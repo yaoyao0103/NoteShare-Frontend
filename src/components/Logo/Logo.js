@@ -5,8 +5,8 @@ const { Title } = Typography;
 const Logo = () => {
     return (
         <div id='logo' className='logo'>
-            <Text className='logo__left' color='black' size='2'>Note</Text>
-            <Text className='logo__right' color='purple' size='2'>Share</Text>
+            <Title className='logo__left' color='black' size='2'>Note</Title>
+            <Title className='logo__right' color='purple' size='2'>Share</Title>
         </div>
     )
 }

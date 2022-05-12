@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import Home from "./Home";
 import Editor from "./components/Editor/Editor";
-import MemberPage from ""
 import { pageLoad } from "./redux/actions/pageAction";
 
 function App() {
@@ -17,7 +16,6 @@ function App() {
     <Router>
       <Switch>
         <Route exact path="/" component={Home}></Route>
-        <Route exact path="/member" component={MemberPage}></Route>
         <Route exact path="/editor/:pageId" component={Editor}></Route>
       </Switch>
     </Router>
