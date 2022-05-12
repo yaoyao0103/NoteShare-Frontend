@@ -1,0 +1,37 @@
+@import "~bootstrap/scss/bootstrap";
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  height: 100vh;
+  overflow: scroll;
+  overflow-x: hidden;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* This rule is applied to the link <a> tag. It lets you turn off the link underline and set the link text color. */
+.nav-link {
+  text-decoration: none;
+  color: #666;
+}
+
+.nav-link.active{
+  color: #FFAF60 !important;
+  background-color: #f7f7f2 !important;
+  border-color: #dee2e6 #dee2e6 #f7f7f2 !important;
+}
+
+.nav-link:hover{
+  color: 	#7D7DFF !important;
+}
+
+
+
