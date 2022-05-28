@@ -45,8 +45,12 @@ const Editor = () => {
   return (
     
     <div className="App">
-      <Navbar/>
-      <div id = "editor-area">
+      <Navbar  style={{
+        z: -100,
+      }}/>
+      <div id = "editor-area" style={{
+        z: -99,
+      }}>
         <div className="sidenav d-flex flex-column overflow-scroll">
         {/* <div id="navbar" className="sidenav d-flex flex-column overflow-scroll"> */}
           {/* <nav className="navbar navbar-light">

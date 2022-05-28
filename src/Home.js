@@ -96,6 +96,12 @@ const Home = () => {
             </tbody>
           </table>
         </div>
+        <div>
+        <Link to={'/MemberPage'}>MemberPage</Link>
+        </div>
+        <div>
+        <Link to={'/QnAPage'}>QnAPage</Link>
+        </div>
       </div>
     </div>
   );

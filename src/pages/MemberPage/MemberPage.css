@@ -1,0 +1,10 @@
+#memberPage{
+    position:relative;
+}
+#header{
+    position: relative;
+    top:0;
+    height: 15%;
+    width: 100%;
+    background-color:white;
+}

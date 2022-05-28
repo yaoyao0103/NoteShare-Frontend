@@ -1,0 +1,21 @@
+#qnaContent__Information__Row{
+    padding-left: 8%;
+    width: auto;
+    display: block;
+    white-space: nowrap;
+}
+#qnaContent__School{
+    width: auto;
+    display: inline-block;
+
+}
+#qnaContent__Department{
+    padding-left: 1%;
+    width: auto;
+    display: inline-block;
+}
+#qnaContent__Subject{
+    padding-left: 6%;
+    width: auto;
+    display: inline-block;
+}

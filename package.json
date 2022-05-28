@@ -4,9 +4,11 @@
   "private": true,
   "proxy": "http://localhost:8080",
   "dependencies": {
+    "@ant-design/colors": "^6.0.0",
     "@popperjs/core": "^2.9.3",
     "@toast-ui/react-image-editor": "^3.15.2",
     "@uiw/react-textarea-code-editor": "^1.4.15",
+    "antd": "^4.20.4",
     "axios": "^0.21.1",
     "bootstrap": "^5.1.1",
     "grapesjs": "^0.17.22",
@@ -25,6 +27,8 @@
     "grapesjs-tui-image-editor": "^0.1.3",
     "grapesjs-typed": "^1.0.5",
     "jquery": "^3.6.0",
+    "node-sass": "^6.0.1",
+    "prop-types": "^15.8.1",
     "react": "^17.0.2",
     "react-bootstrap": "^2.0.0-rc.1",
     "react-dom": "^17.0.2",
@@ -59,8 +63,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "node-sass": "^5.0.0"
   }
 }
