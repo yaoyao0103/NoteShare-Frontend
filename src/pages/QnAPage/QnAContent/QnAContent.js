@@ -12,7 +12,9 @@ const { Header, Content, Sider } = Layout;
 function QnAContent() {
     const author = 'Ting';
     const type = 'QA'
-    const date = '2022-03-06';/*後端傳的是全部的要切*/
+    
+    const date = '2022-03-06T14:53:08.137+00:00'.split('T');
+
     const title = 'Interrupt vs trap';
     const school = '國立台灣海洋大學';
     const department = 'Computer Science';
@@ -42,11 +44,11 @@ function QnAContent() {
             <Layout id='qnaContent__Layout' className="qnaContent__Layout">
                 <Content id="qnaContent__Content" className="qnaContent__Content" >
                     <Avatar id="qnaContent__Title__Avatar" className="qnaContent__Title__Avatar" size={56}>T</Avatar>
-                    <Title />
+                    <Title author={author} date={date[0]} title={title}/>
                     <Row id='qnaContent__Title__Row__Third' className='qnaContent__Titile__Row__Third'>
                         <EllipsisOutlined style={{ fontSize: '22px' }} />
                     </Row>
-                    <Information />
+                    <Information school={school} department={department} subject={subject}/>
                     <Row id='qnaContent__Content__Title__Row' className='qnaContent__Content__Title__Row'>
                         <Col id='qnaContent__Content__Title' className='qnaContent__Content__Title' >
                             <Text color='black' cls='Default' content={"Content:"} fontSize='22' display="inline-block" />
@@ -59,7 +61,7 @@ function QnAContent() {
                     </Row>
                 </Content>
                 <Sider id="qnaContent__Sider" className="qnaContent__Sider" width='40%'>
-                    <Comment/>
+                    <Comment comments={comments}/>
                 </Sider>
             </Layout>
         </div>
