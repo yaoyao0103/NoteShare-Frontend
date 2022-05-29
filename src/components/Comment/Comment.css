@@ -1,39 +1,41 @@
 #Commment{
-    
+    position: relative;
+    width: 100%;
 }
-#Comment__Titile__Row{
+#Comment__Title__Row{
     position: relative;
     width: 100%;
     padding-top:3%;
 }
-#Comment__Titile{
+#Comment__Title{
     position: relative;
     text-align: center;
     width: 100%; 
 }
-.Comment__Block{
+#Comment__Block{
     display: inline-block; 
     position: relative; 
-    height: 15%;
+    height:10%;
     width:100%;
 }
 #Comment__Avatar{
     position: relative;
     background-color: #624c40;
     vertical-align: top;
+    height:10%;
     padding-left:3%;
 }
 #Comment__Author__Row{
     display: inline-block; 
     position: relative; 
     vertical-align: top;
-    height:60%;
-    width:20%;
+    height:30%;
+    width:60%;
 }
 #Comment__Author{
     position:relative;
     width:100%;
-    height:30%;
+    height:50%;
     word-break: break-word;
     vertical-align: top;
     padding-left: 6%;
@@ -41,7 +43,7 @@
 #Comment__Date{
     position: relative;
     width:100%;
-    height: 50%;
+    height: 10%;
     padding-left: 6%;
     display: inline-block;
     word-break: break-word;

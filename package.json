@@ -9,7 +9,7 @@
     "@toast-ui/react-image-editor": "^3.15.2",
     "@uiw/react-textarea-code-editor": "^1.4.15",
     "antd": "^4.20.4",
-    "axios": "^0.21.1",
+    "axios": "^0.21.4",
     "bootstrap": "^5.1.1",
     "grapesjs": "^0.17.22",
     "grapesjs-blocks-basic": "^0.1.8",
@@ -38,6 +38,7 @@
     "redux": "^4.1.1",
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.3.0",
+    "save": "^2.5.0",
     "web-vitals": "^1.1.2"
   },
   "scripts": {

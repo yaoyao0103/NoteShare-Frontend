@@ -1,20 +1,20 @@
-#qnaContent__Information__Row{
+#information__Row{
     padding-left: 8%;
     width: auto;
     display: block;
     white-space: nowrap;
 }
-#qnaContent__School{
+#information__School{
     width: auto;
     display: inline-block;
 
 }
-#qnaContent__Department{
-    padding-left: 1%;
+#information__Department{
+    
     width: auto;
     display: inline-block;
 }
-#qnaContent__Subject{
+#information__Subject{
     padding-left: 6%;
     width: auto;
     display: inline-block;

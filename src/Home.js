@@ -100,7 +100,7 @@ const Home = () => {
         <Link to={'/MemberPage'}>MemberPage</Link>
         </div>
         <div>
-        <Link to={'/QnAPage'}>QnAPage</Link>
+        <Link to={'/QnADetailPage'}>QnADetailPage</Link>
         </div>
       </div>
     </div>

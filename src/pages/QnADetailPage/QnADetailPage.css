@@ -1,4 +1,4 @@
-#qnaPage{
+#qnaDetailPage{
     position:absolute;
 
     top:0%;
@@ -8,14 +8,14 @@
     
 }
 
-#qnaPage__Layout{
+#qnaDetailPage__Layout{
     position:relative;
     margin-top:8%;
     height: 100%;
     width: 100%;
     
 }
-#qnaPage__Content{
+#qnaDetailPage__Content{
     position:relative;
     background-color: white;
     display: flex;

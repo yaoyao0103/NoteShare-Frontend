@@ -1,4 +1,4 @@
-#qnaContent{
+#qnaDetailContent{
     position:relative;
     width: 90%;
     height: 100%;
@@ -8,27 +8,27 @@
     
   
 }
-#qnaContent__Layout{
+#qnaDetailContent__Layout{
     position:relative;
     width: 100%;
     height: 100%;
     background-color: white;
 }
-#qnaContent__Content{
+#qnaDetailContent__Content{
     position: relative;
     height: 100%;
     background-color: white;
     
 }
 
-#qnaContent__Title__Row__First{
+#qnaDetailContent__Title__Row__First{
     display: inline-block; 
     position: relative; 
     margin:2%;
     height:10%;
     width:15%;
 }
-#qnaContent__Title__Avatar{
+#qnaDetailContent__Title__Avatar{
    
     position: relative;
     background-color: #624c40;
@@ -36,7 +36,7 @@
     margin-top:2%;
     margin-left:8%;
 }
-#qnaContent__Title__Author{
+#qnaDetailContent__Title__Author{
     position:relative;
     width:100%;
     height: 20%;
@@ -45,7 +45,7 @@
     padding-top:2%;
     padding-left: 4%;
 }
-#qnaContent__Title__Date{
+#qnaDetailContent__Title__Date{
     position: relative;
     width:100%;
     height: 20%;
@@ -55,7 +55,7 @@
     padding-top:10%;
 
 }
-#qnaContent__Title__Row__Sec{
+#qnaDetailContent__Title__Row__Sec{
     display: inline-block; 
     position: relative; 
     vertical-align: top;
@@ -63,7 +63,7 @@
     height:10%;
     width:55%;
 }
-#qnaContent__Title__Title{
+#qnaDetailContent__Title__Title{
     position: relative;
     width:100%;
     height: 30;
@@ -72,7 +72,7 @@
     vertical-align: top;
     padding-top:2%;
 }
-#qnaContent__Title__Row__Third{
+#qnaDetailContent__Title__Row__Third{
     display: inline-block; 
     position: relative; 
     vertical-align: top;
@@ -81,77 +81,22 @@
     width: 5%;
 }
 
-#qnaContent__Content__Title__Row{
+#qnaDetailContent__Content__Title__Row{
     padding-left: 8%;
     display: block;
     white-space: nowrap;
 }
-#qnaContent__Content__Title{
+#qnaDetailContent__Content__Title{
     width: 100%;
 }
-#qnaContent__Content__Main__Row{
+#qnaDetailContent__Content__Main__Row{
     padding-left: 8%;
     padding-right: 8%;
     width:100%;
     word-break: break-all;
 }
-#qnaContent__Content__Main{
-
-}
-#qnaContent__Sider{
+#qnaDetailContent__Sider{
     background-color: white;
     padding-right: 6%;
 }
-#qnaContent__Comment__Titile__Row{
-    position: relative;
-    width: 100%;
-    padding-top:3%;
-}
-#qnaContent__Comment__Titile{
-    position: relative;
-    text-align: center;
-    width: 100%; 
-}
-.qnaContent__Comment__Block{
-    display: inline-block; 
-    position: relative; 
-    height: 15%;
-    width:100%;
-}
-#qnaContent__Comment__Avatar{
-    position: relative;
-    background-color: #624c40;
-    vertical-align: top;
-    padding-left:3%;
-}
-#qnaContent__Comment__Author__Row{
-    display: inline-block; 
-    position: relative; 
-    vertical-align: top;
-    height:60%;
-    width:20%;
-}
-#qnaContent__Comment__Author{
-    position:relative;
-    width:100%;
-    height:30%;
-    word-break: break-word;
-    vertical-align: top;
-    padding-left: 6%;
-}
-#qnaContent__Comment__Date{
-    position: relative;
-    width:100%;
-    height: 50%;
-    padding-left: 6%;
-    display: inline-block;
-    word-break: break-word;
-    vertical-align: top;
-    
-}
-#qnaContent__Comment__Main__Row{
-    width:100%;
-    word-break: break-all;
-}
-#qnaContent__Comment__Main{
-}
+
