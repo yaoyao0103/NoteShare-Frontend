@@ -18,9 +18,15 @@
 }
 
 #OPInfo__left{
-
+    
 }
 
 #OPInfo__Avatar{
-
+    
+}
+#OPInfo__Author{
+    height: 30%;
+}
+#OPInfo__Date{
+    height: 30%;
 }

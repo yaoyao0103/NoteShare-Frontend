@@ -1,20 +1,66 @@
-#qnaDetailContent{
-    position:relative;
-    width: 90%;
-    height: 100%;
-    margin-top:5%;
-    overflow: scroll;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
-    
-  
-}
+
 #qnaDetailContent__Layout{
     position:relative;
     width: 100%;
     height: 100%;
     background-color: white;
 }
+#qnaDetailContent__Header{
+    position: relative;
+    background-color: #fff;
+    width: 100%;
+    height: 10%;
+    padding-left: 8%;
+    padding-right: 8%;
+    margin-top: 4%;
+    margin-bottom: 2%;
+}
+
+#qnaDetailContent__Header__Row, #qnaDetailContent__Header__left, #qnaDetailContent__Header__middle, #qnaDetailContent__Header__right{
+    height: 100%;
+}
+
+#qnaDetailContent__Header__middle{
+    padding-left: 3%;
+}
+#qnaDetailContent__Header__right{
+    text-align: right;
+}
 #qnaDetailContent__Content{
+    width: 60%;
+    padding-left: 8%;
+    padding-right: 8%;
+    position: relative;
+    height: 100%;
+    margin-bottom: 10%;
+    background-color: white;
+    
+}
+#qnaDetailContent__Content__Information__Row{
+    display: block;
+    white-space: nowrap;
+    margin-bottom: 2%;
+}
+#qnaDetailContent__Content__Information{
+    width: 100%;
+}
+
+#qnaDetailContent__Content__Title__Row{
+    display: block;
+    white-space: nowrap;
+}
+#qnaDetailContent__Content__Title{
+    width: 100%;
+}
+#qnaDetailContent__Content__Main__Row{
+    width:100%;
+    word-break: break-all;
+}
+#qnaDetailContent__Content__Main{
+    width: 100%;
+
+}
+/* #qnaDetailContent__Content{
     position: relative;
     height: 100%;
     background-color: white;
@@ -94,7 +140,7 @@
     padding-right: 8%;
     width:100%;
     word-break: break-all;
-}
+} */
 #qnaDetailContent__Sider{
     background-color: white;
     padding-right: 6%;

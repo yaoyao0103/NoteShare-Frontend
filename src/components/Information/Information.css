@@ -4,23 +4,24 @@
     white-space: nowrap;
 }
 #information__School{
+    padding-right: 4%;
     width: auto;
     display: inline-block;
 
 }
 #information__Department{
-    padding-left: 4%;
+    padding-right: 4%;
     width: auto;
     display: inline-block;
 }
 #information__Subject{
-    padding-left: 4%;
+    padding-right: 4%;
     width: auto;
     display: inline-block;
 }
 
 #information__Instructor{
-    padding-left: 4%;
+    padding-right: 4%;
     width: auto;
     display: inline-block;
 }

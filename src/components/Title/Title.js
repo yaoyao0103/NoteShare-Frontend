@@ -5,7 +5,7 @@ import './Title.css'
 function Title(props) {
     return (
         <div id='Title' className="Title">
-            <div id='Title__Title' className="Title__Title" flex={3}><Text color='black' cls='Large' content={props.title} fontSize='35' display="inline-block" /></div>
+            <div id='Title__Title' className="Title__Title" flex={3}><Text color='black' cls='Default' content={props.title} fontSize='35' display="inline-block" /></div>
         </div>
         );
 }

@@ -1,4 +1,4 @@
-#Commment{
+#Comment{
     position: relative;
     width: 100%;
 }
@@ -13,7 +13,7 @@
     width: 100%; 
 }
 #Comment__Block{
-    display: inline-block; 
+   
     position: relative; 
     height:10%;
     width:100%;
@@ -26,10 +26,10 @@
     padding-left:3%;
 }
 #Comment__Author__Row{
-    display: inline-block; 
+   
     position: relative; 
     vertical-align: top;
-    height:30%;
+    height:10%;
     width:60%;
 }
 #Comment__Author{
@@ -55,4 +55,7 @@
     word-break: break-all;
 }
 #qnaContent__Comment__Main{
+}
+#Comment__Author__Row__left{
+    height:100%;
 }

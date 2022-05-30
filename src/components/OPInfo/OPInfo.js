@@ -12,8 +12,8 @@ const OPInfo = (props) => {
                     <Avatar id="OPInfo__Avatar" className="OPInfo__Avatar" size={props.size}>{props.children}</Avatar>
                 </Col>
                 <Col id="OPInfo__right" className='OPInfo__right'>
-                    <Row id='OPInfo__Author' className='OPInfo__Author' flex={3}><Text color='black' cls='Default' content={props.author} fontSize='20'></Text></Row>
-                    <Row id='OPInfo__Date' className='OPInfo__Date' span={24}><Text color='black' cls='Small' content={props.date.split('T')[0]} fontSize='12' display="inline-block" /></Row>
+                    <Row id='OPInfo__Author' className='OPInfo__Author' ><Text color='black' cls='Default' content={props.author} fontSize='20'></Text></Row>
+                    <Row id='OPInfo__Date' className='OPInfo__Date' ><Text color='black' cls='Small' content={props.date.split('T')[0]} fontSize='12' display="inline-block" /></Row>
                 </Col>
             </Row>
             
