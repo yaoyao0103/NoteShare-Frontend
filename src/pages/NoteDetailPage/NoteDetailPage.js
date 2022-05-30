@@ -13,9 +13,7 @@ function NoteDetailPage(){
         <div id='noteDetailPage' className='noteDetailPage'>
             <Navbar id='noteDetailPage__Navbar' className='noteDetailPage__Navbar' currPage={Page} changePage={(page)=>{ setPage(page) }}/>
             <Layout id='noteDetailPage__Layout' className='noteDetailPage__Layout'>
-                
-                <Content id='noteDetailPage__Content' className='noteDetailPage__Content'><NoteDetailContent/></Content>
-                
+                <NoteDetailContent/>
             </Layout>
         </div>
     );

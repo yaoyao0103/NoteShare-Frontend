@@ -28,18 +28,18 @@ function Information(props) {
             </Row>
             <Row id='information__Bottom' className='information__Bottom'>
                 {props.likes &&(
-                    <Col id='information__Instructor' className='information__Instructor'>
-                        <Text color='black' cls='Default' content={props.instructor} fontSize='17' display="inline-block" />
+                    <Col id='information__Likes' className='information__Likes'>
+                        <Text color='black' cls='Default' content={props.likes} fontSize='17' display="inline-block" />
                     </Col>
                 )}
                 {props.save &&(
-                    <Col id='information__Instructor' className='information__Instructor'>
-                        <Text color='black' cls='Default' content={props.instructor} fontSize='17' display="inline-block" />
+                    <Col id='information__Save' className='information__Save'>
+                        <Text color='black' cls='Default' content={props.save} fontSize='17' display="inline-block" />
                     </Col>
                 )}
                 {props.download &&(
-                    <Col id='information__Instructor' className='information__Instructor'>
-                        <Text color='black' cls='Default' content={props.instructor} fontSize='17' display="inline-block" />
+                    <Col id='information__Download' className='information__Download'>
+                        <Text color='black' cls='Default' content={props.download} fontSize='17' display="inline-block" />
                     </Col>
                 )}
             </Row>

@@ -52,7 +52,7 @@ function NoteDetailContent() {
                 <Content id="noteDetailContent__Content" className="noteDetailContent__Content" >
                     <Row id='noteDetailContent__Content__Information__Row' className='noteDetailContent__Content__Information__Row'>
                         <Col id='noteDetailContent__Content__Information' className='noteDetailContent__Content__Information' >
-                            <Information school={note?.school} department={note?.department} subject={note?.subject} instructor={note?.professor} />
+                            <Information school={note?.school} department={note?.department} subject={note?.subject} instructor={note?.professor} likes={note?.likes} save={note?.save} download={note?.download} />
                         </Col>
                     </Row>
                     
