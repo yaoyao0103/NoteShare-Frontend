@@ -11,7 +11,7 @@
     height: 100%;
 }
 
-#OPInfo__right{
+#OPInfo__right__Content{
     float: left;
     height: 100%;
     padding-top: 5%;
@@ -24,9 +24,14 @@
 #OPInfo__Avatar{
     
 }
-#OPInfo__Author{
-    height: 30%;
+#OPInfo__right__Comment{
+    float: left;
+    height: 100%;
+   
 }
-#OPInfo__Date{
-    height: 30%;
+#OPInfo__Author__Comment{
+    height: 40%;
+}
+#OPInfo__Date__Comment{
+    height: 40%;
 }

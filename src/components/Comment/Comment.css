@@ -1,38 +1,38 @@
-#Comment{
+.Comment{
     position: relative;
     width: 100%;
 }
-#Comment__Title__Row{
+.Comment__Title__Row{
     position: relative;
     width: 100%;
     padding-top:3%;
 }
-#Comment__Title{
+.Comment__Title{
     position: relative;
     text-align: center;
     width: 100%; 
 }
-#Comment__Block{
+.Comment__Block{
    
     position: relative; 
     height:10%;
     width:100%;
 }
-#Comment__Avatar{
+/* .Comment__Avatar{
     position: relative;
     background-color: #624c40;
     vertical-align: top;
     height:10%;
     padding-left:3%;
-}
-#Comment__Author__Row{
+} */
+.Comment__Author__Row{
    
     position: relative; 
     vertical-align: top;
     height:10%;
     width:60%;
 }
-#Comment__Author{
+.Comment__Author{
     position:relative;
     width:100%;
     height:50%;
@@ -40,7 +40,7 @@
     vertical-align: top;
     padding-left: 6%;
 }
-#Comment__Date{
+.Comment__Date{
     position: relative;
     width:100%;
     height: 10%;
@@ -50,12 +50,20 @@
     vertical-align: top;
     
 }
-#Comment__Main__Row{
+.Comment__Main__Row{
+    position: relative;
     width:100%;
     word-break: break-all;
 }
-#qnaContent__Comment__Main{
+.qnaContent__Comment__Main{
+    position: relative;
 }
-#Comment__Author__Row__left{
-    height:100%;
+
+.Comment__Author__Row__left{
+    position: relative;
+   
+}
+.Comment__Author__Row__OPInfo{
+    position: relative;
+    height: 100%;
 }

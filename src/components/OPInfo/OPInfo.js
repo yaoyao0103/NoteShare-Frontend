@@ -11,9 +11,9 @@ const OPInfo = (props) => {
                 <Col id="OPInfo__left" className='OPInfo__left'>
                     <Avatar id="OPInfo__Avatar" className="OPInfo__Avatar" size={props.size}>{props.children}</Avatar>
                 </Col>
-                <Col id="OPInfo__right" className='OPInfo__right'>
-                    <Row id='OPInfo__Author' className='OPInfo__Author' ><Text color='black' cls='Default' content={props.author} fontSize='20'></Text></Row>
-                    <Row id='OPInfo__Date' className='OPInfo__Date' ><Text color='black' cls='Small' content={props.date.split('T')[0]} fontSize='12' display="inline-block" /></Row>
+                <Col id={"OPInfo__right"+'__'+props.mode} className='OPInfo__right'>
+                    <Row id={'OPInfo__Author'+'__'+props.mode} className='OPInfo__Author' ><Text color='black' cls='Default' content={props.author} fontSize='20'></Text></Row>
+                    <Row id={'OPInfo__Date'+'__'+props.mode} className='OPInfo__Date' ><Text color='black' cls='Small' content={props.date.split('T')[0]} fontSize='12' display="inline-block" /></Row>
                 </Col>
             </Row>
             
@@ -26,11 +26,13 @@ const OPInfo = (props) => {
 
 
 OPInfo.propTypes = {
+    mode: PropTypes.string,
     children: PropTypes.string,
     author: PropTypes.string,
     date:PropTypes.string,
 };
 OPInfo.defaultProps = {
+    mode:'Content',
     children: '',
     author: 'Unknown',
     date:'2020-12-25',
