@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Layout, Row, Col, Divider } from "antd";
+import { Row, Col, Divider } from "antd";
 import PropTypes from 'prop-types';
 import Text from "../Text/Text";
 import OPInfo from "../OPInfo/OPInfo";
-import { Avatar } from 'antd';
 import './Comment.css'
 function Comment(props) {
     const Comments = props.comments?.map((item, index) => {
