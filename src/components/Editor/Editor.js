@@ -17,7 +17,6 @@ const Editor = () => {
 
   const { pageStore } = useSelector((state) => state);
   const { pages } = pageStore;
-  var stompClient;
 
   useEffect(() => {
     async function getAllAssets() {
@@ -36,7 +35,6 @@ const Editor = () => {
   useEffect(() => {
     const editor = geditorConfig(assets, pageId);
     setEditor(editor);
-    stompClient = editor.stompClient;
   }, [pageId, assets]);
 
   function print_test(){

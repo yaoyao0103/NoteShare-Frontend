@@ -1,0 +1,73 @@
+{
+      "id": "6262b61b3beec065d67999d0",
+      "type": "normal",
+      "department": "Computer Science",
+      "subject": "Operatin System",
+      "title": "Yao's Test Note",
+      "headerEmail": "allen3325940072@gmail.com",
+      "headerName": "noteshare",
+      "authorEmail": [
+        "allen3325940072@gmail.com"
+      ],
+      "authorName": [
+        "noteshare"
+      ],
+      "managerEmail": "allen3325940072@gmail.com",
+      "professor": "Shangping Ma",
+      "school": "ntou",
+      "exitFolders": null,
+      "likeCount": 0,
+      "favoriteCount": 0,
+      "unlockCount": 0,
+      "downloadable": false,
+      "commentCount": 0,
+      "comments": [],
+      "price": 50,
+      "quotable": false,
+      "tag": [
+        "tag1",
+        "tag2"
+      ],
+      "hiddenTag": [
+        "hiddenTag1",
+        "hiddenTag2"
+      ],
+      "versionToSave": [
+        {
+          "id": "6262b61b3beec065d67999d0",
+          "date": "2022-03-06T14:53:08.137+00:00",
+          "content": {
+                "mycustom-html": "<div id=\"i7sp\" class=\"text-primary\">B-2</div><div id=\"ix4l6\">A-2</div><div id=\"iiz3\">A-3</div><div id=\"i7geh\">A-1</div><div id=\"im69\">B-1</div><div id=\"ic9d\">B-3</div>",
+                "mycustom-components": "[{\"type\":\"text\",\"classes\":[\"text-primary\"],\"attributes\":{\"id\":\"i7sp\"},\"activeOnRender\":1,\"components\":[{\"type\":\"textnode\",\"content\":\"B-2\",\"attributes\":{\"id\":\"i64wv\"}}]},{\"type\":\"text\",\"attributes\":{\"id\":\"ix4l6\"},\"components\":[{\"type\":\"textnode\",\"content\":\"A-2\",\"attributes\":{\"id\":\"iapdb\"}}]},{\"type\":\"text\",\"attributes\":{\"id\":\"iiz3\"},\"activeOnRender\":1,\"components\":[{\"type\":\"textnode\",\"content\":\"A-3\",\"attributes\":{\"id\":\"i2fns\"}}]},{\"type\":\"text\",\"attributes\":{\"id\":\"i7geh\"},\"components\":[{\"type\":\"textnode\",\"content\":\"A-1\",\"attributes\":{\"id\":\"i6rh\"}}]},{\"type\":\"text\",\"attributes\":{\"id\":\"im69\"},\"activeOnRender\":1,\"components\":[{\"type\":\"textnode\",\"content\":\"B-1\",\"attributes\":{\"id\":\"i23j4\"}}]},{\"type\":\"text\",\"chooser\":\"yLTxM\",\"attributes\":{\"id\":\"ic9d\"},\"activeOnRender\":1,\"components\":[{\"type\":\"textnode\",\"content\":\"B-3\",\"attributes\":{\"id\":\"isp27\"}}]}]",
+                "mycustom-assets": "[{\"type\":\"image\",\"src\":\"http://placehold.it/350x250/459ba8/fff/image2.jpg\",\"unitDim\":\"px\",\"height\":350,\"width\":250},{\"type\":\"image\",\"src\":\"http://placehold.it/350x250/79c267/fff/image3.jpg\",\"unitDim\":\"px\",\"height\":350,\"width\":250},{\"type\":\"image\",\"src\":\"http://placehold.it/350x250/79c267/fff/image3.jpg\",\"unitDim\":\"px\",\"height\":350,\"width\":250}]",
+                "mycustom-css": "* { box-sizing: border-box; } body {margin: 0;}#i7geh{padding:10px;}#im69{padding:10px;}#i7sp{padding:10px;float:none;}#iiz3{padding:10px;float:none;}#ic9d{padding:10px;float:none;}.text-primary{float:none;}#ix4l6{padding:10px;}",
+                "mycustom-styles": "[{\"selectors\":[{\"name\":\"gjs-row\",\"private\":1}],\"style\":{\"display\":\"table\",\"padding-top\":\"10px\",\"padding-right\":\"10px\",\"padding-bottom\":\"10px\",\"padding-left\":\"10px\",\"width\":\"100%\"}},{\"selectors\":[{\"name\":\"gjs-cell\",\"private\":1}],\"style\":{\"width\":\"100%\",\"display\":\"block\"},\"mediaText\":\"(max-width: 768px)\",\"atRuleType\":\"media\"},{\"selectors\":[\"gjs-cell30\"],\"style\":{\"width\":\"100%\",\"display\":\"block\"},\"mediaText\":\"(max-width: 768px)\",\"atRuleType\":\"media\"},{\"selectors\":[\"gjs-cell70\"],\"style\":{\"width\":\"100%\",\"display\":\"block\"},\"mediaText\":\"(max-width: 768px)\",\"atRuleType\":\"media\"},{\"selectors\":[{\"name\":\"gjs-cell\",\"private\":1}],\"style\":{\"width\":\"8%\",\"display\":\"table-cell\",\"height\":\"75px\"}},{\"selectors\":[\"gjs-cell30\"],\"style\":{\"width\":\"30%\"}},{\"selectors\":[\"gjs-cell70\"],\"style\":{\"width\":\"70%\"}},{\"selectors\":[\"#i7geh\"],\"style\":{\"padding\":\"10px\"}},{\"selectors\":[\"#im69\"],\"style\":{\"padding\":\"10px\"}},{\"selectors\":[\"#i7sp\"],\"style\":{\"padding\":\"10px\",\"float\":\"none\",\"__p\":false}},{\"selectors\":[\"#iiz3\"],\"style\":{\"padding\":\"10px\",\"float\":\"none\",\"__p\":false}},{\"selectors\":[\"#ic9d\"],\"style\":{\"padding\":\"10px\",\"float\":\"none\",\"__p\":false}},{\"selectors\":[\"text-primary\"],\"style\":{\"float\":\"none\",\"__p\":false}},{\"selectors\":[\"#ix4l6\"],\"style\":{\"padding\":\"10px\"}}]"
+            },
+          "picURL": [],
+          "fileURL": null,
+          "markdown": []
+        }
+      ],
+      "version": [
+        {
+            "id": "6262b61b3beec065d67999d0",
+            "date": "2022-03-06T14:53:08.137+00:00",
+            "content": {
+                  "mycustom-html": "<div id=\"i7sp\" class=\"text-primary\">B-2</div><div id=\"ix4l6\">A-2</div><div id=\"iiz3\">A-3</div><div id=\"i7geh\">A-1</div><div id=\"im69\">B-1</div><div id=\"ic9d\">B-3</div>",
+                  "mycustom-components": "[{\"type\":\"text\",\"classes\":[\"text-primary\"],\"attributes\":{\"id\":\"i7sp\"},\"activeOnRender\":1,\"components\":[{\"type\":\"textnode\",\"content\":\"B-2\",\"attributes\":{\"id\":\"i64wv\"}}]},{\"type\":\"text\",\"attributes\":{\"id\":\"ix4l6\"},\"components\":[{\"type\":\"textnode\",\"content\":\"A-2\",\"attributes\":{\"id\":\"iapdb\"}}]},{\"type\":\"text\",\"attributes\":{\"id\":\"iiz3\"},\"activeOnRender\":1,\"components\":[{\"type\":\"textnode\",\"content\":\"A-3\",\"attributes\":{\"id\":\"i2fns\"}}]},{\"type\":\"text\",\"attributes\":{\"id\":\"i7geh\"},\"components\":[{\"type\":\"textnode\",\"content\":\"A-1\",\"attributes\":{\"id\":\"i6rh\"}}]},{\"type\":\"text\",\"attributes\":{\"id\":\"im69\"},\"activeOnRender\":1,\"components\":[{\"type\":\"textnode\",\"content\":\"B-1\",\"attributes\":{\"id\":\"i23j4\"}}]},{\"type\":\"text\",\"chooser\":\"yLTxM\",\"attributes\":{\"id\":\"ic9d\"},\"activeOnRender\":1,\"components\":[{\"type\":\"textnode\",\"content\":\"B-3\",\"attributes\":{\"id\":\"isp27\"}}]}]",
+                  "mycustom-assets": "[{\"type\":\"image\",\"src\":\"http://placehold.it/350x250/459ba8/fff/image2.jpg\",\"unitDim\":\"px\",\"height\":350,\"width\":250},{\"type\":\"image\",\"src\":\"http://placehold.it/350x250/79c267/fff/image3.jpg\",\"unitDim\":\"px\",\"height\":350,\"width\":250},{\"type\":\"image\",\"src\":\"http://placehold.it/350x250/79c267/fff/image3.jpg\",\"unitDim\":\"px\",\"height\":350,\"width\":250}]",
+                  "mycustom-css": "* { box-sizing: border-box; } body {margin: 0;}#i7geh{padding:10px;}#im69{padding:10px;}#i7sp{padding:10px;float:none;}#iiz3{padding:10px;float:none;}#ic9d{padding:10px;float:none;}.text-primary{float:none;}#ix4l6{padding:10px;}",
+                  "mycustom-styles": "[{\"selectors\":[{\"name\":\"gjs-row\",\"private\":1}],\"style\":{\"display\":\"table\",\"padding-top\":\"10px\",\"padding-right\":\"10px\",\"padding-bottom\":\"10px\",\"padding-left\":\"10px\",\"width\":\"100%\"}},{\"selectors\":[{\"name\":\"gjs-cell\",\"private\":1}],\"style\":{\"width\":\"100%\",\"display\":\"block\"},\"mediaText\":\"(max-width: 768px)\",\"atRuleType\":\"media\"},{\"selectors\":[\"gjs-cell30\"],\"style\":{\"width\":\"100%\",\"display\":\"block\"},\"mediaText\":\"(max-width: 768px)\",\"atRuleType\":\"media\"},{\"selectors\":[\"gjs-cell70\"],\"style\":{\"width\":\"100%\",\"display\":\"block\"},\"mediaText\":\"(max-width: 768px)\",\"atRuleType\":\"media\"},{\"selectors\":[{\"name\":\"gjs-cell\",\"private\":1}],\"style\":{\"width\":\"8%\",\"display\":\"table-cell\",\"height\":\"75px\"}},{\"selectors\":[\"gjs-cell30\"],\"style\":{\"width\":\"30%\"}},{\"selectors\":[\"gjs-cell70\"],\"style\":{\"width\":\"70%\"}},{\"selectors\":[\"#i7geh\"],\"style\":{\"padding\":\"10px\"}},{\"selectors\":[\"#im69\"],\"style\":{\"padding\":\"10px\"}},{\"selectors\":[\"#i7sp\"],\"style\":{\"padding\":\"10px\",\"float\":\"none\",\"__p\":false}},{\"selectors\":[\"#iiz3\"],\"style\":{\"padding\":\"10px\",\"float\":\"none\",\"__p\":false}},{\"selectors\":[\"#ic9d\"],\"style\":{\"padding\":\"10px\",\"float\":\"none\",\"__p\":false}},{\"selectors\":[\"text-primary\"],\"style\":{\"float\":\"none\",\"__p\":false}},{\"selectors\":[\"#ix4l6\"],\"style\":{\"padding\":\"10px\"}}]"
+              },
+            "picURL": [],
+            "fileURL": null,
+            "markdown": []
+          }
+      ],
+      "contributors": [],
+      "postID": null,
+      "best": null,
+      "favorite": null,
+      "submit": true,
+      "public": true
+    }

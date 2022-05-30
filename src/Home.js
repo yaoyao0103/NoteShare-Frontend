@@ -78,6 +78,7 @@ const Home = () => {
                 <td>Name</td>
                 <td>Slug</td>
                 <td>Action</td>
+                <td>Browse</td>
               </tr>
             </thead>
             <tbody>
@@ -89,6 +90,9 @@ const Home = () => {
                       <td>{page.slug}</td>
                       <td>
                         <Link to={`/editor/${page._id}`}>Edit</Link>
+                      </td>
+                      <td>
+                        <Link to={`/NoteDetailPage/${page._id}`}>Browse</Link>
                       </td>
                     </tr>
                   ))

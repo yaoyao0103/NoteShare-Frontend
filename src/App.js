@@ -6,6 +6,7 @@ import Editor from "./components/Editor/Editor";
 import { pageLoad } from "./redux/actions/pageAction";
 import MemberPage from "./pages/MemberPage/MemberPage";
 import QnADetailPage from "./pages/QnADetailPage/QnADetailPage";
+import NoteDetailPage from "./pages/NoteDetailPage/NoteDetailPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -21,6 +22,7 @@ function App() {
         <Route exact path="/editor/:pageId" component={Editor}></Route>
         <Route exact path="/MemberPage" component={MemberPage}></Route>
         <Route exact path="/QnADetailPage" component={QnADetailPage}></Route>
+        <Route exact path="/NoteDetailPage" component={NoteDetailPage}></Route>
       </Switch>
     </Router>
   );
