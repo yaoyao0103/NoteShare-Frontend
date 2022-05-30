@@ -13,8 +13,8 @@ const NoteDetailContentEditor = ( { noteId } ) => {
   const [assets, setAssets] = useState([]);
   const { pageStore } = useSelector((state) => state);
   const { pages } = pageStore;
-/*
-  useEffect(() => {
+
+  /*useEffect(() => {
     async function getAllAssets() {
       try {
         const response = await axios.get(`${API_HOST}assets/`);
@@ -25,29 +25,14 @@ const NoteDetailContentEditor = ( { noteId } ) => {
     }
 
     getAllAssets();
-  }, []);
-  */
+  }, []);*/
+
 
   useEffect(() => {
-    async function getNoteById() {
-      try {
-        /*const response = await axios.get(`${API_HOST}note/${noteId}`);
-        const note = response.data;*/
-        const note = require('./noteTestJson.json');
-        console.log(note);
-      } catch (error) {
-      }
-    }
-
-    getNoteById();
-  }, []);
-
-/*
-  useEffect(() => {
-    const editor = geditorConfig(assets, pageId);
+    console.log("noteId", noteId)
+    const editor = geditorConfig(assets, noteId);
     setEditor(editor);
-    stompClient = editor.stompClient;
-  }, [pageId, assets]);*/
+  }, [noteId, assets]);
 
 
   return (

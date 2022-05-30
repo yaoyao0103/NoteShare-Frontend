@@ -1,0 +1,26 @@
+#OPInfo{
+    height: 100%;
+}
+
+#OPInfo__Row{
+    height: 100%;
+}
+
+#OPInfo__left{
+    width: 40%;
+    height: 100%;
+}
+
+#OPInfo__right{
+    float: left;
+    height: 100%;
+    padding-top: 5%;
+}
+
+#OPInfo__left{
+
+}
+
+#OPInfo__Avatar{
+
+}

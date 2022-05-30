@@ -1,43 +1,14 @@
 #Title{
     display: inline-block; 
     position: relative; 
-    margin:2%;
     height:10%;
     width:65%;
 }
 #Title__Row__First{
     display: inline-block; 
     position: relative; 
-    margin:2%;
     height:100%;
     width:15%;
-}
-#Title__Author{
-    position:relative;
-    width:100%;
-    height: 20%;
-    word-break: break-word;
-    vertical-align: top;
-    padding-top:2%;
-    padding-left: 4%;
-}
-#Title__Date{
-    position: relative;
-    width:100%;
-    height: 20%;
-    display: inline-block;
-    word-break: break-word;
-    vertical-align: top;
-    padding-top:10%;
-
-}
-#Title__Row__Sec{
-    display: inline-block; 
-    position: relative; 
-    vertical-align: top;
-    padding:2%;
-    height:100%;
-    width:55%;
 }
 #Title__Title{
     position: relative;

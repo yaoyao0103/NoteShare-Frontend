@@ -106,6 +106,9 @@ const Home = () => {
         <div>
         <Link to={'/QnADetailPage'}>QnADetailPage</Link>
         </div>
+        <div>
+        <Link to={'/NoteDetailPage'}>NoteDetailPage</Link>
+        </div>
       </div>
     </div>
   );
