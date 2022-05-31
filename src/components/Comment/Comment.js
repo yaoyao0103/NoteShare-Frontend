@@ -53,7 +53,10 @@ function Comment(props) {
                                 mode='Comment'
                                 
                             >T</OPInfo> */}
-            {Comments}
+            <div id='Comment__Title__Middle' className='Comment__Title__Middle'>
+                {Comments}
+            </div>
+            
             <Row className='Comment__Title__Bottom'>
                 <Col className='Comment__Input' span={17}>
                     <Input placeholder="Say something..." bordered={false} />

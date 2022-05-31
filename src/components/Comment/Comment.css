@@ -2,6 +2,8 @@
     position: relative;
     width: 100%;
     height:100%;
+}
+.Comment__Title__Middle{
     overflow-y: scroll;
 }
 .Comment__Title__Top{
