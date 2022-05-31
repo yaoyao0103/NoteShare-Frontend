@@ -41,8 +41,7 @@ const NoteDetailContentEditor = ( { noteId } ) => {
       <div id = "editor-area" style={{
         z: -99,
       }}>
-        <div className="NoteDetailContentEditor_Main_Content-content" id="NoteDetailContentEditor_Main_Content">
-          
+        <div className="noteDetailContentEditor__Content" id="noteDetailContentEditor__Content">
           <div id="editor"></div>
         </div>
       </div>

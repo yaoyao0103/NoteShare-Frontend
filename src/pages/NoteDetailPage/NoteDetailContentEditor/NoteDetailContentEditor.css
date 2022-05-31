@@ -1,9 +1,4 @@
-#editor-area {
-    position: relative;
-    width: 100%;
-    height: 92%;
-    pointer-events: none;
-}
+
   
   /* Theming */
   .gjs-one-bg {
@@ -266,7 +261,7 @@
   .tab-content {
     display: contents;
   }
-  
+  /*
   #block {
     height: 100%;
   }
@@ -292,7 +287,7 @@
             justify-content: center;
     width: 42%;
   }
-  
+  */
   @-webkit-keyframes fadeIn {
     from {
       opacity: 0;
@@ -309,7 +304,7 @@
     to {
       opacity: 1;
     }
-  }
+  }/*
   
   #myTab {
     margin-top: 10px;
@@ -326,7 +321,7 @@
   #myTab i {
     -webkit-transform: scale(1.4);
             transform: scale(1.4);
-  }
+  }*/
   
   .gjs-category-title,
   .gjs-layer-title,
@@ -384,10 +379,10 @@
   .gjs-block-category.gjs-open .gjs-one-bg:hover {
     color: #7D7DFF;
   }
-  
+  /*
   #gjs-sm-add {
     color: #777 !important;
-  }
+  }*/
   
   .gjs-layer .gjs-layer-name {
     font-size: 0.5rem;
