@@ -1,4 +1,4 @@
-#noteDetailContent{
+#contentTemplate{
     position:relative;
     width: 90%;
     height: 100%; 
@@ -6,30 +6,32 @@
     display: block;
     margin-left: auto;
     margin-right: auto;
-    
+    margin-bottom: 10%;
     /* overflow: scroll; */
-    
-  
 }
-#noteDetailContent__Layout{
+
+#contentTemplate__Layout__outer{
+    height: 100%;
+}
+
+#contentTemplate__Layout{
     position:relative;
-    width: 100%;
-    height: 100%; 
+    width: 100%; 
     background-color: white;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
 }
-#noteDetailContent__Content{
+#contentTemplate__Content{
     width: 100%;
     padding-left: 8%;
     padding-right: 8%;
     position: relative;
     height: 100%;
-    margin-bottom: 10%;
+    
     background-color: white;
     
 }
 
-#noteDetailContent__Header{
+#contentTemplate__Header{
     background-color: #fff;
     width: 100%;
     height: 10%;
@@ -39,25 +41,28 @@
     margin-bottom: 2%;
 }
 
-#noteDetailContent__Header__Row, #noteDetailContent__Header__left, #noteDetailContent__Header__middle, #noteDetailContent__Header__right{
+#contentTemplate__Header__left{
     height: 100%;
+    margin-top: 1%;
 }
 
-#noteDetailContent__Header__middle{
+#contentTemplate__Header__middle{
+    height: 100%;
     padding-left: 3%;
 }
-#noteDetailContent__Header__right{
+#contentTemplate__Header__right{
+    height: 100%;
     text-align: right;
 }
 
-#noteDetailContent__Title__Row__First{
+#contentTemplate__Title__Row__First{
     display: inline-block; 
     position: relative; 
     margin:2%;
     height:10%;
     width:15%;
 }
-#noteDetailContent__Title__Avatar{
+#contentTemplate__Title__Avatar{
    
     position: relative;
     background-color: #624c40;
@@ -65,7 +70,7 @@
     margin-top:2%;
     margin-left:8%;
 }
-#noteDetailContent__Title__Author{
+#contentTemplate__Title__Author{
     position:relative;
     width:100%;
     height: 20%;
@@ -74,7 +79,7 @@
     padding-top:2%;
     padding-left: 4%;
 }
-#noteDetailContent__Title__Date{
+#contentTemplate__Title__Date{
     position: relative;
     width:100%;
     height: 20%;
@@ -84,7 +89,7 @@
     padding-top:10%;
 
 }
-#noteDetailContent__Title__Row__Sec{
+#contentTemplate__Title__Row__Sec{
     display: inline-block; 
     position: relative; 
     vertical-align: top;
@@ -92,7 +97,7 @@
     height:10%;
     width:55%;
 }
-#noteDetailContent__Title__Title{
+#contentTemplate__Title__Title{
     position: relative;
     width:100%;
     height: 30;
@@ -101,7 +106,7 @@
     vertical-align: top;
     padding-top:2%;
 }
-#noteDetailContent__Title__Row__Third{
+#contentTemplate__Title__Row__Third{
     display: inline-block; 
     position: relative; 
     vertical-align: top;
@@ -110,64 +115,56 @@
     width: 5%;
 }
 
-#noteDetailContent__Content__Information__Row{
-    display: block;
-    white-space: nowrap;
-    margin-bottom: 2%;
+.contentTemplate__Content__Title{
+    margin-top: 1%;
 }
-#noteDetailContent__Content__Information{
+
+#contentTemplate__Content__Information{
+    width: 100%;
+    margin-top: 1em;
+}
+
+#contentTemplate__Content__Title{
     width: 100%;
 }
 
-#noteDetailContent__Content__Title__Row{
-    display: block;
-    white-space: nowrap;
-}
-#noteDetailContent__Content__Title{
+#contentTemplate__Content__Main{
     width: 100%;
 }
-#noteDetailContent__Content__Main__Row{
-    width:100%;
-    word-break: break-all;
-    height: 100%;
-}
-#noteDetailContent__Content__Main{
-    width: 100%;
-}
-#noteDetailContent__Sider{
+#contentTemplate__Sider{
     background-color: white;
     padding-right: 6%;
 }
-#noteDetailContent__Comment__Title__Row{
+#contentTemplate__Comment__Title__Row{
     position: relative;
     width: 100%;
     padding-top:3%;
 }
-#noteDetailContent__Comment__Titie{
+#contentTemplate__Comment__Title{
     position: relative;
     text-align: center;
     width: 100%; 
 }
-.noteDetailContent__Comment__Block{
+.contentTemplate__Comment__Block{
     display: inline-block; 
     position: relative; 
     height: 15%;
     width:100%;
 }
-#noteDetailContent__Comment__Avatar{
+#contentTemplate__Comment__Avatar{
     position: relative;
     background-color: #624c40;
     vertical-align: top;
     padding-left:3%;
 }
-#noteDetailContent__Comment__Author__Row{
+#contentTemplate__Comment__Author__Row{
     display: inline-block; 
     position: relative; 
     vertical-align: top;
     height:60%;
     width:20%;
 }
-#noteDetailContent__Comment__Author{
+#contentTemplate__Comment__Author{
     position:relative;
     width:100%;
     height:30%;
@@ -175,7 +172,7 @@
     vertical-align: top;
     padding-left: 6%;
 }
-#noteDetailContent__Comment__Date{
+#contentTemplate__Comment__Date{
     position: relative;
     width:100%;
     height: 50%;
@@ -185,10 +182,23 @@
     vertical-align: top;
     
 }
-#noteDetailContent__Comment__Main__Row{
-    width:100%;
-    word-break: break-all;
+
+#contentTemplate__Footer{
+    background-color: #fff;
+    padding-left: 8%;
+    padding-right: 8%;
 }
-#noteDetailContent__Comment__Main{
-    width:100%;
+
+#contentTemplate__Comment{
+    position:relative;
+    background-color: #fff;
+    height: 100%;
+}
+
+.left-margin{
+    margin-left: 10px;
+}
+
+.contentTemplate__Footer__Button{
+    float: right;
 }

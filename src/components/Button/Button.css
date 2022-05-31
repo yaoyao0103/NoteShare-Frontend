@@ -1,0 +1,33 @@
+.button{
+    border-radius: 7px;
+    border: none;
+    height: 45px;
+    min-width: 100px;
+    font-weight: 600;
+}
+
+.anticon-user{
+    position: relative;
+    margin-right: 0.5em;
+    top: -0.2em;
+    color: #fff;
+    font-size: large;
+}
+
+
+.button__span{
+    margin-left: 0.8em;
+    margin-right: 0.8em;
+}
+
+.btn-green{
+    background-color: #1ADCAB;
+}
+
+.btn-purple{
+    background-color: #8015E8;
+}
+
+.btn-black{
+    background-color: #000;
+}

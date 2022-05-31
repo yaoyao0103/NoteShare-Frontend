@@ -8,8 +8,8 @@ const OPInfo = (props) => {
     return (
         <div id="OPInfo">
             <Row id={"OPInfo__Row"+'__'+props.mode} className='OPInfo__Row'>
-                <Col id={"OPInfo__left"+'__'+props.mode} className='OPInfo__left'>
-                    <Avatar id={"OPInfo__Avatar"+'__'+props.mode} className="OPInfo__Avatar" size={props.size}>{props.children}</Avatar>
+                <Col className={"OPInfo__left"+'__'+props.mode}>
+                    <Avatar className={"OPInfo__Avatar"+'__'+props.mode} size={props.size}>{props.children}</Avatar>
                 </Col>
                 <Col id={"OPInfo__right"+'__'+props.mode} className='OPInfo__right'>
                     <Row id={'OPInfo__Author'+'__'+props.mode} className='OPInfo__Author' ><Text color='black' cls='Default' content={props.author} fontSize={props.authorFontSize}></Text></Row>

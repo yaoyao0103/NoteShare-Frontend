@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Divider } from "antd";
+import { Row, Col, Divider, Input  } from "antd";
 import PropTypes from 'prop-types';
 import Text from "../Text/Text";
 import OPInfo from "../OPInfo/OPInfo";
+import Button from "../Button/Button";
 import './Comment.css'
 function Comment(props) {
     const Comments = props.comments?.map((item, index) => {
@@ -15,12 +16,12 @@ function Comment(props) {
                             <OPInfo
                                 id="Comment__Author__Row__OPInfo"
                                 className="Comment__Author__Row__OPInfo"
-                                size={36}
+                                size={45}
                                 author={item.author}
                                 date={item.date}
                                 mode='Comment'
-                                authorFontSize="15"
-                                dateFontSize="9"
+                                authorFontSize="18"
+                                dateFontSize="15"
                             >T</OPInfo>
                             </Col> 
                     </Row>
@@ -38,10 +39,10 @@ function Comment(props) {
 
     return (
         <div id='Comment' className="Comment">
-            <Row id='Comment__Title__Row' className='Comment__Title__Row'>
+            <Row id='Comment__Title__Top' className='Comment__Title__Top'>
             
                 <Col id='Comment__Title' className="Comment__Title" flex={3}><Text color='black' cls='Default' content={'Comment'} fontSize='38' display="inline-block" /></Col>
-                
+                <Divider className="Comment__Divider"/>
             </Row>
             {/* <OPInfo
                                 id="Comment__Author__Row__OPInfo"
@@ -53,6 +54,15 @@ function Comment(props) {
                                 
                             >T</OPInfo> */}
             {Comments}
+            <Row className='Comment__Title__Bottom'>
+                <Col className='Comment__Input' span={17}>
+                    <Input placeholder="Say something..." bordered={false} />
+                </Col>
+                <Col className='Comment__Button' span={6}>
+                    <Button color={"green"}><Text color='white' cls='Large' content={"Submit"} fontSize='20' display="inline-block" /></Button>
+                </Col>
+                
+            </Row>
         </div>
     );
 }

@@ -7,32 +7,25 @@
     height: 100%;
 }
 
-#OPInfo__left__Content{
-    width: 40%;
+.OPInfo__left__Content{
+    margin-right: 1em;
     height: 100%;
 }
 
 #OPInfo__right__Content{
     float: left;
     height: 100%;
-    padding-top: 5%;
 }
 
-#OPInfo__left__Content{
-    
-}
 #OPInfo__Row__Comment{
     position: relative;
     height: 100%;
 }
 
-#OPInfo__Avatar__Content{
-    
-}
-#OPInfo__left__Comment{
+.OPInfo__left__Comment{
     position: relative;
-    width: 40%;
-    height: 30%;
+    margin-right: 0.8em;
+    margin-top: 0.1em;
 }
 #OPInfo__right__Comment{
     position: relative;
@@ -41,8 +34,10 @@
    
 }
 #OPInfo__Author__Comment{
+    padding-bottom: 0;
     position: relative;
     height: 40%;
+    margin-bottom: 0.3em;
 }
 #OPInfo__Date__Comment{
     position: relative;

@@ -1,21 +1,30 @@
-import React ,{useState,useEffect}from 'react';
-import NoteDetailContent from './NoteDetailContent/NoteDetailContent';
-import Navbar from '../../components/Navbar/Navbar';
-import './NoteDetailPage.css'
-import { Layout, PageHeader } from "antd";
-const { Header, Content, Footer } = Layout;
+import React, { useState, useEffect } from 'react';
+import PageDetailTemplate from '../../components/PageDetailTemplate/PageDetailTemplate'
+import PageDetailContentTemplate from '../../components/PageDetailContentTemplate/PageDetailContentTemplate';
 function NoteDetailPage(){
-    const [ Page, setPage ] = useState('NoteDetailPage');
+    const [ note, setNote ] = useState(null);
+    const noteId = "6262b61b3beec065d67999d0";
+
     useEffect(() => {
-        console.log(Page);
-    }, [Page])
+        async function getNoteById() {
+          try {
+            const temp = require('./noteTestJson.json');
+            temp.author = temp.authorName[0];
+            temp.date = temp.version[0].date;
+            setNote(temp);
+          } catch (error) {
+              console.log(error);
+          }
+        }
+        getNoteById();
+      }, []);
     return(
-        <div id='noteDetailPage' className='noteDetailPage'>
-            <Navbar id='noteDetailPage__Navbar' className='noteDetailPage__Navbar' currPage={Page} changePage={(page)=>{ setPage(page) }}/>
-            <Layout id='noteDetailPage__Layout' className='noteDetailPage__Layout'>
-                <NoteDetailContent/>
-            </Layout>
-        </div>
+        <>
+            <PageDetailTemplate page="NoteDetailPage">
+                <PageDetailContentTemplate data={note} hasEditor={true} noteId={noteId} hasComment={false} hasTag={true}/>
+            </PageDetailTemplate>
+        </>
+        
     );
 }
 export default NoteDetailPage;

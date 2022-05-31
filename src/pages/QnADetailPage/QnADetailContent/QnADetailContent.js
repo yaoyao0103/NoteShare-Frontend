@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { Layout, Row, Col } from "antd";
+import { Layout, Row, Col, Button } from "antd";
+import Comment from '../../../components/Comment/Comment';
 import { EllipsisOutlined } from '@ant-design/icons';
 import Text from "../../../components/Text/Text";
 import Title from "../../../components/Title/Title";
 import Information from "../../../components/Information/Information";
 import OPInfo from "../../../components/OPInfo/OPInfo";
 import './QnADetailContent.css'
-const { Header, Content } = Layout;
+const { Header, Content, Sider } = Layout;
 
 function QnADetailContent(props) {
     return (
+        <>
             <Layout id='qnaDetailContent__Layout' className="qnaDetailContent__Layout">
                 <Header id="qnaDetailContent__Header" className="qnaDetailContent__Header" >
                     <Row id="qnaDetailContent__Header__Row" className="qnaDetailContent__Header__Row" >
@@ -45,6 +47,8 @@ function QnADetailContent(props) {
                     </Row>
                 </Content>
             </Layout>
+                
+        </>
     );
 }
 export default QnADetailContent;

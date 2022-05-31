@@ -5,10 +5,10 @@ import { useSelector } from "react-redux";
 import { API_HOST } from "../../../api_utils";
 import geditorConfig from "../../../api_utils/geditor_config";
 import TopNav from "../../../components/Page/TopNav";
-import "./NoteDetailContentEditor.css";
+import "./ContentEditor.css";
 //import PageSection from "../Page/PageSection";
 
-const NoteDetailContentEditor = ( { noteId } ) => {
+const ContentEditor = ( { noteId } ) => {
   const [editor, setEditor] = useState(null);
   const [assets, setAssets] = useState([]);
   const { pageStore } = useSelector((state) => state);
@@ -38,15 +38,11 @@ const NoteDetailContentEditor = ( { noteId } ) => {
   return (
     
     <div className="App">
-      <div id = "editor-area" style={{
-        z: -99,
-      }}>
-        <div className="noteDetailContentEditor__Content" id="noteDetailContentEditor__Content">
-          <div id="editor"></div>
-        </div>
+      <div id = "editor-area" >
+        <div id="editor"></div>
       </div>
     </div>
   );
 };
 
-export default NoteDetailContentEditor;
+export default ContentEditor;

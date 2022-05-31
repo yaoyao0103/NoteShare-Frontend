@@ -1,11 +1,10 @@
-#noteDetailPage{
+#detailTemplate{
     position: absolute;
     height: 100%;
     width: 100%;
-    
 }
 
-#noteDetailPage__Layout{
+#detailTemplate__Layout{
     position: absolute;
     top: 10%;
     background-color: #EFF1F4;
