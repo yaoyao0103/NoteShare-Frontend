@@ -19,8 +19,10 @@ function Comment(props) {
                                 author={item.author}
                                 date={item.date}
                                 mode='Comment'
-                                style={{ position: 'relative' }}
-                            >T</OPInfo></Col>
+                                authorFontSize="15"
+                                dateFontSize="9"
+                            >T</OPInfo>
+                            </Col> 
                     </Row>
                     <Row id={'Comment__Main__Row'+index} className='Comment__Main__Row'>
                         <Col id={'Comment__Main'+index} className='Comment__Main' span={12}>
@@ -37,10 +39,20 @@ function Comment(props) {
     return (
         <div id='Comment' className="Comment">
             <Row id='Comment__Title__Row' className='Comment__Title__Row'>
-                <Col id='Comment__Title' className="Comment__Title" flex={3}><Text color='black' cls='Default' content={'Comment'} fontSize='38' display="inline-block" /></Col>
-            </Row>
-            {Comments}
             
+                <Col id='Comment__Title' className="Comment__Title" flex={3}><Text color='black' cls='Default' content={'Comment'} fontSize='38' display="inline-block" /></Col>
+                
+            </Row>
+            {/* <OPInfo
+                                id="Comment__Author__Row__OPInfo"
+                                className="Comment__Author__Row__OPInfo"
+                                size={36}
+                                author={'Ting'}
+                                date={'2022-12-08'}
+                                mode='Comment'
+                                
+                            >T</OPInfo> */}
+            {Comments}
         </div>
     );
 }

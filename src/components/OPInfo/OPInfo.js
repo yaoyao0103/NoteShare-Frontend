@@ -12,8 +12,8 @@ const OPInfo = (props) => {
                     <Avatar id={"OPInfo__Avatar"+'__'+props.mode} className="OPInfo__Avatar" size={props.size}>{props.children}</Avatar>
                 </Col>
                 <Col id={"OPInfo__right"+'__'+props.mode} className='OPInfo__right'>
-                    <Row id={'OPInfo__Author'+'__'+props.mode} className='OPInfo__Author' ><Text color='black' cls='Default' content={props.author} fontSize='20'></Text></Row>
-                    <Row id={'OPInfo__Date'+'__'+props.mode} className='OPInfo__Date' ><Text color='black' cls='Small' content={props.date.split('T')[0]} fontSize='12' display="inline-block" /></Row>
+                    <Row id={'OPInfo__Author'+'__'+props.mode} className='OPInfo__Author' ><Text color='black' cls='Default' content={props.author} fontSize={props.authorFontSize}></Text></Row>
+                    <Row id={'OPInfo__Date'+'__'+props.mode} className='OPInfo__Date' ><Text color='black' cls='Small' content={props.date.split('T')[0]} fontSize={props.dateFontSize} display="inline-block" /></Row>
                 </Col>
             </Row>
             
@@ -30,11 +30,15 @@ OPInfo.propTypes = {
     children: PropTypes.string,
     author: PropTypes.string,
     date:PropTypes.string,
+    authorFontSize:PropTypes.string,
+    dateFontSize:PropTypes.string,
 };
 OPInfo.defaultProps = {
     mode:'Content',
     children: '',
     author: 'Unknown',
     date:'2020-12-25',
+    authorFontSize:'20',
+    dateFontSize:'12',
 };
   export default OPInfo
