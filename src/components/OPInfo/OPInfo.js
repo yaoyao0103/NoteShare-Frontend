@@ -7,9 +7,9 @@ import "./OPInfo.css";
 const OPInfo = (props) => {
     return (
         <div id="OPInfo">
-            <Row id="OPInfo__Row" className='OPInfo__Row'>
-                <Col id="OPInfo__left" className='OPInfo__left'>
-                    <Avatar id="OPInfo__Avatar" className="OPInfo__Avatar" size={props.size}>{props.children}</Avatar>
+            <Row id={"OPInfo__Row"+'__'+props.mode} className='OPInfo__Row'>
+                <Col id={"OPInfo__left"+'__'+props.mode} className='OPInfo__left'>
+                    <Avatar id={"OPInfo__Avatar"+'__'+props.mode} className="OPInfo__Avatar" size={props.size}>{props.children}</Avatar>
                 </Col>
                 <Col id={"OPInfo__right"+'__'+props.mode} className='OPInfo__right'>
                     <Row id={'OPInfo__Author'+'__'+props.mode} className='OPInfo__Author' ><Text color='black' cls='Default' content={props.author} fontSize='20'></Text></Row>

@@ -3,8 +3,9 @@ import QnADetailContent from './QnADetailContent/QnADetailContent';
 import Navbar from '../../components/Navbar/Navbar';
 import './QnADetailPage.css';
 import Comment from '../../components/Comment/Comment';
+import Text from '../../components/Text/Text';
 import axios from "axios";
-import { Layout} from "antd";
+import { Layout,Button} from "antd";
 const { Sider } = Layout;
 function QnADetailPage() {
     const [QnA, setQnA] = useState([]);
@@ -38,6 +39,7 @@ function QnADetailPage() {
                 <Sider id="qnaDetailContent__Sider" className="qnaDetailContent__Sider" width='40%'>
                     <Comment comments={QnA.comments} />
                 </Sider>
+                <Button type='primary' className='qnaDetailPage__Comment__Submit__Button'><Text></Text>submit</Button>
             </Layout>
 
         </div>

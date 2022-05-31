@@ -1,6 +1,7 @@
 .Comment{
     position: relative;
     width: 100%;
+    height:100%;
 }
 .Comment__Title__Row{
     position: relative;
@@ -13,57 +14,39 @@
     width: 100%; 
 }
 .Comment__Block{
-   
     position: relative; 
-    height:10%;
+    height:auto;
     width:100%;
 }
-/* .Comment__Avatar{
-    position: relative;
-    background-color: #624c40;
-    vertical-align: top;
-    height:10%;
-    padding-left:3%;
-} */
 .Comment__Author__Row{
-   
     position: relative; 
     vertical-align: top;
-    height:10%;
+    height:100%;
     width:60%;
-}
-.Comment__Author{
-    position:relative;
-    width:100%;
-    height:50%;
-    word-break: break-word;
-    vertical-align: top;
-    padding-left: 6%;
-}
-.Comment__Date{
-    position: relative;
-    width:100%;
-    height: 10%;
-    padding-left: 6%;
-    display: inline-block;
-    word-break: break-word;
-    vertical-align: top;
-    
 }
 .Comment__Main__Row{
     position: relative;
     width:100%;
+    height: 30%;
     word-break: break-all;
 }
-.qnaContent__Comment__Main{
+.Comment__Main{
     position: relative;
+    width:100%;
+    height: 100%;
+    word-break: break-all;
 }
-
+.Comment__Divider{
+    position: relative;
+  
+}
 .Comment__Author__Row__left{
     position: relative;
+   
    
 }
 .Comment__Author__Row__OPInfo{
     position: relative;
-    height: 100%;
+   
 }
+

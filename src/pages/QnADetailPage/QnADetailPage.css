@@ -26,6 +26,18 @@
     width: 100%;
     
 }
-.ant-layout-sider-children{
-    position: relative;
+#qnaDetailContent__Sider{
+    position:relative;
+    height: 100%;
+}
+
+.qnaDetailPage__Comment__Submit__Button{
+    position: absolute;
+    text-align: center;
+    width: 7%;
+    height: 5%;
+    bottom:5%;
+    right:5%;
+    background-color: #8015e8;
+    border-radius: 5px;
 }
