@@ -10,12 +10,13 @@
 }
 
 .Comment__Input{
-    margin-bottom: 1.5em;
+    margin-bottom: 1em;
 }
 
 .Comment__Button{
     float: right;
     padding-right: 1.5em;
+    margin-bottom: 1em;
 }
 
 .ant-dropdown-trigger{

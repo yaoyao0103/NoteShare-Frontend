@@ -14,6 +14,6 @@ Title.propTypes = {
 };
 Title.defaultProps = {
     title:'Unknown',
-    size:35
+    size:'35'
 };
 export default Title;

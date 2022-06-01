@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./DropdownFunction.css";
-import { Menu, Dropdown, message, Space, Drawer, List, Comment, Row, Col, Mentions } from "antd";
+import { Menu, Dropdown, message, Space, Drawer, List, Comment, Mentions } from "antd";
 import Button from "../Button/Button";
 import Text from "../Text/Text";
 import { EditOutlined, CommentOutlined, ShareAltOutlined } from "@ant-design/icons";
@@ -12,11 +12,11 @@ const MOCK_DATA = {
 };
 const DropdownFunction = (props) => {
   const [visible, setVisible] = useState(false);
-  const [comments, setComments] = useState({
+  const [comments, setComments] = useState([]);
+  const [names, setNames] = useState({
     '@': [],
     '#': ['1.0', '2.0', '3.0'],
-  });
-  const [names, setNames] = useState([]);
+});
   const handleButtonClick = (e) => {
     message.info("Click on left button.");
     console.log("click left button", e);
@@ -109,8 +109,8 @@ const DropdownFunction = (props) => {
         header={`${comments.length} replies`}
         itemLayout="horizontal"
         dataSource={comments}
-        renderItem={(item) => (
-          <li>
+        renderItem={(item, i) => (
+          <li key={i}>
             <Comment
               actions={null}
               author={item.author}

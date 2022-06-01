@@ -6,7 +6,7 @@ import { EllipsisOutlined } from '@ant-design/icons';
 import Text from "../Text/Text";
 import Title from "../Title/Title";
 import Information from "../Information/Information";
-import Comment from "../Comment/Comment";
+import SiderComment from "../SiderComment/SiderComment";
 import ContentEditor from "../../pages/NoteDetailPage/ContentEditor/ContentEditor";
 import { Avatar, Divider } from 'antd';
 import OPInfo from "../OPInfo/OPInfo";
@@ -33,9 +33,9 @@ const PageDetailContentTemplate = (props) => {
                                 >T</OPInfo>
                             </Col>
                             <Col id="contentTemplate__Header__middle" className="contentTemplate__Header__middle"span={props.hasComment?16:18}>
-                                <Title title={props.data?.title} size={props.hasComment?30:35}/></Col>
+                                <Title title={props.data?.title} size={props.hasComment?'30':'35'}/></Col>
                             <Col id="contentTemplate__Header__right" className="contentTemplate__Header__right contentTemplate__Dropdown" span={props.hasComment?1:2}>
-                                <div className="contentTemplate__Dropdown"><DropdownFunction comments={props.data? props.data.comments:[]} hasComment={props.hasComment}/></div>
+                                <div className="contentTemplate__Dropdown"><DropdownFunction comments={props.data?.comments? props.data.comments:[]} hasComment={props.hasComment}/></div>
                                 
                             </Col>
                         </Row>     
@@ -85,7 +85,7 @@ const PageDetailContentTemplate = (props) => {
                 {props.hasComment && 
                     <>
                         <Sider id="contentTemplate__Comment" className="contentTemplate__Comment" width='40%'>
-                            <Comment comments={props.data?.comments} />
+                            <SiderComment comments={props.data?.comments? props.data.comments:[]} />
                         </Sider>
                     </>
                 }
