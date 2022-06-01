@@ -192,7 +192,6 @@
 #contentTemplate__Comment{
     position:relative;
     background-color: #fff;
-    height: 100%;
 }
 
 .left-margin{
@@ -201,4 +200,9 @@
 
 .contentTemplate__Footer__Button{
     float: right;
+}
+
+
+.contentTemplate__Dropdown{
+    font-size: 30px;
 }

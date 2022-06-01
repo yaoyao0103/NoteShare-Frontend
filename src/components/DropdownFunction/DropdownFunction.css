@@ -1,0 +1,19 @@
+.ant-dropdown-menu-item{
+    font-size: 18px;
+    padding-left: 1em;
+    padding-right: 1em;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+}
+.ant-dropdown-menu-item-icon{
+    font-size: 20px;
+}
+
+.Comment__Input{
+    margin-bottom: 1.5em;
+}
+
+.Comment__Button{
+    float: right;
+    padding-right: 1.5em;
+}

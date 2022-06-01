@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Layout, Row, Col } from "antd";
+import { Layout, Row, Col, Tag } from "antd";
 import Button from "../Button/Button";
 import { EllipsisOutlined } from '@ant-design/icons';
 import Text from "../Text/Text";
@@ -10,11 +10,11 @@ import Comment from "../Comment/Comment";
 import ContentEditor from "../../pages/NoteDetailPage/ContentEditor/ContentEditor";
 import { Avatar, Divider } from 'antd';
 import OPInfo from "../OPInfo/OPInfo";
+import DropdownFunction from "../DropdownFunction/DropdownFunction";
 import './PageDetailContentTemplate.css'
 const { Header, Content, Sider, Footer } = Layout;
 
 const PageDetailContentTemplate = (props) => {
-
     return (
         
         <div id="contentTemplate" className="contentTemplate" >
@@ -34,7 +34,10 @@ const PageDetailContentTemplate = (props) => {
                             </Col>
                             <Col id="contentTemplate__Header__middle" className="contentTemplate__Header__middle"span={props.hasComment?17:18}>
                                 <Title title={props.data?.title} /></Col>
-                            <Col id="contentTemplate__Header__right" className="contentTemplate__Header__right" span={props.hasComment?1:2}><EllipsisOutlined style={{ fontSize: '30px' }} /></Col>
+                            <Col id="contentTemplate__Header__right" className="contentTemplate__Header__right contentTemplate__Dropdown" span={props.hasComment?1:2}>
+                                <div className="contentTemplate__Dropdown"><DropdownFunction comments={props.data? props.data.comments:[]} hasComment={props.hasComment}/></div>
+                                
+                            </Col>
                         </Row>     
                     </Header>
                     <Content id="contentTemplate__Content" className="contentTemplate__Content" >
@@ -63,10 +66,12 @@ const PageDetailContentTemplate = (props) => {
                         {props.hasTag &&
                             <>
                                 <Text color='black' cls='Default' content={"Tags:"} fontSize='22' display="inline-block" />
+                                <span className="left-margin"></span>
                                 {props.data?.tag && props.data.tag.map( (tag) =>
                                     <>
-                                        <span className="left-margin"></span>
-                                        <Text color='black' cls='Default' content={tag} fontSize='18' display="inline-block" />
+                                        {/* 
+                                        <Text color='black' cls='Default' content={tag} fontSize='18' display="inline-block" /> */}
+                                        <Tag style={{ fontSize:"15px" }}>{tag}</Tag>
                                     </>
                                 )}
                             </>
