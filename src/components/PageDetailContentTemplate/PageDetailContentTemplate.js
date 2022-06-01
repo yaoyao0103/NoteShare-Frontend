@@ -22,7 +22,7 @@ const PageDetailContentTemplate = (props) => {
                 <Layout id='contentTemplate__Layout' className="contentTemplate__Layout">
                     <Header id="contentTemplate__Header" className="contentTemplate__Header" >
                         <Row className="contentTemplate__Row">
-                            <Col id="contentTemplate__Header__left" className="contentTemplate__Header__left" span={props.hasComment?6:4}>
+                            <Col id="contentTemplate__Header__left" className="contentTemplate__Header__left" span={props.hasComment?7:4}>
                                 <OPInfo
                                     id="contentTemplate__Title__OPInfo" 
                                     className="contentTemplate__Title__OPInfo" 
@@ -32,8 +32,8 @@ const PageDetailContentTemplate = (props) => {
                                     dateFontSize="18"
                                 >T</OPInfo>
                             </Col>
-                            <Col id="contentTemplate__Header__middle" className="contentTemplate__Header__middle"span={props.hasComment?17:18}>
-                                <Title title={props.data?.title} /></Col>
+                            <Col id="contentTemplate__Header__middle" className="contentTemplate__Header__middle"span={props.hasComment?16:18}>
+                                <Title title={props.data?.title} size={props.hasComment?30:35}/></Col>
                             <Col id="contentTemplate__Header__right" className="contentTemplate__Header__right contentTemplate__Dropdown" span={props.hasComment?1:2}>
                                 <div className="contentTemplate__Dropdown"><DropdownFunction comments={props.data? props.data.comments:[]} hasComment={props.hasComment}/></div>
                                 
@@ -77,7 +77,7 @@ const PageDetailContentTemplate = (props) => {
                             </>
                         }
                         <div className="contentTemplate__Footer__Button">
-                            <Button color={"green"}><Text color='white' cls='Large' content={"Submit"} fontSize='20' display="inline-block" /></Button>
+                            <Button color={"green"}><Text color='white' cls='Large' content={"Submit"} fontSize='17' display="inline-block" /></Button>
                         </div>
                     </Footer>
                 </Layout>

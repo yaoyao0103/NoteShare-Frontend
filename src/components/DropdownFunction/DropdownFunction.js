@@ -114,7 +114,7 @@ const DropdownFunction = (props) => {
             <Comment
               actions={null}
               author={item.author}
-              avatar={<Avatar>T</Avatar>}
+              avatar={<Avatar src="https://joeschmoe.io/api/v1/random"></Avatar>}
               content={item.content}
               datetime={item.date}
             />
@@ -140,7 +140,7 @@ const DropdownFunction = (props) => {
               </Mentions>
           </div>
           <div className='Comment__Button' >
-              <Button color={"green"}><Text color='white' cls='Large' content={"Submit"} fontSize='20' display="inline-block" /></Button>
+              <Button color={"green"}><Text color='white' cls='Large' content={"Submit"} fontSize='17' display="inline-block" /></Button>
           </div>
       </Drawer>
     </>

@@ -1,8 +1,7 @@
 .button{
     border-radius: 7px;
     border: none;
-    height: 45px;
-    min-width: 100px;
+    height: 35px;
     font-weight: 600;
 }
 
@@ -16,8 +15,8 @@
 
 
 .button__span{
-    margin-left: 0.8em;
-    margin-right: 0.8em;
+    margin-left: 0.6em;
+    margin-right: 0.6em;
 }
 
 .btn-green{

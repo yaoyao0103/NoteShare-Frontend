@@ -2,7 +2,7 @@
 #navMenu{
     position: absolute;
     width: 3%;
-    left:60%;
+    left:50%;
     top:0;
     margin-top: 1%;
     margin-left:0.3%;
@@ -12,8 +12,8 @@
     position: relative;
     font-family: 'Poppins', sans-serif;
     font-weight: 600;
-    font-size: 18px;
-    width: 256px;
+    font-size: 15px;
+    width: 160px;
     color:black;
     border-style: none;
     background-color: white;
@@ -23,7 +23,7 @@
     position: relative;
     font-family: 'Poppins', sans-serif;
     font-weight: 600;
-    font-size: 18px;
+    font-size: 15px;
     width: 256px;
     color:black;
     border-style: none;

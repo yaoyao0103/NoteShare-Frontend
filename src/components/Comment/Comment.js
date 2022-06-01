@@ -78,7 +78,7 @@ function Comment(props) {
                     </Mentions>
                 </Col>
                 <Col className='Comment__Button' span={6}>
-                    <Button color={"green"}><Text color='white' cls='Large' content={"Submit"} fontSize='20' display="inline-block" /></Button>
+                    <Button color={"green"}><Text color='white' cls='Large' content={"Submit"} fontSize='17' display="inline-block" /></Button>
                 </Col>
                 
             </Row>

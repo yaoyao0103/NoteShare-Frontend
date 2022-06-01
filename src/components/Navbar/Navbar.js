@@ -15,7 +15,7 @@ function Navbar(props) {
       <NavButton currPage={props.currPage} changePage={(page) => props.changePage(page)} />
       <NavMenu />
       <div className="navbar__Button">
-        <Button color={"black"} icon={<UserOutlined />}><Text color='white' cls='Large' content={"Login"} fontSize='20' display="inline-block" /></Button>
+        <Button color={"black"} icon={<UserOutlined />}><Text color='white' cls='Large' content={"Login"} fontSize='15' display="inline-block" /></Button>
       </div>
       </div>
   );

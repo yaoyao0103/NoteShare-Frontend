@@ -42,8 +42,9 @@ function MainContent() {
                             top: '5px',
                         }}
                             size={48}
+                            src="https://joeschmoe.io/api/v1/random"
 
-                        >A</Avatar>
+                        ></Avatar>
                         <span style={{ position: 'relative', top: '10px', left: '5px' }}>
                             <Row style={{ display: "inline-block", position: 'relative', top: '10px', left: '10px' }}>
                                 <Col flex={2} style={{ position: 'relative', height: 30 }}><Text color='black' cls='Small' content='Allice' fontSize='20'></Text></Col>

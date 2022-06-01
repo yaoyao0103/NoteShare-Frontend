@@ -9,9 +9,8 @@ function QnADetailPage() {
     useEffect(() => {
         async function getQnAById() {
             try {
-                const response = await axios.get(`http://localhost:8080/post/62627205a942b76c5114dbf8`);
-                console.log(typeof (response.data.comments));
-                setQnA(response.data);
+                const temp = require('./QnAJson.json');
+                setQnA(temp);
             } catch (error) {
                 console.log(error.message);
                 setQnA(error.message);

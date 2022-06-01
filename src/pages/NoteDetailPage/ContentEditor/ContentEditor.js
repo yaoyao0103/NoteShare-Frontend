@@ -38,7 +38,7 @@ const ContentEditor = ( { noteId } ) => {
   return (
     
     <div className="App">
-      <div id = "editor-area" >
+      <div className = "content__Editor" >
         <div id="editor"></div>
       </div>
     </div>

@@ -37,9 +37,6 @@ const Editor = () => {
     setEditor(editor);
   }, [pageId, assets]);
 
-  function print_test(){
-  }
-
   return (
     
     <div className="App">
@@ -57,7 +54,6 @@ const Editor = () => {
         </div>
         <div className="main-content" id="main-content">
           <TopNav />
-          <input type="button" onClick={print_test} value = "test"></input>
           <div id="editor"></div>
           
         </div>

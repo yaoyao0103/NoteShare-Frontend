@@ -12,19 +12,19 @@
     position: relative;
     font-family: 'Poppins', sans-serif;
     font-weight: 600;
-    font-size: 18px;
+    font-size: 15px;
     color:black;
     border-style: none;
     background-color: white;
-    margin-right: 5%;
+    margin-right: 3%;
 }
 #navButton #button--active{
     position: relative;
     font-family: 'Poppins', sans-serif;
     font-weight: 600;
-    font-size: 18px;
+    font-size: 15px;
     color:#66e1c1;
     background-color: white;
     border-style: none;
-    margin-right: 5%;
+    margin-right: 3%;
 }
