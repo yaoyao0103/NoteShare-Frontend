@@ -7,19 +7,30 @@ function QnADetailPage() {
     const [QnA, setQnA] = useState([]);
 
     useEffect(() => {
+        // async function getQnAById() {
+        //     try {
+        //         const response = await axios.get(`http://localhost:8080/post/62627205a942b76c5114dbf8`);
+        //         console.log(typeof (response.data.comments));
+        //         setQnA(response.data);
+        //     } catch (error) {
+        //         console.log(error.message);
+        //         setQnA(error.message);
+
+
+        //     }
+        // }
+        // getQnAById();
         async function getQnAById() {
             try {
-                const response = await axios.get(`http://localhost:8080/post/62627205a942b76c5114dbf8`);
-                console.log(typeof (response.data.comments));
-                setQnA(response.data);
+              const temp = require('./QnAJson.json');
+            //   temp.author = temp.authorName[0];
+            //   temp.date = temp.version[0].date;
+              setQnA(temp);
             } catch (error) {
-                console.log(error.message);
-                setQnA(error.message);
-
-
+                console.log(error);
             }
-        }
-        getQnAById();
+          }
+          getQnAById();
     }, []);
 
     return (

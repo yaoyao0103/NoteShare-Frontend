@@ -1,0 +1,39 @@
+{
+    "id": "62627205a942b76c5114dbf8",
+    "type": "QA",
+    "email": [
+        "00853129@email.ntou.edu.tw"
+    ],
+    "author": "Ting",
+    "department": "Computer Science",
+    "subject": "Operating System",
+    "title": "Interrupt vs trap",
+    "content": "可以解釋硬體中斷跟軟體中斷嗎？霸脫",
+    "date": "2022-03-06T14:53:08.137+00:00",
+    "price": 20,
+    "comments": [
+        {
+            "id": {
+                "timestamp": 1650618885,
+                "date": "2022-04-22T09:14:45.000+00:00"
+            },
+            "author": "Ting",
+            "email": "00853129@email.ntou.edu.tw",
+            "content": "豪棒",
+            "likeCount": 0,
+            "liker": [],
+            "referenceNotesURL": [],
+            "floor": 0,
+            "date": "2022-03-06T14:53:08.137+00:00",
+            "reference": false,
+            "best": false
+        }
+    ],
+    "answers": [
+        "note1's id",
+        "note2's id",
+        "note3's id"
+    ],
+    "wantEnterUsersEmail": null,
+    "public": false
+}
