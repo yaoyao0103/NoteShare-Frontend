@@ -1,0 +1,23 @@
+.commentArea{
+    position: relative;
+    background-color: #fff;
+    width: 100%;
+    height:100%;
+}
+
+.commentArea .anticon{
+    float: left;
+    margin-top: 0.4em;
+}
+
+.commentArea__Button{
+    float: right;
+    padding-right: 1.5em;
+    margin-bottom: 1em;
+}
+
+.commentArea__Input{
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    margin-right: 1.5em;
+}

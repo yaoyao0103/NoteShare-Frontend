@@ -1,4 +1,4 @@
-#contentTemplate{
+.contentTemplate{
     position:relative;
     width: 90%;
     height: 100%; 
@@ -10,28 +10,18 @@
     /* overflow: scroll; */
 }
 
-#contentTemplate__Layout__outer{
+.contentTemplate__Layout__outer{
     height: 100%;
 }
 
-#contentTemplate__Layout{
+.contentTemplate__Layout{
     position:relative;
     width: 100%; 
     background-color: white;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
 }
-#contentTemplate__Content{
-    width: 100%;
-    padding-left: 8%;
-    padding-right: 8%;
-    position: relative;
-    height: 100%;
-    
-    background-color: white;
-    
-}
 
-#contentTemplate__Header{
+.contentTemplate__Header{
     background-color: #fff;
     width: 100%;
     height: 10%;
@@ -41,158 +31,58 @@
     margin-bottom: 2%;
 }
 
-#contentTemplate__Header__left{
+.contentTemplate__Header__left{
     height: 100%;
     margin-top: 1%;
 }
 
-#contentTemplate__Header__middle{
+.contentTemplate__Header__middle{
     height: 100%;
     padding-left: 3%;
 }
-#contentTemplate__Header__right{
+.contentTemplate__Header__right{
     height: 100%;
     text-align: right;
 }
 
-#contentTemplate__Title__Row__First{
-    display: inline-block; 
-    position: relative; 
-    margin:2%;
-    height:10%;
-    width:15%;
-}
-#contentTemplate__Title__Avatar{
-   
+.contentTemplate__Content{
+    width: 100%;
+    padding-left: 8%;
+    padding-right: 8%;
     position: relative;
-    background-color: #624c40;
-    vertical-align: top;
-    margin-top:2%;
-    margin-left:8%;
+    height: 100%;
+    
+    background-color: white;
+    
 }
-#contentTemplate__Title__Author{
-    position:relative;
-    width:100%;
-    height: 20%;
-    word-break: break-word;
-    vertical-align: top;
-    padding-top:2%;
-    padding-left: 4%;
-}
-#contentTemplate__Title__Date{
-    position: relative;
-    width:100%;
-    height: 20%;
-    display: inline-block;
-    word-break: break-word;
-    vertical-align: top;
-    padding-top:10%;
 
-}
-#contentTemplate__Title__Row__Sec{
-    display: inline-block; 
-    position: relative; 
-    vertical-align: top;
-    padding:2%;
-    height:10%;
-    width:55%;
-}
-#contentTemplate__Title__Title{
-    position: relative;
-    width:100%;
-    height: 30;
-    display: inline-block;
-    word-break: break-word;
-    vertical-align: top;
-    padding-top:2%;
-}
-#contentTemplate__Title__Row__Third{
-    display: inline-block; 
-    position: relative; 
-    vertical-align: top;
-    padding-top:4%;
-    height:10%;
-    width: 5%;
-}
 
 .contentTemplate__Content__Title{
     margin-top: 1%;
 }
 
-#contentTemplate__Content__Information{
+.contentTemplate__Content__Information{
     width: 100%;
     margin-top: 1em;
 }
 
-#contentTemplate__Content__Title{
+.contentTemplate__Content__Title{
     width: 100%;
 }
 
-#contentTemplate__Content__Main{
+.contentTemplate__Content__Main{
     width: 100%;
-}
-#contentTemplate__Sider{
-    background-color: white;
-    padding-right: 6%;
-}
-#contentTemplate__Comment__Title__Row{
-    position: relative;
-    width: 100%;
-    padding-top:3%;
-}
-#contentTemplate__Comment__Title{
-    position: relative;
-    text-align: center;
-    width: 100%; 
-}
-.contentTemplate__Comment__Block{
-    display: inline-block; 
-    position: relative; 
-    height: 15%;
-    width:100%;
-}
-#contentTemplate__Comment__Avatar{
-    position: relative;
-    background-color: #624c40;
-    vertical-align: top;
-    padding-left:3%;
-}
-#contentTemplate__Comment__Author__Row{
-    display: inline-block; 
-    position: relative; 
-    vertical-align: top;
-    height:60%;
-    width:20%;
-}
-#contentTemplate__Comment__Author{
-    position:relative;
-    width:100%;
-    height:30%;
-    word-break: break-word;
-    vertical-align: top;
-    padding-left: 6%;
-}
-#contentTemplate__Comment__Date{
-    position: relative;
-    width:100%;
-    height: 50%;
-    padding-left: 6%;
-    display: inline-block;
-    word-break: break-word;
-    vertical-align: top;
-    
+    font-size: large;
+    font-weight: 100;
 }
 
-#contentTemplate__Footer{
+
+.contentTemplate__Footer{
     background-color: #fff;
     padding-left: 8%;
     padding-right: 8%;
 }
 
-#contentTemplate__Comment{
-    position:relative;
-    background-color: #fff;
-}
 
 .left-margin{
     margin-left: 10px;

@@ -1,12 +1,17 @@
 .ant-dropdown-menu-item{
-    font-size: 18px;
+    font-size: 16px;
     padding-left: 1em;
     padding-right: 1em;
     padding-top: 0.5em;
     padding-bottom: 0.5em;
 }
 .ant-dropdown-menu-item-icon{
-    font-size: 20px;
+    font-size: 18px;
+}
+
+.ant-dropdown-trigger{
+    border: none;
+    font-size: 30px;
 }
 
 .Comment__Input{
@@ -19,7 +24,12 @@
     margin-bottom: 1em;
 }
 
-.ant-dropdown-trigger{
-    border: none;
-    font-size: 30px;
-}
+.comment-action {
+    padding-left: 8px;
+    cursor: 'auto';
+  }
+  
+  [class*='-col-rtl'] .comment-action {
+    padding-right: 8px;
+    padding-left: 0;
+  }

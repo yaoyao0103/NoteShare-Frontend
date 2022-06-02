@@ -27,7 +27,7 @@ function NavMenu(){
 
   return (
       <div id='navMenu'>
-        <Menu id='Menu'mode="inline"  items={items}/>
+        <Menu id='Menu'mode="inline" items={items}/>
       </div>
   );
 

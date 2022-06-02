@@ -1,27 +1,22 @@
-#information__Top{
+.information__top{
     width: auto;
     display: block;
     white-space: nowrap;
 }
-#information__School{
-    padding-right: 4%;
-    width: auto;
-    display: inline-block;
 
-}
-#information__Department{
-    padding-right: 4%;
-    width: auto;
-    display: inline-block;
-}
-#information__Subject{
+.information__School, .information__Department, .information__Subject, .information__Instructor, .information__Likes, .information__Favorite, .information__Unlock{
     padding-right: 4%;
     width: auto;
     display: inline-block;
 }
 
-#information__Instructor{
-    padding-right: 4%;
-    width: auto;
-    display: inline-block;
+
+.information__top__right{
+    float: right;
 }
+
+.information__top__info{
+    margin-left: 1em;
+    text-align: right;
+}
+

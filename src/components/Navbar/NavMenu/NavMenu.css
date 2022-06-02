@@ -19,15 +19,5 @@
     background-color: white;
     margin-right: 5%;
 }
-#navMenu #Menu:hover{
-    position: relative;
-    font-family: 'Poppins', sans-serif;
-    font-weight: 600;
-    font-size: 15px;
-    width: 256px;
-    color:black;
-    border-style: none;
-    background-color: white;
-    margin-right: 5%;
-}
+
 

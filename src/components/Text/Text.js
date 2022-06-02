@@ -2,8 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './Text.css';
 const Text= (props) => {
+    const fontColor = {
+        "green":"#1ADCAB",
+        "purple":"#8015E8",
+        "white":"#fff",
+        "black":"#000",
+        "dark-green":"#019858",
+        "red":"#AE0000"
+    }
     return (
-        <p className={`text${props.cls ? '__'+props.cls:''}`} style={{fontSize:props.fontSize+'px' ,color:props.color,display:props.display,textDecoration:props.decoration}}>{props.content}</p>
+        <p className={`text${props.cls ? '__'+props.cls:''}`} style={{fontSize:props.fontSize+'px' ,color:fontColor[props.color],display:props.display,textDecoration:props.decoration}}>{props.content}</p>
     )
 }
 //string to dom(content)

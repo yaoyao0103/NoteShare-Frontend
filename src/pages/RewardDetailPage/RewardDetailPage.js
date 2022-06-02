@@ -3,31 +3,28 @@ import axios from "axios";
 import PageDetailTemplate from "../../components/PageDetailTemplate/PageDetailTemplate"
 import PageDetailContentTemplate from '../../components/PageDetailContentTemplate/PageDetailContentTemplate';
 
-function QnADetailPage() {
-    const [QnA, setQnA] = useState([]);
-    const page = "QnADetailPage";
+function RewardDetailPage() {
+    const [reward, setReward] = useState([]);
+    const page = "RewardDetailPage";
 
     useEffect(() => {
-        async function getQnAById() {
+        async function getRewardById() {
             try {
-                const temp = require('./QnAJson.json');
-                setQnA(temp);
+                const temp = require('./RewardJson.json');
+                setReward(temp);
             } catch (error) {
                 console.log(error.message);
-                setQnA(error.message);
-
-
             }
         }
-        getQnAById();
+        getRewardById();
     }, []);
 
     return (
         <>
             <PageDetailTemplate page={page}>
-                <PageDetailContentTemplate page={page} data={QnA} hasEditor={false} hasComment={true}/>  
+                <PageDetailContentTemplate page={page} data={reward} hasEditor={false} hasComment={true} footerBtn={"Answer"}/>  
             </PageDetailTemplate>
         </>
     );
 }
-export default QnADetailPage;
+export default RewardDetailPage;

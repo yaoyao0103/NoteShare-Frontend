@@ -2,29 +2,41 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Layout, Row, Col, Tag } from "antd";
 import Button from "../Button/Button";
-import { EllipsisOutlined } from '@ant-design/icons';
 import Text from "../Text/Text";
 import Title from "../Title/Title";
 import Information from "../Information/Information";
-import SiderComment from "../SiderComment/SiderComment";
+import CommentArea from "../CommentArea/CommentArea";
 import ContentEditor from "../../pages/NoteDetailPage/ContentEditor/ContentEditor";
-import { Avatar, Divider } from 'antd';
 import OPInfo from "../OPInfo/OPInfo";
-import DropdownFunction from "../DropdownFunction/DropdownFunction";
+import OptionMenu from "../OptionMenu/OptionMenu";
 import './PageDetailContentTemplate.css'
 const { Header, Content, Sider, Footer } = Layout;
 
 const PageDetailContentTemplate = (props) => {
+
+    const [versionId, setVersionId] = useState(null);
+    
+    const setVersion = (index) => {
+        setVersionId(props.data?.version[index].id);
+        console.log("setVersion: " + versionId + "-" + index);
+    }
+
+    useEffect(()=>{
+        if(props.page == "NoteDetailPage"){
+            setVersionId(props.data?.version[0].id);
+        }
+    },[props])
+
     return (
         
-        <div id="contentTemplate" className="contentTemplate" >
-            <Layout id='contentTemplate__Layout__outer' className="contentTemplate__Layout__outer">
-                <Layout id='contentTemplate__Layout' className="contentTemplate__Layout">
-                    <Header id="contentTemplate__Header" className="contentTemplate__Header" >
+        <div className="contentTemplate" >
+            <Layout className="contentTemplate__Layout__outer">
+                <Layout className="contentTemplate__Layout">
+                    {/* Header */}
+                    <Header className="contentTemplate__Header" >
                         <Row className="contentTemplate__Row">
-                            <Col id="contentTemplate__Header__left" className="contentTemplate__Header__left" span={props.hasComment?7:4}>
+                            <Col className="contentTemplate__Header__left" span={props.hasComment?7:4}>
                                 <OPInfo
-                                    id="contentTemplate__Title__OPInfo" 
                                     className="contentTemplate__Title__OPInfo" 
                                     size={56}
                                     author={props.data?.author}
@@ -32,37 +44,57 @@ const PageDetailContentTemplate = (props) => {
                                     dateFontSize="18"
                                 >T</OPInfo>
                             </Col>
-                            <Col id="contentTemplate__Header__middle" className="contentTemplate__Header__middle"span={props.hasComment?16:18}>
+                            <Col className="contentTemplate__Header__middle"span={props.hasComment?16:18}>
                                 <Title title={props.data?.title} size={props.hasComment?'30':'35'}/></Col>
-                            <Col id="contentTemplate__Header__right" className="contentTemplate__Header__right contentTemplate__Dropdown" span={props.hasComment?1:2}>
-                                <div className="contentTemplate__Dropdown"><DropdownFunction comments={props.data?.comments? props.data.comments:[]} hasComment={props.hasComment}/></div>
+                            <Col className="contentTemplate__Header__right contentTemplate__Dropdown" span={props.hasComment?1:2}>
+                                <div className="contentTemplate__Dropdown">
+                                    <OptionMenu 
+                                        page={props.page}
+                                        comments={props.data?.comments? props.data.comments:[]} 
+                                        versions={props.data?.version? props.data.version:[]} 
+                                        hasComment={props.hasComment}
+                                        public={props.data?.public}
+                                        setVersion={setVersion}
+                                    /></div>
                                 
                             </Col>
                         </Row>     
                     </Header>
-                    <Content id="contentTemplate__Content" className="contentTemplate__Content" >
+                    {/* Content */}
+                    <Content className="contentTemplate__Content" >
                         <Row className='contentTemplate__Row'>
-                            <Col id='contentTemplate__Content__Information' className='contentTemplate__Content__Information' >
-                                <Information school={props.data?.school} department={props.data?.department} subject={props.data?.subject} instructor={props.data?.professor} likes={props.data?.likes} save={props.data?.save} download={props.data?.download} />
+                            <Col className='contentTemplate__Content__Information' >
+                                <Information 
+                                    school={props.data?.school}
+                                    department={props.data?.department}
+                                    subject={props.data?.subject}
+                                    instructor={props.data?.professor}
+                                    likeCount={props.data?.likeCount}
+                                    favoriteCount={props.data?.favoriteCount}
+                                    unlockCount={props.data?.unlockCount} 
+                                    price={props.data?.price}
+                                    downloadable={props.data?.downloadable}
+                                />
                             </Col>
                         </Row>
                         
                         <Row className='contentTemplate__Row'>
-                            <Col id='contentTemplate__Content__Title' className='contentTemplate__Content__Title' >
+                            <Col  className='contentTemplate__Content__Title' >
                                 <Text color='black' cls='Default' content={"Content:"} fontSize='22' display="inline-block" />
                             </Col>
                         </Row>
                         <Row className='contentTemplate__Row'>
-                            <Col id='contentTemplate__Content__Main' className='contentTemplate__Content__Main' >
+                            <Col className='contentTemplate__Content__Main'>
                                 { props.hasEditor? 
-                                    <ContentEditor noteId = {props.noteId}/>
+                                    <ContentEditor versionId = {versionId}/>
                                     :
-                                    <Text color='black' cls='Small' content={props.data?.content} fontSize='22' display="inline-block" />
+                                    props.data?.content
                                 }
                             </Col>
                         </Row>
                     </Content>
-                    <Footer id="contentTemplate__Footer" className="contentTemplate__Footer">
+                    {/* Footer */}
+                    <Footer className="contentTemplate__Footer">
                         {props.hasTag &&
                             <>
                                 <Text color='black' cls='Default' content={"Tags:"} fontSize='22' display="inline-block" />
@@ -76,16 +108,20 @@ const PageDetailContentTemplate = (props) => {
                                 )}
                             </>
                         }
-                        <div className="contentTemplate__Footer__Button">
-                            <Button color={"green"}><Text color='white' cls='Large' content={"Submit"} fontSize='17' display="inline-block" /></Button>
-                        </div>
+                        {props.footerBtn != null &&
+                            <div className="contentTemplate__Footer__Button">
+                                <Button color={"green"}><Text color='white' cls='Large' content={props.footerBtn} fontSize='17' display="inline-block" /></Button>
+                            </div>
+                        }
+                        
                     </Footer>
                 </Layout>
                 
+                {/* Sider */}
                 {props.hasComment && 
                     <>
                         <Sider id="contentTemplate__Comment" className="contentTemplate__Comment" width='40%'>
-                            <SiderComment comments={props.data?.comments? props.data.comments:[]} />
+                            <CommentArea page={props.page} comments={props.data?.comments? props.data.comments:[]} />
                         </Sider>
                     </>
                 }
@@ -100,7 +136,9 @@ PageDetailContentTemplate.defaultProps = {
     hasComment: false,
     hasEditor: false,
     hasTag: false,
-    noteId: '',
+    versionId: '',
+    page:'',
+    footerBtn: null,
 };
 
 export default PageDetailContentTemplate;

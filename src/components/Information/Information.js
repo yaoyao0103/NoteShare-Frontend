@@ -8,65 +8,68 @@ function Information(props) {
 
     return (
         <div id="information" className="information">
-            <Row id='information__Top' className='information__Top'>
+            <Row id='information__top' className='information__top'>
                 {props.school!='' && (
                     <Col id='information__School' className='information__School' >
                         <Text color='black' cls='Default' content={props.school} fontSize='17' display="inline-block" />
                     </Col>
                 )}
-                <Col id='information__Department' className='information__Departmentl'>
+                <Col className='information__Department'>
                     <Text color='black' cls='Default' content={props.department} fontSize='17' display="inline-block" />
                 </Col>
-                <Col id='information__Subject' className='information__Subject'>
+                <Col className='information__Subject'>
                     <Text color='black' cls='Default' content={props.subject} fontSize='17' display="inline-block" />
                 </Col>
                 {props.instructor &&(
-                    <Col id='information__Instructor' className='information__Instructor'>
+                    <Col className='information__Instructor'>
                         <Text color='black' cls='Default' content={props.instructor} fontSize='17' display="inline-block" />
                     </Col>
                 )}
+                <div className="information__top__right">
+                {props.downloadable!=null &&(
+                    <div className='information__Price information__top__info'>
+                        <Text color='black' cls='Default' content={"Downloadable"} fontSize='17' display="inline-block" />
+                    </div>
+                )}
+                {props.price!=null &&(
+                    <div className='information__Downloadable information__top__info'>
+                        <Text color='black' cls='Default' content={"Price: " + props.price} fontSize='17' display="inline-block" />
+                    </div>
+                )}
+                </div>
+                
+                
             </Row>
-            <Row id='information__Bottom' className='information__Bottom'>
-                {props.likes &&(
-                    <Col id='information__Likes' className='information__Likes'>
-                        <Text color='black' cls='Default' content={props.likes} fontSize='17' display="inline-block" />
+            <Row id='information__bottom' className='information__bottom'>
+                {props.likeCount &&(
+                    <Col className='information__Likes'>
+                        <Text color='black' cls='Default' content={"Likes: " + props.likeCount} fontSize='17' display="inline-block" />
                     </Col>
                 )}
-                {props.save &&(
-                    <Col id='information__Save' className='information__Save'>
-                        <Text color='black' cls='Default' content={props.save} fontSize='17' display="inline-block" />
+                {props.favoriteCount &&(
+                    <Col className='information__Favorite'>
+                        <Text color='black' cls='Default' content={"Save: " + props.favoriteCount} fontSize='17' display="inline-block" />
                     </Col>
                 )}
-                {props.download &&(
-                    <Col id='information__Download' className='information__Download'>
-                        <Text color='black' cls='Default' content={props.download} fontSize='17' display="inline-block" />
+                {props.unlockCount &&(
+                    <Col className='information__Unlock'>
+                        <Text color='black' cls='Default' content={"Unlock: " + props.unlockCount} fontSize='17' display="inline-block" />
                     </Col>
                 )}
             </Row>
         </div>
     );
 }
-Information.propTypes = {
-    school: PropTypes.string,
-    department: PropTypes.string,
-    subject: PropTypes.string,
-    instructor: PropTypes.string,
-    likes: PropTypes.number,
-    save: PropTypes.number,
-    download: PropTypes.number,
-    downloadable: PropTypes.bool,
-    coins: PropTypes.number,
 
-};
 Information.defaultProps = {
     school: '',
     department: 'Unknown',
     subject: 'Unknown',
-    instructor: null,
-    likes: null,
-    save: null,
-    download: null,
+    instructor: false,
+    likeCount: false,
+    favoriteCount: false,
+    unlockCount: false,
     downloadable: false,
-    coins: null,
+    price: false,
 };
 export default Information;

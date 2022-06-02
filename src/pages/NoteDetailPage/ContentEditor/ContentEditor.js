@@ -8,7 +8,7 @@ import TopNav from "../../../components/Page/TopNav";
 import "./ContentEditor.css";
 //import PageSection from "../Page/PageSection";
 
-const ContentEditor = ( { noteId } ) => {
+const ContentEditor = ( { versionId } ) => {
   const [editor, setEditor] = useState(null);
   const [assets, setAssets] = useState([]);
   const { pageStore } = useSelector((state) => state);
@@ -29,10 +29,10 @@ const ContentEditor = ( { noteId } ) => {
 
 
   useEffect(() => {
-    console.log("noteId", noteId)
-    const editor = geditorConfig(assets, noteId);
+    console.log("versionId", versionId)
+    const editor = geditorConfig(assets, versionId);
     setEditor(editor);
-  }, [noteId, assets]);
+  }, [versionId, assets]);
 
 
   return (

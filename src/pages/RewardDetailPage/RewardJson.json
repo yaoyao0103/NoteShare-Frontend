@@ -1,14 +1,14 @@
 {
     "id": "62627205a942b76c5114dbf8",
-    "type": "QA",
+    "type": "Reward",
     "email": [
         "00853129@email.ntou.edu.tw"
     ],
     "author": "Ting",
-    "department": "資訊工程學系",
-    "subject": "作業系統",
-    "title": "System Call",
-    "content": "What is a system call? How it is handled by an OS? OR Write a short note on system call.",
+    "department": "Computer Science",
+    "subject": "Operating System",
+    "title": "Interrupt vs trap",
+    "content": "可以解釋硬體中斷跟軟體中斷嗎？霸脫",
     "date": "2022-03-06T14:53:08.137+00:00",
     "price": 20,
     "comments": [
@@ -17,14 +17,14 @@
                 "timestamp": 1650618885,
                 "date": "2022-04-22T09:14:45.000+00:00"
             },
-            "author": "Alice",
+            "author": "Ting",
             "email": "00853129@email.ntou.edu.tw",
-            "content": "The interface between the operating system and the user programs is defined by the set of system calls that the operating system provides.",
-            "likeCount": 3,
+            "content": "豪棒",
+            "likeCount": 0,
             "liker": [],
             "referenceNotesURL": [],
             "floor": 0,
-            "date": "2019-12-06T14:53:08.137+00:00",
+            "date": "2022-03-06T14:53:08.137+00:00",
             "reference": false,
             "best": false
         },
@@ -33,10 +33,10 @@
                 "timestamp": 1650618885,
                 "date": "2022-05-22T09:14:45.000+00:00"
             },
-            "author": "Amy",
+            "author": "Plusx",
             "email": "00853129@email.ntou.edu.tw",
-            "content": "The system calls available in the interface vary from operating system to operating system.",
-            "likeCount": 1,
+            "content": "我也有相同問題，感恩",
+            "likeCount": 0,
             "liker": [],
             "referenceNotesURL": [],
             "floor": 1,
@@ -49,14 +49,14 @@
                 "timestamp": 1650618885,
                 "date": "2022-05-23T09:14:45.000+00:00"
             },
-            "author": "Bob",
+            "author": "酸民",
             "email": "00853129@email.ntou.edu.tw",
-            "content": "Any single-CPU computer can execute only one instruction at a time.",
-            "likeCount": 6,
+            "content": "沒有人會嗎?口憐",
+            "likeCount": 0,
             "liker": [],
             "referenceNotesURL": [],
             "floor": 3,
-            "date": "2020-01-19T14:53:08.137+00:00",
+            "date": "2022-03-10T14:53:08.137+00:00",
             "reference": false,
             "best": false
         },
@@ -65,30 +65,14 @@
                 "timestamp": 1650618885,
                 "date": "2022-05-24T09:14:45.000+00:00"
             },
-            "author": "John",
+            "author": "路人甲",
             "email": "00853129@email.ntou.edu.tw",
             "content": "早安~.~",
-            "likeCount": 5,
+            "likeCount": 0,
             "liker": [],
             "referenceNotesURL": [],
             "floor": 4,
-            "date": "2022-05-18T11:40:08.137+00:00",
-            "reference": false,
-            "best": false
-        },
-        {
-            "id": {
-                "timestamp": 1650618885,
-                "date": "2022-05-24T09:14:45.000+00:00"
-            },
-            "author": "Johnson",
-            "email": "00853129@email.ntou.edu.tw",
-            "content": "If a process is running a user program in user mode and needs a system service, such as reading data from a file, it has to execute a trap or system call instruction to transfer control to the operating system.",
-            "likeCount": 8,
-            "liker": [],
-            "referenceNotesURL": [],
-            "floor": 4,
-            "date": "2021-03-12T22:01:35.137+00:00",
+            "date": "2022-03-12T14:53:08.137+00:00",
             "reference": false,
             "best": false
         }
@@ -99,5 +83,5 @@
         "note3's id"
     ],
     "wantEnterUsersEmail": null,
-    "public": true
+    "public": false
 }
