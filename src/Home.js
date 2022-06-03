@@ -112,6 +112,9 @@ const Home = () => {
         <div>
         <Link to={'/RewardDetailPage'}>RewardDetailPage</Link>
         </div>
+        <div>
+        <Link to={'/QnAOutlinePage'}>QnAOutlinePage</Link>
+        </div>
       </div>
     </div>
   );

@@ -1,0 +1,42 @@
+.outlineContentTemplate{
+    position:relative;
+    width: 90%;
+    height: 100%; 
+    margin-top: 2%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 10%;
+    /* overflow: scroll; */
+}
+
+.outlineContentTemplate__Layout__Outer{
+  
+    position: relative;
+    height: 100%;
+}
+.outlineContentTemplate__Header{
+    position: relative;
+    background-color: #EFF1F4;
+    width: 100%;
+    height: 5%;
+    
+    
+    
+    margin-bottom: 2%;
+}
+.outlineContentTemplate__Header__Row{
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+.outlineContentTemplate__Header__RecommendSwitch{
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+.outlineContentTemplate__Header__FolderSwitch{
+    position: relative;
+    width: 100%;
+    height: 100%;
+}

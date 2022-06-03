@@ -8,6 +8,7 @@ import MemberPage from "./pages/MemberPage/MemberPage";
 import QnADetailPage from "./pages/QnADetailPage/QnADetailPage";
 import NoteDetailPage from "./pages/NoteDetailPage/NoteDetailPage";
 import RewardDetailPage from "./pages/RewardDetailPage/RewardDetailPage";
+import QnAOutlinePage from "./pages/QnAOutlinePage/QnAOutlinePage";
 
 function App() {
   const dispatch = useDispatch();
@@ -25,6 +26,7 @@ function App() {
         <Route exact path="/QnADetailPage" component={QnADetailPage}></Route>
         <Route exact path="/RewardDetailPage" component={RewardDetailPage}></Route>
         <Route exact path="/NoteDetailPage" component={NoteDetailPage}></Route>
+        <Route exact path="/QnAOutlinePage" component={QnAOutlinePage}></Route>
       </Switch>
     </Router>
   );
