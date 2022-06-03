@@ -5,6 +5,7 @@ import NavButton from "./NavButton/NavButton";
 import NavMenu from "./NavMenu/NavMenu";
 import Button from "../Button/Button";
 import Text from "../Text/Text";
+import SearchBar from "./SearchBar/SearchBar";
 import {
   UserOutlined,
 } from '@ant-design/icons';
@@ -14,6 +15,7 @@ function Navbar(props) {
       <Logo />
       <NavButton currPage={props.currPage} changePage={(page) => props.changePage(page)} />
       <NavMenu />
+      <SearchBar />
       <div className="navbar__Button">
         <Button color={"black"} icon={<UserOutlined />}><Text color='white' cls='Large' content={"Login"} fontSize='15' display="inline-block" /></Button>
       </div>

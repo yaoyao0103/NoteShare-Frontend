@@ -1,0 +1,13 @@
+.advanced__Option {
+    margin-bottom: 1em;
+}
+
+.advanced__Bottom{
+    width: 100%;
+}
+
+.advanced__Button{
+    margin-bottom: 1em;
+    margin-right: 1.5em;
+    float: right;
+}

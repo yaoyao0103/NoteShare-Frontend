@@ -1,0 +1,62 @@
+.navSearchBar{
+    position: absolute;
+    height: 2em;
+    width: 15%;
+    left: 65%;
+    top: 1.1em;
+    border: 0;
+    border-bottom:1px #999 solid;
+}
+
+.navSearchBar--selected{
+    transition: .5s;
+    border-bottom:1px #000 solid;
+}
+
+
+.navSearchBar__Input{
+    width: 80%;
+    height: 100%;
+    border: 0;
+}
+
+
+.navSearchBar__Input:focus{
+    outline: none;
+}
+
+.navSearchBar__Button{
+    width: 10%;
+}
+
+.navSearchBar__AdvancedSearch{
+    position: absolute;
+    background-color: #fff;
+    border: thin #eee solid;
+    top: 90%;
+    left: 60%;
+    margin-right: 2em;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s, opacity 0.2s linear;
+}
+
+.navSearchBar__AdvancedSearch--show{
+    visibility: visible;
+    opacity: 1;
+}
+
+.navSearchBar__AdvancedSearch--hidden{
+    visibility: visible;
+    opacity: 0;
+}
+
+.navSearchBar__AdvancedSearch__Tab{
+    padding-left: 2em;
+    padding-right: 0.3em;
+}
+
+.navSearchBar__AdvancedSearch__Tab__Items{
+    width: 100%;
+}
+
