@@ -8,14 +8,14 @@ body {
 
 html {
   height: 100vh;
-  overflow: scroll;
+  overflow: auto;
   overflow-x: hidden;
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
 
 ::-webkit-scrollbar {
-  // display: none;
+  //display: none;
 }
 
 /* This rule is applied to the link <a> tag. It lets you turn off the link underline and set the link text color. */

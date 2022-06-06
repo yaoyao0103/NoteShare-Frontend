@@ -25,7 +25,7 @@ function QnADetailPage() {
     return (
         <>
             <PageDetailTemplate page={page}>
-                <PageDetailContentTemplate page={page} data={QnA} hasEditor={false} hasComment={true}/>  
+                <PageDetailContentTemplate page={page} data={QnA} />  
             </PageDetailTemplate>
         </>
     );

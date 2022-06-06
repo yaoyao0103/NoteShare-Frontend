@@ -22,8 +22,8 @@ function RewardDetailPage() {
     return (
         <>
             <PageDetailTemplate page={page}>
-                <PageDetailContentTemplate page={page} data={reward} hasEditor={false} hasComment={true} footerBtn={"Answer"}/>  
-            </PageDetailTemplate>
+                <PageDetailContentTemplate page={page} data={reward} footerBtn={"Answer"}/>  
+            </PageDetailTemplate>   
         </>
     );
 }

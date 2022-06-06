@@ -10,11 +10,13 @@ import ContentEditor from "../../pages/NoteDetailPage/ContentEditor/ContentEdito
 import OPInfo from "../OPInfo/OPInfo";
 import OptionMenu from "../OptionMenu/OptionMenu";
 import './PageDetailContentTemplate.css'
+import RewardAnswer from "./RewardAnswer/RewardAnswer";
 const { Header, Content, Sider, Footer } = Layout;
 
 const PageDetailContentTemplate = (props) => {
 
     const [versionId, setVersionId] = useState(null);
+    const [answerShow, setAnswerShow] = useState(false);
     
     const setVersion = (index) => {
         setVersionId(props.data?.version[index].id);
@@ -25,7 +27,12 @@ const PageDetailContentTemplate = (props) => {
         if(props.page == "NoteDetailPage"){
             setVersionId(props.data?.version[0].id);
         }
+        else if(props.page == "CollabDetailPages" && props.isAuthor){
+            const noteId = props.data?.answer[0];
+            setVersionId(noteId[0].id);
+        }
     },[props])
+
 
     return (
         
@@ -35,7 +42,7 @@ const PageDetailContentTemplate = (props) => {
                     {/* Header */}
                     <Header className="contentTemplate__Header" >
                         <Row className="contentTemplate__Row">
-                            <Col className="contentTemplate__Header__left" span={props.hasComment?7:4}>
+                            <Col className="contentTemplate__Header__left" span={props.page!='NoteDetailPage'?7:4}>
                                 <OPInfo
                                     className="contentTemplate__Title__OPInfo" 
                                     size={56}
@@ -44,15 +51,14 @@ const PageDetailContentTemplate = (props) => {
                                     dateFontSize="18"
                                 >T</OPInfo>
                             </Col>
-                            <Col className="contentTemplate__Header__middle"span={props.hasComment?16:18}>
-                                <Title title={props.data?.title} size={props.hasComment?'30':'35'}/></Col>
-                            <Col className="contentTemplate__Header__right contentTemplate__Dropdown" span={props.hasComment?1:2}>
+                            <Col className="contentTemplate__Header__middle"span={props.page!='NoteDetailPage'?16:18}>
+                                <Title title={props.data?.title} size={props.page!='NoteDetailPage'?'30':'35'}/></Col>
+                            <Col className="contentTemplate__Header__right contentTemplate__Dropdown" span={props.page!='NoteDetailPage'?1:2}>
                                 <div className="contentTemplate__Dropdown">
                                     <OptionMenu 
                                         page={props.page}
                                         comments={props.data?.comments? props.data.comments:[]} 
                                         versions={props.data?.version? props.data.version:[]} 
-                                        hasComment={props.hasComment}
                                         public={props.data?.public}
                                         setVersion={setVersion}
                                     /></div>
@@ -85,7 +91,7 @@ const PageDetailContentTemplate = (props) => {
                         </Row>
                         <Row className='contentTemplate__Row'>
                             <Col className='contentTemplate__Content__Main'>
-                                { props.hasEditor? 
+                                { (props.page=='NoteDetailPage' || (props.page=='CollabDetailPage' && props.isAuthor)) ? 
                                     <ContentEditor versionId = {versionId}/>
                                     :
                                     props.data?.content
@@ -95,7 +101,7 @@ const PageDetailContentTemplate = (props) => {
                     </Content>
                     {/* Footer */}
                     <Footer className="contentTemplate__Footer">
-                        {props.hasTag &&
+                        {props.page=='NoteDetailPage' &&
                             <>
                                 <Text color='black' cls='Default' content={"Tags:"} fontSize='22' display="inline-block" />
                                 <span className="left-margin"></span>
@@ -108,24 +114,35 @@ const PageDetailContentTemplate = (props) => {
                                 )}
                             </>
                         }
-                        {props.footerBtn != null &&
-                            <div className="contentTemplate__Footer__Button">
-                                <Button color={"green"}><Text color='white' cls='Large' content={props.footerBtn} fontSize='17' display="inline-block" /></Button>
+                        {/* Todo: also check if he is an origin poster */}
+                        {props.page=='RewardDetailPage' &&
+                            <div className="contentTemplate__Footer__Button" onClick={() => setAnswerShow(true)}>
+                                <Button color={"green"}><Text color='white' cls='Large' content={"Show Answer"} fontSize='17' display="inline-block" /></Button>
                             </div>
+                        }
+                        {(props.page=='CollabDetailPage' && !props.isAuthor) &&
+                            <div className="contentTemplate__Footer__Button" onClick={null}>
+                            <Button color={"green"}><Text color='white' cls='Large' content={"Apply"} fontSize='17' display="inline-block" /></Button>
+                        </div>
                         }
                         
                     </Footer>
                 </Layout>
                 
                 {/* Sider */}
-                {props.hasComment && 
+                {props.page!='NoteDetailPage' && 
                     <>
                         <Sider id="contentTemplate__Comment" className="contentTemplate__Comment" width='40%'>
                             <CommentArea page={props.page} comments={props.data?.comments? props.data.comments:[]} />
                         </Sider>
                     </>
                 }
-            </Layout>
+            </Layout> 
+            {/* Answer Part */}
+            <div className={ answerShow && 'answers__blur'}></div>
+            <div className={`answers ${ answerShow && 'answers--show'}`} >
+                <RewardAnswer answer={props.data?.answers} setAnswerShow={setAnswerShow} />
+            </div>
         </div>
     );
 }
@@ -133,12 +150,10 @@ const PageDetailContentTemplate = (props) => {
 
 PageDetailContentTemplate.defaultProps = {
     data: null,
-    hasComment: false,
-    hasEditor: false,
-    hasTag: false,
     versionId: '',
     page:'',
     footerBtn: null,
+    isAuthor: false,
 };
 
 export default PageDetailContentTemplate;

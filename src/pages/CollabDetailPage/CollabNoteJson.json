@@ -9,8 +9,8 @@
     "department": "資訊工程學系",
     "subject": "機器學習",
     "professor": "鄭錫齊",
-    "title": "機器學習筆記",
-    "content": "機器學習到底在教啥，第一堂睡著後之後沒在聽過課了，有沒有整套筆記讓我補補，還有好幾個作業和限時兩周的個人專題要交欸哭",
+    "title": "機器學習-鄭錫齊 共筆",
+    "content": "機器學習到底在教啥，誰來一起和我做筆記",
     "date": "2022-03-06T14:53:08.137+00:00",
     "price": 100,
     "comments": [
@@ -96,8 +96,7 @@
         }
     ],
     "answers": [
-        "6262b61b3beec065d67999d0",
-        "6262b61b3beec065d67999d1"
+        "6262b61b3beec065d67999d0"
     ],
     "wantEnterUsersEmail": null,
     "public": false

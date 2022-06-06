@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./OptionMenu.css";
 import { Menu, Dropdown, Space, Drawer, message } from "antd";
-import { EditOutlined, CommentOutlined, ShareAltOutlined, InboxOutlined, DeleteOutlined, EyeOutlined, InfoCircleOutlined, UserOutlined } from "@ant-design/icons";
+import { EditOutlined, CommentOutlined, ShareAltOutlined, InboxOutlined, DeleteOutlined, EyeOutlined, InfoCircleOutlined, UserOutlined, LikeOutlined } from "@ant-design/icons";
 import VersionArea from "../VersionArea/VersionArea";
 import CommentArea from "../CommentArea/CommentArea";
 
@@ -58,7 +58,7 @@ const OptionMenu = (props) => {
     */
   }
 
-    const { setVersion } = props;
+    const { setVersion, setAnswer } = props;
 
     const versionEdit = (index) => {
         message.info("edit: "+ index);
@@ -66,6 +66,21 @@ const OptionMenu = (props) => {
     const versionBrowse = (index) => {
         message.info("browse: "+ index);
         setVersion(index);
+    }
+
+    const answerBrowse = (id) => {
+      message.info("browse: "+ id);
+      setAnswer(id);
+    }
+
+    const chooseBest = (id) => {
+      message.info("choose: "+ id + " best");
+      // Todo: connect choose best API
+    }
+
+    const chooseRef = (id) => {
+      message.info("choose: "+ id + " ref");
+      // Todo: connect choose ref API
     }
 
   const NoteDetailMenu = (
@@ -177,12 +192,33 @@ const OptionMenu = (props) => {
             icon: <EditOutlined />
         },
         {
-          label: props.versions[props.index]?.isTemp? (<a onClick={setStatus}>Set Private</a>): (<a onClick={setStatus}>Set Public</a>),
+          label: props.versions[props.index]?.isTemp? (<a >Set Private</a>): (<a >Set Public</a>),
           key: "3",
           icon: <DeleteOutlined />
         }]
     }/>
   );
+
+  const AnswerDetailMenu = (
+    <Menu items={
+      [
+        {
+            label: (<a onClick={()=>{ answerBrowse(props.id) }}>Browse</a>),
+            key: "1",
+            icon: <EyeOutlined />
+        },
+        {
+            label: (<a style={{color: "blue"}} onClick={()=>{ chooseBest(props.id) }}>Choose as the best</a>),
+            key: "2",
+            icon: <LikeOutlined style={{color: "blue"}}/>
+        },
+        {
+          label: (<a style={{color: "green"}} onClick={()=>{ chooseRef(props.id) }}>Choose as reference</a>),
+          key: "3",
+          icon: <LikeOutlined style={{color: "green"}}/>
+        },]
+    }/>
+  )
 
 
   useEffect(()=>{
@@ -192,6 +228,7 @@ const OptionMenu = (props) => {
       case 'QnADetailPage': setMenu( QnADetailMenu ); break;
       case 'RewardDetailPage': setMenu( RewardDetailMenu ); break;
       case 'NoteDetailPageVersion': setMenu( VersionDetailMenu ); break;
+      case 'RewardDetailPageAnswer': setMenu( AnswerDetailMenu ); break;
     }
   },[props])
 
@@ -222,10 +259,10 @@ const OptionMenu = (props) => {
 OptionMenu.defaultProps = {
   comments: [],
   versions: [],
-  hasComment: false,
   public: false,
   setVersion: ()=>{},
   index: 0,
+  id: '',
 };
 
 export default OptionMenu;

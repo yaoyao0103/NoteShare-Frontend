@@ -7,7 +7,6 @@
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 10%;
-    /* overflow: scroll; */
 }
 
 .contentTemplate__Layout__outer{
@@ -95,4 +94,34 @@
 
 .contentTemplate__Dropdown{
     font-size: 30px;
+}
+
+/* Reward Answer*/
+.answers__blur{
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #000;
+    height: 100vh;
+    width: 100vw;
+    opacity: 0.6;
+}
+
+.answers{
+    position: fixed;
+    top: 54%;
+    left: 50%;
+    /* bring your own prefixes */
+    transform: translate(-50%, -50%);
+    width: 90%;
+    height: 80%;
+    background-color: #fff;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s, opacity 0.3s linear;
+}
+
+.answers--show{
+    visibility: visible;
+    opacity: 1;
 }

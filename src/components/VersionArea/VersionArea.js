@@ -1,6 +1,5 @@
 import React from 'react';
 import { List, message } from 'antd';
-import Text from '../Text/Text';
 import OptionMenu from '../OptionMenu/OptionMenu';
 
 const VersionArea = (props) => {

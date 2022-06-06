@@ -36,7 +36,7 @@
     top: 90%;
     left: 60%;
     margin-right: 2em;
-    visibility: hidden;
+    visibility: collapse;
     opacity: 0;
     transition: visibility 0s, opacity 0.2s linear;
 }
@@ -47,7 +47,7 @@
 }
 
 .navSearchBar__AdvancedSearch--hidden{
-    visibility: visible;
+    visibility: collapse;
     opacity: 0;
 }
 

@@ -9,6 +9,8 @@ import QnADetailPage from "./pages/QnADetailPage/QnADetailPage";
 import NoteDetailPage from "./pages/NoteDetailPage/NoteDetailPage";
 import RewardDetailPage from "./pages/RewardDetailPage/RewardDetailPage";
 import QnAOutlinePage from "./pages/QnAOutlinePage/QnAOutlinePage";
+import CollabDetailPage from "./pages/CollabDetailPage/CollabDetailPage";
+import ScreenShotCapture from "./pages/ScreenShotCapture";
 
 function App() {
   const dispatch = useDispatch();
@@ -27,6 +29,8 @@ function App() {
         <Route exact path="/RewardDetailPage" component={RewardDetailPage}></Route>
         <Route exact path="/NoteDetailPage" component={NoteDetailPage}></Route>
         <Route exact path="/QnAOutlinePage" component={QnAOutlinePage}></Route>
+        <Route exact path="/CollabDetailPage" component={CollabDetailPage}></Route>
+        <Route exact path="/ScreenShotCapture" component={ScreenShotCapture}></Route>
       </Switch>
     </Router>
   );

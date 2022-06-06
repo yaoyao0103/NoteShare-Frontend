@@ -9,7 +9,7 @@ function Information(props) {
     return (
         <div id="information" className="information">
             <Row id='information__top' className='information__top'>
-                {props.school!='' && (
+                {props.school!=null && (
                     <Col id='information__School' className='information__School' >
                         <Text color='black' cls='Default' content={props.school} fontSize='17' display="inline-block" />
                     </Col>
@@ -20,7 +20,7 @@ function Information(props) {
                 <Col className='information__Subject'>
                     <Text color='black' cls='Default' content={props.subject} fontSize='17' display="inline-block" />
                 </Col>
-                {props.instructor &&(
+                {props.instructor!=null &&(
                     <Col className='information__Instructor'>
                         <Text color='black' cls='Default' content={props.instructor} fontSize='17' display="inline-block" />
                     </Col>
@@ -41,17 +41,17 @@ function Information(props) {
                 
             </Row>
             <Row id='information__bottom' className='information__bottom'>
-                {props.likeCount &&(
+                {props.likeCount!=null &&(
                     <Col className='information__Likes'>
                         <Text color='black' cls='Default' content={"Likes: " + props.likeCount} fontSize='17' display="inline-block" />
                     </Col>
                 )}
-                {props.favoriteCount &&(
+                {props.favoriteCount!=null &&(
                     <Col className='information__Favorite'>
                         <Text color='black' cls='Default' content={"Save: " + props.favoriteCount} fontSize='17' display="inline-block" />
                     </Col>
                 )}
-                {props.unlockCount &&(
+                {props.unlockCount!=null &&(
                     <Col className='information__Unlock'>
                         <Text color='black' cls='Default' content={"Unlock: " + props.unlockCount} fontSize='17' display="inline-block" />
                     </Col>
@@ -62,14 +62,14 @@ function Information(props) {
 }
 
 Information.defaultProps = {
-    school: '',
+    school: null,
     department: 'Unknown',
     subject: 'Unknown',
-    instructor: false,
-    likeCount: false,
-    favoriteCount: false,
-    unlockCount: false,
-    downloadable: false,
-    price: false,
+    instructor: null,
+    likeCount: null,
+    favoriteCount: null,
+    unlockCount: null,
+    downloadable: null,
+    price: null,
 };
 export default Information;

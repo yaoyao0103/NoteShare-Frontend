@@ -4,14 +4,13 @@ import PageDetailContentTemplate from '../../components/PageDetailContentTemplat
 function NoteDetailPage(){
     const [ note, setNote ] = useState();
     const noteId = "6262b61b3beec065d67999d0";
-    const page = "NoteDetailPage";
+    const page = "CollabDetailPage";
+    const [ isAuthor, setIsAuthor ] = useState(false);
     
     useEffect(() => {
         async function getNoteById() {
           try {
-            const temp = require('./NoteJson.json');
-            temp.author = temp.headerName;
-            temp.date = temp.version[0].date;
+            const temp = require('./CollabNoteJson.json');
             setNote(temp);
           } catch (error) {
               console.log(error);
@@ -22,7 +21,12 @@ function NoteDetailPage(){
     return(
         <>
             <PageDetailTemplate page={page}>
-                <PageDetailContentTemplate page={page} data={note} />
+                {isAuthor?
+                    <PageDetailContentTemplate page={page} data={note} isAuthor={true}/>
+                    :
+                    <PageDetailContentTemplate page={page} data={note} isAuthor={false}/>
+                }
+                
             </PageDetailTemplate>
         </>
         

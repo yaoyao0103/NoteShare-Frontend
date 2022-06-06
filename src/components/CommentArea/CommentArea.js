@@ -33,7 +33,6 @@ function CommentArea(props) {
         '@': [...new Set([...nameArray])],
         '#': ['1.0', '2.0', '3.0'],
         });
-        console.log(tag);
         
     },[props])
     
@@ -165,7 +164,7 @@ function CommentArea(props) {
                 
             </div>
             <div className='commentArea__Button' onClick={onSubmit} >
-                <Button color={"green"} ><Text color='white' cls='Large' content={"Submit"} fontSize='17' display="inline-block" /></Button>
+                <Button color={"purple"} ><Text color='white' cls='Large' content={"Submit"} fontSize='17' display="inline-block" /></Button>
             </div>
         </div>
     );
