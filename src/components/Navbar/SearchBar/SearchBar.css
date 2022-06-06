@@ -42,11 +42,13 @@
 }
 
 .navSearchBar__AdvancedSearch--show{
+    display: block;
     visibility: visible;
     opacity: 1;
 }
 
 .navSearchBar__AdvancedSearch--hidden{
+    display: none;
     visibility: visible;
     opacity: 0;
 }

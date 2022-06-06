@@ -6,14 +6,15 @@ import './QnAOutlinePage.css';
 import { Layout } from "antd";
 const { Header, Content, Footer } = Layout;
 function QnAOutlinePage() {
-    const [Page, setPage] = useState('QnAoutlinePage');
+    const [Page, setPage] = useState('QnAOutlinePage');
     useEffect(() => {
+        setPage('QnAOutlinePage');
         console.log(Page)
     }, [Page])
     return (
         <>
             <PageOutlineTemplate page={Page}>
-                <PageOutlineContentTemplate  />
+                <PageOutlineContentTemplate page={Page} hasSwitch={true}/>
             </PageOutlineTemplate>
 
         </>
