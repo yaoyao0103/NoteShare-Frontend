@@ -70,7 +70,7 @@ function OutlineCard(props) {
             <Sider className={"OutlineCard__Sider__Outer" + '__' + props.mode} width='35%'>
                 <Row className={"OutlineCard__Sider__First__Row" + '__' + props.mode}>
                     <Col className={"OutlineCard__Sider__First__Row" + '__' + props.mode}>
-                        <Text cls='Default' fontSize="16" Content='資訊工程學系' />
+                        <Text cls='Default' fontSize="16" content='資訊工程學系' />
                     </Col>
 
                 </Row>
