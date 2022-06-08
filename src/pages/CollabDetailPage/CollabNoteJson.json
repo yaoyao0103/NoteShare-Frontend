@@ -98,6 +98,10 @@
     "answers": [
         "6262b61b3beec065d67999d0"
     ],
-    "wantEnterUsersEmail": null,
+    "wantEnterUsersEmail": [
+        "user1@gmail.com",
+        "user2@gmail.com",
+        "user3@gmail.com"
+    ],
     "public": false
 }

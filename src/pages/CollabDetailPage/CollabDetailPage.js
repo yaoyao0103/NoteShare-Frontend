@@ -6,27 +6,23 @@ function NoteDetailPage(){
     const noteId = "6262b61b3beec065d67999d0";
     const page = "CollabDetailPage";
     const [ isAuthor, setIsAuthor ] = useState(false);
+    const [ isManager, setIsManager ] = useState(false);
     
     useEffect(() => {
-        async function getNoteById() {
-          try {
+        async function getCollabById() {
+            try {
             const temp = require('./CollabNoteJson.json');
             setNote(temp);
-          } catch (error) {
-              console.log(error);
-          }
+            } catch (error) {
+                console.log(error);
+            }
         }
-        getNoteById();
-      }, [note]);
+        getCollabById();
+        }, []);
     return(
         <>
             <PageDetailTemplate page={page}>
-                {isAuthor?
-                    <PageDetailContentTemplate page={page} data={note} isAuthor={true}/>
-                    :
-                    <PageDetailContentTemplate page={page} data={note} isAuthor={false}/>
-                }
-                
+                <PageDetailContentTemplate page={page} data={note} isAuthor={isAuthor} isManager={isManager}/>
             </PageDetailTemplate>
         </>
         

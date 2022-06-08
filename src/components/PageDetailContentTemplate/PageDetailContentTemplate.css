@@ -96,8 +96,8 @@
     font-size: 30px;
 }
 
-/* Reward Answer*/
-.answers__blur{
+/* Reward Popped*/
+.popped__blur{
     position: fixed;
     top: 0;
     left: 0;
@@ -105,9 +105,10 @@
     height: 100vh;
     width: 100vw;
     opacity: 0.6;
+    z-index: 29;
 }
 
-.answers{
+.popped{
     position: fixed;
     top: 54%;
     left: 50%;
@@ -118,10 +119,11 @@
     background-color: #fff;
     visibility: hidden;
     opacity: 0;
+    z-index: 30;
     transition: visibility 0s, opacity 0.3s linear;
 }
 
-.answers--show{
+.popped--show{
     visibility: visible;
     opacity: 1;
 }

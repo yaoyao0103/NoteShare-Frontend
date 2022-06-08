@@ -1,0 +1,84 @@
+.poppedContent {
+    width: 100%;
+    height: 100%;
+}
+
+.poppedContent__Layout__outer{
+    position: relative;
+    background-color: #fff;
+    height: 100%;
+}
+.poppedContent__Layout{
+    background-color: #fff;
+    height: 100%;
+}
+.poppedContent__Header{
+    background-color: #fff;
+}
+.poppedContent__Content{
+    position: relative;
+    padding-left: 2em;
+    padding-right: 2em;
+    height: 100%;
+    background-color: #fff;
+    overflow-y: auto;
+}
+
+.poppedContent__Sider{
+    position: relative;
+    background-color: #fff;
+    height: 100%;
+    overflow-y: auto;
+}
+
+.poppedContent__Sider .answerAuthor{
+    overflow: hidden;
+}
+
+
+.poppedContent__Sider .ant-list-item-action{
+    margin: 0;
+}
+
+
+.screenCapture{
+    position: relative;
+    top: 0;
+    left: 0;
+    height: 10%;
+    width: 10%;
+    z-index: 1;
+    opacity: 1;
+}
+
+.screenCapture--startCapture{
+    height: 100%;
+    width: 100%;
+    z-index: 99;
+    opacity: 1;
+}
+
+
+.screenCapture__Button{
+    position: fixed;
+    height: 300px;
+    width: 300px;
+    bottom: 60px;
+    right: 0px;
+    z-index: 99;
+}
+
+.screenCapture__Button1{
+    position: fixed;
+    height: 300px;
+    width: 300px;
+    bottom: 0px;
+    right: 0px;
+    z-index: 99;
+}
+
+.apply__Button{
+    position: relative;
+    margin-top: 1em;
+    float: right
+}

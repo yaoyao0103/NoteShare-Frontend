@@ -10,29 +10,33 @@ import ContentEditor from "../../pages/NoteDetailPage/ContentEditor/ContentEdito
 import OPInfo from "../OPInfo/OPInfo";
 import OptionMenu from "../OptionMenu/OptionMenu";
 import './PageDetailContentTemplate.css'
-import RewardAnswer from "./RewardAnswer/RewardAnswer";
+import PoppedContent from "./PoppedContent/PoppedContent";
 const { Header, Content, Sider, Footer } = Layout;
 
 const PageDetailContentTemplate = (props) => {
 
     const [versionId, setVersionId] = useState(null);
-    const [answerShow, setAnswerShow] = useState(false);
+    const [poppedContentShow, setPoppedContentShow] = useState(false);
+    const [poppedContent, setPoppedContent] = useState([]);
+    
+    useEffect(()=>{
+        if(props.page == "NoteDetailPage"){
+            setVersionId(props.data?.version[0].id);
+        }
+        else if(props.page == "CollabDetailPage" && props.isAuthor && props.data){
+            const noteId = props.data.answers[0];
+            setVersionId(noteId);
+            if(props.isManager) setPoppedContent( props.data.wantEnterUsersEmail );
+        }
+        else if(props.page == "RewardDetailPage"){
+            setPoppedContent( props.data.answers );
+        }
+    },[props.data])
     
     const setVersion = (index) => {
         setVersionId(props.data?.version[index].id);
         console.log("setVersion: " + versionId + "-" + index);
     }
-
-    useEffect(()=>{
-        if(props.page == "NoteDetailPage"){
-            setVersionId(props.data?.version[0].id);
-        }
-        else if(props.page == "CollabDetailPages" && props.isAuthor){
-            const noteId = props.data?.answer[0];
-            setVersionId(noteId[0].id);
-        }
-    },[props])
-
 
     return (
         
@@ -61,6 +65,9 @@ const PageDetailContentTemplate = (props) => {
                                         versions={props.data?.version? props.data.version:[]} 
                                         public={props.data?.public}
                                         setVersion={setVersion}
+                                        isAuthor={props.isAuthor}
+                                        isManager={props.isManager}
+                                        setPoppedContentShow={setPoppedContentShow}
                                     /></div>
                                 
                             </Col>
@@ -116,21 +123,26 @@ const PageDetailContentTemplate = (props) => {
                         }
                         {/* Todo: also check if he is an origin poster */}
                         {props.page=='RewardDetailPage' &&
-                            <div className="contentTemplate__Footer__Button" onClick={() => setAnswerShow(true)}>
+                            <div className="contentTemplate__Footer__Button" onClick={() => setPoppedContentShow(true)}>
                                 <Button color={"green"}><Text color='white' cls='Large' content={"Show Answer"} fontSize='17' display="inline-block" /></Button>
                             </div>
                         }
                         {(props.page=='CollabDetailPage' && !props.isAuthor) &&
+                            <div className="contentTemplate__Footer__Button" onClick={() => setPoppedContentShow(true)}>
+                                <Button color={"green"}><Text color='white' cls='Large' content={"Apply"} fontSize='17' display="inline-block" /></Button>
+                            </div>
+                        }
+                        {(props.page=='CollabDetailPage' && props.isAuthor) &&
                             <div className="contentTemplate__Footer__Button" onClick={null}>
-                            <Button color={"green"}><Text color='white' cls='Large' content={"Apply"} fontSize='17' display="inline-block" /></Button>
-                        </div>
+                                <Button color={"green"}><Text color='white' cls='Large' content={"Edit"} fontSize='17' display="inline-block" /></Button>
+                            </div>
                         }
                         
                     </Footer>
                 </Layout>
                 
                 {/* Sider */}
-                {props.page!='NoteDetailPage' && 
+                {(props.page!='NoteDetailPage' && props.page!='CollabDetailPage') && 
                     <>
                         <Sider id="contentTemplate__Comment" className="contentTemplate__Comment" width='40%'>
                             <CommentArea page={props.page} comments={props.data?.comments? props.data.comments:[]} />
@@ -138,10 +150,10 @@ const PageDetailContentTemplate = (props) => {
                     </>
                 }
             </Layout> 
-            {/* Answer Part */}
-            <div className={ answerShow && 'answers__blur'}></div>
-            <div className={`answers ${ answerShow && 'answers--show'}`} >
-                <RewardAnswer answer={props.data?.answers} setAnswerShow={setAnswerShow} />
+            {/* Popped up Part */}
+            <div className={ poppedContentShow && 'popped__blur'}></div>
+            <div className={`popped ${ poppedContentShow && 'popped--show'}`} >
+                <PoppedContent page={props.page} content={poppedContent} setPoppedContentShow={setPoppedContentShow} isAuthor={props.isAuthor}/>
             </div>
         </div>
     );

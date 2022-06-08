@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import "./OptionMenu.css";
 import { Menu, Dropdown, Space, Drawer, message } from "antd";
-import { EditOutlined, CommentOutlined, ShareAltOutlined, InboxOutlined, DeleteOutlined, EyeOutlined, InfoCircleOutlined, UserOutlined, LikeOutlined } from "@ant-design/icons";
+import { EditOutlined, CommentOutlined, CheckOutlined, CloseOutlined, ShareAltOutlined, InboxOutlined, DeleteOutlined, EyeOutlined, InfoCircleOutlined, UserOutlined, LikeOutlined } from "@ant-design/icons";
 import VersionArea from "../VersionArea/VersionArea";
 import CommentArea from "../CommentArea/CommentArea";
+import ContentEditor from "../../pages/NoteDetailPage/ContentEditor/ContentEditor";
 
 const OptionMenu = (props) => {
   const [visible, setVisible] = useState(false);
@@ -58,7 +59,7 @@ const OptionMenu = (props) => {
     */
   }
 
-    const { setVersion, setAnswer } = props;
+    const { setVersion, setContent, setPoppedContentShow } = props;
 
     const versionEdit = (index) => {
         message.info("edit: "+ index);
@@ -68,9 +69,9 @@ const OptionMenu = (props) => {
         setVersion(index);
     }
 
-    const answerBrowse = (id) => {
+    const contentBrowse = (id) => {
       message.info("browse: "+ id);
-      setAnswer(id);
+      setContent(<ContentEditor versionId = {id}/>)
     }
 
     const chooseBest = (id) => {
@@ -80,6 +81,16 @@ const OptionMenu = (props) => {
 
     const chooseRef = (id) => {
       message.info("choose: "+ id + " ref");
+      // Todo: connect choose ref API
+    }
+
+    const agreeApplier = (id) => {
+      message.info("agree applier: "+ id);
+      // Todo: connect choose best API
+    }
+
+    const rejectApplier = (id) => {
+      message.info("reject applier: "+ id);
       // Todo: connect choose ref API
     }
 
@@ -178,6 +189,104 @@ const OptionMenu = (props) => {
     }/>
   );
 
+  const CollabDetailMenu = (
+    <Menu items={
+      [
+        {
+          label: (<a onClick=
+            {() => {
+              setDrawerType('Comment');
+              showDrawer();
+            }}
+            >Comment</a>),
+          key: "1",
+          icon: <CommentOutlined />
+        },
+        {
+            label: "Share",
+            key: "2",
+            icon: <ShareAltOutlined />
+        }]
+    }/>
+  );
+
+  const CollabDetailMenuOfAuthor = (
+    <Menu items={
+      [
+        
+        {
+          label: (<a onClick=
+            {() => {
+              //setDrawerType('Version');
+              showDrawer();
+            }}
+            >Manage Version</a>),
+            key: "1",
+            icon: <InfoCircleOutlined />
+        },
+        {
+          label: (<a onClick=
+            {() => {
+              setDrawerType('Comment');
+              showDrawer();
+            }}
+            >Comment</a>),
+          key: "2",
+          icon: <CommentOutlined />
+        },
+        {
+            label: "Share",
+            key: "3",
+            icon: <ShareAltOutlined />
+        }]
+    }/>
+  );
+
+  const CollabDetailMenuOfManager = (
+    <Menu items={
+      [
+        {
+          label: (<a onClick=
+            {() => {
+              setPoppedContentShow(true);
+            }}
+            >Manage Applier</a>),
+            key: "1",
+            icon: <InfoCircleOutlined />
+        },
+        {
+          label: (<a onClick=
+            {() => {
+              //setDrawerType('Version');
+              showDrawer();
+            }}
+            >Manage Version</a>),
+            key: "2",
+            icon: <InfoCircleOutlined />
+        },
+        {
+          label: (<a onClick=
+            {() => {
+              setDrawerType('Comment');
+              showDrawer();
+            }}
+            >Comment</a>),
+          key: "3",
+          icon: <CommentOutlined />
+        },
+        {
+            label: "Share",
+            key: "4",
+            icon: <ShareAltOutlined />
+        },
+        {
+          label: (<a onClick={deletePost}>Delete</a>),
+          key: "5",
+          icon: <DeleteOutlined />
+        }]
+    }/>
+  );
+
   const VersionDetailMenu = (
     <Menu items={
       [
@@ -203,7 +312,7 @@ const OptionMenu = (props) => {
     <Menu items={
       [
         {
-            label: (<a onClick={()=>{ answerBrowse(props.id) }}>Browse</a>),
+            label: (<a onClick={()=>{ contentBrowse(props.id) }}>Browse</a>),
             key: "1",
             icon: <EyeOutlined />
         },
@@ -218,6 +327,27 @@ const OptionMenu = (props) => {
           icon: <LikeOutlined style={{color: "green"}}/>
         },]
     }/>
+  );
+
+  const ApplierDetailMenu = (
+    <Menu items={
+      [
+        {
+            label: (<a onClick={()=>{ contentBrowse(props.id) }}>Browse</a>),
+            key: "1",
+            icon: <EyeOutlined />
+        },
+        {
+            label: (<a style={{color: "green"}} onClick={()=>{ agreeApplier(props.id) }}>Agree</a>),
+            key: "2",
+            icon: <CheckOutlined style={{color: "green"}}/>
+        },
+        {
+          label: (<a style={{color: "red"}} onClick={()=>{ rejectApplier(props.id) }}>Reject</a>),
+          key: "3",
+          icon: <CloseOutlined style={{color: "red"}}/>
+        },]
+    }/>
   )
 
 
@@ -229,6 +359,14 @@ const OptionMenu = (props) => {
       case 'RewardDetailPage': setMenu( RewardDetailMenu ); break;
       case 'NoteDetailPageVersion': setMenu( VersionDetailMenu ); break;
       case 'RewardDetailPageAnswer': setMenu( AnswerDetailMenu ); break;
+      case 'CollabDetailPageApplier': setMenu( ApplierDetailMenu ); break;
+      case 'CollabDetailPage': 
+        if(props.isAuthor){
+          if(props.isManager) setMenu( CollabDetailMenuOfManager ); 
+          else setMenu( CollabDetailMenuOfAuthor ); 
+        }
+        else setMenu( CollabDetailMenu ); 
+        break;
     }
   },[props])
 
