@@ -351,6 +351,7 @@ const OptionMenu = (props) => {
   )
 
 
+
   useEffect(()=>{
     // set menu
     switch(props.page){
@@ -367,6 +368,8 @@ const OptionMenu = (props) => {
         }
         else setMenu( CollabDetailMenu ); 
         break;
+      // case 'QnAOutlinePage': setMenu( QnAOutlineMenu ); break;
+
     }
   },[props])
 

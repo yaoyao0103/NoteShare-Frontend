@@ -31,7 +31,7 @@ Text.defaultProps = {
     content: '',
     color:'black',
     fontSize:'30',
-    cls:'general',
+    cls:'Default',
     display:'inline-block',
     decoration:'none',
     //fontfamily:"",

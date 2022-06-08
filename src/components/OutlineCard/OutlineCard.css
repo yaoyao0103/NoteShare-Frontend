@@ -1,0 +1,90 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;600&display=swap');
+.OutlineCard__Layout__Outer__Post{
+    position:relative;
+    height: 20em;
+    width: 45%;
+    max-width: 45%;
+    background-color: #fff;
+    margin:2.5%;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+   
+    
+}
+.OutlineCard__Layout__Outer__Post:hover{
+    position:relative;
+    height: 20em;
+    width:45%;
+    background-color: #fff;
+    transform: scale(1.1);
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+   
+    
+}
+.OutlineCard__Content__Outer__Post{
+    position: relative;
+    height: 100%;
+    width: 100%;
+   
+    background-color: #FFF;
+  
+}
+.OutlineCard__Layout__Inner__Post{
+    position:relative;
+    height:100%;
+    width: 100%;
+    background-color: #FFF;
+    /* display: inline-block; */
+}
+.OutlineCard__Header__Post{
+    position:relative;
+    height: 25%;
+    width: 100%;
+    background-color: #FFF;
+    margin: 0;
+    padding: 0;
+  
+}
+.OutlineCard__Header__Row__Post{
+    position:relative;
+    height:100%;
+    width: 100%;
+    background-color: #FFF;
+   
+  
+}
+.OutlineCard__OPInfo{
+    position:relative;
+    width: 100%;
+    
+}
+.OutlineCard__Header__Left__Post{
+    
+}
+.OutlineCard__Header__Right__Post{
+    position: relative;
+    padding: 0;
+}
+.OutlineCard__Content__Inner__Post{
+    position: relative;
+ 
+    margin-left:10%;
+    margin-right:3%;
+}
+.OutlineCard__Paragraph__Post{
+    position: relative;
+    font-size: 18px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 200;
+}
+.OutlineCard__Sider__Outer__Post{
+    position: relative;
+    height: 100%;
+    
+    background-color: #FFF; 
+}
+.OutlineCard__Sider__First__Row__Post,.OutlineCard__Sider__Sec__Row__Post,.OutlineCard__Sider__Third__Row__Post,.OutlineCard__Sider__Fourth__Row__Post{
+    position: relative;
+    padding-top:8%;
+    padding-left: 5%;
+}
+

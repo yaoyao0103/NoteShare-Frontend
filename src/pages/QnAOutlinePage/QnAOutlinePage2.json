@@ -1,0 +1,375 @@
+{
+    "additionalProp1": [
+      {
+        "id": "123121121231312123112",
+        "type": "QA",
+        "email": [
+          "00857030@email.ntou.edu.tw"
+        ],
+        "author": "Allen",
+        "department": "資訊工程學系",
+        "subject": "作業系統",
+        "school": "國立台灣海洋大學",
+        "professor": "蔡國輝",
+        "title": "Interrupt",
+        "content": "可以解釋一下Interrupt的優缺點嗎",
+        "date": "2022-06-06T09:40:49.796Z",
+        "bestPrice": 300,
+        "hasBestAns":true,
+        "comments": [
+          { "id": "1",
+            "author": "Charlie",
+            "email": "a123456789@email.ntou.edu.tw",
+            "content": "Interrupt牛逼",
+            "likeCount": 0,
+            "floor": 0,
+            "date": "2022-06-06T09:40:49.796Z",
+            "best": false
+          },
+          {
+            "id": "3",
+            "author": "路人甲",
+            "email": "a123456789@email.ntou.edu.tw",
+            "content": "早安阿各位",
+            "likeCount": 0,
+            "floor": 1,
+            "date": "2022-06-06T09:40:49.796Z",
+            "best": false
+          },
+          { 
+            "id": "4",
+            "author": "天才",
+            "email": "a123456789@email.ntou.edu.tw",
+            "content": "Interrupt讚讚",
+            "likeCount":10,
+            "floor": 2,
+            "date": "2022-06-06T09:40:49.796Z",
+            "best": false
+          }
+        ],
+        "answer":[
+        ],
+        "commentCount": 3,
+        "publishDate": "2022-06-06T09:40:49.796Z",
+        "public": true
+      },
+      {
+        "id": "123121121231312123112",
+        "type": "QA",
+        "email": [
+          "00857030@email.ntou.edu.tw"
+        ],
+        "author": "Allen",
+        "department": "資訊工程學系",
+        "subject": "作業系統",
+        "school": "國立台灣海洋大學",
+        "professor": "蔡國輝",
+        "title": "Interrupt",
+        "content": "可以解釋一下Interrupt的優缺點嗎",
+        "date": "2022-06-06T09:40:49.796Z",
+        "bestPrice": 300,
+        "hasBestAns":true,
+        "comments": [
+          { "id": "1",
+            "author": "Charlie",
+            "email": "a123456789@email.ntou.edu.tw",
+            "content": "Interrupt牛逼",
+            "likeCount": 0,
+            "floor": 0,
+            "date": "2022-06-06T09:40:49.796Z",
+            "best": false
+          },
+          {
+            "id": "3",
+            "author": "路人甲",
+            "email": "a123456789@email.ntou.edu.tw",
+            "content": "早安阿各位",
+            "likeCount": 0,
+            "floor": 1,
+            "date": "2022-06-06T09:40:49.796Z",
+            "best": false
+          },
+          { 
+            "id": "4",
+            "author": "天才",
+            "email": "a123456789@email.ntou.edu.tw",
+            "content": "Interrupt讚讚",
+            "likeCount":10,
+            "floor": 2,
+            "date": "2022-06-06T09:40:49.796Z",
+            "best": false
+          }
+        ],
+        "answer":[
+        ],
+        "commentCount": 3,
+        "publishDate": "2022-06-06T09:40:49.796Z",
+        "public": true
+      },
+      {
+        "id": "123121121231312123112",
+        "type": "QA",
+        "email": [
+          "00857030@email.ntou.edu.tw"
+        ],
+        "author": "Allen",
+        "department": "資訊工程學系",
+        "subject": "作業系統",
+        "school": "國立台灣海洋大學",
+        "professor": "蔡國輝",
+        "title": "Interrupt",
+        "content": "可以解釋一下Interrupt的優缺點嗎",
+        "date": "2022-06-06T09:40:49.796Z",
+        "bestPrice": 300,
+        "hasBestAns":true,
+        "comments": [
+          { "id": "1",
+            "author": "Charlie",
+            "email": "a123456789@email.ntou.edu.tw",
+            "content": "Interrupt牛逼",
+            "likeCount": 0,
+            "floor": 0,
+            "date": "2022-06-06T09:40:49.796Z",
+            "best": false
+          },
+          {
+            "id": "3",
+            "author": "路人甲",
+            "email": "a123456789@email.ntou.edu.tw",
+            "content": "早安阿各位",
+            "likeCount": 0,
+            "floor": 1,
+            "date": "2022-06-06T09:40:49.796Z",
+            "best": false
+          },
+          { 
+            "id": "4",
+            "author": "天才",
+            "email": "a123456789@email.ntou.edu.tw",
+            "content": "Interrupt讚讚",
+            "likeCount":10,
+            "floor": 2,
+            "date": "2022-06-06T09:40:49.796Z",
+            "best": false
+          }
+        ],
+        "answer":[
+        ],
+        "commentCount": 3,
+        "publishDate": "2022-06-06T09:40:49.796Z",
+        "public": true
+      },
+      {
+        "id": "123121121231312123112",
+        "type": "QA",
+        "email": [
+          "00857030@email.ntou.edu.tw"
+        ],
+        "author": "Allen",
+        "department": "資訊工程學系",
+        "subject": "作業系統",
+        "school": "國立台灣海洋大學",
+        "professor": "蔡國輝",
+        "title": "Interrupt",
+        "content": "可以解釋一下Interrupt的優缺點嗎",
+        "date": "2022-06-06T09:40:49.796Z",
+        "bestPrice": 300,
+        "hasBestAns":true,
+        "comments": [
+          { "id": "1",
+            "author": "Charlie",
+            "email": "a123456789@email.ntou.edu.tw",
+            "content": "Interrupt牛逼",
+            "likeCount": 0,
+            "floor": 0,
+            "date": "2022-06-06T09:40:49.796Z",
+            "best": false
+          },
+          {
+            "id": "3",
+            "author": "路人甲",
+            "email": "a123456789@email.ntou.edu.tw",
+            "content": "早安阿各位",
+            "likeCount": 0,
+            "floor": 1,
+            "date": "2022-06-06T09:40:49.796Z",
+            "best": false
+          },
+          { 
+            "id": "4",
+            "author": "天才",
+            "email": "a123456789@email.ntou.edu.tw",
+            "content": "Interrupt讚讚",
+            "likeCount":10,
+            "floor": 2,
+            "date": "2022-06-06T09:40:49.796Z",
+            "best": false
+          }
+        ],
+        "answer":[
+        ],
+        "commentCount": 3,
+        "publishDate": "2022-06-06T09:40:49.796Z",
+        "public": true
+      },
+      {
+        "id": "123121121231312123112",
+        "type": "QA",
+        "email": [
+          "00857030@email.ntou.edu.tw"
+        ],
+        "author": "Allen",
+        "department": "資訊工程學系",
+        "subject": "作業系統",
+        "school": "國立台灣海洋大學",
+        "professor": "蔡國輝",
+        "title": "Interrupt",
+        "content": "可以解釋一下Interrupt的優缺點嗎",
+        "date": "2022-06-06T09:40:49.796Z",
+        "bestPrice": 300,
+        "hasBestAns":true,
+        "comments": [
+          { "id": "1",
+            "author": "Charlie",
+            "email": "a123456789@email.ntou.edu.tw",
+            "content": "Interrupt牛逼",
+            "likeCount": 0,
+            "floor": 0,
+            "date": "2022-06-06T09:40:49.796Z",
+            "best": false
+          },
+          {
+            "id": "3",
+            "author": "路人甲",
+            "email": "a123456789@email.ntou.edu.tw",
+            "content": "早安阿各位",
+            "likeCount": 0,
+            "floor": 1,
+            "date": "2022-06-06T09:40:49.796Z",
+            "best": false
+          },
+          { 
+            "id": "4",
+            "author": "天才",
+            "email": "a123456789@email.ntou.edu.tw",
+            "content": "Interrupt讚讚",
+            "likeCount":10,
+            "floor": 2,
+            "date": "2022-06-06T09:40:49.796Z",
+            "best": false
+          }
+        ],
+        "answer":[
+        ],
+        "commentCount": 3,
+        "publishDate": "2022-06-06T09:40:49.796Z",
+        "public": true
+      },
+      {
+        "id": "123121121231312123112",
+        "type": "QA",
+        "email": [
+          "00857030@email.ntou.edu.tw"
+        ],
+        "author": "Allen",
+        "department": "資訊工程學系",
+        "subject": "作業系統",
+        "school": "國立台灣海洋大學",
+        "professor": "蔡國輝",
+        "title": "Interrupt",
+        "content": "可以解釋一下Interrupt的優缺點嗎",
+        "date": "2022-06-06T09:40:49.796Z",
+        "bestPrice": 300,
+        "hasBestAns":true,
+        "comments": [
+          { "id": "1",
+            "author": "Charlie",
+            "email": "a123456789@email.ntou.edu.tw",
+            "content": "Interrupt牛逼",
+            "likeCount": 0,
+            "floor": 0,
+            "date": "2022-06-06T09:40:49.796Z",
+            "best": false
+          },
+          {
+            "id": "3",
+            "author": "路人甲",
+            "email": "a123456789@email.ntou.edu.tw",
+            "content": "早安阿各位",
+            "likeCount": 0,
+            "floor": 1,
+            "date": "2022-06-06T09:40:49.796Z",
+            "best": false
+          },
+          { 
+            "id": "4",
+            "author": "天才",
+            "email": "a123456789@email.ntou.edu.tw",
+            "content": "Interrupt讚讚",
+            "likeCount":10,
+            "floor": 2,
+            "date": "2022-06-06T09:40:49.796Z",
+            "best": false
+          }
+        ],
+        "answer":[
+        ],
+        "commentCount": 3,
+        "publishDate": "2022-06-06T09:40:49.796Z",
+        "public": true
+      },
+      {
+        "id": "123121121231312123112",
+        "type": "QA",
+        "email": [
+          "00857030@email.ntou.edu.tw"
+        ],
+        "author": "Allen",
+        "department": "資訊工程學系",
+        "subject": "作業系統",
+        "school": "國立台灣海洋大學",
+        "professor": "蔡國輝",
+        "title": "Interrupt",
+        "content": "可以解釋一下Interrupt的優缺點嗎",
+        "date": "2022-06-06T09:40:49.796Z",
+        "bestPrice": 300,
+        "hasBestAns":true,
+        "comments": [
+          { "id": "1",
+            "author": "Charlie",
+            "email": "a123456789@email.ntou.edu.tw",
+            "content": "Interrupt牛逼",
+            "likeCount": 0,
+            "floor": 0,
+            "date": "2022-06-06T09:40:49.796Z",
+            "best": false
+          },
+          {
+            "id": "3",
+            "author": "路人甲",
+            "email": "a123456789@email.ntou.edu.tw",
+            "content": "早安阿各位",
+            "likeCount": 0,
+            "floor": 1,
+            "date": "2022-06-06T09:40:49.796Z",
+            "best": false
+          },
+          { 
+            "id": "4",
+            "author": "天才",
+            "email": "a123456789@email.ntou.edu.tw",
+            "content": "Interrupt讚讚",
+            "likeCount":10,
+            "floor": 2,
+            "date": "2022-06-06T09:40:49.796Z",
+            "best": false
+          }
+        ],
+        "answer":[
+        ],
+        "commentCount": 3,
+        "publishDate": "2022-06-06T09:40:49.796Z",
+        "public": true
+      }
+    ]
+  }

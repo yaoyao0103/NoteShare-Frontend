@@ -11,9 +11,9 @@ const OPInfo = (props) => {
                 <Col className={"OPInfo__left"+'__'+props.mode}>
                     <Avatar className={"OPInfo__Avatar"+'__'+props.mode} size={props.size} src="https://joeschmoe.io/api/v1/random"></Avatar>
                 </Col>
-                <Col id={"OPInfo__right"+'__'+props.mode} className='OPInfo__right'>
-                    <Row id={'OPInfo__Author'+'__'+props.mode} className='OPInfo__Author' ><Text color='black' cls='Default' content={props.author} fontSize={props.authorFontSize}></Text></Row>
-                    <Row id={'OPInfo__Date'+'__'+props.mode} className='OPInfo__Date' ><Text color='black' cls='Small' content={props.date.split('T')[0]} fontSize={props.dateFontSize} display="inline-block" /></Row>
+                <Col id={"OPInfo__right"+'__'+props.mode} className={"OPInfo__right"+'__'+props.mode} >
+                    <Row id={'OPInfo__Author'+'__'+props.mode} className={'OPInfo__Author'+'__'+props.mode}><Text color='black' cls='Default' content={props.author} fontSize={props.authorFontSize}></Text></Row>
+                    <Row id={'OPInfo__Date'+'__'+props.mode} className={'OPInfo__Date'+'__'+props.mode} ><Text color='black' cls='Small' content={props.date.split('T')[0]} fontSize={props.dateFontSize} display="inline-block" /></Row>
                 </Col>
             </Row>
             

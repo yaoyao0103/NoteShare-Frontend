@@ -8,7 +8,8 @@ body {
 
 html {
   height: 100vh;
-  overflow: auto;
+  overflow: scroll;
+  background-color: #EFF1F4;
   overflow-x: hidden;
   -ms-overflow-style: none;
   scrollbar-width: none;
