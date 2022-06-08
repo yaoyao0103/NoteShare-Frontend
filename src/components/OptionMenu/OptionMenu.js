@@ -183,7 +183,7 @@ const OptionMenu = (props) => {
         }]
     }/>
   );
-
+    
 
   useEffect(()=>{
     // set menu
@@ -192,6 +192,7 @@ const OptionMenu = (props) => {
       case 'QnADetailPage': setMenu( QnADetailMenu ); break;
       case 'RewardDetailPage': setMenu( RewardDetailMenu ); break;
       case 'NoteDetailPageVersion': setMenu( VersionDetailMenu ); break;
+      // case 'QnAOutlinePage': setMenu( QnAOutlineMenu ); break;
     }
   },[props])
 

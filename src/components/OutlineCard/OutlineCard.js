@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Layout, Row, Col, Typography } from "antd";
 import { message } from "antd";
 import { EllipsisOutlined } from '@ant-design/icons';
@@ -11,6 +11,49 @@ const { Paragraph } = Typography;
 const { Header, Content, Sider, Footer } = Layout;
 function OutlineCard(props) {
     const [ellipsis, setEllipsis] = useState(true);
+    const [silder,setSider] = useState(
+        <Sider className={"OutlineCard__Sider__Outer" + '__' + props.mode} width='35%' ></Sider>
+    );
+    const QnASider = (
+        < Sider className={"OutlineCard__Sider__Outer" + '__' + props.mode} width='35%' >
+            <Row className={"OutlineCard__Sider__First__Row" + '__' + props.mode}>
+                <Col className={"OutlineCard__Sider__Department" + '__' + props.mode} span={20}>
+                    <Text cls='Default' fontSize="16" content={props.cardContent.department} />
+                </Col>
+            </Row>
+            <Row className={"OutlineCard__Sider__Sec__Row" + '__' + props.mode}>
+                <Col className={"OutlineCard__Sider__Subject" + '__' + props.mode} span={20}>
+                    <Text cls='Default' fontSize="16" content={props.cardContent.subject} />
+                </Col>
+            </Row>
+            <Row className={"OutlineCard__Sider__Third__Row" + '__' + props.mode}>
+                <Col className={"OutlineCard__Sider__CommentCount" + '__' + props.mode} span={20}>
+                    <Text cls='Default' fontSize="16" content={'留言數 : '+props.cardContent.comments.length} />
+                </Col>
+            </Row>
+            {props.cardContent.answer.length !== 0 &&
+                <Row className={"OutlineCard__Sider__Fourth__Row" + '__' + props.mode}>
+                    <Col className={"OutlineCard__Sider__HasBestAns" + '__' + props.mode} span={20}>
+                        <Text cls='Default' fontSize="16" content='已解答' />
+                    </Col>
+                </Row>
+            }
+            {props.cardContent.answer.length === 0 &&
+                <Row className={"OutlineCard__Sider__Fourth__Row" + '__' + props.mode}>
+                    <Col className={"OutlineCard__Sider__Price" + '__' + props.mode} span={20}>
+                        <Text cls='Default' fontSize="16" content={'最高賞金 : '+props.cardContent.bestPrice} />
+                    </Col>
+                </Row>
+            }
+        </Sider >
+    );
+    useEffect(()=>{
+        // set menu
+        switch(props.page){
+          case 'QnAOutlinePage': setSider( QnASider ); break;
+        }
+        console.log(props.cardContent.answer);
+      },[props])
     return (
         <Layout className={"OutlineCard__Layout__Outer" + '__' + props.mode}>
             <Content className={"OutlineCard__Content__Outer" + '__' + props.mode}>
@@ -22,14 +65,14 @@ function OutlineCard(props) {
                                     className="OutlineCard__OPInfo"
                                     mode="Outline"
                                     size={32}
-                                    author={'Allen'}
-                                    date={'2022-01-06'}
+                                    author={props.cardContent.author}
+                                    date={props.cardContent.date}
                                     authorFontSize='16'
                                     dateFontSize="12"
                                 />
                             </Col>
                             <Col className={"OutlineCard__Header__Right" + '__' + props.mode} span={14}>
-                                <Title mode='Outline' title={'Interrupt Vs Trap'} size={26} />
+                                <Title mode='Outline' title={props.cardContent.title} size={26} />
                             </Col>
                         </Row>
                     </Header>
@@ -50,35 +93,12 @@ function OutlineCard(props) {
                                     : false
                             }
                         >
-                            {/* <Text cls='Small' fontSize="18" content=" Ant Design, a design language for background applications, is refined by Ant UED Team. Ant
-                            Design, a design language for background applications, is refined by Ant UED Team. Ant
-                            Design, a design language for background applications, is refined by Ant UED Team. Ant
-                            Design, a design language for background applications, is refined by Ant UED Team. Ant
-                            Design, a design language for background applications, is refined by Ant UED Team. Ant
-                            Design, a design language for background applications, is refined by Ant UED Team." display="block"/> */}
-
-                            Ant Design, a design language for background applications, is refined by Ant UED Team. Ant
-                            Design, a design language for background applications, is refined by Ant UED Team. Ant
-                            Design, a design language for background applications, is refined by Ant UED Team. Ant
-                            Design, a design language for background applications, is refined by Ant UED Team. Ant
-                            Design, a design language for background applications, is refined by Ant UED Team. Ant
-                            Design, a design language for background applications, is refined by Ant UED Team.
+                            {props.cardContent.content}
                         </Paragraph>
                     </Content>
                 </Layout>
             </Content>
-            <Sider className={"OutlineCard__Sider__Outer" + '__' + props.mode} width='35%'>
-                <Row className={"OutlineCard__Sider__First__Row" + '__' + props.mode}>
-                    <Col className={"OutlineCard__Sider__First__Row" + '__' + props.mode}>
-                        <Text cls='Default' fontSize="16" content='資訊工程學系' />
-                    </Col>
-
-                </Row>
-            </Sider>
-            {/* <div className={"OutlineCard__Sider__Outer" + '__' + props.mode}>
-
-            </div> */}
-
+            {silder}
         </Layout>
     );
 }
