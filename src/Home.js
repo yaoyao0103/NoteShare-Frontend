@@ -127,6 +127,15 @@ const Home = () => {
         <div>
         <Link to={'/ScreenShotCapture'}>ScreenShotCapture</Link>
         </div>
+        <div>
+        <Link to={'/NewQnAPage'}>NewQnAPage</Link>
+        </div>
+        <div>
+        <Link to={'/NewRewardPage'}>NewRewardPage</Link>
+        </div>
+        <div>
+        <Link to={'/NewCollabPage'}>NewCollabPage</Link>
+        </div>
       </div>
     </div>
   );

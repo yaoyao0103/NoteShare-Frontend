@@ -31,7 +31,7 @@ export const Collab = ({ setCondition }) => {
 
     return(
         <>
-<Input type="text" placeholder='keyword' className="advanced__Item" onChange={(ev) => setTempCondition({...tempCondition, keyword: ev.target.value})} value={tempCondition.keyword}/>
+            <Input type="text" placeholder='keyword' className="advanced__Item" onChange={(ev) => setTempCondition({...tempCondition, keyword: ev.target.value})} value={tempCondition.keyword}/>
             <Input type="text" placeholder='school' className="advanced__Item" onChange={(ev) => setTempCondition({...tempCondition, school: ev.target.value})} value={tempCondition.school}/>
             <Input type="text" placeholder='subject' className="advanced__Item" onChange={(ev) => setTempCondition({...tempCondition, subject: ev.target.value})} value={tempCondition.subject}/>
             <Input type="text" placeholder='department' className="advanced__Item" onChange={(ev) => setTempCondition({...tempCondition, department: ev.target.value})} value={tempCondition.department}/>

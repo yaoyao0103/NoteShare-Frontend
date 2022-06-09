@@ -1,0 +1,30 @@
+.detailNotice__Layout{
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+
+.detailNotice__Header{
+    background-color: #fff;
+    height: 25%;
+    padding: 0;
+}
+
+.detailNotice__Header p{
+    float: left;
+    margin: 0;
+    margin-right: 0.5em;
+}
+
+.detailNotice__Header .anticon{
+    position: relative;
+    float: right;
+}
+
+.detailNotice__Content{
+    background-color: #fff;
+}
+
+.detailNotice__Sider{
+    background-color: #fff;
+}

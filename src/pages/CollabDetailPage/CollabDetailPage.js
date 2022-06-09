@@ -5,8 +5,8 @@ function NoteDetailPage(){
     const [ note, setNote ] = useState();
     const noteId = "6262b61b3beec065d67999d0";
     const page = "CollabDetailPage";
-    const [ isAuthor, setIsAuthor ] = useState(false);
-    const [ isManager, setIsManager ] = useState(true);
+    const [ isAuthor, setIsAuthor ] = useState(true);
+    const [ isManager, setIsManager ] = useState(false);
     
     useEffect(() => {
         async function getCollabById() {
@@ -22,7 +22,7 @@ function NoteDetailPage(){
     return(
         <>
             <PageDetailTemplate page={page}>
-                <PageDetailContentTemplate page={page} data={note} isAuthor={isAuthor} isManager={isManager}/>
+                <PageDetailContentTemplate page={page} data={note} isAuthor={isAuthor} isManager={isManager} voting={true}/>
             </PageDetailTemplate>
         </>
         

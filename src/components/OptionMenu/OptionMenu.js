@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import "./OptionMenu.css";
-import { Menu, Dropdown, Space, Drawer, message } from "antd";
-import { EditOutlined, CommentOutlined, CheckOutlined, CloseOutlined, ShareAltOutlined, InboxOutlined, DeleteOutlined, EyeOutlined, InfoCircleOutlined, UserOutlined, LikeOutlined } from "@ant-design/icons";
+import { Menu, Dropdown, Space, Drawer, message, Input, Tooltip, Button } from "antd";
+import { CopyOutlined , EditOutlined, CommentOutlined, CheckOutlined, CloseOutlined, ShareAltOutlined, InboxOutlined, DeleteOutlined, EyeOutlined, InfoCircleOutlined, UserOutlined, LikeOutlined } from "@ant-design/icons";
 import VersionArea from "../VersionArea/VersionArea";
 import CommentArea from "../CommentArea/CommentArea";
 import ContentEditor from "../../pages/NoteDetailPage/ContentEditor/ContentEditor";
+import Text from "../Text/Text";
 
 const OptionMenu = (props) => {
   const [visible, setVisible] = useState(false);
@@ -134,38 +135,40 @@ const OptionMenu = (props) => {
         },
       ]
     }/>
-  );
-
+    );
+    
   const QnADetailMenu = (
-    <Menu items={
-      [
-        {
-            label: "Edit",
-            key: "1",
-            icon: <EditOutlined />
-        },
-        {
-            label: "Share",
-            key: "2",
-            icon: <ShareAltOutlined />
-        },
-        {
-          label: (<a onClick={archive}>Archive</a>),
-          key: "3",
-          icon: <InboxOutlined />
-        },
-        {
-          label: (<a onClick={deletePost}>Delete</a>),
-          key: "4",
-          icon: <DeleteOutlined />
-        },
-        {
-          label: props.public? (<a onClick={setStatus}>Set Private</a>): (<a onClick={setStatus}>Set Public</a>),
-          key: "5",
-          icon: <UserOutlined />
-        },
-      ]
-    }/>
+      <Menu items={
+        [
+          {
+              label: "Edit",
+              key: "1",
+              icon: <EditOutlined />
+          },
+          {
+              label: "Share",
+              key: "2",
+              icon: <ShareAltOutlined />
+          },
+          {
+            label: (<a onClick={archive}>Archive</a>),
+            key: "3",
+            icon: <InboxOutlined />
+          },
+          {
+            label: (<a onClick={deletePost}>Delete</a>),
+            key: "4",
+            icon: <DeleteOutlined />
+          },
+          {
+            label: props.public? (<a onClick={setStatus}>Set Private</a>): (<a onClick={setStatus}>Set Public</a>),
+            key: "5",
+            icon: <UserOutlined style={{color: "#333"}}/>
+          },
+          
+
+        ]
+      }/>
   );
 
   const RewardDetailMenu = (
@@ -213,46 +216,22 @@ const OptionMenu = (props) => {
   const CollabDetailMenuOfAuthor = (
     <Menu items={
       [
-        
         {
-          label: (<a onClick=
-            {() => {
-              //setDrawerType('Version');
-              showDrawer();
-            }}
-            >Manage Version</a>),
-            key: "1",
-            icon: <InfoCircleOutlined />
-        },
-        {
-          label: (<a onClick=
-            {() => {
-              setDrawerType('Comment');
-              showDrawer();
-            }}
-            >Comment</a>),
-          key: "2",
-          icon: <CommentOutlined />
-        },
-        {
-            label: "Share",
-            key: "3",
-            icon: <ShareAltOutlined />
-        }]
-    }/>
-  );
-
-  const CollabDetailMenuOfManager = (
-    <Menu items={
-      [
-        {
-          label: (<a onClick=
-            {() => {
-              setPoppedContentShow(true);
-            }}
-            >Manage Applier</a>),
-            key: "1",
-            icon: <InfoCircleOutlined />
+          label:(
+          <>
+            <Text className="detailNotice__Header__Title" color='black' cls='Small' content={"Invite Link"} fontSize='12' />
+            <Input.Group compact>
+            <Input
+              style={{ width: '80%' }}
+              defaultValue="git@github.com:ant-design/ant-design.git"
+            />
+            <Tooltip title="copy git url">
+              <Button icon={<CopyOutlined />} />
+            </Tooltip>
+          </Input.Group>
+          </>
+          ),
+          key: "1",
         },
         {
           label: (<a onClick=
@@ -278,10 +257,62 @@ const OptionMenu = (props) => {
             label: "Share",
             key: "4",
             icon: <ShareAltOutlined />
+        }]
+    }/>
+  );
+
+  const CollabDetailMenuOfManager = (
+    <Menu items={
+      [
+        {
+          label:(<Input.Group compact>
+            <Input
+              style={{ width: '80%' }}
+              defaultValue="git@github.com:ant-design/ant-design.git"
+            />
+            <Tooltip title="copy git url">
+              <Button icon={<CopyOutlined />} />
+            </Tooltip>
+          </Input.Group>),
+          key: "1",
+        },
+        {
+          label: (<a onClick=
+            {() => {
+              setPoppedContentShow(true);
+            }}
+            >Manage Applier</a>),
+            key: "2",
+            icon: <InfoCircleOutlined />
+        },
+        {
+          label: (<a onClick=
+            {() => {
+              //setDrawerType('Version');
+              showDrawer();
+            }}
+            >Manage Version</a>),
+            key: "3",
+            icon: <InfoCircleOutlined />
+        },
+        {
+          label: (<a onClick=
+            {() => {
+              setDrawerType('Comment');
+              showDrawer();
+            }}
+            >Comment</a>),
+          key: "4",
+          icon: <CommentOutlined />
+        },
+        {
+            label: "Share",
+            key: "5",
+            icon: <ShareAltOutlined />
         },
         {
           label: (<a onClick={deletePost}>Delete</a>),
-          key: "5",
+          key: "6",
           icon: <DeleteOutlined />
         }]
     }/>
