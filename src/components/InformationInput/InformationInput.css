@@ -1,0 +1,32 @@
+.informationInput{
+    width: 100%;
+}
+
+.informationInput__item{
+    margin-top: 0.3em;
+    height: 3.6em;
+}
+
+.informationInput__Input{
+    position: relative;
+    width: 48%;
+    float: left;
+    margin-right: 2%;
+}
+
+.informationInput__InputNumber{
+    position: relative;
+    width: 10%;
+    float: left;
+    margin-right: 1em;
+}
+
+.informationInput__Checkbox{
+    padding-top: 1em; 
+    position: relative;
+    width: 10%;
+    float: right;
+    margin-right: 1.5em;
+    display: flex;
+    align-items: center; 
+}

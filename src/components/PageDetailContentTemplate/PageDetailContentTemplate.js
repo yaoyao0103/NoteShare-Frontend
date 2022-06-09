@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Layout, Row, Col, Tag } from "antd";
+import { Layout, Row, Col, Tag, Progress } from "antd";
 import Button from "../Button/Button";
 import Text from "../Text/Text";
 import Title from "../Title/Title";
@@ -11,6 +11,8 @@ import OPInfo from "../OPInfo/OPInfo";
 import OptionMenu from "../OptionMenu/OptionMenu";
 import './PageDetailContentTemplate.css'
 import PoppedContent from "./PoppedContent/PoppedContent";
+import DetailNotice from "../DetailNotice/DetailNotice";
+import VoteArea from "../VoteArea/VoteArea";
 const { Header, Content, Sider, Footer } = Layout;
 
 const PageDetailContentTemplate = (props) => {
@@ -18,6 +20,8 @@ const PageDetailContentTemplate = (props) => {
     const [versionId, setVersionId] = useState(null);
     const [poppedContentShow, setPoppedContentShow] = useState(false);
     const [poppedContent, setPoppedContent] = useState([]);
+    const [noticeShow, setNoticeShow] = useState(true);
+
     
     useEffect(()=>{
         if(props.page == "NoteDetailPage"){
@@ -155,6 +159,15 @@ const PageDetailContentTemplate = (props) => {
             <div className={`popped ${ poppedContentShow && 'popped--show'}`} >
                 <PoppedContent page={props.page} content={poppedContent} setPoppedContentShow={setPoppedContentShow} isAuthor={props.isAuthor}/>
             </div>
+
+            {props.voting &&
+                <div className={`detailNotice ${ noticeShow && 'detailNotice--show'}`}>
+                    <DetailNotice setNoticeShow={setNoticeShow} type={"vote"} kickUser={"Joe"}>
+                        <VoteArea kickUser={"user's email"} total={10} agree={3} disagree={4}/>
+                    </DetailNotice>
+                </div>
+            }
+            
         </div>
     );
 }

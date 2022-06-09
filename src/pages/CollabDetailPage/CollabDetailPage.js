@@ -22,7 +22,7 @@ function NoteDetailPage(){
     return(
         <>
             <PageDetailTemplate page={page}>
-                <PageDetailContentTemplate page={page} data={note} isAuthor={isAuthor} isManager={isManager}/>
+                <PageDetailContentTemplate page={page} data={note} isAuthor={isAuthor} isManager={isManager} voting={true}/>
             </PageDetailTemplate>
         </>
         
