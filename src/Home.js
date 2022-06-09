@@ -113,10 +113,16 @@ const Home = () => {
         <Link to={'/RewardDetailPage'}>RewardDetailPage</Link>
         </div>
         <div>
+        <Link to={'/RewardOutlinePage'}>RewardOutlinePage</Link>
+        </div>
+        <div>
         <Link to={'/QnAOutlinePage'}>QnAOutlinePage</Link>
         </div>
         <div>
         <Link to={'/CollabDetailPage'}>CollabDetailPage</Link>
+        </div>
+        <div>
+        <Link to={'/CollabOutlinePage'}>CollabOutlinePage</Link>
         </div>
         <div>
         <Link to={'/ScreenShotCapture'}>ScreenShotCapture</Link>

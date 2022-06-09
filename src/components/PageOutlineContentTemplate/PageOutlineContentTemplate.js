@@ -10,8 +10,8 @@ const { Header, Content, Sider, Footer } = Layout;
 function PageOutlineContentTemplate(props) {
     const [pageN,setPageN]=useState();
     const cardLists = [];
-    const searchResult = props.QnA;
-    console.log(searchResult);
+    const searchResult = props.Post;
+    //console.log(searchResult);
     for (let i = 0; i <= searchResult.length - 1; i++) {
         //記得在JSX中使用JS變數要用花括號包著
         cardLists.push(<OutlineCard page={props.page} mode='Post' cardContent={searchResult[i]} />)
@@ -24,7 +24,7 @@ function PageOutlineContentTemplate(props) {
     //     };
     // },pageN);
     const onChange =(pagenumber)=>{
-        console.log(pagenumber);
+        //console.log(pagenumber);
         props.changePageNumber(pagenumber);
         setPageN(pagenumber);
     }

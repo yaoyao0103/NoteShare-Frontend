@@ -8,8 +8,10 @@ import MemberPage from "./pages/MemberPage/MemberPage";
 import QnADetailPage from "./pages/QnADetailPage/QnADetailPage";
 import NoteDetailPage from "./pages/NoteDetailPage/NoteDetailPage";
 import RewardDetailPage from "./pages/RewardDetailPage/RewardDetailPage";
+import RewardOutlinePage from "./pages/RewardOutlinePage/RewardOutlinePage";
 import QnAOutlinePage from "./pages/QnAOutlinePage/QnAOutlinePage";
 import CollabDetailPage from "./pages/CollabDetailPage/CollabDetailPage";
+import CollabOutlinePage from "./pages/CollabOutlinePage/CollabOutlinePage";
 import ScreenShotCapture from "./pages/ScreenShotCapture";
 
 function App() {
@@ -27,9 +29,11 @@ function App() {
         <Route exact path="/MemberPage" component={MemberPage}></Route>
         <Route exact path="/QnADetailPage" component={QnADetailPage}></Route>
         <Route exact path="/RewardDetailPage" component={RewardDetailPage}></Route>
+        <Route exact path="/RewardOutlinePage" component={RewardOutlinePage}></Route>
         <Route exact path="/NoteDetailPage" component={NoteDetailPage}></Route>
         <Route exact path="/QnAOutlinePage" component={QnAOutlinePage}></Route>
         <Route exact path="/CollabDetailPage" component={CollabDetailPage}></Route>
+        <Route exact path="/CollabOutlinePage" component={CollabOutlinePage}></Route>
         <Route exact path="/ScreenShotCapture" component={ScreenShotCapture}></Route>
       </Switch>
     </Router>

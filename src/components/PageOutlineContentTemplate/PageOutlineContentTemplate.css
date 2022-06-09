@@ -57,7 +57,7 @@
     width: 100%;
     height:auto;
     background-color: #EFF1F4;
-    
+    margin-bottom: 5%;
     display: inline-flex;
     flex-wrap: wrap;
 }

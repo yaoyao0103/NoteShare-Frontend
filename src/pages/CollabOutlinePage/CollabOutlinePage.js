@@ -4,33 +4,33 @@ import PageOutlineTemplate from '../../components/PageOutlineTemplate/PageOutlin
 import PageOutlineContentTemplate from '../../components/PageOutlineContentTemplate/PageOutlineContentTemplate';
 import { Layout } from "antd";
 const { Header, Content, Footer } = Layout;
-function QnAOutlinePage() {
-    const [Page, setPage] = useState('QnAOutlinePage');
+function CollabOutlinePage() {
+    const [Page, setPage] = useState('CollabOutlinePage');
     const [pageNumber, setPageNumber] = useState('1');
-    const [QnA, setQnA] =useState([]);
+    const [ Collab, setCollab] =useState([]);
     useEffect(() => {
-        setPage('QnAOutlinePage');
+        setPage('CollabOutlinePage');
         console.log(Page)
     }, [Page]);
     useEffect(() => {
-        async function getQnAById() {
+        async function getCollabById() {
             try {
-                const temp = require('./QnAOutlinePage'+pageNumber+'.json');
+                const temp = require('./CollabOutlinePage'+pageNumber+'.json');
                 console.log(pageNumber);
-                setQnA(temp.additionalProp1);
+                setCollab(temp.additionalProp1);
             } catch (error) {
                 console.log(error.message);
-                setQnA(error.message);
+                setCollab(error.message);
 
 
             }
         }
-        getQnAById();
+        getCollabById();
     }, []);
     const changePage=(pagenumber)=>{
-        const temp = require('./QnAOutlinePage'+pagenumber+'.json');
+        const temp = require('./CollabOutlinePage'+pagenumber+'.json');
         console.log(pagenumber);
-        setQnA(temp.additionalProp1);
+        setCollab(temp.additionalProp1);
         setPageNumber(pageNumber);
         window.scrollTo(0, 0);
     }
@@ -38,7 +38,7 @@ function QnAOutlinePage() {
     return (
         <>
             <PageOutlineTemplate page={Page}>
-                <PageOutlineContentTemplate page={Page} hasSwitch={false} Post={QnA} changePageNumber={(pagenumber)=>{changePage(pagenumber)}}/>
+                <PageOutlineContentTemplate page={Page} hasSwitch={false} Post={Collab} changePageNumber={(pagenumber)=>{changePage(pagenumber)}}/>
             </PageOutlineTemplate>
 
         </>
@@ -47,4 +47,4 @@ function QnAOutlinePage() {
 
 }
 
-export default QnAOutlinePage;
+export default  CollabOutlinePage;

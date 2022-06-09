@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Dropdown, Space, Menu, message, } from "antd";
-import { CalendarOutlined, DollarCircleOutlined, CheckOutlined, DownOutlined } from "@ant-design/icons";
+import { CalendarOutlined, DollarCircleOutlined, CommentOutlined, DownOutlined } from "@ant-design/icons";
 import "./SortMenu.css";
 import { NavDropdown } from "react-bootstrap";
 
@@ -13,13 +13,13 @@ const SortMeun = (props) => {
     const onClose = () => {
         setVisible(false);
     };
-    const SortByPrice=()=>{
+    const SortByPrice = () => {
         message.info('依照賞金排序')
     };
-    const SortByAns=()=>{
-        message.info('依照有無解答排序')
+    const SortByAns = () => {
+        message.info('依照留言數排序')
     };
-    const SortByDate=()=>{
+    const SortByDate = () => {
         message.info('依照日期排序')
     };
 
@@ -29,14 +29,14 @@ const SortMeun = (props) => {
                 {
                     label: (<a onClick=
                         {() => {
-                           SortByDate();
+                            SortByDate();
                         }}
                     >日期</a>),
                     key: "1",
                     icon: <CalendarOutlined />
                 },
                 {
-                    label:(<a onClick=
+                    label: (<a onClick=
                         {() => {
                             SortByPrice();
                         }}
@@ -49,9 +49,9 @@ const SortMeun = (props) => {
                         {() => {
                             SortByAns();
                         }}
-                    >已解答</a>),
+                    >留言數</a>),
                     key: "3",
-                    icon: <CheckOutlined />
+                    icon: <CommentOutlined />
                 },
             ]
         } />
@@ -70,9 +70,9 @@ const SortMeun = (props) => {
                     icon: <DollarCircleOutlined />
                 },
                 {
-                    label: "已解答",
+                    label: "留言數",
                     key: "3",
-                    icon: <CheckOutlined />
+                    icon: <CommentOutlined />
                 },
             ]
         } />
@@ -81,19 +81,64 @@ const SortMeun = (props) => {
         <Menu items={
             [
                 {
-                    label: "日期",
+                    label: (<a onClick=
+                        {() => {
+                            SortByDate();
+                        }}
+                    >日期</a>),
                     key: "1",
                     icon: <CalendarOutlined />
                 },
                 {
-                    label: "賞金",
+                    label: (<a onClick=
+                        {() => {
+                            SortByPrice();
+                        }}
+                    >賞金</a>),
                     key: "2",
                     icon: <DollarCircleOutlined />
                 },
                 {
-                    label: "已解答",
+                    label: (<a onClick=
+                        {() => {
+                            SortByAns();
+                        }}
+                    >留言數</a>),
                     key: "3",
-                    icon: <CheckOutlined />
+                    icon: <CommentOutlined />
+                },
+            ]
+        } />
+    );
+    const CollabOutlineMenu = (
+        <Menu items={
+            [
+                {
+                    label: (<a onClick=
+                        {() => {
+                            SortByDate();
+                        }}
+                    >日期</a>),
+                    key: "1",
+                    icon: <CalendarOutlined />
+                },
+                {
+                    label: (<a onClick=
+                        {() => {
+                            SortByPrice();
+                        }}
+                    >賞金</a>),
+                    key: "2",
+                    icon: <DollarCircleOutlined />
+                },
+                {
+                    label: (<a onClick=
+                        {() => {
+                            SortByAns();
+                        }}
+                    >留言數</a>),
+                    key: "3",
+                    icon: <CommentOutlined />
                 },
             ]
         } />
@@ -105,7 +150,7 @@ const SortMeun = (props) => {
             case 'NoteOutlinePage': setMenu(NoteOutlineMenu); break;
             case 'QnAOutlinePage': setMenu(QnAOutlineMenu); break;
             case 'RewardOutlinePage': setMenu(RewardOutlineMenu); break;
-            // case 'ColabOutlineVersion': setMenu(VersionDetailMenu); break;
+            case 'CollabOutlinePage': setMenu(CollabOutlineMenu); break;
         }
     }, [props])
     return (
