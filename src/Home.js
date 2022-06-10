@@ -136,6 +136,9 @@ const Home = () => {
         <div>
         <Link to={'/NewCollabPage'}>NewCollabPage</Link>
         </div>
+        <div>
+        <Link to={'/ProfilePage'}>ProfilePagePage</Link>
+        </div>
       </div>
     </div>
   );

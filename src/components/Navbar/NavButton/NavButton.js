@@ -40,6 +40,13 @@ function NavButton(props) {
           Collab:true,
         });
       }
+      else{
+        setShowing({ PersonalPage:false,
+          Reward:false,
+          QnA:false,
+          Collab:false,
+        });
+      }
       props.changePage(e.target.innerText);
     };
   

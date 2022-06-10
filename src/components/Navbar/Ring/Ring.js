@@ -1,10 +1,11 @@
-import React from "react";
+import React,{useRef,useEffect}from "react";
 import { Dropdown, Menu,Divider } from 'antd';
 import { BellOutlined} from '@ant-design/icons';
 import './Ring.css';
 import Text from "../../Text/Text";
 
 function Ring() {
+  
     const menu = (
         <Menu
             items={[
@@ -46,8 +47,9 @@ function Ring() {
                 overlay={menu}
                 trigger='click'
                 placement="bottom"
+               
             >
-                <BellOutlined className='Ring__Bell__Button' style={{fontSize:'24px'}}/>
+                <BellOutlined className='Ring__Bell__Button' style={{fontSize:'24px'}} />
             </Dropdown>
 
         </div>

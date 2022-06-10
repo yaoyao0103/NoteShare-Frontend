@@ -10,7 +10,6 @@ function QnAOutlinePage() {
     const [QnA, setQnA] =useState([]);
     useEffect(() => {
         setPage('QnAOutlinePage');
-        console.log(Page)
     }, [Page]);
     useEffect(() => {
         async function getQnAById() {

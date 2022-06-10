@@ -16,7 +16,7 @@ import ScreenShotCapture from "./pages/ScreenShotCapture";
 import NewQnAPage from "./pages/NewQnAPage/NewQnAPage";
 import NewRewardPage from "./pages/NewRewardPage/NewRewardPage";
 import NewCollabPage from "./pages/NewCollabPage/NewCollabPage";
-
+import ProfilePage from "./pages/ProfilePage/ProfilePage";
 function App() {
   const dispatch = useDispatch();
 
@@ -41,6 +41,7 @@ function App() {
         <Route exact path="/NewQnAPage" component={NewQnAPage}></Route>
         <Route exact path="/NewRewardPage" component={NewRewardPage}></Route>
         <Route exact path="/NewCollabPage" component={NewCollabPage}></Route>
+        <Route exact path="/ProfilePage" component={ProfilePage}></Route>
       </Switch>
     </Router>
   );
