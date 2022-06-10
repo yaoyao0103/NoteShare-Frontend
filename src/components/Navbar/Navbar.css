@@ -12,21 +12,24 @@
 
 .navbar__Button {
   position: absolute;
-  right: 160px;
-  top: 20px;
+  right: 10%;
+  top: 1.2em;
+}
+
+.navbar__Buttons{
+  float: left;
 }
 .navbar__Button__Login {
   position: absolute;
-  right: 100px;
-  width:10%;
-  top: 20px;
- 
+  right: 11%;
+  width: 7%;
+  height: 100%;
+  padding: 0.7em 0 0.7em 0;
 }
-.navbar__Ring {
-  
+.navbar__Button__Login .anticon {
+  font-size: 1.2em !important;
+  margin-top: 0.5em;
+  color: #444;
+}
 
-}
-.navbar__AvatarButton {
- 
-}
 /*# sourceMappingURL=Navbar.css.map */
