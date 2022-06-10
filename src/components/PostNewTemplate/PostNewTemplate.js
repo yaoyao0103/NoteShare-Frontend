@@ -6,12 +6,12 @@ import Text from "../Text/Text";
 import ContentEditor from "../../pages/NoteDetailPage/ContentEditor/ContentEditor";
 import InformationInput from "../InformationInput/InformationInput";
 import { Note, QnA, Reward, Collab } from "./InfoCategories"
-import './NewContentTemplate.css'
+import './PostNewTemplate.css'
 
 const { Header, Content, Sider, Footer } = Layout;
 const { TextArea } = Input;
 
-const NewContentTemplate = (props) => {
+const PostNewTemplate = (props) => {
 
     const [title, setTitle] = useState(null);
     const [content, setContent] = useState(null);
@@ -38,35 +38,35 @@ const NewContentTemplate = (props) => {
 
     return (
         
-        <div className="newContentTemplate" >
-            <Layout className="newContentTemplate__Layout">
+        <div className="postNewTemplate" >
+            <Layout className="postNewTemplate__Layout">
                 {/* Header */}
-                <Header className="newContentTemplate__Header" >
-                    <Row className="newContentTemplate__Row">
-                        <Col className="newContentTemplate__Header__Title">
+                <Header className="postNewTemplate__Header" >
+                    <Row className="postNewTemplate__Row">
+                        <Col className="postNewTemplate__Header__Title">
                             <Text color='black' cls='Default' content={`New ${props.type}`} fontSize='30' display="inline-block" />
                         </Col>
                     </Row>     
                 </Header>
                 {/* Content */}
-                <Content className="newContentTemplate__Content" >
-                    <Row className='newContentTemplate__Row'>
-                        <Col  className='newContentTemplate__Content__Label' >
+                <Content className="postNewTemplate__Content" >
+                    <Row className='postNewTemplate__Row'>
+                        <Col  className='postNewTemplate__Content__Label' >
                             <Text color='black' cls='Small' content={"Title"} fontSize='22' display="inline-block" />
                         </Col>
                     </Row>
-                    <Row className='newContentTemplate__Row'>
-                        <Col className='newContentTemplate__Content__Title' >
+                    <Row className='postNewTemplate__Row'>
+                        <Col className='postNewTemplate__Content__Title' >
                             <Input showCount maxLength={20} placeholder="title" value={title} onChange={(ev) => setTitle(ev.target.value)} />
                         </Col>
                     </Row>
-                    <Row className='newContentTemplate__Row'>
-                        <Col  className='newContentTemplate__Content__Label' >
+                    <Row className='postNewTemplate__Row'>
+                        <Col  className='postNewTemplate__Content__Label' >
                             <Text color='black' cls='Small' content={"Information"} fontSize='22' display="inline-block" />
                         </Col>
                     </Row>
-                    <Row className='newContentTemplate__Row'>
-                        <Col className='newContentTemplate__Content__Information' >
+                    <Row className='postNewTemplate__Row'>
+                        <Col className='postNewTemplate__Content__Information' >
                             <InformationInput 
                                 information={information}
                                 setInformation={setInformation}
@@ -74,13 +74,13 @@ const NewContentTemplate = (props) => {
                         </Col>
                     </Row>
                     
-                    <Row className='newContentTemplate__Row'>
-                        <Col  className='newContentTemplate__Content__Label' >
+                    <Row className='postNewTemplate__Row'>
+                        <Col  className='postNewTemplate__Content__Label' >
                             <Text color='black' cls='Small' content={"Description"} fontSize='22' display="inline-block" />
                         </Col>
                     </Row>
-                    <Row className='newContentTemplate__Row'>
-                        <Col className='newContentTemplate__Content__Main'>
+                    <Row className='postNewTemplate__Row'>
+                        <Col className='postNewTemplate__Content__Main'>
                             { (props.page=='NewNotePage' || (props.page=='NewCollabPage')) ? 
                                 <ContentEditor versionId = {null}/>
                                 :
@@ -90,8 +90,8 @@ const NewContentTemplate = (props) => {
                     </Row>
                 </Content>
                 {/* Footer */}
-                <Footer className="newContentTemplate__Footer">
-                    <div className="newContentTemplate__Footer__Button" onClick={onSubmit}>
+                <Footer className="postNewTemplate__Footer">
+                    <div className="postNewTemplate__Footer__Button" onClick={onSubmit}>
                         <Button color={"green"}><Text color='white' cls='Large' content={"Submit"} fontSize='17' display="inline-block" /></Button>
                     </div>
                 </Footer>
@@ -101,7 +101,7 @@ const NewContentTemplate = (props) => {
 }
 
 
-NewContentTemplate.defaultProps = {
+PostNewTemplate.defaultProps = {
     data: null,
     versionId: '',
     page:'',
@@ -109,4 +109,4 @@ NewContentTemplate.defaultProps = {
     isAuthor: false,
 };
 
-export default NewContentTemplate;
+export default PostNewTemplate;

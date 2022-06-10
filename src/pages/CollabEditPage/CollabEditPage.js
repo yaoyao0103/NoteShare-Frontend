@@ -1,16 +1,16 @@
 import React from 'react';
 import PageDetailTemplate from '../../components/PageDetailTemplate/PageDetailTemplate'
-import NewContentTemplate from '../../components/NewContentTemplate/NewContentTemplate';
-function NewRewardPage(){
-    const page = "NewQnAPage";
+import PostNewTemplate from '../../components/PostNewTemplate/PostNewTemplate';
+function NewQnAPage(){
+    const page = "CollabEditPage";
 
     return(
         <>
             <PageDetailTemplate page={page}>
-                <NewContentTemplate page={page} type={"Reward"}/>
+                <PostNewTemplate page={page} type={"QnA"}/>
             </PageDetailTemplate>
         </>
         
     );
 }
-export default NewRewardPage;
+export default NewQnAPage;

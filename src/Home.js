@@ -128,13 +128,13 @@ const Home = () => {
         <Link to={'/ScreenShotCapture'}>ScreenShotCapture</Link>
         </div>
         <div>
-        <Link to={'/NewQnAPage'}>NewQnAPage</Link>
+        <Link to={'/QnANewPage'}>QnANewPage</Link>
         </div>
         <div>
-        <Link to={'/NewRewardPage'}>NewRewardPage</Link>
+        <Link to={'/RewardNewPage'}>RewardNewPage</Link>
         </div>
         <div>
-        <Link to={'/NewCollabPage'}>NewCollabPage</Link>
+        <Link to={'/CollabNewPage'}>CollabNewPage</Link>
         </div>
       </div>
     </div>
