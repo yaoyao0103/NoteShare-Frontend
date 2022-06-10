@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, {useState, useEffect} from 'react';
 import PageDetailTemplate from '../../components/PageDetailTemplate/PageDetailTemplate'
 import PostEditTemplate from '../../components/PostEditTemplate/PostEditTemplate';
-function QnAEditPage(){
-    const page = "CollabEditPage";
+function RewardEditPage(){
+    const page = "RewardEditPage";
     const [post, setPost] = useState(null);
     const [mode, setMode] = useState('Edit') // "Edit" or "New" 
 
     useEffect(() => {
-        async function getCollabNoteById() {
+        async function getRewardById() {
             try {
-                const post = require('../../MockData/CollabNote.json');
+                const post = require('../../MockData/Reward.json');
                 setPost(post);
                 console.log(post)
             } catch (error) {
@@ -17,7 +17,7 @@ function QnAEditPage(){
             }
         }
         if(mode=="Edit"){
-            getCollabNoteById();
+            getRewardById();
         }
         
         }, []);
@@ -25,10 +25,10 @@ function QnAEditPage(){
     return(
         <>
             <PageDetailTemplate page={page}>
-                <PostEditTemplate page={page} type={"CollabNote"} post={post} mode={mode}/>
+                <PostEditTemplate page={page} type={"Reward"} post={post} mode={mode}/>
             </PageDetailTemplate>
         </>
         
     );
 }
-export default QnAEditPage;
+export default RewardEditPage;

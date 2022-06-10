@@ -9,7 +9,7 @@ function NoteDetailPage(){
     useEffect(() => {
         async function getNoteById() {
           try {
-            const temp = require('./NoteJson.json');
+            const temp = require('../../MockData/Note.json');
             temp.author = temp.headerName;
             temp.date = temp.version[0].date;
             setNote(temp);

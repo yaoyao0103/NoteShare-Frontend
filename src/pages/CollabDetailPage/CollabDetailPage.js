@@ -11,7 +11,7 @@ function NoteDetailPage(){
     useEffect(() => {
         async function getCollabById() {
             try {
-            const temp = require('./CollabNoteJson.json');
+            const temp = require('../../MockData/CollabNote.json');
             setNote(temp);
             } catch (error) {
                 console.log(error);

@@ -20,9 +20,9 @@ function Information(props) {
                 <Col className='information__Subject'>
                     <Text color='black' cls='Default' content={props.subject} fontSize='17' display="inline-block" />
                 </Col>
-                {props.instructor!=null &&(
-                    <Col className='information__Instructor'>
-                        <Text color='black' cls='Default' content={props.instructor} fontSize='17' display="inline-block" />
+                {props.professor!=null &&(
+                    <Col className='information__professor'>
+                        <Text color='black' cls='Default' content={props.professor} fontSize='17' display="inline-block" />
                     </Col>
                 )}
                 <div className="information__top__right">
@@ -65,7 +65,7 @@ Information.defaultProps = {
     school: null,
     department: 'Unknown',
     subject: 'Unknown',
-    instructor: null,
+    professor: null,
     likeCount: null,
     favoriteCount: null,
     unlockCount: null,
