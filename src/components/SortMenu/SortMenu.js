@@ -158,6 +158,7 @@ const SortMeun = (props) => {
             <Dropdown
                 className="SortMenu__Drop"
                 overlay={menu}
+                trigger='click'
             >
                 <Space className="SortMenu__Space">
                     Sort

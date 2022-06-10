@@ -15,4 +15,18 @@
   right: 160px;
   top: 20px;
 }
+.navbar__Button__Login {
+  position: absolute;
+  right: 100px;
+  width:10%;
+  top: 20px;
+ 
+}
+.navbar__Ring {
+  
+
+}
+.navbar__AvatarButton {
+ 
+}
 /*# sourceMappingURL=Navbar.css.map */

@@ -14,52 +14,11 @@
         "title": "Array VS LinkList",
         "content": "可以解釋一下陣列跟串列的各個優缺點嗎",
         "date": "2022-06-06T09:40:49.796Z",
-        "bestPrice": 300,
-        "hasBestAns":true,
         "comments": [
-          { "id": "1",
-            "author": "Charlie",
-            "email": "a123456789@email.ntou.edu.tw",
-            "content": "Array比較牛逼八",
-            "likeCount": 0,
-            "floor": 0,
-            "date": "2022-06-06T09:40:49.796Z",
-            "best": false
-          },
-          { 
-            "id": "2",
-            "author": "Allen",
-            "email": "a123456789@email.ntou.edu.tw",
-            "content": "LinkList在某些時候快一點",
-            "likeCount": 3,
-            "floor": 1,
-            "date": "2022-06-06T09:40:49.796Z",
-            "best": false
-          },{
-            "id": "3",
-            "author": "路人甲",
-            "email": "a123456789@email.ntou.edu.tw",
-            "content": "早安阿各位",
-            "likeCount": 0,
-            "floor": 2,
-            "date": "2022-06-06T09:40:49.796Z",
-            "best": false
-          },
-          { 
-            "id": "4",
-            "author": "天才",
-            "email": "a123456789@email.ntou.edu.tw",
-            "content": "資料比較稀疏的時候可以用串列，可以減少浪費的空間",
-            "likeCount":10,
-            "floor": 3,
-            "date": "2022-06-06T09:40:49.796Z",
-            "best": true
-          }
         ],
         "answer":[
-            "1"
         ],
-        "commentCount": 4,
+        "commentCount": 0,
         "publishDate": "2022-06-06T09:40:49.796Z",
         "public": true
       },
@@ -77,52 +36,11 @@
         "title": "Array VS LinkList",
         "content": "可以解釋一下陣列跟串列的各個優缺點嗎",
         "date": "2022-06-06T09:40:49.796Z",
-        "bestPrice": 300,
-        "hasBestAns":true,
         "comments": [
-          { "id": "1",
-            "author": "Charlie",
-            "email": "a123456789@email.ntou.edu.tw",
-            "content": "Array比較牛逼八",
-            "likeCount": 0,
-            "floor": 0,
-            "date": "2022-06-06T09:40:49.796Z",
-            "best": false
-          },
-          { 
-            "id": "2",
-            "author": "Allen",
-            "email": "a123456789@email.ntou.edu.tw",
-            "content": "LinkList在某些時候快一點",
-            "likeCount": 3,
-            "floor": 1,
-            "date": "2022-06-06T09:40:49.796Z",
-            "best": false
-          },{
-            "id": "3",
-            "author": "路人甲",
-            "email": "a123456789@email.ntou.edu.tw",
-            "content": "早安阿各位",
-            "likeCount": 0,
-            "floor": 2,
-            "date": "2022-06-06T09:40:49.796Z",
-            "best": false
-          },
-          { 
-            "id": "4",
-            "author": "天才",
-            "email": "a123456789@email.ntou.edu.tw",
-            "content": "資料比較稀疏的時候可以用串列，可以減少浪費的空間",
-            "likeCount":10,
-            "floor": 3,
-            "date": "2022-06-06T09:40:49.796Z",
-            "best": true
-          }
         ],
         "answer":[
-            "1"
         ],
-        "commentCount": 4,
+        "commentCount": 0,
         "publishDate": "2022-06-06T09:40:49.796Z",
         "public": true
       },
@@ -140,52 +58,11 @@
         "title": "Array VS LinkList",
         "content": "可以解釋一下陣列跟串列的各個優缺點嗎",
         "date": "2022-06-06T09:40:49.796Z",
-        "bestPrice": 300,
-        "hasBestAns":true,
         "comments": [
-          { "id": "1",
-            "author": "Charlie",
-            "email": "a123456789@email.ntou.edu.tw",
-            "content": "Array比較牛逼八",
-            "likeCount": 0,
-            "floor": 0,
-            "date": "2022-06-06T09:40:49.796Z",
-            "best": false
-          },
-          { 
-            "id": "2",
-            "author": "Allen",
-            "email": "a123456789@email.ntou.edu.tw",
-            "content": "LinkList在某些時候快一點",
-            "likeCount": 3,
-            "floor": 1,
-            "date": "2022-06-06T09:40:49.796Z",
-            "best": false
-          },{
-            "id": "3",
-            "author": "路人甲",
-            "email": "a123456789@email.ntou.edu.tw",
-            "content": "早安阿各位",
-            "likeCount": 0,
-            "floor": 2,
-            "date": "2022-06-06T09:40:49.796Z",
-            "best": false
-          },
-          { 
-            "id": "4",
-            "author": "天才",
-            "email": "a123456789@email.ntou.edu.tw",
-            "content": "資料比較稀疏的時候可以用串列，可以減少浪費的空間",
-            "likeCount":10,
-            "floor": 3,
-            "date": "2022-06-06T09:40:49.796Z",
-            "best": true
-          }
         ],
         "answer":[
-            "1"
         ],
-        "commentCount": 4,
+        "commentCount": 0,
         "publishDate": "2022-06-06T09:40:49.796Z",
         "public": true
       },
@@ -203,52 +80,11 @@
         "title": "Array VS LinkList",
         "content": "可以解釋一下陣列跟串列的各個優缺點嗎",
         "date": "2022-06-06T09:40:49.796Z",
-        "bestPrice": 300,
-        "hasBestAns":true,
         "comments": [
-          { "id": "1",
-            "author": "Charlie",
-            "email": "a123456789@email.ntou.edu.tw",
-            "content": "Array比較牛逼八",
-            "likeCount": 0,
-            "floor": 0,
-            "date": "2022-06-06T09:40:49.796Z",
-            "best": false
-          },
-          { 
-            "id": "2",
-            "author": "Allen",
-            "email": "a123456789@email.ntou.edu.tw",
-            "content": "LinkList在某些時候快一點",
-            "likeCount": 3,
-            "floor": 1,
-            "date": "2022-06-06T09:40:49.796Z",
-            "best": false
-          },{
-            "id": "3",
-            "author": "路人甲",
-            "email": "a123456789@email.ntou.edu.tw",
-            "content": "早安阿各位",
-            "likeCount": 0,
-            "floor": 2,
-            "date": "2022-06-06T09:40:49.796Z",
-            "best": false
-          },
-          { 
-            "id": "4",
-            "author": "天才",
-            "email": "a123456789@email.ntou.edu.tw",
-            "content": "資料比較稀疏的時候可以用串列，可以減少浪費的空間",
-            "likeCount":10,
-            "floor": 3,
-            "date": "2022-06-06T09:40:49.796Z",
-            "best": true
-          }
         ],
         "answer":[
-            "1"
         ],
-        "commentCount": 4,
+        "commentCount": 0,
         "publishDate": "2022-06-06T09:40:49.796Z",
         "public": true
       },
@@ -266,52 +102,11 @@
         "title": "Array VS LinkList",
         "content": "可以解釋一下陣列跟串列的各個優缺點嗎",
         "date": "2022-06-06T09:40:49.796Z",
-        "bestPrice": 300,
-        "hasBestAns":true,
         "comments": [
-          { "id": "1",
-            "author": "Charlie",
-            "email": "a123456789@email.ntou.edu.tw",
-            "content": "Array比較牛逼八",
-            "likeCount": 0,
-            "floor": 0,
-            "date": "2022-06-06T09:40:49.796Z",
-            "best": false
-          },
-          { 
-            "id": "2",
-            "author": "Allen",
-            "email": "a123456789@email.ntou.edu.tw",
-            "content": "LinkList在某些時候快一點",
-            "likeCount": 3,
-            "floor": 1,
-            "date": "2022-06-06T09:40:49.796Z",
-            "best": false
-          },{
-            "id": "3",
-            "author": "路人甲",
-            "email": "a123456789@email.ntou.edu.tw",
-            "content": "早安阿各位",
-            "likeCount": 0,
-            "floor": 2,
-            "date": "2022-06-06T09:40:49.796Z",
-            "best": false
-          },
-          { 
-            "id": "4",
-            "author": "天才",
-            "email": "a123456789@email.ntou.edu.tw",
-            "content": "資料比較稀疏的時候可以用串列，可以減少浪費的空間",
-            "likeCount":10,
-            "floor": 3,
-            "date": "2022-06-06T09:40:49.796Z",
-            "best": true
-          }
         ],
         "answer":[
-            "1"
         ],
-        "commentCount": 4,
+        "commentCount": 0,
         "publishDate": "2022-06-06T09:40:49.796Z",
         "public": true
       },
@@ -329,52 +124,11 @@
         "title": "Array VS LinkList",
         "content": "可以解釋一下陣列跟串列的各個優缺點嗎",
         "date": "2022-06-06T09:40:49.796Z",
-        "bestPrice": 300,
-        "hasBestAns":true,
         "comments": [
-          { "id": "1",
-            "author": "Charlie",
-            "email": "a123456789@email.ntou.edu.tw",
-            "content": "Array比較牛逼八",
-            "likeCount": 0,
-            "floor": 0,
-            "date": "2022-06-06T09:40:49.796Z",
-            "best": false
-          },
-          { 
-            "id": "2",
-            "author": "Allen",
-            "email": "a123456789@email.ntou.edu.tw",
-            "content": "LinkList在某些時候快一點",
-            "likeCount": 3,
-            "floor": 1,
-            "date": "2022-06-06T09:40:49.796Z",
-            "best": false
-          },{
-            "id": "3",
-            "author": "路人甲",
-            "email": "a123456789@email.ntou.edu.tw",
-            "content": "早安阿各位",
-            "likeCount": 0,
-            "floor": 2,
-            "date": "2022-06-06T09:40:49.796Z",
-            "best": false
-          },
-          { 
-            "id": "4",
-            "author": "天才",
-            "email": "a123456789@email.ntou.edu.tw",
-            "content": "資料比較稀疏的時候可以用串列，可以減少浪費的空間",
-            "likeCount":10,
-            "floor": 3,
-            "date": "2022-06-06T09:40:49.796Z",
-            "best": true
-          }
         ],
         "answer":[
-            "1"
         ],
-        "commentCount": 4,
+        "commentCount": 0,
         "publishDate": "2022-06-06T09:40:49.796Z",
         "public": true
       },
@@ -392,52 +146,11 @@
         "title": "Array VS LinkList",
         "content": "可以解釋一下陣列跟串列的各個優缺點嗎",
         "date": "2022-06-06T09:40:49.796Z",
-        "bestPrice": 300,
-        "hasBestAns":true,
         "comments": [
-          { "id": "1",
-            "author": "Charlie",
-            "email": "a123456789@email.ntou.edu.tw",
-            "content": "Array比較牛逼八",
-            "likeCount": 0,
-            "floor": 0,
-            "date": "2022-06-06T09:40:49.796Z",
-            "best": false
-          },
-          { 
-            "id": "2",
-            "author": "Allen",
-            "email": "a123456789@email.ntou.edu.tw",
-            "content": "LinkList在某些時候快一點",
-            "likeCount": 3,
-            "floor": 1,
-            "date": "2022-06-06T09:40:49.796Z",
-            "best": false
-          },{
-            "id": "3",
-            "author": "路人甲",
-            "email": "a123456789@email.ntou.edu.tw",
-            "content": "早安阿各位",
-            "likeCount": 0,
-            "floor": 2,
-            "date": "2022-06-06T09:40:49.796Z",
-            "best": false
-          },
-          { 
-            "id": "4",
-            "author": "天才",
-            "email": "a123456789@email.ntou.edu.tw",
-            "content": "資料比較稀疏的時候可以用串列，可以減少浪費的空間",
-            "likeCount":10,
-            "floor": 3,
-            "date": "2022-06-06T09:40:49.796Z",
-            "best": true
-          }
         ],
         "answer":[
-            "1"
         ],
-        "commentCount": 4,
+        "commentCount": 0,
         "publishDate": "2022-06-06T09:40:49.796Z",
         "public": true
       },
@@ -455,52 +168,11 @@
         "title": "Array VS LinkList",
         "content": "可以解釋一下陣列跟串列的各個優缺點嗎",
         "date": "2022-06-06T09:40:49.796Z",
-        "bestPrice": 300,
-        "hasBestAns":true,
         "comments": [
-          { "id": "1",
-            "author": "Charlie",
-            "email": "a123456789@email.ntou.edu.tw",
-            "content": "Array比較牛逼八",
-            "likeCount": 0,
-            "floor": 0,
-            "date": "2022-06-06T09:40:49.796Z",
-            "best": false
-          },
-          { 
-            "id": "2",
-            "author": "Allen",
-            "email": "a123456789@email.ntou.edu.tw",
-            "content": "LinkList在某些時候快一點",
-            "likeCount": 3,
-            "floor": 1,
-            "date": "2022-06-06T09:40:49.796Z",
-            "best": false
-          },{
-            "id": "3",
-            "author": "路人甲",
-            "email": "a123456789@email.ntou.edu.tw",
-            "content": "早安阿各位",
-            "likeCount": 0,
-            "floor": 2,
-            "date": "2022-06-06T09:40:49.796Z",
-            "best": false
-          },
-          { 
-            "id": "4",
-            "author": "天才",
-            "email": "a123456789@email.ntou.edu.tw",
-            "content": "資料比較稀疏的時候可以用串列，可以減少浪費的空間",
-            "likeCount":10,
-            "floor": 3,
-            "date": "2022-06-06T09:40:49.796Z",
-            "best": true
-          }
         ],
         "answer":[
-            "1"
         ],
-        "commentCount": 4,
+        "commentCount": 0,
         "publishDate": "2022-06-06T09:40:49.796Z",
         "public": true
       },
@@ -518,52 +190,11 @@
         "title": "Array VS LinkList",
         "content": "可以解釋一下陣列跟串列的各個優缺點嗎",
         "date": "2022-06-06T09:40:49.796Z",
-        "bestPrice": 300,
-        "hasBestAns":true,
         "comments": [
-          { "id": "1",
-            "author": "Charlie",
-            "email": "a123456789@email.ntou.edu.tw",
-            "content": "Array比較牛逼八",
-            "likeCount": 0,
-            "floor": 0,
-            "date": "2022-06-06T09:40:49.796Z",
-            "best": false
-          },
-          { 
-            "id": "2",
-            "author": "Allen",
-            "email": "a123456789@email.ntou.edu.tw",
-            "content": "LinkList在某些時候快一點",
-            "likeCount": 3,
-            "floor": 1,
-            "date": "2022-06-06T09:40:49.796Z",
-            "best": false
-          },{
-            "id": "3",
-            "author": "路人甲",
-            "email": "a123456789@email.ntou.edu.tw",
-            "content": "早安阿各位",
-            "likeCount": 0,
-            "floor": 2,
-            "date": "2022-06-06T09:40:49.796Z",
-            "best": false
-          },
-          { 
-            "id": "4",
-            "author": "天才",
-            "email": "a123456789@email.ntou.edu.tw",
-            "content": "資料比較稀疏的時候可以用串列，可以減少浪費的空間",
-            "likeCount":10,
-            "floor": 3,
-            "date": "2022-06-06T09:40:49.796Z",
-            "best": true
-          }
         ],
         "answer":[
-            "1"
         ],
-        "commentCount": 4,
+        "commentCount": 0,
         "publishDate": "2022-06-06T09:40:49.796Z",
         "public": true
       },
@@ -581,52 +212,11 @@
         "title": "Array VS LinkList",
         "content": "可以解釋一下陣列跟串列的各個優缺點嗎",
         "date": "2022-06-06T09:40:49.796Z",
-        "bestPrice": 300,
-        "hasBestAns":true,
         "comments": [
-          { "id": "1",
-            "author": "Charlie",
-            "email": "a123456789@email.ntou.edu.tw",
-            "content": "Array比較牛逼八",
-            "likeCount": 0,
-            "floor": 0,
-            "date": "2022-06-06T09:40:49.796Z",
-            "best": false
-          },
-          { 
-            "id": "2",
-            "author": "Allen",
-            "email": "a123456789@email.ntou.edu.tw",
-            "content": "LinkList在某些時候快一點",
-            "likeCount": 3,
-            "floor": 1,
-            "date": "2022-06-06T09:40:49.796Z",
-            "best": false
-          },{
-            "id": "3",
-            "author": "路人甲",
-            "email": "a123456789@email.ntou.edu.tw",
-            "content": "早安阿各位",
-            "likeCount": 0,
-            "floor": 2,
-            "date": "2022-06-06T09:40:49.796Z",
-            "best": false
-          },
-          { 
-            "id": "4",
-            "author": "天才",
-            "email": "a123456789@email.ntou.edu.tw",
-            "content": "資料比較稀疏的時候可以用串列，可以減少浪費的空間",
-            "likeCount":10,
-            "floor": 3,
-            "date": "2022-06-06T09:40:49.796Z",
-            "best": true
-          }
         ],
         "answer":[
-            "1"
         ],
-        "commentCount": 4,
+        "commentCount": 0,
         "publishDate": "2022-06-06T09:40:49.796Z",
         "public": true
       },
@@ -644,52 +234,11 @@
         "title": "Array VS LinkList",
         "content": "可以解釋一下陣列跟串列的各個優缺點嗎",
         "date": "2022-06-06T09:40:49.796Z",
-        "bestPrice": 300,
-        "hasBestAns":true,
         "comments": [
-          { "id": "1",
-            "author": "Charlie",
-            "email": "a123456789@email.ntou.edu.tw",
-            "content": "Array比較牛逼八",
-            "likeCount": 0,
-            "floor": 0,
-            "date": "2022-06-06T09:40:49.796Z",
-            "best": false
-          },
-          { 
-            "id": "2",
-            "author": "Allen",
-            "email": "a123456789@email.ntou.edu.tw",
-            "content": "LinkList在某些時候快一點",
-            "likeCount": 3,
-            "floor": 1,
-            "date": "2022-06-06T09:40:49.796Z",
-            "best": false
-          },{
-            "id": "3",
-            "author": "路人甲",
-            "email": "a123456789@email.ntou.edu.tw",
-            "content": "早安阿各位",
-            "likeCount": 0,
-            "floor": 2,
-            "date": "2022-06-06T09:40:49.796Z",
-            "best": false
-          },
-          { 
-            "id": "4",
-            "author": "天才",
-            "email": "a123456789@email.ntou.edu.tw",
-            "content": "資料比較稀疏的時候可以用串列，可以減少浪費的空間",
-            "likeCount":10,
-            "floor": 3,
-            "date": "2022-06-06T09:40:49.796Z",
-            "best": true
-          }
         ],
         "answer":[
-            "1"
         ],
-        "commentCount": 4,
+        "commentCount": 0,
         "publishDate": "2022-06-06T09:40:49.796Z",
         "public": true
       },
@@ -707,52 +256,11 @@
         "title": "Array VS LinkList",
         "content": "可以解釋一下陣列跟串列的各個優缺點嗎",
         "date": "2022-06-06T09:40:49.796Z",
-        "bestPrice": 300,
-        "hasBestAns":true,
         "comments": [
-          { "id": "1",
-            "author": "Charlie",
-            "email": "a123456789@email.ntou.edu.tw",
-            "content": "Array比較牛逼八",
-            "likeCount": 0,
-            "floor": 0,
-            "date": "2022-06-06T09:40:49.796Z",
-            "best": false
-          },
-          { 
-            "id": "2",
-            "author": "Allen",
-            "email": "a123456789@email.ntou.edu.tw",
-            "content": "LinkList在某些時候快一點",
-            "likeCount": 3,
-            "floor": 1,
-            "date": "2022-06-06T09:40:49.796Z",
-            "best": false
-          },{
-            "id": "3",
-            "author": "路人甲",
-            "email": "a123456789@email.ntou.edu.tw",
-            "content": "早安阿各位",
-            "likeCount": 0,
-            "floor": 2,
-            "date": "2022-06-06T09:40:49.796Z",
-            "best": false
-          },
-          { 
-            "id": "4",
-            "author": "天才",
-            "email": "a123456789@email.ntou.edu.tw",
-            "content": "資料比較稀疏的時候可以用串列，可以減少浪費的空間",
-            "likeCount":10,
-            "floor": 3,
-            "date": "2022-06-06T09:40:49.796Z",
-            "best": true
-          }
         ],
         "answer":[
-            "1"
         ],
-        "commentCount": 4,
+        "commentCount": 0,
         "publishDate": "2022-06-06T09:40:49.796Z",
         "public": true
       },
@@ -770,180 +278,14 @@
         "title": "Array VS LinkList",
         "content": "可以解釋一下陣列跟串列的各個優缺點嗎",
         "date": "2022-06-06T09:40:49.796Z",
-        "bestPrice": 300,
-        "hasBestAns":true,
         "comments": [
-          { "id": "1",
-            "author": "Charlie",
-            "email": "a123456789@email.ntou.edu.tw",
-            "content": "Array比較牛逼八",
-            "likeCount": 0,
-            "floor": 0,
-            "date": "2022-06-06T09:40:49.796Z",
-            "best": false
-          },
-          { 
-            "id": "2",
-            "author": "Allen",
-            "email": "a123456789@email.ntou.edu.tw",
-            "content": "LinkList在某些時候快一點",
-            "likeCount": 3,
-            "floor": 1,
-            "date": "2022-06-06T09:40:49.796Z",
-            "best": false
-          },{
-            "id": "3",
-            "author": "路人甲",
-            "email": "a123456789@email.ntou.edu.tw",
-            "content": "早安阿各位",
-            "likeCount": 0,
-            "floor": 2,
-            "date": "2022-06-06T09:40:49.796Z",
-            "best": false
-          },
-          { 
-            "id": "4",
-            "author": "天才",
-            "email": "a123456789@email.ntou.edu.tw",
-            "content": "資料比較稀疏的時候可以用串列，可以減少浪費的空間",
-            "likeCount":10,
-            "floor": 3,
-            "date": "2022-06-06T09:40:49.796Z",
-            "best": true
-          }
         ],
         "answer":[
-            "1"
         ],
-        "commentCount": 4,
-        "publishDate": "2022-06-06T09:40:49.796Z",
-        "public": true
-      },
-      {
-        "id": "123121121231312123112",
-        "type": "Collab",
-        "email": [
-          "00857030@email.ntou.edu.tw"
-        ],
-        "author": "Plusx",
-        "department": "資訊工程學系",
-        "subject": "資料結構",
-        "school": "國立台灣海洋大學",
-        "professor": "蔡宇軒",
-        "title": "Array VS LinkList",
-        "content": "可以解釋一下陣列跟串列的各個優缺點嗎",
-        "date": "2022-06-06T09:40:49.796Z",
-        "bestPrice": 300,
-        "hasBestAns":true,
-        "comments": [
-          { "id": "1",
-            "author": "Charlie",
-            "email": "a123456789@email.ntou.edu.tw",
-            "content": "Array比較牛逼八",
-            "likeCount": 0,
-            "floor": 0,
-            "date": "2022-06-06T09:40:49.796Z",
-            "best": false
-          },
-          { 
-            "id": "2",
-            "author": "Allen",
-            "email": "a123456789@email.ntou.edu.tw",
-            "content": "LinkList在某些時候快一點",
-            "likeCount": 3,
-            "floor": 1,
-            "date": "2022-06-06T09:40:49.796Z",
-            "best": false
-          },{
-            "id": "3",
-            "author": "路人甲",
-            "email": "a123456789@email.ntou.edu.tw",
-            "content": "早安阿各位",
-            "likeCount": 0,
-            "floor": 2,
-            "date": "2022-06-06T09:40:49.796Z",
-            "best": false
-          },
-          { 
-            "id": "4",
-            "author": "天才",
-            "email": "a123456789@email.ntou.edu.tw",
-            "content": "資料比較稀疏的時候可以用串列，可以減少浪費的空間",
-            "likeCount":10,
-            "floor": 3,
-            "date": "2022-06-06T09:40:49.796Z",
-            "best": true
-          }
-        ],
-        "answer":[
-            "1"
-        ],
-        "commentCount": 4,
-        "publishDate": "2022-06-06T09:40:49.796Z",
-        "public": true
-      },
-      {
-        "id": "123121121231312123112",
-        "type": "Collab",
-        "email": [
-          "00857030@email.ntou.edu.tw"
-        ],
-        "author": "Plusx",
-        "department": "資訊工程學系",
-        "subject": "資料結構",
-        "school": "國立台灣海洋大學",
-        "professor": "蔡宇軒",
-        "title": "Array VS LinkList",
-        "content": "可以解釋一下陣列跟串列的各個優缺點嗎",
-        "date": "2022-06-06T09:40:49.796Z",
-        "bestPrice": 300,
-        "hasBestAns":true,
-        "comments": [
-          { "id": "1",
-            "author": "Charlie",
-            "email": "a123456789@email.ntou.edu.tw",
-            "content": "Array比較牛逼八",
-            "likeCount": 0,
-            "floor": 0,
-            "date": "2022-06-06T09:40:49.796Z",
-            "best": false
-          },
-          { 
-            "id": "2",
-            "author": "Allen",
-            "email": "a123456789@email.ntou.edu.tw",
-            "content": "LinkList在某些時候快一點",
-            "likeCount": 3,
-            "floor": 1,
-            "date": "2022-06-06T09:40:49.796Z",
-            "best": false
-          },{
-            "id": "3",
-            "author": "路人甲",
-            "email": "a123456789@email.ntou.edu.tw",
-            "content": "早安阿各位",
-            "likeCount": 0,
-            "floor": 2,
-            "date": "2022-06-06T09:40:49.796Z",
-            "best": false
-          },
-          { 
-            "id": "4",
-            "author": "天才",
-            "email": "a123456789@email.ntou.edu.tw",
-            "content": "資料比較稀疏的時候可以用串列，可以減少浪費的空間",
-            "likeCount":10,
-            "floor": 3,
-            "date": "2022-06-06T09:40:49.796Z",
-            "best": true
-          }
-        ],
-        "answer":[
-            "1"
-        ],
-        "commentCount": 4,
+        "commentCount": 0,
         "publishDate": "2022-06-06T09:40:49.796Z",
         "public": true
       }
+    
     ]
   }

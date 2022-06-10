@@ -1,0 +1,17 @@
+.Ring__Dropdown{
+    padding-top:6px;
+}
+.Ring__Bell__Button{
+   
+}
+.ant-dropdown-menu{
+    width:200px;
+    
+}
+.Ring__Dropdown .ant-dropdown-menu-item{
+    height: 80px;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
+}
+.Ring__item__text{
+    
+}
