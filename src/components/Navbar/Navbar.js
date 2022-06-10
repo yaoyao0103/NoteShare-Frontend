@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState }from "react";
 import "./Navbar.css";
 import Logo from "./Logo/Logo";
 import NavButton from "./NavButton/NavButton";
@@ -7,12 +7,13 @@ import Button from "../Button/Button";
 import Text from "../Text/Text";
 import SearchBar from "./SearchBar/SearchBar";
 import Ring from "./Ring/Ring";
-import AvararButton from "./AvatarButton/AvatarButton";
+import AvatarButton from "./AvatarButton/AvatarButton";
 import {
   UserOutlined,
 } from '@ant-design/icons';
 import {Row,Col} from 'antd';
 function Navbar(props) {
+  const [loggedIn, setLoggedIn] = useState(false);
   return (
     <div id="navbar" className="nav">
       <Logo />
@@ -20,19 +21,25 @@ function Navbar(props) {
       <NavMenu />
       <SearchBar />
 
-      {/* <div className="navbar__Button">
-         <Button color={"white"}><Text color='Black' cls='Gerneral' content={"Sign Up"} fontSize='15' display="inline-block" /></Button>
-        <Button color={"black"} icon={<UserOutlined />}><Text color='white' cls='Large' content={"Login"} fontSize='15' display="inline-block" /></Button> 
-      </div> */}
-      
+      {loggedIn? 
         <Row className="navbar__Button__Login">
-          <Col span={12}>  <Ring className="navbar__Ring"/>
+          <Col span={12}>  
+            <Ring className="navbar__Ring"/>
           </Col>
-          <Col span={12}><AvararButton className="navbar__AvararButton"/>
+          <Col span={12}> 
+            <AvatarButton className="navbar__AvatarButton" setLoggedIn={setLoggedIn}/>
           </Col>
         </Row>
-      
-        
+        :
+        <div className="navbar__Button">
+          <div className="navbar__Buttons" onClick={null}>
+              <Button color={"white"}><Text color='Black' cls='Default' content={"Sign Up"} fontSize='15' display="inline-block" /></Button>
+          </div>
+          <div className="navbar__Buttons" onClick={() => setLoggedIn(true)}>
+              <Button color={"black"} icon={<UserOutlined />}><Text color='white' cls='Large' content={"Login"} fontSize='15' display="inline-block" /></Button> 
+          </div>
+        </div>
+        }
       
 
     </div>

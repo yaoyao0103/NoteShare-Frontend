@@ -4,7 +4,7 @@ import { BellOutlined} from '@ant-design/icons';
 import './AvatarButton.css';
 import Text from "../../Text/Text";
 
-function AvatarButton() {
+function AvatarButton(props) {
     const menu = (
         <Menu
             items={[
@@ -30,9 +30,9 @@ function AvatarButton() {
                 {
                     key: '3',
                     label: (
-                        <>
-                        <Text className='AvatarButton__item__text' cls='Gerneral' fontSize='16'content={'Logout'}/>
-                        </> 
+                        <a onClick={() => props.setLoggedIn(false)}>
+                            <Text className='AvatarButton__item__text' cls='Gerneral' fontSize='16'content={'Logout'}/>
+                        </a> 
                     ),
                 },
             ]}
@@ -43,10 +43,11 @@ function AvatarButton() {
             <Dropdown
                 className='AvatarButton__Dropdown'
                 overlay={menu}
+                overlayStyle={{width: '400px'}}
                 trigger='click'
                 placement="bottom"
             >
-                <Avatar className="AvatarButton__Avatar" size={36} src="https://joeschmoe.io/api/v1/random"></Avatar>
+                <Avatar className="AvatarButton__Avatar" size={45} src="https://joeschmoe.io/api/v1/random"></Avatar>
             </Dropdown>
 
         </div>
