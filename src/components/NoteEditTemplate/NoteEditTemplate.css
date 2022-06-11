@@ -1,0 +1,55 @@
+.noteEditTemplate{
+    position:relative;
+    width: 90%;
+    height: 100%; 
+    margin-top: 5%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 10%;
+}
+
+.noteEditTemplate__Layout{
+    position:relative;
+    width: 100%; 
+    background-color: white;
+    margin-top: 5%;
+    padding: 3.5% 5% 3.5% 5%;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
+}
+
+
+.noteEditTemplate__Header{
+    position: relative;
+    width: 100%;
+    background-color: #fff ;
+    margin-bottom: 3em;
+}
+
+.noteEditTemplate__Steps{
+    margin-top: 0.5em;
+}
+
+
+.noteEditTemplate__Row{
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.noteEditTemplate__Content{
+    position: relative;
+    width: 100%;
+}
+
+.noteEditTemplate__Footer{
+    position: relative;
+    width: 100%;
+    background-color: #fff;
+    padding: 0;
+    padding-top: 1em;
+}
+
+.noteEditTemplate__Footer__Button{
+    float: right;
+}

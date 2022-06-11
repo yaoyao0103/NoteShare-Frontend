@@ -26,6 +26,7 @@ export const createPage = (name) => async (dispatch) => {
   try {
     const response = await axios.post(`${API_HOST}pages/`, { name });
     dispatch({ type: TYPES.CREATE_PAGE_SUCCESS, data: response.data });
+    return response.data;
   } catch (error) {
     dispatch({ type: TYPES.CREATE_PAGE_ERROR, data: error });
   }

@@ -54,7 +54,7 @@ async function geditorConfig(assets, pageId){
       appendTo: "#blocks",
     },
     styleManager: styleManager,
-    layerManager: layerManager,
+    //layerManager: layerManager,
     traitManager: traitManager,
     selectorManager: selectorManager,
     panels: panels,

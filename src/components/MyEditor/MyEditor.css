@@ -1,0 +1,12 @@
+.myEditor{
+    position: relative;
+    height: 100%;
+    width: 100%;
+    background-color: #fff;
+}
+
+
+.myEditor .gjs-block-category{
+    background-color: #fff;
+    color: #000;
+}

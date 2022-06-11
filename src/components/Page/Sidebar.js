@@ -17,7 +17,7 @@ function Sidebar() {
             <i className="fa fa-cubes"></i>
           </button>
         </li>
-        <li className="nav-item" role="presentation">
+        {/* <li className="nav-item" role="presentation">
           <button
             className="nav-link"
             id="layer-tab"
@@ -30,7 +30,7 @@ function Sidebar() {
           >
             <i className="fa fa-tasks"></i>
           </button>
-        </li>
+        </li> */}
         <li className="nav-item" role="presentation">
           <button
             className="nav-link"

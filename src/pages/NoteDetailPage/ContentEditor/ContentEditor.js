@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { API_HOST } from "../../../api_utils";
 import geditorConfig from "../../../api_utils/geditor_config";
 import TopNav from "../../../components/Page/TopNav";
-import "./ContentEditor.css";
+//import "./ContentEditor.css";
 //import PageSection from "../Page/PageSection";
 
 const ContentEditor = ( { versionId } ) => {

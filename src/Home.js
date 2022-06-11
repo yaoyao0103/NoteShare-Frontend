@@ -136,6 +136,9 @@ const Home = () => {
         <div>
         <Link to={'/ScreenShotCapture'}>ScreenShotCapture</Link>
         </div>
+        <div>
+        <Link to={'/NoteEditPage'}>NoteEditPage</Link>
+        </div>
       </div>
     </div>
   );

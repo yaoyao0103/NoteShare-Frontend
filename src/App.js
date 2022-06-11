@@ -16,6 +16,7 @@ import ScreenShotCapture from "./pages/ScreenShotCapture";
 import QnAEditPage from "./pages/QnAEditPage/QnAEditPage";
 import RewardEditPage from "./pages/RewardEditPage/RewardEditPage";
 import CollabEditPage from "./pages/CollabEditPage/CollabEditPage";
+import NoteEditPage from "./pages/NoteEditPage/NoteEditPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -41,6 +42,7 @@ function App() {
         <Route exact path="/CollabDetailPage" component={CollabDetailPage}></Route>
         <Route exact path="/CollabEditPage" component={CollabEditPage}></Route>
         <Route exact path="/ScreenShotCapture" component={ScreenShotCapture}></Route>
+        <Route exact path="/NoteEditPage" component={NoteEditPage}></Route>
       </Switch>
     </Router>
   );
