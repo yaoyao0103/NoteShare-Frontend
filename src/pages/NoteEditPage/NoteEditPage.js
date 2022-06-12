@@ -3,27 +3,28 @@ import PageDetailTemplate from '../../components/PageDetailTemplate/PageDetailTe
 import NoteEditTemplate from '../../components/NoteEditTemplate/NoteEditTemplate';
 function NoteEditPage(){
     const page = "NoteEditPage";
-
-    /*useEffect(() => {
-        async function getCollabNoteById() {
+    const [mode, setMode] = useState("New");
+    const [note, setNote] = useState(null);
+    useEffect(() => {
+        async function getNoteById() {
             try {
-                const post = require('../../MockData/CollabNote.json');
-                setPost(post);
-                console.log(post)
+                const note = require('../../MockData/Note.json');
+                setNote(note);
+                console.log(note)
             } catch (error) {
                 console.log(error);
             }
         }
         if(mode=="Edit"){
-            getCollabNoteById();
+            getNoteById();
         }
         
-        }, []);*/
+        }, []);
 
     return(
         <>
             <PageDetailTemplate page={page}>
-                <NoteEditTemplate page={page} />
+                <NoteEditTemplate page={page} note={note} mode={mode}/>
             </PageDetailTemplate>
         </>
         

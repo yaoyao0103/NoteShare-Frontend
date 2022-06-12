@@ -60,8 +60,12 @@
       "price": 50,
       "quotable": false,
       "tag": [
-        "tag1",
-        "tag2"
+        "機器學習",
+        "classifier",
+        "model",
+        "train",
+        "keras",
+        "tensorflow"
       ],
       "hiddenTag": [
         "hiddenTag1",

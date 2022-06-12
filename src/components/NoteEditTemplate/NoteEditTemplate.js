@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Steps, Layout, Row, Col, Input, Popover, message } from 'antd';
+import { Steps, Layout, Row, Col, Input, Popover, message, Select } from 'antd';
 import "./NoteEditTemplate.css"
 import PostEditTemplate from '../PostEditTemplate/PostEditTemplate';
 import Button from '../Button/Button';
@@ -12,6 +12,7 @@ import MyEditor from '../MyEditor/MyEditor';
 const { Header, Content, Sider, Footer } = Layout;
 const { Step } = Steps;
 const { TextArea } = Input;
+const { Option } = Select;
 
 const NoteEditTemplate = (props) => {
     const [title, setTitle] = useState(null);
@@ -25,17 +26,17 @@ const NoteEditTemplate = (props) => {
     const { pages } = pageStore;
 
     useEffect(() => {
-        const post = props.post;
-        if(post && props.mode == 'Edit'){
-            setTitle(post.title);
-            setContent(post.content);
+        const note = props.note;
+        if(note && props.mode == 'Edit'){
+            setTitle(note.title);
+            setEditor(<MyEditor noteId={note._id}/>);
             setInformation({
-                school: post.school,
-                department: post.department,
-                subject: post.subject,
-                professor: post.professor,
-                downloadable: post.downloadable,
-                price: post.price,
+                school: note.school,
+                department: note.department,
+                subject: note.subject,
+                professor: note.professor,
+                downloadable: note.downloadable,
+                price: note.price,
             })
         }
         else{
@@ -67,13 +68,19 @@ const NoteEditTemplate = (props) => {
             message.error("Title can't be empty");
             return;
         }
-        const res = createPage(title)(dispatch);
-        await res.then( result => {
+        if(props.mode=="Edit"){
+            message.info("Update info")
+        }
+        else{
+            const res = createPage(title)(dispatch);
+            await res.then( result => {
             setNoteId(result._id)
             setEditor(<MyEditor noteId={result._id}/>)
-            }
-        )
-        setStep(1);
+                }
+            )
+            setStep(1);
+        }
+        //setStep(1);
         
     }
 
@@ -177,6 +184,24 @@ const NoteEditTemplate = (props) => {
                     }
                     {step==2 &&
                         <>
+                            <Select
+                                mode="tags"
+                                style={{
+                                width: '100%',
+                                }}
+                                placeholder="Tags Mode"
+                                onChange={null}
+                            >
+                            </Select>
+                            <Select
+                                mode="tags"
+                                style={{
+                                    width: '100%',
+                                }}
+                                placeholder="Tags Mode"
+                                onChange={null}
+                            >
+                            </Select>
                             <Footer className="noteEditTemplate__Footer">
                                 <div className="noteEditTemplate__Footer__Button" onClick={tagSubmit}>
                                     <Button color={"green"}><Text color='white' cls='Large' content={"Submit"} fontSize='17' display="inline-block" /></Button>
