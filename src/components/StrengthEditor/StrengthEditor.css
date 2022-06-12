@@ -1,0 +1,79 @@
+.StrengthEditor{
+    position: relative;
+    height:80%;
+    
+
+}
+.StrengthEditor__Title{
+    position: relative;
+    display: inline-block;
+}
+.StrengthEditor__Tags{
+    display: inline-block;
+    vertical-align: top;
+    width: 80%;
+    height: auto;
+}
+.StrengthEditor__Tag{
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+    margin-top: 1.2%;
+    margin-left:2%;
+    /* padding-top:0.5% ;
+    padding-bottom:0.5% ; */
+    width: auto;
+    padding-right: 1%;
+    padding-left: 1%;
+    min-width:7% ;
+    min-height:1.8em ;
+    border-radius: 3%;
+   
+}
+.StrengthEditor__Tag:hover{
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+    margin-top: 1.2%;
+    margin-left:2%;
+    /* padding-top:0.5% ;
+    padding-bottom:0.5% ; */
+    width: auto;
+    padding-right: 1%;
+    padding-left: 1%;
+    min-width:7% ;
+    min-height:1.8em ;
+    border-radius: 3%;
+    background-color: #d5d5d5;
+    transform: scale(1.1);
+}
+.StrengthEditor__Delete{
+    opacity: 0;
+
+}
+.StrengthEditor__Tag:hover .StrengthEditor__Delete{
+    position: relative;
+    vertical-align: top;
+    margin-left:0.5em;
+    padding-top: 0.65em;
+    opacity:0.8;
+    cursor: pointer;
+}
+.StrengthEditor__Add{
+    position: relative;
+    vertical-align: top;
+    padding-top: 0.8em;
+    margin-left: 3%;
+    cursor: pointer;
+}
+.StrengthEditor__Input{
+    width:60%;
+    margin-left:2% ;
+    vertical-align:bottom;
+    
+}
+.StrengthEditor__Save{
+    margin-left:3% ;
+    vertical-align:bottom;
+    
+}

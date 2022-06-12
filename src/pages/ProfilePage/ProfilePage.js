@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from '../../components/Navbar/Navbar';
-import { Layout, Avatar, Row,Col } from "antd";
-import { EditFilled } from '@ant-design/icons';
+import { Layout, Avatar, Row, Col, Card, Statistic } from "antd";
+import { EditFilled, ArrowUpOutlined, ArrowDownOutlined } from '@ant-design/icons';
 import './ProfilePage.css'
+import TextEditor from '../../components/TextEditor/TextEditor';
+import StrengthEditor from '../../components/StrengthEditor/StrengthEditor';
 import Text from '../../components/Text/Text';
+import FansNFollower from '../../components/FansNFollower/FansNFollower';
+import IntroductionEditor from '../../components/IntroductionEditor/IntroductionEditor';
 const { Header, Sider, Content, Footer } = Layout;
 
 function ProfilePage() {
     const [Page, setPage] = useState('ProfilePage');
+
     useEffect(() => {
         setPage('ProfilePage');
     }, [Page]);
@@ -18,48 +23,32 @@ function ProfilePage() {
                 <Layout className='Profile__Layout__Inner'>
                     <Content className='Profile__Content'>
                         <div className={"Profile__Avatar__Outer"}>
-                            <Avatar className={"Profile__Avatar__Inner"} size={96} src="https://joeschmoe.io/api/v1/random"></Avatar>
+                            <Avatar className={"Profile__Avatar__Inner"} size={84} src="https://joeschmoe.io/api/v1/random"></Avatar>
                             <div className={"Profile__Avatar__Editor"}>
                                 <EditFilled />
                             </div>
-
                         </div>
-
+                        <div className="Profile__Fans">
+                            <FansNFollower></FansNFollower>
+                        </div>
 
                     </Content>
                     <Sider className='Profile__Sider' width='75%'>
-                        <Row className='Profile__First__Row'>
-                            <Col className='Profile__Name' span={20}>
-                            <Text cls='Gerneral' fontSize='32' content={'名字 : Plusx'} />
-                            </Col>
-                            <Col className='Profile__Name__Editor' span={4}>
-                            <EditFilled style={{ fontSize: '32px' }} />
-                            </Col>
-                        </Row>
-                        <Row className='Profile__Sec__Row'>
-                            <Col className='Profile__Name' span={20}>
-                            <Text cls='Gerneral' fontSize='32' content={'名字 : Plusx'} />
-                            </Col>
-                            <Col className='Profile__Name__Editor' span={4}>
-                            <EditFilled style={{ fontSize: '32px' }} />
-                            </Col>
-                        </Row>
-                        <Row className='Profile__Trd__Row'>
-                            <Col className='Profile__Name' span={20}>
-                            <Text cls='Gerneral' fontSize='32' content={'名字 : Plusx'} />
-                            </Col>
-                            <Col className='Profile__Name__Editor' span={4}>
-                            <EditFilled style={{ fontSize: '32px' }} />
-                            </Col>
-                        </Row>
-                        <Row className='Profile__Fourth__Row'>
-                            <Col className='Profile__Name' span={20}>
-                            <Text cls='Gerneral' fontSize='32' content={'名字 : Plusx'} />
-                            </Col>
-                            <Col className='Profile__Name__Editor' span={4}>
-                            <EditFilled style={{ fontSize: '32px' }} />
-                            </Col>
-                        </Row>
+                        <div className='Profile__FirNSec__Row'>
+                            <div className='Profile__TextEditor'>
+                                <TextEditor ></TextEditor>
+                            </div>
+                            <div className='Profile__Email'>
+                                <Text className='TextEditor__Name' cls='Gerneral' fontSize='26' content={'Email : ' + ' a147896325811@gmail.com'} />
+                            </div>
+                        </div>
+                        
+                        <div className='Profile__Strength'>
+                            <StrengthEditor></StrengthEditor>
+                        </div>
+                        <div className='Profile__Introduction'>
+                            <IntroductionEditor></IntroductionEditor>
+                        </div>
                     </Sider>
                 </Layout>
             </Layout>

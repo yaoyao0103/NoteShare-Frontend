@@ -37,7 +37,7 @@ function QnAOutlinePage() {
     return (
         <>
             <PageOutlineTemplate page={Page}>
-                <PageOutlineContentTemplate page={Page} hasSwitch={false} Post={QnA} changePageNumber={(pagenumber)=>{changePage(pagenumber)}}/>
+                <PageOutlineContentTemplate page={Page} hasSwitch={true} Post={QnA} changePageNumber={(pagenumber)=>{changePage(pagenumber)}}/>
             </PageOutlineTemplate>
 
         </>
