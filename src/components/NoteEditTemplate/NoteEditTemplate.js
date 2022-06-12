@@ -7,7 +7,7 @@ import Text from '../Text/Text';
 import InformationInput from '../InformationInput/InformationInput';
 import { useSelector, useDispatch } from "react-redux";
 import { createPage } from "../../redux/actions/pageAction";
-import { CopyOutlined , EditOutlined, CommentOutlined, CheckOutlined, CloseOutlined, ShareAltOutlined, InboxOutlined, DeleteOutlined, EyeOutlined, InfoCircleOutlined } from "@ant-design/icons";
+import { CaretLeftOutlined, EyeOutlined, InfoCircleOutlined } from "@ant-design/icons";
 import MyEditor from '../MyEditor/MyEditor';
 const { Header, Content, Sider, Footer } = Layout;
 const { Step } = Steps;
@@ -77,6 +77,31 @@ const NoteEditTemplate = (props) => {
         
     }
 
+    const noteFinish = async () => {
+        /*const res = createPage(title)(dispatch);
+        await res.then( result => {
+            setNoteId(result._id)
+            setEditor(<MyEditor noteId={result._id}/>)
+            }
+        )*/
+        setStep(2);
+        
+    }
+
+    const editNote = () => {
+        setStep(1);
+    }
+
+    const tagSubmit = async () => {
+        /*const res = createPage(title)(dispatch);
+        await res.then( result => {
+            setNoteId(result._id)
+            setEditor(<MyEditor noteId={result._id}/>)
+            }
+        )*/
+        
+    }
+
 
     return (   
         <div className="noteEditTemplate">
@@ -141,8 +166,28 @@ const NoteEditTemplate = (props) => {
                         </> 
                     }
                     {step==1 &&
-                        editor
+                        <>
+                            {editor}
+                            <Footer className="noteEditTemplate__Footer">
+                                <div className="noteEditTemplate__Footer__Button" onClick={noteFinish}>
+                                    <Button color={"green"}><Text color='white' cls='Large' content={"Next"} fontSize='17' display="inline-block" /></Button>
+                                </div>
+                            </Footer>
+                        </>
                     }
+                    {step==2 &&
+                        <>
+                            <Footer className="noteEditTemplate__Footer">
+                                <div className="noteEditTemplate__Footer__Button" onClick={tagSubmit}>
+                                    <Button color={"green"}><Text color='white' cls='Large' content={"Submit"} fontSize='17' display="inline-block" /></Button>
+                                </div>
+                                <div className="noteEditTemplate__Footer__Button" onClick={editNote}>
+                                    <Button color={"green"}><CaretLeftOutlined /><Text color='white' cls='Large' content={"Edit Note"} fontSize='17' display="inline-block" /></Button>
+                                </div>
+                            </Footer>
+                        </>
+                    }
+                    
                 </Content>
                 
             </Layout>

@@ -15,7 +15,7 @@ const MyEditor = (props) => {
   const [editor, setEditor] = useState(null);
   const [assets, setAssets] = useState([]);
 
-  /*useEffect(() => {
+  useEffect(() => {
     async function getAllAssets() {
       try {
         const response = await axios.get(`${API_HOST}assets/`);
@@ -27,7 +27,7 @@ const MyEditor = (props) => {
 
     getAllAssets();
   }, []);
-*/
+
 
   useEffect(() => {
     console.log("id", props.noteId)

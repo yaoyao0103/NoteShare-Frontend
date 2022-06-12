@@ -22,8 +22,8 @@
 .noteEditTemplate__Header{
     position: relative;
     width: 100%;
+    height: auto;
     background-color: #fff ;
-    margin-bottom: 3em;
 }
 
 .noteEditTemplate__Steps{
@@ -52,4 +52,12 @@
 
 .noteEditTemplate__Footer__Button{
     float: right;
+    margin-left: 1em;
+}
+
+.noteEditTemplate__Footer__Button .anticon{
+    color: #FFF;
+    margin-right:0.3em;
+    position: relative;
+    top: -0.25em;
 }

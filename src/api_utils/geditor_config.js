@@ -56,7 +56,7 @@ async function geditorConfig(assets, pageId){
     styleManager: styleManager,
     //layerManager: layerManager,
     traitManager: traitManager,
-    selectorManager: selectorManager,
+    //selectorManager: selectorManager,
     panels: panels,
     deviceManager: deviceManager,
     assetManager: { assets: assets, upload: false },
