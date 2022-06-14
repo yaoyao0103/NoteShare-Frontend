@@ -86,6 +86,19 @@
 }
 
 .noteEditTemplate__Content__Tag  .ant-select-selection-overflow-item-suffix{
-    margin-top: 0.1em;
+    /* margin-top: 0.1em; */
     height: 10em;
+}
+
+.noteEditTemplate__Content__RecommendTag  .ant-select-selection-search-input{
+    display: none;
+}
+
+.noteEditTemplate__Content__Tag__List{
+    display: none;
+}
+
+.noteEditTemplate__Content__Tag .anticon{
+    position: relative;
+    top: -0.18em;
 }

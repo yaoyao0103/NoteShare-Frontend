@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Steps, Layout, Row, Col, Input, Popover, message, Select } from 'antd';
+import { Steps, Layout, Row, Col, Input, Popover, message, Select, Tag } from 'antd';
 import "./NoteEditTemplate.css"
 import PostEditTemplate from '../PostEditTemplate/PostEditTemplate';
 import Button from '../Button/Button';
@@ -7,7 +7,7 @@ import Text from '../Text/Text';
 import InformationInput from '../InformationInput/InformationInput';
 import { useSelector, useDispatch } from "react-redux";
 import { createPage } from "../../redux/actions/pageAction";
-import { CaretLeftOutlined, EyeOutlined, InfoCircleOutlined } from "@ant-design/icons";
+import { CaretLeftOutlined, CheckOutlined, InfoCircleOutlined } from "@ant-design/icons";
 import MyEditor from '../MyEditor/MyEditor';
 const { Header, Content, Sider, Footer } = Layout;
 const { Step } = Steps;
@@ -21,6 +21,7 @@ const NoteEditTemplate = (props) => {
     const [step, setStep] = useState(2);
     const [noteId, setNoteId] = useState(null);
     const [editor, setEditor] = useState(null);
+    const [tagSelected, setTagSelected] = useState([])
     const dispatch = useDispatch();
     const { pageStore } = useSelector((state) => state);
     const { pages } = pageStore;
@@ -108,6 +109,48 @@ const NoteEditTemplate = (props) => {
         )*/
         
     }
+    const recommendTag = ['OS', 'VM', 'Pagination', 'Virtual machine']
+
+    const recommendTagRender = (props) => {
+        const { label, closable } = props;
+        const onSelect = (e) => {
+            e.preventDefault();
+            const value = e.target.parentNode.parentNode.parentNode.innerText.length!=0? e.target.parentNode.parentNode.parentNode.innerText:e.target.parentNode.parentNode.innerText.length!=0? e.target.parentNode.parentNode.innerText:'';
+            if(!tagSelected.includes(value) && value.length !=0)
+                setTagSelected([...tagSelected, value])
+            console.log(value);
+            console.log(tagSelected)
+        };
+    
+        return (
+            <Tag
+                color={'gold'}
+                closable={closable}
+                onClose={onSelect}
+                style={{
+                    marginRight: 3,
+                }}
+                closeIcon={<CheckOutlined />}
+                >
+                {label}
+            </Tag>
+        );
+    };
+    const myTagRender = (props) => {
+        const { label, closable, onClose } = props;
+        return (
+            <Tag
+                color={recommendTag.includes(label)?'gold':'green'}
+                closable={closable}
+                onClose={onClose}
+                style={{
+                    marginRight: 3,
+                }}
+                >
+                {label}
+            </Tag>
+        );
+        };
 
 
     return (   
@@ -174,24 +217,29 @@ const NoteEditTemplate = (props) => {
                             <div className='noteEditTemplate__Content__Tag noteEditTemplate__Content__RecommendTag'>
                                 <Text color='black' cls='Small' content={"Recommend Tags"} fontSize='20' display="inline-block" />
                                 <Select
+                                    dropdownClassName="noteEditTemplate__Content__Tag__List"
+                                    defaultValue={recommendTag}
+                                    tagRender={recommendTagRender}
                                     mode="tags"
-                                    size='large'
+                                    //size='large'
                                     style={{
                                     width: '100%',
                                     }}
-                                    onChange={null}
+                                    removeIcon={<CheckOutlined />}
                                 >
                                 </Select>
                             </div>
                             <div className='noteEditTemplate__Content__Tag noteEditTemplate__Content__MyTag'>
                                 <Text color='black' cls='Small' content={"My Tags"} fontSize='20' display="inline-block" />
                                 <Select
+                                    dropdownClassName="noteEditTemplate__Content__Tag__List"
                                     mode="tags"
-                                    size='large'
+                                    value={tagSelected}
+                                    tagRender={myTagRender}
                                     style={{
                                         width: '100%',
                                     }}
-                                    onChange={null}
+                                    onChange={(value) => setTagSelected(value)}
                                 >
                                 </Select>
                             </div>
@@ -215,6 +263,7 @@ const NoteEditTemplate = (props) => {
                 }
                 {step==2 &&
                     <Footer className="noteEditTemplate__Footer">
+                        <Text color='black' cls='Small' content={"Tip: Press enter to confirm your tag"} fontSize='15' display="inline-block" />
                         <div className="noteEditTemplate__Footer__Button" onClick={tagSubmit}>
                             <Button color={"green"}><Text color='white' cls='Large' content={"Submit"} fontSize='17' display="inline-block" /></Button>
                         </div>
