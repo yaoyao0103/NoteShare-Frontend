@@ -61,3 +61,31 @@
     position: relative;
     top: -0.25em;
 }
+
+/* tag phase */
+.noteEditTemplate__Content__Tags{
+    margin-top: 3em;
+    height: 50%;
+}
+
+.noteEditTemplate__Content__Tag{
+    width: 49%;
+    float: left;
+}
+
+.noteEditTemplate__Content__Tags .noteEditTemplate__Content__MyTag{
+    margin-left: 2%;
+}
+
+.noteEditTemplate__Content__Tag  .ant-select-selection-overflow{
+    display: block;
+}
+
+.noteEditTemplate__Content__Tag  .ant-select-selection-overflow-item{
+    float: left;
+}
+
+.noteEditTemplate__Content__Tag  .ant-select-selection-overflow-item-suffix{
+    margin-top: 0.1em;
+    height: 10em;
+}

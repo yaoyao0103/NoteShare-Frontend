@@ -18,7 +18,7 @@ const NoteEditTemplate = (props) => {
     const [title, setTitle] = useState(null);
     const [content, setContent] = useState(null);
     const [information, setInformation] = useState(null);
-    const [step, setStep] = useState(0);
+    const [step, setStep] = useState(2);
     const [noteId, setNoteId] = useState(null);
     const [editor, setEditor] = useState(null);
     const dispatch = useDispatch();
@@ -164,57 +164,65 @@ const NoteEditTemplate = (props) => {
                                         <TextArea rows={10} placeholder="type something..." value={content} onChange={(ev) => setContent(ev.target.value)}/>
                                 </Col>
                             </Row>
-                            {/* Footer */}
-                            <Footer className="noteEditTemplate__Footer">
-                                <div className="noteEditTemplate__Footer__Button" onClick={infoSubmit}>
-                                    <Button color={"green"}><Text color='white' cls='Large' content={"Submit"} fontSize='17' display="inline-block" /></Button>
-                                </div>
-                            </Footer>
                         </> 
                     }
                     {step==1 &&
-                        <>
-                            {editor}
-                            <Footer className="noteEditTemplate__Footer">
-                                <div className="noteEditTemplate__Footer__Button" onClick={noteFinish}>
-                                    <Button color={"green"}><Text color='white' cls='Large' content={"Next"} fontSize='17' display="inline-block" /></Button>
-                                </div>
-                            </Footer>
-                        </>
+                        {editor}
                     }
                     {step==2 &&
-                        <>
-                            <Select
-                                mode="tags"
-                                style={{
-                                width: '100%',
-                                }}
-                                placeholder="Tags Mode"
-                                onChange={null}
-                            >
-                            </Select>
-                            <Select
-                                mode="tags"
-                                style={{
+                        <div className='noteEditTemplate__Content__Tags'>
+                            <div className='noteEditTemplate__Content__Tag noteEditTemplate__Content__RecommendTag'>
+                                <Text color='black' cls='Small' content={"Recommend Tags"} fontSize='20' display="inline-block" />
+                                <Select
+                                    mode="tags"
+                                    size='large'
+                                    style={{
                                     width: '100%',
-                                }}
-                                placeholder="Tags Mode"
-                                onChange={null}
-                            >
-                            </Select>
-                            <Footer className="noteEditTemplate__Footer">
-                                <div className="noteEditTemplate__Footer__Button" onClick={tagSubmit}>
-                                    <Button color={"green"}><Text color='white' cls='Large' content={"Submit"} fontSize='17' display="inline-block" /></Button>
-                                </div>
-                                <div className="noteEditTemplate__Footer__Button" onClick={editNote}>
-                                    <Button color={"green"}><CaretLeftOutlined /><Text color='white' cls='Large' content={"Edit Note"} fontSize='17' display="inline-block" /></Button>
-                                </div>
-                            </Footer>
-                        </>
+                                    }}
+                                    onChange={null}
+                                >
+                                </Select>
+                            </div>
+                            <div className='noteEditTemplate__Content__Tag noteEditTemplate__Content__MyTag'>
+                                <Text color='black' cls='Small' content={"My Tags"} fontSize='20' display="inline-block" />
+                                <Select
+                                    mode="tags"
+                                    size='large'
+                                    style={{
+                                        width: '100%',
+                                    }}
+                                    onChange={null}
+                                >
+                                </Select>
+                            </div>
+                        </div>
                     }
                     
                 </Content>
-                
+                {step==0 &&
+                    <Footer className="noteEditTemplate__Footer">
+                        <div className="noteEditTemplate__Footer__Button" onClick={infoSubmit}>
+                            <Button color={"green"}><Text color='white' cls='Large' content={"Submit"} fontSize='17' display="inline-block" /></Button>
+                        </div>
+                    </Footer>
+                }
+                {step==1 &&
+                    <Footer className="noteEditTemplate__Footer">
+                        <div className="noteEditTemplate__Footer__Button" onClick={noteFinish}>
+                            <Button color={"green"}><Text color='white' cls='Large' content={"Next"} fontSize='17' display="inline-block" /></Button>
+                        </div>
+                    </Footer>
+                }
+                {step==2 &&
+                    <Footer className="noteEditTemplate__Footer">
+                        <div className="noteEditTemplate__Footer__Button" onClick={tagSubmit}>
+                            <Button color={"green"}><Text color='white' cls='Large' content={"Submit"} fontSize='17' display="inline-block" /></Button>
+                        </div>
+                        <div className="noteEditTemplate__Footer__Button" onClick={editNote}>
+                            <Button color={"green"}><CaretLeftOutlined /><Text color='white' cls='Large' content={"Edit Note"} fontSize='17' display="inline-block" /></Button>
+                        </div>
+                    </Footer>
+                }
             </Layout>
         </div>
     )
