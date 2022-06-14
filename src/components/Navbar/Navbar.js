@@ -13,7 +13,7 @@ import {
 } from '@ant-design/icons';
 import {Row,Col} from 'antd';
 function Navbar(props) {
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(true);
   return (
     <div id="navbar" className="nav">
       <Logo />

@@ -139,6 +139,9 @@ const Home = () => {
         <div>
         <Link to={'/NoteEditPage'}>NoteEditPage</Link>
         </div>
+        <div>
+        <Link to={'/ProfilePage'}>ProfilePagePage</Link>
+        </div>
       </div>
     </div>
   );

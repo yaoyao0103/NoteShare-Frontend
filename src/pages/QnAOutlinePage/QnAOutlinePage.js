@@ -10,7 +10,6 @@ function QnAOutlinePage() {
     const [QnA, setQnA] =useState([]);
     useEffect(() => {
         setPage('QnAOutlinePage');
-        console.log(Page)
     }, [Page]);
     useEffect(() => {
         async function getQnAById() {
@@ -38,7 +37,7 @@ function QnAOutlinePage() {
     return (
         <>
             <PageOutlineTemplate page={Page}>
-                <PageOutlineContentTemplate page={Page} hasSwitch={false} Post={QnA} changePageNumber={(pagenumber)=>{changePage(pagenumber)}}/>
+                <PageOutlineContentTemplate page={Page} hasSwitch={true} Post={QnA} changePageNumber={(pagenumber)=>{changePage(pagenumber)}}/>
             </PageOutlineTemplate>
 
         </>

@@ -1,0 +1,29 @@
+.TextEditor{
+position: relative;
+height:80%;
+}
+.TextEditor__Title{
+    margin:3%;
+   
+}
+.TextEditor__Editor{
+    margin:3%;
+    margin-top:2%;
+   vertical-align: top;
+}
+.TextEditor__Name{
+    display: inline;
+    width: 60%;
+    margin-left:1%;
+}
+.TextEditor__Input{
+    width:50%;
+    margin-left:2% ;
+    vertical-align:middle;
+    margin-bottom: 1%;
+}
+.TextEditor__Save{
+    margin-left:3% ;
+    vertical-align:middle;
+    margin-bottom: 1%;
+}
