@@ -164,9 +164,9 @@ const NoteEditTemplate = (props) => {
                     </Row>  
                     <Row className="noteEditTemplate__Row noteEditTemplate__Steps" >
                         <Steps current={step}  progressDot={customDot}>
-                            <Step title="Information" icon={<InfoCircleOutlined />}/>
-                            <Step title="Editor" description="Note editing phase" />
-                            <Step title="Tag" description="Tag manage phase" />
+                            <Step title="Step 1" description="Information modify" icon={<InfoCircleOutlined />}/>
+                            <Step title="Step 2" description="Note edit" />
+                            <Step title="Step 3" description="Tag manage" />
                         </Steps>
                     </Row>  
                 </Header>
@@ -230,7 +230,7 @@ const NoteEditTemplate = (props) => {
                                 </Select>
                             </div>
                             <div className='noteEditTemplate__Content__Tag noteEditTemplate__Content__MyTag'>
-                                <Text color='black' cls='Small' content={"My Tags"} fontSize='20' display="inline-block" />
+                                <Text color='black' cls='Small' content={"Your Tags"} fontSize='20' display="inline-block" />
                                 <Select
                                     dropdownClassName="noteEditTemplate__Content__Tag__List"
                                     mode="tags"
@@ -263,7 +263,7 @@ const NoteEditTemplate = (props) => {
                 }
                 {step==2 &&
                     <Footer className="noteEditTemplate__Footer">
-                        <Text color='black' cls='Small' content={"Tip: Press enter to confirm your tag"} fontSize='15' display="inline-block" />
+                        <Text color='black' cls='Large' content={"Tip: Press enter to confirm your tag"} fontSize='15' display="inline-block" />
                         <div className="noteEditTemplate__Footer__Button" onClick={tagSubmit}>
                             <Button color={"green"}><Text color='white' cls='Large' content={"Submit"} fontSize='17' display="inline-block" /></Button>
                         </div>
