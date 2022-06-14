@@ -13,18 +13,11 @@ import QnAOutlinePage from "./pages/QnAOutlinePage/QnAOutlinePage";
 import CollabDetailPage from "./pages/CollabDetailPage/CollabDetailPage";
 import CollabOutlinePage from "./pages/CollabOutlinePage/CollabOutlinePage";
 import ScreenShotCapture from "./pages/ScreenShotCapture";
-<<<<<<< HEAD
 import QnAEditPage from "./pages/QnAEditPage/QnAEditPage";
 import RewardEditPage from "./pages/RewardEditPage/RewardEditPage";
 import CollabEditPage from "./pages/CollabEditPage/CollabEditPage";
 import NoteEditPage from "./pages/NoteEditPage/NoteEditPage";
-
-=======
-import NewQnAPage from "./pages/NewQnAPage/NewQnAPage";
-import NewRewardPage from "./pages/NewRewardPage/NewRewardPage";
-import NewCollabPage from "./pages/NewCollabPage/NewCollabPage";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
->>>>>>> 20817601e1e0faf34a7b4bfdbbd4babe13063b21
 function App() {
   const dispatch = useDispatch();
 
@@ -49,14 +42,8 @@ function App() {
         <Route exact path="/CollabDetailPage" component={CollabDetailPage}></Route>
         <Route exact path="/CollabEditPage" component={CollabEditPage}></Route>
         <Route exact path="/ScreenShotCapture" component={ScreenShotCapture}></Route>
-<<<<<<< HEAD
         <Route exact path="/NoteEditPage" component={NoteEditPage}></Route>
-=======
-        <Route exact path="/NewQnAPage" component={NewQnAPage}></Route>
-        <Route exact path="/NewRewardPage" component={NewRewardPage}></Route>
-        <Route exact path="/NewCollabPage" component={NewCollabPage}></Route>
         <Route exact path="/ProfilePage" component={ProfilePage}></Route>
->>>>>>> 20817601e1e0faf34a7b4bfdbbd4babe13063b21
       </Switch>
     </Router>
   );
