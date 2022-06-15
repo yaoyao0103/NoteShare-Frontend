@@ -8,12 +8,12 @@
 
 /* Theming */
 .gjs-one-bg {
-  background-color: #f7f7f2;
+  background-color: #fff;
 }
 
 .gjs-two-color {
   color: #7B7B7B;
-  background-color: #f7f7f2;
+  background-color: #fff;
 }
 
 .gjs-three-bg {
@@ -210,7 +210,7 @@
   overflow-x: hidden;
   -ms-overflow-style: none;
   scrollbar-width: none;
-  background-color: #f7f7f2;
+  background-color: #fff;
   -webkit-transition: 0.5s;
   transition: 0.5s;
   -webkit-box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.05);
@@ -314,22 +314,6 @@
   }
 }
 
-#myTab {
-  margin-top: 10px;
-}
-
-#myTab li {
-  width: 25%;
-}
-
-#myTab button {
-  width: 100%;
-}
-
-#myTab i {
-  -webkit-transform: scale(1.4);
-          transform: scale(1.4);
-}
 
 .gjs-category-title,
 .gjs-layer-title,
@@ -337,7 +321,7 @@
 .gjs-sm-sector .gjs-sm-title,
 .gjs-clm-tags .gjs-sm-title {
   font-weight: lighter;
-  background-color: #f7f7f2;
+  background-color: #fff;
   letter-spacing: 1px;
   padding: 9px 10px 9px 20px;
   border-bottom: none;
@@ -370,7 +354,7 @@
 
 .gjs-category-open, .gjs-block-category.gjs-open, .gjs-open .gjs-title, .gjs-sm-sector.gjs-sm-open, .gjs-sm-open.gjs-clm-tags {
   color: #444;
-  background-color: #f1f1ee;
+  background-color: #fff;
   border: none;
   padding-bottom: 10px;
 }
@@ -406,6 +390,6 @@
 }
 
 .gjs-layer .gjs-selected, .gjs-layer .open, .gjs-hovered {
-  background-color: #f1f1ee;
+  /* background-color: #f1f1ee; */
 }
 /*# sourceMappingURL=Editor.css.map */

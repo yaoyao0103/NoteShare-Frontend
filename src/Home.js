@@ -104,37 +104,40 @@ const Home = () => {
         <Link to={'/MemberPage'}>MemberPage</Link>
         </div>
         <div>
-        <Link to={'/QnADetailPage'}>QnADetailPage</Link>
-        </div>
-        <div>
         <Link to={'/NoteDetailPage'}>NoteDetailPage</Link>
-        </div>
-        <div>
-        <Link to={'/RewardDetailPage'}>RewardDetailPage</Link>
         </div>
         <div>
         <Link to={'/RewardOutlinePage'}>RewardOutlinePage</Link>
         </div>
         <div>
+        <Link to={'/RewardDetailPage'}>RewardDetailPage</Link>
+        </div>
+        <div>
+        <Link to={'/RewardEditPage'}>RewardEditPage</Link>
+        </div>
+        <div>
         <Link to={'/QnAOutlinePage'}>QnAOutlinePage</Link>
         </div>
         <div>
-        <Link to={'/CollabDetailPage'}>CollabDetailPage</Link>
+        <Link to={'/QnADetailPage'}>QnADetailPage</Link>
+        </div>
+        <div>
+        <Link to={'/QnAEditPage'}>QnAEditPage</Link>
         </div>
         <div>
         <Link to={'/CollabOutlinePage'}>CollabOutlinePage</Link>
         </div>
         <div>
+        <Link to={'/CollabDetailPage'}>CollabDetailPage</Link>
+        </div>
+        </div>
+        <Link to={'/CollabEditPage'}>CollabEditPage</Link>
+        <div>
+        <div>
         <Link to={'/ScreenShotCapture'}>ScreenShotCapture</Link>
         </div>
         <div>
-        <Link to={'/NewQnAPage'}>NewQnAPage</Link>
-        </div>
-        <div>
-        <Link to={'/NewRewardPage'}>NewRewardPage</Link>
-        </div>
-        <div>
-        <Link to={'/NewCollabPage'}>NewCollabPage</Link>
+        <Link to={'/NoteEditPage'}>NoteEditPage</Link>
         </div>
         <div>
         <Link to={'/ProfilePage'}>ProfilePagePage</Link>

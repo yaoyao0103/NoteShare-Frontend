@@ -10,7 +10,7 @@ function QnADetailPage() {
     useEffect(() => {
         async function getQnAById() {
             try {
-                const temp = require('./QnAJson.json');
+                const temp = require('../../MockData/QnA.json');
                 setQnA(temp);
             } catch (error) {
                 console.log(error.message);

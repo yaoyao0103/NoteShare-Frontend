@@ -13,9 +13,10 @@ import QnAOutlinePage from "./pages/QnAOutlinePage/QnAOutlinePage";
 import CollabDetailPage from "./pages/CollabDetailPage/CollabDetailPage";
 import CollabOutlinePage from "./pages/CollabOutlinePage/CollabOutlinePage";
 import ScreenShotCapture from "./pages/ScreenShotCapture";
-import NewQnAPage from "./pages/NewQnAPage/NewQnAPage";
-import NewRewardPage from "./pages/NewRewardPage/NewRewardPage";
-import NewCollabPage from "./pages/NewCollabPage/NewCollabPage";
+import QnAEditPage from "./pages/QnAEditPage/QnAEditPage";
+import RewardEditPage from "./pages/RewardEditPage/RewardEditPage";
+import CollabEditPage from "./pages/CollabEditPage/CollabEditPage";
+import NoteEditPage from "./pages/NoteEditPage/NoteEditPage";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
 function App() {
   const dispatch = useDispatch();
@@ -30,17 +31,18 @@ function App() {
         <Route exact path="/" component={Home}></Route>
         <Route exact path="/editor/:pageId" component={Editor}></Route>
         <Route exact path="/MemberPage" component={MemberPage}></Route>
-        <Route exact path="/QnADetailPage" component={QnADetailPage}></Route>
-        <Route exact path="/RewardDetailPage" component={RewardDetailPage}></Route>
-        <Route exact path="/RewardOutlinePage" component={RewardOutlinePage}></Route>
         <Route exact path="/NoteDetailPage" component={NoteDetailPage}></Route>
+        <Route exact path="/RewardOutlinePage" component={RewardOutlinePage}></Route>
+        <Route exact path="/RewardDetailPage" component={RewardDetailPage}></Route>
+        <Route exact path="/RewardEditPage" component={RewardEditPage}></Route>
         <Route exact path="/QnAOutlinePage" component={QnAOutlinePage}></Route>
-        <Route exact path="/CollabDetailPage" component={CollabDetailPage}></Route>
+        <Route exact path="/QnADetailPage" component={QnADetailPage}></Route>
+        <Route exact path="/QnAEditPage" component={QnAEditPage}></Route>
         <Route exact path="/CollabOutlinePage" component={CollabOutlinePage}></Route>
+        <Route exact path="/CollabDetailPage" component={CollabDetailPage}></Route>
+        <Route exact path="/CollabEditPage" component={CollabEditPage}></Route>
         <Route exact path="/ScreenShotCapture" component={ScreenShotCapture}></Route>
-        <Route exact path="/NewQnAPage" component={NewQnAPage}></Route>
-        <Route exact path="/NewRewardPage" component={NewRewardPage}></Route>
-        <Route exact path="/NewCollabPage" component={NewCollabPage}></Route>
+        <Route exact path="/NoteEditPage" component={NoteEditPage}></Route>
         <Route exact path="/ProfilePage" component={ProfilePage}></Route>
       </Switch>
     </Router>

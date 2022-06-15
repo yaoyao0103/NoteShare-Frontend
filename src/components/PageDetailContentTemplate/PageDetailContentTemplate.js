@@ -85,7 +85,7 @@ const PageDetailContentTemplate = (props) => {
                                     school={props.data?.school}
                                     department={props.data?.department}
                                     subject={props.data?.subject}
-                                    instructor={props.data?.professor}
+                                    professor={props.data?.professor}
                                     likeCount={props.data?.likeCount}
                                     favoriteCount={props.data?.favoriteCount}
                                     unlockCount={props.data?.unlockCount} 

@@ -3,19 +3,18 @@ export const QnA = {
     subject: '',
     price: '0',
 }
-export const Collab = {
+export const CollabNote = {
     school: '',
     department: '',
     subject: '',
-    instructor: '',
-    downloadable: false,
+    professor: '',
     price: '0',
 }
 export const Note = {
     school: '',
     department: '',
     subject: '',
-    instructor: '',
+    professor: '',
     downloadable: false,
     price: '0',
 }
@@ -23,7 +22,7 @@ export const Reward = {
     school: '',
     department: '',
     subject: '',
-    instructor: '',
+    professor: '',
     price: '0',
     refPrice: '0',
 }

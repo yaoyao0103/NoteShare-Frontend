@@ -26,10 +26,10 @@ const InformationInput = ({information, setInformation}) => {
                 <Input showCount maxLength={20} placeholder="subject" onChange={(ev) => setInformation({...information, subject: ev.target.value})} value={information?.subject} /> 
             </div>  
         }
-        {information?.instructor!=null &&
+        {information?.professor!=null &&
             <div className="informationInput__item informationInput__Input">
-                <Text color='black' cls='Small' content={"Instructor"} fontSize='15' display="inline-block" />
-                <Input showCount maxLength={20} placeholder="instructor" onChange={(ev) => setInformation({...information, instructor: ev.target.value})} value={information?.instructor} /> 
+                <Text color='black' cls='Small' content={"professor"} fontSize='15' display="inline-block" />
+                <Input showCount maxLength={20} placeholder="professor" onChange={(ev) => setInformation({...information, professor: ev.target.value})} value={information?.professor} /> 
             </div>  
         }
         {information?.price!=null &&

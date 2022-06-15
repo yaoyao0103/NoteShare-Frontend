@@ -1,4 +1,4 @@
-.newContentTemplate{
+.postEditTemplate{
     position:relative;
     width: 90%;
     height: 100%; 
@@ -10,7 +10,7 @@
 }
 
 
-.newContentTemplate__Layout{
+.postEditTemplate__Layout{
     position:relative;
     width: 100%; 
     background-color: white;
@@ -18,18 +18,18 @@
     box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
 }
 
-.newContentTemplate__Header{
+.postEditTemplate__Header{
     background-color: #fff;
     width: 100%;
     height: 10%;
 }
 
-.newContentTemplate__Header__Title{
+.postEditTemplate__Header__Title{
     text-align: center;
     width: 100%;
 }
 
-.newContentTemplate__Content{
+.postEditTemplate__Content{
     width: 100%;
     padding-left: 8%;
     padding-right: 8%;
@@ -41,20 +41,20 @@
 }
 
 
-.newContentTemplate__Content__Label{
+.postEditTemplate__Content__Label{
     margin-top: 2em;
     width: 100%;
 }
 
-.newContentTemplate__Content__Title{
+.postEditTemplate__Content__Title{
     width: 100%;
 }
 
-.newContentTemplate__Content__Information{
+.postEditTemplate__Content__Information{
     width: 100%;
 }
 
-.newContentTemplate__Content__Main{
+.postEditTemplate__Content__Main{
     width: 100%;
     font-size: large;
     font-weight: 100;
@@ -62,7 +62,7 @@
 
 
 
-.newContentTemplate__Footer{
+.postEditTemplate__Footer{
     background-color: #fff;
     padding-left: 8%;
     padding-right: 8%;
@@ -73,6 +73,6 @@
     margin-left: 10px;
 }
 
-.newContentTemplate__Footer__Button{
+.postEditTemplate__Footer__Button{
     float: right;
 }

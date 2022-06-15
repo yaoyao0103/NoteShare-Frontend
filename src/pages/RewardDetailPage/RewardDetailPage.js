@@ -10,7 +10,7 @@ function RewardDetailPage() {
     useEffect(() => {
         async function getRewardById() {
             try {
-                const temp = require('./RewardJson.json');
+                const temp = require('../../MockData/Reward.json');
                 setReward(temp);
             } catch (error) {
                 console.log(error.message);

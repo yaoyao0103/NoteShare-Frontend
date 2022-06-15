@@ -1,0 +1,110 @@
+.myEditor{
+    position: relative;
+    height: 100%;
+    width: 100%;
+    margin-top: 2em;
+    background-color: #fff;
+}
+
+.gjs-category-title,
+.gjs-layer-title,
+.gjs-block-category .gjs-title,
+.gjs-sm-sector .gjs-sm-title,
+.gjs-clm-tags .gjs-sm-title {
+    background-color: #fff;
+    color: #555;
+}
+
+.gjs-sm-sector{
+    background-color: #fff;
+}
+
+/* .gjs-open .gjs-title {
+    color: #1ADCAB;
+} */
+
+.gjs-category-title:hover,
+.gjs-layer-title:hover,
+.gjs-block-category .gjs-title:hover,
+.gjs-sm-sector .gjs-sm-title:hover,
+.gjs-clm-tags .gjs-sm-title:hover {
+    color: #7D7DFF;
+    -webkit-transition: 0.2s;
+    transition: 0.2s;
+}
+
+.gjs-block-category.gjs-open .gjs-one-bg:hover {
+    color: #7D7DFF;
+}
+
+/* Theming */
+.gjs-one-bg {
+    background-color: #fff;
+}
+
+.gjs-two-color {
+    color: #555;
+    background-color: #fff;
+}
+
+.gjs-cv-canvas {
+    width: 100%;
+    height: 100%;
+}
+
+/* SideNav */
+.nav-tabs{
+    width: 100%;
+}
+.nav-item{
+    height: 100%;
+}
+
+.nav-item .nav-link{
+    padding: 0.3em 1.97rem;
+    font-size: 1.2em;
+}
+.nav-link.active{
+    color: #FFAF60 !important;
+    background-color: #fff !important;
+}
+
+.nav-link:hover{
+    color: 	#7D7DFF !important;
+}
+
+
+/* TopNav */
+
+.gjs-pn-panel {
+    position: relative;
+    color: #555;
+}
+
+.gjs-pn-btn {
+    color: #555;
+}
+
+.gjs-pn-btn:hover {
+    color: #7D7DFF;
+}
+
+.gjs-pn-active {
+    color: #FFAF60;
+}
+
+
+/* editor */
+.gjs-editor{
+    position: inherit;
+}
+
+.gjs-cv-canvas{
+    position: relative;
+    top: 0;
+}
+
+.gjs-toolbar, .gjs-badge{
+    background-color: #7D7DFF;
+}
+
