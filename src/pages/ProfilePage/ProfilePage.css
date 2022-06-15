@@ -111,3 +111,19 @@
     margin-right:5%;
     margin-bottom: 0%;
 }
+/* .Profile__AvatarSelector__Avatar__0:active,.Profile__AvatarSelector__Avatar__1:active,.Profile__AvatarSelector__Avatar__2:active,.Profile__AvatarSelector__Avatar__3:active,
+.Profile__AvatarSelector__Avatar__4:active,.Profile__AvatarSelector__Avatar__5:active,.Profile__AvatarSelector__Avatar__6:active,.Profile__AvatarSelector__Avatar__7:active,
+.Profile__AvatarSelector__Avatar__8:active,.Profile__AvatarSelector__Avatar__9:active,.Profile__AvatarSelector__Avatar__10:active,.Profile__AvatarSelector__Avatar__11:active,
+.Profile__AvatarSelector__Avatar__12:active,.Profile__AvatarSelector__Avatar__13:active,.Profile__AvatarSelector__Avatar__14:active,.Profile__AvatarSelector__Avatar__15:active,
+.Profile__AvatarSelector__Avatar__16:active,.Profile__AvatarSelector__Avatar__17:active,.Profile__AvatarSelector__Avatar__18:active,.Profile__AvatarSelector__Avatar__19:active,
+.Profile__AvatarSelector__Avatar__20:active,.Profile__AvatarSelector__Avatar__21:active,.Profile__AvatarSelector__Avatar__22:active,.Profile__AvatarSelector__Avatar__23:active,
+.Profile__AvatarSelector__Avatar__24:active,.Profile__AvatarSelector__Avatar__25:active,.Profile__AvatarSelector__Avatar__26:active,.Profile__AvatarSelector__Avatar__27:active{
+    box-shadow: rgba(3, 102, 214, 0.3) 0px 0px 0px 3px;
+} */
+.Profile__AvatarSelector__Avatar{
+    margin:0.5%;
+}
+.Profile__AvatarSelector__Avatar__Active{
+    margin:0.5%;
+    box-shadow: rgba(3, 102, 214, 0.3) 0px 0px 0px 3px;
+}
