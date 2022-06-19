@@ -102,3 +102,22 @@
     position: relative;
     top: -0.18em;
 }
+
+.ant-popover-inner-content{
+    padding: 0;
+}
+
+.versionItem {
+    cursor: pointer;
+    padding-left: 1.5em;
+    padding-right: 1.5em;
+}
+
+.newVersion{
+    padding-left: 1em;
+    padding-right: 1em;
+}
+
+.versionItem:hover {
+    background-color: #eee;
+}

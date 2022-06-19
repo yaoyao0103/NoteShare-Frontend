@@ -34,7 +34,9 @@ import swiperComponent from "../plugins/swiper";
 import codeComponent from "../plugins/code";
 import tUIImageEditor from "../plugins/tUIImageEditor";
 
-async function geditorConfig(assets, pageId){
+export let editor;
+
+async function geditorConfig(assets, noteId, version){
   $(".panel__devices").html("");
   $(".panel__basic-actions").html("");
   $(".panel__editor").html("");
@@ -48,7 +50,7 @@ async function geditorConfig(assets, pageId){
   const mainContent = $("#main-content");
   const panelTopBar = $("#main-content > .navbar-light");
 
-  const editor = grapesjs.init({
+  editor = grapesjs.init({
     container: "#editor",
     blockManager: {
       appendTo: "#blocks",
@@ -60,7 +62,7 @@ async function geditorConfig(assets, pageId){
     panels: panels,
     deviceManager: deviceManager,
     assetManager: { assets: assets, upload: false },
-    storageManager: storageSetting(pageId),
+    storageManager: storageSetting(noteId, version),
     canvas: {
       styles: styles,
       scripts: scripts,

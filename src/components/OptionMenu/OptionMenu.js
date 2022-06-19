@@ -16,7 +16,7 @@ const OptionMenu = (props) => {
   const [drawerType, setDrawerType] = useState('');
 
   const comments = (<CommentArea comments={props.comments}/>);
-  const versions = (<VersionArea versions={props.versions} setVersion={props.setVersion}/>);
+  const versions = (<VersionArea page={'NoteDetailPageVersion'} versions={props.versions} setVersion={props.setVersion}/>);
 
   const showDrawer = () => {
     console.log(drawerType);
@@ -339,6 +339,22 @@ const OptionMenu = (props) => {
     }/>
   );
 
+  const VersionEditMenu = (
+    <Menu items={
+      [
+        {
+            label: (<a onClick={()=>{ setVersion(props.index) }}>Copy</a>),
+            key: "1",
+            icon: <EditOutlined />
+        },
+        {
+          label: props.versions[props.index]?.isTemp? (<a >Set Private</a>): (<a >Set Public</a>),
+          key: "2",
+          icon: <DeleteOutlined />
+        }]
+    }/>
+  );
+
   const AnswerDetailMenu = (
     <Menu items={
       [
@@ -390,6 +406,7 @@ const OptionMenu = (props) => {
       case 'QnADetailPage': setMenu( QnADetailMenu ); break;
       case 'RewardDetailPage': setMenu( RewardDetailMenu ); break;
       case 'NoteDetailPageVersion': setMenu( VersionDetailMenu ); break;
+      case 'NoteEditPageVersion': setMenu( VersionEditMenu ); break;
       case 'RewardDetailPageAnswer': setMenu( AnswerDetailMenu ); break;
       case 'CollabDetailPageApplier': setMenu( ApplierDetailMenu ); break;
       case 'CollabDetailPage': 
@@ -408,6 +425,7 @@ const OptionMenu = (props) => {
     switch(drawerType){
       case 'Comment': setDrawer(comments);break;
       case 'Version': setDrawer(versions);break;
+
     }
   },[drawerType])
 

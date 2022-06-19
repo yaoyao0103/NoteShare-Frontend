@@ -1,8 +1,11 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { List, message } from 'antd';
 import OptionMenu from '../OptionMenu/OptionMenu';
 
 const VersionArea = (props) => {
+  useEffect(() => {
+    console.log(props)
+  },[props])
 
   return (
     <List
@@ -11,7 +14,7 @@ const VersionArea = (props) => {
       renderItem={(item, index) => (index !=0 && <List.Item actions={
 
           [
-            <OptionMenu page={"NoteDetailPageVersion"} index = {index} versions={props.versions} setVersion={props.setVersion}/>
+            <OptionMenu page={props.page} index = {index} versions={props.versions} setVersion={props.setVersion}/>
           ]
     } >{item.name}</List.Item>)}
     />
@@ -19,3 +22,5 @@ const VersionArea = (props) => {
 }
 
 export default VersionArea
+
+//page: NoteDetailPageVersion

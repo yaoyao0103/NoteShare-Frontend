@@ -15,6 +15,7 @@ const MyEditor = (props) => {
   const [editor, setEditor] = useState(null);
   const [assets, setAssets] = useState([]);
 
+  /*
   useEffect(() => {
     async function getAllAssets() {
       try {
@@ -26,26 +27,36 @@ const MyEditor = (props) => {
     }
 
     getAllAssets();
-  }, []);
+  }, []);*/
 
 
   useEffect(() => {
-    console.log("id", props.noteId)
-    const editor = geditorConfig(assets, props.noteId);
+    console.log("props", props)
+    const editor = geditorConfig(assets, props.noteId, props.version);
     setEditor(editor);
-  }, [props.noteId, assets]);
+    
+  }, [props.noteId, props.version, assets]);
 
   return (
     
     <Layout className="myEditor">
         <Row>
-            <Col span={5}>
+            {props.page == 'NoteEditPage'? 
+              <>
+                <Col span={5}>
                 <Sidebar />
-            </Col>
-            <Col span={19}>
-                <TopNav />
-                <div id="editor"></div>
-            </Col>
+                </Col>
+                <Col span={19}>
+                    <TopNav />
+                    <div id="editor"></div>
+                </Col>
+              </>
+              :
+              <>
+                  <div id="editor"></div>
+              </>
+            }
+            
         </Row>
     </Layout>
   );

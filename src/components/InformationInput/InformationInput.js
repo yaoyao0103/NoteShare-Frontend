@@ -49,9 +49,11 @@ const InformationInput = ({information, setInformation}) => {
                 <Checkbox.Group 
                     options={[{
                                 label: 'Downloadable',
-                                value:  true,
+                                value: 'Downloadable',
                             }]} 
-                defaultValue={['Pear']} onChange={(value) => {
+
+                    defaultValue={['Downloadable']}
+                    onChange={(value) => {
                     if(value[0]) setInformation({...information, downloadable: true})
                     else setInformation({...information, downloadable: false})
                 }} />

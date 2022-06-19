@@ -13,6 +13,7 @@ import './PageDetailContentTemplate.css'
 import PoppedContent from "./PoppedContent/PoppedContent";
 import DetailNotice from "../DetailNotice/DetailNotice";
 import VoteArea from "../VoteArea/VoteArea";
+import MyEditor from "../MyEditor/MyEditor";
 const { Header, Content, Sider, Footer } = Layout;
 
 const PageDetailContentTemplate = (props) => {
@@ -21,11 +22,13 @@ const PageDetailContentTemplate = (props) => {
     const [poppedContentShow, setPoppedContentShow] = useState(false);
     const [poppedContent, setPoppedContent] = useState([]);
     const [noticeShow, setNoticeShow] = useState(true);
+    const [editor, setEditor] = useState(<></>)
 
     
     useEffect(()=>{
         if(props.page == "NoteDetailPage"){
-            setVersionId(props.data?.version[0].id);
+            setVersionId(props.data?.id);
+            setEditor(<MyEditor noteId = {props.data?.id} version={'0'} page={props.page}/>)
         }
         else if(props.page == "CollabDetailPage" && props.isAuthor && props.data){
             const noteId = props.data.answers[0];
@@ -35,11 +38,11 @@ const PageDetailContentTemplate = (props) => {
         else if(props.page == "RewardDetailPage"){
             setPoppedContent( props.data.answers );
         }
+        
     },[props.data])
     
     const setVersion = (index) => {
-        setVersionId(props.data?.version[index].id);
-        console.log("setVersion: " + versionId + "-" + index);
+        setEditor(<MyEditor noteId = {props.data?.id} version={index.toString()} page={props.page}/>)
     }
 
     return (
@@ -103,7 +106,7 @@ const PageDetailContentTemplate = (props) => {
                         <Row className='contentTemplate__Row'>
                             <Col className='contentTemplate__Content__Main'>
                                 { (props.page=='NoteDetailPage' || (props.page=='CollabDetailPage' && props.isAuthor)) ? 
-                                    <ContentEditor versionId = {versionId}/>
+                                    editor
                                     :
                                     props.data?.content
                                 }

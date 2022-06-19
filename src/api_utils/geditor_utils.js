@@ -539,7 +539,7 @@ export const addEditorCommand = (editor) => {
   });
 };
 
-export const storageSetting = (pageId) => {
+export const storageSetting = (noteId, version = '0') => {
   return {
     type: "remote",
     stepsBeforeSave: 3,
@@ -553,9 +553,9 @@ export const storageSetting = (pageId) => {
       'Access-Control-Allow-Origin': 'http://localhost:3000',
       'Access-Control-Allow-Credentials': 'true'
     },
-    id: "mycustom-",
-    urlStore: `${API_HOST}pages/${pageId}/content`,
-    urlLoad: `${API_HOST}pages/${pageId}/content`,
+    id: "mycustom_",
+    urlStore: `${API_HOST}note/${noteId}`,
+    urlLoad: `${API_HOST}note/${noteId}/${version}`,
   };
 };
 

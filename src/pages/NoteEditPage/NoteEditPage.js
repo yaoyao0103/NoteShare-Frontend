@@ -1,19 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import PageDetailTemplate from '../../components/PageDetailTemplate/PageDetailTemplate'
 import NoteEditTemplate from '../../components/NoteEditTemplate/NoteEditTemplate';
+import axios from '../../components/axios/axios';
 function NoteEditPage(){
     const page = "NoteEditPage";
-    const [mode, setMode] = useState("New");
+    const [mode, setMode] = useState("Edit");
     const [note, setNote] = useState(null);
+    const noteId = "62aee9682b646a3f85671a8b"
     useEffect(() => {
         async function getNoteById() {
-            try {
-                const note = require('../../MockData/Note.json');
-                setNote(note);
-                console.log(note)
-            } catch (error) {
-                console.log(error);
-            }
+            axios.get(`http://localhost:8080/note/${noteId}`)
+            .then(res => {
+                setNote(res.data.res)
+                console.log(res.data.res)
+            })
+            .catch (err => {
+                console.log(err)
+            })
         }
         if(mode=="Edit"){
             getNoteById();
