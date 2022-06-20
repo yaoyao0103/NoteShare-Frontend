@@ -4,17 +4,20 @@ import PageDetailTemplate from "../../components/PageDetailTemplate/PageDetailTe
 import PageDetailContentTemplate from '../../components/PageDetailContentTemplate/PageDetailContentTemplate';
 
 function RewardDetailPage() {
-    const [reward, setReward] = useState([]);
+    const [post, setPost] = useState([]);
+    const postId = '62b0891f0997e642d1402113'
     const page = "RewardDetailPage";
 
     useEffect(() => {
         async function getRewardById() {
-            try {
-                const temp = require('../../MockData/Reward.json');
-                setReward(temp);
-            } catch (error) {
-                console.log(error.message);
-            }
+            axios.get(`http://localhost:8080/post/${postId}`)
+            .then(res => {
+                console.log(res.data.res)
+                setPost(res.data.res)
+            })
+            .catch(err =>{
+               console.log(err)
+            })
         }
         getRewardById();
     }, []);
@@ -22,7 +25,7 @@ function RewardDetailPage() {
     return (
         <>
             <PageDetailTemplate page={page}>
-                <PageDetailContentTemplate page={page} data={reward} footerBtn={"Answer"}/>  
+                <PageDetailContentTemplate page={page} data={post} footerBtn={"Answer"} postId={postId}/>  
             </PageDetailTemplate>   
         </>
     );

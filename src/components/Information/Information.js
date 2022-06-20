@@ -27,13 +27,19 @@ function Information(props) {
                 )}
                 <div className="information__top__right">
                 {props.downloadable!=null &&(
-                    <div className='information__Price information__top__info'>
+                    <div className='information__Downloadable information__top__info'>
                         <Text color='black' cls='Default' content={"Downloadable"} fontSize='17' display="inline-block" />
                     </div>
                 )}
-                {props.price!=null &&(
-                    <div className='information__Downloadable information__top__info'>
-                        <Text color='black' cls='Default' content={"Price: " + props.price} fontSize='17' display="inline-block" />
+                {props.bestPrice!=null &&(
+                    <div className='information__Price information__top__info'>
+                        <Text color='black' cls='Default' content={"Best Solution: " + props.bestPrice} fontSize='17' display="inline-block" />
+                    </div>
+                )}
+                
+                {props.referencePrice!=null &&(
+                    <div className='information__RefPrice information__top__info'>
+                        <Text color='black' cls='Default' content={"Ref Solution: " + props.referencePrice + '/person , Total: ' + props.referenceNumber + ' person(s)'} fontSize='17' display="inline-block" />
                     </div>
                 )}
                 </div>
@@ -70,6 +76,6 @@ Information.defaultProps = {
     favoriteCount: null,
     unlockCount: null,
     downloadable: null,
-    price: null,
+    bestPrice: null,
 };
 export default Information;

@@ -6,18 +6,18 @@ import PageDetailContentTemplate from '../../components/PageDetailContentTemplat
 function QnADetailPage() {
     const [QnA, setQnA] = useState([]);
     const page = "QnADetailPage";
+    const postId = '62b076e50997e642d140206c'
 
     useEffect(() => {
         async function getQnAById() {
-            try {
-                const temp = require('../../MockData/QnA.json');
-                setQnA(temp);
-            } catch (error) {
-                console.log(error.message);
-                setQnA(error.message);
-
-
-            }
+            axios.get(`http://localhost:8080/post/${postId}`)
+            .then(res => {
+                console.log(res.data.res)
+                setQnA(res.data.res)
+            })
+            .catch(err =>{
+                console.log(err)
+            })
         }
         getQnAById();
     }, []);
@@ -25,7 +25,7 @@ function QnADetailPage() {
     return (
         <>
             <PageDetailTemplate page={page}>
-                <PageDetailContentTemplate page={page} data={QnA} />  
+                <PageDetailContentTemplate page={page} data={QnA} postId={postId}/>  
             </PageDetailTemplate>
         </>
     );

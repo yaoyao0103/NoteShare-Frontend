@@ -12,7 +12,9 @@
     "title": "機器學習筆記",
     "content": "機器學習到底在教啥，第一堂睡著後之後沒在聽過課了，有沒有整套筆記讓我補補，還有好幾個作業和限時兩周的個人專題要交欸哭",
     "date": "2022-03-06T14:53:08.137+00:00",
-    "price": 100,
+    "bestPrice": 100,
+    "referencePrice": 50,
+    "referenceNumber": 2,
     "comments": [
         {
             "id": {

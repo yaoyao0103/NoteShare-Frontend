@@ -18,6 +18,7 @@ import RewardEditPage from "./pages/RewardEditPage/RewardEditPage";
 import CollabEditPage from "./pages/CollabEditPage/CollabEditPage";
 import NoteEditPage from "./pages/NoteEditPage/NoteEditPage";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
+import FileManagement from "./pages/FileManagement/FileManagement";
 function App() {
   const dispatch = useDispatch();
 
@@ -44,6 +45,7 @@ function App() {
         <Route exact path="/ScreenShotCapture" component={ScreenShotCapture}></Route>
         <Route exact path="/NoteEditPage" component={NoteEditPage}></Route>
         <Route exact path="/ProfilePage" component={ProfilePage}></Route>
+        <Route exact path="/FileManagement" component={FileManagement}></Route>
       </Switch>
     </Router>
   );

@@ -5,6 +5,7 @@ import Button from "../Button/Button";
 import './CommentArea.css'
 import { LikeOutlined, LikeFilled } from "@ant-design/icons";
 import moment from 'moment';
+import axios from '../axios/axios'
 
 const { Option } = Mentions;
 
@@ -80,15 +81,27 @@ function CommentArea(props) {
     }
     const onSubmit = (ev) => {
         ev.preventDefault();
-        message.info(comment);
-        /* Todo 
-        axios.put(`API_URL`)
+        const tempComment = {
+            author: "yao",
+            email: "00857028@email.ntou.edu.tw",
+            content: comment,
+        }
+        axios.post(`http://localhost:8080/comment/${props.postId}`, tempComment)
         .then(res => {
-            let temp = [..comments];
-            temp.push(res);
-            setComments(temp);
+            console.log(res.data.res)
+            message.success("Submit!")
+            axios.get(`http://localhost:8080/post/${props.postId}`)
+            .then(postRes => {
+                const tempComment = postRes.data.res.comments
+                setComments(tempComment)
+            })
+            .catch(err => {
+                console.log(err)
+            })
         })
-        */
+        .catch(err => {
+            console.log(err)
+        }) 
     }
     
     const onReply = (index) => {
@@ -137,8 +150,8 @@ function CommentArea(props) {
                     avatar={<Avatar src="https://joeschmoe.io/api/v1/random"></Avatar>}
                     content={item.content}
                     datetime={(
-                        <Tooltip title={moment(item.date).subtract(2, 'days').format('YYYY-MM-DD HH:mm:ss')}>
-                            <span>{moment(item.date).subtract(2, 'days').fromNow()}</span>
+                        <Tooltip title={moment(item.date).format('YYYY-MM-DD HH:mm:ss')}>
+                            <span>{moment(item.date).fromNow()}</span>
                         </Tooltip>
                         )}
                     />

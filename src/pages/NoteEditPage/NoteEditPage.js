@@ -6,7 +6,7 @@ function NoteEditPage(){
     const page = "NoteEditPage";
     const [mode, setMode] = useState("Edit");
     const [note, setNote] = useState(null);
-    const noteId = "62aee9682b646a3f85671a8b"
+    const noteId = "62aff9955922ca112066627b"
     useEffect(() => {
         async function getNoteById() {
             axios.get(`http://localhost:8080/note/${noteId}`)
@@ -34,3 +34,9 @@ function NoteEditPage(){
     );
 }
 export default NoteEditPage;
+
+/*
+62aee9682b646a3f85671a8b
+62aff9955922ca112066627b
+62affa4a5922ca11206662d0
+*/

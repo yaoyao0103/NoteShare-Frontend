@@ -32,16 +32,22 @@ const InformationInput = ({information, setInformation}) => {
                 <Input showCount maxLength={20} placeholder="professor" onChange={(ev) => setInformation({...information, professor: ev.target.value})} value={information?.professor} /> 
             </div>  
         }
-        {information?.price!=null &&
+        {information?.bestPrice!=null &&
             <div className="informationInput__item informationInput__InputNumber">
                 <Text color='black' cls='Small' content={"Price"} fontSize='15' display="inline-block" />
-                <NumericInput placeholder="$" onChange={(value) => setInformation({...information, price: value})} value={information?.price} /> 
+                <NumericInput placeholder="$" onChange={(value) => setInformation({...information, bestPrice: value})} value={information?.bestPrice} /> 
             </div>  
         }
-        {information?.refPrice!=null &&
+        {information?.referencePrice!=null &&
             <div className="informationInput__item informationInput__InputNumber">
                 <Text color='black' cls='Small' content={"Ref Price"} fontSize='15' display="inline-block" />
-                <Input placeholder="$" onChange={(ev) => setInformation({...information, refPrice: ev.target.value})} value={information?.refPrice} /> 
+                <Input placeholder="$" onChange={(ev) => setInformation({...information, referencePrice: ev.target.value})} value={information?.referencePrice} /> 
+            </div>  
+        }
+        {information?.referenceNumber!=null &&
+            <div className="informationInput__item informationInput__InputNumber">
+                <Text color='black' cls='Small' content={"Ref Num"} fontSize='15' display="inline-block" />
+                <Input placeholder="$" onChange={(ev) => setInformation({...information, referenceNumber: ev.target.value})} value={information?.referenceNumber} /> 
             </div>  
         }
         {information?.downloadable!=null &&

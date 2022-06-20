@@ -15,7 +15,7 @@ const OptionMenu = (props) => {
   const [drawer, setDrawer] = useState(<CommentArea comments={props.comments}/>);
   const [drawerType, setDrawerType] = useState('');
 
-  const comments = (<CommentArea comments={props.comments}/>);
+  const comments = (<CommentArea comments={props.comments} postId={props.postId}/>);
   const versions = (<VersionArea page={'NoteDetailPageVersion'} versions={props.versions} setVersion={props.setVersion}/>);
 
   const showDrawer = () => {

@@ -5,11 +5,16 @@ import Button from "../Button/Button";
 import Text from "../Text/Text";
 import ContentEditor from "../../pages/NoteDetailPage/ContentEditor/ContentEditor";
 import InformationInput from "../InformationInput/InformationInput";
-import { Note, QnA, Reward, CollabNote } from "./InfoCategories"
+import { QnA, Reward, CollabNote } from "./InfoCategories"
+import { QnAFormat, RewardFormat, CollabNoteFormat } from "./PostFormat"
 import './PostEditTemplate.css';
+import axios from "axios";
 
 const { Header, Content, Sider, Footer } = Layout;
 const { TextArea } = Input;
+
+const email = '00857028@email.ntou.edu.tw';
+const author = 'yao';
 
 const PostEditTemplate = (props) => {
 
@@ -24,40 +29,41 @@ const PostEditTemplate = (props) => {
             setTitle(post.title);
             setContent(post.content);
             switch(props.type){
-                case 'QnA': 
+                case 'QA': 
                         setInformation({
                             department: post.department,
                             subject: post.subject,
-                            price: post.price,
+                            bestPrice: post.bestPrice,
                         })
                         break;
-                case 'Reward': 
+                case 'reward': 
                         setInformation({
                             school: post.school,
                             department: post.department,
                             subject: post.subject,
                             professor: post.professor,
-                            price: post.price,
-                            refPrice: post.refPrice,
+                            bestPrice: post.bestPrice,
+                            referencePrice: post.referencePrice,
+                            referenceNumber: post.referenceNumber,
                         })
                         break;
-                case 'Note':
+                /*case 'Note':
                         setInformation({
                             school: post.school,
                             department: post.department,
                             subject: post.subject,
                             professor: post.professor,
                             downloadable: post.downloadable,
-                            price: post.price,
+                            bestPrice: post.bestPrice,
                         })
-                        break;
-                case 'CollabNote':
+                        break;*/
+                case 'collaboration':
                         setInformation({
                             school: post.school,
                             department: post.department,
                             subject: post.subject,
                             professor: post.professor,
-                            price: post.price,
+                            bestPrice: post.bestPrice,
                         })
                         break;
             }
@@ -65,21 +71,106 @@ const PostEditTemplate = (props) => {
         }
         else{
             switch(props.type){
-                case 'QnA': setInformation(QnA); break;
-                case 'Reward': setInformation(Reward); break;
-                case 'Note': setInformation(Note); break;
-                case 'CollabNote': setInformation(CollabNote); break;
+                case 'QA': setInformation(QnA); break;
+                case 'reward': setInformation(Reward); break;
+                case 'collaboration': setInformation(CollabNote); break;
             }
         }
+        console.log(props)
     },[props])
 
 
     const onUpdate = () => {
-        message.info("Update!!");
+        const post = props.post;
+        if(props.type == 'QA'){
+            post.title = title
+            post.department = information.department
+            post.subject = information.subject
+            post.bestPrice = information.bestPrice
+            post.content = content
+        }
+        else if(props.type == 'reward'){
+            post.title = title
+            post.department = information.department
+            post.subject = information.subject
+            post.school = information.school
+            post.professor = information.professor? information.professor : null
+            post.bestPrice = information.bestPrice
+            post.referencePrice = information.referencePrice? information.referencePrice : null
+            post.referenceNumber = information.referenceNumber? information.referenceNumber : null
+            post.content = content
+        }
+        else if(props.type == 'collaboration'){
+            post.title = title
+            post.department = information.department
+            post.subject = information.subject
+            post.school = information.school
+            post.professor = information.professor? information.professor : null
+            post.bestPrice = information.bestPrice
+            post.content = content
+        }
+        console.log(post)
+        axios.put(`http://localhost:8080/post/${props.postId}`, post)
+        .then(res => {
+            console.log(res.data)
+            message.info("Update!!");
+        })
+        .catch(err =>{
+            console.log(err)
+        })
+
     } 
 
     const onSubmit = () => {
-        message.info("Submit!!");
+        let data;
+        if(props.type == 'QA'){
+            QnAFormat.type = props.type;
+            QnAFormat.email = [email]
+            QnAFormat.author = author
+            QnAFormat.title = title
+            QnAFormat.department = information.department
+            QnAFormat.subject = information.subject
+            QnAFormat.bestPrice = information.bestPrice
+            QnAFormat.content = content
+            data = QnAFormat
+        }
+        else if(props.type == 'reward'){
+            RewardFormat.type = props.type;
+            RewardFormat.email = [email]
+            RewardFormat.author = author
+            RewardFormat.title = title
+            RewardFormat.department = information.department
+            RewardFormat.subject = information.subject
+            RewardFormat.school = information.school
+            RewardFormat.professor = information.professor? information.professor : null
+            RewardFormat.bestPrice = information.bestPrice
+            RewardFormat.referencePrice = information.referencePrice? information.referencePrice : null
+            RewardFormat.referenceNumber = information.referenceNumber? information.referenceNumber : null
+            RewardFormat.content = content
+            data = RewardFormat
+        }
+        else if(props.type == 'collaboration'){
+            CollabNoteFormat.type = props.type;
+            CollabNoteFormat.email = [email]
+            CollabNoteFormat.author = author
+            CollabNoteFormat.title = title
+            CollabNoteFormat.department = information.department
+            CollabNoteFormat.subject = information.subject
+            CollabNoteFormat.school = information.school
+            CollabNoteFormat.professor = information.professor? information.professor : null
+            CollabNoteFormat.bestPrice = information.bestPrice
+            CollabNoteFormat.content = content
+            data = CollabNoteFormat
+        }
+        console.log(data)
+        axios.post(`http://localhost:8080/post/${email}`, data)
+        .then(res => {
+            console.log(res.data)
+            message.info("Submit!!");
+        })
+        .catch(err =>{
+            console.log(err)
+        })
     } 
 
     return (

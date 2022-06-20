@@ -28,9 +28,13 @@ const NoteEditTemplate = (props) => {
     const [content, setContent] = useState(null);
     const [information, setInformation] = useState(null);
     const [step, setStep] = useState(0);
-    const [noteId, setNoteId] = useState(null);
+    const [noteId, setNoteId] = useState('');
     const [myEditor, setMyEditor] = useState(<></>);
+
     const [tagSelected, setTagSelected] = useState([])
+    const [recommendTag, setRecommendTag] = useState(['OS', 'VM', 'Pagination', 'Virtual machine'])
+    //['OS', 'VM', 'Pagination', 'Virtual machine']
+
     const [visible, setVisible] = useState(false);
     const [popoverContent, setPopoverContent] = useState(<></>);
     const [versions, setVersions] = useState([]);
@@ -52,6 +56,17 @@ const NoteEditTemplate = (props) => {
                 price: note.price,
             })
             setNoteId(note.id)
+            setVersions(note.version)
+            /*setPopoverContent(
+                <>
+                    <List
+                        dataSource={note.version}
+                        renderItem={(item, index) => (index !=0 && <List.Item className='versionItem' onClick={()=>saveVersion(index)}><span>{item.name}</span></List.Item>)}
+                    />
+                    <List.Item className='newVersion'><Input placeholder="New Version" onPressEnter={(ev) => newVersion(ev.target.value)}/></List.Item>
+                </>
+            )*/
+            setTagSelected(note.tag)
         }
         else{
             setInformation({
@@ -63,16 +78,6 @@ const NoteEditTemplate = (props) => {
                 price: '0',
             });
         }
-        setVersions(props.note?.version)
-        setPopoverContent(
-            <>
-                <List
-                    dataSource={props.note?.version}
-                    renderItem={(item, index) => (index !=0 && <List.Item className='versionItem' onClick={()=>saveVersion(index)}><span>{item.name}</span></List.Item>)}
-                />
-                <List.Item className='newVersion'><Input placeholder="New Version" onPressEnter={(ev) => newVersion(ev.target.value)}/></List.Item>
-            </>
-        )
     },[props])
 
     useEffect(() => {
@@ -139,15 +144,18 @@ const NoteEditTemplate = (props) => {
 
             axios.post(`http://localhost:8080/note/${email}/${folderID}`, NoteFormat)
             .then(res => {
-                console.log(res.data.res.id)
-                const id = res.data.res.id
-                setNoteId(id)
+                const tempNote = res.data.res
+                console.log(tempNote)
+                const tempId = tempNote.id
+                setNoteId(tempId)
                 VersionFormat.name = "default"
                 VersionFormat.slug = "default"
                 VersionFormat.content = [ContentFormat]
-                axios.put(`http://localhost:8080/note/${id}/0`, VersionFormat)
-                .then ( async versionRes => {
-                    setMyEditor(<MyEditor noteId={id} version={'0'} page={props.page}/>)
+                axios.put(`http://localhost:8080/note/${tempId}/0`, VersionFormat)
+                .then ( versionRes => {
+                    setMyEditor(<MyEditor noteId={tempId} version={'0'} page={props.page}/>)
+                    const version = versionRes.data.res;
+                    setVersions([version])
                     setStep(1);
                 })
                 .catch (err => {
@@ -206,15 +214,23 @@ const NoteEditTemplate = (props) => {
     }
 
     const tagSubmit = async () => {
-        /*const res = createPage(title)(dispatch);
-        await res.then( result => {
-            setNoteId(result._id)
-            setEditor(<MyEditor noteId={result._id}/>)
-            }
-        )*/
+        axios.get(`http://localhost:8080/note/${noteId}`)
+            .then(res => {
+                const tempNote = res.data.res
+                tempNote.tag = tagSelected
+                axios.put(`http://localhost:8080/note/${noteId}`, tempNote)
+                    .then(res => {
+                        console.log(res)
+                    })
+                    .catch (err => {
+                        console.log(err)
+                    }) 
+            })
+            .catch (err => {
+                console.log(err)
+            })   
         
     }
-    const recommendTag = ['OS', 'VM', 'Pagination', 'Virtual machine']
 
     const recommendTagRender = (props) => {
         const { label, closable } = props;
@@ -223,8 +239,8 @@ const NoteEditTemplate = (props) => {
             const value = e.target.parentNode.parentNode.parentNode.innerText.length!=0? e.target.parentNode.parentNode.parentNode.innerText:e.target.parentNode.parentNode.innerText.length!=0? e.target.parentNode.parentNode.innerText:'';
             if(!tagSelected.includes(value) && value.length !=0)
                 setTagSelected([...tagSelected, value])
-            console.log(value);
-            console.log(tagSelected)
+            // console.log(value);
+            // console.log(tagSelected)
         };
     
         return (
@@ -258,13 +274,12 @@ const NoteEditTemplate = (props) => {
         };
 
     const saveVersion = (index) => {
-        console.log(editor)
         editor.storeVersion({}, index)
         message.success("Saved")
     }
 
     const newVersion = (name) => {
-        const versionLength = props.note?.version.length;
+        const versionLength = versions.length
         VersionFormat.name = name
         VersionFormat.slug = name
         VersionFormat.content = [ContentFormat]
@@ -297,6 +312,7 @@ const NoteEditTemplate = (props) => {
                         </Steps>
                     </Row>  
                 </Header>
+                {/* ------------------------------- Content ---------------------------------- */}
                 <Content className="noteEditTemplate__Content">
                     {step==0 &&
                         <>
@@ -374,6 +390,7 @@ const NoteEditTemplate = (props) => {
                     }
                     
                 </Content>
+                {/* ------------------------------- Footer ---------------------------------- */}
                 {step==0 &&
                     <Footer className="noteEditTemplate__Footer">
                         <div className="noteEditTemplate__Footer__Button" onClick={infoSubmit}>
@@ -413,7 +430,7 @@ const NoteEditTemplate = (props) => {
                 }
             </Layout>
             <Drawer title='Version' placement="right" onClose={onClose} visible={visible}>
-                <VersionArea page={'NoteEditPageVersion'} versions={props.note?.version} setVersion={setVersion}/>
+                <VersionArea page={'NoteEditPageVersion'} versions={versions} setVersion={setVersion}/>
             </Drawer>
         </div>
     )

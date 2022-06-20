@@ -142,6 +142,9 @@ const Home = () => {
         <div>
         <Link to={'/ProfilePage'}>ProfilePagePage</Link>
         </div>
+        <div>
+        <Link to={'/FileManagement'}>FileManagement</Link>
+        </div>
       </div>
     </div>
   );

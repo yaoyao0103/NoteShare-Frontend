@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Layout, Row, Col, Tag, Progress } from "antd";
+import { Layout, Row, Col, Tag, Progress, message } from "antd";
 import Button from "../Button/Button";
 import Text from "../Text/Text";
 import Title from "../Title/Title";
@@ -57,7 +57,7 @@ const PageDetailContentTemplate = (props) => {
                                 <OPInfo
                                     className="contentTemplate__Title__OPInfo" 
                                     size={56}
-                                    author={props.data?.author}
+                                    author={props.page == 'NoteDetailPage'? props.data?.headerName:props.data?.author}
                                     date={props.data?.date} 
                                     dateFontSize="18"
                                 >T</OPInfo>
@@ -75,6 +75,7 @@ const PageDetailContentTemplate = (props) => {
                                         isAuthor={props.isAuthor}
                                         isManager={props.isManager}
                                         setPoppedContentShow={setPoppedContentShow}
+                                        postId={props.postId}
                                     /></div>
                                 
                             </Col>
@@ -92,7 +93,9 @@ const PageDetailContentTemplate = (props) => {
                                     likeCount={props.data?.likeCount}
                                     favoriteCount={props.data?.favoriteCount}
                                     unlockCount={props.data?.unlockCount} 
-                                    price={props.data?.price}
+                                    bestPrice={props.data?.bestPrice}
+                                    referencePrice={props.data?.referencePrice}
+                                    referenceNumber={props.data?.referenceNumber}
                                     downloadable={props.data?.downloadable}
                                 />
                             </Col>
@@ -152,7 +155,7 @@ const PageDetailContentTemplate = (props) => {
                 {(props.page!='NoteDetailPage' && props.page!='CollabDetailPage') && 
                     <>
                         <Sider id="contentTemplate__Comment" className="contentTemplate__Comment" width='40%'>
-                            <CommentArea page={props.page} comments={props.data?.comments? props.data.comments:[]} />
+                            <CommentArea page={props.page} comments={props.data?.comments? props.data.comments:[]} postId={props.postId}/>
                         </Sider>
                     </>
                 }
