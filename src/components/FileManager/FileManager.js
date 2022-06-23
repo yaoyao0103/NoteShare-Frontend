@@ -20,7 +20,7 @@ const FileManager = (props) => {
             axios.get(`http://localhost:8080/folder/root/${email}`)
             .then(res => {
                 console.log(res.data.res)
-                setFiles(res.data.res)
+                setFiles([...res.data.res, {folderName:'QnA', id:''}, {folderName:'Reward', id:''}, {folderName:'Collab', id:''}])
             })
             .catch(err =>{
                 console.log(err)
