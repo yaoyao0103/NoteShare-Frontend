@@ -6,8 +6,8 @@ function NoteDetailPage(){
     const [ post, setPost ] = useState();
     const postId = "62b07f9c0997e642d14020c6";
     const page = "CollabDetailPage";
-    const [ isAuthor, setIsAuthor ] = useState(false);
-    const [ isManager, setIsManager ] = useState(false);
+    const [ isAuthor, setIsAuthor ] = useState(true);
+    const [ isManager, setIsManager ] = useState(true);
     
     useEffect(() => {
         async function getCollabById() {

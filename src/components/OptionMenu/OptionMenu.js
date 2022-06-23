@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./OptionMenu.css";
+import { Link } from "react-router-dom";
 import { Menu, Dropdown, Space, Drawer, message, Input, Tooltip, Button } from "antd";
 import { CopyOutlined , EditOutlined, CommentOutlined, CheckOutlined, CloseOutlined, ShareAltOutlined, InboxOutlined, DeleteOutlined, EyeOutlined, InfoCircleOutlined, UserOutlined, LikeOutlined } from "@ant-design/icons";
 import VersionArea from "../VersionArea/VersionArea";
@@ -397,6 +398,23 @@ const OptionMenu = (props) => {
     }/>
   )
 
+  const PersonalPageNoteMenu = (
+    <Menu items={
+      [
+        {
+            label: (<Link className="personalPageNoteMenu" to={`/NoteEditPage/edit/${props.noteId}`}>Edit</Link>),
+            key: "1",
+            icon: <EditOutlined />
+        },
+        {
+          label: (<a onClick={()=>{ message.info("Share: " + props.noteId) }}>Share</a>),
+            key: "2",
+            icon: <ShareAltOutlined />
+        },
+      ]
+    }/>
+    );
+
 
 
   useEffect(()=>{
@@ -416,6 +434,7 @@ const OptionMenu = (props) => {
         }
         else setMenu( CollabDetailMenu ); 
         break;
+      case 'PersonalPage': setMenu( PersonalPageNoteMenu ); break;
       // case 'QnAOutlinePage': setMenu( QnAOutlineMenu ); break;
 
     }

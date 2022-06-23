@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import { Link, useParams } from "react-router-dom";
 import PageDetailTemplate from '../../components/PageDetailTemplate/PageDetailTemplate'
 import NoteEditTemplate from '../../components/NoteEditTemplate/NoteEditTemplate';
 import axios from '../../components/axios/axios';
 function NoteEditPage(){
+    const { action, noteId } = useParams();
     const page = "NoteEditPage";
-    const [mode, setMode] = useState("Edit");
     const [note, setNote] = useState(null);
-    const noteId = "62aff9955922ca112066627b"
+
     useEffect(() => {
         async function getNoteById() {
             axios.get(`http://localhost:8080/note/${noteId}`)
@@ -18,7 +19,7 @@ function NoteEditPage(){
                 console.log(err)
             })
         }
-        if(mode=="Edit"){
+        if(action=="edit"){
             getNoteById();
         }
         
@@ -27,7 +28,7 @@ function NoteEditPage(){
     return(
         <>
             <PageDetailTemplate page={page}>
-                <NoteEditTemplate page={page} note={note} mode={mode}/>
+                <NoteEditTemplate page={page} note={note} mode={action}/>
             </PageDetailTemplate>
         </>
         

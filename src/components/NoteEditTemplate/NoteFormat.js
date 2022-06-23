@@ -26,6 +26,7 @@ export const NoteFormat = {
     version: [],
     contributors: [],
     postID: null,
+    description: null,
     reference: null,
     best: null,
     favorite: null,

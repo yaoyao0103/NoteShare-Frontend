@@ -3,6 +3,9 @@ import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { createPage } from "./redux/actions/pageAction";
 
+//const noteId = "62aea343e913643da31b5873"
+const noteId = "62b477d9c291fe27002cae3c"
+
 const Home = () => {
   const [name, setName] = useState("");
   const [isValid, setIsValid] = useState(true);
@@ -137,13 +140,16 @@ const Home = () => {
         <Link to={'/ScreenShotCapture'}>ScreenShotCapture</Link>
         </div>
         <div>
-        <Link to={'/NoteEditPage'}>NoteEditPage</Link>
+        <Link to={`/NoteEditPage/edit/${noteId}`}>NoteEditPage</Link>
+        </div>
+        <div>
+        <Link to={'/NoteEditPage/new/0'}>NoteNewPage</Link>
         </div>
         <div>
         <Link to={'/ProfilePage'}>ProfilePagePage</Link>
         </div>
         <div>
-        <Link to={'/FileManagement'}>FileManagement</Link>
+        <Link to={'/PersonalPage'}>PersonalPage</Link>
         </div>
       </div>
     </div>

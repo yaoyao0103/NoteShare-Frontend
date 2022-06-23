@@ -44,7 +44,7 @@ const NoteEditTemplate = (props) => {
 
     useEffect(() => {
         const note = props.note;
-        if(note && props.mode == 'Edit'){
+        if(note && props.mode == 'edit'){
             setTitle(note.title);
             setMyEditor(<MyEditor noteId={note.id} version={'0'} page={props.page}/>);
             setInformation({
@@ -55,6 +55,7 @@ const NoteEditTemplate = (props) => {
                 downloadable: note.downloadable,
                 price: note.price,
             })
+            setContent(note.description)
             setNoteId(note.id)
             setVersions(note.version)
             /*setPopoverContent(
@@ -109,7 +110,7 @@ const NoteEditTemplate = (props) => {
             message.error("Title can't be empty");
             return;
         }
-        if(props.mode=="Edit"){
+        if(props.mode=="edit"){
             message.info("Update info")
             const note = props.note;
             note.department = information.department
@@ -119,8 +120,11 @@ const NoteEditTemplate = (props) => {
             note.school = information.school
             note.downloadable = information.downloadable
             note.price = information.price
+            note.description = content
+
             axios.put(`http://localhost:8080/note/${note.id}`, note)
-            .then(res => {
+            .then(contentRes => {
+                console.log(contentRes)
                 setStep(1);
             })
             .catch (err => {
@@ -141,6 +145,7 @@ const NoteEditTemplate = (props) => {
             NoteFormat.school = information.school
             NoteFormat.downloadable = information.downloadable
             NoteFormat.price = information.price
+            NoteFormat.description = content
 
             axios.post(`http://localhost:8080/note/${email}/${folderID}`, NoteFormat)
             .then(res => {
@@ -323,7 +328,7 @@ const NoteEditTemplate = (props) => {
                             </Row>
                             <Row className='noteEditTemplate__Row'>
                                 <Col className='postEditTemplate__Content__Title' >
-                                    <Input showCount maxLength={20} placeholder="title" value={title} onChange={(ev) => setTitle(ev.target.value)} />
+                                    <Input showCount maxLength={50} placeholder="title" value={title} onChange={(ev) => setTitle(ev.target.value)} />
                                 </Col>
                             </Row>
                             <Row className='noteEditTemplate__Row'>
