@@ -25,7 +25,7 @@ const PostEditTemplate = (props) => {
 
     useEffect(() => {
         const post = props.post;
-        if(post && props.mode == 'Edit'){
+        if(post && props.mode == 'edit'){
             setTitle(post.title);
             setContent(post.content);
             switch(props.type){
@@ -228,7 +228,7 @@ const PostEditTemplate = (props) => {
                 </Content>
                 {/* Footer */}
                 <Footer className="postEditTemplate__Footer">
-                    <div className="postEditTemplate__Footer__Button" onClick={props.mode=="Edit"? onUpdate:onSubmit}>
+                    <div className="postEditTemplate__Footer__Button" onClick={props.mode=="edit"? onUpdate:onSubmit}>
                         <Button color={"green"}><Text color='white' cls='Large' content={"Submit"} fontSize='17' display="inline-block" /></Button>
                     </div>
                 </Footer>

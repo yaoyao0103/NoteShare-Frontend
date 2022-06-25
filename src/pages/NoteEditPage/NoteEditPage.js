@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useLocation  } from "react-router-dom";
 import PageDetailTemplate from '../../components/PageDetailTemplate/PageDetailTemplate'
 import NoteEditTemplate from '../../components/NoteEditTemplate/NoteEditTemplate';
 import axios from '../../components/axios/axios';
 function NoteEditPage(){
-    const { action, noteId } = useParams();
+    const params = useParams();
+    const location = useLocation()
     const page = "NoteEditPage";
     const [note, setNote] = useState(null);
+    const [action, setAction] = useState(null)
 
     useEffect(() => {
         async function getNoteById() {
-            axios.get(`http://localhost:8080/note/${noteId}`)
+            axios.get(`http://localhost:8080/note/${params.noteId}`)
             .then(res => {
                 setNote(res.data.res)
                 console.log(res.data.res)
@@ -19,8 +21,14 @@ function NoteEditPage(){
                 console.log(err)
             })
         }
-        if(action=="edit"){
+        console.log(location)
+        const path = location.pathname.slice(0, location.pathname.lastIndexOf('/'))
+        if(path=='/NoteEditPage'){
+            setAction('edit')
             getNoteById();
+        }
+        else{
+            setAction('new')
         }
         
         }, []);

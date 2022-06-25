@@ -16,7 +16,7 @@ function RewardDetailPage() {
                 setPost(res.data.res)
             })
             .catch(err =>{
-               console.log(err)
+                console.log(err)
             })
         }
         getRewardById();

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useNavigate } from "react-router-dom";
 import { Steps, Layout, Row, Col, Input, Popover, message, Select, Tag, Drawer, List } from 'antd';
 import "./NoteEditTemplate.css"
 import PostEditTemplate from '../PostEditTemplate/PostEditTemplate';
@@ -24,6 +25,7 @@ const author = "Yao"
 
 
 const NoteEditTemplate = (props) => {
+    const navigate = useNavigate();
     const [title, setTitle] = useState(null);
     const [content, setContent] = useState(null);
     const [information, setInformation] = useState(null);
@@ -226,6 +228,7 @@ const NoteEditTemplate = (props) => {
                 axios.put(`http://localhost:8080/note/${noteId}`, tempNote)
                     .then(res => {
                         console.log(res)
+                        navigate("/PersonalPage")
                     })
                     .catch (err => {
                         console.log(err)

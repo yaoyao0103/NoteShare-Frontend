@@ -1,8 +1,10 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./NavButton.css";
 import { Button } from 'antd';
 
 function NavButton(props) {
+    const navigate = useNavigate();
     const [Showing, setShowing] = useState({
       PersonalPage:true,
       Reward:false,
@@ -52,7 +54,7 @@ function NavButton(props) {
   
     return (
       <div id = "navButton" className = "navButton" >
-          <Button type='text' className='button__first'id={`button${Showing.PersonalPage ? '--active':''}`} onClick={onClick}>Personal Page</Button>
+          <Button type='text' className='button__first'id={`button${Showing.PersonalPage ? '--active':''}`} onClick={() => navigate('/PersonalPage')}>Personal Page</Button>
           <Button type='text' className='button__second'id={`button${Showing.Reward ? '--active':''}`} onClick={onClick}>Reward</Button>
           <Button type='text' className='button__third'id={`button${Showing.QnA ? '--active':''}`} onClick={onClick}>QnA</Button>
           <Button type='text' className='button__forth'id={`button${Showing.Collab ? '--active':''}`} onClick={onClick}>Collab</Button>

@@ -402,7 +402,7 @@ const OptionMenu = (props) => {
     <Menu items={
       [
         {
-            label: (<Link className="personalPageNoteMenu" to={`/NoteEditPage/edit/${props.noteId}`}>Edit</Link>),
+            label: (<Link className="personalPageNoteMenu" to={`/NoteEditPage/${props.noteId}`}>Edit</Link>),
             key: "1",
             icon: <EditOutlined />
         },

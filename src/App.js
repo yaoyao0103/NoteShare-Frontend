@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import Home from "./Home";
 import Editor from "./components/Editor/Editor";
@@ -28,25 +28,26 @@ function App() {
 
   return (
     <Router>
-      <Switch>
-        <Route exact path="/" component={Home}></Route>
-        <Route exact path="/editor/:pageId" component={Editor}></Route>
-        <Route exact path="/MemberPage" component={MemberPage}></Route>
-        <Route exact path="/NoteDetailPage" component={NoteDetailPage}></Route>
-        <Route exact path="/RewardOutlinePage" component={RewardOutlinePage}></Route>
-        <Route exact path="/RewardDetailPage" component={RewardDetailPage}></Route>
-        <Route exact path="/RewardEditPage" component={RewardEditPage}></Route>
-        <Route exact path="/QnAOutlinePage" component={QnAOutlinePage}></Route>
-        <Route exact path="/QnADetailPage" component={QnADetailPage}></Route>
-        <Route exact path="/QnAEditPage" component={QnAEditPage}></Route>
-        <Route exact path="/CollabOutlinePage" component={CollabOutlinePage}></Route>
-        <Route exact path="/CollabDetailPage" component={CollabDetailPage}></Route>
-        <Route exact path="/CollabEditPage" component={CollabEditPage}></Route>
-        <Route exact path="/ScreenShotCapture" component={ScreenShotCapture}></Route>
-        <Route exact path="/NoteEditPage/:action/:noteId" component={NoteEditPage}></Route>
-        <Route exact path="/ProfilePage" component={ProfilePage}></Route>
-        <Route exact path="/PersonalPage" component={PersonalPage}></Route>
-      </Switch>
+      <Routes>
+        <Route exact path="/" element={<Home />}></Route>
+        <Route exact path="/editor/:pageId" element={<Editor />}></Route>
+        <Route exact path="/MemberPage" element={<MemberPage />}></Route>
+        <Route exact path="/NoteDetailPage" element={<NoteDetailPage />}></Route>
+        <Route exact path="/RewardOutlinePage" element={<RewardOutlinePage />}></Route>
+        <Route exact path="/RewardDetailPage" element={<RewardDetailPage />}></Route>
+        <Route exact path="/RewardEditPage" element={<RewardEditPage />}></Route>
+        <Route exact path="/QnAOutlinePage" element={<QnAOutlinePage />}></Route>
+        <Route exact path="/QnADetailPage" element={<QnADetailPage />}></Route>
+        <Route exact path="/QnAEditPage" element={<QnAEditPage />}></Route>
+        <Route exact path="/CollabOutlinePage" element={<CollabOutlinePage />}></Route>
+        <Route exact path="/CollabDetailPage" element={<CollabDetailPage />}></Route>
+        <Route exact path="/CollabEditPage/:action/:postId" element={<CollabEditPage />}></Route>
+        <Route exact path="/ScreenShotCapture" element={<ScreenShotCapture />}></Route>
+        <Route exact path="/NoteEditPage/:noteId" element={<NoteEditPage />}></Route>
+        <Route exact path="/NoteNewPage/:parentId" element={<NoteEditPage />}></Route>
+        <Route exact path="/ProfilePage" element={<ProfilePage />}></Route>
+        <Route exact path="/PersonalPage" element={<PersonalPage />}></Route>
+      </Routes>
     </Router>
   );
 }
