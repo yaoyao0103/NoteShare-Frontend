@@ -99,7 +99,7 @@ const PoppedContent = (props) => {
                                     dataSource={props.content}
                                     renderItem={(item, index) => (<List.Item actions={
                                         [
-                                            <OptionMenu page={props.page=="RewardDetailPage"? "RewardDetailPageAnswer":"CollabDetailPageApplier"} id={item} index = {index} setContent={setContent} />
+                                            <OptionMenu page={props.page=="RewardDetailPage"? "RewardDetailPageAnswer":"CollabDetailPageApplier"} answerId={item} index = {index} setContent={setContent} />
                                         ]
                                     } ><span className='answerAuthor'>{item}</span></List.Item>)}
                                 />

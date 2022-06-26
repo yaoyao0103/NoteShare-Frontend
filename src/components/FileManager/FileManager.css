@@ -42,10 +42,19 @@
     overflow-y: auto;
 }
 
+.fileManage_Folder .ant-list-item, .fileManage_Post .ant-list-item{
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
 .fileManage_List_Item{
     cursor: pointer;
     padding-left: 1.5em;
-    padding-right: 1.5em;
+    padding-right: 1.2em;
+}
+
+.fileManage_List_Item_NoHover{
+    padding-left: 1.2em;
 }
 
 .fileManage_List_Item:hover{
@@ -54,6 +63,25 @@
     
 }
 
-.fileManage_Note .anticon{
-    z-index: 99;
+.fileManage_Folder .anticon{
+    float: right;
+    font-size: 1.2em;
+    margin-top: 0.15em;
+}
+
+.fileManage_Folder_Item_Name{
+    width: 100%;
+    height: 100%;
+}
+
+.fileManage_Folder_Item_Name div{
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+
+.fileManage_Folder_Item_Input .ant-input-group-addon{
+    padding: 0 0.6em;
+    cursor: pointer;
+    font-size: .7em;
 }

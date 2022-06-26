@@ -32,7 +32,6 @@ function App() {
         <Route exact path="/" element={<Home />}></Route>
         <Route exact path="/editor/:pageId" element={<Editor />}></Route>
         <Route exact path="/MemberPage" element={<MemberPage />}></Route>
-        <Route exact path="/NoteDetailPage" element={<NoteDetailPage />}></Route>
         <Route exact path="/RewardOutlinePage" element={<RewardOutlinePage />}></Route>
         <Route exact path="/RewardDetailPage" element={<RewardDetailPage />}></Route>
         <Route exact path="/RewardEditPage" element={<RewardEditPage />}></Route>
@@ -43,8 +42,9 @@ function App() {
         <Route exact path="/CollabDetailPage" element={<CollabDetailPage />}></Route>
         <Route exact path="/CollabEditPage/:action/:postId" element={<CollabEditPage />}></Route>
         <Route exact path="/ScreenShotCapture" element={<ScreenShotCapture />}></Route>
+        <Route exact path="/NoteDetailPage/:noteId" element={<NoteDetailPage />}></Route>
         <Route exact path="/NoteEditPage/:noteId" element={<NoteEditPage />}></Route>
-        <Route exact path="/NoteNewPage/:parentId" element={<NoteEditPage />}></Route>
+        <Route exact path="/NoteNewPage/:folderId" element={<NoteEditPage />}></Route>
         <Route exact path="/ProfilePage" element={<ProfilePage />}></Route>
         <Route exact path="/PersonalPage" element={<PersonalPage />}></Route>
       </Routes>

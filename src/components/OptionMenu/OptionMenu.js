@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./OptionMenu.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Menu, Dropdown, Space, Drawer, message, Input, Tooltip, Button } from "antd";
 import { CopyOutlined , EditOutlined, CommentOutlined, CheckOutlined, CloseOutlined, ShareAltOutlined, InboxOutlined, DeleteOutlined, EyeOutlined, InfoCircleOutlined, UserOutlined, LikeOutlined } from "@ant-design/icons";
 import VersionArea from "../VersionArea/VersionArea";
@@ -9,14 +9,15 @@ import ContentEditor from "../../pages/NoteDetailPage/ContentEditor/ContentEdito
 import Text from "../Text/Text";
 
 const OptionMenu = (props) => {
+  const navigate = useNavigate()
   const [visible, setVisible] = useState(false);
   const [menu, setMenu] = useState(
     <Menu />
   );
-  const [drawer, setDrawer] = useState(<CommentArea comments={props.comments}/>);
+  const [drawer, setDrawer] = useState(<CommentArea page={props.page} comments={props.comments} id={props.id}/>);
   const [drawerType, setDrawerType] = useState('');
 
-  const comments = (<CommentArea comments={props.comments} postId={props.postId}/>);
+  const comments = (<CommentArea page={props.page} comments={props.comments} id={props.id}/>);
   const versions = (<VersionArea page={'NoteDetailPageVersion'} versions={props.versions} setVersion={props.setVersion}/>);
 
   const showDrawer = () => {
@@ -100,7 +101,9 @@ const OptionMenu = (props) => {
     <Menu items={
       [
         {
-            label: "Edit",
+            label: (<a onClick=
+              {() => navigate(`/NoteEditPage/${props.id}`)}
+              >Edit</a>),
             key: "1",
             icon: <EditOutlined />
         },
@@ -120,18 +123,13 @@ const OptionMenu = (props) => {
             icon: <CommentOutlined />
         },
         {
-          label: (<a onClick={deletePost}>Delete</a>),
-          key: "4",
-          icon: <DeleteOutlined />
-        },
-        {
           label: (<a onClick=
             {() => {
               setDrawerType('Version');
               showDrawer();
             }}
             >Manage Version</a>),
-          key: "5",
+          key: "4",
           icon: <InfoCircleOutlined />
         },
       ]
@@ -360,17 +358,17 @@ const OptionMenu = (props) => {
     <Menu items={
       [
         {
-            label: (<a onClick={()=>{ contentBrowse(props.id) }}>Browse</a>),
+            label: (<a onClick={()=>{ contentBrowse(props.answerId) }}>Browse</a>),
             key: "1",
             icon: <EyeOutlined />
         },
         {
-            label: (<a style={{color: "blue"}} onClick={()=>{ chooseBest(props.id) }}>Choose as the best</a>),
+            label: (<a style={{color: "blue"}} onClick={()=>{ chooseBest(props.answerId) }}>Choose as the best</a>),
             key: "2",
             icon: <LikeOutlined style={{color: "blue"}}/>
         },
         {
-          label: (<a style={{color: "green"}} onClick={()=>{ chooseRef(props.id) }}>Choose as reference</a>),
+          label: (<a style={{color: "green"}} onClick={()=>{ chooseRef(props.answerId) }}>Choose as reference</a>),
           key: "3",
           icon: <LikeOutlined style={{color: "green"}}/>
         },]
@@ -381,17 +379,17 @@ const OptionMenu = (props) => {
     <Menu items={
       [
         {
-            label: (<a onClick={()=>{ contentBrowse(props.id) }}>Browse</a>),
+            label: (<a onClick={()=>{ contentBrowse(props.answerId) }}>Browse</a>),
             key: "1",
             icon: <EyeOutlined />
         },
         {
-            label: (<a style={{color: "green"}} onClick={()=>{ agreeApplier(props.id) }}>Agree</a>),
+            label: (<a style={{color: "green"}} onClick={()=>{ agreeApplier(props.answerId) }}>Agree</a>),
             key: "2",
             icon: <CheckOutlined style={{color: "green"}}/>
         },
         {
-          label: (<a style={{color: "red"}} onClick={()=>{ rejectApplier(props.id) }}>Reject</a>),
+          label: (<a style={{color: "red"}} onClick={()=>{ rejectApplier(props.answerId) }}>Reject</a>),
           key: "3",
           icon: <CloseOutlined style={{color: "red"}}/>
         },]
@@ -414,7 +412,6 @@ const OptionMenu = (props) => {
       ]
     }/>
     );
-
 
 
   useEffect(()=>{

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Steps, Layout, Row, Col, Input, Popover, message, Select, Tag, Drawer, List } from 'antd';
 import "./NoteEditTemplate.css"
 import PostEditTemplate from '../PostEditTemplate/PostEditTemplate';
@@ -20,12 +20,13 @@ const { TextArea } = Input;
 const { Option } = Select;
 
 const email = "00857028@email.ntou.edu.tw";
-const folderID  = "62aee78ee913643da31b59e9";
+//const folderID  = "62aee78ee913643da31b59e9";
 const author = "Yao"
 
 
 const NoteEditTemplate = (props) => {
     const navigate = useNavigate();
+    const { folderId } = useParams()
     const [title, setTitle] = useState(null);
     const [content, setContent] = useState(null);
     const [information, setInformation] = useState(null);
@@ -149,7 +150,7 @@ const NoteEditTemplate = (props) => {
             NoteFormat.price = information.price
             NoteFormat.description = content
 
-            axios.post(`http://localhost:8080/note/${email}/${folderID}`, NoteFormat)
+            axios.post(`http://localhost:8080/note/${email}/${folderId}`, NoteFormat)
             .then(res => {
                 const tempNote = res.data.res
                 console.log(tempNote)

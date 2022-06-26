@@ -86,11 +86,12 @@ function CommentArea(props) {
             email: "00857028@email.ntou.edu.tw",
             content: comment,
         }
-        axios.post(`http://localhost:8080/comment/${props.postId}`, tempComment)
+        const type = props.page == 'NoteDetailPage'? 'note':'post'
+        axios.post(`http://localhost:8080/comment/${props.id}`, tempComment)
         .then(res => {
             console.log(res.data.res)
             message.success("Submit!")
-            axios.get(`http://localhost:8080/post/${props.postId}`)
+            axios.get(`http://localhost:8080/${type}/${props.id}`)
             .then(postRes => {
                 const tempComment = postRes.data.res.comments
                 setComments(tempComment)

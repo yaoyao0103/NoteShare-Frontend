@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from "react-router-dom";
-import { List, Skeleton, Layout, message, Avatar, Dropdown, Menu } from 'antd';
+import { Link, useNavigate } from "react-router-dom";
+import { List, Skeleton, Layout, message, Avatar, Dropdown, Menu, Input, Modal } from 'antd';
 import Button from '../Button/Button';
 import Text from '../Text/Text';
 import axios from '../axios/axios';
-import { ArrowLeftOutlined, FolderAddOutlined, PlusOutlined } from "@ant-design/icons";
+import { ArrowLeftOutlined, FolderAddOutlined, PlusOutlined, MoreOutlined, CloseOutlined } from "@ant-design/icons";
 import './FileManager.css';
 import { Note } from '../PostEditTemplate/InfoCategories';
 import OptionMenu from '../OptionMenu/OptionMenu';
 const { Content, Sider }  = Layout;
 const email = "00857028@email.ntou.edu.tw"
 const FileManager = (props) => {
+    const navigate = useNavigate()
     const [files, setFiles] = useState([])
     const [posts, setPosts] = useState([])
     const [postShow, setPostShow] = useState(true)
@@ -19,6 +20,9 @@ const FileManager = (props) => {
     const [parent, setParent] = useState(null)
     const [notes, setNotes] = useState([])
     const [inFolder, setInFolder] = useState(false)
+    const [renaming, setRenaming] = useState(false)
+    const [newFolder, setNewFolder] = useState(false)
+    const [path, setPath] = useState('/')
     useEffect(() => {
         async function getRootFile() {
             axios.get(`http://localhost:8080/folder/root/${email}`)
@@ -45,6 +49,7 @@ const FileManager = (props) => {
             const parentId = res.data.res.parent
             const tempNotes = res.data.res.notes;
             const path = res.data.res.path;
+            setPath(path)
             path.split('/')[1] == 'Folder' ? setInFolder(true):setInFolder(false)
             if(parentId){
                 console.log("parentId:",parentId)
@@ -60,7 +65,7 @@ const FileManager = (props) => {
                         renderItem={(item, index) => (
                             <List.Item
                                 className="fileManage_Note_Item fileManage_List_Item"
-                                actions={[<OptionMenu page={props.page} noteId={item.id}/>]}
+                                actions={[<OptionMenu page={props.page} id={item.id}/>]}
                             >
                                 <List.Item.Meta
                                     avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
@@ -90,7 +95,7 @@ const FileManager = (props) => {
     }
 
     const onClickNote = (id) => {
-        message.info("id: "+ id)
+        navigate(`/NoteDetailPage/${id}`)
     }
 
     const back = () => {
@@ -115,7 +120,7 @@ const FileManager = (props) => {
                             renderItem={(item, index) => (
                                 <List.Item
                                     className="fileManage_Note_Item fileManage_List_Item"
-                                    actions={[<OptionMenu page={props.page} noteId={item.id}/>]}
+                                    actions={[<OptionMenu page={props.page} id={item.id}/>]}
                                 >
                                     <List.Item.Meta
                                         avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
@@ -153,7 +158,52 @@ const FileManager = (props) => {
         
     }
 
-    const menu = (
+    const createFolder = (name) => {
+        const data = {
+            folderName: name,
+            parent: current,
+            path: path + `/${name}`,
+            public: true,
+
+        }
+        //console.log("path", data)
+        axios.post(`http://localhost:8080/folder/${email}`, data)
+            .then(res => {
+                console.log(res.data.res);
+                onClickFolderZone(current)
+                setNewFolder(false)
+            })
+            .catch(err =>{
+                console.log(err)
+            })
+    }
+
+    const deleteFolder = (folderId) => {
+        axios.delete(`http://localhost:8080/folder/${email}/${folderId}`)
+            .then(res => {
+                console.log(res);
+                onClickFolderZone(current)
+            })
+            .catch(err =>{
+                console.log(err)
+            })
+    }
+
+    const renameFolder = (folderId, newName) => {
+        axios.put(`http://localhost:8080/folder/rename/${email}/${folderId}/${newName}`)
+            .then(res => {
+                console.log(res);
+                message.success("Success")
+                setRenaming(false)
+                onClickFolderZone(current)
+            })
+            .catch(err =>{
+                console.log(err)
+            })
+    }
+
+
+    const createMenu = (
         <Menu
             items={[
                 {
@@ -172,6 +222,25 @@ const FileManager = (props) => {
             />
         );
 
+        /*const folderMenu = (
+            <Menu
+                items={[
+                    {
+                    key: '1',
+                    label: (
+                        <a onclick={() => setRenaming(id)} style={{textDecoration:"none"}}>Rename Folder</a>
+                    ),
+                    },
+                    {
+                    key: '2',
+                    label: (
+                        <Link to={'/CollabEditPage/new/0'} style={{textDecoration:"none"}}>Delete Folder</Link>
+                    ),
+                    }
+                ]}
+                />
+            );
+*/
     return (
         <div className='fileManager'>
             <Layout className='fileManager_Layout'>
@@ -184,25 +253,56 @@ const FileManager = (props) => {
                         }
                         {inFolder && 
                         <>
-                            <FolderAddOutlined />
-                            <Dropdown overlay={menu} placement="bottomLeft" arrow>
+                            <FolderAddOutlined onClick={()=>setNewFolder(true)}/>
+                            <Dropdown overlay={createMenu} placement="bottomLeft" arrow>
                                 <PlusOutlined/>
                             </Dropdown>
                         </>}
                     </div>
-                    <List
-                        className="fileManage_Folder fileManage_List"
-                        itemLayout="horizontal"
-                        dataSource={files}
-                        renderItem={(item, index) => (
-                            <List.Item
-                                className="fileManage_Folder_Item fileManage_List_Item"
-                                onClick={()=> onClickFolderZone(item.id)}
-                            >
-                                {item.folderName}
+                    <>
+                        <List
+                            className="fileManage_Folder fileManage_List"
+                            itemLayout="horizontal"
+                            dataSource={files}
+                            renderItem={(item, index) => (
+                                    <List.Item
+                                        className={renaming==item.id? "fileManage_Folder_Item fileManage_List_Item_NoHover" : "fileManage_Folder_Item fileManage_List_Item"}
+                                        //onClick={()=> onClickFolderZone(item.id)}
+                                    >
+                                        
+                                        
+                                        {renaming==item.id? <Input onPressEnter={(ev) => renameFolder(item.id, ev.target.value)} className="fileManage_Folder_Item_Input" addonAfter={<CloseOutlined onClick={()=>setRenaming(false)}/>}/>:<div className='fileManage_Folder_Item_Name' onClick={()=> onClickFolderZone(item.id)}><div>{item.folderName}</div></div>}
+                                        
+                                        {renaming!=item.id && inFolder && 
+                                            <Dropdown overlay={<Menu
+                                                items={[
+                                                    {
+                                                    key: '1',
+                                                    label: (
+                                                        <a onClick={() => setRenaming(item.id)} style={{textDecoration:"none"}}>Rename</a>
+                                                    ),
+                                                    },
+                                                    {
+                                                    key: '2',
+                                                    label: (
+                                                        <a onClick={() => deleteFolder(item.id)} style={{textDecoration:"none"}}>Delete</a>
+                                                    ),
+                                                    }
+                                                ]}
+                                                />} placement="bottomLeft" arrow>
+                                                <MoreOutlined/>
+                                            </Dropdown>
+                                        }
+                                    </List.Item>
+                                
+                            )}
+                        />
+                        {newFolder &&
+                            <List.Item className="fileManage_Folder_Item fileManage_List_Item_NoHover">
+                                <Input onPressEnter={(ev) => createFolder(ev.target.value)} className="fileManage_Folder_Item_Input" addonAfter={<CloseOutlined onClick={()=>setNewFolder(false)}/>}/>
                             </List.Item>
-                        )}
-                    />
+                        }
+                    </>
                     {postShow &&
                         <List
                             className="fileManage_Post fileManage_List"
@@ -213,7 +313,7 @@ const FileManager = (props) => {
                                     className="fileManage_Folder_Item fileManage_List_Item"
                                     onClick={()=> onClickPostZone(item.value)}
                                 >
-                                    {item.folderName}
+                                    <div className='fileManage_Folder_Item_Name' onClick={()=> onClickFolderZone(item.id)}><div>{item.folderName}</div></div>
                                 </List.Item>
                             )}
                         />

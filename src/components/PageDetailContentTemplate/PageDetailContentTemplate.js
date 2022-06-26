@@ -75,7 +75,7 @@ const PageDetailContentTemplate = (props) => {
                                         isAuthor={props.isAuthor}
                                         isManager={props.isManager}
                                         setPoppedContentShow={setPoppedContentShow}
-                                        postId={props.postId}
+                                        id={props.postId? props.postId:props.noteId}
                                     /></div>
                                 
                             </Col>
@@ -155,7 +155,7 @@ const PageDetailContentTemplate = (props) => {
                 {(props.page!='NoteDetailPage' && props.page!='CollabDetailPage') && 
                     <>
                         <Sider id="contentTemplate__Comment" className="contentTemplate__Comment" width='40%'>
-                            <CommentArea page={props.page} comments={props.data?.comments? props.data.comments:[]} postId={props.postId}/>
+                            <CommentArea page={props.page} comments={props.data?.comments? props.data.comments:[]} id={props.postId}/>
                         </Sider>
                     </>
                 }
