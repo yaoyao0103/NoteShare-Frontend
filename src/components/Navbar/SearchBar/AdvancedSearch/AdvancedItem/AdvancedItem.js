@@ -5,7 +5,7 @@ import "./AdvancedItem.css"
 
 export const Note = ({ setCondition }) => {
     
-    const [tempCondition, setTempCondition] = useState({});
+    const [tempCondition, setTempCondition] = useState({page:'Note'});
     useEffect(() => {
         setCondition(tempCondition);
     }, [tempCondition])
@@ -24,7 +24,7 @@ export const Note = ({ setCondition }) => {
 
 export const Collab = ({ setCondition }) => {
 
-    const [tempCondition, setTempCondition] = useState({});
+    const [tempCondition, setTempCondition] = useState({page:'Collab'});
     useEffect(() => {
         setCondition(tempCondition);
     }, [tempCondition])
@@ -43,7 +43,7 @@ export const Collab = ({ setCondition }) => {
 
 export const Reward = ({ setCondition }) => {
 
-    const [tempCondition, setTempCondition] = useState({});
+    const [tempCondition, setTempCondition] = useState({page:'Reward'});
     useEffect(() => {
         setCondition(tempCondition);
     }, [tempCondition])
@@ -61,7 +61,7 @@ export const Reward = ({ setCondition }) => {
 
 export const QnA = ({ setCondition }) => {
 
-    const [tempCondition, setTempCondition] = useState({});
+    const [tempCondition, setTempCondition] = useState({page:'QnA'});
     useEffect(() => {
         setCondition(tempCondition);
     }, [tempCondition])
@@ -79,7 +79,7 @@ export const QnA = ({ setCondition }) => {
 
 export const Folder = ({ setCondition }) => {
 
-    const [tempCondition, setTempCondition] = useState({});
+    const [tempCondition, setTempCondition] = useState({page:'Folder'});
     useEffect(() => {
         setCondition(tempCondition);
     }, [tempCondition])

@@ -50,6 +50,7 @@ const AdvancedSearch = (props) => {
 
     const onSearch = () => {
         // Todo: set type of condition
+        props.setSearchCondition(condition);
         message.info("Search for type " + props.type)
         console.log("condition:", condition);
     }

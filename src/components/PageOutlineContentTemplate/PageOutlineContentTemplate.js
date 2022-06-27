@@ -19,12 +19,16 @@ function PageOutlineContentTemplate(props) {
         //console.log(searchResult);
     }, [props.Post]);
     useEffect(() => {
+        console.log(props.Post[0].items)
         var tempcardLists = [];
-        for (let i = 0; i <= props.Post[0].items.length - 1; i++) {
-            tempcardLists.push(<OutlineCard page={props.page} mode={props.mode} cardContent={props.Post[0].items[i]} author={props.Post[0].items[i].authorName} />);
-        };
+        //console.lo(props.Post)
+        if (props.Post.items) {
+            for (let i = 0; i <= props.Post[0].items.length - 1; i++) {
+                tempcardLists.push(<OutlineCard page={props.page} mode={props.mode} cardContent={props.Post[0].items[i]} author={props.Post[0].items[i].authorName} />);
+            };
 
-        setCardList(tempcardLists);
+            setCardList(tempcardLists);
+        }
         setPageTotal(props.Post[0].totalPages * 10);
     }, [props.Post]);
     useEffect(() => {

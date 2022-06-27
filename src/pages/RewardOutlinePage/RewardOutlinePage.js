@@ -18,7 +18,7 @@ function RewardOutlinePage(props) {
 
                 const sortBy=sortMode;
                 
-                await axios.get('http://localhost:8080/search/post/'+props.keyWord+'/' + String(pageNumber-1) + '/20?department='+props.department+'&subject='+props.subject+'&haveReward='+haveReward+'&sortBy='+sortBy).then((res) => {
+                await axios.get('http://localhost:8080/search/post/'+props.keyword+'/' + String(pageNumber-1) + '/20?department='+(props.department?props.department:'')+'&subject='+(props.subject?props.subject:'')+'&haveReward='+true+'&sortBy='+sortBy).then((res) => {
                     //console.log(res.search.search);
                     setReward(oldArray => [...oldArray, res.data.search]);
           
@@ -42,7 +42,7 @@ function RewardOutlinePage(props) {
                
                 const sortBy=sortMode;
                 
-                await axios.get('http://localhost:8080/search/post/'+props.keyWord+'/' + String(pageNumber-1) + '/20?department='+props.department+'&subject='+props.subject+'&haveReward='+haveReward+'&sortBy='+sortBy).then((res) => {
+                await axios.get('http://localhost:8080/search/post/'+props.keyword+'/' + String(pageNumber-1) + '/20?department='+(props.department?props.department:'')+'&subject='+(props.subject?props.subject:'')+'&haveReward='+true+'&sortBy='+sortBy).then((res) => {
                     setReward(oldArray => [...oldArray=[], res.data.search]);
                     window.scrollTo(0, 0);
                     //console.log(pageNumber);

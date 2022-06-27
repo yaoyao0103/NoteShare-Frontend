@@ -63,6 +63,16 @@ const OuterPage = () => {
             default: setPageComponent(<></>); break;
         }
     }, [currPage])
+    useEffect(() => {
+        //console.log(searchCondition);
+        if(searchCondition.keyword)
+            setPageProps(searchCondition);
+        //setCurrPage(searchCondition.page+'OutlinePage');
+    }, [searchCondition])
+    useEffect(() => {
+        if(searchCondition.keyword)
+        setCurrPage(searchCondition.page+'OutlinePage');
+    }, [pageProps])
     return (
         <>
             <div className='outerPage'>
