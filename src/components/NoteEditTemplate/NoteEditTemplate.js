@@ -27,8 +27,8 @@ const author = "Yao"
 const NoteEditTemplate = (props) => {
     const navigate = useNavigate();
     const { folderId } = useParams()
-    const [title, setTitle] = useState(null);
-    const [content, setContent] = useState(null);
+    const [title, setTitle] = useState('');
+    const [content, setContent] = useState('');
     const [information, setInformation] = useState(null);
     const [step, setStep] = useState(0);
     const [noteId, setNoteId] = useState('');
@@ -46,6 +46,7 @@ const NoteEditTemplate = (props) => {
     const { pages } = pageStore;
 
     useEffect(() => {
+        console.log("")
         const note = props.note;
         if(note && props.mode == 'edit'){
             setTitle(note.title);
@@ -72,7 +73,8 @@ const NoteEditTemplate = (props) => {
             )*/
             setTagSelected(note.tag)
         }
-        else{
+        else if(props.mode == 'new'){
+            setTitle('')
             setInformation({
                 school: '',
                 department: '',
@@ -81,6 +83,7 @@ const NoteEditTemplate = (props) => {
                 downloadable: false,
                 price: '0',
             });
+            setContent('')
         }
     },[props])
 

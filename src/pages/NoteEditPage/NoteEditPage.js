@@ -18,6 +18,10 @@ function NoteEditPage(props){
         }
         if(props.action=='edit'){
             getNoteById();
+            console.log("edit")
+        }
+        else{
+            console.log("new")
         }
         
         }, []);

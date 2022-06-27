@@ -18,8 +18,8 @@ const author = 'yao';
 
 const PostEditTemplate = (props) => {
 
-    const [title, setTitle] = useState(null);
-    const [content, setContent] = useState(null);
+    const [title, setTitle] = useState('');
+    const [content, setContent] = useState('');
     const [information, setInformation] = useState(null);
     
 
@@ -70,11 +70,13 @@ const PostEditTemplate = (props) => {
             console.log("post", post);
         }
         else{
+            setTitle('')
             switch(props.type){
                 case 'QA': setInformation(QnA); break;
                 case 'reward': setInformation(Reward); break;
                 case 'collaboration': setInformation(CollabNote); break;
             }
+            setContent('')
         }
         console.log(props)
     },[props])

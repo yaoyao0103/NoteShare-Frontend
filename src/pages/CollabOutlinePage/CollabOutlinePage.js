@@ -20,9 +20,10 @@ function CollabOutlinePage() {
                 const haveCollaboration= true;
                 const sortBy=sortMode;
                 
-                await axios.get('http://localhost:8080/search/post/array/' + String(pageNumber-1) + '/20?haveCollab='+haveCollaboration+'&sortBy='+sortBy).then((res) => {
+                await axios.get('http://localhost:8080/search/post/Interrupt/' + String(pageNumber - 1) + '/20?haveCollaboration=' + haveCollaboration + '&sortBy=' + sortBy).then((res) => {
+                    console.log(res.data.search);
                     setCollab(oldArray => [...oldArray, res.data.search]);
-                    //console.log(res.data.search.totalPages);
+                    
 
                 });
 
@@ -42,10 +43,10 @@ function CollabOutlinePage() {
                 const haveCollaboration= true;
                 const sortBy=sortMode;
                 
-                await axios.get('http://localhost:8080/search/post/array/' + String(pageNumber-1) + '/20?haveCollab='+haveCollaboration+'&sortBy='+sortBy).then((res) => {
-                    setCollab(oldArray => [...oldArray=[], res.data.search]);
-                    window.scrollTo(0, 0);
-                    //console.log(pageNumber);
+                await axios.get('http://localhost:8080/search/post/Interrupt/' + String(pageNumber - 1) + '/20?haveCollaboration=' + haveCollaboration + '&sortBy=' + sortBy).then((res) => {
+                    console.log(res.data.search);
+                    setCollab(oldArray => [...oldArray, res.data.search]);
+                    
 
                 });
 
@@ -67,10 +68,10 @@ function CollabOutlinePage() {
                 const haveCollaboration= true;
                 const sortBy=sortMode;
                 
-                await axios.get('http://localhost:8080/search/post/array/' + String(pageNumber-1) + '/20?haveCollab='+haveCollaboration+'&sortBy='+sortBy).then((res) => {
-                    setCollab(oldArray => [...oldArray=[], res.data.search]);
-                    window.scrollTo(0, 0);
-                    //console.log(pageNumber);
+                await axios.get('http://localhost:8080/search/post/Interrupt/' + String(pageNumber - 1) + '/20?haveCollaboration=' + haveCollaboration + '&sortBy=' + sortBy).then((res) => {
+                    console.log(res.data.search);
+                    setCollab(oldArray => [...oldArray, res.data.search]);
+                    
 
                 });
 
