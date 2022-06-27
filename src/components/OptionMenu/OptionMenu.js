@@ -102,7 +102,13 @@ const OptionMenu = (props) => {
       [
         {
             label: (<a onClick=
-              {() => navigate(`/NoteEditPage/${props.id}`)}
+              {() => {
+                props.setPageProps({
+                  noteId: props.id,
+                  action: "edit"
+                })
+                props.setCurrPage('NoteEditPage');
+              }}
               >Edit</a>),
             key: "1",
             icon: <EditOutlined />
@@ -140,9 +146,18 @@ const OptionMenu = (props) => {
       <Menu items={
         [
           {
-              label: "Edit",
-              key: "1",
-              icon: <EditOutlined />
+            label: (<a onClick=
+              {() => {
+                props.setPageProps({
+                  postId: props.id,
+                  type: 'QA',
+                  action: "edit"
+                })
+                props.setCurrPage('QnAEditPage');
+              }}
+              >Edit</a>),
+            key: "1",
+            icon: <EditOutlined />
           },
           {
               label: "Share",
@@ -174,9 +189,18 @@ const OptionMenu = (props) => {
     <Menu items={
       [
         {
-            label: "Edit",
-            key: "1",
-            icon: <EditOutlined />
+          label: (<a onClick=
+            {() => {
+              props.setPageProps({
+                postId: props.id,
+                type: 'reward',
+                action: "edit"
+              })
+              props.setCurrPage('RewardEditPage');
+            }}
+            >Edit</a>),
+          key: "1",
+          icon: <EditOutlined />
         },
         {
             label: "Share",

@@ -119,77 +119,104 @@ function LoginPage() {
         },
       };
     return (
-        <div className='LoginPage'>
+        <div className='loginPage'>
             
-            <Navbar currPage={Page} changePage={(page) => { setPage(page) }} />
-            {render&&
-            <div className='Login__Outer'>
-                <div className='Login__Logo'><Logo /></div>
-                
-                <Form
-                    name="normal_login"
-                    className="login-form"
-                    size='large'
-                    initialValues={{
-                        email:email,
-                        password:password,
-                        remember: true,
-                    }}
-                    {...formItemLayout}
-                    onFinish={onFinish}
-                >
-                    <Form.Item
-                        className='Login__Form__Item'
-                        name="email"
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Please enter your Email!',
-                            },
-                        ]}
-                    >
-                        <Input defaultValue={startEmail}prefix={<MailOutlined className="site-form-item-icon" />} placeholder="Email" onChange={(e) => { setEmail(e.target.value) }} />
-                    </Form.Item>
-                    <Form.Item
-                    className='Login__Form__Item'
-                        name="password"
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Please enter your Password!',
-                            },
-                        ]}
-                    >
-                        <Input
-                            prefix={<LockOutlined className="site-form-item-icon" />}
-                            defaultValue={startPassword}
-                            type="password"
-                            placeholder="Password"
-                            onChange={(e) => { setPassword(e.target.value); }}
-                        />
-                    </Form.Item>
-                    <Form.Item className='Login__Form__Item'>
+            {render &&
+            <Layout className='loginPage__Outer'>
+                <Header className='loginPage__Header'>
+                    <div className='loginPage__Content__Logo'>
+                        <Text color='black' cls='Large' content='Note' fontSize='22'/>
+                        <Text color='purple' cls='Large' content='Share'fontSize='22'/>
+                    </div>
+                </Header>
+                <Layout>
+                    <Sider className='loginPage__Sider' width={600}>
                         
-                        <Form.Item name="remember" valuePropName="checked" noStyle>
-                            <Checkbox.Group defaultValue={hasRemember}>
-                            <Checkbox value="A" onChange={(e) => { rememberChange(e.target.checked) }}>Remember me</Checkbox>
-                            </Checkbox.Group>
-                        </Form.Item>
-
-                        <a className="login-form-forgot" href="">
-                            Forgot password
-                        </a>
-                    </Form.Item>
-
-                    <Form.Item className='Login__Form__Item'>
-                        <a href="/SignUpPage">register now!</a>
-                        <div className="Login__Button">
-                            <Button color={"green"}><Text color='white' cls='Large' content={"LogIn"} fontSize='15' display="inline-block" /></Button>
+                    </Sider>
+                    <Content className='loginPage__Content'>
+                        <div className='loginPage__Content__Text'>
+                            <Text color='black' cls='Large' content='Welcome to NoteShare' fontSize='22'/>
                         </div>
-                    </Form.Item>
-                </Form>
+                        <div className='loginPage__Content__Text loginPage__Content__Text__Bottom'>
+                            <Text color='black' cls='Large' content='Write your own note' fontSize='10'/>
+                        </div>
+                        <div className="loginPage__Form">
+                            <Form
+                                name="normal_login"
+                                size='large'
+                                initialValues={{
+                                    email:email,
+                                    password:password,
+                                    remember: true,
+                                }}
+                                {...formItemLayout}
+                                onFinish={onFinish}
+                            >
+                                <div className='loginPage__Content__Form__Text'>
+                                    <Text color='black' cls='Small' content='Email' fontSize='13'/>
+                                </div>
+                                <Form.Item
+                                    className='Login__Form__Item'
+                                    name="email"
+                                    rules={[
+                                        {
+                                            required: true,
+                                            message: 'Please enter your Email!',
+                                        },
+                                    ]}
+                                >
+                                    <Input 
+                                        defaultValue={startEmail}
+                                        //prefix={<MailOutlined className="site-form-item-icon" />} 
+                                        placeholder="Email" 
+                                        onChange={(e) => { setEmail(e.target.value) }} />
+                                </Form.Item>
+                                <div className='loginPage__Content__Form__Text'>
+                                    <Text color='black' cls='Small' content='Password' fontSize='13'/>
+                                </div>
+                                
+                                <Form.Item
+                                className='Login__Form__Item'
+                                    name="password"
+                                    rules={[
+                                        {
+                                            required: true,
+                                            message: 'Please enter your Password!',
+                                        },
+                                    ]}
+                                >
+                                    <Input
+                                        //prefix={<LockOutlined className="site-form-item-icon" />}
+                                        defaultValue={startPassword}
+                                        type="password"
+                                        placeholder="Password"
+                                        onChange={(e) => { setPassword(e.target.value); }}
+                                    />
+                                </Form.Item>
+                                <Form.Item className='Login__Form__Item'>
+                                    
+                                    <Form.Item name="remember" valuePropName="checked" noStyle>
+                                        <Checkbox.Group defaultValue={hasRemember}>
+                                        <Checkbox value="A" onChange={(e) => { rememberChange(e.target.checked) }}>Remember me</Checkbox>
+                                        </Checkbox.Group>
+                                    </Form.Item>
 
-            </div>
+                                    <a className="loginPage__Content__Form__Forgot" href="">
+                                        Forgot password?
+                                    </a>
+                                </Form.Item>
+
+                                <Form.Item className='Login__Form__Item'>
+                                    <a href="/SignUpPage">register now!</a>
+                                    <div className="Login__Button">
+                                        <Button color={"green"}><Text color='white' cls='Large' content={"LogIn"} fontSize='15' display="inline-block" /></Button>
+                                    </div>
+                                </Form.Item>
+                            </Form>
+                        </div>
+                    </Content>
+                </Layout>
+            </Layout>
             }
         </div>
 

@@ -114,6 +114,7 @@ const PostEditTemplate = (props) => {
         .then(res => {
             console.log(res.data)
             message.info("Update!!");
+            props.setCurrPage('PersonalPage');
         })
         .catch(err =>{
             console.log(err)
@@ -167,6 +168,7 @@ const PostEditTemplate = (props) => {
         .then(res => {
             console.log(res.data)
             message.info("Submit!!");
+            props.setCurrPage('PersonalPage');
         })
         .catch(err =>{
             console.log(err)

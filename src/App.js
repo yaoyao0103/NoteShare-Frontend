@@ -23,8 +23,10 @@ import PersonalPage from "./pages/PersonalPage/PersonalPage";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import SignUpPage from "./pages/SignUpPage/SignUpPage";
 import VerificationPage from "./pages/VerificationPage/VerificationPage";
+import OuterPage from "./pages/OuterPage/OuterPage";
 function App() {
   const dispatch = useDispatch();
+  const noteId = '62b477d9c291fe27002cae3c'
 
   useEffect(() => {
     pageLoad()(dispatch);
@@ -46,7 +48,8 @@ function App() {
         <Route exact path="/CollabDetailPage" element={<CollabDetailPage />}></Route>
         <Route exact path="/CollabEditPage/:action/:postId" element={<CollabEditPage />}></Route>
         <Route exact path="/ScreenShotCapture" element={<ScreenShotCapture />}></Route>
-        <Route exact path="/NoteDetailPage/:noteId" element={<NoteDetailPage />}></Route>
+        <Route exact path="/NoteOutlinePage" element={<NoteOutlinePage />}></Route>
+        <Route exact path="/NoteDetailPage" element={<NoteDetailPage noteId={noteId}/>}></Route>
         <Route exact path="/NoteEditPage/:noteId" element={<NoteEditPage />}></Route>
         <Route exact path="/NoteNewPage/:folderId" element={<NoteEditPage />}></Route>
         <Route exact path="/ProfilePage" element={<ProfilePage />}></Route>
@@ -54,6 +57,7 @@ function App() {
         <Route exact path="/LoginPage" element={<LoginPage />}></Route>
         <Route exact path="/SignUpPage" element={<SignUpPage />}></Route>
         <Route exact path="/VerificationPage/:email" element={<VerificationPage />}></Route>
+        <Route exact path="/OuterPage" element={<OuterPage />}></Route>
       </Routes>
     </Router>
   );

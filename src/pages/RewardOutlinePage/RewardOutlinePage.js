@@ -18,12 +18,13 @@ function RewardOutlinePage() {
         async function getRewardById() {
             try {
                 const haveReward= true;
-               
+
                 const sortBy=sortMode;
                 
                 await axios.get('http://localhost:8080/search/post/interrupt/' + String(pageNumber-1) + '/20?haveReward='+haveReward+'&sortBy='+sortBy).then((res) => {
+                    console.log(res);    
                     setReward(oldArray => [...oldArray, res.data.search]);
-                    //console.log(res.data.search.totalPages);
+                    console.log(res.data.search.totalPages);
 
                 });
 

@@ -1,10 +1,8 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import "./NavButton.css";
 import { Button } from 'antd';
 
 function NavButton(props) {
-    const navigate = useNavigate();
     const [Showing, setShowing] = useState({
       PersonalPage:true,
       Reward:false,
@@ -12,7 +10,7 @@ function NavButton(props) {
       Collab:false,
     });
     const onClick = e =>{
-      console.log(e.target.innerText);
+      console.log(e.target.value);
       handleShowingChange(e);
       //this.forceUpdate();
     };
@@ -49,15 +47,15 @@ function NavButton(props) {
           Collab:false,
         });
       }
-      props.changePage(e.target.innerText);
+      props.setCurrPage(e.target.value);
     };
   
     return (
       <div id = "navButton" className = "navButton" >
-          <Button type='text' className='button__first'id={`button${Showing.PersonalPage ? '--active':''}`} onClick={() => navigate('/PersonalPage')}>Personal Page</Button>
-          <Button type='text' className='button__second'id={`button${Showing.Reward ? '--active':''}`} onClick={onClick}>Reward</Button>
-          <Button type='text' className='button__third'id={`button${Showing.QnA ? '--active':''}`} onClick={onClick}>QnA</Button>
-          <Button type='text' className='button__forth'id={`button${Showing.Collab ? '--active':''}`} onClick={onClick}>Collab</Button>
+          <Button type='text' className='button__first' value='PersonalPage' id={`button${Showing.PersonalPage ? '--active':''}`} onClick={onClick}>Personal Page</Button>
+          <Button type='text' className='button__second' value='RewardOutlinePage' id={`button${Showing.Reward ? '--active':''}`} onClick={onClick}>Reward</Button>
+          <Button type='text' className='button__third' value='QnAOutlinePage' id={`button${Showing.QnA ? '--active':''}`} onClick={onClick}>QnA</Button>
+          <Button type='text' className='button__forth' value='CollabOutlinePage' id={`button${Showing.Collab ? '--active':''}`} onClick={onClick}>Collab</Button>
       </div>
     );
   }
