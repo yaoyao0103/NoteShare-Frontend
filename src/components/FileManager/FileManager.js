@@ -109,6 +109,7 @@ const FileManager = (props) => {
                 const parentId = res.data.res.parent
                 setParent(parentId)      
                 const path = res.data.res.path;
+                setPath(path);
                 path.split('/')[1] == 'Folder' ? setInFolder(true):setInFolder(false)
                 const tempNotes = res.data.res.notes;
                 if(tempNotes.length > 0){
@@ -202,6 +203,10 @@ const FileManager = (props) => {
             })
     }
 
+    const floatBtnOnClick = () => {
+        message.info("float button click!")
+    }
+
 
     const createMenu = (
         <Menu
@@ -242,90 +247,94 @@ const FileManager = (props) => {
             );
 */
     return (
-        <div className='fileManager'>
-            <Layout className='fileManager_Layout'>
-                <Sider className='fileManager_Sider'>
-                    <div className='fileManager_Buttons' >
-                        {backBtnShow?
-                            <ArrowLeftOutlined onClick={back}/>
-                            :
-                            <ArrowLeftOutlined onClick={null} style={{cursor:"default", color:"#bbb"}}/>
-                        }
-                        {inFolder && 
+        <>
+            <div className='fileManager'>
+                <Layout className='fileManager_Layout'>
+                    <Sider className='fileManager_Sider'>
+                        <div className='fileManager_Buttons' >
+                            {backBtnShow?
+                                <ArrowLeftOutlined onClick={back}/>
+                                :
+                                <ArrowLeftOutlined onClick={null} style={{cursor:"default", color:"#bbb"}}/>
+                            }
+                            {inFolder && 
+                            <>
+                                <FolderAddOutlined onClick={()=>setNewFolder(true)}/>
+                                <Dropdown overlay={createMenu} placement="bottomLeft" arrow>
+                                    <PlusOutlined/>
+                                </Dropdown>
+                            </>}
+                        </div>
                         <>
-                            <FolderAddOutlined onClick={()=>setNewFolder(true)}/>
-                            <Dropdown overlay={createMenu} placement="bottomLeft" arrow>
-                                <PlusOutlined/>
-                            </Dropdown>
-                        </>}
-                    </div>
-                    <>
-                        <List
-                            className="fileManage_Folder fileManage_List"
-                            itemLayout="horizontal"
-                            dataSource={files}
-                            renderItem={(item, index) => (
-                                    <List.Item
-                                        className={renaming==item.id? "fileManage_Folder_Item fileManage_List_Item_NoHover" : "fileManage_Folder_Item fileManage_List_Item"}
-                                        //onClick={()=> onClickFolderZone(item.id)}
-                                    >
-                                        
-                                        
-                                        {renaming==item.id? <Input onPressEnter={(ev) => renameFolder(item.id, ev.target.value)} className="fileManage_Folder_Item_Input" addonAfter={<CloseOutlined onClick={()=>setRenaming(false)}/>}/>:<div className='fileManage_Folder_Item_Name' onClick={()=> onClickFolderZone(item.id)}><div>{item.folderName}</div></div>}
-                                        
-                                        {renaming!=item.id && inFolder && 
-                                            <Dropdown overlay={<Menu
-                                                items={[
-                                                    {
-                                                    key: '1',
-                                                    label: (
-                                                        <a onClick={() => setRenaming(item.id)} style={{textDecoration:"none"}}>Rename</a>
-                                                    ),
-                                                    },
-                                                    {
-                                                    key: '2',
-                                                    label: (
-                                                        <a onClick={() => deleteFolder(item.id)} style={{textDecoration:"none"}}>Delete</a>
-                                                    ),
-                                                    }
-                                                ]}
-                                                />} placement="bottomLeft" arrow>
-                                                <MoreOutlined/>
-                                            </Dropdown>
-                                        }
-                                    </List.Item>
-                                
-                            )}
-                        />
-                        {newFolder &&
-                            <List.Item className="fileManage_Folder_Item fileManage_List_Item_NoHover">
-                                <Input onPressEnter={(ev) => createFolder(ev.target.value)} className="fileManage_Folder_Item_Input" addonAfter={<CloseOutlined onClick={()=>setNewFolder(false)}/>}/>
-                            </List.Item>
-                        }
-                    </>
-                    {postShow &&
-                        <List
-                            className="fileManage_Post fileManage_List"
-                            itemLayout="horizontal"
-                            dataSource={posts}
-                            renderItem={(item, index) => (
-                                <List.Item
-                                    className="fileManage_Folder_Item fileManage_List_Item"
-                                    onClick={()=> onClickPostZone(item.value)}
-                                >
-                                    <div className='fileManage_Folder_Item_Name' onClick={()=> onClickFolderZone(item.id)}><div>{item.folderName}</div></div>
+                            <List
+                                className="fileManage_Folder fileManage_List"
+                                itemLayout="horizontal"
+                                dataSource={files}
+                                renderItem={(item, index) => (
+                                        <List.Item
+                                            className={renaming==item.id? "fileManage_Folder_Item fileManage_List_Item_NoHover" : "fileManage_Folder_Item fileManage_List_Item"}
+                                            //onClick={()=> onClickFolderZone(item.id)}
+                                        >
+                                            
+                                            
+                                            {renaming==item.id? <Input onPressEnter={(ev) => renameFolder(item.id, ev.target.value)} className="fileManage_Folder_Item_Input" addonAfter={<CloseOutlined onClick={()=>setRenaming(false)}/>}/>:<div className='fileManage_Folder_Item_Name' onClick={()=> onClickFolderZone(item.id)}><div>{item.folderName}</div></div>}
+                                            
+                                            {renaming!=item.id && inFolder && 
+                                                <Dropdown overlay={<Menu
+                                                    items={[
+                                                        {
+                                                        key: '1',
+                                                        label: (
+                                                            <a onClick={() => setRenaming(item.id)} style={{textDecoration:"none"}}>Rename</a>
+                                                        ),
+                                                        },
+                                                        {
+                                                        key: '2',
+                                                        label: (
+                                                            <a onClick={() => deleteFolder(item.id)} style={{textDecoration:"none"}}>Delete</a>
+                                                        ),
+                                                        }
+                                                    ]}
+                                                    />} placement="bottomLeft" arrow>
+                                                    <MoreOutlined/>
+                                                </Dropdown>
+                                            }
+                                        </List.Item>
+                                    
+                                )}
+                            />
+                            {newFolder &&
+                                <List.Item className="fileManage_Folder_Item fileManage_List_Item_NoHover">
+                                    <Input onPressEnter={(ev) => createFolder(ev.target.value)} className="fileManage_Folder_Item_Input" addonAfter={<CloseOutlined onClick={()=>setNewFolder(false)}/>}/>
                                 </List.Item>
-                            )}
-                        />
-                    }
-                </Sider>
-                <Content className='fileManager_Content'>
-                    {notes}
-                </Content>
-            </Layout>
-            
-        </div>
-        
+                            }
+                        </>
+                        {postShow &&
+                            <List
+                                className="fileManage_Post fileManage_List"
+                                itemLayout="horizontal"
+                                dataSource={posts}
+                                renderItem={(item, index) => (
+                                    <List.Item
+                                        className="fileManage_Folder_Item fileManage_List_Item"
+                                        onClick={()=> onClickPostZone(item.value)}
+                                    >
+                                        <div className='fileManage_Folder_Item_Name' onClick={()=> onClickFolderZone(item.id)}><div>{item.folderName}</div></div>
+                                    </List.Item>
+                                )}
+                            />
+                        }
+                    </Sider>
+                    <Content className='fileManager_Content'>
+                        {notes}
+                    </Content>
+                </Layout>
+                
+            </div>
+            <div className="floatButton" onClick={floatBtnOnClick}>
+                <PlusOutlined />
+            </div>
+        </>
     );
 }
 export default FileManager;
