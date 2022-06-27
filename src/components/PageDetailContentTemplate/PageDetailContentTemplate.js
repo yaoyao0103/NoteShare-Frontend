@@ -57,7 +57,7 @@ const PageDetailContentTemplate = (props) => {
                                 <OPInfo
                                     className="contentTemplate__Title__OPInfo" 
                                     size={56}
-                                    author={props.page == 'NoteDetailPage'? props.data?.headerName:props.data?.author}
+                                    author={props.page == 'NoteDetailPage'? props.data?.headerName:props.data?.authorName}
                                     date={props.data?.date} 
                                     dateFontSize="18"
                                 >T</OPInfo>
@@ -76,6 +76,8 @@ const PageDetailContentTemplate = (props) => {
                                         isManager={props.isManager}
                                         setPoppedContentShow={setPoppedContentShow}
                                         id={props.postId? props.postId:props.noteId}
+                                        setPageProps={props.setPageProps}
+                                        setCurrPage={props.setCurrPage} 
                                     /></div>
                                 
                             </Col>

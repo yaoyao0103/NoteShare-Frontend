@@ -1,0 +1,16 @@
+.outerPage__Layout{
+    position: absolute;
+    top: 8%;
+    background-color: #EFF1F4;
+    width: 100%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+.drawerBtn{
+    position: fixed;
+    left: 2em;
+    bottom: 2em;
+}

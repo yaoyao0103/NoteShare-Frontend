@@ -17,7 +17,7 @@ function Navbar(props) {
   return (
     <div id="navbar" className="nav">
       <Logo />
-      <NavButton currPage={props.currPage} changePage={(page) => props.changePage(page)} />
+      <NavButton currPage={props.currPage} setCurrPage={props.setCurrPage} />
       <NavMenu />
       <SearchBar />
 

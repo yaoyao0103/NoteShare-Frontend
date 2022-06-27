@@ -228,8 +228,9 @@ const NoteEditTemplate = (props) => {
                 tempNote.tag = tagSelected
                 axios.put(`http://localhost:8080/note/${noteId}`, tempNote)
                     .then(res => {
-                        console.log(res)
-                        navigate("/PersonalPage")
+                        console.log(res);
+                        message.success("Submit!");
+                        props.setCurrPage('PersonalPage');
                     })
                     .catch (err => {
                         console.log(err)

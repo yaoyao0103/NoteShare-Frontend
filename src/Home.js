@@ -107,7 +107,7 @@ const Home = () => {
         <Link to={'/MemberPage'}>MemberPage</Link>
         </div>
         <div>
-        <Link to={`/NoteDetailPage/${noteId}`}>NoteDetailPage</Link>
+        <Link to={`/NoteDetailPage`}>NoteDetailPage</Link>
         </div>
         <div>
         <Link to={'/NoteOutlinePage'}>NoteOutlinePage</Link>
@@ -159,6 +159,9 @@ const Home = () => {
         </div>
         <div>
         <Link to={'/PersonalPage'}>PersonalPage</Link>
+        </div>
+        <div>
+        <Link to={'/OuterPage'}>OuterPage</Link>
         </div>
       </div>
     </div>

@@ -1,39 +1,66 @@
-.Login{
-    position: absolute;
+.loginPage{
+    position:relative;
+    width: 80%;
+    height: 100%; 
+    margin-top: 5%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 10%;
+}
+
+.loginPage__Outer{
     height: 100%;
-    width: 100%;
-    background-color: #FFF;
-    margin-bottom: 5%;
-    
-}
-.Login__Outer{
-    position: absolute;
-    top: 30%;
-    left:37%;
-    width: 100%;
-    background-color: #FFF;
-    margin-bottom: 3%;
-    /* box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;*/
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
 } 
-.Login__Logo{
+
+
+.loginPage__Header{
+  background-color: #fff;
+  padding-top: 1em;
+}
+
+.loginPage__Sider{
+  background-color: #fff;
+}
+
+.loginPage__Content{
+  background-color: #fff;
+  padding: 1em 3em 5em 2em;
+}
+
+.loginPage__Content__Text__Bottom{
+  margin-bottom: 2em;
+}
+
+.loginPage__Form{
   position: relative;
-  padding-bottom:3%;
+  width: 100%;
 }
-.login-form {
-  max-width: 27%;
+
+.loginPage__Content__Form__Text{
+  position: relative;
+  width: 100%;
+  margin-bottom: .5em;
 }
-.login-form-forgot {
+
+.loginPage__Content__Form__Forgot {
+  float: right;
+  text-decoration: none;
+}
+
+.Login__Button{
   float: right;
 }
+
+/*
 .ant-col-rtl .login-form-forgot {
   float: left;
 }
 .login-form-button {
   width: 100%;
 }
-.Login__Button{
-  float: right;
-}
+
 .Login__Form__Item{
   margin-top: 10%;
-}
+}*/
