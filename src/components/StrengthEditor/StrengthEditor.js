@@ -39,7 +39,7 @@ function StrengthEditor(props) {
         if(props.isAuthor){
             strengthLists.push(
                 <div key={i} className='StrengthEditor__Tag'>
-                    <Text className='StrengthEditor__Title' cls='Gerneral' fontSize='18' content={strength[i]} />
+                    <Text className='StrengthEditor__Title' cls='Gerneral' fontSize='16' content={strength[i]} />
                     <CloseOutlined key={i} style={{ fontSize: '16px' }} className={'StrengthEditor__Delete'} onClick={e => Delete(i)} />
                 </div>
                 
@@ -48,7 +48,7 @@ function StrengthEditor(props) {
         else{
             strengthLists.push(
                 <div key={i} className='StrengthEditor__Tag__NotAuthor'>
-                    <Text className='StrengthEditor__Title' cls='Gerneral' fontSize='18' content={strength[i]} />
+                    <Text className='StrengthEditor__Title' cls='Gerneral' fontSize='16' content={strength[i]} />
                  
                 </div>
                 
@@ -59,15 +59,15 @@ function StrengthEditor(props) {
     };
     return (
         <div className='StrengthEditor'>
-            <Text className='StrengthEditor__Title' cls='Gerneral' fontSize='22' content={'Strength :'} />
+            <Text className='StrengthEditor__Title' cls='Gerneral' fontSize='20' content={'Strength :'} />
             <div className='StrengthEditor__Tags'>
                 {strengthLists}
                 {!editing&&props.isAuthor &&
-                    <PlusCircleOutlined style={{ fontSize: '16px' }} className='StrengthEditor__Add' onClick={() => { setEditing(true) }} />}
+                    <PlusCircleOutlined style={{ fontSize: '14px' }} className='StrengthEditor__Add' onClick={() => { setEditing(true) }} />}
                 {editing&&props.isAuthor &&
                     <Input className='StrengthEditor__Input' placeholder='Enter new Strength' onChange={(e) => { const Tag = e.target.value; setTag(Tag) }} />}
                 {editing&&props.isAuthor &&
-                    <SaveOutlined className='StrengthEditor__Save' style={{ fontSize: '18px' }} onClick={() => { Save(); }} />}
+                    <SaveOutlined className='StrengthEditor__Save' style={{ fontSize: '16px' }} onClick={() => { Save(); }} />}
             </div>
         </div>
     );

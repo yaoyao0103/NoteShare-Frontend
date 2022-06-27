@@ -1,8 +1,11 @@
+
 .outerPage__Layout{
     position: absolute;
     top: 8%;
     background-color: #EFF1F4;
     width: 100%;
+    /* height: 100%;
+    padding-bottom: 3%; */
     display: block;
     margin-left: auto;
     margin-right: auto;

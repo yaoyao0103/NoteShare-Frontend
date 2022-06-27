@@ -21,6 +21,7 @@ import VerificationPage from "../VerificationPage/VerificationPage";
 import Navbar from '../../components/Navbar/Navbar';
 import './OuterPage.css'
 import { Button, Drawer } from 'antd'
+import { timers } from 'jquery';
 
 const OuterPage = () => {
     const [currPage, setCurrPage] = useState('LoginPage');
@@ -36,29 +37,34 @@ const OuterPage = () => {
     };
     useEffect(() => {
         console.log(currPage)
-        switch(currPage){
-            case 'NoteDetailPage': setPageComponent(<NoteDetailPage page='NoteDetailPage' setPageProps={setPageProps} setCurrPage={setCurrPage} {...pageProps}/>); break;
-            case 'NoteEditPage': setPageComponent(<NoteEditPage page='NoteEditPage' setPageProps={setPageProps} setCurrPage={setCurrPage} {...pageProps}/>); break;
-            case 'NoteNewPage': setPageComponent(<NoteEditPage page='NoteNewPage' setPageProps={setPageProps} setCurrPage={setCurrPage} {...pageProps}/>); break;
-            case 'RewardDetailPage': setPageComponent(<RewardDetailPage page='RewardDetailPage' setPageProps={setPageProps} setCurrPage={setCurrPage} {...pageProps}/>); break;
-            case 'RewardEditPage': setPageComponent(<RewardEditPage page='RewardEditPage' setPageProps={setPageProps} setCurrPage={setCurrPage} {...pageProps}/>); break;
-            case 'RewardNewPage': setPageComponent(<RewardEditPage page='RewardNewPage' setPageProps={setPageProps} setCurrPage={setCurrPage} {...pageProps}/>); break;
-            case 'QnADetailPage': setPageComponent(<QnADetailPage page='QnADetailPage' setPageProps={setPageProps} setCurrPage={setCurrPage} {...pageProps}/>); break;
-            case 'QnAEditPage': setPageComponent(<QnAEditPage page='QnAEditPage' setPageProps={setPageProps} setCurrPage={setCurrPage} {...pageProps}/>); break;
-            case 'QnANewPage': setPageComponent(<QnAEditPage page='QnANewPage' setPageProps={setPageProps} setCurrPage={setCurrPage} {...pageProps}/>); break;
-            case 'CollabDetailPage': setPageComponent(<CollabDetailPage page='CollabDetailPage' setPageProps={setPageProps} setCurrPage={setCurrPage} {...pageProps}/>); break;
-            case 'CollabEditPage': setPageComponent(<CollabEditPage page='CollabEditPage' setPageProps={setPageProps} setCurrPage={setCurrPage} {...pageProps}/>); break;
-            case 'CollabNewPage': setPageComponent(<CollabEditPage page='CollabNewPage' setPageProps={setPageProps} setCurrPage={setCurrPage} {...pageProps}/>); break;
+        switch (currPage) {
+            case 'NoteDetailPage': setPageComponent(<NoteDetailPage page='NoteDetailPage' setPageProps={setPageProps} setCurrPage={setCurrPage} {...pageProps} />); break;
+            case 'NoteEditPage': setPageComponent(<NoteEditPage page='NoteEditPage' setPageProps={setPageProps} setCurrPage={setCurrPage} {...pageProps} />); break;
+            case 'NoteNewPage': setPageComponent(<NoteEditPage page='NoteNewPage' setPageProps={setPageProps} setCurrPage={setCurrPage} {...pageProps} />); break;
+            case 'NoteOutlinePage': setPageComponent(<NoteOutlinePage page='NoteOutlinePage' setPageProps={setPageProps} setCurrPage={setCurrPage} {...pageProps} />); break;
+            case 'RewardDetailPage': setPageComponent(<RewardDetailPage page='RewardDetailPage' setPageProps={setPageProps} setCurrPage={setCurrPage} {...pageProps} />); break;
+            case 'RewardEditPage': setPageComponent(<RewardEditPage page='RewardEditPage' setPageProps={setPageProps} setCurrPage={setCurrPage} {...pageProps} />); break;
+            case 'RewardNewPage': setPageComponent(<RewardEditPage page='RewardNewPage' setPageProps={setPageProps} setCurrPage={setCurrPage} {...pageProps} />); break;
+            case 'RewardOutlinePage': setPageComponent(<RewardOutlinePage page='RewardOutlinePage' setPageProps={setPageProps} setCurrPage={setCurrPage} {...pageProps} />); break;
+            case 'QnADetailPage': setPageComponent(<QnADetailPage page='QnADetailPage' setPageProps={setPageProps} setCurrPage={setCurrPage} {...pageProps} />); break;
+            case 'QnAOutlinePage': setPageComponent(<QnAOutlinePage page='QnAOutlinePage' setPageProps={setPageProps} setCurrPage={setCurrPage} {...pageProps} />); break;
+            case 'QnAEditPage': setPageComponent(<QnAEditPage page='QnAEditPage' setPageProps={setPageProps} setCurrPage={setCurrPage} {...pageProps} />); break;
+            case 'QnANewPage': setPageComponent(<QnAEditPage page='QnANewPage' setPageProps={setPageProps} setCurrPage={setCurrPage} {...pageProps} />); break;
+            case 'CollabDetailPage': setPageComponent(<CollabDetailPage page='CollabDetailPage' setPageProps={setPageProps} setCurrPage={setCurrPage} {...pageProps} />); break;
+            case 'CollabEditPage': setPageComponent(<CollabEditPage page='CollabEditPage' setPageProps={setPageProps} setCurrPage={setCurrPage} {...pageProps} />); break;
+            case 'CollabNewPage': setPageComponent(<CollabEditPage page='CollabNewPage' setPageProps={setPageProps} setCurrPage={setCurrPage} {...pageProps} />); break;
+            case 'CollabOutlinePage': setPageComponent(<CollabOutlinePage page='CollabOutlinePage' setPageProps={setPageProps} setCurrPage={setCurrPage} {...pageProps} />); break;
             case 'PersonalPage': setPageComponent(<PersonalPage page='PersonalPage' setPageProps={setPageProps} setCurrPage={setCurrPage} />); break;
+            case 'ProfilePage': setPageComponent(<ProfilePage page='ProfilePage' setPageProps={setPageProps} setCurrPage={setCurrPage}  {...pageProps}/>); break;
             case 'LoginPage': setPageComponent(<LoginPage page='LoginPage' setPageProps={setPageProps} setCurrPage={setCurrPage} />); break;
             case 'SignUpPage': setPageComponent(<SignUpPage page='SignUpPage' setPageProps={setPageProps} setCurrPage={setCurrPage} />); break;
             default: setPageComponent(<></>); break;
         }
-    },[currPage])
+    }, [currPage])
     return (
         <>
             <div className='outerPage'>
-                <Navbar currPage={currPage} setCurrPage={setCurrPage}/>
+                <Navbar currPage={currPage} setCurrPage={setCurrPage} />
                 <div className='outerPage__Layout'>
                     {pageComponent}
                 </div>
@@ -68,9 +74,9 @@ const OuterPage = () => {
                     Open
                 </Button>
             </div>
-            
+
             <Drawer title="Basic Drawer" placement="right" onClose={onClose} visible={visible}>
-                <Button type="primary" onClick={() =>{
+                <Button type="primary" onClick={() => {
                     setPageProps({
                         noteId: "62b477d9c291fe27002cae3c"
                     })
@@ -78,7 +84,7 @@ const OuterPage = () => {
                 }} >
                     NoteDetailPage
                 </Button>
-                <Button type="primary" onClick={() =>{
+                <Button type="primary" onClick={() => {
                     setPageProps({
                         noteId: "62b477d9c291fe27002cae3c",
                         action: "edit"
@@ -87,7 +93,7 @@ const OuterPage = () => {
                 }}>
                     NoteEditPage
                 </Button>
-                <Button type="primary" onClick={() =>{
+                <Button type="primary" onClick={() => {
                     setPageProps({
                         action: "new"
                     })
@@ -95,7 +101,21 @@ const OuterPage = () => {
                 }}>
                     NoteNewPage
                 </Button>
-                <Button type="primary" onClick={() =>{
+                <Button type="primary" onClick={() => {
+                    setPageProps({
+                        keyWord: 'OS',
+                        subject: '',
+                        department: '',
+                        professor: '',
+                        school:'',
+                        headName:'',
+                        Downloadable:true,
+                    })
+                    setCurrPage('NoteOutlinePage');
+                }}>
+                    NoteOutlinePage
+                </Button>
+                <Button type="primary" onClick={() => {
                     setPageProps({
                         postId: '62b0891f0997e642d1402113'
                     })
@@ -103,7 +123,7 @@ const OuterPage = () => {
                 }}>
                     RewardDetailPage
                 </Button>
-                <Button type="primary" onClick={() =>{
+                <Button type="primary" onClick={() => {
                     setPageProps({
                         postId: '62b0891f0997e642d1402113',
                         type: 'reward',
@@ -113,7 +133,7 @@ const OuterPage = () => {
                 }}>
                     RewardEditPage
                 </Button>
-                <Button type="primary" onClick={() =>{
+                <Button type="primary" onClick={() => {
                     setPageProps({
                         type: 'reward',
                         action: 'new'
@@ -122,7 +142,33 @@ const OuterPage = () => {
                 }}>
                     RewardNewPage
                 </Button>
-                <Button type="primary" onClick={() =>{
+                <Button type="primary" onClick={() => {
+                    setPageProps({
+                        keyWord: 'interrupt',
+                        subject: '',
+                        department: '',
+                        professor: '',
+                        school:''
+                        
+
+                    })
+                    setCurrPage('RewardOutlinePage');
+                }}>
+                    RewardOutlinePage
+                </Button>
+                <Button type="primary" onClick={() => {
+                    setPageProps({
+                        keyWord: 'array',
+                        subject: '',
+                        department: '',
+                        
+
+                    })
+                    setCurrPage('QnAOutlinePage');
+                }}>
+                    QnAOutlinePage
+                </Button>
+                <Button type="primary" onClick={() => {
                     setPageProps({
                         postId: '62b076e50997e642d140206c',
                     })
@@ -130,7 +176,7 @@ const OuterPage = () => {
                 }}>
                     QnADetailPage
                 </Button>
-                <Button type="primary" onClick={() =>{
+                <Button type="primary" onClick={() => {
                     setPageProps({
                         postId: '62b076e50997e642d140206c',
                         type: 'QA',
@@ -140,7 +186,7 @@ const OuterPage = () => {
                 }}>
                     QnAEditPage
                 </Button>
-                <Button type="primary" onClick={() =>{
+                <Button type="primary" onClick={() => {
                     setPageProps({
                         type: 'QA',
                         action: 'new'
@@ -150,7 +196,7 @@ const OuterPage = () => {
                     QnANewPage
                 </Button>
 
-                <Button type="primary" onClick={() =>{
+                <Button type="primary" onClick={() => {
                     setPageProps({
                         postId: '62b07f9c0997e642d14020c6',
                     })
@@ -158,7 +204,7 @@ const OuterPage = () => {
                 }}>
                     CollabDetailPage
                 </Button>
-                <Button type="primary" onClick={() =>{
+                <Button type="primary" onClick={() => {
                     setPageProps({
                         postId: '62b07f9c0997e642d14020c6',
                         type: 'collaboration',
@@ -168,7 +214,7 @@ const OuterPage = () => {
                 }}>
                     CollabEditPage
                 </Button>
-                <Button type="primary" onClick={() =>{
+                <Button type="primary" onClick={() => {
                     setPageProps({
                         type: 'collaboration',
                         action: 'new'
@@ -177,18 +223,43 @@ const OuterPage = () => {
                 }}>
                     CollabNewPage
                 </Button>
-                <Button type="primary" onClick={() =>{
+                <Button type="primary" onClick={() => {
+                    setPageProps({
+                        keyWord: 'interrupt',
+                        subject: '',
+                        department: '',
+                        professor: '',
+                        school:'',
+                        headName:'',
+                        Downloadable:true,
+                        
+
+                    })
+                    setCurrPage('CollabOutlinePage');
+                }}>
+                    CollabOutlinePage
+                </Button>
+                <Button type="primary" onClick={() => {
                     setCurrPage('PersonalPage');
                 }}>
                     PersonalPage
                 </Button>
+                <Button type="primary" onClick={() => {
+                    setPageProps({
+                        email:'a147896325811%40gmail.com',
+                    });
+                    
+                    setCurrPage('ProfilePage');
+                }}>
+                    ProfilePage
+                </Button>
 
-                <Button type="primary" onClick={() =>{
+                <Button type="primary" onClick={() => {
                     setCurrPage('LoginPage');
                 }}>
                     LoginPage
                 </Button>
-                <Button type="primary" onClick={() =>{
+                <Button type="primary" onClick={() => {
                     setCurrPage('SignUpPage');
                 }}>
                     SignUpPage
