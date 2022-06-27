@@ -9,7 +9,7 @@ import AdvancedSearch from './AdvancedSearch/AdvancedSearch';
 const { TabPane } = Tabs;
 
 
-const SearchBar = () => {
+const SearchBar = (props) => {
   const [selected, setSelected] = useState(false);
   const [advanced, setAdvanced] = useState(false);
   const [keyword, setKeyword] = useState('');
