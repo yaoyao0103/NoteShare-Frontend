@@ -28,6 +28,7 @@ const OuterPage = () => {
     const [pageProps, setPageProps] = useState({});
     const [pageComponent, setPageComponent] = useState(<></>)
     const [visible, setVisible] = useState(false);
+    const [searchCondition,setSearchCondition]=useState({});
     const showDrawer = () => {
         setVisible(true);
     };
@@ -64,7 +65,7 @@ const OuterPage = () => {
     return (
         <>
             <div className='outerPage'>
-                <Navbar currPage={currPage} setCurrPage={setCurrPage} />
+                <Navbar currPage={currPage} setCurrPage={setCurrPage} setSearchCondition={setSearchCondition}/>
                 <div className='outerPage__Layout'>
                     {pageComponent}
                 </div>

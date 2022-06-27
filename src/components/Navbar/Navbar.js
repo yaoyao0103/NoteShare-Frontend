@@ -19,7 +19,7 @@ function Navbar(props) {
       <Logo />
       <NavButton currPage={props.currPage} setCurrPage={props.setCurrPage} />
       <NavMenu />
-      <SearchBar />
+      <SearchBar setSearchCondition={props.setSearchCondition}/>
 
       {loggedIn? 
         <Row className="navbar__Button__Login">
