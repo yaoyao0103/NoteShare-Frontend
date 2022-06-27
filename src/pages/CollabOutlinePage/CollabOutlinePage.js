@@ -9,7 +9,7 @@ function CollabOutlinePage() {
     const [Page, setPage] = useState('CollabOutlinePage');
     const [pageNumber, setPageNumber] = useState(1);
     const [Collab, setCollab] = useState([]);
-    const [sortMode,setSortMode] =useState('date');
+    const [sortMode, setSortMode] = useState('date');
 
     useEffect(() => {
         setPage('CollabOutlinePage');
@@ -17,12 +17,13 @@ function CollabOutlinePage() {
     useEffect(() => {
         async function getCollabById() {
             try {
-                const haveCollaboration= true;
-                const sortBy=sortMode;
-                
-                await axios.get('http://localhost:8080/search/post/Interrupt/' + String(pageNumber-1) + '/20?haveCollaboration='+haveCollaboration+'&sortBy='+sortBy).then((res) => {
+                const haveCollaboration = true;
+                const sortBy = sortMode;
+
+                await axios.get('http://localhost:8080/search/post/Interrupt/' + String(pageNumber - 1) + '/20?haveCollaboration=' + haveCollaboration + '&sortBy=' + sortBy).then((res) => {
+                    console.log(res.data.search);
                     setCollab(oldArray => [...oldArray, res.data.search]);
-                    //console.log(res.data.search.totalPages);
+                    
 
                 });
 
@@ -39,11 +40,11 @@ function CollabOutlinePage() {
     useEffect(() => {
         async function getCollabById() {
             try {
-                const haveCollaboration= true;
-                const sortBy=sortMode;
-                
-                await axios.get('http://localhost:8080/search/post/Interrupt/' + String(pageNumber-1) + '/20?haveCollaboration='+haveCollaboration+'&sortBy='+sortBy).then((res) => {
-                    setCollab(oldArray => [...oldArray=[], res.data.search]);
+                const haveCollaboration = true;
+                const sortBy = sortMode;
+
+                await axios.get('http://localhost:8080/search/post/Interrupt/' + String(pageNumber - 1) + '/20?haveCollaboration=' + haveCollaboration + '&sortBy=' + sortBy).then((res) => {
+                    setCollab(oldArray => [...oldArray = [], res.data.search]);
                     window.scrollTo(0, 0);
                     //console.log(pageNumber);
 
@@ -59,38 +60,38 @@ function CollabOutlinePage() {
         //console.log(pageNumber-1);
         getCollabById();
         //console.log('1111');
-        
-    }, [pageNumber]);
-    useEffect(() => {
-        async function getCollabById() {
-            try {
-                const haveCollaboration= true;
-                const sortBy=sortMode;
-                
-                await axios.get('http://localhost:8080/search/post/Interrupt/' + String(pageNumber-1) + '/20?haveCollaboration='+haveCollaboration+'&sortBy='+sortBy).then((res) => {
-                    setCollab(oldArray => [...oldArray=[], res.data.search]);
-                    window.scrollTo(0, 0);
-                    //console.log(pageNumber);
 
-                });
+    }, [pageNumber,sortMode]);
+    // useEffect(() => {
+    //     async function getCollabById() {
+    //         try {
+    //             const haveCollaboration = true;
+    //             const sortBy = sortMode;
 
-            } catch (error) {
-                //console.log(error.message);
-                setCollab(error.message);
+    //             await axios.get('http://localhost:8080/search/post/Interrupt/' + String(pageNumber - 1) + '/20?haveCollaboration=' + haveCollaboration + '&sortBy=' + sortBy).then((res) => {
+    //                 setCollab(oldArray => [...oldArray = [], res.data.search]);
+    //                 window.scrollTo(0, 0);
+    //                 //console.log(pageNumber);
+
+    //             });
+
+    //         } catch (error) {
+    //             //console.log(error.message);
+    //             setCollab(error.message);
 
 
-            }
-        }
-        //console.log(pageNumber-1);
-        getCollabById();
-        setPageNumber(1);
-        //console.log('1111');
-        
-    }, [sortMode]);
+    //         }
+    //     }
+    //     //console.log(pageNumber-1);
+    //     getCollabById();
+    //     setPageNumber(1);
+    //     //console.log('1111');
+
+    // }, [sortMode]);
     return (
         <>
             {Collab.length > 0 && <PageOutlineTemplate page={Page}>
-                <PageOutlineContentTemplate page={Page}  hasSwitch={false} mode='Post' Post={Collab} changePageNumber={(pagenumber) => { setPageNumber(pagenumber); }} changeSortMode={(sortMode)=>{setSortMode(sortMode);}} />
+                <PageOutlineContentTemplate page={Page} hasSwitch={false} mode='Post' Post={Collab} changePageNumber={(pagenumber) => { setPageNumber(pagenumber); }} changeSortMode={(sortMode) => { setSortMode(sortMode); }} />
             </PageOutlineTemplate>
             }
         </>
@@ -99,4 +100,4 @@ function CollabOutlinePage() {
 
 }
 
-export default  CollabOutlinePage;
+export default CollabOutlinePage;

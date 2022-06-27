@@ -63,33 +63,33 @@ function RewardOutlinePage() {
         getRewardById();
         //console.log('1111');
         
-    }, [pageNumber]);
-    useEffect(() => {
-        async function getRewardById() {
-            try {
-                const haveReward= true;
-                const sortBy=sortMode;
+    }, [pageNumber,sortMode]);
+    // useEffect(() => {
+    //     async function getRewardById() {
+    //         try {
+    //             const haveReward= true;
+    //             const sortBy=sortMode;
                 
-                await axios.get('http://localhost:8080/search/post/interrupt/' + String(pageNumber-1) + '/20?haveReward='+haveReward+'&sortBy='+sortBy).then((res) => {
-                    setReward(oldArray => [...oldArray=[], res.data.search]);
-                    window.scrollTo(0, 0);
-                    //console.log(pageNumber);
+    //             await axios.get('http://localhost:8080/search/post/interrupt/' + String(pageNumber-1) + '/20?haveReward='+haveReward+'&sortBy='+sortBy).then((res) => {
+    //                 setReward(oldArray => [...oldArray=[], res.data.search]);
+    //                 window.scrollTo(0, 0);
+    //                 //console.log(pageNumber);
 
-                });
+    //             });
 
-            } catch (error) {
-                //console.log(error.message);
-                setReward(error.message);
+    //         } catch (error) {
+    //             //console.log(error.message);
+    //             setReward(error.message);
 
 
-            }
-        }
-        //console.log(pageNumber-1);
-        getRewardById();
-        setPageNumber(1);
-        //console.log('1111');
+    //         }
+    //     }
+    //     //console.log(pageNumber-1);
+    //     getRewardById();
+    //     setPageNumber(1);
+    //     //console.log('1111');
         
-    }, [sortMode]);
+    // }, [sortMode]);
     return (
         <>
             {Reward.length > 0 && <PageOutlineTemplate page={Page}>

@@ -56,33 +56,33 @@ function NoteOutlinePage() {
         getNoteById();
         //console.log('1111');
         
-    }, [pageNumber]);
-    useEffect(() => {
-        async function getNoteById() {
-            try {
-                const haveNormal= true;
-                const sortBy=sortMode;
+    }, [pageNumber,sortMode]);
+    // useEffect(() => {
+    //     async function getNoteById() {
+    //         try {
+    //             const haveNormal= true;
+    //             const sortBy=sortMode;
                
-                await axios.get('http://localhost:8080/search/note/OS/' + String(pageNumber-1) + '/10?haveNormal='+haveNormal+'&sortBy='+sortBy).then((res) => {
-                    setNote(oldArray => [...oldArray=[], res.data.search]);
-                    window.scrollTo(0, 0);
-                    //console.log(pageNumber);
+    //             await axios.get('http://localhost:8080/search/note/OS/' + String(pageNumber-1) + '/10?haveNormal='+haveNormal+'&sortBy='+sortBy).then((res) => {
+    //                 setNote(oldArray => [...oldArray=[], res.data.search]);
+    //                 window.scrollTo(0, 0);
+    //                 //console.log(pageNumber);
 
-                });
+    //             });
 
-            } catch (error) {
-                //console.log(error.message);
-                setNote(error.message);
+    //         } catch (error) {
+    //             //console.log(error.message);
+    //             setNote(error.message);
 
 
-            }
-        }
-        //console.log(pageNumber-1);
-        getNoteById();
-        setPageNumber(1);
-        //console.log('1111');
+    //         }
+    //     }
+    //     //console.log(pageNumber-1);
+    //     getNoteById();
+    //     setPageNumber(1);
+    //     //console.log('1111');
         
-    }, [sortMode]);
+    // }, [sortMode]);
     return (
         <>
             {Note.length > 0 && <PageOutlineTemplate page={Page}>
