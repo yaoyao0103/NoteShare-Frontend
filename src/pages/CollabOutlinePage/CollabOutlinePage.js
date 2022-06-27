@@ -17,6 +17,7 @@ function CollabOutlinePage() {
     useEffect(() => {
         async function getCollabById() {
             try {
+
                 const haveCollaboration = true;
                 const sortBy = sortMode;
 

@@ -123,22 +123,16 @@ function LoginPage() {
             
             {render &&
             <Layout className='loginPage__Outer'>
-                <Header className='loginPage__Header'>
-                    <div className='loginPage__Content__Logo'>
-                        <Text color='black' cls='Large' content='Note' fontSize='22'/>
-                        <Text color='purple' cls='Large' content='Share'fontSize='22'/>
-                    </div>
-                </Header>
-                <Layout>
-                    <Sider className='loginPage__Sider' width={600}>
-                        
+                    <Sider className='loginPage__Sider' width={"60%"}>
+                        <img src="https://static.vecteezy.com/system/resources/previews/004/482/308/non_2x/single-one-line-drawing-students-woman-and-man-reading-learning-and-sitting-on-big-books-study-in-library-literature-fans-or-lovers-modern-continuous-line-draw-design-graphic-illustration-vector.jpg" alt="一張圖片" />
                     </Sider>
                     <Content className='loginPage__Content'>
                         <div className='loginPage__Content__Text'>
-                            <Text color='black' cls='Large' content='Welcome to NoteShare' fontSize='22'/>
+                            <Text color='black' cls='Large' content='Welcome to Note' fontSize='22'/>
+                            <Text color='purple' cls='Large' content='Share' fontSize='22'/>
                         </div>
                         <div className='loginPage__Content__Text loginPage__Content__Text__Bottom'>
-                            <Text color='black' cls='Large' content='Write your own note' fontSize='10'/>
+                            <Text color='black' cls='Default' content='Write your own note!' fontSize='10'/>
                         </div>
                         <div className="loginPage__Form">
                             <Form
@@ -201,21 +195,21 @@ function LoginPage() {
                                         </Checkbox.Group>
                                     </Form.Item>
 
+                                    
+                                <div className="loginPage__Button">
+                                        <Button color={"green"}><Text color='white' cls='Large' content={"LogIn"} fontSize='15' display="inline-block" /></Button>
+                                    </div>
+                                </Form.Item>
+                                <Form.Item className='loginPage__Form__Item'>
+                                    <a href="/SignUpPage">register now!</a>
                                     <a className="loginPage__Content__Form__Forgot" href="">
                                         Forgot password?
                                     </a>
-                                </Form.Item>
-
-                                <Form.Item className='Login__Form__Item'>
-                                    <a href="/SignUpPage">register now!</a>
-                                    <div className="Login__Button">
-                                        <Button color={"green"}><Text color='white' cls='Large' content={"LogIn"} fontSize='15' display="inline-block" /></Button>
-                                    </div>
+                                    
                                 </Form.Item>
                             </Form>
                         </div>
                     </Content>
-                </Layout>
             </Layout>
             }
         </div>
@@ -226,3 +220,5 @@ function LoginPage() {
 }
 
 export default LoginPage;
+
+//https://img.freepik.com/free-vector/hand-holding-book-line-drawing-continuous-one-line-illustration_469760-420.jpg

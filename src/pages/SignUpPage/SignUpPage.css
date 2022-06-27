@@ -1,58 +1,72 @@
-.SignUpPage{
-    position: absolute;
-    height: 100%;
-    width: 100%;
+.signUpPage{
+    position:relative;
+    width: 80%;
+    height: 100%; 
+    margin-top: 5%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 10%;
 }
-.SignUp{
-    position: absolute;
+
+.signUpPage__Outer{
     height: 100%;
-    width: 100%;
-    background-color: #FFF;
-    margin-bottom: 5%;
-    
-}
-.SignUp__Outer{
-    position: relative;
-   
-    height: 100%;
-    width: 100%;
-    background-color: #FFF;
-    margin-bottom: 3%;
-    /* box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;*/
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
 } 
-.SignUp__Logo{
+
+
+.signUpPage__Header{
+  background-color: #fff;
+  padding-top: 1em;
+}
+
+.signUpPage__Sider{
+  background-color: #fff;
+}
+
+.signUpPage__Sider img{
   position: relative;
-  padding-bottom:5%;
-  margin-left:36%;
-  margin-top:10%;
+  padding: 4em;
+  padding-top: 6em;
   width: 100%;
-   /* top: 20%;
-    left:23%; */
 }
-.SignUp__Spin{
-    /* position:absolute;
-   top:10%; */
-   width: 100%;
+
+.signUpPage__Content{
+  background-color: #fff;
+  padding-top: 6em;
+  padding-bottom: 3.5em;
+  padding-left: 1em;
+  padding-right: 6em;
 }
-.ant-spin-nested-loading{
-    
+
+.signUpPage__Content__Text__Bottom{
+  margin-bottom: 2em;
 }
-.anticon-spin{
-   /* margin-left:10em; */
+
+.signUpPage__Form{
+  position: relative;
+  width: 100%;
 }
-.SignUp-form{
-    max-width: 45%;
-    margin-left:21%;
-    margin-top:1%;
-    width: 100%;
+
+.signUpPage__Content__Form__Text{
+  position: relative;
+  width: 100%;
+  margin-bottom: .1em;
 }
-.SignUp__Form__Item{
-  margin-top: 2%;
+
+.signUpPage__Content__Form__Forgot {
+  float: right;
+  text-decoration: none;
 }
-.SignUp__Button{
-    float: right;
-}
-.SignUp__Login__Button{
+
+.signUpPage__Login__Button{
     float: left;
-    margin-top:1.5%;
+}
+
+.signUpPage__Button{
+  float: right;
+}
+
+.signUpPage__Form__Item{
+    margin-bottom: 1em;
 }

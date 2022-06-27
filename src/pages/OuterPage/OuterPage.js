@@ -23,7 +23,7 @@ import './OuterPage.css'
 import { Button, Drawer } from 'antd'
 
 const OuterPage = () => {
-    const [currPage, setCurrPage] = useState('PersonalPage');
+    const [currPage, setCurrPage] = useState('LoginPage');
     const [pageProps, setPageProps] = useState({});
     const [pageComponent, setPageComponent] = useState(<></>)
     const [visible, setVisible] = useState(false);
@@ -51,6 +51,7 @@ const OuterPage = () => {
             case 'CollabNewPage': setPageComponent(<CollabEditPage page='CollabNewPage' setPageProps={setPageProps} setCurrPage={setCurrPage} {...pageProps}/>); break;
             case 'PersonalPage': setPageComponent(<PersonalPage page='PersonalPage' setPageProps={setPageProps} setCurrPage={setCurrPage} />); break;
             case 'LoginPage': setPageComponent(<LoginPage page='LoginPage' setPageProps={setPageProps} setCurrPage={setCurrPage} />); break;
+            case 'SignUpPage': setPageComponent(<SignUpPage page='SignUpPage' setPageProps={setPageProps} setCurrPage={setCurrPage} />); break;
             default: setPageComponent(<></>); break;
         }
     },[currPage])
@@ -186,6 +187,11 @@ const OuterPage = () => {
                     setCurrPage('LoginPage');
                 }}>
                     LoginPage
+                </Button>
+                <Button type="primary" onClick={() =>{
+                    setCurrPage('SignUpPage');
+                }}>
+                    SignUpPage
                 </Button>
             </Drawer>
         </>

@@ -24,9 +24,19 @@
   background-color: #fff;
 }
 
+.loginPage__Sider img{
+  position: relative;
+  padding: 4em;
+  padding-top: 6em;
+  width: 100%;
+}
+
 .loginPage__Content{
   background-color: #fff;
-  padding: 1em 3em 5em 2em;
+  padding-top: 6em;
+  padding-bottom: 3em;
+  padding-left: 1em;
+  padding-right: 6em;
 }
 
 .loginPage__Content__Text__Bottom{
@@ -41,7 +51,7 @@
 .loginPage__Content__Form__Text{
   position: relative;
   width: 100%;
-  margin-bottom: .5em;
+  margin-bottom: .1em;
 }
 
 .loginPage__Content__Form__Forgot {
@@ -49,7 +59,7 @@
   text-decoration: none;
 }
 
-.Login__Button{
+.loginPage__Button{
   float: right;
 }
 
