@@ -59,6 +59,7 @@ const OuterPage = () => {
             case 'ProfilePage': setPageComponent(<ProfilePage page='ProfilePage' setPageProps={setPageProps} setCurrPage={setCurrPage}  {...pageProps}/>); break;
             case 'LoginPage': setPageComponent(<LoginPage page='LoginPage' setPageProps={setPageProps} setCurrPage={setCurrPage} />); break;
             case 'SignUpPage': setPageComponent(<SignUpPage page='SignUpPage' setPageProps={setPageProps} setCurrPage={setCurrPage} />); break;
+            case 'VerificationPage': setPageComponent(<VerificationPage page='VerificationPage' setPageProps={setPageProps} setCurrPage={setCurrPage} {...pageProps}/>); break;
             default: setPageComponent(<></>); break;
         }
     }, [currPage])
@@ -264,6 +265,14 @@ const OuterPage = () => {
                     setCurrPage('SignUpPage');
                 }}>
                     SignUpPage
+                </Button>
+                <Button type="primary" onClick={() =>{
+                    setPageProps({
+                        email: 'testemail@email.ntou.edu.tw'
+                    })
+                    setCurrPage('VerificationPage');
+                }}>
+                    VerificationPage
                 </Button>
             </Drawer>
         </>

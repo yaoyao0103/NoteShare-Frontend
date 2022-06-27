@@ -1,33 +1,38 @@
-import React,{useState} from 'react';
+import React,{useEffect, useState} from 'react';
 import 'antd/dist/antd.css';
 import './NavMenu.css';
-import { Menu } from 'antd';
+import { Menu, Select } from 'antd';
+const { Option } = Select;
+const data = require("../../../EducationSet.json");
 function NavMenu(){
+    /*const [departments, setDepartments] = useState([])
+    useEffect(() => {
+      const list = new Array()
+      data.departments.map((department, index)=>{
+        list.push({key:index, icon:undefined, children:undefined, label:department, type:undefined})
+      })
+      setDepartments(list)
+
+      
+    },[])
     
     function getItem(label, key, icon, children, type) {
         return{key,icon,children,label,type};
     };
     const items = [
-        getItem('Department', 'sub1', null, [
-            getItem('資工系', '1'),
-            getItem('電機系', '2'),
-            getItem('輪機系', '3'),
-            getItem('法律系', '4'),
-        ]),
-      ];
-    const{Items,setItems}=useState( [
-        getItem('Department', 'sub1', null, [
-          getItem('資工系', '1'),
-          getItem('電機系', '2'),
-          getItem('輪機系', '3'),
-          getItem('法律系', '4'),
-        ]),
-      ]);
-   
+        getItem('Department', 'sub1', null, departments),
+
+      ];*/
 
   return (
-      <div id='navMenu'>
-        <Menu id='Menu'mode="inline" items={items}/>
+      <div className='navMenu'>
+        {/* <Menu id='Menu'mode="inline" items={items}/> */}
+        <Select defaultValue={"Department"} showSearch className="navMenu__Dropdown" onChange={(department) => console.log(department)}>
+            {data.departments.map((department) => (
+                <Option key={department}>{department}</Option>
+            )
+            )}
+        </Select>
       </div>
   );
 

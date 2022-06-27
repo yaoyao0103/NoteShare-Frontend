@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from "react-router-dom";
 import Navbar from '../../components/Navbar/Navbar';
-import { Form, Input, message, Row, Col,Tooltip,Spin } from "antd";
+import { Layout, Form, Input, message, Row, Col,Tooltip,Spin } from "antd";
 import { ReloadOutlined ,LoadingOutlined} from '@ant-design/icons';
 import Button from '../../components/Button/Button';
 import Text from '../../components/Text/Text';
 import axios from "axios";
 import './VerificationPage.css'
 import Logo from '../../components/Navbar/Logo/Logo';
+const { Header, Sider, Content, Footer } = Layout;
 
-
-function VerificationPage() {
+function VerificationPage(props) {
     const [Page, setPage] = useState('VerificationPage');
     const [render, setRender] = useState(false);
     const [code, setCode] = useState('');
@@ -20,9 +19,9 @@ function VerificationPage() {
     const [resendSuccess, setResendSuccess] = useState(false);
     const [resendFail, setResendFail] = useState(false);
     const [error, setError] = useState('');
-    let { email } = useParams();
+    const {email} = props;
     //console.log(email);
-    let newEmail = email.replace('@', '%40');
+    let newEmail = props.email.replace('@', '%40');
     useEffect(() => {
         setPage('VerificationPage');
     }, [Page]);
@@ -124,15 +123,22 @@ function VerificationPage() {
         />
       );
     return (
-        <div className='VerificationPage'>
-            <Navbar currPage={Page} changePage={(page) => { setPage(page) }} />
+        <div className='verificationPage'>
             {render &&
-                <div className='Verification__Outer'>
-                     <Spin className='SignUp__Spin' indicator={antIcon}  spinning={loading}>
-                    <div className='Verification__Logo'><Logo /></div>
-                   
+            <Layout className='verificationPage__Outer'>
+                <Sider className='verificationPage__Sider' width={"60%"}>
+                    <img src="https://static.vecteezy.com/system/resources/previews/003/410/006/original/continuous-one-line-drawing-of-hand-writing-with-a-pen-on-paper-vector.jpg" alt="一張圖片" />
+                </Sider>
+                <Content className='verificationPage__Content'>
+                    <div className='verificationPage__Content__Text'>
+                        <Text color='black' cls='Large' content='Welcome to Note' fontSize='22'/>
+                        <Text color='purple' cls='Large' content='Share' fontSize='22'/>
+                    </div>
+                    <div className='verificationPage__Content__Text verificationPage__Content__Text__Bottom'>
+                        <Text color='black' cls='Default' content='Write your own note!' fontSize='10'/>
+                    </div>
+                    <div className="verificationPage__Form">
                     <Form
-                        className="Verification-form"
                         {...formItemLayout}
                         name="register"
                         onFinish={onFinish}
@@ -141,10 +147,13 @@ function VerificationPage() {
                         }}
                         scrollToFirstError
                     >
+                        <div className='verificationPage__Content__Form__Text'>
+                            <Text color='black' cls='Small' content='Email' fontSize='13'/>
+                        </div>
                         <Form.Item
                             name="email"
                             className='Verification__Form__Item'
-                            label="E-mail"
+                            //label="E-mail"
                             rules={[
                                 {
                                     type: 'email',
@@ -159,10 +168,13 @@ function VerificationPage() {
                             <Input defaultValue={email} disabled />
 
                         </Form.Item>
+                        <div className='verificationPage__Content__Form__Text'>
+                            <Text color='black' cls='Small' content='Code' fontSize='13'/>
+                        </div>
                         <Form.Item
                             className='Verification__Form__Item'
                             name="Code"
-                            label="Code"
+                            //label="Code"
                             tooltip="Input your verify code!"
                             rules={[
                                 {
@@ -178,26 +190,29 @@ function VerificationPage() {
                                     <Input onChange={(e) => { setCode(e.target.value) }} />
                                 </Col>
                                 <Col className='Verification__Resend__Button'span={3}>
-                                <Tooltip arrowPointAtCenter={true} placement="top" title={"Resend verify code"} color={'#FFF'}>
-                                <ReloadOutlined onClick={()=>{resend()}}/>
+                                <Tooltip arrowPointAtCenter={true} placement="top" title={"Resend verify code"} color={'#000'}>
+                                    <div className='verificationPage__Resend__Button'><ReloadOutlined onClick={()=>{resend()}}/></div>
                                 </Tooltip>
                                 </Col>
                             </Row>
 
                         </Form.Item>
                         <Form.Item {...tailFormItemLayout} className='Verification__Form__Item'>
-                            <a className="Verification__Login__Button" href="/LoginPage">Login now!</a>
+                            <a className="verificationPage__Login__Button" href="/LoginPage">Login now!</a>
 
-                            <div className="Verification__Button">
+                            <div className="verificationPage__Button">
                                 <Button color={"green"}><Text color='white' cls='Large' content={" Register"} fontSize='15' display="inline-block" /></Button>
                             </div>
 
                         </Form.Item>
                     </Form>
-                    </Spin>
-                </div>
+                    {/* </Spin> */}
+                     </div>
+                </Content>
+            </Layout>
             }
         </div>
+    
 
     );
 

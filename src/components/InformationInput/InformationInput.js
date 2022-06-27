@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import Text from '../Text/Text';
-import { Input, Checkbox } from 'antd'
+import { Input, Checkbox, Select } from 'antd'
 import NumericInput from '../NumericInput/NumericInput';
 import "./InformationInput.css"
+const { Option } = Select;
+
+const data = require("../../EducationSet.json");
 
 const InformationInput = ({information, setInformation}) => {
 
@@ -11,13 +14,25 @@ const InformationInput = ({information, setInformation}) => {
         {information?.school!=null &&
             <div className="informationInput__item informationInput__Input">
                 <Text color='black' cls='Small' content={"School"} fontSize='15' display="inline-block" />
-                <Input showCount maxLength={20} placeholder="school" onChange={(ev) => setInformation({...information, school: ev.target.value})} value={information?.school} /> 
+                {/* <Input showCount maxLength={20} placeholder="school" onChange={(ev) => setInformation({...information, school: ev.target.value})} value={information?.school} />  */}
+                <Select showSearch className="informationInput__item__Dropdown" onChange={(school) => setInformation({...information, school: school})} value={information?.school}>
+                    {data.schools.map((school, index) => (
+                        <Option key={school}>{school}</Option>
+                    )
+                    )}
+                </Select>
             </div>  
         }
         {information?.department!=null &&
             <div className="informationInput__item informationInput__Input">
                 <Text color='black' cls='Small' content={"Department"} fontSize='15' display="inline-block" />
-                <Input showCount maxLength={20} placeholder="department" onChange={(ev) => setInformation({...information, department: ev.target.value})} value={information?.department} /> 
+                {/* <Input showCount maxLength={20} placeholder="department" onChange={(ev) => setInformation({...information, department: ev.target.value})} value={information?.department} />  */}
+                <Select showSearch className="informationInput__item__Dropdown" onChange={(department) => setInformation({...information, department: department})} value={information?.department}>
+                    {data.departments.map((department, index) => (
+                        <Option key={department}>{department}</Option>
+                    )
+                    )}
+                </Select>
             </div>  
         }
         {information?.subject!=null &&

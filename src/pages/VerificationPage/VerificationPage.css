@@ -1,57 +1,88 @@
-.VerificatioPage{
-    position: absolute;
-    height: 100%;
-    width: 100%;
+.verificationPage{
+    position:relative;
+    width: 80%;
+    height: 100%; 
+    margin-top: 5%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 10%;
 }
-.Verification{
-    position: absolute;
+
+.verificationPage__Outer{
     height: 100%;
-    width: 100%;
-    background-color: #FFF;
-    margin-bottom: 5%;
-    
-}
-.Verification__Outer{
-    position: relative;
-   
-    height: 100%;
-    width: 100%;
-    background-color: #FFF;
-    margin-bottom: 3%;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
 } 
-.Verification__Logo{
-    position: relative;
-    padding-bottom:5%;
-    margin-left:36%;
-    margin-top:10%;
-    width: 100%;
+
+
+.verificationPage__Header{
+  background-color: #fff;
+  padding-top: 1em;
 }
-.Verification-form{
-    max-width: 45%;
-    margin-left:21%;
-    margin-top:1%;
-    width: 100%;
+
+.verificationPage__Sider{
+  background-color: #fff;
 }
-.Verification__Form__Item{
-  margin-top: 2%;
+
+.verificationPage__Sider img{
+  position: relative;
+  padding: 0 4em 0 4em;
+  width: 100%;
 }
-.Verification__Resend__Button{
+
+.verificationPage__Content{
+  background-color: #fff;
+  padding-top: 6em;
+  padding-bottom: 3em;
+  padding-left: 1em;
+  padding-right: 6em;
+}
+
+.verificationPage__Content__Text__Bottom{
+  margin-bottom: 2em;
+}
+
+.verificationPage__Form{
+  position: relative;
+  width: 100%;
+}
+
+.verificationPage__Content__Form__Text{
+  position: relative;
+  width: 100%;
+  margin-bottom: .1em;
+}
+
+.verificationPage__Content__Form__Forgot {
+  float: right;
+  text-decoration: none;
+}
+
+.verificationPage__Button{
+  float: right;
+}
+
+.verificationPage__Resend__Button{
+    border: thin solid #ddd;
+    height: 100%;
+    margin-left: .3em;
+    width: 4em;
+    text-align: center;
     cursor: pointer;
-    border: 1px solid;
-    border-color: #dbdbdb;
-    
-    margin-left:4%;
-    padding-left:4.5%;
-}
-.Verification__Button{
-    float: right;
-}
-.Verification__Login__Button{
-    float: left;
-
-}
-.ant-tooltip-inner {
-    color: black;
-   
 }
 
+.verificationPage__Resend__Button:hover{
+    background-color: #eee;
+}
+
+/*
+.ant-col-rtl .login-form-forgot {
+  float: left;
+}
+.login-form-button {
+  width: 100%;
+}
+
+.Login__Form__Item{
+  margin-top: 10%;
+}*/
