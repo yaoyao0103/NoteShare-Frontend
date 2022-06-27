@@ -6,8 +6,8 @@ import './FansNFollower.css'
 function FansNFollower() {
     return (
         <div className="FansNFollower">
-            <Row gutter={5} className="FansNFollower__Row">
-                <Col span={12} className="FansNFollower__Follower">
+            <Row gutter={0} className="FansNFollower__Row">
+                <Col span={8} className="FansNFollower__Follower">
                     <Card className="FansNFollower__Follower__Card">
                         <Statistic
                             title="Follower"
@@ -19,7 +19,7 @@ function FansNFollower() {
                         />
                     </Card>
                 </Col>
-                <Col span={12} className="FansNFollower__Fans">
+                <Col span={8} className="FansNFollower__Fans">
                     <Card className="FansNFollower__Fans__Card">
                         <Statistic
                             title="Fans"
@@ -35,4 +35,5 @@ function FansNFollower() {
         </div>
     );
 }
+
 export default FansNFollower;

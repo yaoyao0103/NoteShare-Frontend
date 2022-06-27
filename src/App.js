@@ -7,6 +7,7 @@ import { pageLoad } from "./redux/actions/pageAction";
 import MemberPage from "./pages/MemberPage/MemberPage";
 import QnADetailPage from "./pages/QnADetailPage/QnADetailPage";
 import NoteDetailPage from "./pages/NoteDetailPage/NoteDetailPage";
+import NoteOutlinePage from "./pages/NoteOutlinePage/NoteOutlinePage";
 import RewardDetailPage from "./pages/RewardDetailPage/RewardDetailPage";
 import RewardOutlinePage from "./pages/RewardOutlinePage/RewardOutlinePage";
 import QnAOutlinePage from "./pages/QnAOutlinePage/QnAOutlinePage";
@@ -18,6 +19,9 @@ import RewardEditPage from "./pages/RewardEditPage/RewardEditPage";
 import CollabEditPage from "./pages/CollabEditPage/CollabEditPage";
 import NoteEditPage from "./pages/NoteEditPage/NoteEditPage";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
+import LoginPage from "./pages/LoginPage/LoginPage";
+import SignUpPage from "./pages/SignUpPage/SignUpPage";
+import VerificationPage from "./pages/VerificationPage/VerificationPage";
 function App() {
   const dispatch = useDispatch();
 
@@ -32,6 +36,7 @@ function App() {
         <Route exact path="/editor/:pageId" component={Editor}></Route>
         <Route exact path="/MemberPage" component={MemberPage}></Route>
         <Route exact path="/NoteDetailPage" component={NoteDetailPage}></Route>
+        <Route exact path="/NoteOutlinePage" component={NoteOutlinePage}></Route>
         <Route exact path="/RewardOutlinePage" component={RewardOutlinePage}></Route>
         <Route exact path="/RewardDetailPage" component={RewardDetailPage}></Route>
         <Route exact path="/RewardEditPage" component={RewardEditPage}></Route>
@@ -44,6 +49,9 @@ function App() {
         <Route exact path="/ScreenShotCapture" component={ScreenShotCapture}></Route>
         <Route exact path="/NoteEditPage" component={NoteEditPage}></Route>
         <Route exact path="/ProfilePage" component={ProfilePage}></Route>
+        <Route exact path="/LoginPage" component={LoginPage}></Route>
+        <Route exact path="/SignUpPage" component={SignUpPage}></Route>
+        <Route exact path="/VerificationPage/:email" component={VerificationPage}></Route>
       </Switch>
     </Router>
   );

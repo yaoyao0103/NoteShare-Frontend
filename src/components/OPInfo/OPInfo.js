@@ -9,7 +9,7 @@ const OPInfo = (props) => {
         <div id="OPInfo">
             <Row id={"OPInfo__Row"+'__'+props.mode} className='OPInfo__Row'>
                 <Col className={"OPInfo__left"+'__'+props.mode}>
-                    <Avatar className={"OPInfo__Avatar"+'__'+props.mode} size={props.size} src="https://joeschmoe.io/api/v1/random"></Avatar>
+                    <Avatar className={"OPInfo__Avatar"+'__'+props.mode} size={props.size} src={props.avatar}></Avatar>
                 </Col>
                 <Col id={"OPInfo__right"+'__'+props.mode} className={"OPInfo__right"+'__'+props.mode} >
                     <Row id={'OPInfo__Author'+'__'+props.mode} className={'OPInfo__Author'+'__'+props.mode}><Text color='black' cls='Default' content={props.author} fontSize={props.authorFontSize}></Text></Row>
@@ -29,6 +29,7 @@ OPInfo.propTypes = {
     mode: PropTypes.string,
     children: PropTypes.string,
     author: PropTypes.string,
+    avatar:PropTypes.string,
     date:PropTypes.string,
     authorFontSize:PropTypes.string,
     dateFontSize:PropTypes.string,
@@ -37,6 +38,7 @@ OPInfo.defaultProps = {
     mode:'Content',
     children: '',
     author: 'Unknown',
+    avatar:'https://joeschmoe.io/api/v1/random',
     date:'2020-12-25',
     authorFontSize:'20',
     dateFontSize:'12',

@@ -1,0 +1,57 @@
+.VerificatioPage{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+.Verification{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: #FFF;
+    margin-bottom: 5%;
+    
+}
+.Verification__Outer{
+    position: relative;
+   
+    height: 100%;
+    width: 100%;
+    background-color: #FFF;
+    margin-bottom: 3%;
+} 
+.Verification__Logo{
+    position: relative;
+    padding-bottom:5%;
+    margin-left:36%;
+    margin-top:10%;
+    width: 100%;
+}
+.Verification-form{
+    max-width: 45%;
+    margin-left:21%;
+    margin-top:1%;
+    width: 100%;
+}
+.Verification__Form__Item{
+  margin-top: 2%;
+}
+.Verification__Resend__Button{
+    cursor: pointer;
+    border: 1px solid;
+    border-color: #dbdbdb;
+    
+    margin-left:4%;
+    padding-left:4.5%;
+}
+.Verification__Button{
+    float: right;
+}
+.Verification__Login__Button{
+    float: left;
+
+}
+.ant-tooltip-inner {
+    color: black;
+   
+}
+

@@ -3,21 +3,29 @@ import Navbar from '../../components/Navbar/Navbar';
 import PageOutlineTemplate from '../../components/PageOutlineTemplate/PageOutlineTemplate';
 import PageOutlineContentTemplate from '../../components/PageOutlineContentTemplate/PageOutlineContentTemplate';
 import { Layout } from "antd";
+import axios from "axios";
 const { Header, Content, Footer } = Layout;
 function CollabOutlinePage() {
     const [Page, setPage] = useState('CollabOutlinePage');
-    const [pageNumber, setPageNumber] = useState('1');
-    const [ Collab, setCollab] =useState([]);
+    const [pageNumber, setPageNumber] = useState(1);
+    const [Collab, setCollab] = useState([]);
+    const [sortMode,setSortMode] =useState('date');
+
     useEffect(() => {
         setPage('CollabOutlinePage');
-        console.log(Page)
     }, [Page]);
     useEffect(() => {
         async function getCollabById() {
             try {
-                const temp = require('./CollabOutlinePage'+pageNumber+'.json');
-                console.log(pageNumber);
-                setCollab(temp.additionalProp1);
+                const haveCollaboration= true;
+                const sortBy=sortMode;
+                
+                await axios.get('http://localhost:8080/search/post/array/' + String(pageNumber-1) + '/20?haveCollab='+haveCollaboration+'&sortBy='+sortBy).then((res) => {
+                    setCollab(oldArray => [...oldArray, res.data.search]);
+                    //console.log(res.data.search.totalPages);
+
+                });
+
             } catch (error) {
                 console.log(error.message);
                 setCollab(error.message);
@@ -26,21 +34,65 @@ function CollabOutlinePage() {
             }
         }
         getCollabById();
+        //console.log('2222');
     }, []);
-    const changePage=(pagenumber)=>{
-        const temp = require('./CollabOutlinePage'+pagenumber+'.json');
-        console.log(pagenumber);
-        setCollab(temp.additionalProp1);
-        setPageNumber(pageNumber);
-        window.scrollTo(0, 0);
-    }
+    useEffect(() => {
+        async function getCollabById() {
+            try {
+                const haveCollaboration= true;
+                const sortBy=sortMode;
+                
+                await axios.get('http://localhost:8080/search/post/array/' + String(pageNumber-1) + '/20?haveCollab='+haveCollaboration+'&sortBy='+sortBy).then((res) => {
+                    setCollab(oldArray => [...oldArray=[], res.data.search]);
+                    window.scrollTo(0, 0);
+                    //console.log(pageNumber);
 
+                });
+
+            } catch (error) {
+                //console.log(error.message);
+                setCollab(error.message);
+
+
+            }
+        }
+        //console.log(pageNumber-1);
+        getCollabById();
+        //console.log('1111');
+        
+    }, [pageNumber]);
+    useEffect(() => {
+        async function getCollabById() {
+            try {
+                const haveCollaboration= true;
+                const sortBy=sortMode;
+                
+                await axios.get('http://localhost:8080/search/post/array/' + String(pageNumber-1) + '/20?haveCollab='+haveCollaboration+'&sortBy='+sortBy).then((res) => {
+                    setCollab(oldArray => [...oldArray=[], res.data.search]);
+                    window.scrollTo(0, 0);
+                    //console.log(pageNumber);
+
+                });
+
+            } catch (error) {
+                //console.log(error.message);
+                setCollab(error.message);
+
+
+            }
+        }
+        //console.log(pageNumber-1);
+        getCollabById();
+        setPageNumber(1);
+        //console.log('1111');
+        
+    }, [sortMode]);
     return (
         <>
-            <PageOutlineTemplate page={Page}>
-                <PageOutlineContentTemplate page={Page} hasSwitch={false} Post={Collab} changePageNumber={(pagenumber)=>{changePage(pagenumber)}}/>
+            {Collab.length > 0 && <PageOutlineTemplate page={Page}>
+                <PageOutlineContentTemplate page={Page}  hasSwitch={false} mode='Post' Post={Collab} changePageNumber={(pagenumber) => { setPageNumber(pagenumber); }} changeSortMode={(sortMode)=>{setSortMode(sortMode);}} />
             </PageOutlineTemplate>
-
+            }
         </>
     );
 

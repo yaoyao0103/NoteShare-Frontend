@@ -1,18 +1,21 @@
 .FansNFollower{
-    margin:10%;
+    margin:1%;
 }
 .FansNFollower__Row{
 
 }
 .FansNFollower__Follower__Card{
-    width:90%;
+    margin-left:0%;
+    width:80%;
     height: 80%;
     border-radius: 5%;
-    cursor: pointer;
+
+    
 }
 .FansNFollower__Fans__Card{
-    width:90%;
+    width:80%;
     height: 80%;
     border-radius: 5%;
-    cursor: pointer;
+    
+
 }

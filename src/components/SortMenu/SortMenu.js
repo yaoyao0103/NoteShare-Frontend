@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Dropdown, Space, Menu, message, } from "antd";
-import { CalendarOutlined, DollarCircleOutlined, CommentOutlined, DownOutlined } from "@ant-design/icons";
+import { CalendarOutlined, DollarCircleOutlined, CommentOutlined, DownOutlined, LikeOutlined, UnlockOutlined, StarOutlined } from "@ant-design/icons";
 import "./SortMenu.css";
 import { NavDropdown } from "react-bootstrap";
 
@@ -13,16 +13,34 @@ const SortMeun = (props) => {
     const onClose = () => {
         setVisible(false);
     };
+    const SortByBestPrice = () => {
+        message.info('依照賞金排序');
+        props.changeSortMode('bestPrice');
+    };
     const SortByPrice = () => {
-        message.info('依照賞金排序')
+        message.info('依照價格排序');
+        props.changeSortMode('price');
     };
     const SortByAns = () => {
-        message.info('依照留言數排序')
+        message.info('依照留言數排序');
+        props.changeSortMode('commentCount');
     };
     const SortByDate = () => {
-        message.info('依照日期排序')
+        message.info('依照日期排序');
+        props.changeSortMode('date');
     };
-
+    const  SortByLikeCount = () => {
+        message.info('依照喜歡數排序');
+        props.changeSortMode('likeCount');
+    };
+    const SortByUnlockCountCount = () => {
+        message.info('依照購買數排序');
+        props.changeSortMode('unlockCount');
+    };
+    const  SortByFavoriteCount = () => {
+        message.info('依照收藏數排序');
+        props.changeSortMode('favoriteCount');
+    };
     const QnAOutlineMenu = (
         <Menu items={
             [
@@ -38,7 +56,7 @@ const SortMeun = (props) => {
                 {
                     label: (<a onClick=
                         {() => {
-                            SortByPrice();
+                            SortByBestPrice();
                         }}
                     >賞金</a>),
                     key: "2",
@@ -60,20 +78,52 @@ const SortMeun = (props) => {
         <Menu items={
             [
                 {
-                    label: "日期",
+                    label: (<a onClick=
+                        {() => {
+                            SortByDate();
+                        }}
+                    >日期</a>),
                     key: "1",
                     icon: <CalendarOutlined />
                 },
                 {
-                    label: "賞金",
+                    label: (<a onClick=
+                        {() => {
+                            SortByPrice();
+                        }}
+                    >價格</a>),
                     key: "2",
                     icon: <DollarCircleOutlined />
                 },
                 {
-                    label: "留言數",
+                    label:(<a onClick=
+                        {() => {
+                            SortByLikeCount();
+                        }}
+                    >喜歡數</a>),
                     key: "3",
-                    icon: <CommentOutlined />
+                    icon: <LikeOutlined />
                 },
+                {
+                    label: (<a onClick=
+                        {() => {
+                            SortByUnlockCountCount();
+                        }}
+                    >購買數</a>),
+                    key: "4",
+                    icon: <UnlockOutlined />
+                },
+                {
+                    label: (<a onClick=
+                        {() => {
+                            SortByFavoriteCount();
+                        }}
+                    >收藏數</a>),
+                    key: "4",
+                    icon: <StarOutlined />
+                },
+
+
             ]
         } />
     );
@@ -92,7 +142,7 @@ const SortMeun = (props) => {
                 {
                     label: (<a onClick=
                         {() => {
-                            SortByPrice();
+                            SortByBestPrice();
                         }}
                     >賞金</a>),
                     key: "2",
@@ -125,7 +175,7 @@ const SortMeun = (props) => {
                 {
                     label: (<a onClick=
                         {() => {
-                            SortByPrice();
+                            SortByBestPrice();
                         }}
                     >賞金</a>),
                     key: "2",

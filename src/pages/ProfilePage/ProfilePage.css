@@ -9,16 +9,17 @@
     position: absolute;
     top: 10%;
     height: 100%;
-    background-color: #EFF1F4;
-    
+    min-height: 100%;
+    background-color: #FFF;
     width: 100%;
     /* box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;*/
 } 
 .Profile__Layout__Inner{
     position:relative;
-    width: 70%;
+    width: 90%;
     height: 100%; 
     margin-top: 5%;
+    background-color: #FFF;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 3%;
@@ -27,16 +28,20 @@
 .Profile__Content{
     height: 100%; 
     background-color: #FFF;
+    margin-left:3%;
+    
    
 }
+.Profile__Content__First__Row{
+   
+    margin-top:8%;
+    width: 100%;
+}
+
 .Profile__Avatar__Outer{
     position: relative;
     display: flex;
-    margin-bottom:0%;
-    width: auto;
     height: auto;
-    margin-top:30%;
-    margin-left: 30%;
 }
 .Profile__Avatar__Inner{
     position: relative;
@@ -44,18 +49,10 @@
     object-fit: cover;
     width: 100%;
     height: 100%;
-    margin-left: 0.5em;
     box-shadow: rgba(0, 0, 0, 0.35) 0px -50px 36px -28px inset;
-    border-radius: 100%;
+    
 }
 .Profile__Avatar__Editor{
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items:center;
-    padding-left: 20%;
     opacity:0 ;
     cursor: pointer;
 }
@@ -66,9 +63,48 @@
     display: flex;
     flex-direction: column;
     align-items:center;
-    padding-left:  20%;
+    padding-left:  50%;
     opacity:0.8 ;
     cursor: pointer;
+}
+.Profile__NameNEmail{
+    display: inline;
+    vertical-align: top;
+}
+.Profile__TextEditor{
+    position: relative;
+    min-height: 10%;
+}
+.Profile__Email{
+    position: relative;
+    margin-top:0%;
+    margin-right:5%;
+    margin-bottom: 0%;
+}
+.Profile__Follow{
+    position: relative;
+    width: 20%;
+    margin-top:3%;
+    margin-right:0%;
+    margin-bottom: 3%;
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    border-radius: 5%;
+}
+.Profile__Follow:hover{
+    position: relative;
+    width: 20%;
+    margin-top:3%;
+    margin-right:0%;
+    margin-bottom: 3%;
+    cursor: pointer;
+    transform: scale(1.1);
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    border-radius: 5%;
+}
+.Profile__Follow__Icon{
+    width:auto ;
+    margin-right:5%;
 }
 .Profile__Strength{
     position: relative;
@@ -76,50 +112,34 @@
 
 .Profile__Sider{
     background-color: #FFF;
-    height: auto;
+    height: 100%;
+    display: block;
+    padding-top:1.5%;
+}
+.Profile__Sider__Fir__Row{
+    position: relative;
+    width: 100%;
+    height: 2em;
+    margin-left:30%;
+    margin-bottom: 5%;
+}
+.Profile_Sider__Main_Content{
     overflow: scroll;
     overflow-x: hidden;
-    padding-top:3%;
-}
-.Profile__FirNSec__Row{
-    width: 60%;
-    display: inline-block;
-    vertical-align: top;
-}
-/* .Profile__Fans{
-    width: 35%;
-    display: inline-block;
-    vertical-align: middle;
-} */
-.Profile__TextEditor{
-    position: relative;
-    margin-top: 8%;
-    margin-right:5%;
-    margin-bottom: 0%;
-    min-height: 10%;
-}
-
-.Profile__Email{
-    position: relative;
-    margin-top:0%;
-    margin-right:5%;
-    margin-bottom: 0%;
+    height:80%;
+    min-height: 80%;
+    max-height: 80%;
+    display: inline-flex;
+    flex-wrap: wrap;
+    width: 100%;
 }
 .Profile__Introduction{
     position: relative;
+    height:20%;
     margin-top: 3%;
     margin-right:5%;
     margin-bottom: 0%;
 }
-/* .Profile__AvatarSelector__Avatar__0:active,.Profile__AvatarSelector__Avatar__1:active,.Profile__AvatarSelector__Avatar__2:active,.Profile__AvatarSelector__Avatar__3:active,
-.Profile__AvatarSelector__Avatar__4:active,.Profile__AvatarSelector__Avatar__5:active,.Profile__AvatarSelector__Avatar__6:active,.Profile__AvatarSelector__Avatar__7:active,
-.Profile__AvatarSelector__Avatar__8:active,.Profile__AvatarSelector__Avatar__9:active,.Profile__AvatarSelector__Avatar__10:active,.Profile__AvatarSelector__Avatar__11:active,
-.Profile__AvatarSelector__Avatar__12:active,.Profile__AvatarSelector__Avatar__13:active,.Profile__AvatarSelector__Avatar__14:active,.Profile__AvatarSelector__Avatar__15:active,
-.Profile__AvatarSelector__Avatar__16:active,.Profile__AvatarSelector__Avatar__17:active,.Profile__AvatarSelector__Avatar__18:active,.Profile__AvatarSelector__Avatar__19:active,
-.Profile__AvatarSelector__Avatar__20:active,.Profile__AvatarSelector__Avatar__21:active,.Profile__AvatarSelector__Avatar__22:active,.Profile__AvatarSelector__Avatar__23:active,
-.Profile__AvatarSelector__Avatar__24:active,.Profile__AvatarSelector__Avatar__25:active,.Profile__AvatarSelector__Avatar__26:active,.Profile__AvatarSelector__Avatar__27:active{
-    box-shadow: rgba(3, 102, 214, 0.3) 0px 0px 0px 3px;
-} */
 .Profile__AvatarSelector__Avatar{
     margin:0.5%;
 }

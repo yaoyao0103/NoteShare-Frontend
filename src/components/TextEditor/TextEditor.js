@@ -22,17 +22,17 @@ function TextEditor(props) {
     // }, [editing]);
     return (
         <div className='TextEditor'>
-            <Text className='TextEditor__Title' cls='Gerneral' fontSize='26' content={'Name :'} />
+            <Text className='TextEditor__Title' cls='Gerneral' fontSize='22' content={'Name :'} />
             {!editing &&
                 <div className='TextEditor__Name'>
-                    <Text  cls='Gerneral' fontSize='26' content={name} />
+                    <Text  cls='Gerneral' fontSize='22' content={name} />
                 </div>}
-            {!editing &&
-                <EditFilled className='TextEditor__Editor' style={{ fontSize: '22px' }} onClick={() => { setEditing(true); }} />}
-            {editing &&
+            {(!editing&&props.isAuthor) &&
+                <EditFilled className='TextEditor__Editor' style={{ fontSize: '18px' }} onClick={() => { setEditing(true); }} />}
+            {editing&&props.isAuthor &&
                 <Input className='TextEditor__Input' placeholder='Enter your new name' defaultValue='Plusx' onChange={(e) => { const name = e.target.value; setName(name) }} />}
-            {editing &&
-                <SaveOutlined className='TextEditor__Save' style={{ fontSize: '26px' }} onClick={() => { Save(); }} />}
+            {editing&&props.isAuthor &&
+                <SaveOutlined className='TextEditor__Save' style={{ fontSize: '22px' }} onClick={() => { Save(); }} />}
         </div>
     );
 

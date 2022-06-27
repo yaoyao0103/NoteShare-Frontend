@@ -1,0 +1,58 @@
+.SignUpPage{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+.SignUp{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: #FFF;
+    margin-bottom: 5%;
+    
+}
+.SignUp__Outer{
+    position: relative;
+   
+    height: 100%;
+    width: 100%;
+    background-color: #FFF;
+    margin-bottom: 3%;
+    /* box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;*/
+} 
+.SignUp__Logo{
+  position: relative;
+  padding-bottom:5%;
+  margin-left:36%;
+  margin-top:10%;
+  width: 100%;
+   /* top: 20%;
+    left:23%; */
+}
+.SignUp__Spin{
+    /* position:absolute;
+   top:10%; */
+   width: 100%;
+}
+.ant-spin-nested-loading{
+    
+}
+.anticon-spin{
+   /* margin-left:10em; */
+}
+.SignUp-form{
+    max-width: 45%;
+    margin-left:21%;
+    margin-top:1%;
+    width: 100%;
+}
+.SignUp__Form__Item{
+  margin-top: 2%;
+}
+.SignUp__Button{
+    float: right;
+}
+.SignUp__Login__Button{
+    float: left;
+    margin-top:1.5%;
+}
