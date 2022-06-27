@@ -13,7 +13,7 @@ function ToggleSwitch(props) {
             setSwitch('');
             message.info(props.SwitchRight);
         }
-
+        if(props.ChangeSwitch)props.ChangeSwitch();
     }
     useEffect(() => {
         setSwitch('');

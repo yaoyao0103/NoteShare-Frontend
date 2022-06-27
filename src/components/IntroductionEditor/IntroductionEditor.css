@@ -1,5 +1,6 @@
 .IntroductionEditor{
     margin-right:5%;
+    height:100%;
 }
 .IntroductionEditor__Input{
     
@@ -10,6 +11,10 @@
     flex-direction: column;
     align-items:flex-end;
 } */
+.IntroductionEditor__Name{
+    height:100%;
+    overflow-y: scroll;
+}
 .IntroductionEditor__Editor{
     margin-left:1%;
     margin-top:1.5%;

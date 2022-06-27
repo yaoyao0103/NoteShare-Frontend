@@ -30,6 +30,7 @@
     "grapesjs-typed": "^1.0.5",
     "interweave": "^13.0.0",
     "jquery": "^3.6.0",
+    "js-base64": "^3.7.2",
     "moment": "^2.29.3",
     "node-sass": "^6.0.1",
     "prop-types": "^15.8.1",

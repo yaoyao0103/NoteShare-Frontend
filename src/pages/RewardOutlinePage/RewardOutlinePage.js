@@ -3,21 +3,54 @@ import Navbar from '../../components/Navbar/Navbar';
 import PageOutlineTemplate from '../../components/PageOutlineTemplate/PageOutlineTemplate';
 import PageOutlineContentTemplate from '../../components/PageOutlineContentTemplate/PageOutlineContentTemplate';
 import { Layout } from "antd";
+import axios from "axios";
 const { Header, Content, Footer } = Layout;
 function RewardOutlinePage() {
     const [Page, setPage] = useState('RewardOutlinePage');
-    const [pageNumber, setPageNumber] = useState('1');
-    const [ Reward, setReward] =useState([]);
+    const [pageNumber, setPageNumber] = useState(1);
+    const [Reward, setReward] = useState([]);
+    const [sortMode,setSortMode] =useState('date');
+
     useEffect(() => {
         setPage('RewardOutlinePage');
-        //console.log(Page)
     }, [Page]);
     useEffect(() => {
         async function getRewardById() {
             try {
-                const temp = require('./RewardOutlinePage'+pageNumber+'.json');
-                //console.log(pageNumber);
-                setReward(temp.additionalProp1);
+                const haveReward= true;
+               
+                const sortBy=sortMode;
+                
+                await axios.get('http://localhost:8080/search/post/interrupt/' + String(pageNumber-1) + '/20?haveReward='+haveReward+'&sortBy='+sortBy).then((res) => {
+                    setReward(oldArray => [...oldArray, res.data.search]);
+                    //console.log(res.data.search.totalPages);
+
+                });
+
+            } catch (error) {
+                console.log(error.message);
+                setReward(error.message);
+
+
+            }
+        }
+        getRewardById();
+        //console.log('2222');
+    }, []);
+    useEffect(() => {
+        async function getRewardById() {
+            try {
+                const haveReward= true;
+               
+                const sortBy=sortMode;
+                
+                await axios.get('http://localhost:8080/search/post/interrupt/' + String(pageNumber-1) + '/20?haveReward='+haveReward+'&sortBy='+sortBy).then((res) => {
+                    setReward(oldArray => [...oldArray=[], res.data.search]);
+                    window.scrollTo(0, 0);
+                    //console.log(pageNumber);
+
+                });
+
             } catch (error) {
                 //console.log(error.message);
                 setReward(error.message);
@@ -25,25 +58,45 @@ function RewardOutlinePage() {
 
             }
         }
+        //console.log(pageNumber-1);
         getRewardById();
-    }, []);
-    const changePage=(pagenumber)=>{
-        const temp = require('./RewardOutlinePage'+pagenumber+'.json');
-        //console.log(pagenumber);
-        setReward(temp.additionalProp1);
-        setPageNumber(pageNumber);
-        window.scrollTo(0, 0);
-    }
+        //console.log('1111');
+        
+    }, [pageNumber]);
+    useEffect(() => {
+        async function getRewardById() {
+            try {
+                const haveReward= true;
+                const sortBy=sortMode;
+                
+                await axios.get('http://localhost:8080/search/post/interrupt/' + String(pageNumber-1) + '/20?haveReward='+haveReward+'&sortBy='+sortBy).then((res) => {
+                    setReward(oldArray => [...oldArray=[], res.data.search]);
+                    window.scrollTo(0, 0);
+                    //console.log(pageNumber);
 
+                });
+
+            } catch (error) {
+                //console.log(error.message);
+                setReward(error.message);
+
+
+            }
+        }
+        //console.log(pageNumber-1);
+        getRewardById();
+        setPageNumber(1);
+        //console.log('1111');
+        
+    }, [sortMode]);
     return (
         <>
-            <PageOutlineTemplate page={Page}>
-                <PageOutlineContentTemplate page={Page} hasSwitch={false} Post={Reward} changePageNumber={(pagenumber)=>{changePage(pagenumber)}}/>
+            {Reward.length > 0 && <PageOutlineTemplate page={Page}>
+                <PageOutlineContentTemplate page={Page}  hasSwitch={false} mode='Post' Post={Reward} changePageNumber={(pagenumber) => { setPageNumber(pagenumber); }} changeSortMode={(sortMode)=>{setSortMode(sortMode);}} />
             </PageOutlineTemplate>
-
+            }
         </>
     );
-
 
 }
 

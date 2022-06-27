@@ -7,7 +7,7 @@ function StrengthEditor(props) {
     const [editing, setEditing] = useState(false);
     const [Tag, setTag] = useState('');
     const [strength, setStrength] = useState(
-        ['資料結構', '程式設計', '演算法', 'Java', '資料結構', '程式設計', '演算法', 'Java']
+        ['資料結構', '程式設計', '演算法', 'Java', '資料結構', '程式設計', '演算法', '演算法']
     );
     const Save = () => {
         if (Tag !== '') {
@@ -36,25 +36,38 @@ function StrengthEditor(props) {
     }
     const strengthLists = [];
     for (let i = 0; i <= strength.length - 1; i++) {
-        strengthLists.push(
-            <div key={i} className='StrengthEditor__Tag'>
-                <Text className='StrengthEditor__Title' cls='Gerneral' fontSize='22' content={strength[i]} />
-                <CloseOutlined key={i} style={{ fontSize: '16px' }} className={'StrengthEditor__Delete'} onClick={e => Delete(i)} />
-            </div>
-        );
+        if(props.isAuthor){
+            strengthLists.push(
+                <div key={i} className='StrengthEditor__Tag'>
+                    <Text className='StrengthEditor__Title' cls='Gerneral' fontSize='18' content={strength[i]} />
+                    <CloseOutlined key={i} style={{ fontSize: '16px' }} className={'StrengthEditor__Delete'} onClick={e => Delete(i)} />
+                </div>
+                
+            );
+        }
+        else{
+            strengthLists.push(
+                <div key={i} className='StrengthEditor__Tag__NotAuthor'>
+                    <Text className='StrengthEditor__Title' cls='Gerneral' fontSize='18' content={strength[i]} />
+                 
+                </div>
+                
+            );
+        }
+        
 
     };
     return (
         <div className='StrengthEditor'>
-            <Text className='StrengthEditor__Title' cls='Gerneral' fontSize='26' content={'Strength :'} />
+            <Text className='StrengthEditor__Title' cls='Gerneral' fontSize='22' content={'Strength :'} />
             <div className='StrengthEditor__Tags'>
                 {strengthLists}
-                {!editing &&
-                    <PlusCircleOutlined style={{ fontSize: '20px' }} className='StrengthEditor__Add' onClick={() => { setEditing(true) }} />}
-                {editing &&
+                {!editing&&props.isAuthor &&
+                    <PlusCircleOutlined style={{ fontSize: '16px' }} className='StrengthEditor__Add' onClick={() => { setEditing(true) }} />}
+                {editing&&props.isAuthor &&
                     <Input className='StrengthEditor__Input' placeholder='Enter new Strength' onChange={(e) => { const Tag = e.target.value; setTag(Tag) }} />}
-                {editing &&
-                    <SaveOutlined className='StrengthEditor__Save' style={{ fontSize: '22px' }} onClick={() => { Save(); }} />}
+                {editing&&props.isAuthor &&
+                    <SaveOutlined className='StrengthEditor__Save' style={{ fontSize: '18px' }} onClick={() => { Save(); }} />}
             </div>
         </div>
     );

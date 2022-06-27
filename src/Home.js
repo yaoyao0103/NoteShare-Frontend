@@ -110,6 +110,9 @@ const Home = () => {
         <Link to={`/NoteDetailPage/${noteId}`}>NoteDetailPage</Link>
         </div>
         <div>
+        <Link to={'/NoteOutlinePage'}>NoteOutlinePage</Link>
+        </div>
+        <div>
         <Link to={'/RewardOutlinePage'}>RewardOutlinePage</Link>
         </div>
         <div>
@@ -146,7 +149,13 @@ const Home = () => {
         <Link to={'/NoteEditPage/new'}>NoteNewPage</Link>
         </div>
         <div>
-        <Link to={'/ProfilePage'}>ProfilePagePage</Link>
+        <Link to={'/ProfilePage'}>ProfilePage</Link>
+        </div>
+        <div>
+        <Link to={'/LoginPage'}>LoginPage</Link>
+        </div>
+        <div>
+        <Link to={'/SignUpPage'}>SignUpPage</Link>
         </div>
         <div>
         <Link to={'/PersonalPage'}>PersonalPage</Link>

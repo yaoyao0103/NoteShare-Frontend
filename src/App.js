@@ -7,6 +7,7 @@ import { pageLoad } from "./redux/actions/pageAction";
 import MemberPage from "./pages/MemberPage/MemberPage";
 import QnADetailPage from "./pages/QnADetailPage/QnADetailPage";
 import NoteDetailPage from "./pages/NoteDetailPage/NoteDetailPage";
+import NoteOutlinePage from "./pages/NoteOutlinePage/NoteOutlinePage";
 import RewardDetailPage from "./pages/RewardDetailPage/RewardDetailPage";
 import RewardOutlinePage from "./pages/RewardOutlinePage/RewardOutlinePage";
 import QnAOutlinePage from "./pages/QnAOutlinePage/QnAOutlinePage";
@@ -19,6 +20,9 @@ import CollabEditPage from "./pages/CollabEditPage/CollabEditPage";
 import NoteEditPage from "./pages/NoteEditPage/NoteEditPage";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import PersonalPage from "./pages/PersonalPage/PersonalPage";
+import LoginPage from "./pages/LoginPage/LoginPage";
+import SignUpPage from "./pages/SignUpPage/SignUpPage";
+import VerificationPage from "./pages/VerificationPage/VerificationPage";
 function App() {
   const dispatch = useDispatch();
 
@@ -47,6 +51,9 @@ function App() {
         <Route exact path="/NoteNewPage/:folderId" element={<NoteEditPage />}></Route>
         <Route exact path="/ProfilePage" element={<ProfilePage />}></Route>
         <Route exact path="/PersonalPage" element={<PersonalPage />}></Route>
+        <Route exact path="/LoginPage" element={<LoginPage />}></Route>
+        <Route exact path="/SignUpPage" element={<SignUpPage />}></Route>
+        <Route exact path="/VerificationPage/:email" element={<VerificationPage />}></Route>
       </Routes>
     </Router>
   );

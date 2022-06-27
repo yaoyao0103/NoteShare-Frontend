@@ -71,3 +71,28 @@
     position: relative;
     height: 40%;
 }
+.OPInfo__Row__Profile{
+    height: 100%;
+    width: 100%;
+}
+.OPInfo__left__Profile{
+    margin-right: 1em;
+    height: 100%;
+    margin-left: 2em;
+    
+}
+
+.OPInfo__right__Profile{
+    float: left;
+    height: 100%;
+}
+.OPInfo__Author__Profile{
+    margin-top: 0.5em;
+    position: relative;
+    height: 30%;
+    margin-bottom: 0;
+}
+.OPInfo__Date__Profile{
+    position: relative;
+    height: 40%;
+}

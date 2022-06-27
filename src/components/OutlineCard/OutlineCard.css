@@ -88,3 +88,113 @@
     padding-left: 5%;
 }
 
+
+
+.OutlineCard__Layout__Outer__Note{
+    position:relative;
+    height: 20em;
+    width: 90%;
+    max-width: 90%;
+    background-color: #fff;
+    margin-left:5%;
+    margin-right:5%;
+    margin-top:2.5%;
+    margin-bottom:2.5%;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+   
+    
+}
+.OutlineCard__Layout__Outer__Note:hover{
+    position:relative;
+    height: 20em;
+    width:45%;
+    background-color: #fff;
+    transform: scale(1.05);
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+   
+    
+}
+.OutlineCard__Content__Outer__Note{
+    position: relative;
+    height: 100%;
+    width: 100%;
+   
+    background-color: #FFF;
+  
+}
+.OutlineCard__Layout__Inner__Note{
+    position:relative;
+    height:100%;
+    width: 100%;
+    background-color: #FFF;
+    /* display: inline-block; */
+}
+.OutlineCard__Header__Note{
+    position:relative;
+    height: 25%;
+    width: 100%;
+    background-color: #FFF;
+    margin-top: 1%;
+    padding: 0;
+  
+}
+.OutlineCard__Header__Row__Note{
+    position:relative;
+    height:100%;
+    width: 100%;
+    background-color: #FFF;
+   
+  
+}
+.OutlineCard__Header__Left__Note{
+    
+}
+.OutlineCard__Header__Right__Note{
+    position: relative;
+    padding: 0;
+}
+.OutlineCard__Content__Inner__Note{
+    position: relative;
+ 
+    margin-left:10%;
+    margin-right:3%;
+}
+.OutlineCard__Paragraph__Note{
+    margin-left:1.5%;
+    position: relative;
+    font-size: 22px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 200;
+}
+.OutlineCard__Sider__Outer__Note{
+    position: relative;
+    padding-top:1%;
+    height: 100%;
+    
+    background-color: #FFF; 
+}
+
+/* .OutlineCard__Sider__First__Row__Note,.OutlineCard__Sider__Sec__Row__Note,.OutlineCard__Sider__Third__Row__Note,.OutlineCard__Sider__Fourth__Row__Note,.OutlineCard__Sider__Fifth__Row__Note,.OutlineCard__Sider__Sixth__Row__Note,.OutlineCard__Sider__Seventh__Row__Note{
+    position: relative;
+    padding-top:3%;
+    padding-left: 5%;
+} */
+.OutlineCard__Sider__Row__Note{
+    position: relative;
+    padding-top:2%;
+    padding-left: 5%;
+}
+.OutlineCard__Sider__Row__Like__Note{
+    position: relative;
+    padding-top:0%;
+    padding-left: 5%;
+}
+.OutlineCard__Sider__Paragraph__Note{
+    position: relative;
+    padding: 0;
+    font-size: 14px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 200;
+}
+
+

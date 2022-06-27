@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;600&display=swap');
+
+.FolderCard{
+    position: relative;
+    width: 100%;
+}
+.FolderCard__Back{
+    position: relative;
+    margin-left: 3%;
+    cursor: pointer;
+}
+.FolderCard__List{
+    position: relative;
+    margin-left: 3%;
+}
+.FolderCard__List__Item{
+    cursor: pointer;
+}
+.FolderCard__List__Sec__Col{
+    position: relative;
+    margin-left: 3%;
+}
+.FolderCard__List__Title{
+    font-size: 20px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+}
+
+.FolderCard__List__NoteNumber{
+    position: relative;
+    padding-top:3%;
+    margin-right: 5%;
+}

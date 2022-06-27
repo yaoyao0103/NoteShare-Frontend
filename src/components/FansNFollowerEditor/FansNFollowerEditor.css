@@ -1,0 +1,31 @@
+.FansNFollowerEditor{
+    position:relative;
+    height: 3.5em;
+    width: 45%;
+    max-width: 45%;
+    max-height: 3.5em;
+    background-color: #fff;
+    margin-left:2.5%;
+    margin-right:2.5%;
+    margin-bottom:2.5%;
+    
+    /* box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px; */
+}
+.FansNFollowerEditor__Name{
+    padding-top:2.3%;
+}
+
+.FansNFollowerEditor__Fans{
+    cursor: pointer;
+    border: 1px solid;
+    border-color: #dbdbdb;
+    width: 10%;
+    margin-top:3%;
+    margin-right:0%;
+    margin-bottom: 3%;
+    padding-left: 5%;
+    border-radius: 10%;
+}
+.FansNFollowerEditor__unFans{
+    
+}
