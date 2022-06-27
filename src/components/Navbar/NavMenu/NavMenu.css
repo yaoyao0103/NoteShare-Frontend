@@ -1,13 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;600&display=swap');
-#navMenu{
+.navMenu{
     position: absolute;
-    width: 3%;
+    width: 10%;
     left:50%;
-    top:0;
-    margin-top: 1%;
-    margin-left:0.3%;
+    margin-top: 1.4em;
     background-color: white;
+    font-weight: bolder;
 }
+
+.navMenu .navMenu__Dropdown{
+    width: 100%;
+    border: none;
+}
+
 #navMenu #Menu{
     position: relative;
     font-family: 'Poppins', sans-serif;
