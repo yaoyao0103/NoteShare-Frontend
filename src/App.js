@@ -36,6 +36,7 @@ function App() {
         <Route exact path="/" element={<Home />}></Route>
         <Route exact path="/editor/:pageId" element={<Editor />}></Route>
         <Route exact path="/MemberPage" element={<MemberPage />}></Route>
+        <Route exact path="/NoteOutlinePage" element={<NoteOutlinePage />}></Route>
         <Route exact path="/RewardOutlinePage" element={<RewardOutlinePage />}></Route>
         <Route exact path="/RewardDetailPage" element={<RewardDetailPage />}></Route>
         <Route exact path="/RewardEditPage" element={<RewardEditPage />}></Route>
