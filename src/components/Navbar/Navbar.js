@@ -18,7 +18,7 @@ function Navbar(props) {
       <Logo />
       <NavButton setPageProps={props.setPageProps} />
       <NavMenu />
-      <SearchBar setSearchCondition={props.setSearchCondition}/>
+      <SearchBar setPageProps={props.setPageProps}/>
 
       {props.loggedIn? 
         <Row className="navbar__Button__Login">

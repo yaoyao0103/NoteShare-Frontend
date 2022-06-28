@@ -27,9 +27,10 @@ function NoteOutlinePage(props) {
 
             }
         }
+        setNote([])
         getNoteById();
         //console.log('2222');
-    }, []);
+    }, [props]);
     useEffect(() => {
         async function getNoteById() {
             try {

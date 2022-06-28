@@ -29,7 +29,6 @@ const OuterPage = () => {
     const [pageProps, setPageProps] = useState({page: 'LoginPage'});
     const [pageComponent, setPageComponent] = useState(<></>)
     const [visible, setVisible] = useState(false);
-    const [searchCondition,setSearchCondition]=useState({});
     const [loggedIn, setLoggedIn] = useState(false);
     const showDrawer = () => {
         setVisible(true);
@@ -39,6 +38,7 @@ const OuterPage = () => {
         setVisible(false);
     };
     useEffect(() => {
+        console.log("page", pageProps.page)
         switch (pageProps.page) {
             case 'NoteDetailPage': setPageComponent(<NoteDetailPage page='NoteDetailPage' setPageProps={setPageProps} {...pageProps} />); break;
             case 'NoteEditPage': setPageComponent(<NoteEditPage page='NoteEditPage' setPageProps={setPageProps}  {...pageProps} />); break;
@@ -65,21 +65,6 @@ const OuterPage = () => {
         }
     }, [pageProps])
 
-    useEffect(() => {
-        console.log(searchCondition);
-        if (searchCondition.keyword){
-            setPageProps(searchCondition);
-            setCurrPage('changing');
-            setPageComponent();
-        }
-            
-        //setCurrPage(searchCondition.page+'OutlinePage');
-    }, [searchCondition])
-    useEffect(() => {
-        console.log("pageProps", pageProps)
-        if(searchCondition.keyword)
-        setCurrPage(searchCondition.page+'OutlinePage');
-    }, [pageProps])
 
     const floatBtnOnClick = () => {
         message.info("float button click!")
@@ -87,7 +72,7 @@ const OuterPage = () => {
     return (
         <>
             <div className='outerPage'>
-                <Navbar loggedIn={loggedIn} setPageProps={setPageProps} setSearchCondition={setSearchCondition} setLoggedIn={setLoggedIn}/>
+                <Navbar loggedIn={loggedIn} setPageProps={setPageProps} setLoggedIn={setLoggedIn}/>
                 <div className='outerPage__Layout'>
                     {pageComponent&&pageComponent}
                 </div>

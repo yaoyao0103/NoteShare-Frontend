@@ -33,12 +33,12 @@ const SearchBar = (props) => {
   }, [ref]);
 
   const onSearch = () => {
-    props.setSearchCondition({
-      keyWord:keyword,
-      page:'Note'
-
-    })
+    props.setPageProps({
+      keyword:keyword,
+      page:'NoteOutlinePage'
+    });
     message.info(keyword);
+
   }
   const onChange = (ev) =>{
     setKeyword(ev.target.value);
@@ -63,19 +63,19 @@ const SearchBar = (props) => {
       <div ref={ref} className={`navSearchBar__AdvancedSearch ${ advanced? "navSearchBar__AdvancedSearch--show":"navSearchBar__AdvancedSearch--hidden"}`}>
         <Tabs className="navSearchBar__AdvancedSearch__Tab" defaultActiveKey="1"   >
           <TabPane className="navSearchBar__AdvancedSearch__Tab__Pane" tab={ <Text color='black' cls='Small' content={"Note"} fontSize={"14"} display="inline-block" />} key="1">
-            <AdvancedSearch setSearchCondition={props.setSearchCondition} type={"note"} className="navSearchBar__AdvancedSearch__Tab__Items"/>
+            <AdvancedSearch setPageProps={props.setPageProps} type={"note"} className="navSearchBar__AdvancedSearch__Tab__Items"/>
           </TabPane>
           <TabPane className="navSearchBar__AdvancedSearch__Tab__Pane" tab={<Text color='black' cls='Small' content={"Collab"} fontSize={"14"} display="inline-block" />} key="2">
-            <AdvancedSearch setSearchCondition={props.setSearchCondition} type={"collab"} className="navSearchBar__AdvancedSearch__Tab__Items"/>
+            <AdvancedSearch setPageProps={props.setPageProps} type={"collab"} className="navSearchBar__AdvancedSearch__Tab__Items"/>
           </TabPane>
           <TabPane className="navSearchBar__AdvancedSearch__Tab__Pane" tab={<Text color='black' cls='Small' content={"Reward"} fontSize={"14"} display="inline-block" />} key="3">
-            <AdvancedSearch  setSearchCondition={props.setSearchCondition} type={"reward"} className="navSearchBar__AdvancedSearch__Tab__Items"/>
+            <AdvancedSearch  setPageProps={props.setPageProps} type={"reward"} className="navSearchBar__AdvancedSearch__Tab__Items"/>
           </TabPane>
           <TabPane className="navSearchBar__AdvancedSearch__Tab__Pane" tab={<Text color='black' cls='Small' content={"QnA"} fontSize={"14"} display="inline-block" />} key="4">
-            <AdvancedSearch setSearchCondition={props.setSearchCondition} type={"QnA"} className="navSearchBar__AdvancedSearch__Tab__Items"/>
+            <AdvancedSearch setPageProps={props.setPageProps} type={"QnA"} className="navSearchBar__AdvancedSearch__Tab__Items"/>
           </TabPane>
           <TabPane className="navSearchBar__AdvancedSearch__Tab__Pane" tab={<Text color='black' cls='Small' content={"Folder"} fontSize={"14"} display="inline-block" />} key="5">
-            <AdvancedSearch setSearchCondition={props.setSearchCondition} type={"folder"} className="navSearchBar__AdvancedSearch__Tab__Items"/>
+            <AdvancedSearch setPageProps={props.setPageProps} type={"folder"} className="navSearchBar__AdvancedSearch__Tab__Items"/>
           </TabPane>
         </Tabs>
       </div>
