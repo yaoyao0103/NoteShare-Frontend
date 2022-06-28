@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from '../../components/Navbar/Navbar';
-import { Layout, Avatar, Modal, message, Row, Col, Divider } from "antd";
-import { EditFilled, UserAddOutlined } from '@ant-design/icons';
+import { Layout, Avatar, Modal, message, Row, Col, Divider ,Spin } from "antd";
+import { EditFilled, UserAddOutlined,LoadingOutlined } from '@ant-design/icons';
 import './ProfilePage.css'
 import TextEditor from '../../components/TextEditor/TextEditor';
 import StrengthEditor from '../../components/StrengthEditor/StrengthEditor';
@@ -18,9 +18,11 @@ function ProfilePage(props) {
     const page = 'ProfilePage';
     const [avatarSelector, setAvatarSelector] = useState(false);
     const [avatar, setAvatar] = useState();
-    const [fansOrFollower, setFansOrFollower] = useState(true);//true代表fans
+    const [fansOrFollower, setFansOrFollower] = useState(true);//true代表fans,folder
     const [folderList, setFolderList] = useState([]);
     const [avatarCurrent, setAvatarCurrent] = useState(0);
+    const [user,setUser]=useState({});
+    const [getUserSuccess, setGetUserSuccess] = useState(false);
     const [getAllFolderSuccess, setGetAllFolderSuccess] = useState(false);
     const [getFolderByIdSuccess, setGetFolderByIdSuccess] = useState(false);
     const [isRoot, setIsRoot] = useState(false);
@@ -37,9 +39,19 @@ function ProfilePage(props) {
         "https://joeschmoe.io/api/v1/jodi"
     ];
     function changeFansSwitch() {
-        if (fansOrFollower) setFansOrFollower(false);
-        else setFansOrFollower(true);
-        console.log(fansOrFollower);
+        if (fansOrFollower) {
+            setGetFolderByIdSuccess(false);
+            setFansOrFollower(false);
+            setGetAllFolderSuccess(false);
+            
+        }
+        else {
+            setGetFolderByIdSuccess(false);
+            setFansOrFollower(true);
+            setGetAllFolderSuccess(false);
+           
+        };
+        //console.log(fansOrFollower);
 
     }
     const AvatarsList = [];
@@ -57,6 +69,7 @@ function ProfilePage(props) {
         }).then(res => {
             //console.log(res.data.res);
             const list = res.data.res.children.concat(res.data.res.notes);
+            console.log(list);
             setFolderList(list);
             //setNoteList(res.data.res.notes);
             //console.log('.....');
@@ -90,37 +103,79 @@ function ProfilePage(props) {
         })
 
     }
+    const antIcon = (
+        <LoadingOutlined
+          style={{
+            fontSize: 24,
+          }}
+          spin
+        />
+      );
+    function getAllFolder() {
+        axios.get("http://localhost:8080/folder/all/" + props.email, {
+            }).then(res => {
+                //console.log(res.data.res[2]);
+                //setFolderList(res.data.res[2]);
+
+                setGetAllFolderSuccess(true);
+                
+                setCurrentFolderId(res.data.res[2].id);
+                console.log('CurrentFolderId')
+                console.log(res.data.res[2].id);
+                setIsRoot(true);
+            }).catch ((error)=> {
+            //console.log(error.response.data);
+            //setGetFolderFail(true);
+            
+        });
+
+    };
+    function getAllNote() {
+        
+           axios.get("http://localhost:8080/note/all/" + props.email, {
+            }).then(res => {
+                //console.log(res.data.res[2]);
+                //setFolderList(res.data.res[2]);
+                setFolderList(res.data.res);
+                setCurrentFolderId('0');
+                //setGetAllFolderSuccess(true);
+                setGetFolderByIdSuccess(true);
+            }).catch((error) =>{
+            //console.log(error.response.data);
+            //setGetFolderFail(true);
+        });
+
+    };
+    function getUserByEmail() {
+        
+        axios.get("http://localhost:8080/user/" + props.email, {
+         }).then(res => {
+
+             
+         }).catch((error) =>{
+         console.log(error);
+      
+     });
+
+ };
     useEffect(() => {
-        //console.log(props.keyWord);
-        async function getAllFolder() {
-            try {
-                await axios.get("http://localhost:8080/folder/all/" + props.email, {
-                }).then(res => {
-                    //console.log(res.data.res[2]);
-                    //setFolderList(res.data.res[2]);
-
-                    setGetAllFolderSuccess(true);
-                    setCurrentFolderId(res.data.res[2].id);
-                    setIsRoot(true);
-                });
-            } catch (error) {
-                //console.log(error.response.data);
-                //setGetFolderFail(true);
-            };
-
-        };
-        if (props.email)
+       
+     
+        console.log(fansOrFollower)
+        if (fansOrFollower)
             getAllFolder();
-    }, [props]);
+        else 
+            getAllNote();
+    }, [props, fansOrFollower]);
     useEffect(() => {
+        console.log(getAllFolderSuccess);
         if (getAllFolderSuccess) {
             getFolderById();
-
         }
     }, [currentFolderId]);
 
     return (
-        <>{getFolderByIdSuccess &&
+        <>
 
 
             <Layout className='Profile__Layout__Inner'>
@@ -160,7 +215,9 @@ function ProfilePage(props) {
                         <IntroductionEditor isAuthor={isAuthor}></IntroductionEditor>
                     </div>
                 </Content>
+                
                 <Sider className='Profile__Sider' width='60%'>
+                <Spin className='signUpPage__Spin'indicator={antIcon}  spinning={!getFolderByIdSuccess}>
                     {isAuthor && <Row className='Profile__Sider__Fir__Row'>
                         <ToggleSwitch SwitchLeft='Follower' SwitchRight="Fans" ChangeSwitch={() => changeFansSwitch()} />
                     </Row>}
@@ -171,41 +228,25 @@ function ProfilePage(props) {
                     {isAuthor && fansOrFollower && <div className='Profile_Sider__Main_Content'>
                         <FansNFollowerEditor Name='James' Avatar='https://joeschmoe.io/api/v1/james' isFans={fansOrFollower} />
                         <FansNFollowerEditor Name='Jude' Avatar='https://joeschmoe.io/api/v1/jude' isFans={fansOrFollower} />
-                        <FansNFollowerEditor Name='James' Avatar='https://joeschmoe.io/api/v1/james' isFans={fansOrFollower} />
-                        <FansNFollowerEditor Name='Jude' Avatar='https://joeschmoe.io/api/v1/jude' isFans={fansOrFollower} />
-                        <FansNFollowerEditor Name='James' Avatar='https://joeschmoe.io/api/v1/james' isFans={fansOrFollower} />
-                        <FansNFollowerEditor Name='Jude' Avatar='https://joeschmoe.io/api/v1/jude' isFans={fansOrFollower} />
-                        <FansNFollowerEditor Name='James' Avatar='https://joeschmoe.io/api/v1/james' isFans={fansOrFollower} />
-                        <FansNFollowerEditor Name='James' Avatar='https://joeschmoe.io/api/v1/james' isFans={fansOrFollower} />
-                        <FansNFollowerEditor Name='Jude' Avatar='https://joeschmoe.io/api/v1/jude' isFans={fansOrFollower} />
-                        <FansNFollowerEditor Name='James' Avatar='https://joeschmoe.io/api/v1/james' isFans={fansOrFollower} />
-                        <FansNFollowerEditor Name='Jude' Avatar='https://joeschmoe.io/api/v1/jude' isFans={fansOrFollower} />
-                        <FansNFollowerEditor Name='James' Avatar='https://joeschmoe.io/api/v1/james' isFans={fansOrFollower} />
-                        <FansNFollowerEditor Name='Jude' Avatar='https://joeschmoe.io/api/v1/jude' isFans={fansOrFollower} />
-                        <FansNFollowerEditor Name='James' Avatar='https://joeschmoe.io/api/v1/james' isFans={fansOrFollower} />
-                        <FansNFollowerEditor Name='James' Avatar='https://joeschmoe.io/api/v1/james' isFans={fansOrFollower} />
-                        <FansNFollowerEditor Name='Jude' Avatar='https://joeschmoe.io/api/v1/jude' isFans={fansOrFollower} />
-                        <FansNFollowerEditor Name='James' Avatar='https://joeschmoe.io/api/v1/james' isFans={fansOrFollower} />
-                        <FansNFollowerEditor Name='Jude' Avatar='https://joeschmoe.io/api/v1/jude' isFans={fansOrFollower} />
-                        <FansNFollowerEditor Name='James' Avatar='https://joeschmoe.io/api/v1/james' isFans={fansOrFollower} />
-                        <FansNFollowerEditor Name='Jude' Avatar='https://joeschmoe.io/api/v1/jude' isFans={fansOrFollower} />
-                        <FansNFollowerEditor Name='James' Avatar='https://joeschmoe.io/api/v1/james' isFans={fansOrFollower} />
+                 
 
                     </div>}
                     {isAuthor && !fansOrFollower && <div className='Profile_Sider__Main_Content'>
                         <FansNFollowerEditor Name='James' Avatar='https://joeschmoe.io/api/v1/james' isFans={fansOrFollower} />
                         <FansNFollowerEditor Name='Jude' Avatar='https://joeschmoe.io/api/v1/jude' isFans={fansOrFollower} />
                     </div>}
-                    {!isAuthor && fansOrFollower && <div className='Profile_Sider__Main_Content'>
+                    {!isAuthor && getFolderByIdSuccess &&fansOrFollower && <div className='Profile_Sider__Main_Content'>
                         <FolderCard folderList={folderList} isFolder={true} isRoot={isRoot} clickBack={(id) => { ClickBack(id) }} clickFolder={(id) => { setCurrentFolderId(id); }} />
 
                     </div>}
+                    
                     {!isAuthor && !fansOrFollower && getFolderByIdSuccess && <div className='Profile_Sider__Main_Content'>
                         <FolderCard folderList={folderList} isFolder={true} isRoot={isRoot} clickBack={(id) => { ClickBack(id) }} clickFolder={(id) => { setCurrentFolderId(id); }} />
 
                     </div>}
-
+                    </Spin>
                 </Sider>
+                
                 <Modal
                     title="Choose your avatar"
                     centered
@@ -221,7 +262,7 @@ function ProfilePage(props) {
                 </Modal>
             </Layout>
 
-        }</>
+        </>
     );
 
 

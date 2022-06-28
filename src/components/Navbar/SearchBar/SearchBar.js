@@ -34,7 +34,9 @@ const SearchBar = (props) => {
 
   const onSearch = () => {
     props.setSearchCondition({
-      keyWord:keyword
+      keyWord:keyword,
+      page:'Note'
+
     })
     message.info(keyword);
   }
