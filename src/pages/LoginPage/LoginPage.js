@@ -82,9 +82,14 @@ function LoginPage(props) {
             password: password
         }).then(res => {
             document.cookie = "token=" + res.data.token;
-            console.log(document.cookie)
-            props.setLoggedIn(true)
-            props.setPageProps({page:'PersonalPage'})
+            console.log(document.cookie);
+            if(res.data.activate){
+                props.setLoggedIn(true)
+                props.setPageProps({page:'PersonalPage'})
+            }
+            else{
+                props.setPageProps({page:'VerificationPage',email:email})
+            }
 
         }).catch((error) => {
             console.log(error.response.status)
@@ -189,7 +194,7 @@ function LoginPage(props) {
                                     </div>
                                 </Form.Item>
                                 <Form.Item className='loginPage__Form__Item'>
-                                    <a href="/SignUpPage">register now!</a>
+                                    <a href="javascript: return false;"onClick={()=>(props.setPageProps({page:'SignUpPage'}))}>register now!</a>
                                     <a className="loginPage__Content__Form__Forgot" href="">
                                         Forgot password?
                                     </a>

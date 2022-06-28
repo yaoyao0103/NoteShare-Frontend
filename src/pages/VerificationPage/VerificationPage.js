@@ -109,8 +109,8 @@ function VerificationPage(props) {
                 offset: 0,
             },
             sm: {
-                span: 16,
-                offset: 8,
+                span: 24,
+                offset: 0,
             },
         },
     };
