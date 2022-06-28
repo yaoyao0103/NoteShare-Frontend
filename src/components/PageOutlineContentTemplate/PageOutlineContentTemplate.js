@@ -21,8 +21,9 @@ function PageOutlineContentTemplate(props) {
     useEffect(() => {
         console.log(props.Post[0].items)
         var tempcardLists = [];
-        //console.lo(props.Post)
-        if (props.Post.items) {
+
+        if (!(props.Post[0].totalPages===0)) {
+            //console.log('1111');
             for (let i = 0; i <= props.Post[0].items.length - 1; i++) {
                 tempcardLists.push(<OutlineCard page={props.page} mode={props.mode} cardContent={props.Post[0].items[i]} author={props.Post[0].items[i].authorName} />);
             };
@@ -39,6 +40,9 @@ function PageOutlineContentTemplate(props) {
         props.changePageNumber(pagenumber);
         setPageN(pagenumber);
     }
+    var isFolder=false;
+    if(props.mode==='Folder')
+        isFolder=true;
     return (
         <>
             {cardList.length > 0 &&
@@ -49,12 +53,14 @@ function PageOutlineContentTemplate(props) {
                                 <Col className="outlineContentTemplate__Header__RecommendSwitch" span={props.hasSwitch ? 6 : 9}> {props.hasSwitch && <ToggleSwitch />}</Col>
                                 <Col className="outlineContentTemplate__Header__FolderSwitch" span={props.hasSwitch ? 6 : 9}>{props.hasSwitch && <ToggleSwitch SwitchLeft='Note' SwitchRight="Folder" checkedColor="#8015e8" />}</Col>
                                 <Col className="outlineContentTemplate__Header__Dropdown" span={props.hasSwitch ? 12 : 6}>
+                                    {!isFolder&&
                                     <div className="outlineContentTemplate__Dropdown">
                                         <SortMeun
                                             changeSortMode={props.changeSortMode}
                                             page={props.page}
                                         />
                                     </div>
+                                    }
                                 </Col>
                             </Row>
                         </Header>

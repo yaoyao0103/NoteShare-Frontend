@@ -39,7 +39,6 @@ const OuterPage = () => {
         setVisible(false);
     };
     useEffect(() => {
-        console.log("123",pageProps)
         switch (pageProps.page) {
             case 'NoteDetailPage': setPageComponent(<NoteDetailPage page='NoteDetailPage' setPageProps={setPageProps} {...pageProps} />); break;
             case 'NoteEditPage': setPageComponent(<NoteEditPage page='NoteEditPage' setPageProps={setPageProps}  {...pageProps} />); break;
@@ -66,17 +65,21 @@ const OuterPage = () => {
         }
     }, [pageProps])
 
-    /*useEffect(() => {
-        //console.log(searchCondition);
-        if(searchCondition.keyword)
+    useEffect(() => {
+        console.log(searchCondition);
+        if (searchCondition.keyword){
             setPageProps(searchCondition);
+            setCurrPage('changing');
+            setPageComponent();
+        }
+            
         //setCurrPage(searchCondition.page+'OutlinePage');
     }, [searchCondition])
     useEffect(() => {
         console.log("pageProps", pageProps)
         if(searchCondition.keyword)
         setCurrPage(searchCondition.page+'OutlinePage');
-    }, [pageProps])*/
+    }, [pageProps])
 
     const floatBtnOnClick = () => {
         message.info("float button click!")
@@ -86,7 +89,7 @@ const OuterPage = () => {
             <div className='outerPage'>
                 <Navbar loggedIn={loggedIn} setPageProps={setPageProps} setSearchCondition={setSearchCondition} setLoggedIn={setLoggedIn}/>
                 <div className='outerPage__Layout'>
-                    {pageComponent}
+                    {pageComponent&&pageComponent}
                 </div>
             </div>
             <div className='drawerBtn'>
@@ -254,6 +257,7 @@ const OuterPage = () => {
                 }}>
                     CollabOutlinePage
                 </Button>
+
                 <Button type="primary" onClick={() => {
                     setPageProps({
                         page: 'PersonalPage'
@@ -284,7 +288,7 @@ const OuterPage = () => {
                 }}>
                     SignUpPage
                 </Button>
-                <Button type="primary" onClick={() =>{
+                <Button type="primary" onClick={() => {
                     setPageProps({
                         email: 'testemail@email.ntou.edu.tw',
                         page: 'VerificationPage'
