@@ -77,7 +77,6 @@ const PageDetailContentTemplate = (props) => {
                                         setPoppedContentShow={setPoppedContentShow}
                                         id={props.postId? props.postId:props.noteId}
                                         setPageProps={props.setPageProps}
-                                        setCurrPage={props.setCurrPage} 
                                     /></div>
                                 
                             </Col>

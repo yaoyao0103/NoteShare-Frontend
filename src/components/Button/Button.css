@@ -5,7 +5,7 @@
     font-weight: 600;
 }
 
-.anticon-user{
+button .anticon-user{
     position: relative;
     margin-right: 0.5em;
     top: -0.2em;
@@ -23,20 +23,50 @@
     background-color: #1ADCAB;
 }
 
+.btn-green:hover{
+    background-color: #00CCAA;
+    transform: scale(1.05);
+    transition: 0.2s;
+}
+
 .btn-purple{
     background-color: #8015E8;
+}
+
+.btn-purple:hover{
+    background-color: #7F00DB;
+    transform: scale(1.05);
+    transition: 0.2s;
 }
 
 .btn-black{
     background-color: #000;
 }
 
+.btn-black:hover{
+    background-color: #222;
+    transform: scale(1.05);
+    transition: 0.2s;
+}
+
 .btn-blue{
     background-color: 	#2894FF;
 }
 
+.btn-blue:hover{
+    background-color: #6363FF;
+    transform: scale(1.05);
+    transition: 0.2s;
+}
+
 .btn-red{
     background-color: 	#FF5151;
+}
+
+.btn-red:hover{
+    background-color: #DB0000;
+    transform: scale(1.05);
+    transition: 0.2s;
 }
 
 .btn-green2{

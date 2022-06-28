@@ -9,7 +9,7 @@ function PageOutlineTemplate(props){
     }, [Page])
     return(
         <div className='outlineTemplate'>
-            <Navbar currPage={Page} changePage={ (page) => { setPage(page) }}/>
+            <Navbar changePage={ (page) => { setPage(page) }}/>
             <Layout className='outlineTemplate__Layout'>
                 {props.children}
             </Layout>

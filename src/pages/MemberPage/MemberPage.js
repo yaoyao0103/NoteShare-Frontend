@@ -13,7 +13,7 @@ function MemberPage(){
         <div id='memberPage' className='MemberPage'>
             <Layout>
                 <Header id='header'>
-                    <Navbar currPage={Page} changePage={(page)=>{setPage(page)}}/>
+                    <Navbar changePage={(page)=>{setPage(page)}}/>
                 </Header>
             </Layout>
             <MainContent/>

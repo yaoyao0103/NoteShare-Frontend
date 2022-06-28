@@ -16,7 +16,7 @@ function NoteOutlinePage(props) {
                 console.log(props.keyword);
                 await axios.get('http://localhost:8080/search/note/'+props.keyword+'/' + String(pageNumber-1) + '/10?department='+(props.department?props.department:'')+'&subject='+(props.subject?props.subject:'')+'&haveNormal='+true+'&sortBy='+sortBy).then((res) => {
                     setNote(oldArray => [...oldArray, res.data.search]);
-                    //console.log(res.data.search.totalPages);
+                    //console.log(res.data.search);
 
                 });
 
@@ -27,9 +27,10 @@ function NoteOutlinePage(props) {
 
             }
         }
+        setNote([])
         getNoteById();
         //console.log('2222');
-    }, []);
+    }, [props]);
     useEffect(() => {
         async function getNoteById() {
             try {

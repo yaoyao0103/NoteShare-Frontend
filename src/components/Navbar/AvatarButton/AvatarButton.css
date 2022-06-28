@@ -1,5 +1,6 @@
 .AvatarButton__Dropdown{
-    padding-top:6px;
+    padding-top:.5em;
+    width: auto !important;
 }
 .AvatarButton__Bell__Button{
    
@@ -9,12 +10,18 @@
     
 } */
 .AvatarButton__Dropdown .ant-dropdown-menu-item{
-    height: 80px;
+    padding-left: 1.2em;
+    padding-right: 1.2em;
     box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
 }
 .AvatarButton__Avatar{
     cursor: pointer; 
 }
-.AvatarButton__item__text{
-    
+
+.AvatarButton__Dropdown .ant-dropdown-menu-item .anticon{
+    position: relative;
+    margin-right: 0.5em;
+    top: -0.2em;
+    color: #fff;
+    font-size: large;
 }

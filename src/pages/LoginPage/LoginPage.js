@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import Navbar from '../../components/Navbar/Navbar';
+import React, { useState, useEffect} from 'react';
+import { useForm } from "react-hook-form";
 import { Layout, Checkbox, Form, Input,message } from "antd";
 import { Base64 } from 'js-base64';
 import Button from '../../components/Button/Button';
@@ -12,16 +12,16 @@ import Logo from '../../components/Navbar/Logo/Logo';
 
 const { Header, Sider, Content, Footer } = Layout;
 
-function LoginPage() {
+function LoginPage(props) {
     const [Page, setPage] = useState('LoginPage');
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [render, setRender] = useState(false);
     const [hasRemember, setHasRemember] = useState('');
+    const [form] = Form.useForm();
     const [remember,setRemember]=useState(false);
-    const [openSuccess, setOpenSuccess] = useState(false);
-    const [openFail, setOpenFail] = useState(false);
     const [error,setError]= useState('');
+    //const form =createRef();
     const handleEmailChange = (event) => {
         setEmail(event.target.value);
         console.log(email);
@@ -42,18 +42,22 @@ function LoginPage() {
         let rPassword=cookieParser.getCookieByName('password');
         if(rEmail&&rPassword){
             setHasRemember('A');
-            //console.log(email);
-            startEmail= Base64.decode(rEmail);
-            //console.log('e:'+Base64.decode(rEmail))
-            startPassword =Base64.decode(rPassword);
-            //console.log('p:'+Base64.decode(rPassword))
-        }
-       
-        setRender(true);
-    });
-    const onFinish = (values) => {
-        //console.log('Received values of form: ', values);
 
+            startEmail= Base64.decode(rEmail);
+
+            startPassword =Base64.decode(rPassword);
+
+            form.setFieldsValue({
+                email: startEmail,
+                password:startPassword
+              });
+            setEmail(startEmail);
+            setPassword(startPassword);
+        }
+
+        setRender(true);
+    },[]);
+    const onFinish = (values) => {
         login();
     };
     const rememberChange = (checked) => {
@@ -78,28 +82,17 @@ function LoginPage() {
             password: password
         }).then(res => {
             document.cookie = "token=" + res.data.token;
-           
             console.log(document.cookie)
-            setOpenSuccess(true);
+            props.setLoggedIn(true)
+            props.setPageProps({page:'PersonalPage'})
+
         }).catch((error) => {
             console.log(error.response.status)
-            // if(error.response.status === 403){
-            //   setRedirectActivate(true);
-            // }
-            setOpenFail(true);
+
+            message.info(error.msg);
         })
         
     };
-    useEffect(() => {
-        if (openSuccess)
-            window.location.href = "/NoteOutlinePage" ;
-    }, [openSuccess]);
-    useEffect(() => {
-        if (openFail) {
-            
-            message.info(error.msg);
-        }
-    }, [openFail]);
     const formItemLayout = {
         labelCol: {
           xs: {
@@ -138,11 +131,8 @@ function LoginPage() {
                             <Form
                                 name="normal_login"
                                 size='large'
-                                initialValues={{
-                                    email:email,
-                                    password:password,
-                                    remember: true,
-                                }}
+                    
+                                form={form}
                                 {...formItemLayout}
                                 onFinish={onFinish}
                             >
@@ -160,8 +150,7 @@ function LoginPage() {
                                     ]}
                                 >
                                     <Input 
-                                        defaultValue={startEmail}
-                                        //prefix={<MailOutlined className="site-form-item-icon" />} 
+                                 
                                         placeholder="Email" 
                                         onChange={(e) => { setEmail(e.target.value) }} />
                                 </Form.Item>
@@ -180,8 +169,7 @@ function LoginPage() {
                                     ]}
                                 >
                                     <Input
-                                        //prefix={<LockOutlined className="site-form-item-icon" />}
-                                        defaultValue={startPassword}
+                         
                                         type="password"
                                         placeholder="Password"
                                         onChange={(e) => { setPassword(e.target.value); }}

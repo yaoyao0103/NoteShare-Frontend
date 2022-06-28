@@ -25,7 +25,7 @@ function RewardDetailPage(props) {
             {/* <PageDetailTemplate page={page}>
                 <PageDetailContentTemplate page={page} data={post} footerBtn={"Answer"} postId={postId}/>  
             </PageDetailTemplate>    */}
-            <PageDetailContentTemplate page={props.page} data={post} footerBtn={"Answer"} postId={props.postId} setPageProps={props.setPageProps} setCurrPage={props.setCurrPage}/>  
+            <PageDetailContentTemplate page={props.page} data={post} footerBtn={"Answer"} postId={props.postId} setPageProps={props.setPageProps}/>  
         </>
     );
 }
