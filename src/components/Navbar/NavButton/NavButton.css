@@ -18,6 +18,12 @@
     background-color: white;
     margin-right: 3%;
 }
+
+#navButton #button:hover{
+    transform: scale(1.05);
+    transition: 0.1s;
+}
+
 #navButton #button--active{
     position: relative;
     font-family: 'Poppins', sans-serif;
@@ -27,4 +33,9 @@
     background-color: white;
     border-style: none;
     margin-right: 3%;
+}
+
+#navButton #button--active:hover{
+    transform: scale(1.05);
+    transition: 0.1s;
 }

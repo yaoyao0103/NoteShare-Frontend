@@ -1,6 +1,8 @@
 import React from "react";
 import { Dropdown, Menu,Avatar} from 'antd';
 import { BellOutlined} from '@ant-design/icons';
+import { UserOutlined, SettingOutlined, LogoutOutlined } from '@ant-design/icons';
+
 import './AvatarButton.css';
 import Text from "../../Text/Text";
 
@@ -12,10 +14,13 @@ function AvatarButton(props) {
                     key: '1',
                     label: (
                         <>
-                        <Text className='AvatarButton__item__text' cls='Gerneral' fontSize='16'content={'Profile'}/>
+                        <UserOutlined style={{color:"#555"}}/>
+                        <span className='AvatarButton__item__text'>
+                            <a className='AvatarButton__item__text' onClick={() => props.setPageProps({page:'ProfilePage'})}>
+                                <Text cls='Gerneral' fontSize='16'content={'Profile'}/>
+                            </a> 
+                        </span>
                         </> 
-                           
-                       
                         
                     ),
                 },
@@ -23,16 +28,22 @@ function AvatarButton(props) {
                     key: '2',
                     label: (
                         <>
-                        <Text className='AvatarButton__item__text' cls='Gerneral' fontSize='16'content={'Setting'}/>
+                        <SettingOutlined style={{color:"#555"}}/>
+                        <span className='AvatarButton__item__text'>
+                            <Text cls='Gerneral' fontSize='16'content={'Setting'}/>
+                        </span>
                         </> 
                     ),
                 },
                 {
                     key: '3',
                     label: (
-                        <a onClick={() => props.setLoggedIn(false)}>
-                            <Text className='AvatarButton__item__text' cls='Gerneral' fontSize='16'content={'Logout'}/>
-                        </a> 
+                        <>
+                            <LogoutOutlined style={{color:"#555"}}/>
+                            <a className='AvatarButton__item__text' onClick={() => props.setLoggedIn(false)}>
+                                <Text className='AvatarButton__item__text' cls='Gerneral' fontSize='16'content={'Logout'}/>
+                            </a> 
+                        </>
                     ),
                 },
             ]}
@@ -41,7 +52,7 @@ function AvatarButton(props) {
     return (
         <div>
             <Dropdown
-                className='AvatarButton__Dropdown'
+                overlayClassName='AvatarButton__Dropdown'
                 overlay={menu}
                 overlayStyle={{width: '400px'}}
                 trigger='click'

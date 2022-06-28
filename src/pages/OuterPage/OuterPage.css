@@ -17,3 +17,26 @@
     left: 2em;
     bottom: 2em;
 }
+
+.floatButton {
+    position: fixed;
+    right: 2.2em;
+    bottom: 2.2em;
+    border-radius: 50%;
+    background-color: #FFAF60;
+    font-size: 2em;
+    padding: .6em;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    cursor: pointer;
+    box-shadow: -2px 2px 20px 1px rgba(0, 0, 0, 0.2);
+}
+
+.floatButton:hover{
+    background-color: #FF9224;
+    transform: scale(1.1) rotate(180deg);
+    transition: 0.2s;
+}

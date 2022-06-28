@@ -105,9 +105,9 @@ const OptionMenu = (props) => {
               {() => {
                 props.setPageProps({
                   noteId: props.id,
-                  action: "edit"
+                  action: "edit",
+                  page:'NoteEditPage'
                 })
-                props.setCurrPage('NoteEditPage');
               }}
               >Edit</a>),
             key: "1",
@@ -151,9 +151,9 @@ const OptionMenu = (props) => {
                 props.setPageProps({
                   postId: props.id,
                   type: 'QA',
-                  action: "edit"
+                  action: "edit",
+                  page:'QnAEditPage'
                 })
-                props.setCurrPage('QnAEditPage');
               }}
               >Edit</a>),
             key: "1",
@@ -194,9 +194,9 @@ const OptionMenu = (props) => {
               props.setPageProps({
                 postId: props.id,
                 type: 'reward',
-                action: "edit"
+                action: "edit",
+                page:'RewardEditPage'
               })
-              props.setCurrPage('RewardEditPage');
             }}
             >Edit</a>),
           key: "1",
@@ -424,7 +424,18 @@ const OptionMenu = (props) => {
     <Menu items={
       [
         {
-            label: (<Link className="personalPageNoteMenu" to={`/NoteEditPage/${props.noteId}`}>Edit</Link>),
+            label: (<a onClick={()=>{ 
+              if(props.type){
+                switch(props.type){
+                  case 'QA': props.setPageProps({page: 'QnAEditPage', type:'QA', postId:props.id, action:'edit'})
+                  case 'reward': props.setPageProps({page: 'RewardEditPage', type:'reward', postId:props.id, action:'edit'})
+                  case 'collaboration': props.setPageProps({page: 'CollabEditPage', type:'collaboration', postId:props.id, action:'edit'})
+                }
+              }
+              else{
+                props.setPageProps({page: 'NoteEditPage', noteId:props.id, action:'edit'})
+              }
+            }}>Edit</a>),
             key: "1",
             icon: <EditOutlined />
         },

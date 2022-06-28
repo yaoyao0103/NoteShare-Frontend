@@ -12,15 +12,13 @@ import Logo from '../../components/Navbar/Logo/Logo';
 
 const { Header, Sider, Content, Footer } = Layout;
 
-function LoginPage() {
+function LoginPage(props) {
     const [Page, setPage] = useState('LoginPage');
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [render, setRender] = useState(false);
     const [hasRemember, setHasRemember] = useState('');
     const [remember,setRemember]=useState(false);
-    const [openSuccess, setOpenSuccess] = useState(false);
-    const [openFail, setOpenFail] = useState(false);
     const [error,setError]= useState('');
     const handleEmailChange = (event) => {
         setEmail(event.target.value);
@@ -78,28 +76,20 @@ function LoginPage() {
             password: password
         }).then(res => {
             document.cookie = "token=" + res.data.token;
-           
             console.log(document.cookie)
-            setOpenSuccess(true);
+            props.setLoggedIn(true)
+            props.setPageProps({page:'PersonalPage'})
+            //setOpenSuccess(true);
         }).catch((error) => {
             console.log(error.response.status)
             // if(error.response.status === 403){
             //   setRedirectActivate(true);
             // }
-            setOpenFail(true);
+            //setOpenFail(true);
+            message.info(error.msg);
         })
         
     };
-    useEffect(() => {
-        if (openSuccess)
-            window.location.href = "/NoteOutlinePage" ;
-    }, [openSuccess]);
-    useEffect(() => {
-        if (openFail) {
-            
-            message.info(error.msg);
-        }
-    }, [openFail]);
     const formItemLayout = {
         labelCol: {
           xs: {

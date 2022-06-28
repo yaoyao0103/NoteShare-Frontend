@@ -31,7 +31,7 @@ function NoteEditPage(props){
             {/* <PageDetailTemplate page={page}>
                 <NoteEditTemplate page={page} note={note} mode={props.action}/>
             </PageDetailTemplate> */}
-            <NoteEditTemplate page={props.page} note={note} mode={props.action}  setPageProps={props.setPageProps} setCurrPage={props.setCurrPage}/>
+            <NoteEditTemplate page={props.page} note={note} mode={props.action}  setPageProps={props.setPageProps} folderId={props.folderId}/>
         </>
         
     );

@@ -25,8 +25,6 @@ const author = "Yao"
 
 
 const NoteEditTemplate = (props) => {
-    const navigate = useNavigate();
-    const { folderId } = useParams()
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [information, setInformation] = useState(null);
@@ -46,7 +44,6 @@ const NoteEditTemplate = (props) => {
     const { pages } = pageStore;
 
     useEffect(() => {
-        console.log("")
         const note = props.note;
         if(note && props.mode == 'edit'){
             setTitle(note.title);
@@ -98,7 +95,6 @@ const NoteEditTemplate = (props) => {
             </>
         )
     },[versions])
-
     const customDot = (dot, { status, index }) => (
         <Popover
             content={
@@ -153,7 +149,7 @@ const NoteEditTemplate = (props) => {
             NoteFormat.price = information.price
             NoteFormat.description = content
 
-            axios.post(`http://localhost:8080/note/${email}/${folderId}`, NoteFormat)
+            axios.post(`http://localhost:8080/note/${email}/${props.folderId}`, NoteFormat)
             .then(res => {
                 const tempNote = res.data.res
                 console.log(tempNote)
@@ -233,7 +229,7 @@ const NoteEditTemplate = (props) => {
                     .then(res => {
                         console.log(res);
                         message.success("Submit!");
-                        props.setCurrPage('PersonalPage');
+                        props.setPageProps({page:'PersonalPage'})
                     })
                     .catch (err => {
                         console.log(err)

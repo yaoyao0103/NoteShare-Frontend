@@ -27,7 +27,7 @@ function QnADetailPage(props) {
             {/* <PageDetailTemplate page={page}>
                 <PageDetailContentTemplate page={page} data={QnA} postId={postId}/>  
             </PageDetailTemplate> */}
-            <PageDetailContentTemplate page={props.page} data={post} postId={props.postId} setPageProps={props.setPageProps} setCurrPage={props.setCurrPage}/>  
+            <PageDetailContentTemplate page={props.page} data={post} postId={props.postId} setPageProps={props.setPageProps} />  
         </>
     );
 }

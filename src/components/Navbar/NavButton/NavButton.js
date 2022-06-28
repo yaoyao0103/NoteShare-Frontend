@@ -10,9 +10,7 @@ function NavButton(props) {
       Collab:false,
     });
     const onClick = e =>{
-      console.log(e.target.value);
       handleShowingChange(e);
-      //this.forceUpdate();
     };
     const handleShowingChange = e => {
       if(e.target.innerText==='Personal Page'){
@@ -21,6 +19,7 @@ function NavButton(props) {
           QnA:false,
           Collab:false,
         });
+        props.setPageProps({page:'PersonalPage'})
       }else if(e.target.innerText==='Reward'){
         setShowing({ PersonalPage:false,
           Reward:true,
@@ -47,7 +46,6 @@ function NavButton(props) {
           Collab:false,
         });
       }
-      props.setCurrPage(e.target.value);
     };
   
     return (

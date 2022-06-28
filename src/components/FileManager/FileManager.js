@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { List, Skeleton, Layout, message, Avatar, Dropdown, Menu, Input, Modal } from 'antd';
 import Button from '../Button/Button';
 import Text from '../Text/Text';
@@ -9,9 +9,8 @@ import './FileManager.css';
 import { Note } from '../PostEditTemplate/InfoCategories';
 import OptionMenu from '../OptionMenu/OptionMenu';
 const { Content, Sider }  = Layout;
-const email = "00857028@email.ntou.edu.tw"
+//const email = "00857028@email.ntou.edu.tw"
 const FileManager = (props) => {
-    const navigate = useNavigate()
     const [files, setFiles] = useState([])
     const [posts, setPosts] = useState([])
     const [postShow, setPostShow] = useState(true)
@@ -25,7 +24,7 @@ const FileManager = (props) => {
     const [path, setPath] = useState('/')
     useEffect(() => {
         async function getRootFile() {
-            axios.get(`http://localhost:8080/folder/root/${email}`)
+            axios.get(`http://localhost:8080/folder/root/${props.email}`)
             .then(res => {
                 console.log(res.data.res)
                 setFiles(res.data.res)
@@ -35,8 +34,9 @@ const FileManager = (props) => {
                 console.log(err)
             })
         }
-        getRootFile();
-    },[])
+        if(props.email) getRootFile();
+        //setRoot([{folderName:'Buy', value:'buy'}, {folderName:'Favorite', value:'favorite'}, {folderName:'Folder', value:'folder'}, {folderName:'QnA', value:'QA'}, {folderName:'Reward', value:'reward'}, {folderName:'CollabNote',value:'collaboration'}])
+    },[props.email])
 
     const onClickFolderZone = (folderId) => {
         setCurrent(folderId)
@@ -65,7 +65,7 @@ const FileManager = (props) => {
                         renderItem={(item, index) => (
                             <List.Item
                                 className="fileManage_Note_Item fileManage_List_Item"
-                                actions={[<OptionMenu page={props.page} id={item.id}/>]}
+                                actions={[<OptionMenu page={props.page} id={item.id} setPageProps={props.setPageProps}/>]}
                             >
                                 <List.Item.Meta
                                     avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
@@ -92,10 +92,69 @@ const FileManager = (props) => {
 
     const onClickPostZone = (value) => {
         message.info(value)
+        axios.get(`http://localhost:8080/post/${props.email}/${value}`)
+        .then(res => {
+            console.log(res.data.res)
+            setFiles([])
+            setPostShow(false)
+            const tempPosts = res.data.res;
+            if(tempPosts.length > 0){
+                setNotes(
+                    <List
+                        className="fileManage_Note fileManage_List"
+                        itemLayout="horizontal"
+                        dataSource={tempPosts}
+                        renderItem={(item, index) => (
+                            <List.Item
+                                className="fileManage_Note_Item fileManage_List_Item"
+                                actions={[<OptionMenu page={props.page} type={item.type} id={item.id} setPageProps={props.setPageProps}/>]}
+                            >
+                                <List.Item.Meta
+                                    avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
+                                    title={item.title}
+                                    description={item.content.substring(0, 120) + '...'}
+                                    onClick={()=> onClickPost(item.type, item.id)}
+                                />
+                            </List.Item>
+                        )}
+                    />
+                    
+                )
+            }
+            else{
+                setNotes([])
+            }
+
+            
+        })
+        .catch(err =>{
+            console.log(err)
+        })
     }
 
     const onClickNote = (id) => {
-        navigate(`/NoteDetailPage/${id}`)
+        props.setPageProps({
+            noteId:id,
+            page:'NoteDetailPage'
+        })
+    }
+
+    const onClickPost = (type, id) => {
+        switch(type){
+            case 'reward': props.setPageProps({
+                postId: id,
+                page:'RewardDetailPage'
+            });break;
+            case 'QA': props.setPageProps({
+                postId: id,
+                page:'QnADetailPage'
+            });break;
+            case 'collaboration': props.setPageProps({
+                postId: id,
+                page:'CollabDetailPage'
+            });break;
+        }
+        
     }
 
     const back = () => {
@@ -143,7 +202,7 @@ const FileManager = (props) => {
         // No parent: root folder
         else{
             setCurrent(null);
-            axios.get(`http://localhost:8080/folder/root/${email}`)
+            axios.get(`http://localhost:8080/folder/root/${props.email}`)
             .then(res => {
                 console.log(res.data.res);
                 setFiles(res.data.res);
@@ -168,7 +227,7 @@ const FileManager = (props) => {
 
         }
         //console.log("path", data)
-        axios.post(`http://localhost:8080/folder/${email}`, data)
+        axios.post(`http://localhost:8080/folder/${props.email}`, data)
             .then(res => {
                 console.log(res.data.res);
                 onClickFolderZone(current)
@@ -180,7 +239,7 @@ const FileManager = (props) => {
     }
 
     const deleteFolder = (folderId) => {
-        axios.delete(`http://localhost:8080/folder/${email}/${folderId}`)
+        axios.delete(`http://localhost:8080/folder/${props.email}/${folderId}`)
             .then(res => {
                 console.log(res);
                 onClickFolderZone(current)
@@ -191,7 +250,7 @@ const FileManager = (props) => {
     }
 
     const renameFolder = (folderId, newName) => {
-        axios.put(`http://localhost:8080/folder/rename/${email}/${folderId}/${newName}`)
+        axios.put(`http://localhost:8080/folder/rename/${props.email}/${folderId}/${newName}`)
             .then(res => {
                 console.log(res);
                 message.success("Success")
@@ -203,9 +262,6 @@ const FileManager = (props) => {
             })
     }
 
-    const floatBtnOnClick = () => {
-        message.info("float button click!")
-    }
 
 
     const createMenu = (
@@ -214,7 +270,13 @@ const FileManager = (props) => {
                 {
                 key: '1',
                 label: (
-                    <Link to={`/NoteNewPage/${current}`} style={{textDecoration:"none"}}>Note</Link>
+                    <a onClick={()=>{
+                        props.setPageProps({
+                            folderId: current,
+                            action: "new",
+                            page: 'NoteNewPage'
+                        })
+                    }} style={{textDecoration:"none"}}>Note</a>
                 ),
                 },
                 {
@@ -330,9 +392,6 @@ const FileManager = (props) => {
                     </Content>
                 </Layout>
                 
-            </div>
-            <div className="floatButton" onClick={floatBtnOnClick}>
-                <PlusOutlined />
             </div>
         </>
     );

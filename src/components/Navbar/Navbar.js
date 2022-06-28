@@ -13,29 +13,28 @@ import {
 } from '@ant-design/icons';
 import {Row,Col} from 'antd';
 function Navbar(props) {
-  const [loggedIn, setLoggedIn] = useState(true);
   return (
     <div id="navbar" className="nav">
       <Logo />
-      <NavButton currPage={props.currPage} setCurrPage={props.setCurrPage} />
+      <NavButton setPageProps={props.setPageProps} />
       <NavMenu />
       <SearchBar setSearchCondition={props.setSearchCondition}/>
 
-      {loggedIn? 
+      {props.loggedIn? 
         <Row className="navbar__Button__Login">
           <Col span={12}>  
             <Ring className="navbar__Ring"/>
           </Col>
           <Col span={12}> 
-            <AvatarButton className="navbar__AvatarButton" setLoggedIn={setLoggedIn}/>
+            <AvatarButton className="navbar__AvatarButton" setPageProps={props.setPageProps} setLoggedIn={props.setLoggedIn}/>
           </Col>
         </Row>
         :
         <div className="navbar__Button">
-          <div className="navbar__Buttons" onClick={null}>
+          <div className="navbar__Buttons" onClick={() => {props.setPageProps({page:'SignUpPage'})}}>
               <Button color={"white"}><Text color='Black' cls='Default' content={"Sign Up"} fontSize='15' display="inline-block" /></Button>
           </div>
-          <div className="navbar__Buttons" onClick={() => setLoggedIn(true)}>
+          <div className="navbar__Buttons" onClick={() => {props.setPageProps({page:'LoginPage'})}}>
               <Button color={"black"} icon={<UserOutlined />}><Text color='white' cls='Large' content={"Login"} fontSize='15' display="inline-block" /></Button> 
           </div>
         </div>

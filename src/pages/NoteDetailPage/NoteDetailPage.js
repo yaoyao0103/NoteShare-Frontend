@@ -27,7 +27,7 @@ function NoteDetailPage(props){
             {/* <PageDetailTemplate page={page}>
                 <PageDetailContentTemplate page={page} data={note} noteId={props.noteId}/>
             </PageDetailTemplate> */}
-            <PageDetailContentTemplate page={page} data={note} noteId={props.noteId} setPageProps={props.setPageProps} setCurrPage={props.setCurrPage} />
+            <PageDetailContentTemplate page={page} data={note} noteId={props.noteId} setPageProps={props.setPageProps} />
         </>
         
     );

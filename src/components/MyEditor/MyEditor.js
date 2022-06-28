@@ -41,7 +41,7 @@ const MyEditor = (props) => {
     
     <Layout className="myEditor">
         <Row>
-            {props.page == 'NoteEditPage'? 
+            {props.page == 'NoteEditPage' || props.page == 'NoteNewPage'? 
               <>
                 <Col span={5}>
                 <Sidebar />

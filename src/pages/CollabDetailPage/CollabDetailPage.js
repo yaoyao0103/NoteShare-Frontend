@@ -25,7 +25,7 @@ function NoteDetailPage(props){
             {/* <PageDetailTemplate page={page}>
                 <PageDetailContentTemplate page={page} data={post} isAuthor={isAuthor} isManager={isManager} voting={true} postId={postId}/>
             </PageDetailTemplate> */}
-            <PageDetailContentTemplate page={props.page} data={post} isAuthor={isAuthor} isManager={isManager} voting={true} postId={props.postId} setPageProps={props.setPageProps} setCurrPage={props.setCurrPage}/>
+            <PageDetailContentTemplate page={props.page} data={post} isAuthor={isAuthor} isManager={isManager} voting={true} postId={props.postId} setPageProps={props.setPageProps} />
         </>
         
     );
