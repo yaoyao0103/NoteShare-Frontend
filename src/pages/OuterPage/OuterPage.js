@@ -78,6 +78,7 @@ const OuterPage = () => {
     useEffect(() => {
         if (searchCondition.keyword)
             setCurrPage(searchCondition.page + 'OutlinePage');
+        console.log(pageProps)
     }, [pageProps])
     return (
         <>
