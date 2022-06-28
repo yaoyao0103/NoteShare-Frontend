@@ -11,7 +11,7 @@ import Logo from '../../components/Navbar/Logo/Logo';
 const { Header, Sider, Content, Footer } = Layout;
 
 
-function SignUpPage() {
+function SignUpPage(props) {
     const [Page, setPage] = useState('SignUpPage');
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -222,7 +222,7 @@ function SignUpPage() {
 
 
                                         <Form.Item {...tailFormItemLayout} className='signUpPage__Form__Item'>
-                                            <a className="signUpPage__Login__Button" href="/LoginPage">Login now!</a>
+                                            <a className="signUpPage__Login__Button" href="javascript: return false;"onClick={()=>(props.setPageProps({page:'LoginPage'}))}>Login now!</a>
                                             <div className="signUpPage__Button">
                                                 <Button color={"green"}><Text color='white' cls='Large' content={" Register"} fontSize='15' display="inline-block" /></Button>
                                             </div>

@@ -198,7 +198,7 @@ function VerificationPage(props) {
 
                         </Form.Item>
                         <Form.Item {...tailFormItemLayout} className='Verification__Form__Item'>
-                            <a className="verificationPage__Login__Button" href="/LoginPage">Login now!</a>
+                            <a className="verificationPage__Login__Button" href="javascript: return false;"onClick={()=>(props.setPageProps({page:'LoginPage'}))}>Login now!</a>
 
                             <div className="verificationPage__Button">
                                 <Button color={"green"}><Text color='white' cls='Large' content={" Register"} fontSize='15' display="inline-block" /></Button>
