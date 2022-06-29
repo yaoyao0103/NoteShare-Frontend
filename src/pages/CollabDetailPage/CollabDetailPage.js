@@ -4,8 +4,6 @@ import PageDetailContentTemplate from '../../components/PageDetailContentTemplat
 import axios from '../../components/axios/axios';
 function NoteDetailPage(props){
     const [ post, setPost ] = useState();
-    const [ isAuthor, setIsAuthor ] = useState(true);
-    const [ isManager, setIsManager ] = useState(true);
     
     useEffect(() => {
         async function getCollabById() {
@@ -25,7 +23,7 @@ function NoteDetailPage(props){
             {/* <PageDetailTemplate page={page}>
                 <PageDetailContentTemplate page={page} data={post} isAuthor={isAuthor} isManager={isManager} voting={true} postId={postId}/>
             </PageDetailTemplate> */}
-            <PageDetailContentTemplate page={props.page} data={post} isAuthor={isAuthor} isManager={isManager} voting={true} postId={props.postId} setPageProps={props.setPageProps} />
+            <PageDetailContentTemplate page={props.page} data={post} voting={true} postId={props.postId} setPageProps={props.setPageProps} />
         </>
         
     );

@@ -50,7 +50,7 @@ function LoginPage(props) {
             form.setFieldsValue({
                 email: startEmail,
                 password:startPassword
-              });
+            });
             setEmail(startEmail);
             setPassword(startPassword);
         }
@@ -69,10 +69,9 @@ function LoginPage(props) {
 
     };
     const login = () => {
+        var str = Base64.encode(email);
+        document.cookie = "email=" + str;
         if (remember) {
-            
-            var str = Base64.encode(email);
-            document.cookie = "email=" + str;
             var str = Base64.encode(password);
             document.cookie = "password=" + str;
             console.log('1111111')

@@ -20,10 +20,12 @@ import SignUpPage from "../SignUpPage/SignUpPage";
 import VerificationPage from "../VerificationPage/VerificationPage";
 import Navbar from '../../components/Navbar/Navbar';
 import { PlusOutlined } from "@ant-design/icons";
+import CollabNoteEditPage from "../CollabNoteEditPage/CollabNoteEditPage";
 
 import './OuterPage.css'
 import { Button, Drawer, message } from 'antd'
 import { timers } from 'jquery';
+import Cookie from '../../components/Cookies/Cookies';
 
 const OuterPage = () => {
     const [pageProps, setPageProps] = useState({page: 'LoginPage'});
@@ -37,6 +39,17 @@ const OuterPage = () => {
     const onClose = () => {
         setVisible(false);
     };
+
+
+    useEffect(()=> {
+        const cookieParser = new Cookie(document.cookie)
+        const email = cookieParser.getCookieByName('email')
+        if(email){
+            setLoggedIn(true);
+            setPageProps({page: 'PersonalPage'})
+        }
+    },[])
+
     useEffect(() => {
         console.log("page", pageProps.page)
         switch (pageProps.page) {
@@ -54,6 +67,7 @@ const OuterPage = () => {
             case 'QnANewPage': setPageComponent(<QnAEditPage page='QnANewPage' setPageProps={setPageProps} {...pageProps} />); break;
             case 'CollabDetailPage': setPageComponent(<CollabDetailPage page='CollabDetailPage' setPageProps={setPageProps} {...pageProps} />); break;
             case 'CollabEditPage': setPageComponent(<CollabEditPage page='CollabEditPage' setPageProps={setPageProps} {...pageProps} />); break;
+            case 'CollabNoteEditPage': setPageComponent(<CollabNoteEditPage page='CollabNoteEditPage' setPageProps={setPageProps} {...pageProps} />); break;
             case 'CollabNewPage': setPageComponent(<CollabEditPage page='CollabNewPage' setPageProps={setPageProps} {...pageProps} />); break;
             case 'CollabOutlinePage': setPageComponent(<CollabOutlinePage page='CollabOutlinePage' setPageProps={setPageProps} {...pageProps} />); break;
             case 'PersonalPage': setPageComponent(<PersonalPage page='PersonalPage' setPageProps={setPageProps} {...pageProps}/>); break;

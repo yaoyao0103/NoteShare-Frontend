@@ -259,54 +259,16 @@ const OptionMenu = (props) => {
         {
           label: (<a onClick=
             {() => {
-              //setDrawerType('Version');
-              showDrawer();
+              props.setPageProps({
+                postId: props.id,
+                type: 'collab',
+                action: "edit",
+                page:'CollabEditPage'
+              })
             }}
-            >Manage Version</a>),
-            key: "2",
-            icon: <InfoCircleOutlined />
-        },
-        {
-          label: (<a onClick=
-            {() => {
-              setDrawerType('Comment');
-              showDrawer();
-            }}
-            >Comment</a>),
-          key: "3",
-          icon: <CommentOutlined />
-        },
-        {
-            label: "Share",
-            key: "4",
-            icon: <ShareAltOutlined />
-        }]
-    }/>
-  );
-
-  const CollabDetailMenuOfManager = (
-    <Menu items={
-      [
-        {
-          label:(<Input.Group compact>
-            <Input
-              style={{ width: '80%' }}
-              defaultValue="git@github.com:ant-design/ant-design.git"
-            />
-            <Tooltip title="copy git url">
-              <Button icon={<CopyOutlined />} />
-            </Tooltip>
-          </Input.Group>),
-          key: "1",
-        },
-        {
-          label: (<a onClick=
-            {() => {
-              setPoppedContentShow(true);
-            }}
-            >Manage Applier</a>),
-            key: "2",
-            icon: <InfoCircleOutlined />
+            >Edit</a>),
+          key: "2",
+          icon: <EditOutlined />
         },
         {
           label: (<a onClick=
@@ -332,10 +294,76 @@ const OptionMenu = (props) => {
             label: "Share",
             key: "5",
             icon: <ShareAltOutlined />
+        }]
+    }/>
+  );
+
+  const CollabDetailMenuOfManager = (
+    <Menu items={
+      [
+        {
+          label:(<Input.Group compact>
+            <Input
+              style={{ width: '80%' }}
+              defaultValue="git@github.com:ant-design/ant-design.git"
+            />
+            <Tooltip title="copy git url">
+              <Button icon={<CopyOutlined />} />
+            </Tooltip>
+          </Input.Group>),
+          key: "1",
+        },
+        {
+          label: (<a onClick=
+            {() => {
+              props.setPageProps({
+                postId: props.id,
+                type: 'collaboration',
+                action: "edit",
+                page:'CollabEditPage'
+              })
+            }}
+            >Edit</a>),
+          key: "2",
+          icon: <EditOutlined />
+        },
+        {
+          label: (<a onClick=
+            {() => {
+              setPoppedContentShow(true);
+            }}
+            >Manage Applier</a>),
+            key: "3",
+            icon: <InfoCircleOutlined />
+        },
+        {
+          label: (<a onClick=
+            {() => {
+              //setDrawerType('Version');
+              showDrawer();
+            }}
+            >Manage Version</a>),
+            key: "4",
+            icon: <InfoCircleOutlined />
+        },
+        {
+          label: (<a onClick=
+            {() => {
+              setDrawerType('Comment');
+              showDrawer();
+            }}
+            >Comment</a>),
+          key: "5",
+          icon: <CommentOutlined />
+        },
+        {
+            label: "Share",
+            key: "6",
+            icon: <ShareAltOutlined />
         },
         {
           label: (<a onClick={deletePost}>Delete</a>),
-          key: "6",
+          key: "7",
           icon: <DeleteOutlined />
         }]
     }/>

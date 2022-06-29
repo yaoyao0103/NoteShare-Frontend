@@ -76,7 +76,9 @@ function VerificationPage(props) {
     }, [resendFail]);
     useEffect(() => {
         if (openSuccess)
-            window.location.href = "/LoginPage/";
+            props.setPageProps({
+                page: 'LoginPage'
+            })
     }, [openSuccess]);
     useEffect(() => {
         if (openFail) {
