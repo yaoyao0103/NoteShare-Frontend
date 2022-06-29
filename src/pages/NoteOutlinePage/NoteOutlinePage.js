@@ -60,7 +60,7 @@ function NoteOutlinePage(props) {
     return (
         <>
             {Note.length > 0 && 
-                <PageOutlineContentTemplate page={page}  hasSwitch={false} mode='Note' Post={Note} changePageNumber={(pagenumber) => { setPageNumber(pagenumber); }} changeSortMode={(sortMode)=>{setSortMode(sortMode);}} />
+                <PageOutlineContentTemplate page={page}  hasSwitch={false} mode='Note' Post={Note} changePageNumber={(pagenumber) => { setPageNumber(pagenumber); }} changeSortMode={(sortMode)=>{setSortMode(sortMode);}} setPageProps={props.setPageProps}/>
        
             }
         </>

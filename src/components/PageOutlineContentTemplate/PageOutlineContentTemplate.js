@@ -43,6 +43,7 @@ function PageOutlineContentTemplate(props) {
     }
 
     const onClickCard = (type, id) => {
+        console.log(type, id)
         switch(type){
             case 'QA': props.setPageProps({
                 page: 'QnADetailPage',
@@ -55,6 +56,10 @@ function PageOutlineContentTemplate(props) {
             case 'collaboration': props.setPageProps({
                 page: 'CollabDetailPage',
                 postId: id,
+            }); break;
+            case 'normal': props.setPageProps({
+                page: 'NoteDetailPage',
+                noteId: id,
             }); break;
         }
         
