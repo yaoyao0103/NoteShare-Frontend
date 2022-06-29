@@ -9,11 +9,15 @@ import { QnA, Reward, CollabNote } from "./InfoCategories"
 import { QnAFormat, RewardFormat, CollabNoteFormat } from "./PostFormat"
 import './PostEditTemplate.css';
 import axios from "axios";
+import { NoteFormat, VersionFormat, ContentFormat } from "../NoteEditTemplate/NoteFormat";
+import Cookie from "../Cookies/Cookies";
+import { Base64 } from 'js-base64';
+
 
 const { Header, Content, Sider, Footer } = Layout;
 const { TextArea } = Input;
 
-const email = '00857028@email.ntou.edu.tw';
+//const email = '00857028@email.ntou.edu.tw';
 const author = 'yao';
 
 const PostEditTemplate = (props) => {
@@ -21,6 +25,14 @@ const PostEditTemplate = (props) => {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [information, setInformation] = useState(null);
+    const [email, setEmail] = useState('')
+
+    useEffect(()=>{
+        const cookieParser = new Cookie(document.cookie)
+        const temp = cookieParser.getCookieByName('email')
+        const tempEmail = Base64.decode(temp);
+        setEmail(tempEmail);
+    },[])
     
 
     useEffect(() => {
@@ -64,6 +76,7 @@ const PostEditTemplate = (props) => {
                             subject: post.subject,
                             professor: post.professor,
                             bestPrice: post.bestPrice,
+                            downloadable: post.downloadable,
                         })
                         break;
             }
@@ -164,12 +177,27 @@ const PostEditTemplate = (props) => {
             CollabNoteFormat.bestPrice = information.bestPrice
             CollabNoteFormat.content = content
             data = CollabNoteFormat
+            
         }
+        
         console.log(data)
         axios.post(`http://localhost:8080/post/${email}`, data)
         .then(res => {
-            console.log(res.data)
+            console.log(res.data.res)
             message.info("Submit!!");
+            if(props.type=='collaboration'){
+                const tempId = res.data.res.answers[0]
+                VersionFormat.name = "default"
+                VersionFormat.slug = "default"
+                VersionFormat.content = [ContentFormat]
+                axios.put(`http://localhost:8080/note/${tempId}/0`, VersionFormat)
+                .then ( versionRes => {
+                    console.log(versionRes.data.res)
+                })
+                .catch(err =>{
+                    console.log(err)
+                })
+            }
             props.setPageProps({page:'PersonalPage'});
         })
         .catch(err =>{

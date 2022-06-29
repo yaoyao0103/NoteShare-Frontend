@@ -14,26 +14,58 @@ import PoppedContent from "./PoppedContent/PoppedContent";
 import DetailNotice from "../DetailNotice/DetailNotice";
 import VoteArea from "../VoteArea/VoteArea";
 import MyEditor from "../MyEditor/MyEditor";
+import axios from "../axios/axios";
+import Cookie from '../../components/Cookies/Cookies';
+import { Base64 } from 'js-base64';
 const { Header, Content, Sider, Footer } = Layout;
 
 const PageDetailContentTemplate = (props) => {
 
-    const [versionId, setVersionId] = useState(null);
+    const [noteId, setNoteId] = useState(null);
     const [poppedContentShow, setPoppedContentShow] = useState(false);
     const [poppedContent, setPoppedContent] = useState([]);
     const [noticeShow, setNoticeShow] = useState(true);
     const [editor, setEditor] = useState(<></>)
+    const [isManager, setIsManager] = useState(false)
+    const [isAuthor, setIsAuthor] = useState(false)
 
-    
     useEffect(()=>{
+        const cookieParser = new Cookie(document.cookie)
+        const temp = cookieParser.getCookieByName('email')
+        const tempEmail = Base64.decode(temp);
+        console.log("tempEmail",tempEmail)
         if(props.page == "NoteDetailPage"){
-            setVersionId(props.data?.id);
+            setNoteId(props.data?.id);
             setEditor(<MyEditor noteId = {props.data?.id} version={'0'} page={props.page}/>)
         }
-        else if(props.page == "CollabDetailPage" && props.isAuthor && props.data){
+        else if(props.page == "CollabDetailPage" && props.data){
             const noteId = props.data.answers[0];
-            setVersionId(noteId);
-            if(props.isManager) setPoppedContent( props.data.wantEnterUsersEmail );
+            setNoteId(noteId);
+            axios.get(`http://localhost:8080/note/${noteId}`)
+            .then ( res => {
+                console.log(res.data.res)
+                const tempNote = res.data.res
+                if((tempNote.managerEmail?.includes(tempEmail)) || tempNote.headerEmail == tempEmail){
+                    setEditor(<MyEditor noteId = {noteId} version={'0'} page={props.page}/>)
+                    setIsManager(true)
+                    setIsAuthor(true)
+                    console.log("is a manager")
+                }
+                else if(props.data.email?.includes(tempEmail)){
+                    setEditor(<MyEditor noteId = {noteId} version={'0'} page={props.page}/>)
+                    setIsAuthor(true)
+                    console.log("is a author")
+                }
+                else{
+                    setIsAuthor(false)
+                    setIsManager(false)
+                    console.log("is not a manager or author")
+                }
+            })
+            .catch(err =>{
+                console.log(err)
+            })
+            if(isManager) setPoppedContent( props.data.wantEnterUsersEmail );
         }
         else if(props.page == "RewardDetailPage"){
             setPoppedContent( props.data.answers );
@@ -72,8 +104,8 @@ const PageDetailContentTemplate = (props) => {
                                         versions={props.data?.version? props.data.version:[]} 
                                         public={props.data?.public}
                                         setVersion={setVersion}
-                                        isAuthor={props.isAuthor}
-                                        isManager={props.isManager}
+                                        isAuthor={isAuthor}
+                                        isManager={isManager}
                                         setPoppedContentShow={setPoppedContentShow}
                                         id={props.postId? props.postId:props.noteId}
                                         setPageProps={props.setPageProps}
@@ -109,7 +141,7 @@ const PageDetailContentTemplate = (props) => {
                         </Row>
                         <Row className='contentTemplate__Row'>
                             <Col className='contentTemplate__Content__Main'>
-                                { (props.page=='NoteDetailPage' || (props.page=='CollabDetailPage' && props.isAuthor)) ? 
+                                { (props.page=='NoteDetailPage' || (props.page=='CollabDetailPage' && isAuthor)) ? 
                                     editor
                                     :
                                     props.data?.content
@@ -138,13 +170,13 @@ const PageDetailContentTemplate = (props) => {
                                 <Button color={"green"}><Text color='white' cls='Large' content={"Show Answer"} fontSize='17' display="inline-block" /></Button>
                             </div>
                         }
-                        {(props.page=='CollabDetailPage' && !props.isAuthor) &&
+                        {(props.page=='CollabDetailPage' && !isAuthor) &&
                             <div className="contentTemplate__Footer__Button" onClick={() => setPoppedContentShow(true)}>
                                 <Button color={"green"}><Text color='white' cls='Large' content={"Apply"} fontSize='17' display="inline-block" /></Button>
                             </div>
                         }
-                        {(props.page=='CollabDetailPage' && props.isAuthor) &&
-                            <div className="contentTemplate__Footer__Button" onClick={null}>
+                        {(props.page=='CollabDetailPage' && isAuthor) &&
+                            <div className="contentTemplate__Footer__Button" onClick={()=>{props.setPageProps({page:'CollabNoteEditPage', noteId:noteId, postId:props.postId, isAuthor:isAuthor, isManager:isManager})}}>
                                 <Button color={"green"}><Text color='white' cls='Large' content={"Edit"} fontSize='17' display="inline-block" /></Button>
                             </div>
                         }
@@ -164,7 +196,7 @@ const PageDetailContentTemplate = (props) => {
             {/* Popped up Part */}
             <div className={ poppedContentShow && 'popped__blur'}></div>
             <div className={`popped ${ poppedContentShow && 'popped--show'}`} >
-                <PoppedContent page={props.page} content={poppedContent} setPoppedContentShow={setPoppedContentShow} isAuthor={props.isAuthor}/>
+                <PoppedContent page={props.page} content={poppedContent} setPoppedContentShow={setPoppedContentShow} isAuthor={isAuthor}/>
             </div>
 
             {props.voting &&
@@ -185,7 +217,6 @@ PageDetailContentTemplate.defaultProps = {
     versionId: '',
     page:'',
     footerBtn: null,
-    isAuthor: false,
 };
 
 export default PageDetailContentTemplate;

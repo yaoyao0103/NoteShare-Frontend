@@ -8,6 +8,7 @@ export const CollabNote = {
     department: '',
     subject: '',
     professor: '',
+    downloadable: true,
     bestPrice: '0',
 }
 export const Note = {

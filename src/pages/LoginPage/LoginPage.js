@@ -49,7 +49,8 @@ function LoginPage(props) {
             console.log(startPassword);
             form.setFieldsValue({
                 email: startEmail,
-                password: startPassword
+                password:startPassword
+
             });
             setEmail(startEmail);
             setPassword(startPassword);

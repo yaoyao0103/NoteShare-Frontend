@@ -59,7 +59,10 @@ function SignUpPage(props) {
     };
     useEffect(() => {
         if (openSuccess)
-            window.location.href = "/VerificationPage/" + email;
+            props.setPageProps({
+                page: 'VerificationPage',
+                email: email
+            })
     }, [openSuccess]);
     useEffect(() => {
         if (openFail) {

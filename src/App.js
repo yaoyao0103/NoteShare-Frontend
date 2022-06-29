@@ -35,7 +35,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route exact path="/" element={<Home />}></Route>
+        <Route exact path="/" element={<OuterPage />}></Route>
         <Route exact path="/editor/:pageId" element={<Editor />}></Route>
         <Route exact path="/MemberPage" element={<MemberPage />}></Route>
         <Route exact path="/NoteOutlinePage" element={<NoteOutlinePage />}></Route>

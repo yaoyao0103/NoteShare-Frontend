@@ -5,6 +5,7 @@ import { UserOutlined, SettingOutlined, LogoutOutlined } from '@ant-design/icons
 
 import './AvatarButton.css';
 import Text from "../../Text/Text";
+import Cookie from "../../Cookies/Cookies";
 
 function AvatarButton(props) {
     const menu = (
@@ -40,7 +41,12 @@ function AvatarButton(props) {
                     label: (
                         <>
                             <LogoutOutlined style={{color:"#555"}}/>
-                            <a className='AvatarButton__item__text' onClick={() => props.setLoggedIn(false)}>
+                            <a className='AvatarButton__item__text' onClick={() => {
+                                const cookieParser = new Cookie(document.cookie)
+                                document.cookie = "email=";
+                                props.setLoggedIn(false);
+                                props.setPageProps({page:'LoginPage'});
+                                }}>
                                 <Text className='AvatarButton__item__text' cls='Gerneral' fontSize='16'content={'Logout'}/>
                             </a> 
                         </>
