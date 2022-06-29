@@ -13,6 +13,7 @@ import QnAEditPage from "../QnAEditPage/QnAEditPage";
 import RewardEditPage from "../RewardEditPage/RewardEditPage";
 import CollabEditPage from "../CollabEditPage/CollabEditPage";
 import NoteEditPage from "../NoteEditPage/NoteEditPage";
+import FolderOutlinePage from '../FolderOutlinePage/FolderOutlinePage';
 import ProfilePage from "../ProfilePage/ProfilePage";
 import PersonalPage from "../PersonalPage/PersonalPage";
 import LoginPage from "../LoginPage/LoginPage";
@@ -56,6 +57,7 @@ const OuterPage = () => {
             case 'CollabEditPage': setPageComponent(<CollabEditPage page='CollabEditPage' setPageProps={setPageProps} {...pageProps} />); break;
             case 'CollabNewPage': setPageComponent(<CollabEditPage page='CollabNewPage' setPageProps={setPageProps} {...pageProps} />); break;
             case 'CollabOutlinePage': setPageComponent(<CollabOutlinePage page='CollabOutlinePage' setPageProps={setPageProps} {...pageProps} />); break;
+            case 'FolderOutlinePage': setPageComponent(<CollabOutlinePage page='FolderOutlinePage' setPageProps={setPageProps} {...pageProps} />); break;
             case 'PersonalPage': setPageComponent(<PersonalPage page='PersonalPage' setPageProps={setPageProps} {...pageProps}/>); break;
             case 'ProfilePage': setPageComponent(<ProfilePage page='ProfilePage' setPageProps={setPageProps} {...pageProps}/>); break;
             case 'LoginPage': setPageComponent(<LoginPage page='LoginPage' setPageProps={setPageProps} setLoggedIn={setLoggedIn} {...pageProps}/>); break;
@@ -242,7 +244,16 @@ const OuterPage = () => {
                 }}>
                     CollabOutlinePage
                 </Button>
+                <Button type="primary" onClick={() => {
+                    setPageProps({
+                        keyWord: 'test',
+                        author:'a',
+                        page: 'FolderOutlinePage'
 
+                    })
+                }}>
+                    FolderOutlinePage
+                </Button>
                 <Button type="primary" onClick={() => {
                     setPageProps({
                         page: 'PersonalPage'
