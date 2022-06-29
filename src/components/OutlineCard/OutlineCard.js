@@ -14,10 +14,8 @@ function OutlineCard(props) {
     const [sider, setSider] = useState(
         <Sider className={"OutlineCard__Sider__Outer" + '__' + props.mode} width='35%' ></Sider>
     );
-    var modeB = true;
-    if (props.mode === 'Note')
-        modeB = false;
-    //console.log(props.cardContent);
+
+
     
     if (props.cardContent.tag) {
         var tags = '';
@@ -28,7 +26,7 @@ function OutlineCard(props) {
         }
     }
     const QnASider = (
-        <>{modeB &&
+        <>{props.mode === 'Post' &&
             < Sider className={"OutlineCard__Sider__Outer" + '__' + props.mode} width='35%' >
 
                 <Row className={"OutlineCard__Sider__First__Row" + '__' + props.mode}>
@@ -65,7 +63,7 @@ function OutlineCard(props) {
         }</>
     );
     const RewardSider = (
-        <>{modeB &&
+        <>{props.mode === 'Post' &&
             < Sider className={"OutlineCard__Sider__Outer" + '__' + props.mode} width='35%' >
                 <Row className={"OutlineCard__Sider__First__Row" + '__' + props.mode}>
                     <Col className={"OutlineCard__Sider__Department" + '__' + props.mode} span={20}>
@@ -104,7 +102,7 @@ function OutlineCard(props) {
         }</>
     );
     const CollabSider = (
-        <>{modeB &&
+        <>{props.mode === 'Post' &&
             < Sider className={"OutlineCard__Sider__Outer" + '__' + props.mode} width='35%' >
                 <Row className={"OutlineCard__Sider__First__Row" + '__' + props.mode}>
                     <Col className={"OutlineCard__Sider__Department" + '__' + props.mode} span={20}>
@@ -131,7 +129,7 @@ function OutlineCard(props) {
         }</>
     );
     const NoteSider = (
-        <>{!modeB &&
+        <>{props.mode === 'Note' &&
             < Sider className={"OutlineCard__Sider__Outer" + '__' + props.mode} width='30%' >
                 <Row className={"OutlineCard__Sider__Row" + '__' + props.mode}>
                     <Col className={"OutlineCard__Sider__Department" + '__' + props.mode} span={8}>
@@ -203,10 +201,81 @@ function OutlineCard(props) {
             </Sider >
         }</>
     );
+    const FolderSider = (
+        <>{props.mode === 'Folder' &&
+            < Sider className={"OutlineCard__Sider__Outer" + '__' + props.mode} width='30%' >
+                <Row className={"OutlineCard__Sider__Row" + '__' + props.mode}>
+                    <Col className={"OutlineCard__Sider__Department" + '__' + props.mode} span={8}>
+                        <Text cls='Default' fontSize="16" content={props.cardContent.department} />
+                    </Col>
+                    <Col className={"OutlineCard__Sider__Subject" + '__' + props.mode} span={16}>
+                        <Text cls='Default' fontSize="16" content={props.cardContent.subject} />
+                    </Col>
+
+                </Row>
+                <Row className={"OutlineCard__Sider__Row" + '__' + props.mode}>
+                    <Col className={"OutlineCard__Sider__School" + '__' + props.mode} span={20}>
+                        <Text cls='Default' fontSize="16" content={props.cardContent.school} />
+                    </Col>
+                </Row>
+                <Row className={"OutlineCard__Sider__Row" + '__' + props.mode}>
+                    <Col className={"OutlineCard__Sider__Professor" + '__' + props.mode} span={20}>
+                        <Text cls='Default' fontSize="16" content={props.cardContent.professor + '教授'} />
+                    </Col>
+                </Row>
+                {props.cardContent.tag.length > 0 && <Row className={"OutlineCard__Sider__Row" + '__' + props.mode}>
+                    <Col className={"OutlineCard__Sider__Tag__Title" + '__' + props.mode} span={20}>
+                        <Text cls='Default' fontSize="16" content={'Tags : '} />
+                    </Col>
+                </Row>
+                }
+                {props.cardContent.tag.length > 0 && <Row className={"OutlineCard__Sider__Row" + '__' + props.mode}>
+                    <Paragraph
+                        className={"OutlineCard__Sider__Paragraph" + '__' + props.mode}
+                        ellipsis={
+                            ellipsis
+                                ? {
+                                    rows: 1,
+                                    expandable: false,
+                                }
+                                : false
+                        }
+                    >
+                        {tags}
+                    </Paragraph>
+                    {/* <Text cls='Small' fontSize="14" content={tags} /> */}
+
+                </Row>
+                }
+                <Row className={"OutlineCard__Sider__Row__Like" + '__' + props.mode}>
+                    <Col className={"OutlineCard__Sider__LikeCount" + '__' + props.mode} span={8}>
+                        <Text cls='Default' fontSize="14" content={'喜歡數 : ' + props.cardContent.likeCount} />
+                    </Col>
+                    <Col className={"OutlineCard__Sider__UnlockCount" + '__' + props.mode} span={8}>
+                        <Text cls='Default' fontSize="14" content={'購買數 : ' + props.cardContent.unlockCount} />
+                    </Col>
+                    <Col className={"OutlineCard__Sider__FavoriteCount" + '__' + props.mode} span={8}>
+                        <Text cls='Default' fontSize="14" content={'收藏數 : ' + props.cardContent.favoriteCount} />
+                    </Col>
+
+                </Row>
+
+                <Row className={"OutlineCard__Sider__Row" + '__' + props.mode}>
+                    <Col className={"OutlineCard__Sider__Downloadable" + '__' + props.mode} span={16}>
+                        <Text cls='Default' fontSize="14" content={props.cardContent.downloadable ? 'Downloadable' : 'Undownloadable'} />
+                    </Col>
+                    <Col className={"OutlineCard__Sider__Downloadable" + '__' + props.mode} span={8}>
+                        <Text cls='Default' fontSize="14" content={'Coin : ' + props.cardContent.price} />
+                    </Col>
+                </Row>
+                
+            </Sider >
+        }</>
+    );
     var opSize = 32;
     var authorFontSize = '16';
     var dateFontSize = '12';
-    var author = props.cardContent.authorName;
+    var author = props.cardContent.authorName?props.cardContent.authorName:props.cardContent.creatorName;
     if (props.mode == 'Note') {
         opSize = 48;
         authorFontSize = '22';

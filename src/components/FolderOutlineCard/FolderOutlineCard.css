@@ -1,0 +1,108 @@
+.FolderOutlineCard__Layout__Outer{
+    position:relative;
+    height: 5em;
+    width: 90%;
+    max-width: 90%;
+    background-color: #fff;
+    margin-left:5%;
+    margin-right:5%;
+    margin-top:2.5%;
+    margin-bottom:2.5%;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+   
+    
+}
+.FolderOutlineCard__Layout__Outer:hover{
+    position:relative;
+    height: 20em;
+    width:45%;
+    background-color: #fff;
+    transform: scale(1.05);
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+   
+    
+}
+.FolderOutlineCard__Content__Outer{
+    position: relative;
+    height: 100%;
+    width: 100%;
+   
+    background-color: #FFF;
+  
+}
+.FolderOutlineCard__Layout__Inner{
+    position:relative;
+    height:100%;
+    width: 100%;
+    background-color: #FFF;
+    /* display: inline-block; */
+}
+.FolderOutlineCard__Header{
+    position:relative;
+    height: 25%;
+    width: 100%;
+    background-color: #FFF;
+    margin-top: 1%;
+    padding: 0;
+  
+}
+.FolderOutlineCard__Header__Row{
+    position:relative;
+    height:100%;
+    width: 100%;
+    background-color: #FFF;
+   
+  
+}
+.FolderOutlineCard__Header__Left{
+    
+}
+.FolderOutlineCard__Header__Right{
+    position: relative;
+    padding: 0;
+}
+.FolderOutlineCard__Content__Inner{
+    position: relative;
+ 
+    margin-left:10%;
+    margin-right:3%;
+}
+.FolderOutlineCard__Paragraph{
+    margin-left:1.5%;
+    position: relative;
+    font-size: 22px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 200;
+}
+.FolderOutlineCard__Sider__Outer{
+    position: relative;
+    padding-top:1%;
+    height: 100%;
+    
+    background-color: #FFF; 
+}
+
+/* .FolderOutlineCard__Sider__First__Row,.FolderOutlineCard__Sider__Sec__Row,.FolderOutlineCard__Sider__Third__Row,.FolderOutlineCard__Sider__Fourth__Row,.FolderOutlineCard__Sider__Fifth__Row,.FolderOutlineCard__Sider__Sixth__Row,.FolderOutlineCard__Sider__Seventh__Row{
+    position: relative;
+    padding-top:3%;
+    padding-left: 5%;
+} */
+.FolderOutlineCard__Sider__Row{
+    position: relative;
+    padding-top:2%;
+    padding-left: 5%;
+}
+.FolderOutlineCard__Sider__Row__Like{
+    position: relative;
+    padding-top:0%;
+    padding-left: 5%;
+}
+.FolderOutlineCard__Sider__Paragraph{
+    position: relative;
+    padding: 0;
+    font-size: 14px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 200;
+}
+
+

@@ -71,7 +71,7 @@ const OuterPage = () => {
             case 'CollabNoteEditPage': setPageComponent(<CollabNoteEditPage page='CollabNoteEditPage' setPageProps={setPageProps} {...pageProps} />); break;
             case 'CollabNewPage': setPageComponent(<CollabEditPage page='CollabNewPage' setPageProps={setPageProps} {...pageProps} />); break;
             case 'CollabOutlinePage': setPageComponent(<CollabOutlinePage page='CollabOutlinePage' setPageProps={setPageProps} {...pageProps} />); break;
-            case 'FolderOutlinePage': setPageComponent(<CollabOutlinePage page='FolderOutlinePage' setPageProps={setPageProps} {...pageProps} />); break;
+            case 'FolderOutlinePage': setPageComponent(<FolderOutlinePage page='FolderOutlinePage' setPageProps={setPageProps} {...pageProps} />); break;
             case 'PersonalPage': setPageComponent(<PersonalPage page='PersonalPage' setPageProps={setPageProps} {...pageProps}/>); break;
             case 'ProfilePage': setPageComponent(<ProfilePage page='ProfilePage' setPageProps={setPageProps} {...pageProps}/>); break;
             case 'LoginPage': setPageComponent(<LoginPage page='LoginPage' setPageProps={setPageProps} setLoggedIn={setLoggedIn} {...pageProps}/>); break;
