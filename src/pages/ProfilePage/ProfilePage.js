@@ -27,7 +27,7 @@ function ProfilePage(props) {
     const [getFolderByIdSuccess, setGetFolderByIdSuccess] = useState(false);
     const [isRoot, setIsRoot] = useState(false);
     const [currentFolderId, setCurrentFolderId] = useState('');
-    const isAuthor = false;
+    const isAuthor = true;
 
     const Avatars = ["https://joeschmoe.io/api/v1/james", "https://joeschmoe.io/api/v1/jude", "https://joeschmoe.io/api/v1/jana",
         "https://joeschmoe.io/api/v1/jabala", "https://joeschmoe.io/api/v1/jacques", "https://joeschmoe.io/api/v1/jed", "https://joeschmoe.io/api/v1/jon",

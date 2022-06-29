@@ -76,7 +76,7 @@ function VerificationPage(props) {
     }, [resendFail]);
     useEffect(() => {
         if (openSuccess)
-            window.location.href = "/LoginPage/";
+        props.setPageProps({ page: 'LoginPage' })
     }, [openSuccess]);
     useEffect(() => {
         if (openFail) {
@@ -201,7 +201,7 @@ function VerificationPage(props) {
                             <a className="verificationPage__Login__Button" href="javascript: return false;"onClick={()=>(props.setPageProps({page:'LoginPage'}))}>Login now!</a>
 
                             <div className="verificationPage__Button">
-                                <Button color={"green"}><Text color='white' cls='Large' content={" Register"} fontSize='15' display="inline-block" /></Button>
+                                <Button color={"green"}><Text color='white' cls='Large' content={"Verify"} fontSize='15' display="inline-block" /></Button>
                             </div>
 
                         </Form.Item>
