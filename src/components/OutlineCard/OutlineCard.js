@@ -29,7 +29,7 @@ function OutlineCard(props) {
     }
     const QnASider = (
         <>{modeB &&
-            < Sider className={"OutlineCard__Sider__Outer" + '__' + props.mode} width='35%' >
+            < Sider onClick={props.onClick} className={"OutlineCard__Sider__Outer" + '__' + props.mode} width='35%' >
 
                 <Row className={"OutlineCard__Sider__First__Row" + '__' + props.mode}>
                     <Col className={"OutlineCard__Sider__Department" + '__' + props.mode} span={20}>
@@ -66,7 +66,7 @@ function OutlineCard(props) {
     );
     const RewardSider = (
         <>{modeB &&
-            < Sider className={"OutlineCard__Sider__Outer" + '__' + props.mode} width='35%' >
+            < Sider onClick={props.onClick} className={"OutlineCard__Sider__Outer" + '__' + props.mode} width='35%' >
                 <Row className={"OutlineCard__Sider__First__Row" + '__' + props.mode}>
                     <Col className={"OutlineCard__Sider__Department" + '__' + props.mode} span={20}>
                         <Text cls='Default' fontSize="16" content={props.cardContent.department} />
@@ -105,7 +105,7 @@ function OutlineCard(props) {
     );
     const CollabSider = (
         <>{modeB &&
-            < Sider className={"OutlineCard__Sider__Outer" + '__' + props.mode} width='35%' >
+            < Sider onClick={props.onClick}  className={"OutlineCard__Sider__Outer" + '__' + props.mode} width='35%' >
                 <Row className={"OutlineCard__Sider__First__Row" + '__' + props.mode}>
                     <Col className={"OutlineCard__Sider__Department" + '__' + props.mode} span={20}>
                         <Text cls='Default' fontSize="16" content={props.cardContent.department} />
@@ -132,7 +132,7 @@ function OutlineCard(props) {
     );
     const NoteSider = (
         <>{!modeB &&
-            < Sider className={"OutlineCard__Sider__Outer" + '__' + props.mode} width='30%' >
+            < Sider onClick={props.onClick} className={"OutlineCard__Sider__Outer" + '__' + props.mode} width='30%' >
                 <Row className={"OutlineCard__Sider__Row" + '__' + props.mode}>
                     <Col className={"OutlineCard__Sider__Department" + '__' + props.mode} span={8}>
                         <Text cls='Default' fontSize="16" content={props.cardContent.department} />
@@ -230,7 +230,7 @@ function OutlineCard(props) {
                 <Layout className={"OutlineCard__Layout__Inner" + '__' + props.mode}>
                     <Header className={"OutlineCard__Header" + '__' + props.mode} >
                         <Row className={"OutlineCard__Header__Row" + '__' + props.mode}>
-                            <Col className={"OutlineCard__Header__Left" + '__' + props.mode} span={10}>
+                            <Col onClick={null} className={"OutlineCard__Header__Left" + '__' + props.mode} span={10}>
                                 <OPInfo
                                     className="OutlineCard__OPInfo"
                                     mode="Outline"
@@ -241,12 +241,12 @@ function OutlineCard(props) {
                                     dateFontSize={dateFontSize}
                                 />
                             </Col>
-                            <Col className={"OutlineCard__Header__Right" + '__' + props.mode} span={14}>
+                            <Col onClick={props.onClick} className={"OutlineCard__Header__Right" + '__' + props.mode} span={14}>
                                 <Title mode='Outline' title={props.cardContent.title} size={26} />
                             </Col>
                         </Row>
                     </Header>
-                    <Content className={"OutlineCard__Content__Inner" + '__' + props.mode} >
+                    <Content onClick={props.onClick} className={"OutlineCard__Content__Inner" + '__' + props.mode} >
                         <Paragraph
                             className={"OutlineCard__Paragraph" + '__' + props.mode}
                             ellipsis={

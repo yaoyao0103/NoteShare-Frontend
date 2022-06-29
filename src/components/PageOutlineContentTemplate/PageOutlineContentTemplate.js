@@ -25,7 +25,8 @@ function PageOutlineContentTemplate(props) {
         if (!(props.Post[0].totalPages===0)) {
             //console.log('1111');
             for (let i = 0; i <= props.Post[0].items.length - 1; i++) {
-                tempcardLists.push(<OutlineCard page={props.page} mode={props.mode} cardContent={props.Post[0].items[i]} author={props.Post[0].items[i].authorName} />);
+                tempcardLists.push(
+                        <OutlineCard onClick={() => onClickCard(props.Post[0].items[i].type, props.Post[0].items[i].id)} page={props.page} mode={props.mode} cardContent={props.Post[0].items[i]} author={props.Post[0].items[i].authorName} />)
             };
 
             setCardList(tempcardLists);
@@ -40,6 +41,25 @@ function PageOutlineContentTemplate(props) {
         props.changePageNumber(pagenumber);
         setPageN(pagenumber);
     }
+
+    const onClickCard = (type, id) => {
+        switch(type){
+            case 'QA': props.setPageProps({
+                page: 'QnADetailPage',
+                postId: id,
+            }); break;
+            case 'reward': props.setPageProps({
+                page: 'RewardDetailPage',
+                postId: id,
+            }); break;
+            case 'collaboration': props.setPageProps({
+                page: 'CollabDetailPage',
+                postId: id,
+            }); break;
+        }
+        
+    }
+
     var isFolder=false;
     if(props.mode==='Folder')
         isFolder=true;

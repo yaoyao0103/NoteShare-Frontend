@@ -45,7 +45,7 @@ function QnAOutlinePage(props) {
     return (
         <>
             {QnA.length > 0 && 
-                <PageOutlineContentTemplate page={page}  hasSwitch={false} mode='Post' Post={QnA} changePageNumber={(pagenumber) => { setPageNumber(pagenumber); }} changeSortMode={(sortMode)=>{setSortMode(sortMode);}} />
+                <PageOutlineContentTemplate page={page}  hasSwitch={false} mode='Post' Post={QnA} changePageNumber={(pagenumber) => { setPageNumber(pagenumber); }} changeSortMode={(sortMode)=>{setSortMode(sortMode);}} setPageProps={props.setPageProps} />
            
             }
         </>

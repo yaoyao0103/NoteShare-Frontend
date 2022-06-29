@@ -273,7 +273,7 @@ const OptionMenu = (props) => {
         {
           label: (<a onClick=
             {() => {
-              //setDrawerType('Version');
+              setDrawerType('Version');
               showDrawer();
             }}
             >Manage Version</a>),
@@ -339,7 +339,7 @@ const OptionMenu = (props) => {
         {
           label: (<a onClick=
             {() => {
-              //setDrawerType('Version');
+              setDrawerType('Version');
               showDrawer();
             }}
             >Manage Version</a>),
@@ -488,6 +488,7 @@ const OptionMenu = (props) => {
       case 'RewardDetailPageAnswer': setMenu( AnswerDetailMenu ); break;
       case 'CollabDetailPageApplier': setMenu( ApplierDetailMenu ); break;
       case 'CollabDetailPage': 
+        console.log("versions", props.versions)
         if(props.isAuthor){
           if(props.isManager) setMenu( CollabDetailMenuOfManager ); 
           else setMenu( CollabDetailMenuOfAuthor ); 
