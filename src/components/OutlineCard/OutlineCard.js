@@ -21,7 +21,7 @@ function OutlineCard(props) {
         var tags = '';
         for (let i = 0; i < props.cardContent.tag.length; i++) {
             tags += props.cardContent.tag[i];
-            if (i != props.cardContent.tag.length - 1)
+            if (i !== props.cardContent.tag.length - 1)
                 tags += ' , ';
         }
     }
@@ -299,7 +299,7 @@ function OutlineCard(props) {
                 <Layout className={"OutlineCard__Layout__Inner" + '__' + props.mode}>
                     <Header className={"OutlineCard__Header" + '__' + props.mode} >
                         <Row className={"OutlineCard__Header__Row" + '__' + props.mode}>
-                            <Col className={"OutlineCard__Header__Left" + '__' + props.mode} span={10}>
+                            <Col onClick={null} className={"OutlineCard__Header__Left" + '__' + props.mode} span={10}>
                                 <OPInfo
                                     className="OutlineCard__OPInfo"
                                     mode="Outline"
@@ -310,12 +310,12 @@ function OutlineCard(props) {
                                     dateFontSize={dateFontSize}
                                 />
                             </Col>
-                            <Col className={"OutlineCard__Header__Right" + '__' + props.mode} span={14}>
+                            <Col onClick={props.onClick} className={"OutlineCard__Header__Right" + '__' + props.mode} span={14}>
                                 <Title mode='Outline' title={props.cardContent.title} size={26} />
                             </Col>
                         </Row>
                     </Header>
-                    <Content className={"OutlineCard__Content__Inner" + '__' + props.mode} >
+                    <Content onClick={props.onClick} className={"OutlineCard__Content__Inner" + '__' + props.mode} >
                         <Paragraph
                             className={"OutlineCard__Paragraph" + '__' + props.mode}
                             ellipsis={

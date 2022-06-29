@@ -65,7 +65,7 @@ function CollabOutlinePage(props) {
     return (
         <>
             {Collab.length > 0 &&
-                <PageOutlineContentTemplate page={page} hasSwitch={false} mode='Post' Post={Collab} changePageNumber={(pagenumber) => { setPageNumber(pagenumber); }} changeSortMode={(sortMode) => { setSortMode(sortMode); }} />
+                <PageOutlineContentTemplate page={page} hasSwitch={false} mode='Post' Post={Collab} changePageNumber={(pagenumber) => { setPageNumber(pagenumber); }} changeSortMode={(sortMode) => { setSortMode(sortMode); }} setPageProps={props.setPageProps}/>
             }
         </>
     );

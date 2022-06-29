@@ -28,7 +28,7 @@ const PageDetailContentTemplate = (props) => {
     const [editor, setEditor] = useState(<></>)
     const [isManager, setIsManager] = useState(false)
     const [isAuthor, setIsAuthor] = useState(false)
-
+    const [versions, setVersions] = useState(null)
     useEffect(()=>{
         const cookieParser = new Cookie(document.cookie)
         const temp = cookieParser.getCookieByName('email')
@@ -45,6 +45,7 @@ const PageDetailContentTemplate = (props) => {
             .then ( res => {
                 console.log(res.data.res)
                 const tempNote = res.data.res
+                setVersions(tempNote.version)
                 if((tempNote.managerEmail?.includes(tempEmail)) || tempNote.headerEmail == tempEmail){
                     setEditor(<MyEditor noteId = {noteId} version={'0'} page={props.page}/>)
                     setIsManager(true)
@@ -74,7 +75,10 @@ const PageDetailContentTemplate = (props) => {
     },[props.data])
     
     const setVersion = (index) => {
-        setEditor(<MyEditor noteId = {props.data?.id} version={index.toString()} page={props.page}/>)
+        if(props.page == "NoteDetailPage")
+            setEditor(<MyEditor noteId = {props.data?.id} version={index.toString()} page={props.page}/>)
+        else if(props.page == "CollabDetailPage" && props.data)
+            setEditor(<MyEditor noteId = {noteId} version={index.toString()} page={props.page}/>)
     }
 
     return (
@@ -101,7 +105,7 @@ const PageDetailContentTemplate = (props) => {
                                     <OptionMenu 
                                         page={props.page}
                                         comments={props.data?.comments? props.data.comments:[]} 
-                                        versions={props.data?.version? props.data.version:[]} 
+                                        versions={versions? versions:props.data?.version? props.data.version:[]} 
                                         public={props.data?.public}
                                         setVersion={setVersion}
                                         isAuthor={isAuthor}

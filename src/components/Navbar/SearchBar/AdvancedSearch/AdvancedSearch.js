@@ -52,7 +52,8 @@ const AdvancedSearch = (props) => {
         // Todo: set type of condition
         const temp = JSON.parse(JSON.stringify(condition))
         temp.page = temp.page+'OutlinePage'
-        console.log(temp)
+        temp.setPageProps = props.setPageProps
+        //console.log(temp)
         props.setPageProps(temp);
         
         message.info("Search for type " + props.type)

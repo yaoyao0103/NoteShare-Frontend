@@ -49,6 +49,30 @@ function PageOutlineContentTemplate(props) {
         props.changePageNumber(pagenumber);
         setPageN(pagenumber);
     }
+
+    const onClickCard = (type, id) => {
+        console.log(type, id)
+        switch(type){
+            case 'QA': props.setPageProps({
+                page: 'QnADetailPage',
+                postId: id,
+            }); break;
+            case 'reward': props.setPageProps({
+                page: 'RewardDetailPage',
+                postId: id,
+            }); break;
+            case 'collaboration': props.setPageProps({
+                page: 'CollabDetailPage',
+                postId: id,
+            }); break;
+            case 'normal': props.setPageProps({
+                page: 'NoteDetailPage',
+                noteId: id,
+            }); break;
+        }
+        
+    }
+
     var isFolder=false;
     if(props.mode==='Folder')
         isFolder=true;
