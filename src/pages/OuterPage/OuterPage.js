@@ -33,6 +33,7 @@ const OuterPage = () => {
     const [pageComponent, setPageComponent] = useState(<></>)
     const [visible, setVisible] = useState(false);
     const [loggedIn, setLoggedIn] = useState(false);
+    const [changeAvatar,setChangeAvatar]=useState(0);
     const showDrawer = () => {
         setVisible(true);
     };
@@ -73,7 +74,7 @@ const OuterPage = () => {
             case 'CollabOutlinePage': setPageComponent(<CollabOutlinePage page='CollabOutlinePage' setPageProps={setPageProps} {...pageProps} />); break;
             case 'FolderOutlinePage': setPageComponent(<FolderOutlinePage page='FolderOutlinePage' setPageProps={setPageProps} {...pageProps} />); break;
             case 'PersonalPage': setPageComponent(<PersonalPage page='PersonalPage' setPageProps={setPageProps} {...pageProps}/>); break;
-            case 'ProfilePage': setPageComponent(<ProfilePage page='ProfilePage' setPageProps={setPageProps} {...pageProps}/>); break;
+            case 'ProfilePage': setPageComponent(<ProfilePage page='ProfilePage' Avatar={changeAvatar}setAvatar={setChangeAvatar}setPageProps={setPageProps} {...pageProps}/>); break;
             case 'LoginPage': setPageComponent(<LoginPage page='LoginPage' setPageProps={setPageProps} setLoggedIn={setLoggedIn} {...pageProps}/>); break;
             case 'SignUpPage': setPageComponent(<SignUpPage page='SignUpPage' setPageProps={setPageProps} {...pageProps}/>); break;
             case 'VerificationPage': setPageComponent(<VerificationPage page='VerificationPage' setPageProps={setPageProps} {...pageProps}/>); break;
@@ -88,7 +89,7 @@ const OuterPage = () => {
     return (
         <>
             <div className='outerPage'>
-                <Navbar loggedIn={loggedIn} setPageProps={setPageProps} setLoggedIn={setLoggedIn}/>
+                <Navbar changeAvatar={changeAvatar}loggedIn={loggedIn} setPageProps={setPageProps} setLoggedIn={setLoggedIn}/>
                 <div className='outerPage__Layout'>
                     {pageComponent&&pageComponent}
                 </div>

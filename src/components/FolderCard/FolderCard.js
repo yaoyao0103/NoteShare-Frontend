@@ -37,6 +37,10 @@ function FolderCard(props) {
                             className='FolderCard__List__Sec__Col'
                             title={<Text cls='Default' fontSize={20} content={item.title} />}
                             description={item.description}
+                            onClick={()=>{props.setPageProps({
+                                noteId: item.id,
+                                page: "NoteDetailPage"
+                            })}}
                         />}
                     {item.folderName &&
                         <div className='FolderCard__List__NoteNumber'>

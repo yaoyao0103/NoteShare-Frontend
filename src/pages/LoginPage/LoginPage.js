@@ -63,9 +63,9 @@ function LoginPage(props) {
     };
     const rememberChange = (checked) => {
         if (checked)
-            setRemember(true);
+            setHasRemember('A');
         else
-            setRemember(false);
+            setHasRemember('');
         //console.log(remember);
 
     };

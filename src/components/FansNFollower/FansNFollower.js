@@ -10,7 +10,7 @@ function FansNFollower(props) {
                 <Col span={8} className="FansNFollower__Follower">
                     <Card className="FansNFollower__Follower__Card">
                         <Statistic
-                            title="Follower"
+                            title="Following"
                             value={props.follower}
                             valueStyle={{
                                 color: '#3f8600',

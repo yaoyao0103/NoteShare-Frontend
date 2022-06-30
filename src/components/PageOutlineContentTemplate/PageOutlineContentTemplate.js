@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Layout, Row, Col, Pagination } from "antd";
+import { Layout, Row, Col, Pagination ,Empty} from "antd";
 import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
 import SortMeun from "../SortMenu/SortMenu";
 import OutlineCard from "../OutlineCard/OutlineCard";
@@ -37,6 +37,10 @@ function PageOutlineContentTemplate(props) {
                 tempcardLists.push(<FolderOutlineCard page={props.page} mode={props.mode} cardContent={props.Post[0].items[i]} author={props.Post[0].items[i].creatorName} />);
             };
 
+            setCardList(tempcardLists);
+        }
+        else{
+            tempcardLists.push(<Empty />);
             setCardList(tempcardLists);
         }
         setPageTotal(props.Post[0].totalPages * 10);

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useTransition } from 'react';
-import { Layout, Avatar, Modal, message, Row, Col, Divider, Spin } from "antd";
-import { EditFilled, UserAddOutlined, LoadingOutlined } from '@ant-design/icons';
+import { Layout, Avatar, Modal, message, Row, Col, Divider, Spin, Tooltip } from "antd";
+import { EditFilled, UserAddOutlined, LoadingOutlined, BellOutlined, BellFilled, UserDeleteOutlined } from '@ant-design/icons';
 import './ProfilePage.css'
 import TextEditor from '../../components/TextEditor/TextEditor';
 import StrengthEditor from '../../components/StrengthEditor/StrengthEditor';
@@ -22,9 +22,12 @@ function ProfilePage(props) {
 
     const [avatarSelector, setAvatarSelector] = useState(false);
     const [avatar, setAvatar] = useState();
-    const [strength,setStrength]=useState([]);
-    const [profile,setProfile]=useState('');
-
+    const [avatarNum,setAvatarNum]=useState(0);
+    const [strength, setStrength] = useState([]);
+    const [profile, setProfile] = useState('');
+    const [isFollow, setIsFollow] = useState(false);
+    const [fansNum, setFansNum] = useState(0);
+    const [followingNum, setFollowingNum] = useState(0);
 
     const [fansOrFollower, setFansOrFollower] = useState(true);//true代表fans,folder
     const [folderList, setFolderList] = useState([]);
@@ -34,7 +37,7 @@ function ProfilePage(props) {
     const [isRoot, setIsRoot] = useState(false);
     const [currentFolderId, setCurrentFolderId] = useState('');
     const [email, setEmail] = useState('');
-    const [isAuthor,setIsAuthor] = useState(false);
+    const [isAuthor, setIsAuthor] = useState(false);
 
     const Avatars = ["https://joeschmoe.io/api/v1/james", "https://joeschmoe.io/api/v1/jude", "https://joeschmoe.io/api/v1/jana",
         "https://joeschmoe.io/api/v1/jabala", "https://joeschmoe.io/api/v1/jacques", "https://joeschmoe.io/api/v1/jed", "https://joeschmoe.io/api/v1/jon",
@@ -69,48 +72,74 @@ function ProfilePage(props) {
         AvatarsList.push(<Avatar className={temp} size={84} src={Avatars[i]} onClick={() => { setAvatar(i); }}></Avatar>)
     };
 
-    const getFolderById = (id) => {
-        axios.get("http://localhost:8080/folder/" + id, {
-        }).then(res => {
-            const list = res.data.res.children.concat(res.data.res.notes);
-            //console.log(list);
-            setFolderList(list);
-            if (res.data.res.parent === null)
-                setIsRoot(true);
-            else
-                setIsRoot(false);
-            setGetFolderByIdSuccess(true);
-        }).catch((error) => {
-            //console.log(error.response.error);
-        })
-    };
+
 
     const SaveAvatar = () => {
-        setAvatarCurrent(avatar);
-        message.info('Change avatar');
+        axios.put("http://localhost:8080/user/head/" + email, { headshotPhoto: Avatars[avatar] }).then(res => {
+            
+            setAvatarCurrent(Avatars[avatar]);
+            
+            message.info('Change avatar');
+            //console.log(avatarNum+1);
+            setAvatarNum(avatarNum+1);
+            props.setAvatar(avatarNum+1);
+
+        }).catch((error) => {
+            message.info(error.response.error);
+
+        })
+
+
     }
 
-    const SaveProfile=(content)=>{
-        axios.put("http://localhost:8080/user/profile/" +email, {profile:content}).then(res => {
+    const Follow = () => {
+        if (!isFollow) {
+            axios.put("http://localhost:8080/follow/" + email + '/' + props.email,).then(res => {
+                //setProfile(content);
+                setIsFollow(true);
+                setFansNum(fansNum + 1);
+
+                message.info('Follow ' + user.name);
+            }).catch((error) => {
+                console.log(error.response.error);
+
+            })
+        }
+        else {
+            axios.put("http://localhost:8080/unfollow/" + email + '/' + props.email,).then(res => {
+                //setProfile(content);
+                setIsFollow(false);
+                setFansNum(fansNum - 1);
+                message.info('Unfollow ' + user.name);
+            }).catch((error) => {
+                console.log(error.response.error);
+            })
+        }
+    }
+
+
+
+    const SaveProfile = (content) => {
+        axios.put("http://localhost:8080/user/profile/" + email, { profile: content }).then(res => {
             setProfile(content);
         }).catch((error) => {
             console.log(error.response.error);
         })
     };
 
-    const AddStrength=(tag)=>{
+    const AddStrength = (tag) => {
         console.log(tag);
-        const tags=[...strength,tag];
-        axios.put("http://localhost:8080/user/strength/" +email, {strength:tags}).then(res => {
-            console.log(...strength,tag);
-            setStrength(oldArray =>[...oldArray, tag]);
+        const tags = [...strength, tag];
+        axios.put("http://localhost:8080/user/strength/" + email, { strength: tags }).then(res => {
+            console.log(...strength, tag);
+            setStrength(oldArray => [...oldArray, tag]);
         }).catch((error) => {
             console.log(error.response.error);
         })
     }
-    const DeleteStrength=(key)=>{
-        const tags=[...strength.slice(0, key), ...strength.slice(key + 1, strength.length)]
-        axios.put("http://localhost:8080/user/strength/" +email, {strength:tags}).then(res => {
+    const DeleteStrength = (key) => {
+        const tags = [...strength.slice(0, key), ...strength.slice(key + 1, strength.length)]
+        axios.put("http://localhost:8080/user/strength/" + email, { strength: tags }).then(res => {
             setStrength(oldArray => [...oldArray.slice(0, key), ...oldArray.slice(key + 1, strength.oldArray)]);
         }).catch((error) => {
             console.log(error.response.error);
@@ -126,7 +155,7 @@ function ProfilePage(props) {
         })
     };
 
-    
+
 
     const antIcon = (
         <LoadingOutlined
@@ -136,9 +165,24 @@ function ProfilePage(props) {
             spin
         />
     );
+    const getFolderById = (id) => {
+        axios.get("http://localhost:8080/folder/" + id, {
+        }).then(res => {
+            const list = res.data.res.children.concat(res.data.res.notes);
+            //console.log(list);
+            setFolderList(oldArray => [...oldArray.slice(0, 0),list]);
+            if (res.data.res.parent === null)
+                setIsRoot(true);
+            else
+                setIsRoot(false);
+            setGetFolderByIdSuccess(true);
+        }).catch((error) => {
+            //console.log(error.response.error);
+        })
+    };
 
-    function getAllFolder(tempEmail) {
-        axios.get("http://localhost:8080/folder/root/" + tempEmail, {
+    function getAllFolder(Email) {
+        axios.get("http://localhost:8080/folder/root/" + Email, {
         }).then(res => {
             console.log(res.data.res[2]);
             getFolderById(res.data.res[2].id);
@@ -149,10 +193,10 @@ function ProfilePage(props) {
         });
     };
 
-    function getAllNote(tempEmail) {
-        axios.get("http://localhost:8080/note/all/" + tempEmail, {
+    function getAllNote(Email) {
+        axios.get("http://localhost:8080/note/all/" + Email, {
         }).then(res => {
-            setFolderList(res.data.res);
+            setFolderList(oldArray => [...oldArray.slice(0, 0),res.data.res]);
             setCurrentFolderId('0');
             setGetFolderByIdSuccess(true);
         }).catch((error) => {
@@ -161,14 +205,23 @@ function ProfilePage(props) {
         });
     };
 
-    function getUserByEmail(tempEmail) {
+    function getUserByEmail(Email) {
 
-        axios.get("http://localhost:8080/user/" + tempEmail, {
+        axios.get("http://localhost:8080/user/" + Email, {
         }).then(res => {
             setUser(res.data.res);
+            setAvatarCurrent(res.data.res.headshotPhoto);
             // console.log(res.data.res.name);
             setProfile(res.data.res.profile);
             setStrength(res.data.res.strength);
+            //console.log(res.data.res.subscribe);
+            setFansNum(res.data.res.fans.length);
+            setFollowingNum(res.data.res.subscribe.length);
+            for (let i = 0; i < res.data.res.fans.length; i++) {
+                console.log(res.data.res.fans[i]);
+                if (res.data.res.fans[i] === props.email);
+                setIsFollow(true);
+            }
             setGetUserSuccess(true);
         }).catch((error) => {
             console.log(error);
@@ -176,19 +229,30 @@ function ProfilePage(props) {
     };
 
     useEffect(() => {
+
         let cookieParser = new Cookie(document.cookie);
         let tempEmail = cookieParser.getCookieByName('email')
         tempEmail = Base64.decode(tempEmail);
+        console.log(tempEmail);
+        
         if (tempEmail === props.email)
             setIsAuthor(true);
+        else {
+            setIsAuthor(false);
+        }
         setEmail(tempEmail);
+        setGetUserSuccess(false);
+        getUserByEmail(props.email);
+    }, [props]);
+
+    useEffect(() => {
+        console.log(props.email);
         if (fansOrFollower && !isAuthor)
-            getAllFolder(tempEmail);
+            getAllFolder(props.email);
         else if (!fansOrFollower && !isAuthor)
-            getAllNote(tempEmail);
-        if (!getUserSuccess)
-            getUserByEmail(tempEmail);
-    }, [props, fansOrFollower]);
+            getAllNote(props.email);
+
+    }, [props,fansOrFollower]);
 
     useEffect(() => {
 
@@ -205,7 +269,7 @@ function ProfilePage(props) {
                         <Row className='Profile__Content__First__Row'>
                             <Col span={6}>
                                 <div className={"Profile__Avatar__Outer"}>
-                                    <Avatar className={"Profile__Avatar__Inner"} size={84} src={'https://joeschmoe.io/api/v1/' + user.headshotPhoto}></Avatar>
+                                    <Avatar className={"Profile__Avatar__Inner"} size={84} src={avatarCurrent}></Avatar>
                                     {isAuthor && <div className={"Profile__Avatar__Editor"} onClick={() => { setAvatarSelector(true) }}>
                                         <EditFilled />
 
@@ -218,30 +282,50 @@ function ProfilePage(props) {
                                     <TextEditor name={user.name}></TextEditor>
                                 </div>
                                 <div className='Profile__Email'>
-                                    <Text className='TextEditor__Name' cls='Gerneral' fontSize='20' content={'Email : ' + email} />
+                                    <Text className='TextEditor__Name' cls='Gerneral' fontSize='20' content={'Email : ' + props.email} />
                                 </div>
-                                {!isAuthor && <div className='Profile__Follow'>
-                                    <UserAddOutlined className='Profile__Follow__Icon' style={{ fontSize: '20px' }} />
-                                    <Text cls='Small' fontSize={'14'} content='追蹤'></Text>
-                                </div>
+                                {!isAuthor &&
+                                    <Row className='Profile__FollowNBell'>
+                                        {!isFollow &&
+                                            <Col className='Profile__Follow' span={6} onClick={() => { Follow() }}>
+                                                <Tooltip arrowPointAtCenter={true} placement="top" title={"Follow " + user.name} color={'#000'}>
+                                                    <UserAddOutlined className='Profile__Follow__Icon' style={{ fontSize: '20px' }} />
+                                                    <Text cls='Small' fontSize={'14'} content='追蹤'></Text>
+                                                </Tooltip>
+                                            </Col>
+                                        }
+                                        {isFollow &&
+                                            <Col className='Profile__Follow' span={6} onClick={() => { Follow() }}>
+                                                <Tooltip arrowPointAtCenter={true} placement="top" title={"Follow " + user.name} color={'#000'}>
+                                                    <UserDeleteOutlined className='Profile__Follow__Icon' style={{ fontSize: '20px' }} />
+                                                    <Text cls='Small' fontSize={'14'} content='取消'></Text>
+                                                </Tooltip>
+                                            </Col>
+                                        }
+                                        <Col className='Profile__Bell' span={8}>
+                                            <Tooltip arrowPointAtCenter={true} placement="top" title={"Open the notification of " + user.name} color={'#000'}>
+                                                <BellOutlined className='Profile__Bell__Icon' style={{ fontSize: '22px' }} />
+                                            </Tooltip>
+                                        </Col>
+                                    </Row>
                                 }
                             </Col>
                         </Row>
                         <div className="Profile__Fans">
-                            <FansNFollower fans={user.fans.length} follower={user.subscribe.length}></FansNFollower>
+                            <FansNFollower fans={fansNum} follower={followingNum}></FansNFollower>
                         </div>
                         <div className='Profile__Strength'>
-                            <StrengthEditor strength={strength} delete={(key)=>{DeleteStrength(key)}}add={(tag)=>(AddStrength(tag))}isAuthor={isAuthor}></StrengthEditor>
+                            <StrengthEditor strength={strength} delete={(key) => { DeleteStrength(key) }} add={(tag) => (AddStrength(tag))} isAuthor={isAuthor}></StrengthEditor>
                         </div>
                         <div className='Profile__Introduction'>
-                            <IntroductionEditor edit={(content)=>{SaveProfile(content)}}content={profile} isAuthor={isAuthor}></IntroductionEditor>
+                            <IntroductionEditor edit={(content) => { SaveProfile(content) }} content={profile} isAuthor={isAuthor}></IntroductionEditor>
                         </div>
                     </Content>
 
                     <Sider className='Profile__Sider' width='60%'>
                         <Spin className='signUpPage__Spin' indicator={antIcon} spinning={!getFolderByIdSuccess}>
                             {isAuthor && <Row className='Profile__Sider__Fir__Row'>
-                                <ToggleSwitch SwitchLeft='Follower' SwitchRight="Fans" ChangeSwitch={() => changeFansSwitch()} />
+                                <ToggleSwitch SwitchLeft='Following' SwitchRight="Fans" ChangeSwitch={() => changeFansSwitch()} />
                             </Row>}
                             {!isAuthor && <Row className='Profile__Sider__Fir__Row'>
                                 <ToggleSwitch SwitchLeft='Note' SwitchRight="Folder" ChangeSwitch={() => changeFansSwitch()} />
@@ -258,12 +342,12 @@ function ProfilePage(props) {
                                 <FansNFollowerEditor Name='Jude' Avatar='https://joeschmoe.io/api/v1/jude' isFans={fansOrFollower} />
                             </div>}
                             {!isAuthor && getFolderByIdSuccess && fansOrFollower && <div className='Profile_Sider__Main_Content'>
-                                <FolderCard folderList={folderList} isFolder={true} isRoot={isRoot} clickBack={(id) => { ClickBack(id) }} clickFolder={(id) => { setCurrentFolderId(id); }} />
+                                <FolderCard folderList={folderList} isFolder={true} setPageProps={props.setPageProps} isRoot={isRoot} clickBack={(id) => { ClickBack(id) }} clickFolder={(id) => { setCurrentFolderId(id); }} />
 
                             </div>}
 
                             {!isAuthor && !fansOrFollower && getFolderByIdSuccess && <div className='Profile_Sider__Main_Content'>
-                                <FolderCard folderList={folderList} isFolder={true} isRoot={isRoot} clickBack={(id) => { ClickBack(id) }} clickFolder={(id) => { setCurrentFolderId(id); }} />
+                                <FolderCard folderList={folderList} isFolder={true} setPageProps={props.setPageProps} isRoot={isRoot} clickBack={(id) => { ClickBack(id) }} clickFolder={(id) => { setCurrentFolderId(id); }} />
 
                             </div>}
                         </Spin>
@@ -273,7 +357,7 @@ function ProfilePage(props) {
                         title="Choose your avatar"
                         centered
                         visible={avatarSelector}
-                        onOk={() => SaveAvatar()}
+                        onOk={() => { SaveAvatar(); props.setAvatar(props.Avatar+1);setAvatarSelector(false) }}
                         onCancel={() => setAvatarSelector(false)}
                         okText="Save"
                         cancelText="Cancel"
@@ -282,7 +366,7 @@ function ProfilePage(props) {
                         {AvatarsList}
 
                     </Modal>
-                </Layout>
+                </Layout >
             }
         </>
     );
