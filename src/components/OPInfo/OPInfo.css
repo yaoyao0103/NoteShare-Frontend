@@ -122,3 +122,6 @@
     position: relative;
     height: 40%;
 }
+.ant-popover-inner{
+    padding: .5em;
+}

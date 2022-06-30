@@ -33,6 +33,10 @@ const PoppedContent = (props) => {
         downloadLink.click();
     };
 
+    useEffect(()=>{
+        console.log("content", props.content)
+    },[props.content])
+
     
 
     return (
@@ -81,16 +85,15 @@ const PoppedContent = (props) => {
                                 content
                                 :
                                 <>
-                                    <TextArea rows={4} placeholder="maxLength is 6" maxLength={6} value={applyContent} onChange={(ev) => setApplyContent(ev.target.value)}/>
-                                    <div className="apply__Button" onClick={null}>
+                                    <TextArea rows={4} placeholder="maxLength is 100" maxLength={100} value={applyContent} onChange={(ev) => setApplyContent(ev.target.value)}/>
+                                    <div className="apply__Button" onClick={()=>props.apply(applyContent)}>
                                         <Button color={"green"}><Text color='white' cls='Large' content={"Apply"} fontSize='17' display="inline-block" /></Button>
                                     </div>
                                 </>
                             }
                         </Content>
-                        {!(props.page=='CollabDetailPage' && !props.isAuthor) &&
-                            <Sider className='poppedContent__Sider' width='20%'>
-                                
+                        {(props.page=='CollabDetailPage' && props.isManager) &&
+                            <Sider className='poppedContent__Sider' width='30%'>
                                 
                                 {/* <button onClick={onStartCapture}>Capture</button>
                                 <button onClick={handleSave}>Download</button> */}
@@ -99,7 +102,23 @@ const PoppedContent = (props) => {
                                     dataSource={props.content}
                                     renderItem={(item, index) => (<List.Item actions={
                                         [
-                                            <OptionMenu page={props.page=="RewardDetailPage"? "RewardDetailPageAnswer":"CollabDetailPageApplier"} answerId={item} index = {index} setContent={setContent} />
+                                            <OptionMenu page="CollabDetailPageApplier" email={item.wantEnterUsersEmail} index = {index} commentFromApplicant={item.commentFromApplicant} setContent={setContent} postId={props.postId}/>
+                                        ]
+                                    } ><span className='answerAuthor'>{item.wantEnterUsersEmail}</span></List.Item>)}
+                                />
+                            </Sider>
+                        }
+                        {!(props.page=='CollabDetailPage' && props.isAuthor) &&
+                            <Sider className='poppedContent__Sider' width='20%'>
+                                
+                                {/* <button onClick={onStartCapture}>Capture</button>
+                                <button onClick={handleSave}>Download</button> */}
+                                <List
+                                    size="large"
+                                    dataSource={props.content}
+                                    renderItem={(item, index) => (<List.Item actions={
+                                        [
+                                            <OptionMenu page="RewardDetailPageAnswer" answerId={item} index = {index} setContent={setContent} postId={props.postId}/>
                                         ]
                                     } ><span className='answerAuthor'>{item}</span></List.Item>)}
                                 />

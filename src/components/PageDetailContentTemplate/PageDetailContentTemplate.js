@@ -29,10 +29,13 @@ const PageDetailContentTemplate = (props) => {
     const [isManager, setIsManager] = useState(false)
     const [isAuthor, setIsAuthor] = useState(false)
     const [versions, setVersions] = useState(null)
+    const [email, setEmail] = useState('')
+
     useEffect(()=>{
         const cookieParser = new Cookie(document.cookie)
         const temp = cookieParser.getCookieByName('email')
         const tempEmail = Base64.decode(temp);
+        setEmail(tempEmail)
         console.log("tempEmail",tempEmail)
         if(props.page == "NoteDetailPage"){
             setNoteId(props.data?.id);
@@ -51,6 +54,7 @@ const PageDetailContentTemplate = (props) => {
                     setIsManager(true)
                     setIsAuthor(true)
                     console.log("is a manager")
+                    setPoppedContent( props.data.collabApply );
                 }
                 else if(props.data.email?.includes(tempEmail)){
                     setEditor(<MyEditor noteId = {noteId} version={'0'} page={props.page}/>)
@@ -66,7 +70,8 @@ const PageDetailContentTemplate = (props) => {
             .catch(err =>{
                 console.log(err)
             })
-            if(isManager) setPoppedContent( props.data.wantEnterUsersEmail );
+            //if(isManager) setPoppedContent( props.data.wantEnterUsersEmail );
+            //if(isManager) setPoppedContent( props.data.collabApply );
         }
         else if(props.page == "RewardDetailPage"){
             setPoppedContent( props.data.answers );
@@ -79,6 +84,22 @@ const PageDetailContentTemplate = (props) => {
             setEditor(<MyEditor noteId = {props.data?.id} version={index.toString()} page={props.page}/>)
         else if(props.page == "CollabDetailPage" && props.data)
             setEditor(<MyEditor noteId = {noteId} version={index.toString()} page={props.page}/>)
+    }
+
+    const apply = (content) => {
+        message.success("apply")
+        const data = {
+            wantEnterUsersEmail: email,
+            commentFromApplicant: content
+        }
+        console.log("data", data)
+        axios.put(`http://localhost:8080/post/apply/${props.postId}`, data)
+            .then ( res => {
+                console.log(res.data.res)
+            })
+            .catch(err =>{
+                console.log(err)
+            })
     }
 
     return (
@@ -96,6 +117,7 @@ const PageDetailContentTemplate = (props) => {
                                     author={props.page == 'NoteDetailPage'? props.data?.headerName:props.data?.authorName}
                                     date={props.data?.date} 
                                     dateFontSize="18"
+                                    page={props.page}
                                 >T</OPInfo>
                             </Col>
                             <Col className="contentTemplate__Header__middle"span={props.page!='NoteDetailPage'?16:18}>
@@ -199,8 +221,8 @@ const PageDetailContentTemplate = (props) => {
             </Layout> 
             {/* Popped up Part */}
             <div className={ poppedContentShow && 'popped__blur'}></div>
-            <div className={`popped ${ poppedContentShow && 'popped--show'}`} >
-                <PoppedContent page={props.page} content={poppedContent} setPoppedContentShow={setPoppedContentShow} isAuthor={isAuthor}/>
+            <div className={`${ props.page!='CollabDetailPage'? 'popped__Answer': 'popped__Apply'} ${ poppedContentShow && 'popped--show'}`} >
+                <PoppedContent page={props.page} content={poppedContent} apply={apply} setPoppedContentShow={setPoppedContentShow} isAuthor={isAuthor} isManager={isManager} postId={props.postId}/>
             </div>
 
             {props.voting &&

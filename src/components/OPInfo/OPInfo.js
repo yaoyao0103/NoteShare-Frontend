@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Avatar, Row, Col } from 'antd';
+import { Avatar, Row, Col, Tooltip } from 'antd';
+import { UserOutlined, AntDesignOutlined } from '@ant-design/icons';
 import Text from '../Text/Text';
 import "./OPInfo.css";
 
@@ -9,7 +10,24 @@ const OPInfo = (props) => {
         <div id="OPInfo">
             <Row id={"OPInfo__Row"+'__'+props.mode} className='OPInfo__Row'>
                 <Col className={"OPInfo__left"+'__'+props.mode}>
+                    {props.page!='CollabDetailPage'?
                     <Avatar className={"OPInfo__Avatar"+'__'+props.mode} size={props.size} src={props.avatar}></Avatar>
+                    :
+                    <Avatar.Group
+                        className='OPInfo_Avatar_Group'
+                        maxCount={2}
+                        maxPopoverTrigger="click"
+                        size="large"
+                        maxStyle={{ color: '#f56a00', backgroundColor: '#fde3cf', cursor: 'pointer' }}
+                        >
+                        <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+                        <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
+                        <Tooltip title="Ant User" placement="top">
+                            <Avatar style={{ backgroundColor: '#87d068' }} icon={<UserOutlined />} />
+                        </Tooltip>
+                        <Avatar style={{ backgroundColor: '#1890ff' }} icon={<AntDesignOutlined />} />
+                        </Avatar.Group>
+                    }
                 </Col>
                 <Col id={"OPInfo__right"+'__'+props.mode} className={"OPInfo__right"+'__'+props.mode} >
                     <Row id={'OPInfo__Author'+'__'+props.mode} className={'OPInfo__Author'+'__'+props.mode}><Text color='black' cls='Default' content={props.author} fontSize={props.authorFontSize}></Text></Row>

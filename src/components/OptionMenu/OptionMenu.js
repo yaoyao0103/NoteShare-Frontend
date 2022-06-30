@@ -7,6 +7,8 @@ import VersionArea from "../VersionArea/VersionArea";
 import CommentArea from "../CommentArea/CommentArea";
 import ContentEditor from "../../pages/NoteDetailPage/ContentEditor/ContentEditor";
 import Text from "../Text/Text";
+import MyButton from "../Button/Button";
+import axios from "../axios/axios";
 
 const OptionMenu = (props) => {
   const navigate = useNavigate()
@@ -77,6 +79,26 @@ const OptionMenu = (props) => {
       setContent(<ContentEditor versionId = {id}/>)
     }
 
+    const commentBrowse = (comment, index) => {
+      message.info("browse: "+ index);
+      setContent(
+        <div className="commentFromApplicant">
+          <div className="commentFromApplicantLabel">
+            <Text color='black' cls='Default' content={"Message:"} fontSize='28' display="inline-block" />
+          </div>
+          <div className="commentFromApplicantComment">
+            {comment}
+          </div>
+          <div className="commentFromApplicantButton" onClick={() => rejectApplier(props.email)}>
+            <MyButton color={"red"}><Text color='white' cls='Large' content={"Reject"} fontSize='17' display="inline-block" /></MyButton>
+          </div>
+          <div className="commentFromApplicantButton" onClick={() => agreeApplier(props.email)}>
+            <MyButton color={"green"}><Text color='white' cls='Large' content={"Agree"} fontSize='17' display="inline-block" /></MyButton>
+          </div>
+        </div>
+      )
+    }
+
     const chooseBest = (id) => {
       message.info("choose: "+ id + " best");
       // Todo: connect choose best API
@@ -87,13 +109,21 @@ const OptionMenu = (props) => {
       // Todo: connect choose ref API
     }
 
-    const agreeApplier = (id) => {
-      message.info("agree applier: "+ id);
-      // Todo: connect choose best API
+    const agreeApplier = (email) => {
+      message.info("agree applier: "+ email);
+      axios.put(`http://localhost:8080/post/add/${props.postId}/${email}`)
+      .then ( res => {
+          message.success("Agree!!")
+          console.log(res.data.res)
+          // Todo: remove applicant from list
+      })
+      .catch(err =>{
+          console.log(err)
+      })
     }
 
-    const rejectApplier = (id) => {
-      message.info("reject applier: "+ id);
+    const rejectApplier = (email) => {
+      message.info("reject applier: "+ email);
       // Todo: connect choose ref API
     }
 
@@ -431,17 +461,17 @@ const OptionMenu = (props) => {
     <Menu items={
       [
         {
-            label: (<a onClick={()=>{ contentBrowse(props.answerId) }}>Browse</a>),
+            label: (<a onClick={()=>{ commentBrowse(props.commentFromApplicant, props.index) }}>Browse</a>),
             key: "1",
             icon: <EyeOutlined />
         },
         {
-            label: (<a style={{color: "green"}} onClick={()=>{ agreeApplier(props.answerId) }}>Agree</a>),
+            label: (<a style={{color: "green"}} onClick={()=>{ agreeApplier(props.email) }}>Agree</a>),
             key: "2",
             icon: <CheckOutlined style={{color: "green"}}/>
         },
         {
-          label: (<a style={{color: "red"}} onClick={()=>{ rejectApplier(props.answerId) }}>Reject</a>),
+          label: (<a style={{color: "red"}} onClick={()=>{ rejectApplier(props.email) }}>Reject</a>),
           key: "3",
           icon: <CloseOutlined style={{color: "red"}}/>
         },]
