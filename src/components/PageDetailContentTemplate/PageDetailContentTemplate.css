@@ -110,14 +110,29 @@
     z-index: 29;
 }
 
-.popped{
+.popped__Apply{
     position: fixed;
     top: 54%;
     left: 50%;
     /* bring your own prefixes */
     transform: translate(-50%, -50%);
-    width: 90%;
-    height: 80%;
+    width: 50%;
+    height: 60%;
+    background-color: #fff;
+    visibility: hidden;
+    opacity: 0;
+    z-index: 30;
+    transition: visibility 0s, opacity 0.3s linear;
+}
+
+.popped__Answer{
+    position: fixed;
+    top: 54%;
+    left: 50%;
+    /* bring your own prefixes */
+    transform: translate(-50%, -50%);
+    width: 80%;
+    height: 70%;
     background-color: #fff;
     visibility: hidden;
     opacity: 0;

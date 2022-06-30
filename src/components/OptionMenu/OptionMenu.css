@@ -37,3 +37,25 @@
 .personalPageNoteMenu{
     text-decoration: none;
 }
+
+.commentFromApplicant{
+    margin: .5em 3em 1em 3em;
+    font-size: large;
+}
+
+.commentFromApplicantComment{
+    position: relative;
+    height: 31vh;
+    overflow-y: auto;
+}
+
+.commentFromApplicantLabel{
+    position: relative;
+    margin-bottom: .5em;
+}
+
+.commentFromApplicantButton{
+    position: relative;
+    float: right;
+    margin-left: .5em;
+}
