@@ -3,7 +3,7 @@ import {  Row, Col, Card, Statistic } from "antd";
 import { UserOutlined } from '@ant-design/icons';
 import './FansNFollower.css'
 
-function FansNFollower() {
+function FansNFollower(props) {
     return (
         <div className="FansNFollower">
             <Row gutter={0} className="FansNFollower__Row">
@@ -11,7 +11,7 @@ function FansNFollower() {
                     <Card className="FansNFollower__Follower__Card">
                         <Statistic
                             title="Follower"
-                            value={300}
+                            value={props.follower}
                             valueStyle={{
                                 color: '#3f8600',
                             }}
@@ -23,7 +23,7 @@ function FansNFollower() {
                     <Card className="FansNFollower__Fans__Card">
                         <Statistic
                             title="Fans"
-                            value={100}
+                            value={props.fans}
                             valueStyle={{
                                 color: '#3f8600',
                             }}

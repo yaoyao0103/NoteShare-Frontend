@@ -96,3 +96,29 @@
     position: relative;
     height: 40%;
 }
+
+.OPInfo__Row__FolderOutline{
+    height: 100%;
+    width: 100%;
+}
+.OPInfo__left__FolderOutline{
+    margin-right: 1em;
+    height: 100%;
+    margin-left: 2em;
+    
+}
+
+.OPInfo__right__FolderOutline{
+    float: left;
+    height: 100%;
+}
+.OPInfo__Author__FolderOutline{
+    margin-top: 0.8em;
+    position: relative;
+    height: 30%;
+    margin-bottom: 0;
+}
+.OPInfo__Date__FolderOutline{
+    position: relative;
+    height: 40%;
+}

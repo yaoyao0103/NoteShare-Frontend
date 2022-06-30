@@ -277,7 +277,7 @@ const OuterPage = () => {
                 </Button>
                 <Button type="primary" onClick={() => {
                     setPageProps({
-                        email:'a147896325811%40gmail.com',
+                        email:'00857030@email.ntou.edu.tw',
                         page: 'ProfilePage'
                     });     
                 }}>

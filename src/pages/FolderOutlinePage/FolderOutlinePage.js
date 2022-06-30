@@ -13,11 +13,12 @@ function FolderOutlinePage(props) {
 
     
     useEffect(() => {
+        console.log(props.headerName)
         async function getFolderById() {
             try {
-                await axios.get('http://localhost:8080/search/folder/'+props.keyword+'/'+ String(pageNumber - 1) + '/20?creator='+props.author).then((res) => {
+                await axios.get('http://localhost:8080/search/folder/'+props.keyword+'/'+ String(pageNumber - 1) + '/20?creator='+props.headerName).then((res) => {
                     console.log(res.data.search);
-                    setFolder(oldArray => [...oldArray, res.data.search]);
+                    setFolder(oldArray => [...oldArray= [], res.data.search]);
                 });
             } catch (error) {
                 console.log(error.message);
@@ -32,7 +33,7 @@ function FolderOutlinePage(props) {
             try {
                 
 
-                await axios.get('http://localhost:8080/search/folder/'+props.keyword+'/'+ String(pageNumber - 1) + '/20').then((res) => {
+                await axios.get('http://localhost:8080/search/folder/'+props.keyword+'/'+ String(pageNumber - 1) + '/20?creator='+props.headName).then((res) => {
                     setFolder(oldArray => [...oldArray = [], res.data.search]);
                     window.scrollTo(0, 0);
                     //console.log(pageNumber);
@@ -51,7 +52,12 @@ function FolderOutlinePage(props) {
         //console.log('1111');
 
     }, [pageNumber,sortMode]);
-   
+   useEffect(()=>{
+    console.log(Folder);
+
+
+
+   },[Folder])
     return (
         <>
             {Folder.length > 0 &&

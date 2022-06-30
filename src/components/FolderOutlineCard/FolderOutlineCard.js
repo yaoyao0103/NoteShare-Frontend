@@ -28,17 +28,24 @@ function FolderOutlineCard(props) {
   
     const FolderSider = (
         <>{props.mode === 'Folder' &&
-            < Sider className={"FolderOutlineCard__Sider__Outer" + '__' + props.mode} width='30%' >
-              
+            < Sider className={"FolderOutlineCard__Sider__Outer"} width='30%' >
+              <Row className={"FolderOutlineCard__Sider__NoteNumber"}>
+                <Text cls='Default' fontSize={22} content={'Note number : '+props.cardContent.notes.length}/>
+              </Row>
                 
             </Sider >
         }</>
     );
-    var opSize = 32;
-    var authorFontSize = '16';
+    var opSize = 42;
+    var authorFontSize = '22';
     var dateFontSize = '12';
     var author = props.cardContent.authorName?props.cardContent.authorName:props.cardContent.creatorName;
    
+    useEffect(() => {
+        // set menu
+        
+        setSider(FolderSider);
+    }, [props])
 
  
     return (
@@ -62,21 +69,6 @@ function FolderOutlineCard(props) {
                             </Col>
                         </Row>
                     </Header>
-                    {/* <Content className={"FolderOutlineCard__Content__Inner" + '__' + props.mode} >
-                        <Paragraph
-                            className={"FolderOutlineCard__Paragraph" + '__' + props.mode}
-                            ellipsis={
-                                ellipsis
-                                    ? {
-                                        rows: 7,
-                                        expandable: false,
-                                    }
-                                    : false
-                            }
-                        >
-                            {props.cardContent.content}
-                        </Paragraph>
-                    </Content> */}
                 </Layout>
             </Content>
             {sider}
