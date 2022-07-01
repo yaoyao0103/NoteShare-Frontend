@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate, useParams } from "react-router-dom";
-import { Steps, Layout, Row, Col, Input, Popover, message, Select, Tag, Drawer, List } from 'antd';
+import { Steps, Layout, Row, Col, Input, Popover, message, Select, Tag, Drawer, List, Tooltip } from 'antd';
 import "./NoteEditTemplate.css"
 import PostEditTemplate from '../PostEditTemplate/PostEditTemplate';
 import Button from '../Button/Button';
@@ -14,6 +14,7 @@ import { NoteFormat, VersionFormat, ContentFormat } from './NoteFormat';
 import axios from '../axios/axios';
 import VersionArea from '../VersionArea/VersionArea';
 import { editor } from '../../api_utils/geditor_config';
+import moment from 'moment';
 const { Header, Content, Sider, Footer } = Layout;
 const { Step } = Steps;
 const { TextArea } = Input;
@@ -89,7 +90,11 @@ const NoteEditTemplate = (props) => {
             <>
                 <List
                     dataSource={versions}
-                    renderItem={(item, index) => (index !=0 && <List.Item className='versionItem' onClick={()=>saveVersion(index)}><span>{item.name}</span></List.Item>)}
+                    renderItem={(item, index) => (index !=0 && 
+                        <Tooltip placement='top' title={moment(item.date).format('YYYY-MM-DD HH:mm:ss')}>
+                            <List.Item className='versionItem' onClick={()=>saveVersion(index)}><span>{item.name}</span></List.Item>
+                        </Tooltip>
+                    )}
                 />
                 <List.Item className='newVersion'><Input placeholder="New Version" onPressEnter={(ev) => newVersion(ev.target.value)}/></List.Item>
             </>

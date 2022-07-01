@@ -11,7 +11,7 @@ const OPInfo = (props) => {
             <Row id={"OPInfo__Row"+'__'+props.mode} className='OPInfo__Row'>
                 <Col className={"OPInfo__left"+'__'+props.mode}>
                     {props.page!='CollabDetailPage'?
-                    <Avatar className={"OPInfo__Avatar"+'__'+props.mode} size={props.size} src={props.avatar}></Avatar>
+                    <Avatar className={"OPInfo__Avatar"+'__'+props.mode} size={props.size} src={props.avatar} onClick={null}></Avatar>
                     :
                     <Avatar.Group
                         className='OPInfo_Avatar_Group'
@@ -20,17 +20,17 @@ const OPInfo = (props) => {
                         size="large"
                         maxStyle={{ color: '#f56a00', backgroundColor: '#fde3cf', cursor: 'pointer' }}
                         >
-                        <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-                        <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
-                        <Tooltip title="Ant User" placement="top">
-                            <Avatar style={{ backgroundColor: '#87d068' }} icon={<UserOutlined />} />
-                        </Tooltip>
-                        <Avatar style={{ backgroundColor: '#1890ff' }} icon={<AntDesignOutlined />} />
+                        {props.author.map( (item, index) => (
+                            <Tooltip placement="top" title={item.name}>
+                                <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" onClick={null}/>
+                            </Tooltip>
+                            
+                        ))}
                         </Avatar.Group>
                     }
                 </Col>
                 <Col id={"OPInfo__right"+'__'+props.mode} className={"OPInfo__right"+'__'+props.mode} >
-                    <Row id={'OPInfo__Author'+'__'+props.mode} className={'OPInfo__Author'+'__'+props.mode}><Text color='black' cls='Default' content={props.author} fontSize={props.authorFontSize}></Text></Row>
+                    <Row id={'OPInfo__Author'+'__'+props.mode} className={'OPInfo__Author'+'__'+props.mode}><Text color='black' cls='Default' content={props.author.name} fontSize={props.authorFontSize}></Text></Row>
                     <Row id={'OPInfo__Date'+'__'+props.mode} className={'OPInfo__Date'+'__'+props.mode} ><Text color='black' cls='Small' content={props.date.split('T')[0]} fontSize={props.dateFontSize} display="inline-block" /></Row>
                 </Col>
             </Row>
@@ -46,7 +46,6 @@ const OPInfo = (props) => {
 OPInfo.propTypes = {
     mode: PropTypes.string,
     children: PropTypes.string,
-    author: PropTypes.string,
     avatar:PropTypes.string,
     date:PropTypes.string,
     authorFontSize:PropTypes.string,
@@ -55,7 +54,7 @@ OPInfo.propTypes = {
 OPInfo.defaultProps = {
     mode:'Content',
     children: '',
-    author: 'Unknown',
+    author: {},
     avatar:'https://joeschmoe.io/api/v1/random',
     date:'2020-12-25',
     authorFontSize:'20',

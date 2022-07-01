@@ -84,12 +84,22 @@ const PoppedContent = (props) => {
                             {!(props.page=='CollabDetailPage' && !props.isAuthor)?
                                 content
                                 :
-                                <>
+                                props.haveApplied?
+                                <div className='apply_Form'>
+                                    <Text color='black' cls='Small' content={"Message:"} fontSize='22' display="inline-block" />
+                                    <TextArea disabled={true} rows={4} value={props.haveApplied} />
+                                    <div className="poppedContent__Tip">
+                                        <Text color='black' cls='Small' content={"You have been applied!!"} fontSize='16' display="inline-block" />
+                                    </div>
+                                </div>
+                                :
+                                <div className='apply_Form'>
+                                    <Text color='black' cls='Small' content={"Message:"} fontSize='22' display="inline-block" />
                                     <TextArea rows={4} placeholder="maxLength is 100" maxLength={100} value={applyContent} onChange={(ev) => setApplyContent(ev.target.value)}/>
-                                    <div className="apply__Button" onClick={()=>props.apply(applyContent)}>
+                                    <div className="apply__Button" onClick={()=> {props.apply(applyContent); setPoppedContentShow(false); props.setHaveApplied(applyContent);}}>
                                         <Button color={"green"}><Text color='white' cls='Large' content={"Apply"} fontSize='17' display="inline-block" /></Button>
                                     </div>
-                                </>
+                                </div>
                             }
                         </Content>
                         {(props.page=='CollabDetailPage' && props.isManager) &&
@@ -108,7 +118,7 @@ const PoppedContent = (props) => {
                                 />
                             </Sider>
                         }
-                        {!(props.page=='CollabDetailPage' && props.isAuthor) &&
+                        {!props.page=='CollabDetailPage' &&
                             <Sider className='poppedContent__Sider' width='20%'>
                                 
                                 {/* <button onClick={onStartCapture}>Capture</button>

@@ -30,6 +30,9 @@ const PageDetailContentTemplate = (props) => {
     const [isAuthor, setIsAuthor] = useState(false)
     const [versions, setVersions] = useState(null)
     const [email, setEmail] = useState('')
+    const [author, setAuthor] = useState([])
+    const [haveApplied, setHaveApplied] = useState(null)
+    const [isPublic, setIsPublic] = useState(true)
 
     useEffect(()=>{
         const cookieParser = new Cookie(document.cookie)
@@ -44,6 +47,7 @@ const PageDetailContentTemplate = (props) => {
         else if(props.page == "CollabDetailPage" && props.data){
             const noteId = props.data.answers[0];
             setNoteId(noteId);
+            setIsPublic(props.data?.public)
             axios.get(`http://localhost:8080/note/${noteId}`)
             .then ( res => {
                 console.log(res.data.res)
@@ -64,8 +68,21 @@ const PageDetailContentTemplate = (props) => {
                 else{
                     setIsAuthor(false)
                     setIsManager(false)
+                    if(props.data.collabApply){
+                        for(let i = 0; i < props.data.collabApply.length; i++){
+                            if(props.data.collabApply[i].wantEnterUsersEmail == tempEmail){
+                                setHaveApplied(props.data.collabApply[i].commentFromApplicant)
+                                break;
+                            }
+                        }
+                    }
                     console.log("is not a manager or author")
                 }
+                let tempAuthor = []
+                for(let i = 0; i < tempNote.authorName.length; i++){
+                    tempAuthor = [...tempAuthor, {email: tempNote.authorEmail[i], name: tempNote.authorName[i]}]
+                }
+                setAuthor(tempAuthor)
             })
             .catch(err =>{
                 console.log(err)
@@ -74,7 +91,11 @@ const PageDetailContentTemplate = (props) => {
             //if(isManager) setPoppedContent( props.data.collabApply );
         }
         else if(props.page == "RewardDetailPage"){
+            setIsPublic(props.data?.public)
             setPoppedContent( props.data.answers );
+        }
+        else if(props.page == "QnADetailPage"){
+            setIsPublic(props.data?.public)
         }
         
     },[props.data])
@@ -102,6 +123,7 @@ const PageDetailContentTemplate = (props) => {
             })
     }
 
+
     return (
         
         <div className="contentTemplate" >
@@ -114,7 +136,7 @@ const PageDetailContentTemplate = (props) => {
                                 <OPInfo
                                     className="contentTemplate__Title__OPInfo" 
                                     size={56}
-                                    author={props.page == 'NoteDetailPage'? props.data?.headerName:props.data?.authorName}
+                                    author={props.page == 'NoteDetailPage'? {email: props.data?.headerEmail, name:props.data?.headerName}: props.page == 'CollabDetailPage'? author:{email: props.data?.author, name: props.data?.authorName}}
                                     date={props.data?.date} 
                                     dateFontSize="18"
                                     page={props.page}
@@ -128,7 +150,8 @@ const PageDetailContentTemplate = (props) => {
                                         page={props.page}
                                         comments={props.data?.comments? props.data.comments:[]} 
                                         versions={versions? versions:props.data?.version? props.data.version:[]} 
-                                        public={props.data?.public}
+                                        public={isPublic}
+                                        setIsPublic={setIsPublic}
                                         setVersion={setVersion}
                                         isAuthor={isAuthor}
                                         isManager={isManager}
@@ -222,7 +245,7 @@ const PageDetailContentTemplate = (props) => {
             {/* Popped up Part */}
             <div className={ poppedContentShow && 'popped__blur'}></div>
             <div className={`${ props.page!='CollabDetailPage'? 'popped__Answer': 'popped__Apply'} ${ poppedContentShow && 'popped--show'}`} >
-                <PoppedContent page={props.page} content={poppedContent} apply={apply} setPoppedContentShow={setPoppedContentShow} isAuthor={isAuthor} isManager={isManager} postId={props.postId}/>
+                <PoppedContent page={props.page} content={poppedContent} apply={apply} setPoppedContentShow={setPoppedContentShow} isAuthor={isAuthor} isManager={isManager} postId={props.postId} haveApplied={haveApplied} setHaveApplied={setHaveApplied}/>
             </div>
 
             {props.voting &&

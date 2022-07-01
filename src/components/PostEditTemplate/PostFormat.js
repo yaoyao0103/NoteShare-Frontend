@@ -7,7 +7,7 @@ export const QnAFormat = {
     title: null, //
     content: null, //
     bestPrice: 0, //
-    isPublic: true,
+    public: true,
 }
 
 export const RewardFormat = {
@@ -23,7 +23,7 @@ export const RewardFormat = {
   bestPrice: 0, //
   referencePrice: 0, //
   referenceNumber: 0, //
-  isPublic: true,
+  public: true,
 }
 
 export const CollabNoteFormat = {
@@ -37,5 +37,5 @@ export const CollabNoteFormat = {
   title: null, //
   content: null, //
   bestPrice: 0, //
-  isPublic: true,
+  public: true,
 }

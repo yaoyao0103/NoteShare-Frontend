@@ -43,25 +43,22 @@ const OptionMenu = (props) => {
     */
   }
 
-  const deletePost = () => {
-    message.info("Delete")
-    /* Todo: delete it from db
-    // call archive API
-    axios.put(`API_URL`)
-    .then(res => {
-    })
-    */
-  }
-
   // set private or public
   const setStatus = () => {
-    message.info("Delete")
-    /* Todo: delete it from db
-    // call setStatus API
-    axios.put(`API_URL`)
+    console.log("id",props.id)
+    axios.put(`http://localhost:8080/post/publish/${props.id}`)
     .then(res => {
+        console.log("status", res.data.res)
+        props.setIsPublic(res.data.res.public)
+        console.log("status", res.data.res.public)
+        if(res.data.res.public)
+          message.success("Set public")
+        else
+          message.success("set private")
     })
-    */
+    .catch(err => {
+        console.log(err)
+    }) 
   }
 
     const { setVersion, setContent, setPoppedContentShow } = props;
@@ -89,10 +86,10 @@ const OptionMenu = (props) => {
           <div className="commentFromApplicantComment">
             {comment}
           </div>
-          <div className="commentFromApplicantButton" onClick={() => rejectApplier(props.email)}>
+          <div className="commentFromApplicantButton" onClick={() => reject(props.email)}>
             <MyButton color={"red"}><Text color='white' cls='Large' content={"Reject"} fontSize='17' display="inline-block" /></MyButton>
           </div>
-          <div className="commentFromApplicantButton" onClick={() => agreeApplier(props.email)}>
+          <div className="commentFromApplicantButton" onClick={() => approve(props.email)}>
             <MyButton color={"green"}><Text color='white' cls='Large' content={"Agree"} fontSize='17' display="inline-block" /></MyButton>
           </div>
         </div>
@@ -109,7 +106,7 @@ const OptionMenu = (props) => {
       // Todo: connect choose ref API
     }
 
-    const agreeApplier = (email) => {
+    const approve = (email) => {
       message.info("agree applier: "+ email);
       axios.put(`http://localhost:8080/post/add/${props.postId}/${email}`)
       .then ( res => {
@@ -122,9 +119,37 @@ const OptionMenu = (props) => {
       })
     }
 
-    const rejectApplier = (email) => {
+    const reject = (email) => {
       message.info("reject applier: "+ email);
-      // Todo: connect choose ref API
+      axios.delete(`http://localhost:8080/post/apply/${props.postId}/${email}`)
+      .then ( res => {
+          message.success("reject!!")
+          console.log(res.data.res)
+          // Todo: remove applicant from list
+      })
+      .catch(err =>{
+          console.log(err)
+      })
+    }
+
+    const deletePost = () => {
+      message.info("delete post: "+ props.id);
+      axios.delete(`http://localhost:8080/post/${props.id}`)
+      .then ( res => {
+          message.success("delete!!")
+          console.log(res.data.res)
+          if(props.page=='PersonalPage')
+            props.rerenderPosts()
+          else{
+            props.setPageProps({
+              page: 'PersonalPage'
+            })
+          }
+          // Todo: remove applicant from list
+      })
+      .catch(err =>{
+          console.log(err)
+      })
     }
 
   const NoteDetailMenu = (
@@ -200,14 +225,14 @@ const OptionMenu = (props) => {
             icon: <InboxOutlined />
           },
           {
-            label: (<a onClick={deletePost}>Delete</a>),
+            label: props.public? (<a onClick={setStatus}>Set Private</a>): (<a onClick={setStatus}>Set Public</a>),
             key: "4",
-            icon: <DeleteOutlined />
+            icon: <UserOutlined style={{color: "#333"}}/>
           },
           {
-            label: props.public? (<a onClick={setStatus}>Set Private</a>): (<a onClick={setStatus}>Set Public</a>),
+            label: (<a onClick={deletePost} style={{color:"red"}}>Delete</a>),
             key: "5",
-            icon: <UserOutlined style={{color: "#333"}}/>
+            icon: <DeleteOutlined style={{color:"red"}}/>
           },
           
 
@@ -238,9 +263,9 @@ const OptionMenu = (props) => {
             icon: <ShareAltOutlined />
         },
         {
-          label: (<a onClick={deletePost}>Delete</a>),
+          label: (<a onClick={deletePost} style={{color:"red"}}>Delete</a>),
           key: "3",
-          icon: <DeleteOutlined />
+          icon: <DeleteOutlined style={{color:"red"}}/>
         }]
     }/>
   );
@@ -262,7 +287,8 @@ const OptionMenu = (props) => {
             label: "Share",
             key: "2",
             icon: <ShareAltOutlined />
-        }]
+        },
+      ]
     }/>
   );
 
@@ -387,15 +413,24 @@ const OptionMenu = (props) => {
           icon: <CommentOutlined />
         },
         {
+          label: (<a onClick=
+            {() => {
+            }}
+            >Kick User</a>),
+          key: "6",
+          icon: <CommentOutlined />
+        },
+        {
             label: "Share",
-            key: "6",
+            key: "7",
             icon: <ShareAltOutlined />
         },
         {
-          label: (<a onClick={deletePost}>Delete</a>),
-          key: "7",
-          icon: <DeleteOutlined />
-        }]
+          label: props.public? (<a onClick={setStatus}>Set Private</a>): (<a onClick={setStatus}>Set Public</a>),
+          key: "8",
+          icon: <UserOutlined style={{color: "#333"}}/>
+        },
+      ]
     }/>
   );
 
@@ -466,12 +501,12 @@ const OptionMenu = (props) => {
             icon: <EyeOutlined />
         },
         {
-            label: (<a style={{color: "green"}} onClick={()=>{ agreeApplier(props.email) }}>Agree</a>),
+            label: (<a style={{color: "green"}} onClick={()=>{ approve(props.email) }}>Agree</a>),
             key: "2",
             icon: <CheckOutlined style={{color: "green"}}/>
         },
         {
-          label: (<a style={{color: "red"}} onClick={()=>{ rejectApplier(props.email) }}>Reject</a>),
+          label: (<a style={{color: "red"}} onClick={()=>{ reject(props.email) }}>Reject</a>),
           key: "3",
           icon: <CloseOutlined style={{color: "red"}}/>
         },]
@@ -502,6 +537,11 @@ const OptionMenu = (props) => {
             key: "2",
             icon: <ShareAltOutlined />
         },
+        {
+          label: (<a onClick={()=> deletePost() } style={{color:"red"}}>Delete</a>),
+            key: "3",
+            icon: <DeleteOutlined style={{color:"red"}}/>
+        },
       ]
     }/>
     );
@@ -527,7 +567,6 @@ const OptionMenu = (props) => {
         break;
       case 'PersonalPage': setMenu( PersonalPageNoteMenu ); break;
       // case 'QnAOutlinePage': setMenu( QnAOutlineMenu ); break;
-
     }
   },[props])
 

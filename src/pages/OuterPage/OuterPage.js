@@ -216,7 +216,7 @@ const OuterPage = () => {
 
                 <Button type="primary" onClick={() => {
                     setPageProps({
-                        postId: '62b07f9c0997e642d14020c6',
+                        postId: '62bea68c4e0af13e28f37f62',
                         page: 'CollabDetailPage'
                     })
                 }}>

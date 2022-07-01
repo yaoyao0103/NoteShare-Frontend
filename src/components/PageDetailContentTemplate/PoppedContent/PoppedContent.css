@@ -82,3 +82,13 @@
     margin-top: 1em;
     float: right
 }
+
+.apply_Form{
+    margin: .5em 1em;
+}
+
+.poppedContent__Tip{
+    float: right;
+    margin-top: .3em;
+    margin-right: .3em;
+}

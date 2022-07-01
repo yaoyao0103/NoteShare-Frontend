@@ -97,12 +97,14 @@ const PostEditTemplate = (props) => {
 
     const onUpdate = () => {
         const post = props.post;
+        let page;
         if(props.type == 'QA'){
             post.title = title
             post.department = information.department
             post.subject = information.subject
             post.bestPrice = information.bestPrice
             post.content = content
+            page = 'QnADetailPage'
         }
         else if(props.type == 'reward'){
             post.title = title
@@ -114,6 +116,7 @@ const PostEditTemplate = (props) => {
             post.referencePrice = information.referencePrice? information.referencePrice : null
             post.referenceNumber = information.referenceNumber? information.referenceNumber : null
             post.content = content
+            page = 'RewardDetailPage'
         }
         else if(props.type == 'collaboration'){
             post.title = title
@@ -123,13 +126,14 @@ const PostEditTemplate = (props) => {
             post.professor = information.professor? information.professor : null
             post.bestPrice = information.bestPrice
             post.content = content
+            page = 'CollabDetailPage'
         }
         console.log(post)
         axios.put(`http://localhost:8080/post/${props.postId}`, post)
         .then(res => {
             console.log(res.data)
             message.info("Update!!");
-            props.setPageProps({page:'PersonalPage'});
+            props.setPageProps({page:page, postId: props.postId});
         })
         .catch(err =>{
             console.log(err)
