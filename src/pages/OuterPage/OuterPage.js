@@ -13,15 +13,17 @@ import QnAEditPage from "../QnAEditPage/QnAEditPage";
 import RewardEditPage from "../RewardEditPage/RewardEditPage";
 import CollabEditPage from "../CollabEditPage/CollabEditPage";
 import NoteEditPage from "../NoteEditPage/NoteEditPage";
+import FolderOutlinePage from '../FolderOutlinePage/FolderOutlinePage';
 import ProfilePage from "../ProfilePage/ProfilePage";
 import PersonalPage from "../PersonalPage/PersonalPage";
 import LoginPage from "../LoginPage/LoginPage";
 import SignUpPage from "../SignUpPage/SignUpPage";
 import VerificationPage from "../VerificationPage/VerificationPage";
+import ForgetPasswordPage from '../ForgetPasswordPage/ForgetPasswordPage';
 import Navbar from '../../components/Navbar/Navbar';
 import { PlusOutlined } from "@ant-design/icons";
 import CollabNoteEditPage from "../CollabNoteEditPage/CollabNoteEditPage";
-
+import ResetPasswordPage from '../ResetPasswordPage/ResetPasswordPage';
 import './OuterPage.css'
 import { Button, Drawer, message } from 'antd'
 import { timers } from 'jquery';
@@ -32,6 +34,7 @@ const OuterPage = () => {
     const [pageComponent, setPageComponent] = useState(<></>)
     const [visible, setVisible] = useState(false);
     const [loggedIn, setLoggedIn] = useState(false);
+    const [changeAvatar,setChangeAvatar]=useState(0);
     const showDrawer = () => {
         setVisible(true);
     };
@@ -49,6 +52,14 @@ const OuterPage = () => {
             setPageProps({page: 'PersonalPage'})
         }
     },[])
+    useEffect(()=> {
+        if(loggedIn){
+            setPageProps({page: 'PersonalPage'})
+        }
+        else{
+            setPageProps({page: 'LoginPage'})
+        }
+    },[loggedIn])
 
     useEffect(() => {
         console.log("page", pageProps.page)
@@ -70,11 +81,14 @@ const OuterPage = () => {
             case 'CollabNoteEditPage': setPageComponent(<CollabNoteEditPage page='CollabNoteEditPage' setPageProps={setPageProps} {...pageProps} />); break;
             case 'CollabNewPage': setPageComponent(<CollabEditPage page='CollabNewPage' setPageProps={setPageProps} {...pageProps} />); break;
             case 'CollabOutlinePage': setPageComponent(<CollabOutlinePage page='CollabOutlinePage' setPageProps={setPageProps} {...pageProps} />); break;
+            case 'FolderOutlinePage': setPageComponent(<FolderOutlinePage page='FolderOutlinePage' setPageProps={setPageProps} {...pageProps} />); break;
             case 'PersonalPage': setPageComponent(<PersonalPage page='PersonalPage' setPageProps={setPageProps} {...pageProps}/>); break;
-            case 'ProfilePage': setPageComponent(<ProfilePage page='ProfilePage' setPageProps={setPageProps} {...pageProps}/>); break;
+            case 'ProfilePage': setPageComponent(<ProfilePage page='ProfilePage' Avatar={changeAvatar}setAvatar={setChangeAvatar}setPageProps={setPageProps} {...pageProps}/>); break;
             case 'LoginPage': setPageComponent(<LoginPage page='LoginPage' setPageProps={setPageProps} setLoggedIn={setLoggedIn} {...pageProps}/>); break;
             case 'SignUpPage': setPageComponent(<SignUpPage page='SignUpPage' setPageProps={setPageProps} {...pageProps}/>); break;
             case 'VerificationPage': setPageComponent(<VerificationPage page='VerificationPage' setPageProps={setPageProps} {...pageProps}/>); break;
+            case 'ForgetPasswordPage': setPageComponent(<ForgetPasswordPage page='ForgetPasswordPage' setPageProps={setPageProps} {...pageProps}/>); break;
+            case 'ResetPasswordPage': setPageComponent(<ResetPasswordPage setLoggedIn={setLoggedIn}page='ResetPasswordPage' setPageProps={setPageProps} {...pageProps}/>); break;
             default: setPageComponent(<></>); break;
         }
     }, [pageProps])
@@ -86,7 +100,7 @@ const OuterPage = () => {
     return (
         <>
             <div className='outerPage'>
-                <Navbar loggedIn={loggedIn} setPageProps={setPageProps} setLoggedIn={setLoggedIn}/>
+                <Navbar changeAvatar={changeAvatar}loggedIn={loggedIn} setPageProps={setPageProps} setLoggedIn={setLoggedIn}/>
                 <div className='outerPage__Layout'>
                     {pageComponent&&pageComponent}
                 </div>
@@ -256,7 +270,16 @@ const OuterPage = () => {
                 }}>
                     CollabOutlinePage
                 </Button>
+                <Button type="primary" onClick={() => {
+                    setPageProps({
+                        keyWord: 'test',
+                        author:'a',
+                        page: 'FolderOutlinePage'
 
+                    })
+                }}>
+                    FolderOutlinePage
+                </Button>
                 <Button type="primary" onClick={() => {
                     setPageProps({
                         page: 'PersonalPage'
@@ -266,7 +289,7 @@ const OuterPage = () => {
                 </Button>
                 <Button type="primary" onClick={() => {
                     setPageProps({
-                        email:'a147896325811%40gmail.com',
+                        email:'00857030@email.ntou.edu.tw',
                         page: 'ProfilePage'
                     });     
                 }}>
@@ -294,6 +317,22 @@ const OuterPage = () => {
                     })
                 }}>
                     VerificationPage
+                </Button>
+                <Button type="primary" onClick={() => {
+                    setPageProps({
+                        email: 'a5477547720@yahoo.com.tw',
+                        page: 'ForgetPasswordPage'
+                    })
+                }}>
+                    ForgetPasswordPage
+                </Button>
+                <Button type="primary" onClick={() => {
+                    setPageProps({
+                        email:'a5477547720@yahoo.com.tw',
+                        page: 'ResetPasswordPage'
+                    })
+                }}>
+                    ResetPasswordPage
                 </Button>
             </Drawer>
             <div className="floatButton" onClick={floatBtnOnClick}>

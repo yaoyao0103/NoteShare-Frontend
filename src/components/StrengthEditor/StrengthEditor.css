@@ -70,7 +70,7 @@
     position: relative;
     vertical-align: top;
     margin-left:0.5em;
-    padding-top: 0.65em;
+    padding-top: 0.55em;
     opacity:0.8;
     cursor: pointer;
 }
@@ -89,6 +89,7 @@
 }
 .StrengthEditor__Save{
     margin-left:3% ;
-    vertical-align:bottom;
+    margin-bottom:1%;
+    vertical-align:middle;
     
 }

@@ -14,15 +14,11 @@ function RewardOutlinePage(props) {
     useEffect(() => {
         async function getRewardById() {
             try {
-                const haveReward= true;
-
                 const sortBy=sortMode;
                 
-                await axios.get('http://localhost:8080/search/post/'+props.keyword+'/' + String(pageNumber-1) + '/20?department='+(props.department?props.department:'')+'&subject='+(props.subject?props.subject:'')+'&haveReward='+true+'&sortBy='+sortBy).then((res) => {
-                    //console.log(res.search.search);
-                    setReward(oldArray => [...oldArray, res.data.search]);
-          
+                await axios.get('http://localhost:8080/search/post/'+ String(pageNumber-1) + '/20?keyword='+(props.keyword?props.keyword:'')+'&department='+(props.department?props.department:'')+'&subject='+(props.subject?props.subject:'')+'&haveReward='+true+'&sortBy='+sortBy).then((res) => {
 
+                    setReward(oldArray => [...oldArray, res.data.search]);
                 });
 
             } catch (error) {
@@ -33,60 +29,33 @@ function RewardOutlinePage(props) {
             }
         }
         getRewardById();
-        //console.log('2222');
+
     }, []);
     useEffect(() => {
         async function getRewardById() {
             try {
-                const haveReward= true;
-               
                 const sortBy=sortMode;
                 
-                await axios.get('http://localhost:8080/search/post/'+props.keyword+'/' + String(pageNumber-1) + '/20?department='+(props.department?props.department:'')+'&subject='+(props.subject?props.subject:'')+'&haveReward='+true+'&sortBy='+sortBy).then((res) => {
+                await axios.get('http://localhost:8080/search/post/'+ String(pageNumber-1) + '/20?keyword='+(props.keyword?props.keyword:'')+'&department='+(props.department?props.department:'')+'&subject='+(props.subject?props.subject:'')+'&haveReward='+true+'&sortBy='+sortBy).then((res) => {
                     setReward(oldArray => [...oldArray=[], res.data.search]);
                     window.scrollTo(0, 0);
-                    //console.log(pageNumber);
+
 
                 });
 
             } catch (error) {
-                //console.log(error.message);
+
                 setReward(error.message);
 
 
             }
         }
-        //console.log(pageNumber-1);
+
         getRewardById();
-        //console.log('1111');
+
         
     }, [pageNumber,sortMode]);
-    // useEffect(() => {
-    //     async function getRewardById() {
-    //         try {
-    //             const haveReward= true;
-    //             const sortBy=sortMode;
-                
-    //             await axios.get('http://localhost:8080/search/post/interrupt/' + String(pageNumber-1) + '/20?haveReward='+haveReward+'&sortBy='+sortBy).then((res) => {
-    //                 setReward(oldArray => [...oldArray=[], res.data.search]);
-    //                 window.scrollTo(0, 0);
-    //                 //console.log(pageNumber);
-
-    //             });
-
-    //         } catch (error) {
-    //             //console.log(error.message);
-    //             setReward(error.message);
-
-
-    //         }
-    //     }
-    //     //console.log(pageNumber-1);
-    //     getRewardById();
-    //     setPageNumber(1);
-    //     //console.log('1111');
-        
-    // }, [sortMode]);
+   
     return (
         <>
             {Reward.length > 0 && 

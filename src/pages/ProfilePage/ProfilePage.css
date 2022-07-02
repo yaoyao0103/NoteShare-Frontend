@@ -3,7 +3,7 @@
     /* position: absolute;
     top: 10%; */
     width: 90%;
-    height: 80vh; 
+    height: 100vh; 
     /* height: auto; */
     margin-top: 5%;
     background-color: #FFF;
@@ -70,17 +70,41 @@
 }
 .Profile__Follow{
     position: relative;
-    width: 20%;
     margin-top:3%;
     margin-right:0%;
     margin-bottom: 3%;
+    padding-left:5%;
     cursor: pointer;
     box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
     border-radius: 5%;
 }
+.Profile__Bell{
+    position: relative;
+   
+    margin-top:3%;
+    margin-right:0%;
+    margin-left:5%;
+    margin-bottom: 3%;
+    cursor: pointer;
+    
+    /* box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px; */
+    /* border-radius: 5%; */
+}
+.Profile__Bell:hover{
+    position: relative;
+    margin-top:3%;
+    margin-right:0%;
+    margin-left:5%;
+    margin-bottom: 3%;
+    cursor: pointer;
+    /* box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px; */
+    /* border-radius: 5%; */
+}
+.Profile__Bell__Icon{
+
+}
 .Profile__Follow:hover{
     position: relative;
-    width: 20%;
     margin-top:3%;
     margin-right:0%;
     margin-bottom: 3%;
@@ -91,7 +115,9 @@
 }
 .Profile__Follow__Icon{
     width:auto ;
+    padding-left:3%;
     margin-right:5%;
+    /* margin-right:5%; */
 }
 .Profile__Strength{
     position: relative;

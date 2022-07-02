@@ -63,9 +63,9 @@ function LoginPage(props) {
     };
     const rememberChange = (checked) => {
         if (checked)
-            setRemember(true);
+            setHasRemember('A');
         else
-            setRemember(false);
+            setHasRemember('');
         //console.log(remember);
 
     };
@@ -91,7 +91,13 @@ function LoginPage(props) {
                 props.setPageProps({ page: 'PersonalPage' })
             }
             else {
-                props.setPageProps({ page: 'VerificationPage', email: email })
+                axios.post("http://localhost:8080/verification/resendCode/" + email).then(res => {
+                    console.log(res.data.msg);
+                }).catch((error) => {
+                    console.log(error.response.status);
+                })
+               
+                props.setPageProps({ page: 'VerificationPage', email: email });
             }
 
         }).catch((error) => {
@@ -198,7 +204,7 @@ function LoginPage(props) {
                                 </Form.Item>
                                 <Form.Item className='loginPage__Form__Item'>
                                     <a href="javascript: return false;" onClick={() => (props.setPageProps({ page: 'SignUpPage' }))}>Register now!</a>
-                                    <a className="loginPage__Content__Form__Forgot" href="">
+                                    <a className="loginPage__Content__Form__Forgot" href="javascript: return false;" onClick={() => (props.setPageProps({ page: 'ForgetPasswordPage' }))}>
                                         Forgot password?
                                     </a>
 

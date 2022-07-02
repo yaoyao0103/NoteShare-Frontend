@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Layout, Row, Col, Pagination } from "antd";
+import { Layout, Row, Col, Pagination ,Empty} from "antd";
 import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
 import SortMeun from "../SortMenu/SortMenu";
 import OutlineCard from "../OutlineCard/OutlineCard";
+import FolderOutlineCard from "../FolderOutlineCard/FolderOutlineCard";
 import './PageOutlineContentTemplate.css'
 import axios from "axios";
 const { Header, Content, Footer } = Layout;
@@ -22,13 +23,24 @@ function PageOutlineContentTemplate(props) {
         console.log(props.Post[0].items)
         var tempcardLists = [];
 
-        if (!(props.Post[0].totalPages===0)) {
+        if (!(props.Post[0].totalPages===0)&&props.mode!=='Folder') {
             //console.log('1111');
             for (let i = 0; i <= props.Post[0].items.length - 1; i++) {
-                tempcardLists.push(
-                        <OutlineCard onClick={() => onClickCard(props.Post[0].items[i].type, props.Post[0].items[i].id)} page={props.page} mode={props.mode} cardContent={props.Post[0].items[i]} author={props.Post[0].items[i].authorName} />)
+                tempcardLists.push(<OutlineCard page={props.page} mode={props.mode} cardContent={props.Post[0].items[i]} author={props.Post[0].items[i].author} />);
             };
 
+            setCardList(tempcardLists);
+        }
+        else if (!(props.Post[0].totalPages===0)&&props.mode==='Folder'){
+            // tempcardLists.push(<FolderOutlineCard page={props.page} mode={props.mode} cardContent={props.Post[0].items[0]} author={props.Post[0].items[0].creatorName} />);
+            for (let i = 0; i <= props.Post[0].items.length - 1; i++) {
+                tempcardLists.push(<FolderOutlineCard page={props.page} mode={props.mode} cardContent={props.Post[0].items[i]} author={props.Post[0].items[i].creatorName} />);
+            };
+
+            setCardList(tempcardLists);
+        }
+        else{
+            tempcardLists.push(<Empty />);
             setCardList(tempcardLists);
         }
         setPageTotal(props.Post[0].totalPages * 10);
