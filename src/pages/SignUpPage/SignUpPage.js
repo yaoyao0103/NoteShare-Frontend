@@ -58,6 +58,11 @@ function SignUpPage(props) {
 
     };
     useEffect(() => {
+        axios.post("http://localhost:8080/verification/resendCode/" + email).then(res => {
+            console.log(res.data.msg);
+        }).catch((error) => {
+            console.log(error.response.status);
+        })
         if (openSuccess)
             props.setPageProps({
                 page: 'VerificationPage',

@@ -13,10 +13,9 @@ function NoteOutlinePage(props) {
             try {
                 const haveNormal= true;
                 const sortBy=sortMode;
-                console.log(props.keyword);
-                await axios.get('http://localhost:8080/search/note/'+props.keyword+'/' + String(pageNumber-1) + '/10?department='+(props.department?props.department:'')+'&subject='+(props.subject?props.subject:'')+'&haveNormal='+true+'&sortBy='+sortBy).then((res) => {
+                console.log(props.department);
+                await axios.get('http://localhost:8080/search/note/'+ String(pageNumber-1) + '/10?keyword='+(props.keyword?props.keyword:'')+'&department='+(props.department?props.department:'')+'&subject='+(props.subject?props.subject:'')+'&haveNormal='+true+'&sortBy='+sortBy).then((res) => {
                     setNote(oldArray => [...oldArray, res.data.search]);
-                    //console.log(res.data.search);
 
                 });
 
@@ -37,7 +36,7 @@ function NoteOutlinePage(props) {
                 const haveNormal= true;
                 const sortBy=sortMode;
             
-                await axios.get('http://localhost:8080/search/note/'+props.keyword+'/' + String(pageNumber-1) + '/10?department='+(props.department?props.department:'')+'&subject='+(props.subject?props.subject:'')+'&haveNormal='+true+'&sortBy='+sortBy).then((res) => {
+                await axios.get('http://localhost:8080/search/note/'+ String(pageNumber-1) + '/10?keyword='+(props.keyword?props.keyword:'')+'&department='+(props.department?props.department:'')+'&subject='+(props.subject?props.subject:'')+'&haveNormal='+true+'&sortBy='+sortBy).then((res) => {
                     setNote(oldArray => [...oldArray=[], res.data.search]);
                     window.scrollTo(0, 0);
                     //console.log(pageNumber);

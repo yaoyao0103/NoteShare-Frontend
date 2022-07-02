@@ -19,10 +19,11 @@ import PersonalPage from "../PersonalPage/PersonalPage";
 import LoginPage from "../LoginPage/LoginPage";
 import SignUpPage from "../SignUpPage/SignUpPage";
 import VerificationPage from "../VerificationPage/VerificationPage";
+import ForgetPasswordPage from '../ForgetPasswordPage/ForgetPasswordPage';
 import Navbar from '../../components/Navbar/Navbar';
 import { PlusOutlined } from "@ant-design/icons";
 import CollabNoteEditPage from "../CollabNoteEditPage/CollabNoteEditPage";
-
+import ResetPasswordPage from '../ResetPasswordPage/ResetPasswordPage';
 import './OuterPage.css'
 import { Button, Drawer, message } from 'antd'
 import { timers } from 'jquery';
@@ -51,6 +52,14 @@ const OuterPage = () => {
             setPageProps({page: 'PersonalPage'})
         }
     },[])
+    useEffect(()=> {
+        if(loggedIn){
+            setPageProps({page: 'PersonalPage'})
+        }
+        else{
+            setPageProps({page: 'LoginPage'})
+        }
+    },[loggedIn])
 
     useEffect(() => {
         console.log("page", pageProps.page)
@@ -78,6 +87,8 @@ const OuterPage = () => {
             case 'LoginPage': setPageComponent(<LoginPage page='LoginPage' setPageProps={setPageProps} setLoggedIn={setLoggedIn} {...pageProps}/>); break;
             case 'SignUpPage': setPageComponent(<SignUpPage page='SignUpPage' setPageProps={setPageProps} {...pageProps}/>); break;
             case 'VerificationPage': setPageComponent(<VerificationPage page='VerificationPage' setPageProps={setPageProps} {...pageProps}/>); break;
+            case 'ForgetPasswordPage': setPageComponent(<ForgetPasswordPage page='ForgetPasswordPage' setPageProps={setPageProps} {...pageProps}/>); break;
+            case 'ResetPasswordPage': setPageComponent(<ResetPasswordPage setLoggedIn={setLoggedIn}page='ResetPasswordPage' setPageProps={setPageProps} {...pageProps}/>); break;
             default: setPageComponent(<></>); break;
         }
     }, [pageProps])
@@ -306,6 +317,22 @@ const OuterPage = () => {
                     })
                 }}>
                     VerificationPage
+                </Button>
+                <Button type="primary" onClick={() => {
+                    setPageProps({
+                        email: 'a5477547720@yahoo.com.tw',
+                        page: 'ForgetPasswordPage'
+                    })
+                }}>
+                    ForgetPasswordPage
+                </Button>
+                <Button type="primary" onClick={() => {
+                    setPageProps({
+                        email:'a5477547720@yahoo.com.tw',
+                        page: 'ResetPasswordPage'
+                    })
+                }}>
+                    ResetPasswordPage
                 </Button>
             </Drawer>
             <div className="floatButton" onClick={floatBtnOnClick}>
