@@ -49,7 +49,7 @@ const OuterPage = () => {
         const email = cookieParser.getCookieByName('email')
         if(email){
             setLoggedIn(true);
-            setPageProps({page: 'PersonalPage'})
+            //setPageProps({page: 'PersonalPage'})
         }
     },[])
     useEffect(()=> {

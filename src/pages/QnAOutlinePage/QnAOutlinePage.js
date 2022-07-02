@@ -13,7 +13,7 @@ function QnAOutlinePage(props) {
             try {
                 const haveQA= true;
                 const sortBy=sortMode;               
-                await axios.get('http://localhost:8080/search/post/'+props.keyword+'/' + String(pageNumber-1) + '/20?department='+(props.department?props.department:'')+'&subject='+(props.subject?props.subject:'')+'&haveQA='+true+'&sortBy='+sortBy).then((res) => {
+                await axios.get('http://localhost:8080/search/post/'+ String(pageNumber-1) + '/20?'+(props.keyword?props.keyword:'')+'&department='+(props.department?props.department:'')+'&subject='+(props.subject?props.subject:'')+'&haveQA='+true+'&sortBy='+sortBy).then((res) => {
                     setQnA(oldArray => [...oldArray, res.data.search]);
                 });
 
@@ -30,7 +30,7 @@ function QnAOutlinePage(props) {
                 const haveQA= true;
                 const sortBy=sortMode;
                 
-                await axios.get('http://localhost:8080/search/post/'+props.keyword+'/' + String(pageNumber-1) + '/20?department='+(props.department?props.department:'')+'&subject='+(props.subject?props.subject:'')+'&haveQA='+true+'&sortBy='+sortBy).then((res) => {
+                await axios.get('http://localhost:8080/search/post/'+ String(pageNumber-1) + '/20?'+(props.keyword?props.keyword:'')+'&department='+(props.department?props.department:'')+'&subject='+(props.subject?props.subject:'')+'&haveQA='+true+'&sortBy='+sortBy).then((res) => {
                     setQnA(oldArray => [...oldArray=[], res.data.search]);
                     window.scrollTo(0, 0);
                 });
