@@ -49,7 +49,7 @@ const OuterPage = () => {
         const email = cookieParser.getCookieByName('email')
         if(email){
             setLoggedIn(true);
-            //setPageProps({page: 'PersonalPage'})
+            setPageProps({page: 'PersonalPage'})
         }
     },[])
     useEffect(()=> {
@@ -63,6 +63,7 @@ const OuterPage = () => {
 
     useEffect(() => {
         console.log("page", pageProps.page)
+        console.log('login',loggedIn)
         switch (pageProps.page) {
             case 'NoteDetailPage': setPageComponent(<NoteDetailPage page='NoteDetailPage' setPageProps={setPageProps} {...pageProps} />); break;
             case 'NoteEditPage': setPageComponent(<NoteEditPage page='NoteEditPage' setPageProps={setPageProps}  {...pageProps} />); break;

@@ -9,6 +9,7 @@ function NoteDetailPage(props){
     const page = "NoteDetailPage";
     
     useEffect(() => {
+        //console.log('1234')
         async function getNoteById() {
             axios.get(`http://localhost:8080/note/${props.noteId}`)
             .then(res => {
