@@ -26,7 +26,7 @@ function PageOutlineContentTemplate(props) {
         if (!(props.Post[0].totalPages===0)&&props.mode!=='Folder') {
             //console.log('1111');
             for (let i = 0; i <= props.Post[0].items.length - 1; i++) {
-                tempcardLists.push(<OutlineCard page={props.page} mode={props.mode} cardContent={props.Post[0].items[i]} author={props.Post[0].items[i].author} />);
+                tempcardLists.push(<OutlineCard onClick={()=>onClickCard(props.Post[0].items[i].type, props.Post[0].items[i].id)} page={props.page} mode={props.mode} cardContent={props.Post[0].items[i]} author={props.Post[0].items[i].author} />);
             };
 
             setCardList(tempcardLists);

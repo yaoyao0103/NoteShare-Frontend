@@ -125,3 +125,7 @@
 .ant-popover-inner{
     padding: .5em;
 }
+
+.OPInfo__Avatar{
+    cursor: pointer;
+}
