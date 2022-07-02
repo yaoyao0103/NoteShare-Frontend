@@ -14,7 +14,7 @@ const VersionArea = (props) => {
       renderItem={(item, index) => (index !=0 && <List.Item actions={
 
           [
-            <OptionMenu page={props.page} index = {index} versions={props.versions} setVersion={props.setVersion}/>
+            <OptionMenu page={props.page} index = {index} versions={props.versions} setVersion={props.setVersion} isAuthor={props.isAuthor}/>
           ]
     } >{item.name}</List.Item>)}
     />

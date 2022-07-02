@@ -17,7 +17,7 @@ function Navbar(props) {
     <div id="navbar" className="nav">
       <Logo />
       <NavButton setPageProps={props.setPageProps} />
-      <NavMenu />
+      <NavMenu setPageProps={props.setPageProps}/>
       <SearchBar setPageProps={props.setPageProps}/>
 
       {props.loggedIn? 

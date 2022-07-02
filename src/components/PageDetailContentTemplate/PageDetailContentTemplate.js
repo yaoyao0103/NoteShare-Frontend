@@ -28,6 +28,7 @@ const PageDetailContentTemplate = (props) => {
     const [editor, setEditor] = useState(<></>)
     const [isManager, setIsManager] = useState(false)
     const [isAuthor, setIsAuthor] = useState(false)
+    const [isFavoriter, setIsFavoriter] = useState(false)
     const [versions, setVersions] = useState(null)
     const [email, setEmail] = useState('')
     const [author, setAuthor] = useState([])
@@ -43,6 +44,11 @@ const PageDetailContentTemplate = (props) => {
         if(props.page == "NoteDetailPage"){
             setNoteId(props.data?.id);
             setEditor(<MyEditor noteId = {props.data?.id} version={'0'} page={props.page}/>)
+            if (props.data?.headerEmail == tempEmail) setIsAuthor(true)
+            else setIsAuthor(false)
+            if(props.data?.favoriter.includes(tempEmail)) setIsFavoriter(true)
+            else setIsFavoriter(false)
+
         }
         else if(props.page == "CollabDetailPage" && props.data){
             const noteId = props.data.answers[0];
@@ -52,6 +58,7 @@ const PageDetailContentTemplate = (props) => {
             .then ( res => {
                 console.log(res.data.res)
                 const tempNote = res.data.res
+                setNoteId(tempNote)
                 setVersions(tempNote.version)
                 if((tempNote.managerEmail?.includes(tempEmail)) || tempNote.headerEmail == tempEmail){
                     setEditor(<MyEditor noteId = {noteId} version={'0'} page={props.page}/>)
@@ -78,6 +85,8 @@ const PageDetailContentTemplate = (props) => {
                     }
                     console.log("is not a manager or author")
                 }
+                if(tempNote.favoriter.includes(tempEmail)) setIsFavoriter(true)
+                else setIsFavoriter(false)
                 let tempAuthor = []
                 for(let i = 0; i < tempNote.authorName.length; i++){
                     tempAuthor = [...tempAuthor, {email: tempNote.authorEmail[i], name: tempNote.authorName[i]}]
@@ -123,6 +132,17 @@ const PageDetailContentTemplate = (props) => {
             })
     }
 
+    const buyNote = () => {
+        axios.put(`http://localhost:8080/coin/note/${email}/${props.noteId}`)
+        .then ( res => {
+            console.log(res.data.res)
+            message.success("Bought!")
+        })
+        .catch(err =>{
+            console.log(err)
+        })
+    }
+
 
     return (
         
@@ -156,6 +176,7 @@ const PageDetailContentTemplate = (props) => {
                                         setVersion={setVersion}
                                         isAuthor={isAuthor}
                                         isManager={isManager}
+                                        isFavoriter={isFavoriter}
                                         setPoppedContentShow={setPoppedContentShow}
                                         id={props.postId? props.postId:props.noteId}
                                         setPageProps={props.setPageProps}
@@ -212,12 +233,22 @@ const PageDetailContentTemplate = (props) => {
                                         <Tag style={{ fontSize:"15px" }}>{tag}</Tag>
                                     </>
                                 )}
+                                {!(props.data?.headerEmail == email || props.data?.buyer.includes(email)) &&
+                                    <div className="contentTemplate__Footer__Button" onClick={() => buyNote()}>
+                                        <Button color={"green"}><Text color='white' cls='Large' content={"Buy"} fontSize='17' display="inline-block" /></Button>
+                                    </div>   
+                                }
                             </>
                         }
                         {/* Todo: also check if he is an origin poster */}
-                        {props.page=='RewardDetailPage' &&
+                        {(props.page=='RewardDetailPage' && props.author == email)  &&
                             <div className="contentTemplate__Footer__Button" onClick={() => setPoppedContentShow(true)}>
-                                <Button color={"green"}><Text color='white' cls='Large' content={"Show Answer"} fontSize='17' display="inline-block" /></Button>
+                                <Button color={"green"}><Text color='white' cls='Large' content={"Show user-contributed Notes"} fontSize='17' display="inline-block" /></Button>
+                            </div>
+                        }
+                        {(props.page=='RewardDetailPage' && props.author != email) &&
+                            <div className="contentTemplate__Footer__Button" onClick={() => setPoppedContentShow(true)}>
+                                <Button color={"green"}><Text color='white' cls='Large' content={"Contribute Note"} fontSize='17' display="inline-block" /></Button>
                             </div>
                         }
                         {(props.page=='CollabDetailPage' && !isAuthor) &&

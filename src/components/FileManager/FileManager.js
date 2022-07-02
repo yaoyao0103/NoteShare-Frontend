@@ -65,7 +65,10 @@ const FileManager = (props) => {
                         renderItem={(item, index) => (
                             <List.Item
                                 className="fileManage_Note_Item fileManage_List_Item"
-                                actions={[<OptionMenu page={props.page} id={item.id} setPageProps={props.setPageProps} />]}
+                                actions={
+                                    inFolder &&
+                                    [<OptionMenu page={props.page} id={item.id} setPageProps={props.setPageProps} />]
+                                }
                             >
                                 <List.Item.Meta
                                     avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
