@@ -63,7 +63,12 @@ const OuterPage = () => {
 
     useEffect(() => {
         console.log("page", pageProps.page)
+<<<<<<< HEAD
         console.log('login',loggedIn)
+=======
+        console.log("pageProps", pageProps)
+        
+>>>>>>> 38e728f386a193baa0cf2129a0a2c4976b8b6f94
         switch (pageProps.page) {
             case 'NoteDetailPage': setPageComponent(<NoteDetailPage page='NoteDetailPage' setPageProps={setPageProps} {...pageProps} />); break;
             case 'NoteEditPage': setPageComponent(<NoteEditPage page='NoteEditPage' setPageProps={setPageProps}  {...pageProps} />); break;
@@ -101,7 +106,7 @@ const OuterPage = () => {
     return (
         <>
             <div className='outerPage'>
-                <Navbar changeAvatar={changeAvatar}loggedIn={loggedIn} setPageProps={setPageProps} setLoggedIn={setLoggedIn}/>
+                <Navbar changeAvatar={changeAvatar} loggedIn={loggedIn} setPageProps={setPageProps} setLoggedIn={setLoggedIn}/>
                 <div className='outerPage__Layout'>
                     {pageComponent&&pageComponent}
                 </div>

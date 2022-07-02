@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
 import PageDetailTemplate from '../../components/PageDetailTemplate/PageDetailTemplate'
 import PageDetailContentTemplate from '../../components/PageDetailContentTemplate/PageDetailContentTemplate';
 import axios from '../../components/axios/axios';
@@ -20,9 +19,9 @@ function NoteDetailPage(props){
                 console.log(err)
             })
         }
-
+        console.log("--------------------")
         getNoteById();
-        }, []);
+        }, [props]);
     return(
         <>
             {/* <PageDetailTemplate page={page}>

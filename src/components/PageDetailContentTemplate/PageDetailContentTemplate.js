@@ -140,6 +140,7 @@ const PageDetailContentTemplate = (props) => {
                                     date={props.data?.date} 
                                     dateFontSize="18"
                                     page={props.page}
+                                    setPageProps={props.setPageProps}
                                 >T</OPInfo>
                             </Col>
                             <Col className="contentTemplate__Header__middle"span={props.page!='NoteDetailPage'?16:18}>
