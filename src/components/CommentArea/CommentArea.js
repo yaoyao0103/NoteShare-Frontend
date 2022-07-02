@@ -75,13 +75,9 @@ function CommentArea(props) {
     }
 
 
-    const updateLike = (floor) => {
-        message.info(`Like ${floor}`);
-        let temp = props.comments[floor]
-        console.log(temp)
-        temp.liker.push(email)
-        temp.likeCount += 1;
-        axios.put(`http://localhost:8080/comment/${props.id}/${floor}`, temp)
+    const like = (commentId) => {
+        message.info(`Like ${commentId}`);
+        axios.put(`http://localhost:8080/favorite/${props.type}/${props.id}/${commentId}/${email}`)
         .then(res => {
             console.log(res.data.res)
             message.success("Submit!")
@@ -90,6 +86,20 @@ function CommentArea(props) {
         .catch(err => {
             console.log(err)
         }) 
+
+    };
+
+    const unlike = (commentId) => {
+        message.info(`UnLike ${commentId}`);
+        axios.put(`http://localhost:8080/unFavorite/${props.type}/${props.id}/${commentId}/${email}`)
+        .then(res => {
+            console.log(res.data.res)
+            message.success("Submit!")
+            refresh()
+        })
+        .catch(err => {
+            console.log(err)
+        })  
 
     };
 
@@ -148,7 +158,7 @@ function CommentArea(props) {
                     <Comment
                     actions={[
                         <Tooltip key={`comment-best-like-on-${index}`} title="Like">
-                            <span onClick={() => {updateLike(item.id)}} >
+                            <span onClick={() => {like(item.id)}} >
                             {React.createElement(likeColor[item.id]? LikeFilled : LikeOutlined)}
                             <span className="comment-action">{likeCount[item.id]}</span>
                             </span>
@@ -178,13 +188,16 @@ function CommentArea(props) {
                 <li key={index}>
                     <Comment
                     actions={[
-                        <Tooltip key={`comment-basic-like-on-${index}`} title="Like">
+                        <Tooltip key={`comment-basic-like-on-${index}`} title={likeColor[item.id]?"Unlike":"Like"}>
                             <span 
                             onClick={()=>{
-                                if(!likeColor[item.id])
-                                    updateLike(item.floor);
+                                if(likeColor[item.id])
+                                    unlike(item.id);
+                                else{
+                                    like(item.id);
+                                }
                             }} 
-                            style={(likeColor[item.id])?{cursor:"default"}:{cursor:"pointer"}}>
+                            >
                             {React.createElement(likeColor[item.id]? LikeFilled : LikeOutlined)}
                             <span className="comment-action">{likeCount[item.id]}</span>
                             </span>
