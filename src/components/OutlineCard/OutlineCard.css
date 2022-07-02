@@ -6,7 +6,7 @@
     max-width: 45%;
     background-color: #fff;
     margin:2.5%;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 20px 100px -50px
    
     
 }
@@ -15,8 +15,9 @@
     height: 20em;
     width:45%;
     background-color: #fff;
-    transform: scale(1.1);
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+    transform: scale(1.005);
+    transition: .3s;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 20px 100px -20px
    
     
 }
@@ -100,8 +101,7 @@
     margin-right:5%;
     margin-top:2.5%;
     margin-bottom:2.5%;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
-   
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 20px 100px -50px
     
 }
 .OutlineCard__Layout__Outer__Note:hover{
@@ -109,10 +109,10 @@
     height: 20em;
     width:45%;
     background-color: #fff;
-    transform: scale(1.05);
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
-   
-    
+    transform: scale(1.005);
+    transition: .3s;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 20px 100px -20px
+
 }
 .OutlineCard__Content__Outer__Note{
     position: relative;

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./OptionMenu.css";
 import { Link, useNavigate } from "react-router-dom";
 import { Menu, Dropdown, Space, Drawer, message, Input, Tooltip, Button } from "antd";
-import { CopyOutlined , EditOutlined, CommentOutlined, CheckOutlined, CloseOutlined, ShareAltOutlined, InboxOutlined, DeleteOutlined, EyeOutlined, InfoCircleOutlined, UserOutlined, LikeOutlined } from "@ant-design/icons";
+import { StarOutlined, CopyOutlined , EditOutlined, CommentOutlined, CheckOutlined, CloseOutlined, ShareAltOutlined, InboxOutlined, DeleteOutlined, EyeOutlined, InfoCircleOutlined, UserOutlined, LikeOutlined } from "@ant-design/icons";
 import VersionArea from "../VersionArea/VersionArea";
 import CommentArea from "../CommentArea/CommentArea";
 import ContentEditor from "../../pages/NoteDetailPage/ContentEditor/ContentEditor";
@@ -20,7 +20,7 @@ const OptionMenu = (props) => {
   const [drawerType, setDrawerType] = useState('');
 
   const comments = (<CommentArea page={props.page} comments={props.comments} id={props.id}/>);
-  const versions = (<VersionArea page={'NoteDetailPageVersion'} versions={props.versions} setVersion={props.setVersion}/>);
+  const versions = (<VersionArea page={'NoteDetailPageVersion'} versions={props.versions} setVersion={props.setVersion} isAuthor={props.isAuthor}/>);
 
   const showDrawer = () => {
     console.log(drawerType);
@@ -152,7 +152,33 @@ const OptionMenu = (props) => {
       })
     }
 
-  const NoteDetailMenu = (
+    const favorite = () =>{
+      message.info("favorite!!")
+      /*axios.put(`http://localhost:8080/favorite/note/${props.id}/${email}`)
+      .then ( res => {
+          message.success("Agree!!")
+          console.log(res.data.res)
+          // Todo: remove applicant from list
+      })
+      .catch(err =>{
+          console.log(err)
+      })*/
+    }
+
+    const unfavorite = () =>{
+      message.info("unfavorite!!")
+      /*axios.put(`http://localhost:8080/favorite/add/${props.postId}/${email}`)
+      .then ( res => {
+          message.success("Agree!!")
+          console.log(res.data.res)
+          // Todo: remove applicant from list
+      })
+      .catch(err =>{
+          console.log(err)
+      })*/
+    }
+
+  const NoteDetailMenuAuthor = (
     <Menu items={
       [
         {
@@ -197,6 +223,43 @@ const OptionMenu = (props) => {
     }/>
     );
     
+    const NoteDetailMenu = (
+      <Menu items={
+        [
+          {
+            label: !props.isFavoriter? (<a onClick={favorite}>Favorite</a>): (<a onClick={unfavorite}>UnFavorite</a>),
+            key: "1",
+            icon: <StarOutlined />
+        },
+          {
+              label: "Share",
+              key: "2",
+              icon: <ShareAltOutlined />
+          },
+          {
+              label: (<a onClick=
+                {() => {
+                  setDrawerType('Comment');
+                  showDrawer();
+                }}
+                >Comment</a>),
+              key: "3",
+              icon: <CommentOutlined />
+          },
+          {
+            label: (<a onClick=
+              {() => {
+                setDrawerType('Version');
+                showDrawer();
+              }}
+              >Manage Version</a>),
+            key: "4",
+            icon: <InfoCircleOutlined />
+          },
+        ]
+      }/>
+      );
+
   const QnADetailMenu = (
       <Menu items={
         [
@@ -434,7 +497,7 @@ const OptionMenu = (props) => {
     }/>
   );
 
-  const VersionDetailMenu = (
+  const VersionDetailMenuAuthor = (
     <Menu items={
       [
         {
@@ -451,6 +514,17 @@ const OptionMenu = (props) => {
           label: props.versions[props.index]?.isTemp? (<a >Set Private</a>): (<a >Set Public</a>),
           key: "3",
           icon: <DeleteOutlined />
+        }]
+    }/>
+  );
+
+  const VersionDetailMenu = (
+    <Menu items={
+      [
+        {
+            label: (<a onClick={()=>{ versionBrowse(props.index) }}>Browse</a>),
+            key: "1",
+            icon: <EyeOutlined />
         }]
     }/>
   );
@@ -550,10 +624,22 @@ const OptionMenu = (props) => {
   useEffect(()=>{
     // set menu
     switch(props.page){
-      case 'NoteDetailPage': setMenu( NoteDetailMenu ); break;
+      case 'NoteDetailPage': 
+        if(props.isAuthor){
+          setMenu( NoteDetailMenuAuthor ); break;
+        }
+        else{
+          setMenu( NoteDetailMenu ); break;
+        }
       case 'QnADetailPage': setMenu( QnADetailMenu ); break;
       case 'RewardDetailPage': setMenu( RewardDetailMenu ); break;
-      case 'NoteDetailPageVersion': setMenu( VersionDetailMenu ); break;
+      case 'NoteDetailPageVersion': 
+      if(props.isAuthor){
+        setMenu( VersionDetailMenuAuthor ); break;
+      }
+      else{
+        setMenu( VersionDetailMenu ); break;
+      }
       case 'NoteEditPageVersion': setMenu( VersionEditMenu ); break;
       case 'RewardDetailPageAnswer': setMenu( AnswerDetailMenu ); break;
       case 'CollabDetailPageApplier': setMenu( ApplierDetailMenu ); break;

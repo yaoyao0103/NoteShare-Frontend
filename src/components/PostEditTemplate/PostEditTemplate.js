@@ -145,8 +145,6 @@ const PostEditTemplate = (props) => {
         let data;
         if(props.type == 'QA'){
             QnAFormat.type = props.type;
-            QnAFormat.email = [email]
-            QnAFormat.author = author
             QnAFormat.title = title
             QnAFormat.department = information.department
             QnAFormat.subject = information.subject
@@ -156,8 +154,6 @@ const PostEditTemplate = (props) => {
         }
         else if(props.type == 'reward'){
             RewardFormat.type = props.type;
-            RewardFormat.email = [email]
-            RewardFormat.author = author
             RewardFormat.title = title
             RewardFormat.department = information.department
             RewardFormat.subject = information.subject
@@ -171,8 +167,6 @@ const PostEditTemplate = (props) => {
         }
         else if(props.type == 'collaboration'){
             CollabNoteFormat.type = props.type;
-            CollabNoteFormat.email = [email]
-            CollabNoteFormat.author = author
             CollabNoteFormat.title = title
             CollabNoteFormat.department = information.department
             CollabNoteFormat.subject = information.subject

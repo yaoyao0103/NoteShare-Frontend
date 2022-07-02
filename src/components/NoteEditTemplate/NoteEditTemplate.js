@@ -15,17 +15,18 @@ import axios from '../axios/axios';
 import VersionArea from '../VersionArea/VersionArea';
 import { editor } from '../../api_utils/geditor_config';
 import moment from 'moment';
+import Cookie from '../../components/Cookies/Cookies';
+import { Base64 } from 'js-base64';
+
 const { Header, Content, Sider, Footer } = Layout;
 const { Step } = Steps;
 const { TextArea } = Input;
 const { Option } = Select;
 
-const email = "00857028@email.ntou.edu.tw";
-//const folderID  = "62aee78ee913643da31b59e9";
-const author = "Yao"
 
 
 const NoteEditTemplate = (props) => {
+    const [email, setEmail] = useState('')
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [information, setInformation] = useState(null);
@@ -45,6 +46,10 @@ const NoteEditTemplate = (props) => {
     const { pages } = pageStore;
 
     useEffect(() => {
+        const cookieParser = new Cookie(document.cookie)
+        const temp = cookieParser.getCookieByName('email')
+        const tempEmail = Base64.decode(temp);
+        setEmail(tempEmail)
         const note = props.note;
         if(note && props.mode == 'edit'){
             setTitle(note.title);
@@ -143,11 +148,6 @@ const NoteEditTemplate = (props) => {
             NoteFormat.department = information.department
             NoteFormat.subject = information.subject
             NoteFormat.title = title
-            NoteFormat.headerEmail = email
-            NoteFormat.headerName = author
-            NoteFormat.authorEmail = [email]
-            NoteFormat.authorName = [author]
-            NoteFormat.managerEmail = email
             NoteFormat.professor = information.professor
             NoteFormat.school = information.school
             NoteFormat.downloadable = information.downloadable

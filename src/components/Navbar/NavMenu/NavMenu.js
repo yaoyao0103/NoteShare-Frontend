@@ -4,7 +4,7 @@ import './NavMenu.css';
 import { Menu, Select } from 'antd';
 const { Option } = Select;
 const data = require("../../../EducationSet.json");
-function NavMenu(){
+function NavMenu(props){
     /*const [departments, setDepartments] = useState([])
     useEffect(() => {
       const list = new Array()
@@ -27,7 +27,7 @@ function NavMenu(){
   return (
       <div className='navMenu'>
         {/* <Menu id='Menu'mode="inline" items={items}/> */}
-        <Select defaultValue={"Department"} showSearch className="navMenu__Dropdown" onChange={(department) => console.log(department)}>
+        <Select defaultValue={"Department"} showSearch className="navMenu__Dropdown" onChange={(department) => {props.setPageProps({page:'NoteOutlinePage', department:department})}}>
             {data.departments.map((department) => (
                 <Option key={department}>{department}</Option>
             )
