@@ -8,7 +8,7 @@ import "./OPInfo.css";
 const OPInfo = (props) => {
 
     useEffect(()=>{
-        console.log("date", props.date)
+        //console.log("date", props.date)
     },[props.date])
     return (
         <div id="OPInfo">
