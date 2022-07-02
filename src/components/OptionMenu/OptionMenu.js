@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./OptionMenu.css";
 import { Link, useNavigate } from "react-router-dom";
-import { Menu, Dropdown, Space, Drawer, message, Input, Tooltip, Button } from "antd";
+import { Menu, Dropdown, Space, Drawer, message, Input, Tooltip, Button, Popover, List } from "antd";
 import { StarOutlined, CopyOutlined , EditOutlined, CommentOutlined, CheckOutlined, CloseOutlined, ShareAltOutlined, InboxOutlined, DeleteOutlined, EyeOutlined, InfoCircleOutlined, UserOutlined, LikeOutlined } from "@ant-design/icons";
 import VersionArea from "../VersionArea/VersionArea";
 import CommentArea from "../CommentArea/CommentArea";
@@ -16,10 +16,12 @@ const OptionMenu = (props) => {
   const [menu, setMenu] = useState(
     <Menu />
   );
-  const [drawer, setDrawer] = useState(<CommentArea page={props.page} comments={props.comments} id={props.id}/>);
+  const [drawer, setDrawer] = useState(<CommentArea page={props.page} type="note" comments={props.comments} id={props.id}/>);
   const [drawerType, setDrawerType] = useState('');
+  const [chooseManagerList, setChooseManagerList] = useState(<></>)
+  const [kickUserList, setKickUserList] = useState(<></>)
 
-  const comments = (<CommentArea page={props.page} comments={props.comments} id={props.id}/>);
+  const comments = (<CommentArea page={props.page} type="note" comments={props.comments} id={props.id}/>);
   const versions = (<VersionArea page={'NoteDetailPageVersion'} versions={props.versions} setVersion={props.setVersion} isAuthor={props.isAuthor}/>);
 
   const showDrawer = () => {
@@ -176,6 +178,39 @@ const OptionMenu = (props) => {
       .catch(err =>{
           console.log(err)
       })*/
+    }
+
+    const chooseManager = (email) => {
+      axios.put(`http://localhost:8080/note/admin/${props.noteId}/${email}`)
+      .then ( res => {
+          message.success("Success!!")
+          console.log(res.data.res)
+          // Todo: remove applicant from list
+      })
+      .catch(err =>{
+          console.log(err)
+      })
+    }
+
+    const kickUser = (email) => {
+      const data = {
+        task: {
+          year: 0,
+          month: 0,
+          day: 0,
+          postID: props.id
+        },
+        kickTarget: email,
+      }
+      axios.post(`http://localhost:8080/vote/${props.id}`, data)
+      .then ( res => {
+          message.success("Vote Submit!!")
+          console.log(res.data.res)
+          // Todo: remove applicant from list
+      })
+      .catch(err =>{
+          console.log(err)
+      })
     }
 
   const NoteDetailMenuAuthor = (
@@ -489,8 +524,34 @@ const OptionMenu = (props) => {
             icon: <ShareAltOutlined />
         },
         {
-          label: props.public? (<a onClick={setStatus}>Set Private</a>): (<a onClick={setStatus}>Set Public</a>),
+          label: (
+            <Popover 
+                content={chooseManagerList} 
+                title={<Text color='black' cls='Small' content={"Choose a user"} fontSize='17' display="inline-block" />}
+                trigger="hover"
+                placement="left">
+                Choose Manager
+            </Popover>
+        ),
           key: "8",
+          icon: <UserOutlined style={{color: "#333"}}/>
+        },
+        {
+          label: (
+            <Popover 
+                content={kickUserList} 
+                title={<Text color='black' cls='Small' content={"Choose a user"} fontSize='17' display="inline-block" />}
+                trigger="hover"
+                placement="left">
+                Kick User
+            </Popover>
+        ),
+          key: "9",
+          icon: <UserOutlined style={{color: "#333"}}/>
+        },
+        {
+          label: props.public? (<a onClick={setStatus}>Set Private</a>): (<a onClick={setStatus}>Set Public</a>),
+          key: "10",
           icon: <UserOutlined style={{color: "#333"}}/>
         },
       ]
@@ -646,7 +707,28 @@ const OptionMenu = (props) => {
       case 'CollabDetailPage': 
         console.log("versions", props.versions)
         if(props.isAuthor){
-          if(props.isManager) setMenu( CollabDetailMenuOfManager ); 
+          if(props.isManager){
+            setKickUserList(
+              <List
+                  dataSource={props.author}
+                  renderItem={(item, index) => (
+                    <List.Item className='userItem' onClick={()=>kickUser(item.email)}><span>{item.name}</span></List.Item>
+                  )}
+              />
+            )
+            setChooseManagerList(
+              <>
+                <List.Item className='currUserItem' >Current: {props.managerEmail}</List.Item>
+                <List
+                    dataSource={props.author}
+                    renderItem={(item, index) => (
+                      <List.Item className='userItem' onClick={()=>chooseManager(item.email)}><span>{item.name}</span></List.Item>
+                    )}
+                />
+              </>
+            )
+            setMenu( CollabDetailMenuOfManager ); 
+          }
           else setMenu( CollabDetailMenuOfAuthor ); 
         }
         else setMenu( CollabDetailMenu ); 
@@ -655,6 +737,10 @@ const OptionMenu = (props) => {
       // case 'QnAOutlinePage': setMenu( QnAOutlineMenu ); break;
     }
   },[props])
+
+  useEffect(()=>{
+    setMenu( CollabDetailMenuOfManager ); 
+  },[kickUserList, chooseManagerList])
 
   useEffect(()=>{
     switch(drawerType){

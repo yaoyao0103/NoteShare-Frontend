@@ -32,6 +32,7 @@ const PageDetailContentTemplate = (props) => {
     const [versions, setVersions] = useState(null)
     const [email, setEmail] = useState('')
     const [author, setAuthor] = useState([])
+    const [managerEmail, setManagerEmail] = useState('')
     const [haveApplied, setHaveApplied] = useState(null)
     const [isPublic, setIsPublic] = useState(true)
 
@@ -58,9 +59,9 @@ const PageDetailContentTemplate = (props) => {
             .then ( res => {
                 console.log(res.data.res)
                 const tempNote = res.data.res
-                setNoteId(tempNote)
                 setVersions(tempNote.version)
-                if((tempNote.managerEmail?.includes(tempEmail)) || tempNote.headerEmail == tempEmail){
+                setManagerEmail(tempNote.managerEmail)
+                if((tempNote.managerEmail == tempEmail) || tempNote.headerEmail == tempEmail){
                     setEditor(<MyEditor noteId = {noteId} version={'0'} page={props.page}/>)
                     setIsManager(true)
                     setIsAuthor(true)
@@ -179,7 +180,11 @@ const PageDetailContentTemplate = (props) => {
                                         isFavoriter={isFavoriter}
                                         setPoppedContentShow={setPoppedContentShow}
                                         id={props.postId? props.postId:props.noteId}
+                                        postId={props.postId}
+                                        noteId={props.noteId? props.noteId:noteId}
                                         setPageProps={props.setPageProps}
+                                        author={author}
+                                        managerEmail={managerEmail}
                                     /></div>
                                 
                             </Col>
@@ -241,13 +246,21 @@ const PageDetailContentTemplate = (props) => {
                             </>
                         }
                         {/* Todo: also check if he is an origin poster */}
-                        {(props.page=='RewardDetailPage' && props.author == email)  &&
+                        {(props.page=='RewardDetailPage' && props.data?.author == email)  &&
                             <div className="contentTemplate__Footer__Button" onClick={() => setPoppedContentShow(true)}>
                                 <Button color={"green"}><Text color='white' cls='Large' content={"Show user-contributed Notes"} fontSize='17' display="inline-block" /></Button>
                             </div>
                         }
-                        {(props.page=='RewardDetailPage' && props.author != email) &&
-                            <div className="contentTemplate__Footer__Button" onClick={() => setPoppedContentShow(true)}>
+                        {(props.page=='RewardDetailPage' && props.data?.author != email) &&
+                            <div 
+                                className="contentTemplate__Footer__Button" 
+                                onClick={() => {
+                                    /*props.setPageProps({
+                                        page: "NoteNewPage",
+
+                                    })*/
+                                }}
+                            >
                                 <Button color={"green"}><Text color='white' cls='Large' content={"Contribute Note"} fontSize='17' display="inline-block" /></Button>
                             </div>
                         }
@@ -269,7 +282,7 @@ const PageDetailContentTemplate = (props) => {
                 {(props.page!='NoteDetailPage' && props.page!='CollabDetailPage') && 
                     <>
                         <Sider id="contentTemplate__Comment" className="contentTemplate__Comment" width='40%'>
-                            <CommentArea page={props.page} comments={props.data?.comments? props.data.comments:[]} id={props.postId}/>
+                            <CommentArea type="post" page={props.page} comments={props.data?.comments? props.data.comments:[]} id={props.postId}/>
                         </Sider>
                     </>
                 }

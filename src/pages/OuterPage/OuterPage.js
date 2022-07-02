@@ -51,20 +51,30 @@ const OuterPage = () => {
             setLoggedIn(true);
             setPageProps({page: 'PersonalPage'})
         }
+        const tempPageProps = cookieParser.getCookieByName('pageProps')
+        if(tempPageProps){
+            const temp = JSON.parse(tempPageProps)
+            console.log("temp",temp)
+            setPageProps(temp)
+        }
     },[])
     useEffect(()=> {
-        if(loggedIn){
-            setPageProps({page: 'PersonalPage'})
-        }
-        else{
-            setPageProps({page: 'LoginPage'})
+        const cookieParser = new Cookie(document.cookie)
+        const tempPageProps = cookieParser.getCookieByName('pageProps')
+        if(!tempPageProps){
+            if(loggedIn){
+                setPageProps({page: 'PersonalPage'})
+            }
+            else{
+                setPageProps({page: 'LoginPage'})
+            }
         }
     },[loggedIn])
 
     useEffect(() => {
         console.log("page", pageProps.page)
         console.log("pageProps", pageProps)
-        
+        document.cookie = "pageProps=" + JSON.stringify(pageProps);
         switch (pageProps.page) {
             case 'NoteDetailPage': setPageComponent(<NoteDetailPage page='NoteDetailPage' setPageProps={setPageProps} {...pageProps} />); break;
             case 'NoteEditPage': setPageComponent(<NoteEditPage page='NoteEditPage' setPageProps={setPageProps}  {...pageProps} />); break;
