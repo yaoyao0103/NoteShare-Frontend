@@ -275,11 +275,15 @@ function OutlineCard(props) {
     var opSize = 32;
     var authorFontSize = '16';
     var dateFontSize = '12';
+    var email=props.cardContent.author;
+    var date =props.cardContent.date?props.cardContent.date:'';
     var author = props.cardContent.authorName?props.cardContent.authorName:props.cardContent.creatorName;
     if (props.mode == 'Note') {
         opSize = 48;
         authorFontSize = '22';
         dateFontSize = '16';
+        date=props.cardContent.publishDate;
+        email=props.cardContent.email;
         author = props.cardContent.author[0];
     }
 
@@ -304,7 +308,7 @@ function OutlineCard(props) {
                                     className="OutlineCard__OPInfo"
                                     mode="Outline"
                                     size={opSize}
-                                    author={author}
+                                    author={{email:email,name:author}}
                                     date={props.cardContent.date}
                                     authorFontSize={authorFontSize}
                                     dateFontSize={dateFontSize}

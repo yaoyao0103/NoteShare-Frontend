@@ -39,8 +39,8 @@ function FolderOutlineCard(props) {
     var opSize = 42;
     var authorFontSize = '22';
     var dateFontSize = '12';
-    var author = props.cardContent.authorName?props.cardContent.authorName:props.cardContent.creatorName;
-   
+    var author = props.cardContent.creatorName;
+    var email = props.cardContent.creatorEmail;
     useEffect(() => {
         // set menu
         
@@ -59,7 +59,7 @@ function FolderOutlineCard(props) {
                                     className="FolderOutlineCard__OPInfo"
                                     mode="FolderOutline"
                                     size={opSize}
-                                    author={author}
+                                    author={{email:email,name:author}}
                                     authorFontSize={authorFontSize}
                                     dateFontSize={dateFontSize}
                                 />
