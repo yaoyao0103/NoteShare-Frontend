@@ -291,9 +291,13 @@ function OutlineCard(props) {
         // set menu
         switch (props.page) {
             case 'QnAOutlinePage': setSider(QnASider); break;
+            case 'QnARecommendPage': setSider(QnASider); break;
             case 'RewardOutlinePage': setSider(RewardSider); break;
+            case 'RewardRecommendPage': setSider(RewardSider); break;
             case 'CollabOutlinePage': setSider(CollabSider); break;
+            case 'CollabRecommendPage': setSider(CollabSider); break;
             case 'NoteOutlinePage': setSider(NoteSider); break;
+            case 'MemberPage': setSider(NoteSider); break;
         }
         console.log(props.page);
     }, [props])

@@ -198,9 +198,13 @@ const SortMeun = (props) => {
         // eslint-disable-next-line default-case
         switch (props.page) {
             case 'NoteOutlinePage': setMenu(NoteOutlineMenu); break;
+            case 'MemberPage': setMenu(NoteOutlineMenu); break;
             case 'QnAOutlinePage': setMenu(QnAOutlineMenu); break;
+            case 'QnARecommendPage': setMenu(QnAOutlineMenu); break;
             case 'RewardOutlinePage': setMenu(RewardOutlineMenu); break;
+            case 'RewardRecommendPage': setMenu(RewardOutlineMenu); break;
             case 'CollabOutlinePage': setMenu(CollabOutlineMenu); break;
+            case 'CollabRecommendPage': setMenu(CollabOutlineMenu); break;
         }
     }, [props])
     return (

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import PageOutlineTemplate from '../../components/PageOutlineTemplate/PageOutlineTemplate';
 import PageOutlineContentTemplate from '../../components/PageOutlineContentTemplate/PageOutlineContentTemplate';
 import axios from "axios";
-function QnAOutlinePage(props) {
-    const page = "QnAOutlinePage";
+
+function QnARecommendPage(props) {
+    const page='QnARecommendPage';
     const [pageNumber, setPageNumber] = useState(1);
     const [QnA, setQnA] = useState([]);
     const [sortMode, setSortMode] = useState('date');
@@ -14,7 +14,7 @@ function QnAOutlinePage(props) {
 
                 const sortBy = sortMode;
 
-                await axios.get('http://localhost:8080/search/post/' + String(pageNumber - 1) + '/20?keyword=' + (props.keyword ? props.keyword : '') + '&department=' + (props.department ? props.department : '') + '&subject=' + (props.subject ? props.subject : '') + '&haveQA=' + true + '&sortBy=' + sortBy).then((res) => {
+                await axios.get('http://localhost:8080/search/post/' + String(pageNumber - 1) + '/20?keyword=array&department=' + (props.department ? props.department : '') + '&subject=' + (props.subject ? props.subject : '') + '&haveQA=' + true + '&sortBy=' + sortBy).then((res) => {
                     setQnA(oldArray => [...oldArray, res.data.search]);
                     console.log(res.data.search)
                 });
@@ -33,7 +33,7 @@ function QnAOutlinePage(props) {
 
                 const sortBy = sortMode;
 
-                await axios.get('http://localhost:8080/search/post/' + String(pageNumber - 1) + '/20?keyword=' + (props.keyword ? props.keyword : '') + '&department=' + (props.department ? props.department : '') + '&subject=' + (props.subject ? props.subject : '') + '&haveQA=' + true + '&sortBy=' + sortBy).then((res) => {
+                await axios.get('http://localhost:8080/search/post/' + String(pageNumber - 1) + '/20?keyword=array&department=' + (props.department ? props.department : '') + '&subject=' + (props.subject ? props.subject : '') + '&haveQA=' + true + '&sortBy=' + sortBy).then((res) => {
                     setQnA(oldArray => [...oldArray, res.data.search]);
                     window.scrollTo(0, 0);
                 });
@@ -58,5 +58,4 @@ function QnAOutlinePage(props) {
 
 }
 
-export default QnAOutlinePage;
-
+export default  QnARecommendPage;

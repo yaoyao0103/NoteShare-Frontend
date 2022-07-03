@@ -24,7 +24,7 @@ function PageOutlineContentTemplate(props) {
         var tempcardLists = [];
 
         if (!(props.Post[0].totalPages===0)&&props.mode!=='Folder') {
-            //console.log('1111');
+            console.log('1111');
             for (let i = 0; i <= props.Post[0].items.length - 1; i++) {
                 tempcardLists.push(<OutlineCard onClick={()=>onClickCard(props.Post[0].items[i].type, props.Post[0].items[i].id)} page={props.page} mode={props.mode} cardContent={props.Post[0].items[i]} author={props.Post[0].items[i].author} />);
             };
@@ -32,6 +32,7 @@ function PageOutlineContentTemplate(props) {
             setCardList(tempcardLists);
         }
         else if (!(props.Post[0].totalPages===0)&&props.mode==='Folder'){
+            console.log('1111');
             // tempcardLists.push(<FolderOutlineCard page={props.page} mode={props.mode} cardContent={props.Post[0].items[0]} author={props.Post[0].items[0].creatorName} />);
             for (let i = 0; i <= props.Post[0].items.length - 1; i++) {
                 tempcardLists.push(<FolderOutlineCard page={props.page} mode={props.mode} cardContent={props.Post[0].items[i]} author={props.Post[0].items[i].creatorName} />);
@@ -40,6 +41,7 @@ function PageOutlineContentTemplate(props) {
             setCardList(tempcardLists);
         }
         else{
+            
             tempcardLists.push(<Empty />);
             setCardList(tempcardLists);
         }

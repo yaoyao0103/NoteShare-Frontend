@@ -15,8 +15,8 @@ import {Row,Col} from 'antd';
 function Navbar(props) {
   return (
     <div id="navbar" className="nav">
-      <Logo />
-      <NavButton setPageProps={props.setPageProps} />
+      <Logo setPageProps={props.setPageProps}/>
+      <NavButton pageProps={props.pageProps}setPageProps={props.setPageProps} />
       <NavMenu setPageProps={props.setPageProps}/>
       <SearchBar setPageProps={props.setPageProps}/>
 
