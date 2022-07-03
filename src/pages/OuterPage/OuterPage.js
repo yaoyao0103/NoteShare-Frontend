@@ -122,6 +122,7 @@ const OuterPage = () => {
 
         switch (pageProps.page) {
             case 'MemberPage': setPageProps({ page: 'NoteNewPage', action: "new", }); break;
+            case 'PersonalPage': setPageProps({ page: 'NoteNewPage', action: "new", }); break;
             case 'RewardRecommendPage': setPageProps({ page: 'RewardNewPage', type: 'reward', action: 'new' }); break;
             case 'QnARecommendPage': setPageProps({ page: 'QnANewPage',type: 'QA', action: 'new', page: 'QnANewPage' }); break;
             case 'CollabRecommendPage': setPageProps({page: 'CollabNewPage',type: 'collaboration', action: 'new', page: 'CollabNewPage'}); break;
