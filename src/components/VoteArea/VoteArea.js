@@ -12,8 +12,8 @@ const VoteArea = (props) => {
     const [disagreeCount, setDisagreeCount] = useState(0);
     useEffect(()=>{
         // Todo: agree count
-        setAgreeCount(props.agree);
-        setDisagreeCount(props.disagree);
+        setAgreeCount(props.agree? props.agree.length:0);
+        setDisagreeCount(props.disagree? props.disagree.length:0);
     },[]);
     const agree = () => {
         // Todo: check agree list
