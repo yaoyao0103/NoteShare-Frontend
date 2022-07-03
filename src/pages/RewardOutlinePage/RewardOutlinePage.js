@@ -28,16 +28,17 @@ function RewardOutlinePage(props) {
 
             }
         }
+        setReward([]);
         getRewardById();
 
-    }, []);
+    }, [props]);
     useEffect(() => {
         async function getRewardById() {
             try {
                 const sortBy=sortMode;
                 
                 await axios.get('http://localhost:8080/search/post/'+ String(pageNumber-1) + '/20?keyword='+(props.keyword?props.keyword:'')+'&department='+(props.department?props.department:'')+'&subject='+(props.subject?props.subject:'')+'&haveReward='+true+'&sortBy='+sortBy).then((res) => {
-                    setReward(oldArray => [...oldArray=[], res.data.search]);
+                    setReward(oldArray => [...oldArray, res.data.search]);
                     window.scrollTo(0, 0);
 
 
@@ -50,7 +51,7 @@ function RewardOutlinePage(props) {
 
             }
         }
-
+        setReward([]);
         getRewardById();
 
         

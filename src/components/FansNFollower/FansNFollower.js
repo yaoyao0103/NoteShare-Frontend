@@ -9,25 +9,26 @@ function FansNFollower(props) {
             <Row gutter={0} className="FansNFollower__Row">
                 <Col span={8} className="FansNFollower__Follower">
                     <Card className="FansNFollower__Follower__Card">
-                        <Statistic
-                            title="Following"
-                            value={props.follower}
-                            valueStyle={{
-                                color: '#3f8600',
-                            }}
-                    
-                        />
-                    </Card>
-                </Col>
-                <Col span={8} className="FansNFollower__Fans">
-                    <Card className="FansNFollower__Fans__Card">
-                        <Statistic
+                    <Statistic
                             title="Fans"
                             value={props.fans}
                             valueStyle={{
                                 color: '#3f8600',
                             }}
 
+                        />
+                    </Card>
+                </Col>
+                <Col span={8} className="FansNFollower__Fans">
+                    <Card className="FansNFollower__Fans__Card">
+                       
+                         <Statistic
+                            title="Following"
+                            value={props.following}
+                            valueStyle={{
+                                color: '#3f8600',
+                            }}
+                    
                         />
                     </Card>
                 </Col>

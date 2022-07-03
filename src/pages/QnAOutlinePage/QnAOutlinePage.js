@@ -16,6 +16,7 @@ function QnAOutlinePage(props) {
                 
                 await axios.get('http://localhost:8080/search/post/'+ String(pageNumber-1) + '/20?keyword='+(props.keyword?props.keyword:'')+'&department='+(props.department?props.department:'')+'&subject='+(props.subject?props.subject:'')+'&haveQA='+true+'&sortBy='+sortBy).then((res) => {
                     setQnA(oldArray => [...oldArray, res.data.search]);
+                    console.log(res.data.search)
                 });
 
             } catch (error) {
@@ -23,8 +24,9 @@ function QnAOutlinePage(props) {
                 setQnA(error.message);
             }
         }
+        setQnA([])
         getQnAById();
-    }, []);
+    }, [props]);
     useEffect(() => {
         async function getQnAById() {
             try {
@@ -32,7 +34,7 @@ function QnAOutlinePage(props) {
                 const sortBy=sortMode;
                 
                 await axios.get('http://localhost:8080/search/post/'+ String(pageNumber-1) + '/20?keyword='+(props.keyword?props.keyword:'')+'&department='+(props.department?props.department:'')+'&subject='+(props.subject?props.subject:'')+'&haveQA='+true+'&sortBy='+sortBy).then((res) => {
-                    setQnA(oldArray => [...oldArray=[], res.data.search]);
+                    setQnA(oldArray => [...oldArray, res.data.search]);
                     window.scrollTo(0, 0);
                 });
 
@@ -40,6 +42,7 @@ function QnAOutlinePage(props) {
                 setQnA(error.message);
             }
         }
+        setQnA([])
         getQnAById();       
     }, [pageNumber,sortMode]);
 

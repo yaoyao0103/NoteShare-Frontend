@@ -29,3 +29,15 @@
 .FansNFollowerEditor__unFans{
     
 }
+.FansNFollowerEditor__Fans__UnFollow{
+    cursor: pointer;
+    border: 1px solid;
+    border-color: #dbdbdb;
+    background-color: #66e1c1;
+    width: 10%;
+    margin-top:3%;
+    margin-right:0%;
+    margin-bottom: 3%;
+    padding-left: 5%;
+    border-radius: 10%;
+}

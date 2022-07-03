@@ -35,6 +35,7 @@ const OuterPage = () => {
     const [visible, setVisible] = useState(false);
     const [loggedIn, setLoggedIn] = useState(false);
     const [changeAvatar,setChangeAvatar]=useState(0);
+    const [isChanging,setIsChanging] =useState(false);
     const showDrawer = () => {
         setVisible(true);
     };
@@ -75,6 +76,8 @@ const OuterPage = () => {
         console.log("page", pageProps.page)
         console.log("pageProps", pageProps)
         document.cookie = "pageProps=" + JSON.stringify(pageProps);
+        //setPageComponent(<></>);
+        //console.log('11111');
         switch (pageProps.page) {
             case 'NoteDetailPage': setPageComponent(<NoteDetailPage page='NoteDetailPage' setPageProps={setPageProps} {...pageProps} />); break;
             case 'NoteEditPage': setPageComponent(<NoteEditPage page='NoteEditPage' setPageProps={setPageProps}  {...pageProps} />); break;
@@ -104,6 +107,7 @@ const OuterPage = () => {
             default: setPageComponent(<></>); break;
         }
     }, [pageProps])
+
 
 
     const floatBtnOnClick = () => {
@@ -301,7 +305,7 @@ const OuterPage = () => {
                 </Button>
                 <Button type="primary" onClick={() => {
                     setPageProps({
-                        email:'00857030@email.ntou.edu.tw',
+                        email:'a147896325811@gmail.com',
                         page: 'ProfilePage'
                     });     
                 }}>

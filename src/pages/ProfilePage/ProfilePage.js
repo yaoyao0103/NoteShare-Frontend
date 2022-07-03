@@ -22,7 +22,7 @@ function ProfilePage(props) {
 
     const [avatarSelector, setAvatarSelector] = useState(false);
     const [avatar, setAvatar] = useState();
-    const [avatarNum,setAvatarNum]=useState(0);
+    const [avatarNum, setAvatarNum] = useState(0);
     const [strength, setStrength] = useState([]);
     const [profile, setProfile] = useState('');
     const [isFollow, setIsFollow] = useState(false);
@@ -30,6 +30,8 @@ function ProfilePage(props) {
     const [followingNum, setFollowingNum] = useState(0);
 
     const [fansOrFollower, setFansOrFollower] = useState(true);//true代表fans,folder
+    const [fansList, setFansList] = useState([]);
+    const [followingList, setFollowingList] = useState([]);
     const [folderList, setFolderList] = useState([]);
     const [avatarCurrent, setAvatarCurrent] = useState(0);
 
@@ -76,13 +78,13 @@ function ProfilePage(props) {
 
     const SaveAvatar = () => {
         axios.put("http://localhost:8080/user/head/" + email, { headshotPhoto: Avatars[avatar] }).then(res => {
-            
+
             setAvatarCurrent(Avatars[avatar]);
-            
+
             message.info('Change avatar');
             //console.log(avatarNum+1);
-            setAvatarNum(avatarNum+1);
-            props.setAvatar(avatarNum+1);
+            setAvatarNum(avatarNum + 1);
+            props.setAvatar(avatarNum + 1);
 
         }).catch((error) => {
             message.info(error.response.error);
@@ -170,7 +172,7 @@ function ProfilePage(props) {
         }).then(res => {
             const list = res.data.res.children.concat(res.data.res.notes);
             //console.log(list);
-            setFolderList(oldArray => [...oldArray.slice(0, 0),list]);
+            setFolderList(oldArray => [...oldArray.slice(0, 0), list]);
             if (res.data.res.parent === null)
                 setIsRoot(true);
             else
@@ -196,7 +198,7 @@ function ProfilePage(props) {
     function getAllNote(Email) {
         axios.get("http://localhost:8080/note/all/" + Email, {
         }).then(res => {
-            setFolderList(oldArray => [...oldArray.slice(0, 0),res.data.res]);
+            setFolderList(oldArray => [...oldArray.slice(0, 0), res.data.res]);
             setCurrentFolderId('0');
             setGetFolderByIdSuccess(true);
         }).catch((error) => {
@@ -207,7 +209,7 @@ function ProfilePage(props) {
 
     function getUserByEmail(Email) {
 
-        axios.get("http://localhost:8080/user/" + Email, {
+        axios.get("http://localhost:8080/user/" + props.email, {
         }).then(res => {
             setUser(res.data.res);
             setAvatarCurrent(res.data.res.headshotPhoto);
@@ -217,11 +219,28 @@ function ProfilePage(props) {
             //console.log(res.data.res.subscribe);
             setFansNum(res.data.res.fans.length);
             setFollowingNum(res.data.res.subscribe.length);
+            var tempFansList = [];
+            var tempFollowingList = [];
+
             for (let i = 0; i < res.data.res.fans.length; i++) {
                 console.log(res.data.res.fans[i]);
-                if (res.data.res.fans[i] === props.email);
-                setIsFollow(true);
+                console.log('email', Email)
+                if (res.data.res.fans[i] === Email)
+                    setIsFollow(true);
+
+                tempFansList.push(<FansNFollowerEditor setFansNum={setFansNum} fansNum={res.data.res.fans.length} email={Email} targetEmail={res.data.res.fans[i]} Name='James' Avatar='https://joeschmoe.io/api/v1/james' isSwitch={true} />)
             }
+            for (let i = 0; i < res.data.res.subscribe.length; i++) {
+                console.log(res.data.res.subscribe[i]);
+
+                tempFollowingList.push(<FansNFollowerEditor setFollowingNum={setFollowingNum} followingNum={res.data.res.subscribe.length} email={Email} targetEmail={res.data.res.subscribe[i]} Name='James' Avatar='https://joeschmoe.io/api/v1/james' isSwitch={false} />)
+            }
+            console.log('Fans', tempFansList);
+            console.log('Following', tempFollowingList)
+
+            setFansList(oldArray => [...oldArray.slice(0, 0), tempFansList]);
+            setFollowingList(oldArray => [...oldArray.slice(0, 0), tempFollowingList]);
+
             setGetUserSuccess(true);
         }).catch((error) => {
             console.log(error);
@@ -229,30 +248,35 @@ function ProfilePage(props) {
     };
 
     useEffect(() => {
-
+        setFansOrFollower(true);
+        setIsFollow(false);
+        setGetUserSuccess(false);
         let cookieParser = new Cookie(document.cookie);
         let tempEmail = cookieParser.getCookieByName('email')
         tempEmail = Base64.decode(tempEmail);
         console.log(tempEmail);
-        
-        if (tempEmail === props.email)
+        getUserByEmail(tempEmail);
+        if (tempEmail === props.email) {
             setIsAuthor(true);
+            setGetFolderByIdSuccess(true);
+        }
         else {
             setIsAuthor(false);
         }
         setEmail(tempEmail);
-        setGetUserSuccess(false);
-        getUserByEmail(props.email);
-    }, [props]);
 
+
+    }, [props]);
     useEffect(() => {
-        console.log(props.email);
+        //console.log(props.email);
         if (fansOrFollower && !isAuthor)
             getAllFolder(props.email);
         else if (!fansOrFollower && !isAuthor)
             getAllNote(props.email);
+        if (isAuthor)
+            setGetFolderByIdSuccess(true);
 
-    }, [props,fansOrFollower]);
+    }, [props, fansOrFollower]);
 
     useEffect(() => {
 
@@ -312,7 +336,7 @@ function ProfilePage(props) {
                             </Col>
                         </Row>
                         <div className="Profile__Fans">
-                            <FansNFollower fans={fansNum} follower={followingNum}></FansNFollower>
+                            <FansNFollower fans={fansNum} following={followingNum}></FansNFollower>
                         </div>
                         <div className='Profile__Strength'>
                             <StrengthEditor strength={strength} delete={(key) => { DeleteStrength(key) }} add={(tag) => (AddStrength(tag))} isAuthor={isAuthor}></StrengthEditor>
@@ -332,14 +356,11 @@ function ProfilePage(props) {
                             </Row>}
                             <Divider />
                             {isAuthor && fansOrFollower && <div className='Profile_Sider__Main_Content'>
-                                <FansNFollowerEditor Name='James' Avatar='https://joeschmoe.io/api/v1/james' isFans={fansOrFollower} />
-                                <FansNFollowerEditor Name='Jude' Avatar='https://joeschmoe.io/api/v1/jude' isFans={fansOrFollower} />
-
+                                {fansList}
 
                             </div>}
                             {isAuthor && !fansOrFollower && <div className='Profile_Sider__Main_Content'>
-                                <FansNFollowerEditor Name='James' Avatar='https://joeschmoe.io/api/v1/james' isFans={fansOrFollower} />
-                                <FansNFollowerEditor Name='Jude' Avatar='https://joeschmoe.io/api/v1/jude' isFans={fansOrFollower} />
+                                {followingList}
                             </div>}
                             {!isAuthor && getFolderByIdSuccess && fansOrFollower && <div className='Profile_Sider__Main_Content'>
                                 <FolderCard folderList={folderList} isFolder={true} setPageProps={props.setPageProps} isRoot={isRoot} clickBack={(id) => { ClickBack(id) }} clickFolder={(id) => { setCurrentFolderId(id); }} />
@@ -357,7 +378,7 @@ function ProfilePage(props) {
                         title="Choose your avatar"
                         centered
                         visible={avatarSelector}
-                        onOk={() => { SaveAvatar(); props.setAvatar(props.Avatar+1);setAvatarSelector(false) }}
+                        onOk={() => { SaveAvatar(); props.setAvatar(props.Avatar + 1); setAvatarSelector(false) }}
                         onCancel={() => setAvatarSelector(false)}
                         okText="Save"
                         cancelText="Cancel"

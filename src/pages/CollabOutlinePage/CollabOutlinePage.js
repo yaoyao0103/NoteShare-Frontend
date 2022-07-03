@@ -33,9 +33,10 @@ function CollabOutlinePage(props) {
 
             }
         }
+        setCollab([]);
         getCollabById();
         //console.log('2222');
-    }, []);
+    }, [props]);
     useEffect(() => {
         async function getCollabById() {
             try {
@@ -43,7 +44,7 @@ function CollabOutlinePage(props) {
                 const sortBy = sortMode;
 
                 await axios.get('http://localhost:8080/search/post/'+ String(pageNumber - 1) + '/20?keyword='+(props.keyword?props.keyword:'')+'&department='+(props.department?props.department:'')+'&subject='+(props.subject?props.subject:'')+'&haveCollaboration=' +true + '&sortBy=' + sortBy).then((res) => {
-                    setCollab(oldArray => [...oldArray = [], res.data.search]);
+                    setCollab(oldArray => [...oldArray, res.data.search]);
                     window.scrollTo(0, 0);
                     //console.log(pageNumber);
 
@@ -57,6 +58,7 @@ function CollabOutlinePage(props) {
             }
         }
         //console.log(pageNumber-1);
+        setCollab([]);
         getCollabById();
         //console.log('1111');
 

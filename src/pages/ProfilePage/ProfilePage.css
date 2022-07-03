@@ -40,6 +40,13 @@
     
 }
 .Profile__Avatar__Editor{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+    padding-left:  50%;
     opacity:0 ;
     cursor: pointer;
 }
