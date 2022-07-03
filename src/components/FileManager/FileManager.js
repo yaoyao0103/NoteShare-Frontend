@@ -4,7 +4,7 @@ import { List, Skeleton, Layout, message, Avatar, Dropdown, Menu, Input, Modal }
 import Button from '../Button/Button';
 import Text from '../Text/Text';
 import axios from '../axios/axios';
-import { ArrowLeftOutlined, FolderAddOutlined, PlusOutlined, MoreOutlined, CloseOutlined } from "@ant-design/icons";
+import { ArrowLeftOutlined, FolderAddOutlined, PlusOutlined, MoreOutlined, CloseOutlined, CheckOutlined } from "@ant-design/icons";
 import './FileManager.css';
 import { Note } from '../PostEditTemplate/InfoCategories';
 import OptionMenu from '../OptionMenu/OptionMenu';
@@ -22,6 +22,9 @@ const FileManager = (props) => {
     const [renaming, setRenaming] = useState(false)
     const [newFolder, setNewFolder] = useState(false)
     const [path, setPath] = useState('/')
+    const [copy, setCopy] = useState(null)
+    const [move, setMove] = useState(null)
+
     useEffect(() => {
         async function getRootFile() {
             axios.get(`http://localhost:8080/folder/root/${props.email}`)
@@ -38,6 +41,13 @@ const FileManager = (props) => {
         //setRoot([{folderName:'Buy', value:'buy'}, {folderName:'Favorite', value:'favorite'}, {folderName:'Folder', value:'folder'}, {folderName:'QnA', value:'QA'}, {folderName:'Reward', value:'reward'}, {folderName:'CollabNote',value:'collaboration'}])
     },[props.email])
 
+    useEffect(()=>{ 
+        if(copy)
+            message.info("Please go to the folder you want to copy, then click confirm button",0) 
+        if(move)
+        message.info("Please go to the folder you want to move, then click confirm button",0) 
+    },[copy, move])
+
     const onClickFolderZone = (folderId) => {
         setCurrent(folderId)
         setBackBtnShow(true);
@@ -48,9 +58,9 @@ const FileManager = (props) => {
             setPostShow(false)
             const parentId = res.data.res.parent
             const tempNotes = res.data.res.notes;
-            const path = res.data.res.path;
-            setPath(path)
-            path.split('/')[1] == 'Folder' ? setInFolder(true):setInFolder(false)
+            const tempPath = res.data.res.path;
+            setPath(tempPath)
+            tempPath.split('/')[1] == 'Folder' ? setInFolder(true):setInFolder(false)
             if(parentId){
                 console.log("parentId:",parentId)
                 setParent(parentId)
@@ -66,8 +76,8 @@ const FileManager = (props) => {
                             <List.Item
                                 className="fileManage_Note_Item fileManage_List_Item"
                                 actions={
-                                    inFolder &&
-                                    [<OptionMenu page={props.page} id={item.id} setPageProps={props.setPageProps} />]
+                                    tempPath.split('/')[1] == 'Folder' &&
+                                    [<OptionMenu page={props.page} id={item.id} setPageProps={props.setPageProps} setCopy={setCopy} />]
                                 }
                             >
                                 <List.Item.Meta
@@ -110,7 +120,7 @@ const FileManager = (props) => {
                         renderItem={(item, index) => (
                             <List.Item
                                 className="fileManage_Note_Item fileManage_List_Item"
-                                actions={[<OptionMenu page={props.page} type={item.type} id={item.id} setPageProps={props.setPageProps} rerenderPosts={() => onClickPostZone(item.type)}/>]}
+                                actions={[<OptionMenu page={props.page} type={item.type} id={item.id} setPageProps={props.setPageProps} rerenderPosts={() => onClickPostZone(item.type)} setCopy={setCopy}/>]}
                             >
                                 <List.Item.Meta
                                     avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
@@ -183,7 +193,7 @@ const FileManager = (props) => {
                             renderItem={(item, index) => (
                                 <List.Item
                                     className="fileManage_Note_Item fileManage_List_Item"
-                                    actions={[<OptionMenu page={props.page} id={item.id}/>]}
+                                    actions={[<OptionMenu page={props.page} id={item.id} setCopy={setCopy}/>]}
                                 >
                                     <List.Item.Meta
                                         avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
@@ -311,6 +321,40 @@ const FileManager = (props) => {
                 />
             );
 */
+
+    const copyNote = () => {
+        message.destroy();
+        axios.put(`http://localhost:8080/note/save/${copy}/${current}`)
+            .then(res => {
+                message.success("Success!")
+                onClickFolderZone(current)
+                setCopy(null)
+            })
+            .catch(err =>{
+                message.error("Error!")
+                setCopy(null)
+            })
+        
+    }
+
+    const moveFolder = () => {
+        const data = {
+            path: path + '/' + move.folderName,
+            parent: current,
+        }
+        console.log("data", data)
+        console.log("move", move)
+        
+        axios.put(`http://localhost:8080/folder/save/${props.email}/${move.folderId}`, data)
+            .then(res => {
+                message.success("Success!")
+                onClickFolderZone(current)
+                setMove(null)
+            })
+            .catch(err =>{
+                message.error("Error!")
+            })
+    }
     return (
         <>
             <div className='fileManager'>
@@ -328,6 +372,22 @@ const FileManager = (props) => {
                                 <Dropdown overlay={createMenu} placement="bottomLeft" arrow>
                                     <PlusOutlined/>
                                 </Dropdown>
+                                {(copy||move)&&
+                                    <>
+                                        <button className='copy_Button confirm_Button' onClick={copy? copyNote: moveFolder}>
+                                            <CheckOutlined/>
+                                        </button>
+                                        <button className='copy_Button cancel_Button' onClick={() => {
+                                            setCopy(null);
+                                            setMove(null);
+                                            message.destroy(); 
+                                            message.warn("Cancel!")}
+                                            }>
+                                            <CloseOutlined />
+                                        </button>
+                                    </>
+                                }
+                                
                             </>}
                         </div>
                         <>
@@ -354,7 +414,13 @@ const FileManager = (props) => {
                                                         ),
                                                         },
                                                         {
-                                                        key: '2',
+                                                            key: '2',
+                                                            label: (
+                                                                <a onClick={() => setMove({folderId:item.id, folderName:item.folderName})} style={{textDecoration:"none"}}>Move</a>
+                                                            ),
+                                                            },
+                                                        {
+                                                        key: '3',
                                                         label: (
                                                             <a onClick={() => deleteFolder(item.id)} style={{textDecoration:"none"}}>Delete</a>
                                                         ),

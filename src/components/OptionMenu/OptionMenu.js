@@ -193,16 +193,17 @@ const OptionMenu = (props) => {
     }
 
     const kickUser = (email) => {
+      console.log("email", email)
       const data = {
         task: {
-          year: 0,
-          month: 0,
-          day: 0,
+          year: 2022,
+          month: 7,
+          day: 4,
           postID: props.id
         },
         kickTarget: email,
       }
-      axios.post(`http://localhost:8080/vote/${props.id}`, data)
+      axios.post(`http://localhost:8080/schedule/vote/${props.id}`, data)
       .then ( res => {
           message.success("Vote Submit!!")
           console.log(res.data.res)
@@ -668,13 +669,18 @@ const OptionMenu = (props) => {
             icon: <EditOutlined />
         },
         {
-          label: (<a onClick={()=>{ message.info("Share: " + props.noteId) }}>Share</a>),
+          label: (<a onClick={()=>{ message.info("Share: " + props.id) }}>Share</a>),
             key: "2",
             icon: <ShareAltOutlined />
         },
         {
-          label: (<a onClick={()=> deletePost() } style={{color:"red"}}>Delete</a>),
+          label: (<a onClick={()=>{ props.setCopy(props.id) }}>Copy</a>),
             key: "3",
+            icon: <CopyOutlined />
+        },
+        {
+          label: (<a onClick={()=> deletePost() } style={{color:"red"}}>Delete</a>),
+            key: "4",
             icon: <DeleteOutlined style={{color:"red"}}/>
         },
       ]
@@ -705,7 +711,6 @@ const OptionMenu = (props) => {
       case 'RewardDetailPageAnswer': setMenu( AnswerDetailMenu ); break;
       case 'CollabDetailPageApplier': setMenu( ApplierDetailMenu ); break;
       case 'CollabDetailPage': 
-        console.log("versions", props.versions)
         if(props.isAuthor){
           if(props.isManager){
             setKickUserList(
@@ -727,19 +732,24 @@ const OptionMenu = (props) => {
                 />
               </>
             )
-            setMenu( CollabDetailMenuOfManager ); 
+            setMenu( CollabDetailMenuOfManager ); break;
           }
-          else setMenu( CollabDetailMenuOfAuthor ); 
+          else{
+            setMenu( CollabDetailMenuOfAuthor ); break;
+            }
         }
-        else setMenu( CollabDetailMenu ); 
-        break;
+        else{
+          setMenu( CollabDetailMenu ); break;
+        } 
       case 'PersonalPage': setMenu( PersonalPageNoteMenu ); break;
       // case 'QnAOutlinePage': setMenu( QnAOutlineMenu ); break;
     }
   },[props])
 
   useEffect(()=>{
-    setMenu( CollabDetailMenuOfManager ); 
+    console.log(kickUserList, )
+    if(props.page == 'CollabDetailPage')
+      setMenu( CollabDetailMenuOfManager ); 
   },[kickUserList, chooseManagerList])
 
   useEffect(()=>{

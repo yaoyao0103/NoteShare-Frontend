@@ -35,6 +35,7 @@ const PageDetailContentTemplate = (props) => {
     const [managerEmail, setManagerEmail] = useState('')
     const [haveApplied, setHaveApplied] = useState(null)
     const [isPublic, setIsPublic] = useState(true)
+    const [vote, setVote] = useState(null)
 
     useEffect(()=>{
         const cookieParser = new Cookie(document.cookie)
@@ -55,6 +56,7 @@ const PageDetailContentTemplate = (props) => {
             const noteId = props.data.answers[0];
             setNoteId(noteId);
             setIsPublic(props.data?.public)
+            setVote(props.data?.vote)
             axios.get(`http://localhost:8080/note/${noteId}`)
             .then ( res => {
                 console.log(res.data.res)
@@ -293,10 +295,10 @@ const PageDetailContentTemplate = (props) => {
                 <PoppedContent page={props.page} content={poppedContent} apply={apply} setPoppedContentShow={setPoppedContentShow} isAuthor={isAuthor} isManager={isManager} postId={props.postId} haveApplied={haveApplied} setHaveApplied={setHaveApplied}/>
             </div>
 
-            {props.voting &&
+            {vote &&
                 <div className={`detailNotice ${ noticeShow && 'detailNotice--show'}`}>
-                    <DetailNotice setNoticeShow={setNoticeShow} type={"vote"} kickUser={"Joe"}>
-                        <VoteArea kickUser={"user's email"} total={10} agree={3} disagree={4}/>
+                    <DetailNotice setNoticeShow={setNoticeShow} type={"vote"} kickUser={vote.kickUser}>
+                        <VoteArea vote={vote} total={props.data?.email.length}/>
                     </DetailNotice>
                 </div>
             }

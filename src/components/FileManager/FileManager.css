@@ -85,3 +85,56 @@
     cursor: pointer;
     font-size: .7em;
 }
+
+.copy_Button{
+    border: 0;
+    background-color: #fff;
+}
+
+.copy_Button .anticon{
+    margin: 0;
+}
+
+.confirm_Button{
+    color: #02C874;
+    animation: wiggle 2s linear infinite;
+}
+
+.confirm_Button:hover{
+    color: #02F78E;
+}
+
+.cancel_Button{
+    color: #FF0000;
+    margin-left: .5em;
+}
+
+.cancel_Button:hover{
+    color: #FF5151;
+}
+
+
+
+@keyframes wiggle {
+    0%, 7% {
+      transform: rotateZ(0);
+    }
+    15% {
+      transform: rotateZ(-15deg) scale(1.8);
+    }
+    20% {
+      transform: rotateZ(10deg);
+    }
+    25% {
+      transform: rotateZ(-10deg) ;
+    }
+    30% {
+      transform: rotateZ(6deg);
+    }
+    35% {
+      transform: rotateZ(-4deg);
+    }
+    40%, 100% {
+      transform: rotateZ(0);
+    }
+  }
