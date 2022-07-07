@@ -29,6 +29,7 @@ const PageDetailContentTemplate = (props) => {
     const [isManager, setIsManager] = useState(false)
     const [isAuthor, setIsAuthor] = useState(false)
     const [isFavoriter, setIsFavoriter] = useState(false)
+    const [isBuyer, setIsBuyer] = useState(false)
     const [versions, setVersions] = useState(null)
     const [email, setEmail] = useState('')
     const [author, setAuthor] = useState([])
@@ -46,10 +47,20 @@ const PageDetailContentTemplate = (props) => {
         if(props.page == "NoteDetailPage"){
             setNoteId(props.data?.id);
             setEditor(<MyEditor noteId = {props.data?.id} version={'0'} page={props.page}/>)
-            if (props.data?.headerEmail == tempEmail) setIsAuthor(true)
+            if (props.data?.headerUserObj.userObjEmail == tempEmail) setIsAuthor(true)
             else setIsAuthor(false)
-            if(props.data?.favoriter.includes(tempEmail)) setIsFavoriter(true)
-            else setIsFavoriter(false)
+            for(let i = 0; i < props.data?.favoriterUserObj.length; i++){
+                if(props.data?.favoriterUserObj[i].userObjEmail == tempEmail){
+                    setIsFavoriter(true);
+                    break;
+                } 
+            }
+            for(let i = 0; i < props.data?.buyerUserObj.length; i++){
+                if(props.data?.buyerUserObj[i].userObjEmail == tempEmail){
+                    setIsBuyer(true);
+                    break;
+                } 
+            }
 
         }
         else if(props.page == "CollabDetailPage" && props.data){
@@ -62,18 +73,24 @@ const PageDetailContentTemplate = (props) => {
                 console.log(res.data.res)
                 const tempNote = res.data.res
                 setVersions(tempNote.version)
-                setManagerEmail(tempNote.managerEmail)
-                if((tempNote.managerEmail == tempEmail) || tempNote.headerEmail == tempEmail){
+                setManagerEmail(tempNote.managerUserObj.userObjEmail)
+                
+                for(let i = 0; i < props.data?.authorUserObj.length; i++){
+                    if(props.data?.authorUserObj[i].userObjEmail == tempEmail){
+                        setEditor(<MyEditor noteId = {noteId} version={'0'} page={props.page}/>)
+                        setIsAuthor(true)
+                        console.log("is a author")
+                        break;
+                    } 
+                }
+                
+                
+                if((tempNote.managerUserObj.userObjEmail == tempEmail) || tempNote.headerUserObj.userObjEmail == tempEmail){
                     setEditor(<MyEditor noteId = {noteId} version={'0'} page={props.page}/>)
                     setIsManager(true)
                     setIsAuthor(true)
                     console.log("is a manager")
                     setPoppedContent( props.data.collabApply );
-                }
-                else if(props.data.email?.includes(tempEmail)){
-                    setEditor(<MyEditor noteId = {noteId} version={'0'} page={props.page}/>)
-                    setIsAuthor(true)
-                    console.log("is a author")
                 }
                 else{
                     setIsAuthor(false)
@@ -88,11 +105,17 @@ const PageDetailContentTemplate = (props) => {
                     }
                     console.log("is not a manager or author")
                 }
-                if(tempNote.favoriter.includes(tempEmail)) setIsFavoriter(true)
-                else setIsFavoriter(false)
+
+                for(let i = 0; i < tempNote.favoriterUserObj.length; i++){
+                    if(tempNote.favoriterUserObj[i].userObjEmail == tempEmail){
+                        setIsFavoriter(true)
+                        break;
+                    } 
+                }
+
                 let tempAuthor = []
-                for(let i = 0; i < tempNote.authorName.length; i++){
-                    tempAuthor = [...tempAuthor, {email: tempNote.authorEmail[i], name: tempNote.authorName[i]}]
+                for(let i = 0; i < tempNote.authorUserObj.length; i++){
+                    tempAuthor = [...tempAuthor, {email: tempNote.authorUserObj[i].userObjEmail, name: tempNote.authorUserObj[i].userObjName, avatar: tempNote.authorUserObj[i].userObjAvatar}]
                 }
                 setAuthor(tempAuthor)
             })
@@ -159,7 +182,7 @@ const PageDetailContentTemplate = (props) => {
                                 <OPInfo
                                     className="contentTemplate__Title__OPInfo" 
                                     size={56}
-                                    author={props.page == 'NoteDetailPage'? {email: props.data?.headerEmail, name:props.data?.headerName}: props.page == 'CollabDetailPage'? author:{email: props.data?.author, name: props.data?.authorName}}
+                                    author={props.page == 'NoteDetailPage'? {email: props.data?.headerUserObj.userObjEmail, name:props.data?.headerUserObj.userObjName, avatar:props.data?.headerUserObj.userObjAvatar}: props.page == 'CollabDetailPage'? author:{email: props.data?.authorUserObj?.userObjEmail, name:props.data?.authorUserObj?.userObjName, avatar:props.data?.authorUserObj?.userObjAvatar}}
                                     date={props.data?.date} 
                                     dateFontSize="18"
                                     page={props.page}
@@ -187,6 +210,7 @@ const PageDetailContentTemplate = (props) => {
                                         setPageProps={props.setPageProps}
                                         author={author}
                                         managerEmail={managerEmail}
+                                        isArchive={props.data.archive}
                                     /></div>
                                 
                             </Col>
@@ -240,7 +264,7 @@ const PageDetailContentTemplate = (props) => {
                                         <Tag style={{ fontSize:"15px" }}>{tag}</Tag>
                                     </>
                                 )}
-                                {!(props.data?.headerEmail == email || props.data?.buyer.includes(email)) &&
+                                {!(isAuthor || isBuyer) &&
                                     <div className="contentTemplate__Footer__Button" onClick={() => buyNote()}>
                                         <Button color={"green"}><Text color='white' cls='Large' content={"Buy"} fontSize='17' display="inline-block" /></Button>
                                     </div>   
@@ -284,7 +308,7 @@ const PageDetailContentTemplate = (props) => {
                 {(props.page!='NoteDetailPage' && props.page!='CollabDetailPage') && 
                     <>
                         <Sider id="contentTemplate__Comment" className="contentTemplate__Comment" width='40%'>
-                            <CommentArea type="post" page={props.page} comments={props.data?.comments? props.data.comments:[]} id={props.postId}/>
+                            <CommentArea type="post" page={props.page} comments={props.data?.comments? props.data.comments:[]} id={props.postId} isArchive={props.data.archive}/>
                         </Sider>
                     </>
                 }
@@ -298,7 +322,7 @@ const PageDetailContentTemplate = (props) => {
             {vote &&
                 <div className={`detailNotice ${ noticeShow && 'detailNotice--show'}`}>
                     <DetailNotice setNoticeShow={setNoticeShow} type={"vote"} kickUser={vote.kickUser}>
-                        <VoteArea vote={vote} total={props.data?.email.length}/>
+                        <VoteArea vote={vote} total={props.data?.authorUserObj.length}/>
                     </DetailNotice>
                 </div>
             }

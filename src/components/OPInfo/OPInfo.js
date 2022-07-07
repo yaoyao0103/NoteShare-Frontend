@@ -15,7 +15,7 @@ const OPInfo = (props) => {
             <Row id={"OPInfo__Row"+'__'+props.mode} className='OPInfo__Row'>
                 <Col className={"OPInfo__left"+'__'+props.mode}>
                     {props.page!='CollabDetailPage'?
-                    <Avatar className={"OPInfo__Avatar OPInfo__Avatar"+'__'+props.mode} size={props.size} src={props.avatar} onClick={() => props.setPageProps({page: 'ProfilePage', email: props.author.email})}></Avatar>
+                    <Avatar className={"OPInfo__Avatar OPInfo__Avatar"+'__'+props.mode} size={props.size} src={props.author.avatar} onClick={() => props.setPageProps({page: 'ProfilePage', email: props.author.email})}></Avatar>
                     :
                     <Avatar.Group
                         className='OPInfo_Avatar_Group'
@@ -26,7 +26,7 @@ const OPInfo = (props) => {
                         >
                         {props.author.map( (item, index) => (
                             <Tooltip placement="top" title={item.name}>
-                                <Avatar className={"OPInfo__Avatar OPInfo__Avatar"+'__'+props.mode} src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" onClick={() => props.setPageProps({page: 'ProfilePage', email: item.email})}/>
+                                <Avatar className={"OPInfo__Avatar OPInfo__Avatar"+'__'+props.mode} src={item.avatar} onClick={() => props.setPageProps({page: 'ProfilePage', email: item.email})}/>
                             </Tooltip>
 
                         ))}

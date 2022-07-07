@@ -12,8 +12,8 @@ function QnADetailPage(props) {
         async function getQnAById() {
             axios.get(`http://localhost:8080/post/${props.postId}`)
             .then(res => {
-                console.log(res.data.res)
                 setPost(res.data.res)
+                console.log("QnA:",res.data.res)
             })
             .catch(err =>{
                 console.log(err)

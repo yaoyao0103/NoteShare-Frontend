@@ -13,7 +13,7 @@ function NoteDetailPage(props){
             axios.get(`http://localhost:8080/note/${props.noteId}`)
             .then(res => {
                 setNote(res.data.res)
-                console.log(res.data.res)
+                console.log("Note Response:", res.data.res)
             })
             .catch (err => {
                 console.log(err)

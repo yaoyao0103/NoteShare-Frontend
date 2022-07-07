@@ -33,12 +33,6 @@ const PoppedContent = (props) => {
         downloadLink.click();
     };
 
-    useEffect(()=>{
-        console.log("content", props.content)
-    },[props.content])
-
-    
-
     return (
         <>
             {/* <div className='ScreenCapture'>
