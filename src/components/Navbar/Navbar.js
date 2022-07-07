@@ -23,7 +23,7 @@ function Navbar(props) {
       {props.loggedIn? 
         <Row className="navbar__Button__Login">
           <Col span={12}>  
-            <Ring className="navbar__Ring"/>
+            <Ring setPageProps={props.setPageProps} className="navbar__Ring"/>
           </Col>
           <Col span={12}> 
             <AvatarButton className="navbar__AvatarButton" changeAvatar={props.changeAvatar}setPageProps={props.setPageProps} setLoggedIn={props.setLoggedIn}/>

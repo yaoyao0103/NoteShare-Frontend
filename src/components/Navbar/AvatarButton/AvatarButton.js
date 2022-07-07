@@ -83,7 +83,7 @@ function AvatarButton(props) {
             <Dropdown
                 overlayClassName='AvatarButton__Dropdown'
                 overlay={menu}
-                overlayStyle={{ width: '400px' }}
+              
                 trigger='click'
                 placement="bottom"
             >

@@ -81,7 +81,7 @@ function FansNFollowerEditor(props) {
         <div className='FansNFollowerEditor'>
             <Row className='FansNFollowerEditor__Row'>
                 <Col className='FansNFollowerEditor__Avatar' span={4}>
-                    <Avatar className={"Profile__Avatar__Inner"} size={48} src={props.Avatar}></Avatar>
+                    <Avatar className={"FansNFollowerEditor__Avatar__Inner"} size={48} src={props.Avatar} onClick={()=>{props.setPageProps({page:'ProfilePage',email:props.targetEmail})}}></Avatar>
                 </Col>
                 <Col className='FansNFollowerEditor__Name' span={15}>
                     <Text cls='Small' fontSize={'22'} content={props.Name} />

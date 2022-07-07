@@ -228,12 +228,12 @@ function ProfilePage(props) {
                 if (res.data.res.fans[i] === Email)
                     setIsFollow(true);
 
-                tempFansList.push(<FansNFollowerEditor setFansNum={setFansNum} fansNum={res.data.res.fans.length} email={Email} targetEmail={res.data.res.fans[i]} Name='James' Avatar='https://joeschmoe.io/api/v1/james' isSwitch={true} />)
+                tempFansList.push(<FansNFollowerEditor setPageProps={props.setPageProps} setFansNum={setFansNum} fansNum={res.data.res.fans.length} email={Email} targetEmail={res.data.res.fans[i]} Name='James' Avatar='https://joeschmoe.io/api/v1/james' isSwitch={true} />)
             }
             for (let i = 0; i < res.data.res.subscribe.length; i++) {
                 console.log(res.data.res.subscribe[i]);
 
-                tempFollowingList.push(<FansNFollowerEditor setFollowingNum={setFollowingNum} followingNum={res.data.res.subscribe.length} email={Email} targetEmail={res.data.res.subscribe[i]} Name='James' Avatar='https://joeschmoe.io/api/v1/james' isSwitch={false} />)
+                tempFollowingList.push(<FansNFollowerEditor setPageProps={props.setPageProps} setFollowingNum={setFollowingNum} followingNum={res.data.res.subscribe.length} email={Email} targetEmail={res.data.res.subscribe[i]} Name='James' Avatar='https://joeschmoe.io/api/v1/james' isSwitch={false} />)
             }
             console.log('Fans', tempFansList);
             console.log('Following', tempFollowingList)

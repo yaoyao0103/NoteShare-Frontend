@@ -275,16 +275,18 @@ function OutlineCard(props) {
     var opSize = 32;
     var authorFontSize = '16';
     var dateFontSize = '12';
-    var email=props.cardContent.author;
+    var email=props.cardContent.authorUserObj.userObjEmail;
     var date =props.cardContent.date?props.cardContent.date:'';
-    var author = props.cardContent.authorName?props.cardContent.authorName:props.cardContent.creatorName;
+    var author = props.cardContent.authorUserObj.userObjName;
+    var avatar=props.cardContent.authorUserObj.userObjAvatar;
     if (props.mode == 'Note') {
         opSize = 48;
         authorFontSize = '22';
         dateFontSize = '16';
         date=props.cardContent.publishDate;
-        email=props.cardContent.email;
-        author = props.cardContent.author[0];
+        email=props.cardContent.headerEmailUserObj.userObjEmail;
+        author = props.cardContent.headerEmailUserObj.userObjName;
+        avatar=props.cardContent.headerEmailUserOb.userObjAvatar;
     }
 
     useEffect(() => {
@@ -316,6 +318,7 @@ function OutlineCard(props) {
                                     date={props.cardContent.date}
                                     authorFontSize={authorFontSize}
                                     dateFontSize={dateFontSize}
+                                    avatar={avatar}
                                 />
                             </Col>
                             <Col onClick={props.onClick} className={"OutlineCard__Header__Right" + '__' + props.mode} span={14}>

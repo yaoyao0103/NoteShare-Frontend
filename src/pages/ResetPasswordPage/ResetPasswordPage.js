@@ -229,11 +229,7 @@ function ResetPasswordPage(props) {
                                         <Input.Password placeholder="Confirm Password" />
                                     </Form.Item>
 
-                                    <div className='signUpPage__Content__Form__Text'>
-                                        <Text color='black' cls='Small' content='Name' fontSize='13'/>
-                                    </div>    
-                               
-
+                              
 
 
                                     <Form.Item {...tailFormItemLayout} className='signUpPage__Form__Item'>
