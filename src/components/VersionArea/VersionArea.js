@@ -4,17 +4,17 @@ import OptionMenu from '../OptionMenu/OptionMenu';
 
 const VersionArea = (props) => {
   useEffect(() => {
-    console.log(props)
+    console.log("versionArea:",props)
   },[props])
 
   return (
     <List
       size="large"
       dataSource={props.versions}
-      renderItem={(item, index) => (index !=0 && <List.Item actions={
+      renderItem={(item, index) => ((index !=0 && ((props.isAuthor) || (!props.isAuthor && !props.versions[index].temp))) && <List.Item actions={
 
           [
-            <OptionMenu page={props.page} index = {index} versions={props.versions} setVersion={props.setVersion} isAuthor={props.isAuthor}/>
+            <OptionMenu page={props.page} index = {index} versions={props.versions} setVersion={props.setVersion} isAuthor={props.isAuthor} id={props.id}/>
           ]
     } >{item.name}</List.Item>)}
     />

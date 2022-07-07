@@ -21,3 +21,23 @@
     margin-bottom: 0.5em;
     margin-right: 1.5em;
 }
+
+.comment_MoreOption .anticon{
+    margin-top: 1.5em;
+    cursor: pointer;
+}
+
+.editing_Comment{
+    border-bottom: solid .1px #ddd;
+}
+
+.editing_Comment .ant-input-group-addon{
+    border: 0;
+    background-color: #fff;
+}
+
+.editing_Comment .anticon{
+    font-size: .9em;
+    margin: 0;
+    color: #777;
+}

@@ -22,7 +22,7 @@ const OptionMenu = (props) => {
   const [kickUserList, setKickUserList] = useState(<></>)
 
   const comments = (<CommentArea page={props.page} type="note" comments={props.comments} id={props.id}/>);
-  const versions = (<VersionArea page={'NoteDetailPageVersion'} versions={props.versions} setVersion={props.setVersion} isAuthor={props.isAuthor}/>);
+  const versions = (<VersionArea page={'NoteDetailPageVersion'} id={props.id} versions={props.versions} setVersion={props.setVersion} isAuthor={props.isAuthor} />);
 
   const showDrawer = () => {
     console.log(drawerType);
@@ -36,13 +36,18 @@ const OptionMenu = (props) => {
 
 
   const archive = () => {
-    message.info("Set to archived")
-    /* Todo: set archived
-    // call archive API
-    axios.put(`API_URL`)
+    axios.put(`http://localhost:8080/post/archive/${props.id}`)
     .then(res => {
+      message.info("Archived")
+        /*console.log("status", res.data.res.public)
+        if(res.data.res.public)
+          message.success("Set archive")
+        else
+          message.success("set non-archive")*/
     })
-    */
+    .catch(err => {
+        console.log(err)
+    }) 
   }
 
   // set private or public
@@ -65,12 +70,23 @@ const OptionMenu = (props) => {
 
     const { setVersion, setContent, setPoppedContentShow } = props;
 
-    const versionEdit = (index) => {
-        message.info("edit: "+ index);
-    }
     const versionBrowse = (index) => {
         message.info("browse: "+ index);
         setVersion(index);
+    }
+
+    const versionPublish = (index) => {
+      axios.put(`http://localhost:8080/note/publish/${props.id}/${index}`)
+      .then(res => {
+          console.log("status", res.data.res)
+          if(!res.data.res.temp)
+            message.success("Set public")
+          else
+            message.success("set private")
+      })
+      .catch(err => {
+          console.log(err)
+      })
     }
 
     const contentBrowse = (id) => {
@@ -339,6 +355,50 @@ const OptionMenu = (props) => {
       }/>
   );
 
+  const QnADetailMenuArchive = (
+    <Menu items={
+      [
+        {
+          label: (<a onClick=
+            {() => {
+              props.setPageProps({
+                postId: props.id,
+                type: 'QA',
+                action: "edit",
+                page:'QnAEditPage'
+              })
+            }}
+            >Edit</a>),
+          key: "1",
+          icon: <EditOutlined />
+        },
+        {
+            label: "Share",
+            key: "2",
+            icon: <ShareAltOutlined />
+        },
+        {
+          label: (<a>Archive</a>),
+          key: "3",
+          icon: <InboxOutlined />,
+          disabled: true
+        },
+        {
+          label: props.public? (<a onClick={setStatus}>Set Private</a>): (<a onClick={setStatus}>Set Public</a>),
+          key: "4",
+          icon: <UserOutlined style={{color: "#333"}}/>
+        },
+        {
+          label: (<a onClick={deletePost} style={{color:"red"}}>Delete</a>),
+          key: "5",
+          icon: <DeleteOutlined style={{color:"red"}}/>
+        },
+        
+
+      ]
+    }/>
+);
+
   const RewardDetailMenu = (
     <Menu items={
       [
@@ -568,13 +628,8 @@ const OptionMenu = (props) => {
             icon: <EyeOutlined />
         },
         {
-            label: (<a onClick={()=>{ versionEdit(props.index) }}>Edit</a>),
-            key: "2",
-            icon: <EditOutlined />
-        },
-        {
-          label: props.versions[props.index]?.isTemp? (<a >Set Private</a>): (<a >Set Public</a>),
-          key: "3",
+          label: !props.versions[props.index]?.temp? (<a onClick={() => versionPublish(props.index)}>Set Private</a>): (<a onClick={() => versionPublish(props.index)}>Set Public</a>),
+          key: "2",
           icon: <DeleteOutlined />
         }]
     }/>
@@ -698,7 +753,14 @@ const OptionMenu = (props) => {
         else{
           setMenu( NoteDetailMenu ); break;
         }
-      case 'QnADetailPage': setMenu( QnADetailMenu ); break;
+      case 'QnADetailPage':{
+        if(props.isArchive){
+          setMenu( QnADetailMenuArchive ); break;
+        }
+        else{
+          setMenu( QnADetailMenu ); break;
+        }
+      } 
       case 'RewardDetailPage': setMenu( RewardDetailMenu ); break;
       case 'NoteDetailPageVersion': 
       if(props.isAuthor){
