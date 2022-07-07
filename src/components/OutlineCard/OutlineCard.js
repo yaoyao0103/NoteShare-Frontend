@@ -16,7 +16,7 @@ function OutlineCard(props) {
     );
 
 
-    
+
     if (props.cardContent.tag) {
         var tags = '';
         for (let i = 0; i < props.cardContent.tag.length; i++) {
@@ -268,25 +268,30 @@ function OutlineCard(props) {
                         <Text cls='Default' fontSize="14" content={'Coin : ' + props.cardContent.price} />
                     </Col>
                 </Row>
-                
+
             </Sider >
         }</>
     );
     var opSize = 32;
     var authorFontSize = '16';
     var dateFontSize = '12';
-    var email=props.cardContent.authorUserObj.userObjEmail;
-    var date =props.cardContent.date?props.cardContent.date:'';
-    var author = props.cardContent.authorUserObj.userObjName;
-    var avatar=props.cardContent.authorUserObj.userObjAvatar;
+    var email = '';
+    var author = '';
+    var avatar = '';
+    var date = props.cardContent.date ? props.cardContent.date : '';
+    if (props.mode === 'Post') {
+        email = props.cardContent.authorUserObj.userObjEmail ? props.cardContent.authorUserObj.userObjEmail : '';
+        author = props.cardContent.authorUserObj.userObjName ? props.cardContent.authorUserObj.userObjName : "";
+        avatar = props.cardContent.authorUserObj.userObjAvatar ? props.cardContent.authorUserObj.userObjAvatar : '';
+    }
     if (props.mode == 'Note') {
         opSize = 48;
         authorFontSize = '22';
         dateFontSize = '16';
-        date=props.cardContent.publishDate;
-        email=props.cardContent.headerEmailUserObj.userObjEmail;
+        date = props.cardContent.publishDate;
+        email = props.cardContent.headerEmailUserObj.userObjEmail;
         author = props.cardContent.headerEmailUserObj.userObjName;
-        avatar=props.cardContent.headerEmailUserOb.userObjAvatar;
+        avatar = props.cardContent.headerEmailUserObj.userObjAvatar;
     }
 
     useEffect(() => {
@@ -314,8 +319,8 @@ function OutlineCard(props) {
                                     className="OutlineCard__OPInfo"
                                     mode="Outline"
                                     size={opSize}
-                                    author={{email:email,name:author}}
-                                    date={props.cardContent.date}
+                                    author={{ email: email, name: author }}
+                                    date={date}
                                     authorFontSize={authorFontSize}
                                     dateFontSize={dateFontSize}
                                     avatar={avatar}

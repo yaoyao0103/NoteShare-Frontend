@@ -210,7 +210,7 @@ const PageDetailContentTemplate = (props) => {
                                         setPageProps={props.setPageProps}
                                         author={author}
                                         managerEmail={managerEmail}
-                                        isArchive={props.data.archive}
+                                        isArchive={props.data?.archive}
                                     /></div>
                                 
                             </Col>
