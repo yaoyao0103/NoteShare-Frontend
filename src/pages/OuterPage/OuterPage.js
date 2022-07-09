@@ -38,6 +38,9 @@ const OuterPage = () => {
     const [visible, setVisible] = useState(false);
     const [loggedIn, setLoggedIn] = useState(false);
     const [changeAvatar, setChangeAvatar] = useState(0);
+    const [coinNum, setCoinNum] = useState(0);
+    const [floatButtonVisable, setFloatButtonVisable] = useState(false);
+    
     const [isChanging, setIsChanging] = useState(false);
     const showDrawer = () => {
         setVisible(true);
@@ -59,6 +62,7 @@ const OuterPage = () => {
         if (tempPageProps) {
             const temp = JSON.parse(tempPageProps)
             console.log("temp", temp)
+
             setPageProps(temp)
         }
     }, [])
@@ -79,6 +83,14 @@ const OuterPage = () => {
         console.log("page", pageProps.page)
         console.log("pageProps", pageProps)
         document.cookie = "pageProps=" + JSON.stringify(pageProps);
+        if (pageProps.page === 'NoteDetailPage' || pageProps.page === 'NoteOutlinePage' || pageProps.page === 'MemberPage' ||
+            pageProps.page === 'RewardDetailPage' || pageProps.page === 'RewardOutlinePage' || pageProps.page === 'RewardRecommendPage' ||
+            pageProps.page === 'QnADetailPage' || pageProps.page === 'QnAOutlinePage' || pageProps.page === 'QnARecommendPage' ||
+            pageProps.page === 'CollabDetailPage' || pageProps.page === 'CollabOutlinePage' || pageProps.page === 'CollabRecommendPage'
+        )
+            setFloatButtonVisable(true)
+        else
+            setFloatButtonVisable(false)
         //setPageComponent(<></>);
         //console.log('11111');
         switch (pageProps.page) {
@@ -121,11 +133,18 @@ const OuterPage = () => {
         message.info("float button click!")
 
         switch (pageProps.page) {
+            case 'NoteDetailPage': setPageProps({ page: 'NoteNewPage', action: "new", }); break;
+            case 'NoteOutlinePage': setPageProps({ page: 'NoteNewPage', action: "new", }); break;
             case 'MemberPage': setPageProps({ page: 'NoteNewPage', action: "new", }); break;
-            case 'PersonalPage': setPageProps({ page: 'NoteNewPage', action: "new", }); break;
+            case 'RewardDetailPage': setPageProps({ page: 'RewardNewPage', type: 'reward', action: 'new' }); break;
+            case 'RewardOutlinePage': setPageProps({ page: 'RewardNewPage', type: 'reward', action: 'new' }); break;
             case 'RewardRecommendPage': setPageProps({ page: 'RewardNewPage', type: 'reward', action: 'new' }); break;
-            case 'QnARecommendPage': setPageProps({ page: 'QnANewPage',type: 'QA', action: 'new', page: 'QnANewPage' }); break;
-            case 'CollabRecommendPage': setPageProps({page: 'CollabNewPage',type: 'collaboration', action: 'new', page: 'CollabNewPage'}); break;
+            case 'QnADetailPage': setPageProps({ page: 'QnANewPage', type: 'QA', action: 'new', page: 'QnANewPage' }); break;
+            case 'QnAOutlinePage': setPageProps({ page: 'QnANewPage', type: 'QA', action: 'new', page: 'QnANewPage' }); break;
+            case 'QnARecommendPage': setPageProps({ page: 'QnANewPage', type: 'QA', action: 'new', page: 'QnANewPage' }); break;
+            case 'CollabDetailPage': setPageProps({ page: 'CollabNewPage', type: 'collaboration', action: 'new', page: 'CollabNewPage' }); break;
+            case 'CollabOutlinePage': setPageProps({ page: 'CollabNewPage', type: 'collaboration', action: 'new', page: 'CollabNewPage' }); break;
+            case 'CollabRecommendPage': setPageProps({ page: 'CollabNewPage', type: 'collaboration', action: 'new', page: 'CollabNewPage' }); break;
             default: setPageComponent(<></>); break;
         }
 
@@ -133,7 +152,7 @@ const OuterPage = () => {
     return (
         <>
             <div className='outerPage'>
-                <Navbar pageProps={pageProps}changeAvatar={changeAvatar} loggedIn={loggedIn} setPageProps={setPageProps} setLoggedIn={setLoggedIn} />
+                <Navbar coinNum={coinNum} setCoinNum={setCoinNum} pageProps={pageProps} changeAvatar={changeAvatar} loggedIn={loggedIn} setPageProps={setPageProps} setLoggedIn={setLoggedIn} />
                 <div className='outerPage__Layout'>
                     {pageComponent && pageComponent}
                 </div>
@@ -368,9 +387,11 @@ const OuterPage = () => {
                     ResetPasswordPage
                 </Button>
             </Drawer>
-            <div className="floatButton" onClick={floatBtnOnClick}>
-                <PlusOutlined />
-            </div>
+            {floatButtonVisable &&
+                <div className="floatButton" onClick={floatBtnOnClick}>
+                    <PlusOutlined />
+                </div>
+            }
         </>
     )
 }

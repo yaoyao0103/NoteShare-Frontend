@@ -26,6 +26,7 @@ function ProfilePage(props) {
     const [strength, setStrength] = useState([]);
     const [profile, setProfile] = useState('');
     const [isFollow, setIsFollow] = useState(false);
+    const [isBell, setIsBell] = useState(false);
     const [fansNum, setFansNum] = useState(0);
     const [followingNum, setFollowingNum] = useState(0);
 
@@ -119,7 +120,27 @@ function ProfilePage(props) {
         }
     }
 
+    const changeBell = () => {
+        if (isBell) {
+            axios.put('http://localhost:8080/cancelBell/'+ email + '/' + props.email,).then(res => {
+                //setProfile(content);
+                setIsBell(false);
+                message.info('Turn on the bell of ' + user.name);
+            }).catch((error) => {
+                console.log(error.response.error);
+            })
+        }
+        else {
+            axios.put("http://localhost:8080/bell/" + email + '/' + props.email,).then(res => {
+                //setProfile(content);
+                setIsBell(true);
+                message.info('Turn on the bell of ' + user.name);
+            }).catch((error) => {
+                console.log(error.response.error);
+            })
 
+        }
+    }
 
     const SaveProfile = (content) => {
         axios.put("http://localhost:8080/user/profile/" + email, { profile: content }).then(res => {
@@ -217,26 +238,34 @@ function ProfilePage(props) {
             setProfile(res.data.res.profile);
             setStrength(res.data.res.strength);
             //console.log(res.data.res.subscribe);
-            setFansNum(res.data.res.fans.length);
-            setFollowingNum(res.data.res.subscribe.length);
+            setFansNum(res.data.res.fansUserObj.length);
+            setFollowingNum(res.data.res.subscribeUserObj.length);
             var tempFansList = [];
             var tempFollowingList = [];
+            for (let i = 0; i < res.data.res.belledByUserObj.length; i++) {
 
-            for (let i = 0; i < res.data.res.fans.length; i++) {
-                console.log(res.data.res.fans[i]);
-                console.log('email', Email)
-                if (res.data.res.fans[i] === Email)
+                if (res.data.res.belledByUserObj[i].userObjEmail === Email){
+                    console.log(Email);
+                    setIsBell(true);
+                }
+                    
+
+
+            }
+
+            for (let i = 0; i < res.data.res.fansUserObj.length; i++) {
+
+                if (res.data.res.fansUserObj[i].userObjEmail === Email)
                     setIsFollow(true);
 
-                tempFansList.push(<FansNFollowerEditor setPageProps={props.setPageProps} setFansNum={setFansNum} fansNum={res.data.res.fans.length} email={Email} targetEmail={res.data.res.fans[i]} Name='James' Avatar='https://joeschmoe.io/api/v1/james' isSwitch={true} />)
+                tempFansList.push(<FansNFollowerEditor setPageProps={props.setPageProps} setFansNum={setFansNum} fansNum={res.data.res.fansUserObj.length} email={Email} targetEmail={res.data.res.fansUserObj[i].userObjEmail} Name={res.data.res.fansUserObj[i].userObjName} Avatar={res.data.res.fansUserObj[i].userObjAvatar} isSwitch={true} />)
             }
-            for (let i = 0; i < res.data.res.subscribe.length; i++) {
-                console.log(res.data.res.subscribe[i]);
 
-                tempFollowingList.push(<FansNFollowerEditor setPageProps={props.setPageProps} setFollowingNum={setFollowingNum} followingNum={res.data.res.subscribe.length} email={Email} targetEmail={res.data.res.subscribe[i]} Name='James' Avatar='https://joeschmoe.io/api/v1/james' isSwitch={false} />)
+            for (let i = 0; i < res.data.res.subscribeUserObj.length; i++) {
+
+                tempFollowingList.push(<FansNFollowerEditor setPageProps={props.setPageProps} setFollowingNum={setFollowingNum} followingNum={res.data.res.subscribeUserObj.length} email={Email} targetEmail={res.data.res.subscribeUserObj[i].userObjEmail} Name={res.data.res.subscribeUserObj[i].userObjName} Avatar={res.data.res.subscribeUserObj[i].userObjAvatar} isSwitch={false} />)
             }
-            console.log('Fans', tempFansList);
-            console.log('Following', tempFollowingList)
+
 
             setFansList(oldArray => [...oldArray.slice(0, 0), tempFansList]);
             setFollowingList(oldArray => [...oldArray.slice(0, 0), tempFollowingList]);
@@ -327,9 +356,13 @@ function ProfilePage(props) {
                                             </Col>
                                         }
                                         <Col className='Profile__Bell' span={8}>
-                                            <Tooltip arrowPointAtCenter={true} placement="top" title={"Open the notification of " + user.name} color={'#000'}>
-                                                <BellOutlined className='Profile__Bell__Icon' style={{ fontSize: '22px' }} />
-                                            </Tooltip>
+                                        {!isBell && <Tooltip arrowPointAtCenter={true} placement="top" title={"Turn on the notification of " + user.name} color={'#000'}>
+                                                <BellOutlined className='Profile__Bell__Icon' style={{ fontSize: '22px' }} onClick={() => { changeBell() }} />
+                                            </Tooltip>}
+                                            {isBell &&<Tooltip arrowPointAtCenter={true} placement="top" title={"Turn off the notification of " + user.name} color={'#000'}>
+                                                 <BellFilled className='Profile__Bell__Icon' style={{ fontSize: '22px' }} onClick={() => { changeBell() }} />
+                                            </Tooltip>}
+
                                         </Col>
                                     </Row>
                                 }
