@@ -61,7 +61,7 @@ function FolderOutlinePage(props) {
     return (
         <>
             {Folder.length > 0 &&
-                <PageOutlineContentTemplate page={page} hasSwitch={false} mode='Folder' Post={Folder} changePageNumber={(pagenumber) => { setPageNumber(pagenumber); }} changeSortMode={(sortMode) => { setSortMode(sortMode); }} />
+                <PageOutlineContentTemplate setPageProps={props.setPageProps}page={page} hasSwitch={false} mode='Folder' Post={Folder} changePageNumber={(pagenumber) => { setPageNumber(pagenumber); }} changeSortMode={(sortMode) => { setSortMode(sortMode); }} />
             }
         </>
     );

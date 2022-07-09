@@ -59,9 +59,10 @@ function FolderOutlineCard(props) {
                                     className="FolderOutlineCard__OPInfo"
                                     mode="FolderOutline"
                                     size={opSize}
-                                    author={{email:email,name:author}}
+                                    author={{email:email,name:author,avatar:props.cardContent.headshotPhoto}}
                                     authorFontSize={authorFontSize}
                                     dateFontSize={dateFontSize}
+                                    setPageProps={props.setPageProps}
                                 />
                             </Col>
                             <Col className={"FolderOutlineCard__Header__Right" } span={14}>

@@ -35,7 +35,7 @@ function PageOutlineContentTemplate(props) {
             console.log('1111');
             // tempcardLists.push(<FolderOutlineCard page={props.page} mode={props.mode} cardContent={props.Post[0].items[0]} author={props.Post[0].items[0].creatorName} />);
             for (let i = 0; i <= props.Post[0].items.length - 1; i++) {
-                tempcardLists.push(<FolderOutlineCard page={props.page} mode={props.mode} cardContent={props.Post[0].items[i]} author={props.Post[0].items[i].creatorName} />);
+                tempcardLists.push(<FolderOutlineCard page={props.page} mode={props.mode} cardContent={props.Post[0].items[i]} setPageProps={props.setPageProps}/>);
             };
 
             setCardList(tempcardLists);
