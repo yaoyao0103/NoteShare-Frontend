@@ -53,6 +53,12 @@ button .anticon-user{
     background-color: 	#2894FF;
 }
 
+.btn-blue--disable{
+    background-color: 	#2894FF;
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
 .btn-blue:hover{
     background-color: #6363FF;
     transform: scale(1.05);
@@ -61,6 +67,12 @@ button .anticon-user{
 
 .btn-red{
     background-color: 	#FF5151;
+}
+
+.btn-red--disable{
+    background-color: 	#FF5151;
+    opacity: 0.5;
+    cursor: not-allowed;
 }
 
 .btn-red:hover{

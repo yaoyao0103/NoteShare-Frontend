@@ -53,7 +53,7 @@ const NoteEditTemplate = (props) => {
         const note = props.note;
         if(note && props.mode == 'edit'){
             setTitle(note.title);
-            setMyEditor(<MyEditor noteId={note.id} version={'0'} page={props.page}/>);
+            setMyEditor(<MyEditor noteId={note.id} version={'0'} page={props.page} email={email}/>);
             setInformation({
                 school: note.school,
                 department: note.department,
@@ -165,7 +165,7 @@ const NoteEditTemplate = (props) => {
                 VersionFormat.content = [ContentFormat]
                 axios.put(`http://localhost:8080/note/${tempId}/0`, VersionFormat)
                 .then ( versionRes => {
-                    setMyEditor(<MyEditor noteId={tempId} version={'0'} page={props.page}/>)
+                    setMyEditor(<MyEditor noteId={tempId} version={'0'} page={props.page} email={email}/>)
                     const version = versionRes.data.res;
                     setVersions([version])
                     setStep(1);
@@ -198,7 +198,7 @@ const NoteEditTemplate = (props) => {
                 defaultVersion.slug = "default"
                 axios.put(`http://localhost:8080/note/${noteId}/0`, defaultVersion)
                 .then ( async versionRes => {
-                    setMyEditor(<MyEditor noteId={noteId} version={'0'} page={props.page}/>)
+                    setMyEditor(<MyEditor noteId={noteId} version={'0'} page={props.page} email={email}/>)
                     setStep(0);
                     setStep(1);
                 })

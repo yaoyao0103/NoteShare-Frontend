@@ -211,14 +211,13 @@ const OptionMenu = (props) => {
     const kickUser = (email) => {
       console.log("email", email)
       const data = {
-        task: {
-          year: 2022,
-          month: 7,
-          day: 4,
-          postID: props.id
-        },
-        kickTarget: email,
+        year: 2022,
+        month: 7,
+        day: 9,
+        kickTargetEmail: email,
       }
+
+      console.log("kick info: ", data)
       axios.post(`http://localhost:8080/schedule/vote/${props.id}`, data)
       .then ( res => {
           message.success("Vote Submit!!")

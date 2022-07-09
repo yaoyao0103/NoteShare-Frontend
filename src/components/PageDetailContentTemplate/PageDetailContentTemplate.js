@@ -46,7 +46,7 @@ const PageDetailContentTemplate = (props) => {
         console.log("tempEmail",tempEmail)
         if(props.page == "NoteDetailPage"){
             setNoteId(props.data?.id);
-            setEditor(<MyEditor noteId = {props.data?.id} version={'0'} page={props.page}/>)
+            setEditor(<MyEditor noteId = {props.data?.id} version={'0'} page={props.page} email={email}/>)
             if (props.data?.headerUserObj.userObjEmail == tempEmail) setIsAuthor(true)
             else setIsAuthor(false)
             for(let i = 0; i < props.data?.favoriterUserObj.length; i++){
@@ -67,17 +67,17 @@ const PageDetailContentTemplate = (props) => {
             const noteId = props.data.answers[0];
             setNoteId(noteId);
             setIsPublic(props.data?.public)
-            setVote(props.data?.vote)
+            setVote(props.data?.vote.length>0? props.data?.vote[0]:null)
             axios.get(`http://localhost:8080/note/${noteId}`)
             .then ( res => {
                 console.log(res.data.res)
                 const tempNote = res.data.res
                 setVersions(tempNote.version)
-                setManagerEmail(tempNote.managerUserObj.userObjEmail)
+                setManagerEmail(tempNote.managerUserObj?.userObjEmail)
                 
                 for(let i = 0; i < props.data?.authorUserObj.length; i++){
                     if(props.data?.authorUserObj[i].userObjEmail == tempEmail){
-                        setEditor(<MyEditor noteId = {noteId} version={'0'} page={props.page}/>)
+                        setEditor(<MyEditor noteId = {noteId} version={'0'} page={props.page} email={email}/>)
                         setIsAuthor(true)
                         console.log("is a author")
                         break;
@@ -85,8 +85,8 @@ const PageDetailContentTemplate = (props) => {
                 }
                 
                 
-                if((tempNote.managerUserObj.userObjEmail == tempEmail) || tempNote.headerUserObj.userObjEmail == tempEmail){
-                    setEditor(<MyEditor noteId = {noteId} version={'0'} page={props.page}/>)
+                if((tempNote.managerUserObj?.userObjEmail == tempEmail) || tempNote.headerUserObj.userObjEmail == tempEmail){
+                    setEditor(<MyEditor noteId = {noteId} version={'0'} page={props.page} email={email}/>)
                     setIsManager(true)
                     setIsAuthor(true)
                     console.log("is a manager")
@@ -137,9 +137,9 @@ const PageDetailContentTemplate = (props) => {
     
     const setVersion = (index) => {
         if(props.page == "NoteDetailPage")
-            setEditor(<MyEditor noteId = {props.data?.id} version={index.toString()} page={props.page}/>)
+            setEditor(<MyEditor noteId = {props.data?.id} version={index.toString()} page={props.page} email={email}/>)
         else if(props.page == "CollabDetailPage" && props.data)
-            setEditor(<MyEditor noteId = {noteId} version={index.toString()} page={props.page}/>)
+            setEditor(<MyEditor noteId = {noteId} version={index.toString()} page={props.page} email={email}/>)
     }
 
     const apply = (content) => {
@@ -210,7 +210,7 @@ const PageDetailContentTemplate = (props) => {
                                         setPageProps={props.setPageProps}
                                         author={author}
                                         managerEmail={managerEmail}
-                                        isArchive={props.data.archive}
+                                        isArchive={props.data?.archive}
                                     /></div>
                                 
                             </Col>
@@ -321,8 +321,8 @@ const PageDetailContentTemplate = (props) => {
 
             {vote &&
                 <div className={`detailNotice ${ noticeShow && 'detailNotice--show'}`}>
-                    <DetailNotice setNoticeShow={setNoticeShow} type={"vote"} kickUser={vote.kickUser}>
-                        <VoteArea vote={vote} total={props.data?.authorUserObj.length}/>
+                    <DetailNotice setNoticeShow={setNoticeShow} type={"vote"} kickUser={vote.kickTarget}>
+                        <VoteArea vote={vote} total={props.data?.emailUserObj.length} postId={props.postId} email={email}/>
                     </DetailNotice>
                 </div>
             }

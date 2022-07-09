@@ -5,6 +5,7 @@
 }
 
 .detailNotice__Header{
+    position: relative;
     background-color: #fff;
     height: 25%;
     padding: 0;
@@ -19,6 +20,7 @@
 .detailNotice__Header .anticon{
     position: relative;
     float: right;
+    margin-left: 1em;
 }
 
 .detailNotice__Content{

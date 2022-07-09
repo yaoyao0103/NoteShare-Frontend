@@ -36,7 +36,7 @@ import tUIImageEditor from "../plugins/tUIImageEditor";
 
 export let editor;
 
-async function geditorConfig(assets, noteId, version){
+async function geditorConfig(assets, noteId, version, isCollab, email){
   $(".panel__devices").html("");
   $(".panel__basic-actions").html("");
   $(".panel__editor").html("");
@@ -51,6 +51,9 @@ async function geditorConfig(assets, noteId, version){
   const panelTopBar = $("#main-content > .navbar-light");
 
   editor = grapesjs.init({
+    noteId: noteId,
+    isCollab: isCollab,
+    email: email,
     container: "#editor",
     blockManager: {
       appendTo: "#blocks",

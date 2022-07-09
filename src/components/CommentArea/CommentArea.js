@@ -67,17 +67,19 @@ function CommentArea(props) {
                 if(item.best){
                     setBestAns([item])
                 }
-                authorArray[item.id] = item.userObj.userObjName
-                likeCount[item.id] = item.likeCount;
+                authorArray[item.id] = item.userObj.userObjName? item.userObj.userObjName:null
+                likeCount[item.id] = item.likeCount? item.likeCount:0 ;
                 let flag = false;
-                for(let i = 0; i < item.likerUserObj.length; i++){
-                    if(item.likerUserObj[i].userObjEmail == tempEmail){
-                        flag = true;
-                        break;
+                if(item.likerUserObj){
+                    for(let i = 0; i < item.likerUserObj.length; i++){
+                        if(item.likerUserObj[i].userObjEmail == tempEmail){
+                            flag = true;
+                            break;
+                        }
                     }
-                }
-                if(flag){
-                    likeColor[item.id] = true;
+                    if(flag){
+                        likeColor[item.id] = true;
+                    }
                 }
             });
             setAuthors(authorArray);
@@ -248,7 +250,7 @@ function CommentArea(props) {
                         <Col span={21}>
                         <Comment
                             actions={
-                                    props.isArchive?
+                                    props.isArchive || !item.date?
                                     [
                                         <span  style={{cursor:"default"}}>
                                         {React.createElement(likeColor[item.id]? LikeFilled : LikeOutlined)}
@@ -291,14 +293,20 @@ function CommentArea(props) {
                                 />
                                 :item.content
                             }
-                            datetime={(
+                            datetime={item.date?(
                                 <Tooltip title={moment(item.date).format('YYYY-MM-DD HH:mm:ss')}>
                                     <span>{moment(item.date).fromNow()}</span>
                                 </Tooltip>
-                                )}
+                                )
+                                :
+                                <Tooltip title={"Deleted Comment"}>
+                                    <span>Deleted Comment</span>
+                                </Tooltip>
+                            }
                             />
                         </Col>
                         <Col className="comment_MoreOption" span={3}>
+                            {(item.userObj.userObjEmail == email) &&
                             <Dropdown 
                             overlay={<Menu
                                 items={[
@@ -324,6 +332,7 @@ function CommentArea(props) {
                                 />} placement="bottomLeft" arrow>
                                 <MoreOutlined/>
                             </Dropdown>
+                            }
                         </Col>
                     </Row>
                 </li>

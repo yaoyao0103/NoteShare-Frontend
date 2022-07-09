@@ -11,6 +11,8 @@ import { NoteFormat, VersionFormat, ContentFormat } from '../../components/NoteE
 import axios from '../../components/axios/axios';
 import VersionArea from '../../components/VersionArea/VersionArea';
 import { editor } from '../../api_utils/geditor_config';
+import Cookie from '../../components/Cookies/Cookies';
+import { Base64 } from 'js-base64';
 
 
 const { Header, Content, Sider, Footer } = Layout;
@@ -18,7 +20,7 @@ const { Step } = Steps;
 const { TextArea } = Input;
 const { Option } = Select;
 
-const email = "00857028@email.ntou.edu.tw";
+//const email = "00857028@email.ntou.edu.tw";
 //const folderID  = "62aee78ee913643da31b59e9";
 const author = "Yao"
 
@@ -38,11 +40,15 @@ const CollabNoteEditPage = (props) => {
     const [visible, setVisible] = useState(false);
     const [popoverContent, setPopoverContent] = useState(<></>);
     const [versions, setVersions] = useState([]);
-    const dispatch = useDispatch();
+    const [email, setEmail] = useState('')
     const { pageStore } = useSelector((state) => state);
-    const { pages } = pageStore;
 
     useEffect(() => {
+        const cookieParser = new Cookie(document.cookie)
+        const temp = cookieParser.getCookieByName('email')
+        const tempEmail = Base64.decode(temp);
+        setEmail(tempEmail)
+        console.log("tempEmail", tempEmail)
         //const note = props.note;
         axios.get(`http://localhost:8080/note/${props.noteId}`)
         .then ( res => {
@@ -50,7 +56,7 @@ const CollabNoteEditPage = (props) => {
             const tempNote = res.data.res
             setNote(res.data.res)
             setTitle(tempNote.title);
-            setMyEditor(<MyEditor noteId={props.noteId} version={'0'} page={props.page}/>);
+            setMyEditor(<MyEditor noteId={props.noteId} version={'0'} page={props.page} email={tempEmail} isCollab={true}/>);
             setInformation({
                 school: tempNote.school,
                 department: tempNote.department,
@@ -100,7 +106,7 @@ const CollabNoteEditPage = (props) => {
             return;
         }
         message.info("Update info")
-        const tempNote = JSON.parse(JSON.stringify(note))
+        /*const tempNote = JSON.parse(JSON.stringify(note))
         tempNote.department = information.department
         tempNote.subject = information.subject
         tempNote.title = title
@@ -110,6 +116,16 @@ const CollabNoteEditPage = (props) => {
         tempNote.price = information.price
         tempNote.description = content
 
+        delete tempNote.authorUserObj
+        delete tempNote.buyerUserObj
+        delete tempNote.favoriterUserObj
+        delete tempNote.headerUserObj
+        delete tempNote.contributorUserObj
+        delete tempNote.likerUserObj
+        delete tempNote.managerUserObj
+        console.log("tempNote:", tempNote);
+
+
         axios.put(`http://localhost:8080/note/${props.noteId}`, tempNote)
         .then(contentRes => {
             console.log(contentRes)
@@ -117,7 +133,8 @@ const CollabNoteEditPage = (props) => {
         })
         .catch (err => {
             console.log(err)
-        })
+        })*/
+        setStep(1);
     }
 
     const showDrawer = () => {
@@ -137,7 +154,7 @@ const CollabNoteEditPage = (props) => {
                 defaultVersion.slug = "default"
                 axios.put(`http://localhost:8080/note/${props.noteId}/0`, defaultVersion)
                 .then ( async versionRes => {
-                    setMyEditor(<MyEditor noteId={props.noteId} version={'0'} page={props.page}/>)
+                    setMyEditor(<MyEditor noteId={props.noteId} version={'0'} page={props.page} email={email} isCollab={true}/>)
                     setStep(0);
                     setStep(1);
                 })
