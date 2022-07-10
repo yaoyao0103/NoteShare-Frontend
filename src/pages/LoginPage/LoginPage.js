@@ -49,7 +49,7 @@ function LoginPage(props) {
             console.log(startPassword);
             form.setFieldsValue({
                 email: startEmail,
-                password:startPassword
+                password: startPassword
 
             });
             setEmail(startEmail);
@@ -59,9 +59,16 @@ function LoginPage(props) {
         setRender(true);
     }, []);
     useEffect(() => {
-      props.setLoading(false);
+        if(render)
+        props.setLoading(false);
 
-        setRender(true);
+
+    }, [props]);
+    useEffect(() => {
+
+        props.setLoading(false);
+
+
     }, [render]);
     const onFinish = (values) => {
         login();
@@ -77,7 +84,7 @@ function LoginPage(props) {
     const login = () => {
         var str = Base64.encode(email);
         document.cookie = "email=" + str;
-        if (hasRemember==='A') {
+        if (hasRemember === 'A') {
             str = Base64.encode(email);
             document.cookie = "rEmail=" + str;
 
@@ -101,7 +108,7 @@ function LoginPage(props) {
                 }).catch((error) => {
                     console.log(error.response.status);
                 })
-               
+
                 props.setPageProps({ page: 'VerificationPage', email: email });
             }
 

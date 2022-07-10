@@ -32,6 +32,12 @@ function SignUpPage(props) {
         setRender(true);
     });
     useEffect(() => {
+        if(render)
+        props.setLoading(false);
+
+
+    }, [props]);
+    useEffect(() => {
         props.setLoading(false)
     }, [render]);
     const onFinish = (values) => {

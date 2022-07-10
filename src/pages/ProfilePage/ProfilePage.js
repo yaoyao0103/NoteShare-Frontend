@@ -30,7 +30,7 @@ function ProfilePage(props) {
     const [fansNum, setFansNum] = useState(0);
     const [followingNum, setFollowingNum] = useState(0);
 
-    const [fansOrFollower, setFansOrFollower] = useState(true);//true代表fans,folder
+    const [fansOrFollower, setFansOrFollower] = useState(true);
     const [fansList, setFansList] = useState([]);
     const [followingList, setFollowingList] = useState([]);
     const [folderList, setFolderList] = useState([]);
@@ -79,9 +79,7 @@ function ProfilePage(props) {
 
     const SaveAvatar = () => {
         axios.put("http://localhost:8080/user/head/" + email, { headshotPhoto: Avatars[avatar] }).then(res => {
-
             setAvatarCurrent(Avatars[avatar]);
-
             message.info('Change avatar');
             //console.log(avatarNum+1);
             setAvatarNum(avatarNum + 1);
@@ -89,10 +87,7 @@ function ProfilePage(props) {
 
         }).catch((error) => {
             message.info(error.response.error);
-
         })
-
-
     }
 
     const Follow = () => {

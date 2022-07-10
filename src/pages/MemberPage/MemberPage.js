@@ -12,6 +12,7 @@ function MemberPage(props) {
     const [sortMode,setSortMode] =useState('likeCount');
 
     useEffect(() => {
+        props.setLoading(true)
         async function getNoteById() {
             try {
                 const haveNormal= true;
@@ -19,7 +20,7 @@ function MemberPage(props) {
                 console.log(props.department);
                 await axios.get('http://localhost:8080/search/note/'+ String(pageNumber-1) + '/10?keyword=os&department=&subject=&haveNormal='+true+'&sortBy='+sortBy).then((res) => {
                     setNote(oldArray => [...oldArray, res.data.search]);
-
+                    props.setLoading(false)
                 });
 
             } catch (error) {
