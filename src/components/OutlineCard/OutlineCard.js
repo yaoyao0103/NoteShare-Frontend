@@ -319,11 +319,12 @@ function OutlineCard(props) {
                                     className="OutlineCard__OPInfo"
                                     mode="Outline"
                                     size={opSize}
-                                    author={{ email: email, name: author }}
+                                    author={{ email: email, name: author,avatar:avatar}}
                                     date={date}
                                     authorFontSize={authorFontSize}
                                     dateFontSize={dateFontSize}
-                                    avatar={avatar}
+                                    
+                                    setPageProps={props.setPageProps}
                                 />
                             </Col>
                             <Col onClick={props.onClick} className={"OutlineCard__Header__Right" + '__' + props.mode} span={14}>

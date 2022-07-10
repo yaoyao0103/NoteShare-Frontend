@@ -28,6 +28,9 @@ function ResetPasswordPage(props) {
     useEffect(() => {
         setRender(true);
     });
+    useEffect(() => {
+        props.setLoading(false)
+    }, [render]);
     const onFinish = (values) => {
         //console.log('Received values of form: ', values);
 

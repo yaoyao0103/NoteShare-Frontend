@@ -28,6 +28,7 @@ function QnARecommendPage(props) {
         getQnAById();
     }, [props]);
     useEffect(() => {
+        props.setLoading(true)
         async function getQnAById() {
             try {
 
@@ -36,6 +37,7 @@ function QnARecommendPage(props) {
                 await axios.get('http://localhost:8080/search/post/' + String(pageNumber - 1) + '/20?keyword=array&department=' + (props.department ? props.department : '') + '&subject=' + (props.subject ? props.subject : '') + '&haveQA=' + true + '&sortBy=' + sortBy).then((res) => {
                     setQnA(oldArray => [...oldArray, res.data.search]);
                     window.scrollTo(0, 0);
+                    props.setLoading(false)
                 });
 
             } catch (error) {
@@ -49,7 +51,7 @@ function QnARecommendPage(props) {
     return (
         <>
             {QnA.length > 0 &&
-                <PageOutlineContentTemplate page={page} hasSwitch={false} mode='Post' Post={QnA} changePageNumber={(pagenumber) => { setPageNumber(pagenumber); }} changeSortMode={(sortMode) => { setSortMode(sortMode); }} setPageProps={props.setPageProps} />
+                <PageOutlineContentTemplate page={page} hasSwitch={false} mode='Post' Post={QnA} pageNumber={pageNumber} changePageNumber={(pagenumber) => { setPageNumber(pagenumber); }} changeSortMode={(sortMode) => { setSortMode(sortMode); }} setPageProps={props.setPageProps} />
 
             }
         </>

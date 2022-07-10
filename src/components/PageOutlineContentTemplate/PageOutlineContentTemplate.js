@@ -9,7 +9,7 @@ import axios from "axios";
 const { Header, Content, Footer } = Layout;
 
 function PageOutlineContentTemplate(props) {
-    const [pageN, setPageN] = useState();
+    const [pageN, setPageN] = useState(1);
     const [searchResult, setSearchResult] = useState([]);
 
     const [pageTotal, setPageTotal] = useState();
@@ -26,7 +26,7 @@ function PageOutlineContentTemplate(props) {
         if (!(props.Post[0].totalPages===0)&&props.mode!=='Folder') {
             console.log('1111');
             for (let i = 0; i <= props.Post[0].items.length - 1; i++) {
-                tempcardLists.push(<OutlineCard onClick={()=>onClickCard(props.Post[0].items[i].type, props.Post[0].items[i].id)} page={props.page} mode={props.mode} cardContent={props.Post[0].items[i]} author={props.Post[0].items[i].author} />);
+                tempcardLists.push(<OutlineCard onClick={()=>onClickCard(props.Post[0].items[i].type, props.Post[0].items[i].id)} setPageProps={props.setPageProps}page={props.page} mode={props.mode} cardContent={props.Post[0].items[i]}  />);
             };
 
             setCardList(tempcardLists);
@@ -52,8 +52,10 @@ function PageOutlineContentTemplate(props) {
     }, [cardList])
     const onChange = (pagenumber) => {
         //console.log(pagenumber);
-        props.changePageNumber(pagenumber);
         setPageN(pagenumber);
+        props.changePageNumber(pagenumber);
+
+        
     }
 
     const onClickCard = (type, id) => {
@@ -107,7 +109,7 @@ function PageOutlineContentTemplate(props) {
                             {cardList}
                         </Content>
                         <Footer className="outlineContentTemplate__Footer">
-                            <Pagination defaultCurrent={1} total={pageTotal} onChange={onChange} />
+                            <Pagination defaultCurrent={1} current={props.pageNumber} total={pageTotal} onChange={onChange} />
                         </Footer>
                     </Layout>
 

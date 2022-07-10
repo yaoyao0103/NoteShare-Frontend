@@ -14,6 +14,7 @@ function NoteDetailPage(props){
             .then(res => {
                 setNote(res.data.res)
                 console.log("Note Response:", res.data.res)
+                props.setLoading(false)
             })
             .catch (err => {
                 console.log(err)

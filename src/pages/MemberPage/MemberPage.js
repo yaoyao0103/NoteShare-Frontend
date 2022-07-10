@@ -34,6 +34,7 @@ function MemberPage(props) {
         //console.log('2222');
     }, [props]);
     useEffect(() => {
+        props.setLoading(true)
         async function getNoteById() {
             try {
                 const haveNormal= true;
@@ -41,7 +42,9 @@ function MemberPage(props) {
             
                 await axios.get('http://localhost:8080/search/note/'+ String(pageNumber-1) + '/10?keyword=os&department=&subject=&haveNormal='+true+'&sortBy='+sortBy).then((res) => {
                     setNote(oldArray => [...oldArray=[], res.data.search]);
+                    
                     window.scrollTo(0, 0);
+                    props.setLoading(false)
                     //console.log(pageNumber);
 
                 });
@@ -62,7 +65,7 @@ function MemberPage(props) {
     return (
         <>
             {Note.length > 0 && 
-                <PageOutlineContentTemplate page={page}  hasSwitch={true} mode='Note' Post={Note} changePageNumber={(pagenumber) => { setPageNumber(pagenumber); }} changeSortMode={(sortMode)=>{setSortMode(sortMode);}} setPageProps={props.setPageProps}/>
+                <PageOutlineContentTemplate page={page}  hasSwitch={true} mode='Note' Post={Note} pageNumber={pageNumber} changePageNumber={(pagenumber) => { setPageNumber(pagenumber); }} changeSortMode={(sortMode)=>{setSortMode(sortMode);}} setPageProps={props.setPageProps}/>
        
             }
         </>
