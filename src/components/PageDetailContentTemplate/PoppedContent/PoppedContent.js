@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react'
-import { Layout, Row, Col, List, Empty, Input } from 'antd';
+import { Layout, Row, Col, List, Empty, Input, Avatar, message } from 'antd';
 import { CloseOutlined } from '@ant-design/icons'
 import OptionMenu from '../../OptionMenu/OptionMenu';
 import { ScreenCapture } from 'react-screen-capture';
+import axios from '../../axios/axios';
 
 import Button from '../../Button/Button';
 import Text from '../../Text/Text';
 import "./PoppedContent.css";
+import { set } from 'react-hook-form';
 const { Header, Content, Sider, Footer } = Layout;
 const { TextArea } = Input;
 
@@ -16,9 +18,15 @@ const PoppedContent = (props) => {
     const [ content, setContent ] = useState(<Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />);
     const [ startCapture, setStartCapture ] = useState(false);
     const [ applyContent, setApplyContent ] = useState('');
+    const [ siderList, setSiderList ] = useState([])
     
     // Screen Shot Capture
     const [screenCapture, setScreenCapture] = useState('');
+
+    useEffect(()=>{
+        setSiderList(props.content)
+    },[props])
+
     const handleScreenCapture = (screenCapture) => {
         setScreenCapture(screenCapture);
     };
@@ -32,6 +40,44 @@ const PoppedContent = (props) => {
         downloadLink.download = fileName;
         downloadLink.click();
     };
+
+    const approve = (email) => {
+        axios.put(`http://localhost:8080/post/add/${props.postId}/${email}`)
+        .then ( res => {
+            message.success("Agree!!")
+            const tempList = new Array();
+            for(let i = 0; i < siderList.length; i++){
+                if(siderList[i].userObj.userObjEmail != email){
+                    tempList.push(siderList[i])
+                }
+            }
+            setSiderList(tempList)
+            setContent()
+        })
+        .catch(err =>{
+            console.log(err)
+        })
+      }
+  
+      const reject = (email) => {
+        axios.delete(`http://localhost:8080/post/apply/${props.postId}/${email}`)
+        .then ( res => {
+            message.success("reject!!")
+            const tempList = new Array();
+            console.log("siderList", siderList)
+            for(let i = 0; i < siderList.length; i++){
+                if(siderList[i].userObj.userObjEmail != email){
+                    tempList.push(siderList[i])
+                }
+            }
+            setSiderList(tempList)
+            setContent()
+            // Todo: remove applicant from list
+        })
+        .catch(err =>{
+            console.log(err)
+        })
+      }
 
     return (
         <>
@@ -103,12 +149,32 @@ const PoppedContent = (props) => {
                                 <button onClick={handleSave}>Download</button> */}
                                 <List
                                     size="large"
-                                    dataSource={props.content}
-                                    renderItem={(item, index) => (<List.Item actions={
-                                        [
-                                            <OptionMenu page="CollabDetailPageApplier" email={item.wantEnterUsersEmail} index = {index} commentFromApplicant={item.commentFromApplicant} setContent={setContent} postId={props.postId}/>
-                                        ]
-                                    } ><span className='answerAuthor'>{item.wantEnterUsersEmail}</span></List.Item>)}
+                                    dataSource={siderList}
+                                    renderItem={(item, index) => (<List.Item 
+                                        className="poppedContent__Sider__Item"
+                                        onClick={() => setContent(
+                                            <div className="commentFromApplicant">
+                                                <div className="commentFromApplicantLabel">
+                                                    <Text color='black' cls='Default' content={"Message:"} fontSize='28' display="inline-block" />
+                                                </div>
+                                                <div className="commentFromApplicantComment">
+                                                    {item.commentFromApplicant}
+                                                </div>
+                                                <div className="commentFromApplicantButton" onClick={() => reject(item.userObj.userObjEmail)}>
+                                                    <Button color={"red"}><Text color='white' cls='Large' content={"Reject"} fontSize='17' display="inline-block" /></Button>
+                                                </div>
+                                                <div className="commentFromApplicantButton" onClick={() => approve(item.userObj.userObjEmail)}>
+                                                    <Button color={"green"}><Text color='white' cls='Large' content={"Agree"} fontSize='17' display="inline-block" /></Button>
+                                                </div>
+                                                </div>
+                                        )}
+                                    >
+                                        <div>
+                                            <Avatar style={{cursor:"pointer", marginRight:".5em"}} size={30} src={item.userObj.userObjAvatar} onClick={() => props.setPageProps({page: 'ProfilePage', email: item.userObj.userObjEmail})}></Avatar>
+                                            <Text color='black' cls='Default' content={item.userObj.userObjName} fontSize='15' display="inline-block" />
+                                        </div> 
+                                        {/* <span className='answerAuthor'>{item.userObj.userObjName}</span> */}
+                                    </List.Item>)}
                                 />
                             </Sider>
                         }
@@ -119,7 +185,7 @@ const PoppedContent = (props) => {
                                 <button onClick={handleSave}>Download</button> */}
                                 <List
                                     size="large"
-                                    dataSource={props.content}
+                                    dataSource={siderList}
                                     renderItem={(item, index) => (<List.Item actions={
                                         [
                                             <OptionMenu page="RewardDetailPageAnswer" answerId={item} index = {index} setContent={setContent} postId={props.postId}/>

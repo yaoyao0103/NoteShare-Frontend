@@ -24,6 +24,7 @@ const VoteArea = (props) => {
             .then ( res => {
                 message.info("Agree!");
                 setAgreeCount(agreeCount +1);
+                setVoted(true)
             })
             .catch(err =>{
                 console.log(err)
@@ -36,6 +37,7 @@ const VoteArea = (props) => {
             .then ( res => {
                 message.info("Disagree!");
                 setDisagreeCount(disagreeCount +1);
+                setVoted(true)
             })
             .catch(err =>{
                 console.log(err)

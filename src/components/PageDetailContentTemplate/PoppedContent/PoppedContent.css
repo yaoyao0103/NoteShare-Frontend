@@ -92,3 +92,7 @@
     margin-top: .3em;
     margin-right: .3em;
 }
+
+.poppedContent__Sider__Item:hover{
+    background-color: #eee;
+}

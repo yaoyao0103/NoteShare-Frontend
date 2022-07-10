@@ -20,8 +20,11 @@ function NoteEditPage(props){
             getNoteById();
             console.log("edit")
         }
-        else{
+        else if(props.action=='new'){
             console.log("new")
+        }
+        else{
+            console.log("newReward")
         }
         
         }, []);
@@ -31,7 +34,7 @@ function NoteEditPage(props){
             {/* <PageDetailTemplate page={page}>
                 <NoteEditTemplate page={page} note={note} mode={props.action}/>
             </PageDetailTemplate> */}
-            <NoteEditTemplate page={props.page} note={note} mode={props.action}  setPageProps={props.setPageProps} folderId={props.folderId}/>
+            <NoteEditTemplate page={props.page} note={note} mode={props.action} setPageProps={props.setPageProps} folderId={props.folderId} postId={props.postId}/>
         </>
         
     );

@@ -41,6 +41,7 @@ function CommentArea(props) {
       };
 
     useEffect(()=>{
+        console.log("Comment: ", props)
         refresh()  
         if(props.isArchive && !isArchive) openNotification()
     },[props])
@@ -58,27 +59,29 @@ function CommentArea(props) {
         axios.get(`http://localhost:8080/${type}/${props.id}`)
         .then(res => {
             //console.log(res.data.res)
-            const tempComment = res.data.res.comments
+            const tempComment = res.data.res.commentsUserObj
             setComments(tempComment);
             let authorArray = new Object();
             let likeCount = new Object();
             let likeColor = new Object();
             tempComment.map( item => {
-                if(item.best){
-                    setBestAns([item])
-                }
-                authorArray[item.id] = item.userObj.userObjName? item.userObj.userObjName:null
-                likeCount[item.id] = item.likeCount? item.likeCount:0 ;
-                let flag = false;
-                if(item.likerUserObj){
-                    for(let i = 0; i < item.likerUserObj.length; i++){
-                        if(item.likerUserObj[i].userObjEmail == tempEmail){
-                            flag = true;
-                            break;
-                        }
+                if(item.date){
+                    if(item.best){
+                        setBestAns([item])
                     }
-                    if(flag){
-                        likeColor[item.id] = true;
+                    authorArray[item.id] = item.userObj.userObjName? item.userObj.userObjName:null
+                    likeCount[item.id] = item.likeCount? item.likeCount:0 ;
+                    let flag = false;
+                    if(item.likerUserObj){
+                        for(let i = 0; i < item.likerUserObj.length; i++){
+                            if(item.likerUserObj[i].userObjEmail == tempEmail){
+                                flag = true;
+                                break;
+                            }
+                        }
+                        if(flag){
+                            likeColor[item.id] = true;
+                        }
                     }
                 }
             });
@@ -150,7 +153,7 @@ function CommentArea(props) {
 
     
     const setTheBest = (commentIds) => {
-        message.info(`Set ${commentIds} as the best answer`);
+        //message.info(`Set ${commentIds} as the best answer`);
         axios.put(`http://localhost:8080/post/qa/best/${props.id}/${commentIds}`)
         .then(res => {
             console.log("Set best response:", res.data.res)
@@ -225,8 +228,8 @@ function CommentArea(props) {
                         <span key={`comment-best-reply-to-${index}`}  onClick={() => {onReply(item.id)}}>Reply to</span>,
                         ]
                     }
-                    author={item.userObj.userObjName}
-                    avatar={<Avatar src={item.userObj.userObjAvatar}></Avatar>}
+                    author={item.userObj?.userObjName}
+                    avatar={<Avatar src={item.userObj?.userObjAvatar}></Avatar>}
                     content={item.content}
                     datetime={(
                         <Tooltip title={moment(item.date).format('YYYY-MM-DD HH:mm:ss')}>
@@ -280,8 +283,8 @@ function CommentArea(props) {
                                     }</>,
                                 ]
                             }
-                            author={item.userObj.userObjName}
-                            avatar={<Avatar src={item.userObj.userObjAvatar}></Avatar>}
+                            author={item.userObj?.userObjName}
+                            avatar={<Avatar src={item.userObj?.userObjAvatar}></Avatar>}
                             content={commentEditFloor==item.floor? 
                                 <Input 
                                     className="editing_Comment"
@@ -306,7 +309,7 @@ function CommentArea(props) {
                             />
                         </Col>
                         <Col className="comment_MoreOption" span={3}>
-                            {(item.userObj.userObjEmail == email) &&
+                            {(item.userObj?.userObjEmail == email) &&
                             <Dropdown 
                             overlay={<Menu
                                 items={[

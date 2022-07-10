@@ -76,7 +76,7 @@ const NoteEditTemplate = (props) => {
             )*/
             setTagSelected(note.tag)
         }
-        else if(props.mode == 'new'){
+        else if(props.mode == 'new' || props.mode == 'newReward'){
             setTitle('')
             setInformation({
                 school: '',
@@ -143,7 +143,7 @@ const NoteEditTemplate = (props) => {
                 console.log(err)
             })
         }
-        else{
+        else if(props.mode=="new"){
             NoteFormat.type = "normal"
             NoteFormat.department = information.department
             NoteFormat.subject = information.subject
@@ -155,6 +155,39 @@ const NoteEditTemplate = (props) => {
             NoteFormat.description = content
 
             axios.post(`http://localhost:8080/note/${email}/${props.folderId}`, NoteFormat)
+            .then(res => {
+                const tempNote = res.data.res
+                console.log(tempNote)
+                const tempId = tempNote.id
+                setNoteId(tempId)
+                VersionFormat.name = "default"
+                VersionFormat.slug = "default"
+                VersionFormat.content = [ContentFormat]
+                axios.put(`http://localhost:8080/note/${tempId}/0`, VersionFormat)
+                .then ( versionRes => {
+                    setMyEditor(<MyEditor noteId={tempId} version={'0'} page={props.page} email={email}/>)
+                    const version = versionRes.data.res;
+                    setVersions([version])
+                    setStep(1);
+                })
+                .catch (err => {
+                    console.log(err)
+                })
+            })
+            .catch (err => {
+                console.log(err)
+            })    
+        }
+        else if(props.mode=="newReward"){
+            NoteFormat.type = "reward"
+            NoteFormat.department = information.department
+            NoteFormat.subject = information.subject
+            NoteFormat.title = title
+            NoteFormat.professor = information.professor
+            NoteFormat.school = information.school
+            NoteFormat.description = content
+
+            axios.post(`http://localhost:8080/post/reward/${props.postId}/${email}`, NoteFormat)
             .then(res => {
                 const tempNote = res.data.res
                 console.log(tempNote)

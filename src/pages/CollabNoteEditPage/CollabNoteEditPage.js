@@ -106,7 +106,7 @@ const CollabNoteEditPage = (props) => {
             return;
         }
         message.info("Update info")
-        /*const tempNote = JSON.parse(JSON.stringify(note))
+        const tempNote = JSON.parse(JSON.stringify(note))
         tempNote.department = information.department
         tempNote.subject = information.subject
         tempNote.title = title
@@ -116,13 +116,6 @@ const CollabNoteEditPage = (props) => {
         tempNote.price = information.price
         tempNote.description = content
 
-        delete tempNote.authorUserObj
-        delete tempNote.buyerUserObj
-        delete tempNote.favoriterUserObj
-        delete tempNote.headerUserObj
-        delete tempNote.contributorUserObj
-        delete tempNote.likerUserObj
-        delete tempNote.managerUserObj
         console.log("tempNote:", tempNote);
 
 
@@ -133,8 +126,8 @@ const CollabNoteEditPage = (props) => {
         })
         .catch (err => {
             console.log(err)
-        })*/
-        setStep(1);
+        })
+        //setStep(1);
     }
 
     const showDrawer = () => {

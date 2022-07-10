@@ -30,10 +30,11 @@ const PageDetailContentTemplate = (props) => {
     const [isAuthor, setIsAuthor] = useState(false)
     const [isFavoriter, setIsFavoriter] = useState(false)
     const [isBuyer, setIsBuyer] = useState(false)
+    const [isArchive, setIsArchive] = useState(false)
     const [versions, setVersions] = useState(null)
     const [email, setEmail] = useState('')
     const [author, setAuthor] = useState([])
-    const [managerEmail, setManagerEmail] = useState('')
+    const [manager, setManager] = useState('')
     const [haveApplied, setHaveApplied] = useState(null)
     const [isPublic, setIsPublic] = useState(true)
     const [vote, setVote] = useState(null)
@@ -61,28 +62,44 @@ const PageDetailContentTemplate = (props) => {
                     break;
                 } 
             }
-
         }
         else if(props.page == "CollabDetailPage" && props.data){
             const noteId = props.data.answers[0];
             setNoteId(noteId);
             setIsPublic(props.data?.public)
-            setVote(props.data?.vote.length>0? props.data?.vote[0]:null)
+            if(props.data?.vote.length > 0){
+                if(props.data?.vote[0].result == "invalid"){
+                    // remove vote
+                    axios.delete(`http://localhost:8080/schedule/delete/${props.postId}/${props.data?.vote[0].id}`)
+                        .then ( res => {
+                        })
+                        .catch(err =>{
+                        })
+                }
+                else if(props.data?.vote[0].result == "valid"){
+
+                }
+                else{
+                    setVote(props.data?.vote.length>0? props.data?.vote[0]:null)
+                }
+                
+            }
+            
             axios.get(`http://localhost:8080/note/${noteId}`)
             .then ( res => {
                 console.log(res.data.res)
                 const tempNote = res.data.res
                 setVersions(tempNote.version)
-                setManagerEmail(tempNote.managerUserObj?.userObjEmail)
+                setManager(tempNote.managerUserObj)
                 
-                for(let i = 0; i < props.data?.authorUserObj.length; i++){
-                    if(props.data?.authorUserObj[i].userObjEmail == tempEmail){
+                /*for(let i = 0; i < props.data?.authorUserObj.length; i++){
+                    if(props.data?.emailUserObj[i].userObjEmail == tempEmail){
                         setEditor(<MyEditor noteId = {noteId} version={'0'} page={props.page} email={email}/>)
                         setIsAuthor(true)
                         console.log("is a author")
                         break;
                     } 
-                }
+                }*/
                 
                 
                 if((tempNote.managerUserObj?.userObjEmail == tempEmail) || tempNote.headerUserObj.userObjEmail == tempEmail){
@@ -90,7 +107,12 @@ const PageDetailContentTemplate = (props) => {
                     setIsManager(true)
                     setIsAuthor(true)
                     console.log("is a manager")
-                    setPoppedContent( props.data.collabApply );
+                    setPoppedContent( props.data.collabApplyUserObj );
+                    console.log("props.data.collabApplyUserObj", props.data.collabApplyUserObj)
+                }
+                else if(tempNote.authorEmail.includes(tempEmail)){
+                    setEditor(<MyEditor noteId = {noteId} version={'0'} page={props.page} email={email}/>)
+                    setIsAuthor(true)
                 }
                 else{
                     setIsAuthor(false)
@@ -128,9 +150,18 @@ const PageDetailContentTemplate = (props) => {
         else if(props.page == "RewardDetailPage"){
             setIsPublic(props.data?.public)
             setPoppedContent( props.data.answers );
+            if(props.data?.author == email){
+                setIsAuthor(true)
+            }
         }
         else if(props.page == "QnADetailPage"){
             setIsPublic(props.data?.public)
+            if(props.data?.author == email){
+                setIsAuthor(true)
+            }
+            if(props.data?.archive){
+                setIsArchive(true)
+            }
         }
         
     },[props.data])
@@ -151,7 +182,7 @@ const PageDetailContentTemplate = (props) => {
         console.log("data", data)
         axios.put(`http://localhost:8080/post/apply/${props.postId}`, data)
             .then ( res => {
-                console.log(res.data.res)
+                console.log(res)
             })
             .catch(err =>{
                 console.log(err)
@@ -195,7 +226,7 @@ const PageDetailContentTemplate = (props) => {
                                 <div className="contentTemplate__Dropdown">
                                     <OptionMenu 
                                         page={props.page}
-                                        comments={props.data?.comments? props.data.comments:[]} 
+                                        comments={props.data?.commentsUserObj? props.data.commentsUserObj:[]} 
                                         versions={versions? versions:props.data?.version? props.data.version:[]} 
                                         public={isPublic}
                                         setIsPublic={setIsPublic}
@@ -205,12 +236,15 @@ const PageDetailContentTemplate = (props) => {
                                         isFavoriter={isFavoriter}
                                         setPoppedContentShow={setPoppedContentShow}
                                         id={props.postId? props.postId:props.noteId}
-                                        postId={props.postId}
+                                        postId={props.postId? props.postId:props.data?.postID}
                                         noteId={props.noteId? props.noteId:noteId}
                                         setPageProps={props.setPageProps}
                                         author={author}
-                                        managerEmail={managerEmail}
-                                        isArchive={props.data?.archive}
+                                        manager={manager}
+                                        isArchive={isArchive}
+                                        noteType={props.data?.type}
+                                        setIsArchive={setIsArchive}
+                                        voting={vote?true:false}
                                     /></div>
                                 
                             </Col>
@@ -272,19 +306,20 @@ const PageDetailContentTemplate = (props) => {
                             </>
                         }
                         {/* Todo: also check if he is an origin poster */}
-                        {(props.page=='RewardDetailPage' && props.data?.author == email)  &&
+                        {(props.page=='RewardDetailPage' && isAuthor)  &&
                             <div className="contentTemplate__Footer__Button" onClick={() => setPoppedContentShow(true)}>
                                 <Button color={"green"}><Text color='white' cls='Large' content={"Show user-contributed Notes"} fontSize='17' display="inline-block" /></Button>
                             </div>
                         }
-                        {(props.page=='RewardDetailPage' && props.data?.author != email) &&
+                        {(props.page=='RewardDetailPage' && !isAuthor) &&
                             <div 
                                 className="contentTemplate__Footer__Button" 
                                 onClick={() => {
-                                    /*props.setPageProps({
+                                    props.setPageProps({
                                         page: "NoteNewPage",
-
-                                    })*/
+                                        action: "newReward",
+                                        postId: props.postId
+                                    })
                                 }}
                             >
                                 <Button color={"green"}><Text color='white' cls='Large' content={"Contribute Note"} fontSize='17' display="inline-block" /></Button>
@@ -308,7 +343,7 @@ const PageDetailContentTemplate = (props) => {
                 {(props.page!='NoteDetailPage' && props.page!='CollabDetailPage') && 
                     <>
                         <Sider id="contentTemplate__Comment" className="contentTemplate__Comment" width='40%'>
-                            <CommentArea type="post" page={props.page} comments={props.data?.comments? props.data.comments:[]} id={props.postId} isArchive={props.data.archive}/>
+                            <CommentArea type="post" page={props.page} comments={props.data?.commentsUserObj? props.data.commentsUserObj:[]} id={props.postId} isArchive={isArchive}/>
                         </Sider>
                     </>
                 }
@@ -319,7 +354,7 @@ const PageDetailContentTemplate = (props) => {
                 <PoppedContent page={props.page} content={poppedContent} apply={apply} setPoppedContentShow={setPoppedContentShow} isAuthor={isAuthor} isManager={isManager} postId={props.postId} haveApplied={haveApplied} setHaveApplied={setHaveApplied}/>
             </div>
 
-            {vote &&
+            {(vote && isAuthor)&&
                 <div className={`detailNotice ${ noticeShow && 'detailNotice--show'}`}>
                     <DetailNotice setNoticeShow={setNoticeShow} type={"vote"} kickUser={vote.kickTarget}>
                         <VoteArea vote={vote} total={props.data?.emailUserObj.length} postId={props.postId} email={email}/>
