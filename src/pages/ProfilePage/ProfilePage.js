@@ -271,6 +271,7 @@ function ProfilePage(props) {
             setFollowingList(oldArray => [...oldArray.slice(0, 0), tempFollowingList]);
 
             setGetUserSuccess(true);
+            props.setLoading(false);
         }).catch((error) => {
             console.log(error);
         });

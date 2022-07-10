@@ -23,14 +23,16 @@ import SignUpPage from "../SignUpPage/SignUpPage";
 import VerificationPage from "../VerificationPage/VerificationPage";
 import ForgetPasswordPage from '../ForgetPasswordPage/ForgetPasswordPage';
 import Navbar from '../../components/Navbar/Navbar';
-import { PlusOutlined } from "@ant-design/icons";
+import { PlusOutlined, ArrowLeftOutlined } from "@ant-design/icons";
 import CollabNoteEditPage from "../CollabNoteEditPage/CollabNoteEditPage";
 import CollabRecommendPage from '../CollabRecommendPage/CollabRecommendPage';
 import ResetPasswordPage from '../ResetPasswordPage/ResetPasswordPage';
 import './OuterPage.css'
-import { Button, Drawer, message } from 'antd'
+import { Button, Drawer, message, Spin } from 'antd'
+import { LoadingOutlined } from '@ant-design/icons';
 import { timers } from 'jquery';
 import Cookie from '../../components/Cookies/Cookies';
+import { set } from 'react-hook-form';
 
 const OuterPage = () => {
     const [pageProps, setPageProps] = useState({ page: 'LoginPage' });
@@ -40,7 +42,9 @@ const OuterPage = () => {
     const [changeAvatar, setChangeAvatar] = useState(0);
     const [coinNum, setCoinNum] = useState(0);
     const [floatButtonVisable, setFloatButtonVisable] = useState(false);
-    
+    const [pageStack, setPageStack] = useState([]);
+    const [backMode, setBackMode] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [isChanging, setIsChanging] = useState(false);
     const showDrawer = () => {
         setVisible(true);
@@ -82,7 +86,27 @@ const OuterPage = () => {
     useEffect(() => {
         console.log("page", pageProps.page)
         console.log("pageProps", pageProps)
+        //寫在這裡就是有弄loading的如果寫完了，就把他拿出去
+        console.log(loading)
+        if (pageProps.page === 'LoginPage' || pageProps.page === "ProfilePage" || pageProps.page === 'ForgetPasswordPage' || pageProps.page === 'ResetPasswordPage' ||
+            pageProps.page === 'SignUpPage' ||pageProps.page ==='VerificationPage'||
+            pageProps.page === 'CollabOutlinePage' || pageProps.page === 'CollabRecommendPage' || pageProps.page === 'CollabDetailPage' ||
+            pageProps.page === 'QnAOutlinePage' || pageProps.page === 'QnARecommendPage' || pageProps.page === 'QnAOutlinePage' ||
+            pageProps.page === 'NoteOutlinePage' || pageProps.page === 'MemberPage' || pageProps.page === 'NoteDetailPage' ||
+            pageProps.page === 'RewardOutlinePage' || pageProps.page === 'RewardRecommendPage' || pageProps.page === 'RewardDetailPage' ||
+            pageProps.page === 'FolderOutlinePage'
+        )
+            setLoading(true)
+        else
+            setLoading(false)
         document.cookie = "pageProps=" + JSON.stringify(pageProps);
+        //setStrength(oldArray => [...oldArray.slice(0, key), ...oldArray.slice(key + 1, strength.oldArray)]);
+        if (pageStack.length > 0)
+            setBackMode(true)
+        else
+            setBackMode(false)
+        setPageStack(oldArray => [...oldArray, pageProps]);
+        console.log(pageStack)
         if (pageProps.page === 'NoteDetailPage' || pageProps.page === 'NoteOutlinePage' || pageProps.page === 'MemberPage' ||
             pageProps.page === 'RewardDetailPage' || pageProps.page === 'RewardOutlinePage' || pageProps.page === 'RewardRecommendPage' ||
             pageProps.page === 'QnADetailPage' || pageProps.page === 'QnAOutlinePage' || pageProps.page === 'QnARecommendPage' ||
@@ -91,38 +115,40 @@ const OuterPage = () => {
             setFloatButtonVisable(true)
         else
             setFloatButtonVisable(false)
+
+
         //setPageComponent(<></>);
         //console.log('11111');
         switch (pageProps.page) {
-            case 'NoteDetailPage': setPageComponent(<NoteDetailPage page='NoteDetailPage' setPageProps={setPageProps} {...pageProps} />); break;
-            case 'NoteEditPage': setPageComponent(<NoteEditPage page='NoteEditPage' setPageProps={setPageProps}  {...pageProps} />); break;
-            case 'NoteNewPage': setPageComponent(<NoteEditPage page='NoteNewPage' setPageProps={setPageProps} {...pageProps} />); break;
-            case 'NoteOutlinePage': setPageComponent(<NoteOutlinePage page='NoteOutlinePage' setPageProps={setPageProps}  {...pageProps} />); break;
-            case 'MemberPage': setPageComponent(<MemberPage page='MemberPage' setPageProps={setPageProps}  {...pageProps} />); break;
-            case 'RewardDetailPage': setPageComponent(<RewardDetailPage page='RewardDetailPage' setPageProps={setPageProps} {...pageProps} />); break;
-            case 'RewardEditPage': setPageComponent(<RewardEditPage page='RewardEditPage' setPageProps={setPageProps} {...pageProps} />); break;
-            case 'RewardNewPage': setPageComponent(<RewardEditPage page='RewardNewPage' setPageProps={setPageProps}  {...pageProps} />); break;
-            case 'RewardOutlinePage': setPageComponent(<RewardOutlinePage page='RewardOutlinePage' setPageProps={setPageProps}  {...pageProps} />); break;
-            case 'RewardRecommendPage': setPageComponent(<RewardRecommendPage page='RewardRecommendPage' setPageProps={setPageProps}  {...pageProps} />); break;
-            case 'QnADetailPage': setPageComponent(<QnADetailPage page='QnADetailPage' setPageProps={setPageProps}  {...pageProps} />); break;
-            case 'QnAOutlinePage': setPageComponent(<QnAOutlinePage page='QnAOutlinePage' setPageProps={setPageProps} {...pageProps} />); break;
-            case 'QnAEditPage': setPageComponent(<QnAEditPage page='QnAEditPage' setPageProps={setPageProps}  {...pageProps} />); break;
-            case 'QnANewPage': setPageComponent(<QnAEditPage page='QnANewPage' setPageProps={setPageProps} {...pageProps} />); break;
-            case 'QnARecommendPage': setPageComponent(<QnARecommendPage page='QnARecommendPage' setPageProps={setPageProps} {...pageProps} />); break;
-            case 'CollabDetailPage': setPageComponent(<CollabDetailPage page='CollabDetailPage' setPageProps={setPageProps} {...pageProps} />); break;
-            case 'CollabEditPage': setPageComponent(<CollabEditPage page='CollabEditPage' setPageProps={setPageProps} {...pageProps} />); break;
-            case 'CollabNoteEditPage': setPageComponent(<CollabNoteEditPage page='CollabNoteEditPage' setPageProps={setPageProps} {...pageProps} />); break;
-            case 'CollabNewPage': setPageComponent(<CollabEditPage page='CollabNewPage' setPageProps={setPageProps} {...pageProps} />); break;
-            case 'CollabOutlinePage': setPageComponent(<CollabOutlinePage page='CollabOutlinePage' setPageProps={setPageProps} {...pageProps} />); break;
-            case 'CollabRecommendPage': setPageComponent(<CollabRecommendPage page='CollabRecommendPage' setPageProps={setPageProps} {...pageProps} />); break;
-            case 'FolderOutlinePage': setPageComponent(<FolderOutlinePage page='FolderOutlinePage' setPageProps={setPageProps} {...pageProps} />); break;
-            case 'PersonalPage': setPageComponent(<PersonalPage page='PersonalPage' setPageProps={setPageProps} {...pageProps} />); break;
-            case 'ProfilePage': setPageComponent(<ProfilePage page='ProfilePage' Avatar={changeAvatar} setAvatar={setChangeAvatar} setPageProps={setPageProps} {...pageProps} />); break;
-            case 'LoginPage': setPageComponent(<LoginPage page='LoginPage' setPageProps={setPageProps} setLoggedIn={setLoggedIn} {...pageProps} />); break;
-            case 'SignUpPage': setPageComponent(<SignUpPage page='SignUpPage' setPageProps={setPageProps} {...pageProps} />); break;
-            case 'VerificationPage': setPageComponent(<VerificationPage page='VerificationPage' setPageProps={setPageProps} {...pageProps} />); break;
-            case 'ForgetPasswordPage': setPageComponent(<ForgetPasswordPage page='ForgetPasswordPage' setPageProps={setPageProps} {...pageProps} />); break;
-            case 'ResetPasswordPage': setPageComponent(<ResetPasswordPage setLoggedIn={setLoggedIn} page='ResetPasswordPage' setPageProps={setPageProps} {...pageProps} />); break;
+            case 'NoteDetailPage': setPageComponent(<NoteDetailPage page='NoteDetailPage' setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+            case 'NoteEditPage': setPageComponent(<NoteEditPage page='NoteEditPage' setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
+            case 'NoteNewPage': setPageComponent(<NoteEditPage page='NoteNewPage' setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+            case 'NoteOutlinePage': setPageComponent(<NoteOutlinePage page='NoteOutlinePage' setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
+            case 'MemberPage': setPageComponent(<MemberPage page='MemberPage' setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
+            case 'RewardDetailPage': setPageComponent(<RewardDetailPage page='RewardDetailPage' setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+            case 'RewardEditPage': setPageComponent(<RewardEditPage page='RewardEditPage' setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+            case 'RewardNewPage': setPageComponent(<RewardEditPage page='RewardNewPage' setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
+            case 'RewardOutlinePage': setPageComponent(<RewardOutlinePage page='RewardOutlinePage' setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
+            case 'RewardRecommendPage': setPageComponent(<RewardRecommendPage page='RewardRecommendPage' setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
+            case 'QnADetailPage': setPageComponent(<QnADetailPage page='QnADetailPage' setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
+            case 'QnAOutlinePage': setPageComponent(<QnAOutlinePage page='QnAOutlinePage' setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+            case 'QnAEditPage': setPageComponent(<QnAEditPage page='QnAEditPage' setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
+            case 'QnANewPage': setPageComponent(<QnAEditPage page='QnANewPage' setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+            case 'QnARecommendPage': setPageComponent(<QnARecommendPage page='QnARecommendPage' setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+            case 'CollabDetailPage': setPageComponent(<CollabDetailPage page='CollabDetailPage' setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+            case 'CollabEditPage': setPageComponent(<CollabEditPage page='CollabEditPage' setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+            case 'CollabNoteEditPage': setPageComponent(<CollabNoteEditPage page='CollabNoteEditPage' setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+            case 'CollabNewPage': setPageComponent(<CollabEditPage page='CollabNewPage' setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+            case 'CollabOutlinePage': setPageComponent(<CollabOutlinePage page='CollabOutlinePage' setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+            case 'CollabRecommendPage': setPageComponent(<CollabRecommendPage page='CollabRecommendPage' setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+            case 'FolderOutlinePage': setPageComponent(<FolderOutlinePage page='FolderOutlinePage' setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+            case 'PersonalPage': setPageComponent(<PersonalPage page='PersonalPage' setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+            case 'ProfilePage': setPageComponent(<ProfilePage page='ProfilePage' setLoading={setLoading} Avatar={changeAvatar} setAvatar={setChangeAvatar} setPageProps={setPageProps} {...pageProps} />); break;
+            case 'LoginPage': setPageComponent(<LoginPage page='LoginPage' setLoading={setLoading} setPageProps={setPageProps} setLoggedIn={setLoggedIn} {...pageProps} />); break;
+            case 'SignUpPage': setPageComponent(<SignUpPage page='SignUpPage' setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+            case 'VerificationPage': setPageComponent(<VerificationPage page='VerificationPage' setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+            case 'ForgetPasswordPage': setPageComponent(<ForgetPasswordPage page='ForgetPasswordPage' setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+            case 'ResetPasswordPage': setPageComponent(<ResetPasswordPage setLoggedIn={setLoggedIn} page='ResetPasswordPage' setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
             default: setPageComponent(<></>); break;
         }
     }, [pageProps])
@@ -149,13 +175,54 @@ const OuterPage = () => {
         }
 
     }
+
+    const lastPageBtnOnClick = () => {
+
+        //pageStack.pop();
+
+        if (pageStack.length > 0) {
+
+            //message.info("Back to last page!");
+            setPageProps(pageStack[pageStack.length - 2]);
+            setPageStack(oldArray => [...oldArray.slice(0, pageStack.length - 2)]);
+        }
+
+
+    }
+
+    const antIcon = (
+        <LoadingOutlined
+            style={{
+                fontSize: 64,
+            }}
+            spin
+        />
+    );
+
     return (
         <>
             <div className='outerPage'>
+
                 <Navbar coinNum={coinNum} setCoinNum={setCoinNum} pageProps={pageProps} changeAvatar={changeAvatar} loggedIn={loggedIn} setPageProps={setPageProps} setLoggedIn={setLoggedIn} />
-                <div className='outerPage__Layout'>
-                    {pageComponent && pageComponent}
-                </div>
+
+                <>
+                    <Spin wrapperClassName={'outerPage__Loading'} indicator={antIcon} spinning={loading} style={{ width: '100%', height: '100%' }}>
+                        <div className='outerPage__Layout'>
+                            {pageComponent && pageComponent}
+                        </div>
+                        {backMode &&
+                            <div className={"lastPageButton"} disable={false} onClick={lastPageBtnOnClick}>
+                                <ArrowLeftOutlined style={{ fontSize: '28px' }} />
+                            </div>
+                        }
+                        {floatButtonVisable &&
+                            <div className="floatButton" onClick={floatBtnOnClick}>
+                                <PlusOutlined />
+                            </div>
+                        }
+                    </Spin>
+                </>
+
             </div>
             <div className='drawerBtn'>
                 <Button type="primary" onClick={showDrawer}>
@@ -387,11 +454,7 @@ const OuterPage = () => {
                     ResetPasswordPage
                 </Button>
             </Drawer>
-            {floatButtonVisable &&
-                <div className="floatButton" onClick={floatBtnOnClick}>
-                    <PlusOutlined />
-                </div>
-            }
+
         </>
     )
 }

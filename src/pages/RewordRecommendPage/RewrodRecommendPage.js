@@ -5,17 +5,17 @@ import PageOutlineContentTemplate from '../../components/PageOutlineContentTempl
 import axios from "axios";
 
 function RewardRecommendPage(props) {
-    const page='RewardRecommendPage';
+    const page = 'RewardRecommendPage';
     const [pageNumber, setPageNumber] = useState(1);
     const [Reward, setReward] = useState([]);
-    const [sortMode,setSortMode] =useState('date');
+    const [sortMode, setSortMode] = useState('date');
 
     useEffect(() => {
         async function getRewardById() {
             try {
-                const sortBy=sortMode;
-                
-                await axios.get('http://localhost:8080/search/post/'+ String(pageNumber-1) + '/20?keyword=interrupt&department=&subject=&haveReward='+true+'&sortBy='+sortBy).then((res) => {
+                const sortBy = sortMode;
+
+                await axios.get('http://localhost:8080/search/post/' + String(pageNumber - 1) + '/20?keyword=interrupt&department=&subject=&haveReward=' + true + '&sortBy=' + sortBy).then((res) => {
 
                     setReward(oldArray => [...oldArray, res.data.search]);
                 });
@@ -32,13 +32,15 @@ function RewardRecommendPage(props) {
 
     }, [props]);
     useEffect(() => {
+        props.setLoading(true)
         async function getRewardById() {
             try {
-                const sortBy=sortMode;
-                
-                await axios.get('http://localhost:8080/search/post/'+ String(pageNumber-1) + '/20?keyword=interrupt&department=&subject=&haveReward='+true+'&sortBy='+sortBy).then((res) => {
+                const sortBy = sortMode;
+
+                await axios.get('http://localhost:8080/search/post/' + String(pageNumber - 1) + '/20?keyword=interrupt&department=&subject=&haveReward=' + true + '&sortBy=' + sortBy).then((res) => {
                     setReward(oldArray => [...oldArray, res.data.search]);
                     window.scrollTo(0, 0);
+                    props.setLoading(false)
 
 
                 });
@@ -53,17 +55,17 @@ function RewardRecommendPage(props) {
         setReward([]);
         getRewardById();
 
-        
-    }, [pageNumber,sortMode]);
-   
+
+    }, [pageNumber, sortMode]);
+
     return (
         <>
-            {Reward.length > 0 && 
-                <PageOutlineContentTemplate page={page}  hasSwitch={false} mode='Post' Post={Reward} changePageNumber={(pagenumber) => { setPageNumber(pagenumber); }} changeSortMode={(sortMode)=>{setSortMode(sortMode);}} setPageProps={props.setPageProps}/>
+            {Reward.length > 0 &&
+                <PageOutlineContentTemplate page={page} hasSwitch={false} mode='Post' Post={Reward} pageNumber={pageNumber} changePageNumber={(pagenumber) => { setPageNumber(pagenumber); }} changeSortMode={(sortMode) => { setSortMode(sortMode); }} setPageProps={props.setPageProps} />
             }
         </>
     );
 
 }
 
-export default  RewardRecommendPage;
+export default RewardRecommendPage;

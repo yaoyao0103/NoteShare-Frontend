@@ -33,6 +33,7 @@ function RewardOutlinePage(props) {
 
     }, [props]);
     useEffect(() => {
+        props.setLoading(true)
         async function getRewardById() {
             try {
                 const sortBy=sortMode;
@@ -40,7 +41,7 @@ function RewardOutlinePage(props) {
                 await axios.get('http://localhost:8080/search/post/'+ String(pageNumber-1) + '/20?keyword='+(props.keyword?props.keyword:'')+'&department='+(props.department?props.department:'')+'&subject='+(props.subject?props.subject:'')+'&haveReward='+true+'&sortBy='+sortBy).then((res) => {
                     setReward(oldArray => [...oldArray, res.data.search]);
                     window.scrollTo(0, 0);
-
+                    props.setLoading(false)
 
                 });
 
@@ -60,7 +61,7 @@ function RewardOutlinePage(props) {
     return (
         <>
             {Reward.length > 0 && 
-                <PageOutlineContentTemplate page={page}  hasSwitch={false} mode='Post' Post={Reward} changePageNumber={(pagenumber) => { setPageNumber(pagenumber); }} changeSortMode={(sortMode)=>{setSortMode(sortMode);}} setPageProps={props.setPageProps}/>
+                <PageOutlineContentTemplate page={page}  hasSwitch={false} mode='Post' Post={Reward} pageNumber={pageNumber} changePageNumber={(pagenumber) => { setPageNumber(pagenumber); }} changeSortMode={(sortMode)=>{setSortMode(sortMode);}} setPageProps={props.setPageProps}/>
             }
         </>
     );

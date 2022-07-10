@@ -1,4 +1,14 @@
 
+.outerPage__Loading{
+    position: absolute;
+    height: 100%;
+    width:100%;
+}
+.ant-spin-container{
+    
+    height: 100%;
+    width:100%;
+}
 .outerPage__Layout{
     position: absolute;
     top: 8%;
@@ -17,7 +27,20 @@
     left: 2em;
     bottom: 2em;
 }
-
+.lastPageButton{
+    position: absolute;
+    left: 4em;
+    top: 6em;
+    cursor: pointer;
+}
+.lastPageButton:hover{
+    position: absolute;
+    left: 4em;
+    top: 6em;
+    cursor: pointer;
+    transform: scale(1.1);
+    transition: .3s;
+}
 .floatButton {
     position: fixed;
     right: 2.2em;

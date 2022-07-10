@@ -32,6 +32,7 @@ function CollabRecommendPage(props) {
 
     }, [props]);
     useEffect(() => {
+        props.setLoading(true)
         async function getCollabById() {
             try {
                 const sortBy=sortMode;
@@ -39,7 +40,7 @@ function CollabRecommendPage(props) {
                 await axios.get('http://localhost:8080/search/post/'+ String(pageNumber-1) + '/20?keyword=interrupt&haveCollaboration='+true+'&sortBy='+sortBy).then((res) => {
                     setCollab(oldArray => [...oldArray, res.data.search]);
                     window.scrollTo(0, 0);
-
+                    props.setLoading(false)
 
                 });
 
@@ -59,7 +60,7 @@ function CollabRecommendPage(props) {
     return (
         <>
             {Collab.length > 0 && 
-                <PageOutlineContentTemplate page={page}  hasSwitch={false} mode='Post' Post={Collab} changePageNumber={(pagenumber) => { setPageNumber(pagenumber); }} changeSortMode={(sortMode)=>{setSortMode(sortMode);}} setPageProps={props.setPageProps}/>
+                <PageOutlineContentTemplate page={page}  hasSwitch={false} mode='Post' Post={Collab} pageNumber={pageNumber} changePageNumber={(pagenumber) => { setPageNumber(pagenumber); }} changeSortMode={(sortMode)=>{setSortMode(sortMode);}} setPageProps={props.setPageProps}/>
             }
         </>
     );

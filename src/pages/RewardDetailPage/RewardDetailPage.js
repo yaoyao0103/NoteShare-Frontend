@@ -12,6 +12,7 @@ function RewardDetailPage(props) {
             .then(res => {
                 console.log(res.data.res)
                 setPost(res.data.res)
+                props.setLoading(false)
             })
             .catch(err =>{
                 console.log(err)

@@ -14,6 +14,7 @@ function QnADetailPage(props) {
             .then(res => {
                 setPost(res.data.res)
                 console.log("QnA:",res.data.res)
+                props.setLoading(false);
             })
             .catch(err =>{
                 console.log(err)

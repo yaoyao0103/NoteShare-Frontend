@@ -58,6 +58,11 @@ function LoginPage(props) {
 
         setRender(true);
     }, []);
+    useEffect(() => {
+      props.setLoading(false);
+
+        setRender(true);
+    }, [render]);
     const onFinish = (values) => {
         login();
     };
