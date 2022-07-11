@@ -32,6 +32,7 @@ const FileManager = (props) => {
                 console.log(res.data.res)
                 setFiles(res.data.res)
                 setPosts([{folderName:'QnA', value:'QA'}, {folderName:'Reward', value:'reward'}, {folderName:'Collab',value:'collaboration'}])
+                props.setLoading(false)
             })
             .catch(err =>{
                 console.log(err)
@@ -49,6 +50,7 @@ const FileManager = (props) => {
     },[copy, move])
 
     const onClickFolderZone = (folderId) => {
+        props.setLoading(true)
         setCurrent(folderId)
         setBackBtnShow(true);
         axios.get(`http://localhost:8080/folder/${folderId}`)
@@ -95,15 +97,17 @@ const FileManager = (props) => {
             else{
                 setNotes([])
             }
-
+            props.setLoading(false)
             
         })
         .catch(err =>{
             console.log(err)
+            props.setLoading(false)
         })
     }
 
     const onClickPostZone = (value) => {
+        props.setLoading(true)
         message.info(value)
         axios.get(`http://localhost:8080/post/${props.email}/${value}`)
         .then(res => {
@@ -137,11 +141,11 @@ const FileManager = (props) => {
             else{
                 setNotes([])
             }
-
-            
+            props.setLoading(false)
         })
         .catch(err =>{
             console.log(err)
+            props.setLoading(false)
         })
     }
 
@@ -171,6 +175,7 @@ const FileManager = (props) => {
     }
 
     const back = () => {
+        props.setLoading(true)
         setCurrent(parent)
         if(parent){
             axios.get(`http://localhost:8080/folder/${parent}`)
@@ -206,9 +211,11 @@ const FileManager = (props) => {
                         />
                     )
                 }
+                props.setLoading(false)
             })
             .catch(err =>{
                 console.log(err)
+                props.setLoading(false)
             })
         }
 
@@ -223,15 +230,18 @@ const FileManager = (props) => {
                 setBackBtnShow(false);
                 setNotes([])
                 setInFolder(false)
+                props.setLoading(false)
             })
             .catch(err =>{
                 console.log(err)
+                props.setLoading(false)
             })
         }
         
     }
 
     const createFolder = (name) => {
+        props.setLoading(true)
         const data = {
             folderName: name,
             parent: current,
@@ -245,6 +255,7 @@ const FileManager = (props) => {
                 console.log(res.data.res);
                 onClickFolderZone(current)
                 setNewFolder(false)
+                props.setLoading(false)
             })
             .catch(err =>{
                 console.log(err)
@@ -252,10 +263,12 @@ const FileManager = (props) => {
     }
 
     const deleteFolder = (folderId) => {
+        props.setLoading(true)
         axios.delete(`http://localhost:8080/folder/${props.email}/${folderId}`)
             .then(res => {
                 console.log(res);
                 onClickFolderZone(current)
+                props.setLoading(false)
             })
             .catch(err =>{
                 console.log(err)
@@ -263,12 +276,14 @@ const FileManager = (props) => {
     }
 
     const renameFolder = (folderId, newName) => {
+        props.setLoading(true)
         axios.put(`http://localhost:8080/folder/rename/${props.email}/${folderId}/${newName}`)
             .then(res => {
                 console.log(res);
                 message.success("Success")
                 setRenaming(false)
                 onClickFolderZone(current)
+                props.setLoading(false)
             })
             .catch(err =>{
                 console.log(err)
@@ -323,12 +338,14 @@ const FileManager = (props) => {
 */
 
     const copyNote = () => {
+        props.setLoading(true)
         message.destroy();
         axios.put(`http://localhost:8080/note/save/${copy}/${current}`)
             .then(res => {
                 message.success("Success!")
                 onClickFolderZone(current)
                 setCopy(null)
+                props.setLoading(false)
             })
             .catch(err =>{
                 message.error("Error!")
@@ -338,18 +355,18 @@ const FileManager = (props) => {
     }
 
     const moveFolder = () => {
+        props.setLoading(true)
         const data = {
             path: path + '/' + move.folderName,
             parent: current,
         }
-        console.log("data", data)
-        console.log("move", move)
         
         axios.put(`http://localhost:8080/folder/save/${props.email}/${move.folderId}`, data)
             .then(res => {
                 message.success("Success!")
                 onClickFolderZone(current)
                 setMove(null)
+                props.setLoading(false)
             })
             .catch(err =>{
                 message.error("Error!")

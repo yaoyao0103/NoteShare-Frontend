@@ -106,7 +106,7 @@ const OuterPage = () => {
             pageProps.page === 'QnAOutlinePage' || pageProps.page === 'QnARecommendPage' || pageProps.page === 'QnAOutlinePage' ||pageProps.page === 'QnADetailPage'||
             pageProps.page === 'NoteOutlinePage' || pageProps.page === 'MemberPage' || pageProps.page === 'NoteDetailPage' ||
             pageProps.page === 'RewardOutlinePage' || pageProps.page === 'RewardRecommendPage' || pageProps.page === 'RewardDetailPage' ||
-            pageProps.page === 'FolderOutlinePage'
+            pageProps.page === 'FolderOutlinePage' || pageProps.page === 'PersonalPage'
         )
             setLoading(true)
         else
@@ -200,7 +200,7 @@ const OuterPage = () => {
     const antIcon = (
         <LoadingOutlined
             style={{
-                fontSize: 64,
+                fontSize: 30,
             }}
             spin
         />
@@ -219,7 +219,7 @@ const OuterPage = () => {
                         </div>
                         {backMode &&
                             <div className={"lastPageButton"} disable={false} onClick={lastPageBtnOnClick}>
-                                <ArrowLeftOutlined style={{ fontSize: '28px' }} />
+                                <ArrowLeftOutlined style={{ fontSize: '1.5em' }} />
                             </div>
                         }
                         {floatButtonVisable &&

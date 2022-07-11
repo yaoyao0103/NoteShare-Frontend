@@ -121,3 +121,26 @@
 .versionItem:hover {
     background-color: #eee;
 }
+
+.collabNoteEditPage__Queue{
+    position: fixed;
+    background-color: #fff;
+    width: 2.5em;
+    left: 0;
+    top: 20vh;
+    border-radius: 0 1em 1em 0;
+    padding-top: .5em;
+    padding-bottom: .5em;
+    z-index: 99;
+    text-align: center;
+    box-shadow: rgba(50, 50, 93, 0.3) 2px 3px 20px -2px
+}
+
+.collabNoteEditPage__Queue .anticon{
+    color: #ccc;
+    cursor: pointer;
+}
+
+.collabNoteEditPage__Queue .anticon:hover{
+    color: #555;
+}

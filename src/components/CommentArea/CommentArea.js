@@ -278,7 +278,7 @@ function CommentArea(props) {
                                         </span>
                                     </Tooltip>,
                                     <span key={`comment-basic-reply-to-${index}`}  onClick={() => {onReply(item.id)}}>Reply to</span>,
-                                    <> {(props.page == "QnADetailPage" && bestAns.length ==0) && 
+                                    <> {(props.page == "QnADetailPage" && bestAns.length ==0 && props.isAuthor && (props.authorEmail!=item.userObj.userObjEmail)) && 
                                         <span key={`comment-basic-choose-the-best`} onClick={() => {setTheBest(item.id)}}>Set as the best Answer</span>
                                     }</>,
                                 ]
