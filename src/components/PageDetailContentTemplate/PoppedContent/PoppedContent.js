@@ -24,6 +24,7 @@ const PoppedContent = (props) => {
     const [screenCapture, setScreenCapture] = useState('');
 
     useEffect(()=>{
+        console.log("props.content: ", props.content)
         setSiderList(props.content)
     },[props])
 
@@ -178,7 +179,7 @@ const PoppedContent = (props) => {
                                 />
                             </Sider>
                         }
-                        {!props.page=='CollabDetailPage' &&
+                        {props.page=='RewardDetailPage' &&
                             <Sider className='poppedContent__Sider' width='20%'>
                                 
                                 {/* <button onClick={onStartCapture}>Capture</button>

@@ -239,31 +239,13 @@ const OptionMenu = (props) => {
       <Menu items={
         [
           {
-              label: (<a onClick=
-                {() => {
-                  props.setPageProps({
-                    noteId: props.id,
-                    action: "edit",
-                    page:'NoteEditPage'
-                  })
-                }}
-                >Edit</a>),
-              key: "1",
-              icon: <EditOutlined />
-          },
-          {
-              label: "Share",
-              key: "2",
-              icon: <ShareAltOutlined />
-          },
-          {
             label: (<a onClick=
               {() => {
                 setDrawerType('Version');
                 showDrawer();
               }}
               >Manage Version</a>),
-            key: "3",
+            key: "1",
             icon: <InfoCircleOutlined />
           },
           {
@@ -275,7 +257,7 @@ const OptionMenu = (props) => {
                 })
               }}
               >Goto Reward Post</a>),
-            key: "4",
+            key: "2",
             icon: <EyeOutlined />
           },
         ]
@@ -286,21 +268,8 @@ const OptionMenu = (props) => {
     <Menu items={
       [
         {
-            label: (<a onClick=
-              {() => {
-                props.setPageProps({
-                  noteId: props.id,
-                  action: "edit",
-                  page:'NoteEditPage'
-                })
-              }}
-              >Edit</a>),
-            key: "1",
-            icon: <EditOutlined />
-        },
-        {
             label: "Share",
-            key: "2",
+            key: "1",
             icon: <ShareAltOutlined />
         },
         {
@@ -310,7 +279,7 @@ const OptionMenu = (props) => {
                 showDrawer();
               }}
               >Comment</a>),
-            key: "3",
+            key: "2",
             icon: <CommentOutlined />
         },
         {
@@ -320,7 +289,7 @@ const OptionMenu = (props) => {
               showDrawer();
             }}
             >Manage Version</a>),
-          key: "4",
+          key: "3",
           icon: <InfoCircleOutlined />
         },
       ]
@@ -389,7 +358,7 @@ const OptionMenu = (props) => {
                   page:'QnAEditPage'
                 })
               }}
-              >Edit</a>),
+              >Edit Information</a>),
             key: "1",
             icon: <EditOutlined />
           },
@@ -432,7 +401,7 @@ const OptionMenu = (props) => {
                 page:'QnAEditPage'
               })
             }}
-            >Edit</a>),
+            >Edit Information</a>),
           key: "1",
           icon: <EditOutlined />
         },
@@ -476,7 +445,7 @@ const OptionMenu = (props) => {
                 page:'RewardEditPage'
               })
             }}
-            >Edit</a>),
+            >Edit Information</a>),
           key: "1",
           icon: <EditOutlined />
         },
@@ -556,7 +525,7 @@ const OptionMenu = (props) => {
                 page:'CollabEditPage'
               })
             }}
-            >Edit</a>),
+            >Edit Information</a>),
           key: "2",
           icon: <EditOutlined />
         },
@@ -613,7 +582,7 @@ const OptionMenu = (props) => {
                 page:'CollabEditPage'
               })
             }}
-            >Edit</a>),
+            >Edit Information</a>),
           key: "2",
           icon: <EditOutlined />
         },

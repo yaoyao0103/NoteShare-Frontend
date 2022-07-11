@@ -29,15 +29,11 @@
 }
 .lastPageButton{
     position: absolute;
-    left: 4em;
-    top: 6em;
+    left: 2em;
+    top: 5.5em;
     cursor: pointer;
 }
 .lastPageButton:hover{
-    position: absolute;
-    left: 4em;
-    top: 6em;
-    cursor: pointer;
     transform: scale(1.1);
     transition: .3s;
 }

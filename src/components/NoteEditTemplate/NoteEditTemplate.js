@@ -41,6 +41,7 @@ const NoteEditTemplate = (props) => {
     const [visible, setVisible] = useState(false);
     const [popoverContent, setPopoverContent] = useState(<></>);
     const [versions, setVersions] = useState([]);
+    const [isAuthor, setIsAuthor] = useState(false)
     const dispatch = useDispatch();
     const { pageStore } = useSelector((state) => state);
     const { pages } = pageStore;
@@ -65,6 +66,7 @@ const NoteEditTemplate = (props) => {
             setContent(note.description)
             setNoteId(note.id)
             setVersions(note.version)
+            setIsAuthor(note.headerEmail == tempEmail? true:false)
             /*setPopoverContent(
                 <>
                     <List
@@ -267,7 +269,7 @@ const NoteEditTemplate = (props) => {
                     .then(res => {
                         console.log(res);
                         message.success("Submit!");
-                        props.setPageProps({page:'PersonalPage'})
+                        props.setPageProps({page:'NoteDetailPage', noteId: noteId})
                     })
                     .catch (err => {
                         console.log(err)
@@ -477,7 +479,7 @@ const NoteEditTemplate = (props) => {
                 }
             </Layout>
             <Drawer title='Version' placement="right" onClose={onClose} visible={visible}>
-                <VersionArea page={'NoteEditPageVersion'} versions={versions} setVersion={setVersion}/>
+                <VersionArea page={'NoteEditPageVersion'} versions={versions} setVersion={setVersion} isAuthor={isAuthor}/>
             </Drawer>
         </div>
     )

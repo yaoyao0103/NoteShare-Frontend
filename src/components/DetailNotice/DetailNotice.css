@@ -30,3 +30,7 @@
 .detailNotice__Sider{
     background-color: #fff;
 }
+
+.detailNotice__Header__Title, .detailNotice__Header__Avatar, .detailNotice__Header__Name{
+    float: left;
+}

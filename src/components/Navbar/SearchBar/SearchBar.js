@@ -53,11 +53,14 @@ const SearchBar = (props) => {
           onFocus={() => setSelected(true)}  
           onBlur={() => setSelected(false)} 
           onChange={onChange}
+          onKeyPress={event => {
+            if (event.key === 'Enter') onSearch()
+          }}
           type="text" 
           className='navSearchBar__Input' 
           value = {keyword}
         />
-        <SearchOutlined className='navSearchBar__Button' onClick={onSearch}/>
+        <SearchOutlined className='navSearchBar__Button' onClick={onSearch} />
         <MoreOutlined className='navSearchBar__Button' onClick={() => setAdvanced(!advanced)}/>
       </div>
       <div ref={ref} className={`navSearchBar__AdvancedSearch ${ advanced? "navSearchBar__AdvancedSearch--show":"navSearchBar__AdvancedSearch--hidden"}`}>

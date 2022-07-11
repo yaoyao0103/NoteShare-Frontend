@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Layout, Row, Col, List, Empty, Input } from 'antd';
+import { Layout, Row, Col, List, Empty, Input, Avatar } from 'antd';
 import "./DetailNotice.css"
 import { CloseOutlined } from "@ant-design/icons";
 import Text from '../Text/Text';
@@ -13,7 +13,12 @@ const DetailNotice = (props) => {
             <Header className='detailNotice__Header'>
                 <Text className="detailNotice__Header__Title" color='black' cls='Default' content={"Vote:"} fontSize='22' />
                 <Text className="detailNotice__Header__Title" color='black' cls='Small' content={"Kick "} fontSize='22' />
-                <Text className="detailNotice__Header__Title" color='red' cls='Default' content={kickUser} fontSize='22' />
+                <p className='detailNotice__Header__Title'>
+                    <Avatar className='detailNotice__Header__Avatar' style={{cursor:"pointer", marginRight:".5em"}} size={30} src={kickUser.userObjAvatar} onClick={() => props.setPageProps({page: 'ProfilePage', email: kickUser.userObjEmail})}></Avatar>
+                    <Text className='detailNotice__Header__Name' color='black' cls='Default' content={kickUser.userObjName} fontSize='15' display="inline-block" />
+                </p> 
+                
+                {/* <Text className="detailNotice__Header__Title" color='red' cls='Default' content={kickUser} fontSize='22' /> */}
                 <Text className="detailNotice__Header__Title" color='black' cls='Small' content={"out of group!!"} fontSize='22' />
                 <CloseOutlined onClick={() => { setNoticeShow(false) }}/>
             </Header>

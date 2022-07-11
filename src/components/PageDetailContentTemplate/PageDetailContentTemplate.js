@@ -38,6 +38,9 @@ const PageDetailContentTemplate = (props) => {
     const [haveApplied, setHaveApplied] = useState(null)
     const [isPublic, setIsPublic] = useState(true)
     const [vote, setVote] = useState(null)
+    const [authorEmail, setAuthorEmail] = useState('')
+    const [noteType, setNoteType] = useState(null)
+    const [isSubmit, setIsSubmit] = useState(false)
 
     useEffect(()=>{
         const cookieParser = new Cookie(document.cookie)
@@ -48,7 +51,11 @@ const PageDetailContentTemplate = (props) => {
         if(props.page == "NoteDetailPage"){
             setNoteId(props.data?.id);
             setEditor(<MyEditor noteId = {props.data?.id} version={'0'} page={props.page} email={email}/>)
-            if (props.data?.headerUserObj.userObjEmail == tempEmail) setIsAuthor(true)
+            setNoteType(props.data?.type)
+            if(props.data?.type == 'reward'){
+                if(props.data?.submit) setIsSubmit(true)
+            }
+            if (props.data?.headerUserObj.userObjEmail == tempEmail) setIsAuthor(true)  
             else setIsAuthor(false)
             for(let i = 0; i < props.data?.favoriterUserObj.length; i++){
                 if(props.data?.favoriterUserObj[i].userObjEmail == tempEmail){
@@ -67,20 +74,20 @@ const PageDetailContentTemplate = (props) => {
             const noteId = props.data.answers[0];
             setNoteId(noteId);
             setIsPublic(props.data?.public)
-            if(props.data?.vote.length > 0){
-                if(props.data?.vote[0].result == "invalid"){
+            if(props.data?.voteUserObj.length > 0){
+                if(props.data?.voteUserObj[0].result == "invalid"){
                     // remove vote
-                    axios.delete(`http://localhost:8080/schedule/delete/${props.postId}/${props.data?.vote[0].id}`)
+                    axios.delete(`http://localhost:8080/schedule/delete/${props.postId}/${props.data?.voteUserObj[0].id}`)
                         .then ( res => {
                         })
                         .catch(err =>{
                         })
                 }
-                else if(props.data?.vote[0].result == "valid"){
+                else if(props.data?.voteUserObj[0].result == "valid"){
 
                 }
                 else{
-                    setVote(props.data?.vote.length>0? props.data?.vote[0]:null)
+                    setVote(props.data?.vote.length>0? props.data?.voteUserObj[0]:null)
                 }
                 
             }
@@ -149,13 +156,14 @@ const PageDetailContentTemplate = (props) => {
         }
         else if(props.page == "RewardDetailPage"){
             setIsPublic(props.data?.public)
-            setPoppedContent( props.data.answers );
+            setPoppedContent( props.data?.answers );
             if(props.data?.author == email){
                 setIsAuthor(true)
             }
         }
         else if(props.page == "QnADetailPage"){
             setIsPublic(props.data?.public)
+            setAuthorEmail(props.data?.author)
             if(props.data?.author == email){
                 setIsAuthor(true)
             }
@@ -194,6 +202,28 @@ const PageDetailContentTemplate = (props) => {
         .then ( res => {
             console.log(res.data.res)
             message.success("Bought!")
+        })
+        .catch(err =>{
+            console.log(err)
+        })
+    }
+
+    const submitRewardNote = () => {
+        axios.put(`http://localhost:8080/note/submit/${props.noteId}`)
+        .then ( res => {
+            message.success("Submit!")
+            setIsSubmit(true)
+        })
+        .catch(err =>{
+            console.log(err)
+        })
+    }
+
+    const withdrawRewardNote = () => {
+        axios.put(`http://localhost:8080/note/withdraw/${props.noteId}`)
+        .then ( res => {
+            message.success("Withdraw!")
+            setIsSubmit(false)
         })
         .catch(err =>{
             console.log(err)
@@ -298,10 +328,31 @@ const PageDetailContentTemplate = (props) => {
                                         <Tag style={{ fontSize:"15px" }}>{tag}</Tag>
                                     </>
                                 )}
-                                {!(isAuthor || isBuyer) &&
+                                {(noteType!='reward' &&!(isAuthor || isBuyer)) &&
                                     <div className="contentTemplate__Footer__Button" onClick={() => buyNote()}>
                                         <Button color={"green"}><Text color='white' cls='Large' content={"Buy"} fontSize='17' display="inline-block" /></Button>
                                     </div>   
+                                }
+                                {(noteType!='reward' && isAuthor) &&
+                                    <div className="contentTemplate__Footer__Button" onClick={() => props.setPageProps({page: "NoteEditPage", noteId: noteId, action: "edit"})}>
+                                        <Button color={"green"}><Text color='white' cls='Large' content={"Edit"} fontSize='17' display="inline-block" /></Button>
+                                    </div>   
+                                }
+                                {(noteType=='reward' && isAuthor) &&
+                                    <> 
+                                    {isSubmit?
+                                        <div className="contentTemplate__Footer__Button" onClick={() => withdrawRewardNote()}>
+                                            <Button color={"purple"}><Text color='white' cls='Large' content={"Withdraw"} fontSize='17' display="inline-block" /></Button>
+                                        </div> 
+                                        :
+                                        <div className="contentTemplate__Footer__Button" onClick={() => submitRewardNote()}>
+                                            <Button color={"purple"}><Text color='white' cls='Large' content={"Submit"} fontSize='17' display="inline-block" /></Button>
+                                        </div> 
+                                    }
+                                        <div className="contentTemplate__Footer__Button" onClick={() => props.setPageProps({page: "NoteEditPage", noteId: noteId, action: "edit"})}>
+                                            <Button color={"green"}><Text color='white' cls='Large' content={"Edit"} fontSize='17' display="inline-block" /></Button>
+                                        </div> 
+                                    </>
                                 }
                             </>
                         }
@@ -343,7 +394,7 @@ const PageDetailContentTemplate = (props) => {
                 {(props.page!='NoteDetailPage' && props.page!='CollabDetailPage') && 
                     <>
                         <Sider id="contentTemplate__Comment" className="contentTemplate__Comment" width='40%'>
-                            <CommentArea type="post" page={props.page} comments={props.data?.commentsUserObj? props.data.commentsUserObj:[]} id={props.postId} isArchive={isArchive}/>
+                            <CommentArea type="post" page={props.page} comments={props.data?.commentsUserObj? props.data.commentsUserObj:[]} id={props.postId} isArchive={isArchive} isAuthor={isAuthor} authorEmail={authorEmail}/>
                         </Sider>
                     </>
                 }
@@ -356,7 +407,7 @@ const PageDetailContentTemplate = (props) => {
 
             {(vote && isAuthor)&&
                 <div className={`detailNotice ${ noticeShow && 'detailNotice--show'}`}>
-                    <DetailNotice setNoticeShow={setNoticeShow} type={"vote"} kickUser={vote.kickTarget}>
+                    <DetailNotice setNoticeShow={setNoticeShow} type={"vote"} kickUser={vote.kickTargetUserObj} setPageProps={props.setPageProps}>
                         <VoteArea vote={vote} total={props.data?.emailUserObj.length} postId={props.postId} email={email}/>
                     </DetailNotice>
                 </div>

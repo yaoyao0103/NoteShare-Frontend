@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { Steps, Layout, Row, Col, Input, Popover, message, Select, Tag, Drawer, List } from 'antd';
+import { Steps, Layout, Row, Col, Input, Popover, message, Select, Tag, Drawer, List, Avatar } from 'antd';
 import "./CollabNoteEditPage.css"
 import Button from '../../components/Button/Button';
 import Text from '../../components/Text/Text';
 import InformationInput from '../../components/InformationInput/InformationInput';
 import { useSelector, useDispatch } from "react-redux";
-import { CaretLeftOutlined, CheckOutlined, InfoCircleOutlined } from "@ant-design/icons";
+import { CaretLeftOutlined, CheckOutlined, InfoCircleOutlined, CaretRightFilled } from "@ant-design/icons";
 import MyEditor from '../../components/MyEditor/MyEditor';
 import { NoteFormat, VersionFormat, ContentFormat } from '../../components/NoteEditTemplate/NoteFormat';
 import axios from '../../components/axios/axios';
@@ -41,6 +41,9 @@ const CollabNoteEditPage = (props) => {
     const [popoverContent, setPopoverContent] = useState(<></>);
     const [versions, setVersions] = useState([]);
     const [email, setEmail] = useState('')
+    const [drawer, setDrawer] = useState(<></>)
+    const [drawerTitle, setDrawerTitle] = useState('Version')
+    const [drawerPlacement, setDrawerPlacement] = useState('right')
     const { pageStore } = useSelector((state) => state);
 
     useEffect(() => {
@@ -130,7 +133,19 @@ const CollabNoteEditPage = (props) => {
         //setStep(1);
     }
 
-    const showDrawer = () => {
+    const showDrawer = (type) => {
+        switch(type){
+            case 'version':  
+                setDrawer(<VersionArea page={'NoteEditPageVersion'} versions={versions} setVersion={setVersion}/>);
+                setDrawerPlacement('right'); 
+                setDrawerTitle('Version')
+                break;
+            case 'chatroom':  
+                setDrawer(<VersionArea page={'NoteEditPageVersion'} versions={versions} setVersion={setVersion}/>);
+                setDrawerPlacement('left'); 
+                setDrawerTitle('Chatroom');
+                break;
+        }
         setVisible(true);
       };
     
@@ -384,7 +399,7 @@ const CollabNoteEditPage = (props) => {
                                 <Button color={"green"}><Text color='white' cls='Large' content={"Save Current Version"} fontSize='17' display="inline-block" /></Button>
                             </div>
                         </Popover>
-                        <div className="collabNoteEditPage__Footer__Button" onClick={showDrawer}>
+                        <div className="collabNoteEditPage__Footer__Button" onClick={() => showDrawer('version')}>
                             <Button color={"green"}><Text color='white' cls='Large' content={"Copy Version"} fontSize='17' display="inline-block" /></Button>
                         </div>
                         
@@ -402,9 +417,19 @@ const CollabNoteEditPage = (props) => {
                     </Footer>
                 }
             </Layout>
-            <Drawer title='Version' placement="right" onClose={onClose} visible={visible}>
-                <VersionArea page={'NoteEditPageVersion'} versions={versions} setVersion={setVersion}/>
+            <Drawer title={drawerTitle} placement={drawerPlacement} onClose={onClose} visible={visible}>
+                {drawer}
+                {/* <VersionArea page={'NoteEditPageVersion'} versions={versions} setVersion={setVersion}/> */}
             </Drawer>
+            {step==1 &&
+            <div className='collabNoteEditPage__Queue'>
+                <Avatar className={"Ring__Avatar"} size={36} src='https://joeschmoe.io/api/v1/james' ></Avatar>
+                <Avatar className={"Ring__Avatar"} size={36} src='https://joeschmoe.io/api/v1/james' ></Avatar>
+                <Avatar className={"Ring__Avatar"} size={36} src='https://joeschmoe.io/api/v1/james' ></Avatar>
+                <Avatar className={"Ring__Avatar"} size={36} src='https://joeschmoe.io/api/v1/james' ></Avatar>
+                <CaretRightFilled  className={"Ring__Avatar"} onClick={() => showDrawer('chatroom')}/>
+            </div>
+            }
         </div>
     )
 }
