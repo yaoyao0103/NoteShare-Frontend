@@ -9,14 +9,16 @@ function QnARecommendPage(props) {
     const [sortMode, setSortMode] = useState('date');
 
     useEffect(() => {
+        props.setLoading(true)
         async function getQnAById() {
             try {
-
+                props.setLoading(true)
                 const sortBy = sortMode;
 
                 await axios.get('http://localhost:8080/search/post/' + String(pageNumber - 1) + '/20?keyword=array&department=' + (props.department ? props.department : '') + '&subject=' + (props.subject ? props.subject : '') + '&haveQA=' + true + '&sortBy=' + sortBy).then((res) => {
                     setQnA(oldArray => [...oldArray, res.data.search]);
                     console.log(res.data.search)
+                    props.setLoading(false)
                 });
 
             } catch (error) {

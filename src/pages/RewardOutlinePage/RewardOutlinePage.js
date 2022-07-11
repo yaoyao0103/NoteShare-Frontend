@@ -12,6 +12,7 @@ function RewardOutlinePage(props) {
     const [sortMode,setSortMode] =useState('date');
 
     useEffect(() => {
+        props.setLoading(true)
         async function getRewardById() {
             try {
                 const sortBy=sortMode;
@@ -19,6 +20,7 @@ function RewardOutlinePage(props) {
                 await axios.get('http://localhost:8080/search/post/'+ String(pageNumber-1) + '/20?keyword='+(props.keyword?props.keyword:'')+'&department='+(props.department?props.department:'')+'&subject='+(props.subject?props.subject:'')+'&haveReward='+true+'&sortBy='+sortBy).then((res) => {
 
                     setReward(oldArray => [...oldArray, res.data.search]);
+                    props.setLoading(false)
                 });
 
             } catch (error) {

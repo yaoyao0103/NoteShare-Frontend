@@ -12,12 +12,14 @@ function RewardRecommendPage(props) {
 
     useEffect(() => {
         async function getRewardById() {
+            props.setLoading(true)
             try {
                 const sortBy = sortMode;
 
                 await axios.get('http://localhost:8080/search/post/' + String(pageNumber - 1) + '/20?keyword=interrupt&department=&subject=&haveReward=' + true + '&sortBy=' + sortBy).then((res) => {
 
                     setReward(oldArray => [...oldArray, res.data.search]);
+                    props.setLoading(false)
                 });
 
             } catch (error) {

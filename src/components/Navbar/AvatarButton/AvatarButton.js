@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Dropdown, Menu, Avatar } from 'antd';
 import { Base64 } from 'js-base64';
 import { BellOutlined } from '@ant-design/icons';
+
 import { UserOutlined, SettingOutlined, LogoutOutlined } from '@ant-design/icons';
 import axios from "axios";
 
@@ -65,12 +66,19 @@ function AvatarButton(props) {
         let tempEmail = cookieParser.getCookieByName('email');
         tempEmail = Base64.decode(tempEmail);
         setEmail(tempEmail);
+        axios.get("http://localhost:8080/user/name/" + tempEmail, {
+        }).then(res => {
+            document.cookie = "name=" + res.data.res;
+        }).catch((error) => {
+            console.log(error);
+        });
         //console.log(props.changeAvatar);
         //console.log(avatarNum);
         if (props.changeAvatar > avatarNum) {
             axios.get("http://localhost:8080/user/head/" + tempEmail,).then(res => {
                 setAvatar(res.data.res);
                 setAvatarNum(props.changeAvatar);
+                document.cookie = "avatar=" + res.data.res;
                 //message.info('Change avatar');
             }).catch((error) => {
                 //message.info(error.response.error);
@@ -83,7 +91,7 @@ function AvatarButton(props) {
             <Dropdown
                 overlayClassName='AvatarButton__Dropdown'
                 overlay={menu}
-              
+
                 trigger='click'
                 placement="bottom"
             >

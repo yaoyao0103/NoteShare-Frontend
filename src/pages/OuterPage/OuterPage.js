@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react'
+import SockJS from "sockjs-client"
+import { over } from "stompjs"
 import MemberPage from "../MemberPage/MemberPage";
 import QnADetailPage from "../QnADetailPage/QnADetailPage";
 import NoteDetailPage from "../NoteDetailPage/NoteDetailPage";
@@ -60,9 +62,96 @@ const OuterPage = () => {
         setVisible(false);
     };
 
+    let stompClient;
+    const connect = () => {
+        // postID = (location.state === 'genewang7@gmail.com') ? 12345 : 67890
+
+        let sock = new SockJS('http://localhost:8080/our-websocket')
+        stompClient = over(sock)
+        stompClient.connect({}, onConnected, (err) => {
+            console.log(err)
+        })
+    }
+
+    const onConnected = (frame) => {
+        // stompClient.subscribe(`/topic/group-messages/${noteID}`, (message) => {
+        //     // showMessage(message) 
+        // })
+        // for (let i in bell) {   //訂閱"他人"地址，接收"他人"發送的訊息
+        //     stompClient.subscribe(`/topic/bell-messages/${bell[i]}`, (message) => {   //拿user 後端轉bell
+        //         // showMessage(message) 
+        //     })
+        // }
+        stompClient.subscribe('/user/topic/private-messages', (message) => {
+            // showMessage(message) 
+        })
+    }
+
+    //   const sendGroupMessage = (msg) => {
+    //     let messageObj = {
+    //       'message': msg,
+    //       'type': 'post',
+    //       'userObj': {
+    //         'userObjEmail': location.state,
+    //         'userObjName': 'gene'
+    //       },
+    //       'id': noteID,
+    //       // 'receiverEmail': receiver
+    //     }
+
+    //     stompClient.send(`/ws/group-messages/${noteID}`, {}, JSON.stringify(messageObj))
+    //   }
+
+    //   const sendGroupMessageForManager = (msg) => {
+    //     let messageObj = {
+    //       'message': msg,
+    //       'type': 'post',
+    //       'userObj': {
+    //         'userObjEmail': location.state,
+    //         'userObjName': 'gene'
+    //       },
+    //       'id': noteID,
+    //       // 'receiverEmail': receiver
+    //     }
+
+    //     stompClient.send(`/ws/group-messages-manager/${noteID}`, {}, JSON.stringify(messageObj))
+    //   }
+
+    const sendBellMessage = (msg, type, userObjEmail, userObjName, userObjAvatar, id, receiver) => {  //地址指向"自己"，由"自己"發送訊息
+        let messageObj = {
+            'message': msg,
+            'type': type,
+            'userObj': {
+                'userObjEmail': userObjEmail,
+                'userObjName': userObjName,
+                'userObjAvatar': userObjAvatar
+            },
+             'id': id,
+            'receiverEmail': receiver
+        }
+
+        stompClient.send(`/ws/bell-messages/${userObjEmail}`, {}, JSON.stringify(messageObj))
+    }
+
+    const sendPrivateMessage = (msg, type, userObjEmail, userObjName, userObjAvatar, id, receiver) => {
+        let messageObj = {
+            'message': msg,
+            'type': type,
+            'userObj': {
+                'userObjEmail': userObjEmail,
+                'userObjName': userObjName,
+                'userObjAvatar': userObjAvatar
+            },
+            'id': id,
+            'receiverEmail': receiver
+        }
+
+        stompClient.send("/ws/private-messages", {}, JSON.stringify(messageObj))
+    }
+
 
     useEffect(() => {
-
+        connect();
         const cookieParser = new Cookie(document.cookie)
         const email = cookieParser.getCookieByName('email')
         if (email) {
@@ -103,7 +192,7 @@ const OuterPage = () => {
         if (pageProps.page === 'LoginPage' || pageProps.page === "ProfilePage" || pageProps.page === 'ForgetPasswordPage' || pageProps.page === 'ResetPasswordPage' ||
             pageProps.page === 'SignUpPage' || pageProps.page === 'VerificationPage' ||
             pageProps.page === 'CollabOutlinePage' || pageProps.page === 'CollabRecommendPage' || pageProps.page === 'CollabDetailPage' ||
-            pageProps.page === 'QnAOutlinePage' || pageProps.page === 'QnARecommendPage' || pageProps.page === 'QnAOutlinePage' ||pageProps.page === 'QnADetailPage'||
+            pageProps.page === 'QnAOutlinePage' || pageProps.page === 'QnARecommendPage' || pageProps.page === 'QnAOutlinePage' || pageProps.page === 'QnADetailPage' ||
             pageProps.page === 'NoteOutlinePage' || pageProps.page === 'MemberPage' || pageProps.page === 'NoteDetailPage' ||
             pageProps.page === 'RewardOutlinePage' || pageProps.page === 'RewardRecommendPage' || pageProps.page === 'RewardDetailPage' ||
             pageProps.page === 'FolderOutlinePage'
@@ -152,7 +241,7 @@ const OuterPage = () => {
             case 'CollabRecommendPage': setPageComponent(<CollabRecommendPage page='CollabRecommendPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
             case 'FolderOutlinePage': setPageComponent(<FolderOutlinePage page='FolderOutlinePage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
             case 'PersonalPage': setPageComponent(<PersonalPage page='PersonalPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
-            case 'ProfilePage': setPageComponent(<ProfilePage page='ProfilePage' changePage={changePage} setLoading={setLoading} Avatar={changeAvatar} setAvatar={setChangeAvatar} setPageProps={setPageProps} {...pageProps} />); break;
+            case 'ProfilePage': setPageComponent(<ProfilePage page='ProfilePage' sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} Avatar={changeAvatar} setAvatar={setChangeAvatar} setPageProps={setPageProps} {...pageProps} />); break;
             case 'LoginPage': setPageComponent(<LoginPage page='LoginPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} setLoggedIn={setLoggedIn} {...pageProps} />); break;
             case 'SignUpPage': setPageComponent(<SignUpPage page='SignUpPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
             case 'VerificationPage': setPageComponent(<VerificationPage page='VerificationPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;

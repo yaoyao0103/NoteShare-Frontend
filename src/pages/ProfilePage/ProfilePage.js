@@ -91,17 +91,30 @@ function ProfilePage(props) {
     }
 
     const Follow = () => {
+        let cookieParser = new Cookie(document.cookie);
+        let name = cookieParser.getCookieByName('name');
+        let avatar = cookieParser.getCookieByName('avatar');
         if (!isFollow) {
             axios.put("http://localhost:8080/follow/" + email + '/' + props.email,).then(res => {
+                props.sendPrivateMessage(email+'has following you','Follow',)
                 //setProfile(content);
                 setIsFollow(true);
                 setFansNum(fansNum + 1);
-
+               
                 message.info('Follow ' + user.name);
             }).catch((error) => {
                 console.log(error.response.error);
 
             })
+            props.sendPrivateMessage(
+                email+' has following you !',
+                'follow',
+                email,
+                name,
+                avatar,
+                '',
+                props.email
+            )
         }
         else {
             axios.put("http://localhost:8080/unfollow/" + email + '/' + props.email,).then(res => {

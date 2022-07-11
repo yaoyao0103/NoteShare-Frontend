@@ -9,6 +9,7 @@ function QnAOutlinePage(props) {
     const [sortMode, setSortMode] = useState('date');
 
     useEffect(() => {
+        props.setLoading(true)
         async function getQnAById() {
             try {
 
@@ -18,6 +19,7 @@ function QnAOutlinePage(props) {
                     setQnA(oldArray => [...oldArray, res.data.search]);
                    
                     console.log(res.data.search)
+                    props.setLoading(false)
                 });
 
             } catch (error) {
