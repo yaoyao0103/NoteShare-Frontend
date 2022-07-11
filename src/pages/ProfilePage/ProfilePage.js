@@ -100,21 +100,21 @@ function ProfilePage(props) {
                 //setProfile(content);
                 setIsFollow(true);
                 setFansNum(fansNum + 1);
-               
+                props.sendPrivateMessage(
+                    name+' has following you !',
+                    'ProfilePage',
+                    email,
+                    name,
+                    avatar,
+                    '',
+                    props.email
+                )
                 message.info('Follow ' + user.name);
             }).catch((error) => {
                 console.log(error.response.error);
 
             })
-            props.sendPrivateMessage(
-                email+' has following you !',
-                'follow',
-                email,
-                name,
-                avatar,
-                '',
-                props.email
-            )
+            
         }
         else {
             axios.put("http://localhost:8080/unfollow/" + email + '/' + props.email,).then(res => {

@@ -129,6 +129,9 @@ function CommentArea(props) {
         setComment(str);
     }
     const onSubmit = (ev) => {
+        let cookieParser = new Cookie(document.cookie);
+        let name = cookieParser.getCookieByName('name');
+        let avatar = cookieParser.getCookieByName('avatar');
         ev.preventDefault();
         const tempComment = {
             email: email,
@@ -138,8 +141,10 @@ function CommentArea(props) {
         axios.post(`http://localhost:8080/comment/${props.id}`, tempComment)
         .then(res => {
             console.log("Comment Response: ",res.data.res)
+            
             message.success("Submit!")
             refresh()
+
         })
         .catch(err => {
             console.log(err)

@@ -35,7 +35,7 @@ import { LoadingOutlined } from '@ant-design/icons';
 import { timers } from 'jquery';
 import Cookie from '../../components/Cookies/Cookies';
 import { set } from 'react-hook-form';
-
+var stompClient;
 const OuterPage = () => {
     const [pageProps, setPageProps] = useState({ page: 'LoginPage' });
     const [pageComponent, setPageComponent] = useState(<></>)
@@ -62,7 +62,7 @@ const OuterPage = () => {
         setVisible(false);
     };
 
-    let stompClient;
+    
     const connect = () => {
         // postID = (location.state === 'genewang7@gmail.com') ? 12345 : 67890
 
@@ -87,35 +87,38 @@ const OuterPage = () => {
         })
     }
 
-    //   const sendGroupMessage = (msg) => {
-    //     let messageObj = {
-    //       'message': msg,
-    //       'type': 'post',
-    //       'userObj': {
-    //         'userObjEmail': location.state,
-    //         'userObjName': 'gene'
-    //       },
-    //       'id': noteID,
-    //       // 'receiverEmail': receiver
-    //     }
+      const sendGroupMessage = (msg, type, userObjEmail, userObjName, userObjAvatar, id) => {
+        let messageObj = {
+            'message': msg,
+            'type': type,
+            'userObj': {
+                'userObjEmail': userObjEmail,
+                'userObjName': userObjName,
+                'userObjAvatar': userObjAvatar
+            },
+            'id': id,
+          
+          // 'receiverEmail': receiver
+        }
 
-    //     stompClient.send(`/ws/group-messages/${noteID}`, {}, JSON.stringify(messageObj))
-    //   }
+        stompClient.send(`/ws/group-messages/${id}`, {}, JSON.stringify(messageObj))
+      }
 
-    //   const sendGroupMessageForManager = (msg) => {
-    //     let messageObj = {
-    //       'message': msg,
-    //       'type': 'post',
-    //       'userObj': {
-    //         'userObjEmail': location.state,
-    //         'userObjName': 'gene'
-    //       },
-    //       'id': noteID,
-    //       // 'receiverEmail': receiver
-    //     }
+      const sendGroupMessageForManager = (msg, type, userObjEmail, userObjName, userObjAvatar, id) => {
+        let messageObj = {
+            'message': msg,
+            'type': type,
+            'userObj': {
+                'userObjEmail': userObjEmail,
+                'userObjName': userObjName,
+                'userObjAvatar': userObjAvatar
+            },
+            'id': id,
+          // 'receiverEmail': receiver
+        }
 
-    //     stompClient.send(`/ws/group-messages-manager/${noteID}`, {}, JSON.stringify(messageObj))
-    //   }
+        stompClient.send(`/ws/group-messages-manager/${id}`, {}, JSON.stringify(messageObj))
+      }
 
     const sendBellMessage = (msg, type, userObjEmail, userObjName, userObjAvatar, id, receiver) => {  //地址指向"自己"，由"自己"發送訊息
         let messageObj = {
@@ -126,7 +129,7 @@ const OuterPage = () => {
                 'userObjName': userObjName,
                 'userObjAvatar': userObjAvatar
             },
-             'id': id,
+            'id': id,
             'receiverEmail': receiver
         }
 
@@ -145,8 +148,8 @@ const OuterPage = () => {
             'id': id,
             'receiverEmail': receiver
         }
-
-        stompClient.send("/ws/private-messages", {}, JSON.stringify(messageObj))
+        if (stompClient)
+            stompClient.send("/ws/private-messages", {}, JSON.stringify(messageObj))
     }
 
 
@@ -218,7 +221,7 @@ const OuterPage = () => {
             setFloatButtonVisable(false)
 
         switch (pageProps.page) {
-            case 'NoteDetailPage': setPageComponent(<NoteDetailPage page='NoteDetailPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+            case 'NoteDetailPage': setPageComponent(<NoteDetailPage page='NoteDetailPage' sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
             case 'NoteEditPage': setPageComponent(<NoteEditPage page='NoteEditPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
             case 'NoteNewPage': setPageComponent(<NoteEditPage page='NoteNewPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
             case 'NoteOutlinePage': setPageComponent(<NoteOutlinePage page='NoteOutlinePage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;

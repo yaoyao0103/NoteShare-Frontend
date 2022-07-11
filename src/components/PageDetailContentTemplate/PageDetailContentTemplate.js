@@ -52,6 +52,7 @@ const PageDetailContentTemplate = (props) => {
             setNoteId(props.data?.id);
             setEditor(<MyEditor noteId = {props.data?.id} version={'0'} page={props.page} email={email}/>)
             setNoteType(props.data?.type)
+            setAuthorEmail(props.data?.headerUserObj.userObjEmail)
             if(props.data?.type == 'reward'){
                 if(props.data?.submit) setIsSubmit(true)
             }
@@ -394,7 +395,7 @@ const PageDetailContentTemplate = (props) => {
                 {(props.page!='NoteDetailPage' && props.page!='CollabDetailPage') && 
                     <>
                         <Sider id="contentTemplate__Comment" className="contentTemplate__Comment" width='40%'>
-                            <CommentArea type="post" page={props.page} comments={props.data?.commentsUserObj? props.data.commentsUserObj:[]} id={props.postId} isArchive={isArchive} isAuthor={isAuthor} authorEmail={authorEmail}/>
+                            <CommentArea type="post" page={props.page}  comments={props.data?.commentsUserObj? props.data.commentsUserObj:[]} id={props.postId} isArchive={isArchive} isAuthor={isAuthor} authorEmail={authorEmail}/>
                         </Sider>
                     </>
                 }

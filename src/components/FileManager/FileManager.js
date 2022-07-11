@@ -40,8 +40,9 @@ const FileManager = (props) => {
         }
         if(props.email) getRootFile();
         //setRoot([{folderName:'Buy', value:'buy'}, {folderName:'Favorite', value:'favorite'}, {folderName:'Folder', value:'folder'}, {folderName:'QnA', value:'QA'}, {folderName:'Reward', value:'reward'}, {folderName:'CollabNote',value:'collaboration'}])
-    },[props.email])
+    },[props])
 
+   
     useEffect(()=>{ 
         if(copy)
             message.info("Please go to the folder you want to copy, then click confirm button",0) 

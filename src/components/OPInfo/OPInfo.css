@@ -60,6 +60,7 @@
 .OPInfo__right__Outline{
     float: left;
     height: 100%;
+    word-wrap: break-all;
 }
 .OPInfo__Author__Outline{
     margin-top: 0.5em;

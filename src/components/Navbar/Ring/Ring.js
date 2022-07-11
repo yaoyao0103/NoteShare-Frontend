@@ -7,140 +7,83 @@ import { Base64 } from 'js-base64';
 import axios from "axios";
 const { Paragraph } = Typography;
 function Ring(props) {
-    const [email, setEmail] = useState('a147896325811@gmail.com');
+    const [email, setEmail] = useState('');
     const [ringList, setRingList] = useState([]);
+    const [render, setRender] = useState(false);
     useEffect(() => {
 
-        // let cookieParser = new Cookie(document.cookie);
-        // let tempEmail = cookieParser.getCookieByName('email');
-        // tempEmail = Base64.decode(tempEmail);
-        // axios.get("http://localhost:8080/notification/" + tempEmail,).then(res => {
-            
-        // }).catch((error) => {
-        //     //message.info(error.response.error);
+        let cookieParser = new Cookie(document.cookie);
+        let tempEmail = cookieParser.getCookieByName('email');
+        tempEmail = Base64.decode(tempEmail);
+        axios.get("http://localhost:8080/notification/" + tempEmail,).then(res => {
+            console.log(res.data.notification.length);
+            let itemList = []
+            console.log(ringList)
+            for (let i = 0; i < res.data.notification.length; i++) {
 
-        // })
-        // setEmail(tempEmail);
-       
-    }, [props]);
+                let tempItem = {
+                    key: i + 1,
+                    label: (
+                        <>  <Row onClick={() => props.setPageProps({ page: res.data.notification[i].type === 'normal' ? 'NoteDetailPage' : res.data.notification[i].type, noteId: res.data.notification[i].id, postId: res.data.notification[i].id, email: res.data.notification[i].userObj.userObjEmail })}>
+                            <Col span={5} className={"Ring__Icon"}>
+                                {/* <ExclamationCircleOutlined /> */}
+                                <Avatar className={"Ring__Avatar"} size={36} src={res.data.notification[i].userObj.userObjAvatar} ></Avatar>
+                            </Col>
+                            <Col span={19}>
+                                <Paragraph
+                                    className={"Ring__Paragraph"}
+                                    ellipsis={
+                                        ellipsis
+                                            ? {
+                                                rows: 3,
+                                                expandable: false,
+                                            }
+                                            : false
+                                    }
+                                >
+                                    {res.data.notification[i].message}
+                                </Paragraph>
+
+                            </Col>
+                        </Row>
+                        </>
+                    ),
+                }
+
+                setRingList(oldArray => [tempItem,...oldArray ]);
+            }
+            setRender(true)
+        }).catch((error) => {
+            //message.info(error.response.error);
+
+        })
+        setEmail(tempEmail);
+
+    }, []);
     const [ellipsis, setEllipsis] = useState(true);
-    const menu = (
-        <Menu
-            items={[
-                {
-                    key: '1',
-                    label: (
-                        <>  <Row>
-                            <Col span={5} className={"Ring__Icon"}>
-                                {/* <ExclamationCircleOutlined /> */}
-                                <Avatar className={"Ring__Avatar"} size={36} src='https://joeschmoe.io/api/v1/james' onClick={() => props.setPageProps({page: 'ProfilePage', email: email})}></Avatar>
-                            </Col>
-                            <Col span={19}>
-                                <Paragraph
-                                    className={"Ring__Paragraph"}
-                                    ellipsis={
-                                        ellipsis
-                                            ? {
-                                                rows:3,
-                                                expandable: false,
-                                            }
-                                            : false
-                                    }
-                                >
-                                    1st menu item51165115151561 1223123123123123213123123123123
-                                </Paragraph>
 
-                            </Col>
-                        </Row>
-
-
-
-                        </>
-
-
-
-                    ),
-                },
-                {
-                    key: '2',
-                    label: (
-                        <>  <Row>
-                            <Col span={5} className={"Ring__Icon"}>
-                                {/* <ExclamationCircleOutlined /> */}
-                                <Avatar className={"Ring__Avatar"} size={36} src='https://joeschmoe.io/api/v1/james' onClick={() => props.setPageProps({page: 'ProfilePage', email: email})}></Avatar>
-                            </Col>
-                            <Col span={19}>
-                                <Paragraph
-                                    className={"Ring__Paragraph"}
-                                    ellipsis={
-                                        ellipsis
-                                            ? {
-                                                rows:3,
-                                                expandable: false,
-                                            }
-                                            : false
-                                    }
-                                >
-                                    1st menu item51165115151561 1223123123123123213123123123123
-                                </Paragraph>
-
-                            </Col>
-                        </Row>
-
-
-
-                        </>
-                    ),
-                },
-                {
-                    key: '3',
-                    label: (
-                        <>  <Row>
-                            <Col span={5} className={"Ring__Icon"}>
-                                {/* <ExclamationCircleOutlined /> */}
-                                <Avatar className={"Ring__Avatar"} size={36} src='https://joeschmoe.io/api/v1/james' onClick={() => props.setPageProps({page: 'ProfilePage', email: email})}></Avatar>
-                            </Col>
-                            <Col span={19}>
-                                <Paragraph
-                                    className={"Ring__Paragraph"}
-                                    ellipsis={
-                                        ellipsis
-                                            ? {
-                                                rows:3,
-                                                expandable: false,
-                                            }
-                                            : false
-                                    }
-                                >
-                                    1st menu item51165115151561 1223123123123123213123123123123
-                                </Paragraph>
-
-                            </Col>
-                        </Row>
-
-
-
-                        </>
-                    ),
-                },
-            ]}
-        />
-    );
     return (
-        <div>
-            <Badge count={99} size="small" overflowCount={10} offset={[8, 8]}>
-                <Dropdown
-                    className='Ring__Dropdown'
-                    overlay={menu}
-                    overlayStyle={{ width: '300px',maxHeight:'200px',overflowY:'scroll',overflowX:'hidden' }}
-                    trigger='click'
-                    placement="bottom"
+        <>
+            {render &&
+                <div>
+                    <Badge count={99} size="small" overflowCount={10} offset={[8, 8]}>
+                        <Dropdown
+                            className='Ring__Dropdown'
+                            overlay={(
+                                <Menu
+                                    items={ringList} />
+                            )}
+                            overlayStyle={{ width: '300px', maxHeight: '200px', overflowY: 'scroll', overflowX: 'hidden' }}
+                            trigger='click'
+                            placement="bottom"
 
-                >
-                    <BellOutlined className='Ring__Bell__Button' style={{ fontSize: '28px' }} />
-                </Dropdown>
-            </Badge>
-        </div>
+                        >
+                            <BellOutlined className='Ring__Bell__Button' style={{ fontSize: '28px' }} />
+                        </Dropdown>
+                    </Badge>
+                </div>
+            }
+        </>
     );
 }
 export default Ring;
