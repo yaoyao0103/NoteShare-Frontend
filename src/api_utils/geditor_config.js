@@ -36,7 +36,7 @@ import tUIImageEditor from "../plugins/tUIImageEditor";
 
 export let editor;
 
-async function geditorConfig(assets, noteId, version, isCollab, email){
+async function geditorConfig(assets, noteId, version, isCollab, email, username, avatar){
   $(".panel__devices").html("");
   $(".panel__basic-actions").html("");
   $(".panel__editor").html("");
@@ -54,6 +54,8 @@ async function geditorConfig(assets, noteId, version, isCollab, email){
     noteId: noteId,
     isCollab: isCollab,
     email: email,
+    username: username,
+    avatar: avatar,
     container: "#editor",
     blockManager: {
       appendTo: "#blocks",

@@ -41,16 +41,24 @@ const CollabNoteEditPage = (props) => {
     const [popoverContent, setPopoverContent] = useState(<></>);
     const [versions, setVersions] = useState([]);
     const [email, setEmail] = useState('')
+    const [name, setName] = useState('')
+    const [avatar, setAvatar] = useState('')
     const [drawer, setDrawer] = useState(<></>)
     const [drawerTitle, setDrawerTitle] = useState('Version')
     const [drawerPlacement, setDrawerPlacement] = useState('right')
+    const [queue, setQueue] = useState([])
+    const [queueAvatar, setQueueAvatar] = (<></>)
     const { pageStore } = useSelector((state) => state);
 
     useEffect(() => {
         const cookieParser = new Cookie(document.cookie)
         const temp = cookieParser.getCookieByName('email')
         const tempEmail = Base64.decode(temp);
+        const tempName = cookieParser.getCookieByName('name')
+        const tempAvatar = cookieParser.getCookieByName('avatar')
         setEmail(tempEmail)
+        setName(tempName)
+        setAvatar(tempAvatar)
         console.log("tempEmail", tempEmail)
         //const note = props.note;
         axios.get(`http://localhost:8080/note/${props.noteId}`)
@@ -59,7 +67,7 @@ const CollabNoteEditPage = (props) => {
             const tempNote = res.data.res
             setNote(res.data.res)
             setTitle(tempNote.title);
-            setMyEditor(<MyEditor noteId={props.noteId} version={'0'} page={props.page} email={tempEmail} isCollab={true}/>);
+            setMyEditor(<MyEditor noteId={props.noteId} version={'0'} page={props.page} email={tempEmail} name={tempName} avatar={tempAvatar} isCollab={true} />);
             setInformation({
                 school: tempNote.school,
                 department: tempNote.department,
@@ -91,6 +99,13 @@ const CollabNoteEditPage = (props) => {
             </>
         )
     },[versions])
+
+
+    useEffect(()=>{
+        console.log("queue: ", queue)
+        //setQueueAvatar(<></>);
+    },[queue])
+
     const customDot = (dot, { status, index }) => (
         <Popover
             content={
@@ -162,7 +177,7 @@ const CollabNoteEditPage = (props) => {
                 defaultVersion.slug = "default"
                 axios.put(`http://localhost:8080/note/${props.noteId}/0`, defaultVersion)
                 .then ( async versionRes => {
-                    setMyEditor(<MyEditor noteId={props.noteId} version={'0'} page={props.page} email={email} isCollab={true}/>)
+                    setMyEditor(<MyEditor noteId={props.noteId} version={'0'} page={props.page} email={email} name={name} avatar={avatar} isCollab={true} />)
                     setStep(0);
                     setStep(1);
                 })
@@ -423,10 +438,11 @@ const CollabNoteEditPage = (props) => {
             </Drawer>
             {step==1 &&
             <div className='collabNoteEditPage__Queue'>
+                {queueAvatar}
+                {/* <Avatar className={"Ring__Avatar"} size={36} src='https://joeschmoe.io/api/v1/james' ></Avatar>
                 <Avatar className={"Ring__Avatar"} size={36} src='https://joeschmoe.io/api/v1/james' ></Avatar>
                 <Avatar className={"Ring__Avatar"} size={36} src='https://joeschmoe.io/api/v1/james' ></Avatar>
-                <Avatar className={"Ring__Avatar"} size={36} src='https://joeschmoe.io/api/v1/james' ></Avatar>
-                <Avatar className={"Ring__Avatar"} size={36} src='https://joeschmoe.io/api/v1/james' ></Avatar>
+                <Avatar className={"Ring__Avatar"} size={36} src='https://joeschmoe.io/api/v1/james' ></Avatar> */}
                 <CaretRightFilled  className={"Ring__Avatar"} onClick={() => showDrawer('chatroom')}/>
             </div>
             }
