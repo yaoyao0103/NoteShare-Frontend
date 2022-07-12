@@ -189,6 +189,10 @@ const NoteEditTemplate = (props) => {
             NoteFormat.school = information.school
             NoteFormat.description = content
 
+            // let cookieParser = new Cookie(document.cookie);
+            // let name = cookieParser.getCookieByName('name');
+            // let avatar = cookieParser.getCookieByName('avatar');
+
             axios.post(`http://localhost:8080/post/reward/${props.postId}/${email}`, NoteFormat)
             .then(res => {
                 const tempNote = res.data.res
@@ -208,6 +212,15 @@ const NoteEditTemplate = (props) => {
                 .catch (err => {
                     console.log(err)
                 })
+                // props.sendPrivateMessage(
+                //     name + ' has provided answers to your reward !',
+                //     'reward',
+                //     email,
+                //     name,
+                //     avatar,
+                //     props.noteId,
+                //     props.rewardAuthorEmail
+                // )
             })
             .catch (err => {
                 console.log(err)
