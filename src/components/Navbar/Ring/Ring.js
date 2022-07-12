@@ -19,12 +19,29 @@ function Ring(props) {
             console.log(res.data.notification.length);
             let itemList = []
             console.log(ringList)
+            
             for (let i = 0; i < res.data.notification.length; i++) {
+                let type=res.data.notification[i].type
+                if(res.data.notification[i].type==='note'){
+                    type='NoteDetailPage';
+                }
+                else if(res.data.notification[i].type==='qa'){
+                    type='QnADetailPage';
+                }
+                else if(res.data.notification[i].type==='reward'){
+                    type='RewardDetailPage';
+                }
+                else if(res.data.notification[i].type==='collaboration'){
+                    type='CollabDetailPage';
+                }
+
+
+
 
                 let tempItem = {
                     key: i + 1,
                     label: (
-                        <>  <Row onClick={() => props.setPageProps({ page: res.data.notification[i].type === 'normal' ? 'NoteDetailPage' : res.data.notification[i].type, noteId: res.data.notification[i].id, postId: res.data.notification[i].id, email: res.data.notification[i].userObj.userObjEmail })}>
+                        <>  <Row onClick={() => props.setPageProps({ page: type, noteId: res.data.notification[i].id, postId: res.data.notification[i].id, email: res.data.notification[i].userObj.userObjEmail })}>
                             <Col span={5} className={"Ring__Icon"}>
                                 {/* <ExclamationCircleOutlined /> */}
                                 <Avatar className={"Ring__Avatar"} size={36} src={res.data.notification[i].userObj.userObjAvatar} ></Avatar>
