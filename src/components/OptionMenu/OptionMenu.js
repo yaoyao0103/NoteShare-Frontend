@@ -86,18 +86,10 @@ const OptionMenu = (props) => {
         console.log(err)
       })
   }
-
-<<<<<<< HEAD
     const contentBrowse = (noteId) => {
       message.info("browse: "+ noteId);
       setContent(<MyEditor noteId={noteId} version={'0'} page={props.page}/>)
     }
-=======
-  const contentBrowse = (id) => {
-    message.info("browse: " + id);
-    setContent(<ContentEditor versionId={id} />)
-  }
->>>>>>> ba2629a68b8129787380918057219d8ed230b854
 
   const commentBrowse = (comment, index) => {
     message.info("browse: " + index);
