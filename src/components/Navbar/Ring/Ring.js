@@ -22,7 +22,7 @@ function Ring(props) {
             
             for (let i = 0; i < res.data.notification.length; i++) {
                 let type=res.data.notification[i].type
-                if(res.data.notification[i].type==='note'){
+                if(res.data.notification[i].type==='note'||res.data.notification[i].type==='normal'){
                     type='NoteDetailPage';
                 }
                 else if(res.data.notification[i].type==='qa'){
