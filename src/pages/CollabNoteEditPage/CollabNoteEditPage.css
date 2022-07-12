@@ -136,6 +136,10 @@
     box-shadow: rgba(50, 50, 93, 0.3) 2px 3px 20px -2px
 }
 
+.collabNoteEditPage__Queue .Queue__Avatar{
+    cursor: pointer;
+}
+
 .collabNoteEditPage__Queue .anticon{
     color: #ccc;
     cursor: pointer;

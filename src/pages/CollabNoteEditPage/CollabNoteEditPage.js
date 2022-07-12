@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Steps, Layout, Row, Col, Input, Popover, message, Select, Tag, Drawer, List, Avatar } from 'antd';
+import { Steps, Layout, Row, Col, Input, Popover, message, Select, Tag, Drawer, List, Avatar, Tooltip } from 'antd';
 import "./CollabNoteEditPage.css"
 import Button from '../../components/Button/Button';
 import Text from '../../components/Text/Text';
@@ -47,7 +47,16 @@ const CollabNoteEditPage = (props) => {
     const [drawerTitle, setDrawerTitle] = useState('Version')
     const [drawerPlacement, setDrawerPlacement] = useState('right')
     const [queue, setQueue] = useState([])
-    const [queueAvatar, setQueueAvatar] = (<></>)
+    const [preQueue, setPreQueue] = useState([])
+    const [queueDom, setQueueDom] = useState({})
+    const [queueAvatar, setQueueAvatar] = useState(
+        <>
+            <Avatar className={"Queue__Avatar"} size={36} src='https://joeschmoe.io/api/v1/james' ></Avatar>
+            <Avatar className={"Queue__Avatar"} size={36} src='https://joeschmoe.io/api/v1/james' ></Avatar>
+            <Avatar className={"Queue__Avatar"} size={36} src='https://joeschmoe.io/api/v1/james' ></Avatar>
+            <Avatar className={"Queue__Avatar"} size={36} src='https://joeschmoe.io/api/v1/james' ></Avatar>
+        </>
+    )
     const { pageStore } = useSelector((state) => state);
 
     useEffect(() => {
@@ -67,7 +76,7 @@ const CollabNoteEditPage = (props) => {
             const tempNote = res.data.res
             setNote(res.data.res)
             setTitle(tempNote.title);
-            setMyEditor(<MyEditor noteId={props.noteId} version={'0'} page={props.page} email={tempEmail} name={tempName} avatar={tempAvatar} isCollab={true} />);
+            setMyEditor(<MyEditor noteId={props.noteId} version={'0'} page={props.page} email={tempEmail} name={tempName} avatar={tempAvatar} isCollab={true} setQueue={setQueue}/>);
             setInformation({
                 school: tempNote.school,
                 department: tempNote.department,
@@ -102,9 +111,61 @@ const CollabNoteEditPage = (props) => {
 
 
     useEffect(()=>{
+        //  queue:[1,2,3,4], preQueue:[1,2], newcomer:[3,4]
+        let newcomer = queue.filter(x => !preQueue.includes(x));
+        // preQueue:[1,2,3,4] queue:[1,2], leaver:[3,4]
+        let leaver = preQueue.filter(x => !queue.includes(x));
+        setPreQueue(queue)
+        if(leaver.length!=0){
+            leaver.map(userEmail => {
+                setQueueDom(current => {
+                    // 👇️ create copy of state object
+                    const copy = {...current};
+                    // 👇️ remove salary key from object
+                    delete copy[userEmail];
+                    return copy;
+                });
+            })
+        }
+        if(newcomer.length!=0){
+            newcomer.map(userEmail => {
+                axios.get(`http://localhost:8080/user/${userEmail}`)
+                .then(res => {
+                    const temp = queueDom;
+                    temp[userEmail] = (<Tooltip title={res.data.res.name}>
+                        <Avatar className={"Queue__Avatar"}  size={36} src={res.data.res.headshotPhoto} onClick={() => props.setPageProps({page: 'ProfilePage', email: userEmail})}></Avatar>
+                    </Tooltip>)
+                    setQueueDom({...temp});
+                })
+                .catch (err => {
+                    console.log(err)
+                })
+                
+            })
+        }
         console.log("queue: ", queue)
         //setQueueAvatar(<></>);
     },[queue])
+
+    /*
+    (
+                        <Tooltip title={res.data.res.name}>
+                            <Avatar className={"Ring__Avatar"} size={36} src={res.data.res.headshotPhoto} ></Avatar>
+                        </Tooltip>
+                    )
+    */
+
+    useEffect(()=>{
+        console.log("queueDom:", queueDom)
+        setQueueAvatar(
+            <>
+            {Object.values(queueDom).map(item => (
+                item
+            ))}
+            </>
+            
+        )
+    },[queueDom])
 
     const customDot = (dot, { status, index }) => (
         <Popover
@@ -177,7 +238,7 @@ const CollabNoteEditPage = (props) => {
                 defaultVersion.slug = "default"
                 axios.put(`http://localhost:8080/note/${props.noteId}/0`, defaultVersion)
                 .then ( async versionRes => {
-                    setMyEditor(<MyEditor noteId={props.noteId} version={'0'} page={props.page} email={email} name={name} avatar={avatar} isCollab={true} />)
+                    setMyEditor(<MyEditor noteId={props.noteId} version={'0'} page={props.page} email={email} name={name} avatar={avatar} isCollab={true} setQueue={setQueue}/>)
                     setStep(0);
                     setStep(1);
                 })

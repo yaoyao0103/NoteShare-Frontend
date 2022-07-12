@@ -35,6 +35,7 @@ import { LoadingOutlined } from '@ant-design/icons';
 import { timers } from 'jquery';
 import Cookie from '../../components/Cookies/Cookies';
 import { set } from 'react-hook-form';
+import { editor } from '../../api_utils/geditor_config';
 var stompClient;
 const OuterPage = () => {
     const [pageProps, setPageProps] = useState({ page: 'LoginPage' });
@@ -183,6 +184,10 @@ const OuterPage = () => {
     }, [loggedIn])
 
     useEffect(() => {
+        /*if(editor){
+            console.log("editor:", editor)
+            editor.disconnectWS()
+        }*/
         console.log(changePage)
         changePageFunction()
 
