@@ -9,6 +9,7 @@ import ContentEditor from "../../pages/NoteDetailPage/ContentEditor/ContentEdito
 import Text from "../Text/Text";
 import MyButton from "../Button/Button";
 import axios from "../axios/axios";
+import MyEditor from "../MyEditor/MyEditor";
 
 const OptionMenu = (props) => {
   const navigate = useNavigate()
@@ -85,9 +86,9 @@ const OptionMenu = (props) => {
       })
     }
 
-    const contentBrowse = (id) => {
-      message.info("browse: "+ id);
-      setContent(<ContentEditor versionId = {id}/>)
+    const contentBrowse = (noteId) => {
+      message.info("browse: "+ noteId);
+      setContent(<MyEditor noteId={noteId} version={'0'} page={props.page}/>)
     }
 
     const commentBrowse = (comment, index) => {
@@ -111,12 +112,27 @@ const OptionMenu = (props) => {
     }
 
     const chooseBest = (id) => {
-      message.info("choose: "+ id + " best");
-      // Todo: connect choose best API
+      //message.info("choose: "+ id + " best");
+      axios.put(`http://localhost:8080/post/reward/best/${props.postId}/${id}`)
+      .then ( res => {
+          message.success("Best!")
+          // Todo: remove applicant from list
+      })
+      .catch(err =>{
+          console.log(err)
+      })
     }
 
     const chooseRef = (id) => {
-      message.info("choose: "+ id + " ref");
+      //message.info("choose: "+ id + " ref");
+      axios.put(`http://localhost:8080/post/reward/reference/${props.postId}/${id}`)
+      .then ( res => {
+          message.success("Reference!")
+          // Todo: remove applicant from list
+      })
+      .catch(err =>{
+          console.log(err)
+      })
       // Todo: connect choose ref API
     }
 
@@ -241,23 +257,13 @@ const OptionMenu = (props) => {
           {
             label: (<a onClick=
               {() => {
-                setDrawerType('Version');
-                showDrawer();
-              }}
-              >Manage Version</a>),
-            key: "1",
-            icon: <InfoCircleOutlined />
-          },
-          {
-            label: (<a onClick=
-              {() => {
                 props.setPageProps({
                   postId: props.postId,
                   page:'RewardDetailPage'
                 })
               }}
               >Goto Reward Post</a>),
-            key: "2",
+            key: "1",
             icon: <EyeOutlined />
           },
         ]

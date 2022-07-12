@@ -42,7 +42,9 @@ const NoteEditTemplate = (props) => {
     const [popoverContent, setPopoverContent] = useState(<></>);
     const [versions, setVersions] = useState([]);
     const [isAuthor, setIsAuthor] = useState(false)
-    const dispatch = useDispatch();
+    const [noteType, setNoteType] = useState('');
+    const [isSubmit, setIsSubmit] = useState(false)
+
     const { pageStore } = useSelector((state) => state);
     const { pages } = pageStore;
 
@@ -52,6 +54,8 @@ const NoteEditTemplate = (props) => {
         const tempEmail = Base64.decode(temp);
         setEmail(tempEmail)
         const note = props.note;
+        setNoteType(note?.type)
+        setIsSubmit(note?.submit)
         if(note && props.mode == 'edit'){
             setTitle(note.title);
             setMyEditor(<MyEditor noteId={note.id} version={'0'} page={props.page} email={email}/>);
@@ -344,6 +348,24 @@ const NoteEditTemplate = (props) => {
         })
     }
 
+    const saveDefault = () => {
+        editor.storeVersion({}, 0)
+    }
+
+    const submitRewardNote = () => {
+        axios.put(`http://localhost:8080/note/submit/${noteId}`)
+        .then ( res => {
+            message.success("Submit!")
+            props.setPageProps({
+                page: "NoteDetailPage",
+                noteId: noteId
+            })
+        })
+        .catch(err =>{
+            console.log(err)
+        })
+    }
+
     return (   
         <div className="noteEditTemplate">
             <Layout  className="noteEditTemplate__Layout" >
@@ -449,32 +471,74 @@ const NoteEditTemplate = (props) => {
                 }
                 {step==1 &&
                     <Footer className="noteEditTemplate__Footer">
-                        <div className="noteEditTemplate__Footer__Button" onClick={noteFinish}>
-                            <Button color={"purple"}><Text color='white' cls='Large' content={"Next"} fontSize='17' display="inline-block" /></Button>
-                        </div>
-                        <Popover 
-                            content={popoverContent} 
-                            title={<Text color='black' cls='Small' content={"Choose a version to save"} fontSize='17' display="inline-block" />}
-                            trigger="click">
-                            <div className="noteEditTemplate__Footer__Button">
-                                <Button color={"green"}><Text color='white' cls='Large' content={"Save Current Version"} fontSize='17' display="inline-block" /></Button>
+                        {noteType=='reward'?
+                        <>
+                            <div className="noteEditTemplate__Footer__Button" onClick={noteFinish}>
+                                <Button color={"purple"}><Text color='white' cls='Large' content={"Next"} fontSize='17' display="inline-block" /></Button>
                             </div>
-                        </Popover>
-                        <div className="noteEditTemplate__Footer__Button" onClick={showDrawer}>
-                            <Button color={"green"}><Text color='white' cls='Large' content={"Copy Version"} fontSize='17' display="inline-block" /></Button>
-                        </div>
+                            <div className="noteEditTemplate__Footer__Button" onClick={saveDefault}>
+                                <Button color={"green"}><Text color='white' cls='Large' content={"Save"} fontSize='17' display="inline-block" /></Button>
+                            </div>
+                        </>
+                        :
+                        <>
+                            <div className="noteEditTemplate__Footer__Button" onClick={noteFinish}>
+                                <Button color={"purple"}><Text color='white' cls='Large' content={"Next"} fontSize='17' display="inline-block" /></Button>
+                            </div>
+                            <Popover 
+                                content={popoverContent} 
+                                title={<Text color='black' cls='Small' content={"Choose a version to save"} fontSize='17' display="inline-block" />}
+                                trigger="click">
+                                <div className="noteEditTemplate__Footer__Button">
+                                    <Button color={"green"}><Text color='white' cls='Large' content={"Save Current Version"} fontSize='17' display="inline-block" /></Button>
+                                </div>
+                            </Popover>
+                            <div className="noteEditTemplate__Footer__Button" onClick={showDrawer}>
+                                <Button color={"green"}><Text color='white' cls='Large' content={"Copy Version"} fontSize='17' display="inline-block" /></Button>
+                            </div>
+                        </>
+
+                        }
                         
                     </Footer>
                 }
                 {step==2 &&
                     <Footer className="noteEditTemplate__Footer">
                         <Text color='black' cls='Large' content={"Tip: Press enter to confirm your tag"} fontSize='15' display="inline-block" />
-                        <div className="noteEditTemplate__Footer__Button" onClick={tagSubmit}>
-                            <Button color={"purple"}><Text color='white' cls='Large' content={"Submit"} fontSize='17' display="inline-block" /></Button>
-                        </div>
-                        <div className="noteEditTemplate__Footer__Button" onClick={editNote}>
-                            <Button color={"purple"}><CaretLeftOutlined /><Text color='white' cls='Large' content={"Edit Note"} fontSize='17' display="inline-block" /></Button>
-                        </div>
+                        {noteType=='reward'?
+                        <>
+                            {isSubmit?
+                            <div className="noteEditTemplate__Footer__Button" onClick={tagSubmit}>
+                                <Button color={"purple"}><Text color='white' cls='Large' content={"Save"} fontSize='17' display="inline-block" /></Button>
+                            </div>
+                            :
+                            <>
+                                <div className="noteEditTemplate__Footer__Button" onClick={() => {
+                                tagSubmit();
+                                submitRewardNote()
+                                ;}}>
+                                    <Button color={"purple"}><Text color='white' cls='Large' content={"Submit"} fontSize='17' display="inline-block" /></Button>
+                                </div>
+                                <div className="noteEditTemplate__Footer__Button" onClick={tagSubmit}>
+                                    <Button color={"purple"}><Text color='white' cls='Large' content={"Save as draft"} fontSize='17' display="inline-block" /></Button>
+                                </div>
+                            </>
+                            }
+                            
+                            <div className="noteEditTemplate__Footer__Button" onClick={editNote}>
+                                <Button color={"green"}><CaretLeftOutlined /><Text color='white' cls='Large' content={"Edit Note"} fontSize='17' display="inline-block" /></Button>
+                            </div>
+                        </>
+                        :
+                        <>
+                            <div className="noteEditTemplate__Footer__Button" onClick={tagSubmit}>
+                                <Button color={"purple"}><Text color='white' cls='Large' content={"Submit"} fontSize='17' display="inline-block" /></Button>
+                            </div>
+                            <div className="noteEditTemplate__Footer__Button" onClick={editNote}>
+                                <Button color={"purple"}><CaretLeftOutlined /><Text color='white' cls='Large' content={"Edit Note"} fontSize='17' display="inline-block" /></Button>
+                            </div>
+                        </>
+                        }
                     </Footer>
                 }
             </Layout>

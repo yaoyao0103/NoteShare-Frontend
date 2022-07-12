@@ -189,9 +189,14 @@ const PoppedContent = (props) => {
                                     dataSource={siderList}
                                     renderItem={(item, index) => (<List.Item actions={
                                         [
-                                            <OptionMenu page="RewardDetailPageAnswer" answerId={item} index = {index} setContent={setContent} postId={props.postId}/>
+                                            <OptionMenu page="RewardDetailPageAnswer" answerId={item.id} index = {index} setContent={setContent} postId={props.postId}/>
                                         ]
-                                    } ><span className='answerAuthor'>{item}</span></List.Item>)}
+                                    } >
+                                        <div>
+                                            <Avatar style={{cursor:"pointer", marginRight:".5em"}} size={30} src={item.userObj.userObjAvatar} onClick={() => props.setPageProps({page: 'ProfilePage', email: item.userObj.userObjEmail})}></Avatar>
+                                            <Text color='black' cls='Default' content={item.userObj.userObjName} fontSize='15' display="inline-block" />
+                                        </div> 
+                                    </List.Item>)}
                                 />
                             </Sider>
                         }

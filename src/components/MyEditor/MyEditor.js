@@ -31,7 +31,7 @@ const MyEditor = (props) => {
 
 
   useEffect(() => {
-    console.log("props", props)
+    console.log("MyEditor props", props)
     const editor = geditorConfig(assets, props.noteId, props.version, props.isCollab? props.isCollab:false, props.email, props.name, props.avatar, props.setQueue);
     setEditor(editor);
     

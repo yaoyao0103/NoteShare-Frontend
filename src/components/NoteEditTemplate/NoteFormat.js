@@ -30,6 +30,7 @@ export const NoteFormat = {
     reference: null,
     best: null,
     favorite: null,
+    submit: false,
     public: true
 }
 

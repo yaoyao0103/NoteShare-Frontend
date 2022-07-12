@@ -157,7 +157,7 @@ const PageDetailContentTemplate = (props) => {
         }
         else if(props.page == "RewardDetailPage"){
             setIsPublic(props.data?.public)
-            setPoppedContent( props.data?.answers );
+            setPoppedContent( props.data?.answersUserObj );
             if(props.data?.author == email){
                 setIsAuthor(true)
             }

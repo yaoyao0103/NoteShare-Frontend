@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Row, Col } from "antd";
+import { Row, Col, Tooltip } from "antd";
 import PropTypes from 'prop-types';
 import Text from "../Text/Text";
 import './Information.css'
@@ -48,19 +48,23 @@ function Information(props) {
                 )}
                 {props.bestPrice!=null &&(
                     <Col className='information__Price'>
-                        <div className='information__Price'>
-                            <Text color='black' cls='Small' content={"Best Solution"} fontSize='5' display="inline-block" />
-                        </div>
-                        {props.bestPrice}
+                        <Tooltip title={"for " + props.referenceNumber + " people" }>
+                            <div className='information__Price'>
+                                <Text color='black' cls='Small' content={"Best Solution"} fontSize='5' display="inline-block" />
+                            </div>
+                            {props.bestPrice}
+                        </Tooltip>
                     </Col>
                 )}
                 
                 {props.referencePrice!=null &&(
                     <Col className='information__RefPrice'>
-                        <div className='information__Price'>
-                            <Text color='black' cls='Small' content={"Ref Solution"} fontSize='5' display="inline-block" />
-                        </div>
-                        {props.referencePrice}
+                        <Tooltip title={"for " + props.referenceNumber + " people" }>
+                            <div className='information__Price'>
+                                <Text color='black' cls='Small' content={"Ref Solution"} fontSize='5' display="inline-block" />
+                            </div>
+                            {props.referencePrice}
+                        </Tooltip>
                     </Col>
                     // <div className='information__RefPrice information__top__info'>
                     //     <Text color='black' cls='Default' content={"Ref Solution: " + props.referencePrice + '/person , Total: ' + props.referenceNumber + ' person(s)'} fontSize='17' display="inline-block" />

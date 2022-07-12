@@ -184,10 +184,9 @@ const OuterPage = () => {
     }, [loggedIn])
 
     useEffect(() => {
-        /*if(editor){
-            console.log("editor:", editor)
+        if(editor){
             editor.disconnectWS()
-        }*/
+        }
         console.log(changePage)
         changePageFunction()
 
