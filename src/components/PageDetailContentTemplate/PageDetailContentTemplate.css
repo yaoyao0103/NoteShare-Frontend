@@ -146,7 +146,7 @@
     opacity: 1;
 }
 
-.detailNotice{
+.vote{
     position: fixed;
     background-color: #fff;
     padding: 2em 2em 1.5em 2em;
@@ -161,7 +161,18 @@
     transition: visibility 0s, opacity 0.3s linear;
 }
 
-.detailNotice--show{
+.vote--show{
     visibility: visible;
     opacity: 1;
+}
+
+.vote__Header__Title{
+    float: left;
+    margin-right: .3em;
+}
+
+
+.vote__Header__Avatar{
+    margin-left: .3em;
+    margin-right: .7em;
 }

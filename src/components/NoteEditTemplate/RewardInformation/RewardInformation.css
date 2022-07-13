@@ -1,0 +1,21 @@
+.rewardInformation__row{
+    width: auto;
+    display: block;
+    white-space: nowrap;
+    margin-bottom: .5em;
+}
+
+.rewardInformation__Top{
+    margin-bottom: 2em;
+}
+
+.rewardInformation__Bottom{
+    margin-top: 2em;
+}
+
+.rewardInformation__School, .rewardInformation__Department, .rewardInformation__Subject, .rewardInformation__Instructor, .rewardInformation__Price, .rewardInformation__RefPrice{
+    padding-right: 2em;
+    width: auto;
+    display: inline-block;
+    width: 50%;
+}

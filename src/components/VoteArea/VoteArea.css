@@ -1,35 +1,8 @@
-.voteArea__Layout{
-    position: relative;
-    height: 100%;
-    width: 100%;
-}
-
-.voteArea__Header{
-    background-color: #fff;
-    height: 25%;
-    padding: 0;
-}
-
-.voteArea__Header p{
-    float: left;
-    margin: 0;
-    margin-right: 0.5em;
-}
-
-.voteArea__Header .anticon{
-    position: relative;
-    float: right;
-}
-
 .voteArea__Content{
     background-color: #fff;
 }
 
-.voteArea__Sider{
-    background-color: #fff;
-    padding: 1em;
-}
-
-.voteArea__Sider .voteArea__Button{
+.voteArea__Button{
     margin:0.5em;
+    float: left;
 }

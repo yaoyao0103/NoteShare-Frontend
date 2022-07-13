@@ -6,9 +6,10 @@ import PostEditTemplate from '../PostEditTemplate/PostEditTemplate';
 import Button from '../Button/Button';
 import Text from '../Text/Text';
 import InformationInput from '../InformationInput/InformationInput';
+import RewardInformation from './RewardInformation/RewardInformation';
 import { useSelector, useDispatch } from "react-redux";
 import { createPage } from "../../redux/actions/pageAction";
-import { CaretLeftOutlined, CheckOutlined, InfoCircleOutlined } from "@ant-design/icons";
+import { CaretLeftOutlined, CheckOutlined, InfoCircleOutlined, CaretRightFilled } from "@ant-design/icons";
 import MyEditor from '../MyEditor/MyEditor';
 import { NoteFormat, VersionFormat, ContentFormat } from './NoteFormat';
 import axios from '../axios/axios';
@@ -44,6 +45,11 @@ const NoteEditTemplate = (props) => {
     const [isAuthor, setIsAuthor] = useState(false)
     const [noteType, setNoteType] = useState('');
     const [isSubmit, setIsSubmit] = useState(false)
+    const [postInfo, setPostInfo] = useState({})
+    const [drawer, setDrawer] = useState(<></>)
+    const [drawerTitle, setDrawerTitle] = useState('Version')
+    const [drawerPlacement, setDrawerPlacement] = useState('right')
+    const [postId, setPostId] = useState('');
 
     const { pageStore } = useSelector((state) => state);
     const { pages } = pageStore;
@@ -54,9 +60,20 @@ const NoteEditTemplate = (props) => {
         const tempEmail = Base64.decode(temp);
         setEmail(tempEmail)
         const note = props.note;
+        if(props.postId) setPostId(props.postId)
         setNoteType(note?.type)
         setIsSubmit(note?.submit)
         if(note && props.mode == 'edit'){
+            if(note?.type == 'reward'){
+                setPostId(note?.postId);
+                axios.get(`http://localhost:8080/post/${note?.postId}/`)
+                .then ( res => {
+                    setPostInfo(res.data.res);
+                })
+                .catch (err => {
+                    console.log(err)
+                }) 
+            }
             setTitle(note.title);
             setMyEditor(<MyEditor noteId={note.id} version={'0'} page={props.page} email={email}/>);
             setInformation({
@@ -82,7 +99,7 @@ const NoteEditTemplate = (props) => {
             )*/
             setTagSelected(note.tag)
         }
-        else if(props.mode == 'new' || props.mode == 'newReward'){
+        else if(props.mode == 'new'){
             setTitle('')
             setInformation({
                 school: '',
@@ -93,6 +110,27 @@ const NoteEditTemplate = (props) => {
                 price: '0',
             });
             setContent('')
+        }
+        else if(props.mode == 'newReward'){
+            setTitle('')
+            setInformation({
+                school: '',
+                department: '',
+                subject: '',
+                professor: '',
+                downloadable: false,
+                price: '0',
+            });
+            setContent('')
+            // get post info
+            axios.get(`http://localhost:8080/post/${props.postId}/`)
+                .then ( res => {
+                    console.log("------------", res.data.res)
+                    setPostInfo(res.data.res);
+                })
+                .catch (err => {
+                    console.log(err)
+                })      
         }
     },[props])
 
@@ -233,7 +271,32 @@ const NoteEditTemplate = (props) => {
         
     }
 
-    const showDrawer = () => {
+    const showDrawer = (type) => {
+        switch(type){
+            case 'version':  
+                setDrawer(<VersionArea page={'NoteEditPageVersion'} versions={versions} setVersion={setVersion}/>);
+                setDrawerPlacement('right'); 
+                setDrawerTitle('Version')
+                break;
+            case 'postInfo':  
+                setDrawer(
+                    <RewardInformation
+                        title={postInfo?.title}
+                        school={postInfo?.school}
+                        department={postInfo?.department}
+                        subject={postInfo?.subject}
+                        professor={postInfo?.professor}
+                        bestPrice={postInfo?.bestPrice}
+                        referencePrice={postInfo?.referencePrice}
+                        referenceNumber={postInfo?.referenceNumber}
+                        content={postInfo?.content}
+                    />
+                );
+                setDrawerPlacement('left'); 
+                setDrawerTitle('Reward Information');
+                break;
+        }
+        setVisible(true);
         setVisible(true);
       };
     
@@ -363,6 +426,7 @@ const NoteEditTemplate = (props) => {
 
     const saveDefault = () => {
         editor.storeVersion({}, 0)
+        message.success("Saved!")
     }
 
     const submitRewardNote = () => {
@@ -484,7 +548,7 @@ const NoteEditTemplate = (props) => {
                 }
                 {step==1 &&
                     <Footer className="noteEditTemplate__Footer">
-                        {noteType=='reward'?
+                        {(noteType=='reward' || props.mode=='newReward')?
                         <>
                             <div className="noteEditTemplate__Footer__Button" onClick={noteFinish}>
                                 <Button color={"purple"}><Text color='white' cls='Large' content={"Next"} fontSize='17' display="inline-block" /></Button>
@@ -506,7 +570,7 @@ const NoteEditTemplate = (props) => {
                                     <Button color={"green"}><Text color='white' cls='Large' content={"Save Current Version"} fontSize='17' display="inline-block" /></Button>
                                 </div>
                             </Popover>
-                            <div className="noteEditTemplate__Footer__Button" onClick={showDrawer}>
+                            <div className="noteEditTemplate__Footer__Button" onClick={() => showDrawer('version')}>
                                 <Button color={"green"}><Text color='white' cls='Large' content={"Copy Version"} fontSize='17' display="inline-block" /></Button>
                             </div>
                         </>
@@ -518,7 +582,7 @@ const NoteEditTemplate = (props) => {
                 {step==2 &&
                     <Footer className="noteEditTemplate__Footer">
                         <Text color='black' cls='Large' content={"Tip: Press enter to confirm your tag"} fontSize='15' display="inline-block" />
-                        {noteType=='reward'?
+                        {(noteType=='reward' || props.mode=='newReward')?
                         <>
                             {isSubmit?
                             <div className="noteEditTemplate__Footer__Button" onClick={tagSubmit}>
@@ -555,9 +619,16 @@ const NoteEditTemplate = (props) => {
                     </Footer>
                 }
             </Layout>
-            <Drawer title='Version' placement="right" onClose={onClose} visible={visible}>
-                <VersionArea page={'NoteEditPageVersion'} versions={versions} setVersion={setVersion} isAuthor={isAuthor}/>
+            <Drawer title={drawerTitle} placement={drawerPlacement} onClose={onClose} visible={visible}>
+                {drawer}
+                {/* <VersionArea page={'NoteEditPageVersion'} versions={versions} setVersion={setVersion} isAuthor={isAuthor}/> */}
             </Drawer>
+            {(noteType=='reward' || props.mode=='newReward') &&
+                <div className='noteEditTemplate__PostInfo' onClick={() => showDrawer('postInfo')}>
+                    <div className='noteEditTemplate__PostInfo__Title'>Reward Information</div>
+                    <CaretRightFilled  className={"Ring__Avatar"} />
+                </div>
+            }
         </div>
     )
 }

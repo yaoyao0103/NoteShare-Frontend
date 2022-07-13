@@ -121,3 +121,36 @@
 .versionItem:hover {
     background-color: #eee;
 }
+
+.noteEditTemplate__PostInfo{
+    position: fixed;
+    background-color: #fff;
+    width: 2.5em;
+    left: 0;
+    top: 20vh;
+    border-radius: 0 1em 1em 0;
+    padding-top: .5em;
+    padding-bottom: .5em;
+    padding-left: .5em;
+    padding-right: .5em;
+    z-index: 99;
+    text-align: center;
+    cursor: pointer;
+    box-shadow: rgba(50, 50, 93, 0.3) 2px 3px 20px -2px
+}
+
+.noteEditTemplate__PostInfo:hover .anticon, .noteEditTemplate__PostInfo:hover .noteEditTemplate__PostInfo__Title{
+    color: #555;
+    transition: .3s;
+}
+
+.noteEditTemplate__PostInfo .anticon{
+    color: #ccc;
+    cursor: pointer;
+}
+
+.noteEditTemplate__PostInfo__Title{
+    color: #888;
+    writing-mode: vertical-lr;
+    margin-top: .5em;
+}

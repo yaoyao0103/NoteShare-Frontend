@@ -200,7 +200,7 @@ const PoppedContent = (props) => {
                                 <List
                                     size="large"
                                     dataSource={siderList}
-                                    renderItem={(item, index) => (<List.Item actions={
+                                    renderItem={(item, index) => ( (!item.best && !item.reference) && <List.Item actions={
                                         [
                                             <OptionMenu page="RewardDetailPageAnswer" answerId={item.id} index = {index} setContent={setContent} postId={props.postId}/>
                                         ]
