@@ -48,7 +48,7 @@ function Information(props) {
                 )}
                 {props.bestPrice!=null &&(
                     <Col className='information__Price'>
-                        <Tooltip title={"for " + props.referenceNumber + " people" }>
+                        <Tooltip title={"Remainder: " + props.remainBest + " people" }>
                             <div className='information__Price'>
                                 <Text color='black' cls='Small' content={"Best Solution"} fontSize='5' display="inline-block" />
                             </div>
@@ -59,7 +59,7 @@ function Information(props) {
                 
                 {props.referencePrice!=null &&(
                     <Col className='information__RefPrice'>
-                        <Tooltip title={"for " + props.referenceNumber + " people" }>
+                        <Tooltip title={"Remainder: " + props.remainRef + " people" }>
                             <div className='information__Price'>
                                 <Text color='black' cls='Small' content={"Ref Solution"} fontSize='5' display="inline-block" />
                             </div>

@@ -45,6 +45,8 @@ const PageDetailContentTemplate = (props) => {
     const [kickTarget, setKickTarget] = useState('')
     const [kickDate, setKickDate] = useState(null)
     const [kickUserList, setKickUserList] = useState(<></>)
+    const [refNum, setRefNum] = useState(0)
+    const [bestNum, setBestNum] = useState(0)
 
     useEffect(() => {
         const cookieParser = new Cookie(document.cookie)
@@ -58,6 +60,7 @@ const PageDetailContentTemplate = (props) => {
             setNoteType(props.data?.type)
             setAuthorEmail(props.data?.headerUserObj.userObjEmail)
             if (props.data?.type == 'reward') {
+                console.log("props.data?.submit", props.data)
                 if (props.data?.submit) setIsSubmit(true)
             }
             if (props.data?.headerUserObj.userObjEmail == tempEmail) setIsAuthor(true)
@@ -145,6 +148,13 @@ const PageDetailContentTemplate = (props) => {
             //if(isManager) setPoppedContent( props.data.collabApply );
         }
         else if (props.page == "RewardDetailPage") {
+            if(props.data?.answersUserObj?.length > 0){
+                for(let i = 0; i < props.data?.answersUserObj?.length; i++){
+                    if(props.data?.answersUserObj[i].best){
+                        setBestNum(bestNum+1);
+                    }
+                }
+            }
             setIsPublic(props.data?.public)
             setPoppedContent( props.data?.answersUserObj );
             if(props.data?.author == email){
@@ -163,6 +173,19 @@ const PageDetailContentTemplate = (props) => {
         }
 
     }, [props.data])
+
+    useEffect(()=>{
+        if(bestNum==1 && props.data?.referenceNumber==0){
+            notification.open({
+                message: "The author has selected all answers",
+                description: "You cannot contribute any note now",
+                placement: 'bottomLeft',
+                style:{
+                    width: "auto"
+                }
+            });
+        }
+    },[bestNum])
 
     useEffect(()=>{
         if (props.data?.voteUserObj?.length > 0 && isAuthor) {
@@ -249,6 +272,7 @@ const PageDetailContentTemplate = (props) => {
             .then(res => {
                 console.log(res.data.res)
                 message.success("Bought!")
+                setIsBuyer(true);
                 if(props.data.type==='normal')
                 props.sendPrivateMessage(
                     name + ' has bought your note !',
@@ -324,6 +348,16 @@ const PageDetailContentTemplate = (props) => {
         setKickTarget(value);
       }
     //////////////////////////
+
+    const refreshAnswer = () => {
+        axios.get(`http://localhost:8080/post/${props.postId}`)
+            .then(res => {
+                setPoppedContent( res.data.res.answersUserObj );
+            })
+            .catch(err => {
+              console.log(err)
+            })
+    }
     return (
 
         <div className="contentTemplate" >
@@ -357,6 +391,7 @@ const PageDetailContentTemplate = (props) => {
                                         isAuthor={isAuthor}
                                         isManager={isManager}
                                         isFavoriter={isFavoriter}
+                                        setIsFavoriter={setIsFavoriter}
                                         setPoppedContentShow={setPoppedContentShow}
                                         id={props.postId ? props.postId : props.noteId}
                                         postId={props.postId ? props.postId : props.data?.postID}
@@ -369,6 +404,8 @@ const PageDetailContentTemplate = (props) => {
                                         noteType={props.data?.type}
                                         setIsArchive={setIsArchive}
                                         showKickWindow={showModal}
+                                        isBuyer={isBuyer}
+                                        email={email}
                                     /></div>
 
                             </Col>
@@ -388,7 +425,8 @@ const PageDetailContentTemplate = (props) => {
                                     unlockCount={props.data?.unlockCount}
                                     bestPrice={props.data?.bestPrice}
                                     referencePrice={props.data?.referencePrice}
-                                    referenceNumber={props.data?.referenceNumber}
+                                    remainBest={1-bestNum}
+                                    remainRef={props.data?.referenceNumber}
                                     downloadable={props.data?.downloadable}
                                 />
                             </Col>
@@ -456,7 +494,7 @@ const PageDetailContentTemplate = (props) => {
                                 <Button color={"green"}><Text color='white' cls='Large' content={"Show user-contributed Notes"} fontSize='17' display="inline-block" /></Button>
                             </div>
                         }
-                        {(props.page == 'RewardDetailPage' && !isAuthor) &&
+                        {(props.page == 'RewardDetailPage' && !isAuthor && bestNum!=1 &&props.data?.referenceNumber!=0) &&
                             <div
                                 className="contentTemplate__Footer__Button"
                                 onClick={() => {
@@ -497,7 +535,7 @@ const PageDetailContentTemplate = (props) => {
             {/* Popped up Part */}
             <div className={poppedContentShow && 'popped__blur'}></div>
             <div className={`${props.page != 'CollabDetailPage' ? 'popped__Answer' : 'popped__Apply'} ${poppedContentShow && 'popped--show'}`} >
-                <PoppedContent email={email}sendPrivateMessage={props.sendPrivateMessage} page={props.page} content={poppedContent} apply={apply} setPoppedContentShow={setPoppedContentShow} isAuthor={isAuthor} isManager={isManager} postId={props.postId} haveApplied={haveApplied} setHaveApplied={setHaveApplied} />
+                <PoppedContent email={email} sendPrivateMessage={props.sendPrivateMessage} page={props.page} content={poppedContent} apply={apply} setPoppedContentShow={setPoppedContentShow} isAuthor={isAuthor} isManager={isManager} postId={props.postId} haveApplied={haveApplied} setHaveApplied={setHaveApplied} refreshAnswer={refreshAnswer}/>
             </div>
 
             <Modal title="Kick User" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>

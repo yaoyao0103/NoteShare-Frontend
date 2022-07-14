@@ -69,7 +69,7 @@ const OptionMenu = (props) => {
   const { setVersion, setContent, setPoppedContentShow } = props;
 
   const versionBrowse = (index) => {
-    message.info("browse: " + index);
+    //message.info("browse: " + index);
     setVersion(index);
   }
 
@@ -86,12 +86,12 @@ const OptionMenu = (props) => {
       })
   }
     const contentBrowse = (noteId) => {
-      message.info("browse: "+ noteId);
+      //message.info("browse: "+ noteId);
       setContent(<MyEditor noteId={noteId} version={'0'} page={props.page}/>)
     }
 
   const commentBrowse = (comment, index) => {
-    message.info("browse: " + index);
+    //message.info("browse: " + index);
     setContent(
       <div className="commentFromApplicant">
         <div className="commentFromApplicantLabel">
@@ -115,6 +115,7 @@ const OptionMenu = (props) => {
       axios.put(`http://localhost:8080/post/reward/best/${props.postId}/${id}`)
       .then ( res => {
           message.success("Best!")
+          props.refreshAnswer()
           // Todo: remove applicant from list
       })
       .catch(err =>{
@@ -127,6 +128,7 @@ const OptionMenu = (props) => {
       axios.put(`http://localhost:8080/post/reward/reference/${props.postId}/${id}`)
       .then ( res => {
           message.success("Reference!")
+          props.refreshAnswer()
           // Todo: remove applicant from list
       })
       .catch(err =>{
@@ -138,7 +140,7 @@ const OptionMenu = (props) => {
   const approve = (email) => {
     
     
-    message.info("agree applier: " + email);
+    message.success("Agree applier: " + email);
     axios.put(`http://localhost:8080/post/add/${props.postId}/${email}`)
       .then(res => {
         
@@ -151,7 +153,7 @@ const OptionMenu = (props) => {
   }
 
   const reject = (email) => {
-    message.info("reject applier: " + email);
+    message.success("Reject applier: " + email);
     axios.delete(`http://localhost:8080/post/apply/${props.postId}/${email}`)
       .then(res => {
         message.success("reject!!")
@@ -163,10 +165,31 @@ const OptionMenu = (props) => {
   }
 
   const deletePost = () => {
-    message.info("delete post: " + props.id);
-    axios.delete(`http://localhost:8080/post/${props.id}`)
+    //message.info("delete post: " + props.id);
+    console.log("type:", props)
+    if(props.type == "note"){
+      axios.put(`http://localhost:8080/note/delete/${props.id}/${props.folderId}`)
       .then(res => {
-        message.success("delete!!")
+        message.success("Delete!!")
+        if (props.page == 'PersonalPage')
+          props.rerenderNotes()
+        else {
+          props.setPageProps({
+            page: 'PersonalPage'
+          })
+        }
+        // Todo: remove applicant from list
+      })
+      .catch(err => {
+        if(err.response.status === 409){
+          message.warn("You cannot delete the last note!")
+        }
+      })
+    }
+    else{
+      axios.delete(`http://localhost:8080/post/${props.id}`)
+      .then(res => {
+        message.success("Delete!!")
         if (props.page == 'PersonalPage')
           props.rerenderPosts()
         else {
@@ -179,32 +202,32 @@ const OptionMenu = (props) => {
       .catch(err => {
         console.log(err)
       })
+    }
+    
   }
 
   const favorite = () => {
-    message.info("favorite!!")
-    /*axios.put(`http://localhost:8080/favorite/note/${props.id}/${email}`)
+    axios.put(`http://localhost:8080/favorite/note/${props.id}/${props.email}`)
     .then ( res => {
-        message.success("Agree!!")
-        console.log(res.data.res)
+        message.success("Favorite!")
+        props.setIsFavoriter(true)
         // Todo: remove applicant from list
     })
     .catch(err =>{
         console.log(err)
-    })*/
+    })
   }
 
   const unfavorite = () => {
-    message.info("unfavorite!!")
-    /*axios.put(`http://localhost:8080/favorite/add/${props.postId}/${email}`)
+    axios.put(`http://localhost:8080/favorite/note/${props.id}/${props.email}`)
     .then ( res => {
-        message.success("Agree!!")
-        console.log(res.data.res)
+        message.success("Unfavorite!")
+        props.setIsFavoriter(false)
         // Todo: remove applicant from list
     })
     .catch(err =>{
         console.log(err)
-    })*/
+    })
   }
 
   const chooseManager = (userObj) => {
@@ -305,6 +328,33 @@ const OptionMenu = (props) => {
   );
 
   const NoteDetailMenu = (
+    <Menu items={
+      [
+        {
+          label: !props.isFavoriter ? (<a onClick={favorite}>Favorite</a>) : (<a onClick={unfavorite}>UnFavorite</a>),
+          key: "1",
+          icon: <StarOutlined />
+        },
+        {
+          label: "Share",
+          key: "2",
+          icon: <ShareAltOutlined />
+        },
+        {
+          label: (<a onClick=
+            {() => {
+              setDrawerType('Comment');
+              showDrawer();
+            }}
+          >Comment</a>),
+          key: "3",
+          icon: <CommentOutlined />
+          }
+      ]
+    } />
+  );
+
+  const NoteDetailMenuBuyer = (
     <Menu items={
       [
         {
@@ -812,7 +862,12 @@ const OptionMenu = (props) => {
             setMenu(NoteDetailMenuAuthor); break;
           }
           else {
-            setMenu(NoteDetailMenu); break;
+            if(props.isBuyer){
+              setMenu(NoteDetailMenuBuyer); break;
+            }
+            else{
+              setMenu(NoteDetailMenu); break;
+            }
           }
         }
       case 'QnADetailPage': {

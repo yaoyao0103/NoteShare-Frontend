@@ -152,7 +152,7 @@ function CommentArea(props) {
     }
     
     const onReply = (commentId) => {
-        message.info("reply to: "+ commentId);
+        message.info("Reply to: "+ commentId);
         setComment(comment + '@' + authors[commentId] + ' ');
     }
 

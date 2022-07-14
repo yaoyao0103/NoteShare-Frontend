@@ -13,7 +13,7 @@ function IntroductionEditor(props) {
         // setName(value);
         props.edit(introduction);
         setEditing(false);
-        message.info('Save Introduction');
+        message.success('Save Introduction');
     }
     return (
         <div className='IntroductionEditor'>

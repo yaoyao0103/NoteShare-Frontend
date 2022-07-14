@@ -15,7 +15,7 @@ function FolderCard(props) {
 
         }
         else
-            message.info("There hasn't note in this folder!");
+            message.info("There has no note in this folder!");
     }
     console.log(props.folderList);
     const generatedFolder = (item) => {

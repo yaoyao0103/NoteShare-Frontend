@@ -22,7 +22,7 @@ const VoteArea = (props) => {
         // Todo: check agree list
         axios.put(`http://localhost:8080/post/vote/${props.postId}/${props.vote.id}/${props.email}`, {option: 'agree'})
             .then ( res => {
-                message.info("Agree!");
+                message.success("Agree!");
                 setAgreeCount(agreeCount +1);
                 setVoted(true)
             })
@@ -35,7 +35,7 @@ const VoteArea = (props) => {
         // Todo: check agree list
         axios.put(`http://localhost:8080/post/vote/${props.postId}/${props.vote.id}/${props.email}`, {option: 'agree'})
             .then ( res => {
-                message.info("Disagree!");
+                message.success("Disagree!");
                 setDisagreeCount(disagreeCount +1);
                 setVoted(true)
             })

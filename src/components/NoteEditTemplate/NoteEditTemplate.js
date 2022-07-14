@@ -140,7 +140,7 @@ const NoteEditTemplate = (props) => {
                 <List
                     dataSource={versions}
                     renderItem={(item, index) => (index !=0 && 
-                        <Tooltip placement='top' title={moment(item.date).format('YYYY-MM-DD HH:mm:ss')}>
+                        <Tooltip placement='left' title={moment(item.date).format('YYYY-MM-DD HH:mm:ss')}>
                             <List.Item className='versionItem' onClick={()=>saveVersion(index)}><span>{item.name}</span></List.Item>
                         </Tooltip>
                     )}
@@ -167,7 +167,7 @@ const NoteEditTemplate = (props) => {
             return;
         }
         if(props.mode=="edit"){
-            message.info("Update info")
+            message.success("Update info")
             const note = props.note;
             note.department = information.department
             note.subject = information.subject
@@ -274,7 +274,7 @@ const NoteEditTemplate = (props) => {
     const showDrawer = (type) => {
         switch(type){
             case 'version':  
-                setDrawer(<VersionArea page={'NoteEditPageVersion'} versions={versions} setVersion={setVersion}/>);
+                setDrawer(<VersionArea page={'NoteEditPageVersion'} versions={versions} setVersion={setVersion} isAuthor={isAuthor}/>);
                 setDrawerPlacement('right'); 
                 setDrawerTitle('Version')
                 break;
@@ -430,17 +430,31 @@ const NoteEditTemplate = (props) => {
     }
 
     const submitRewardNote = () => {
-        axios.put(`http://localhost:8080/note/submit/${noteId}`)
-        .then ( res => {
-            message.success("Submit!")
-            props.setPageProps({
-                page: "NoteDetailPage",
-                noteId: noteId
+        axios.get(`http://localhost:8080/note/${noteId}`)
+            .then(res => {
+                const tempNote = res.data.res
+                tempNote.tag = tagSelected
+                axios.put(`http://localhost:8080/note/${noteId}`, tempNote)
+                    .then(res => {
+                        axios.put(`http://localhost:8080/note/submit/${noteId}`)
+                        .then ( res => {
+                            message.success("Submit!")
+                            props.setPageProps({
+                                page: "NoteDetailPage",
+                                noteId: noteId
+                            })
+                        })
+                        .catch(err =>{
+                            console.log(err)
+                        })
+                    })
+                    .catch (err => {
+                        console.log(err)
+                    }) 
             })
-        })
-        .catch(err =>{
-            console.log(err)
-        })
+            .catch (err => {
+                console.log(err)
+            })   
     }
 
     return (   
@@ -590,10 +604,7 @@ const NoteEditTemplate = (props) => {
                             </div>
                             :
                             <>
-                                <div className="noteEditTemplate__Footer__Button" onClick={() => {
-                                tagSubmit();
-                                submitRewardNote()
-                                ;}}>
+                                <div className="noteEditTemplate__Footer__Button" onClick={submitRewardNote}>
                                     <Button color={"purple"}><Text color='white' cls='Large' content={"Submit"} fontSize='17' display="inline-block" /></Button>
                                 </div>
                                 <div className="noteEditTemplate__Footer__Button" onClick={tagSubmit}>
