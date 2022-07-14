@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import SockJS from "sockjs-client"
+import axios from 'axios';
+import { Base64 } from 'js-base64';
 import { over } from "stompjs"
 import MemberPage from "../MemberPage/MemberPage";
 import QnADetailPage from "../QnADetailPage/QnADetailPage";
@@ -30,8 +32,10 @@ import CollabNoteEditPage from "../CollabNoteEditPage/CollabNoteEditPage";
 import CollabRecommendPage from '../CollabRecommendPage/CollabRecommendPage';
 import ResetPasswordPage from '../ResetPasswordPage/ResetPasswordPage';
 import './OuterPage.css'
-import { Button, Drawer, message, Spin } from 'antd'
+import { Button, Drawer, message, Spin, notification, Avatar } from 'antd'
 import { LoadingOutlined } from '@ant-design/icons';
+
+import { RadiusBottomleftOutlined } from '@ant-design/icons';
 import { timers } from 'jquery';
 import Cookie from '../../components/Cookies/Cookies';
 import { set } from 'react-hook-form';
@@ -50,6 +54,7 @@ const OuterPage = () => {
     const [loading, setLoading] = useState(true);
     const [changePage, setChangePage] = useState(1);
     const [isChanging, setIsChanging] = useState(false);
+    const [api, contextHolder] = notification.useNotification();
 
     const changePageFunction = () => {
         setChangePage(current => current + 1)
@@ -63,7 +68,7 @@ const OuterPage = () => {
         setVisible(false);
     };
 
-    
+
     const connect = () => {
         // postID = (location.state === 'genewang7@gmail.com') ? 12345 : 67890
 
@@ -78,17 +83,27 @@ const OuterPage = () => {
         // stompClient.subscribe(`/topic/group-messages/${noteID}`, (message) => {
         //     // showMessage(message) 
         // })
-        // for (let i in bell) {   //訂閱"他人"地址，接收"他人"發送的訊息
-        //     stompClient.subscribe(`/topic/bell-messages/${bell[i]}`, (message) => {   //拿user 後端轉bell
-        //         // showMessage(message) 
-        //     })
-        // }
+        let cookieParser = new Cookie(document.cookie);
+        let tempEmail = cookieParser.getCookieByName('email');
+        tempEmail = Base64.decode(tempEmail);
+        axios.get("http://localhost:8080/bellBy/" + tempEmail,).then(res => {
+
+            for (let i in res.data.res) {   //訂閱"他人"地址，接收"他人"發送的訊息
+                stompClient.subscribe(`/topic/bell-messages/${res.data.res[i].userObjEmail}`, (message) => {   //拿user 後端轉bell
+                    // showMessage(message) 
+                })
+            }
+        }).catch((error) => {
+            //message.info(error.response.error);
+
+        })
+
         stompClient.subscribe('/user/topic/private-messages', (message) => {
-            // showMessage(message) 
+            openNotification(message)
         })
     }
 
-      const sendGroupMessage = (msg, type, userObjEmail, userObjName, userObjAvatar, id) => {
+    const sendGroupMessage = (msg, type, userObjEmail, userObjName, userObjAvatar, id) => {
         let messageObj = {
             'message': msg,
             'type': type,
@@ -98,14 +113,14 @@ const OuterPage = () => {
                 'userObjAvatar': userObjAvatar
             },
             'id': id,
-          
-          // 'receiverEmail': receiver
+
+            // 'receiverEmail': receiver
         }
 
         stompClient.send(`/ws/group-messages/${id}`, {}, JSON.stringify(messageObj))
-      }
+    }
 
-      const sendGroupMessageForManager = (msg, type, userObjEmail, userObjName, userObjAvatar, id) => {
+    const sendGroupMessageForManager = (msg, type, userObjEmail, userObjName, userObjAvatar, id) => {
         let messageObj = {
             'message': msg,
             'type': type,
@@ -115,13 +130,13 @@ const OuterPage = () => {
                 'userObjAvatar': userObjAvatar
             },
             'id': id,
-          // 'receiverEmail': receiver
+            // 'receiverEmail': receiver
         }
 
         stompClient.send(`/ws/group-messages-manager/${id}`, {}, JSON.stringify(messageObj))
-      }
+    }
 
-    const sendBellMessage = (msg, type, userObjEmail, userObjName, userObjAvatar, id, receiver) => {  //地址指向"自己"，由"自己"發送訊息
+    const sendBellMessage = (msg, type, userObjEmail, userObjName, userObjAvatar, id) => {  //地址指向"自己"，由"自己"發送訊息
         let messageObj = {
             'message': msg,
             'type': type,
@@ -131,7 +146,7 @@ const OuterPage = () => {
                 'userObjAvatar': userObjAvatar
             },
             'id': id,
-            'receiverEmail': receiver
+
         }
 
         stompClient.send(`/ws/bell-messages/${userObjEmail}`, {}, JSON.stringify(messageObj))
@@ -152,6 +167,18 @@ const OuterPage = () => {
         if (stompClient)
             stompClient.send("/ws/private-messages", {}, JSON.stringify(messageObj))
     }
+
+    const openNotification = (placement,message) => {
+        notification.info({
+            message: message.userObj.userObjName,
+            description:message.message,
+            icon: (
+                <Avatar className="toast__Avatar" style={{marginRight:'5em'}} size={40} src={message.userObj.userObjAvatar}></Avatar>
+            ),
+            placement
+          
+        });
+    };
 
 
     useEffect(() => {
@@ -184,7 +211,7 @@ const OuterPage = () => {
     }, [loggedIn])
 
     useEffect(() => {
-        if(editor){
+        if (editor) {
             editor.disconnectWS()
         }
         console.log(changePage)
@@ -227,23 +254,23 @@ const OuterPage = () => {
         switch (pageProps.page) {
             case 'NoteDetailPage': setPageComponent(<NoteDetailPage page='NoteDetailPage' sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
             case 'NoteEditPage': setPageComponent(<NoteEditPage page='NoteEditPage' sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
-            case 'NoteNewPage': setPageComponent(<NoteEditPage page='NoteNewPage' sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+            case 'NoteNewPage': setPageComponent(<NoteEditPage page='NoteNewPage' sendBellMessage={sendBellMessage} sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
             case 'NoteOutlinePage': setPageComponent(<NoteOutlinePage page='NoteOutlinePage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
             case 'MemberPage': setPageComponent(<MemberPage page='MemberPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
             case 'RewardDetailPage': setPageComponent(<RewardDetailPage page='RewardDetailPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
             case 'RewardEditPage': setPageComponent(<RewardEditPage page='RewardEditPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
-            case 'RewardNewPage': setPageComponent(<RewardEditPage page='RewardNewPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
+            case 'RewardNewPage': setPageComponent(<RewardEditPage page='RewardNewPage' sendBellMessage={sendBellMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
             case 'RewardOutlinePage': setPageComponent(<RewardOutlinePage page='RewardOutlinePage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
             case 'RewardRecommendPage': setPageComponent(<RewardRecommendPage page='RewardRecommendPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
             case 'QnADetailPage': setPageComponent(<QnADetailPage page='QnADetailPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
             case 'QnAOutlinePage': setPageComponent(<QnAOutlinePage page='QnAOutlinePage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
             case 'QnAEditPage': setPageComponent(<QnAEditPage page='QnAEditPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
-            case 'QnANewPage': setPageComponent(<QnAEditPage page='QnANewPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+            case 'QnANewPage': setPageComponent(<QnAEditPage page='QnANewPage' sendBellMessage={sendBellMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
             case 'QnARecommendPage': setPageComponent(<QnARecommendPage page='QnARecommendPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
-            case 'CollabDetailPage': setPageComponent(<CollabDetailPage page='CollabDetailPage' sendPrivateMessage={sendPrivateMessage}  changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+            case 'CollabDetailPage': setPageComponent(<CollabDetailPage page='CollabDetailPage' sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
             case 'CollabEditPage': setPageComponent(<CollabEditPage page='CollabEditPage' sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
             case 'CollabNoteEditPage': setPageComponent(<CollabNoteEditPage page='CollabNoteEditPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
-            case 'CollabNewPage': setPageComponent(<CollabEditPage page='CollabNewPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+            case 'CollabNewPage': setPageComponent(<CollabEditPage page='CollabNewPage' sendBellMessage={sendBellMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
             case 'CollabOutlinePage': setPageComponent(<CollabOutlinePage page='CollabOutlinePage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
             case 'CollabRecommendPage': setPageComponent(<CollabRecommendPage page='CollabRecommendPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
             case 'FolderOutlinePage': setPageComponent(<FolderOutlinePage page='FolderOutlinePage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
@@ -328,7 +355,7 @@ const OuterPage = () => {
 
             </div>
             <div className='drawerBtn'>
-                <Button type="primary" onClick={showDrawer}>
+                <Button type="primary" onClick={()=>{openNotification('bottomLeft',{message:'123',userObj:{userObjName:'Plusx',userObjAvatar:"https://joeschmoe.io/api/v1/james"}})}/*showDrawer*/}>
                     Open
                 </Button>
             </div>

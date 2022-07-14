@@ -165,7 +165,7 @@ const PageDetailContentTemplate = (props) => {
     }, [props.data])
 
     useEffect(()=>{
-        if (props.data?.voteUserObj.length > 0 && isAuthor) {
+        if (props.data?.voteUserObj?.length > 0 && isAuthor) {
             for(let i = 0; i < props.data?.voteUserObj.length; i++){
                     //setVote(props.data?.vote.length > 0 ? props.data?.voteUserObj[0] : null)
                 notification.open({

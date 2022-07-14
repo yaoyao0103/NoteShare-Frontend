@@ -143,6 +143,8 @@ const PostEditTemplate = (props) => {
 
     const onSubmit = () => {
         let data;
+        let msg='';
+        let type=''
         if(props.type == 'QA'){
             QnAFormat.type = props.type;
             QnAFormat.title = title
@@ -151,6 +153,8 @@ const PostEditTemplate = (props) => {
             QnAFormat.bestPrice = information.bestPrice
             QnAFormat.content = content
             data = QnAFormat
+            msg=' has posted a Q&A'
+            type='QnADetailPage'
         }
         else if(props.type == 'reward'){
             RewardFormat.type = props.type;
@@ -164,6 +168,8 @@ const PostEditTemplate = (props) => {
             RewardFormat.referenceNumber = information.referenceNumber? information.referenceNumber : null
             RewardFormat.content = content
             data = RewardFormat
+            msg=' has posted a Reward'
+            type='RewardDetailPage'
         }
         else if(props.type == 'collaboration'){
             CollabNoteFormat.type = props.type;
@@ -175,12 +181,26 @@ const PostEditTemplate = (props) => {
             CollabNoteFormat.bestPrice = information.bestPrice
             CollabNoteFormat.content = content
             data = CollabNoteFormat
+            msg=' has posted a Collaboration'
+            type='CollabDetailPage'
             
         }
         
         console.log(data)
+        let cookieParser = new Cookie(document.cookie);
+        let name = cookieParser.getCookieByName('name');
+        let avatar = cookieParser.getCookieByName('avatar');
         axios.post(`http://localhost:8080/post/${email}`, data)
         .then(res => {
+            console.log(res)
+            props.sendBellMessage(
+                name+msg,
+                type,
+                email,
+                name,
+                avatar,
+                res.data.res.id
+            );            
             console.log(res.data.res)
             message.info("Submit!!");
             if(props.type=='collaboration'){
