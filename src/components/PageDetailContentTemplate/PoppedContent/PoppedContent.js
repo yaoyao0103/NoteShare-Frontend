@@ -76,7 +76,7 @@ const PoppedContent = (props) => {
     const reject = (email) => {
         axios.delete(`http://localhost:8080/post/apply/${props.postId}/${email}`)
             .then(res => {
-                message.success("reject!!")
+                message.success("Reject!!")
                 const tempList = new Array();
                 console.log("siderList", siderList)
                 for (let i = 0; i < siderList.length; i++) {
@@ -200,9 +200,32 @@ const PoppedContent = (props) => {
                                 <List
                                     size="large"
                                     dataSource={siderList}
-                                    renderItem={(item, index) => ( (!item.best && !item.reference) && <List.Item actions={
+                                    renderItem={(item, index) => ( 
+                                        item.best? <List.Item actions={
+                                            [
+                                                <p>Best</p>
+                                            ]
+                                        } >
+                                            <div>
+                                                <Avatar style={{cursor:"pointer", marginRight:".5em"}} size={30} src={item.userObj.userObjAvatar} onClick={() => props.setPageProps({page: 'ProfilePage', email: item.userObj.userObjEmail})}></Avatar>
+                                                <Text color='black' cls='Default' content={item.userObj.userObjName} fontSize='15' display="inline-block" />
+                                            </div> 
+                                        </List.Item>
+                                        :
+                                        item.reference? <List.Item actions={
+                                            [
+                                                <p>Reference</p>
+                                            ]
+                                        } >
+                                            <div>
+                                                <Avatar style={{cursor:"pointer", marginRight:".5em"}} size={30} src={item.userObj.userObjAvatar} onClick={() => props.setPageProps({page: 'ProfilePage', email: item.userObj.userObjEmail})}></Avatar>
+                                                <Text color='black' cls='Default' content={item.userObj.userObjName} fontSize='15' display="inline-block" />
+                                            </div> 
+                                        </List.Item>
+                                        :
+                                        <List.Item actions={
                                         [
-                                            <OptionMenu page="RewardDetailPageAnswer" answerId={item.id} index = {index} setContent={setContent} postId={props.postId}/>
+                                            <OptionMenu page="RewardDetailPageAnswer" answerId={item.id} index = {index} setContent={setContent} postId={props.postId} refreshAnswer={props.refreshAnswer}/>
                                         ]
                                     } >
                                         <div>

@@ -80,13 +80,13 @@ function ProfilePage(props) {
     const SaveAvatar = () => {
         axios.put("http://localhost:8080/user/head/" + email, { headshotPhoto: Avatars[avatar] }).then(res => {
             setAvatarCurrent(Avatars[avatar]);
-            message.info('Change avatar');
+            message.success('Change avatar');
             //console.log(avatarNum+1);
             setAvatarNum(avatarNum + 1);
             props.setAvatar(avatarNum + 1);
 
         }).catch((error) => {
-            message.info(error.response.error);
+            message.error(error.response.error);
         })
     }
 
@@ -109,7 +109,7 @@ function ProfilePage(props) {
                     '',
                     props.email
                 )
-                message.info('Follow ' + user.name);
+                message.success('Follow ' + user.name);
             }).catch((error) => {
                 console.log(error.response.error);
 
@@ -121,7 +121,7 @@ function ProfilePage(props) {
                 //setProfile(content);
                 setIsFollow(false);
                 setFansNum(fansNum - 1);
-                message.info('Unfollow ' + user.name);
+                message.success('Unfollow ' + user.name);
             }).catch((error) => {
                 console.log(error.response.error);
             })
@@ -133,7 +133,7 @@ function ProfilePage(props) {
             axios.put('http://localhost:8080/cancelBell/'+ email + '/' + props.email,).then(res => {
                 //setProfile(content);
                 setIsBell(false);
-                message.info('Turn on the bell of ' + user.name);
+                message.success('Turn on the bell of ' + user.name);
             }).catch((error) => {
                 console.log(error.response.error);
             })
@@ -142,7 +142,7 @@ function ProfilePage(props) {
             axios.put("http://localhost:8080/bell/" + email + '/' + props.email,).then(res => {
                 //setProfile(content);
                 setIsBell(true);
-                message.info('Turn on the bell of ' + user.name);
+                message.success('Turn on the bell of ' + user.name);
             }).catch((error) => {
                 console.log(error.response.error);
             })

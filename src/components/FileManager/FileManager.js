@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
-import { List, Skeleton, Layout, message, Avatar, Dropdown, Menu, Input, Modal } from 'antd';
+import { List, Skeleton, Layout, message, Avatar, Dropdown, Menu, Input, Modal, Tooltip } from 'antd';
 import Button from '../Button/Button';
 import Text from '../Text/Text';
 import axios from '../axios/axios';
@@ -80,11 +80,14 @@ const FileManager = (props) => {
                                 className="fileManage_Note_Item fileManage_List_Item"
                                 actions={
                                     tempPath.split('/')[1] == 'Folder' &&
-                                    [<OptionMenu page={props.page} id={item.id} setPageProps={props.setPageProps} setCopy={setCopy} />]
+                                    [<OptionMenu page={props.page} id={item.id} setPageProps={props.setPageProps} setCopy={setCopy} type={"note"} folderId={folderId} rerenderNotes={() => onClickFolderZone(folderId)}/>]
                                 }
                             >
                                 <List.Item.Meta
-                                    avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
+                                    avatar={
+                                    <Tooltip title={item.headerUserObj.userObjName}>
+                                        <Avatar src={item.headerUserObj.userObjAvatar} />
+                                    </Tooltip>}
                                     title={item.title}
                                     description={item.description.substring(0, 120) + '...'}
                                     onClick={()=> onClickNote(item.id)}
@@ -109,7 +112,7 @@ const FileManager = (props) => {
 
     const onClickPostZone = (value) => {
         props.setLoading(true)
-        message.info(value)
+        message.info(value.charAt(0).toUpperCase() + value.slice(1))
         axios.get(`http://localhost:8080/post/${props.email}/${value}`)
         .then(res => {
             console.log(res.data.res)
@@ -125,10 +128,15 @@ const FileManager = (props) => {
                         renderItem={(item, index) => (
                             <List.Item
                                 className="fileManage_Note_Item fileManage_List_Item"
-                                actions={[<OptionMenu page={props.page} type={item.type} id={item.id} setPageProps={props.setPageProps} rerenderPosts={() => onClickPostZone(item.type)} setCopy={setCopy}/>]}
+                                //actions={[<OptionMenu page={props.page} type={item.type} id={item.id} setPageProps={props.setPageProps} rerenderPosts={() => onClickPostZone(item.type)} setCopy={setCopy}/>]}
+                                actions={[<p>{item.type.charAt(0).toUpperCase() + item.type.slice(1)}</p>]}
                             >
                                 <List.Item.Meta
-                                    avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
+                                    avatar={
+                                    <Tooltip title={item.authorUserObj.userObjName}>
+                                        <Avatar src={item.authorUserObj.userObjAvatar} />
+                                    </Tooltip>
+                                    }                 
                                     title={item.title}
                                     description={item.content.substring(0, 120) + '...'}
                                     onClick={()=> onClickPost(item.type, item.id)}
@@ -177,6 +185,7 @@ const FileManager = (props) => {
 
     const back = () => {
         props.setLoading(true)
+        let tempCurrent = parent
         setCurrent(parent)
         if(parent){
             axios.get(`http://localhost:8080/folder/${parent}`)
@@ -199,10 +208,14 @@ const FileManager = (props) => {
                             renderItem={(item, index) => (
                                 <List.Item
                                     className="fileManage_Note_Item fileManage_List_Item"
-                                    actions={[<OptionMenu page={props.page} id={item.id} setCopy={setCopy}/>]}
+                                    actions={[<OptionMenu page={props.page} id={item.id} setCopy={setCopy} type={"note"} folderId={tempCurrent} rerenderNotes={() => onClickFolderZone(tempCurrent)}/>]}
                                 >
                                     <List.Item.Meta
-                                        avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
+                                        avatar={
+                                            <Tooltip title={item.headerUserObj.userObjName}>
+                                                <Avatar src={item.headerUserObj.userObjAvatar} />
+                                            </Tooltip>
+                                        }
                                         title={item.title}
                                         description={item.description.substring(0, 120) + '...'}
                                         onClick={()=> onClickNote(item.id)}

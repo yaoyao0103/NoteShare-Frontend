@@ -115,7 +115,7 @@ function LoginPage(props) {
         }).catch((error) => {
             console.log(error.response.status)
 
-            message.info(error.msg);
+            message.error(error.msg);
         })
 
     };

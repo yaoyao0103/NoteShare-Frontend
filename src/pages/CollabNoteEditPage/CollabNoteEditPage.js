@@ -184,7 +184,7 @@ const CollabNoteEditPage = (props) => {
             message.error("Title can't be empty");
             return;
         }
-        message.info("Update info")
+        message.success("Update info")
         const tempNote = JSON.parse(JSON.stringify(note))
         tempNote.department = information.department
         tempNote.subject = information.subject

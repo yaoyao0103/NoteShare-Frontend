@@ -132,7 +132,7 @@ const PostEditTemplate = (props) => {
         axios.put(`http://localhost:8080/post/${props.postId}`, post)
         .then(res => {
             console.log(res.data)
-            message.info("Update!!");
+            message.success("Update!!");
             props.setPageProps({page:page, postId: props.postId});
         })
         .catch(err =>{
@@ -182,7 +182,7 @@ const PostEditTemplate = (props) => {
         axios.post(`http://localhost:8080/post/${email}`, data)
         .then(res => {
             console.log(res.data.res)
-            message.info("Submit!!");
+            message.success("Submit!!");
             if(props.type=='collaboration'){
                 const tempId = res.data.res.answers[0]
                 VersionFormat.name = "default"

@@ -73,14 +73,14 @@ function VerificationPage(props) {
     useEffect(() => {
         if (resendSuccess) {
             setLoading(false);
-            message.info('Verify code has resend!');
+            message.success('Verify code has resend!');
         }
 
     }, [resendSuccess]);
     useEffect(() => {
         if (resendFail) {
             setLoading(false);
-            message.info(error.msg);
+            message.error(error.msg);
         }
     }, [resendFail]);
     useEffect(() => {
@@ -94,7 +94,7 @@ function VerificationPage(props) {
     useEffect(() => {
         if (openFail) {
 
-            message.info(error.msg);
+            message.error(error.msg);
         }
     }, [openFail]);
     const formItemLayout = {

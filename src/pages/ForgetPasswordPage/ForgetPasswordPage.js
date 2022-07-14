@@ -53,7 +53,7 @@ function ForgetPasswordPage(props) {
                 setResendFail(true);
             })
             if (res.data.res.activate) {
-                message.info("Your new password has send to your email !");
+                message.success("Your new password has send to your email !");
                 setInterval(function () {
                     props.setPageProps({
                         page: 'LoginPage',
@@ -63,7 +63,7 @@ function ForgetPasswordPage(props) {
                 
             }
             else {
-                message.info('You shoul verify your account first');
+                message.warn('You should verify your account first');
                 setInterval(function () {
                     props.setPageProps({ page: 'VerificationPage', email: email });
                 }, 2000)
@@ -87,7 +87,7 @@ function ForgetPasswordPage(props) {
     useEffect(() => {
         if (resendFail) {
 
-            message.info(error.msg);
+            message.error(error.msg);
         }
     }, [resendFail]);
 

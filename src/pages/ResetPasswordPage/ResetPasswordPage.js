@@ -48,7 +48,7 @@ function ResetPasswordPage(props) {
         console.log(newPassword);
         axios.post("http://localhost:8080/verification/resetPassword" , {password:oldPassword,newPassword:newPassword,email:props.email,}).then(res => {
             console.log(res);
-            message.info("Your password has reset,please log in again !");
+            message.success("Your password has reset, please log in again !");
             document.cookie ='email=;';
             setInterval(function () {
                 props.setLoggedIn(false);
@@ -78,7 +78,7 @@ function ResetPasswordPage(props) {
     useEffect(() => {
         if (openFail) {
 
-            message.info(error.msg);
+            message.error(error.msg);
         }
     }, [openFail]);
     const formItemLayout = {

@@ -81,7 +81,7 @@ function SignUpPage(props) {
     useEffect(() => {
         if (openFail) {
             setLoading(false);
-            message.info(error.msg);
+            message.error(error.msg);
         }
     }, [openFail]);
     const formItemLayout = {
