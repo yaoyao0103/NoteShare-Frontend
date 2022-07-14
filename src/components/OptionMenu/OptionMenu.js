@@ -21,7 +21,6 @@ const OptionMenu = (props) => {
   const [drawer, setDrawer] = useState(<CommentArea page={props.page} type="note" comments={props.comments} id={props.id} />);
   const [drawerType, setDrawerType] = useState('');
   const [chooseManagerList, setChooseManagerList] = useState(<></>)
-  const [kickUserList, setKickUserList] = useState(<></>)
 
   const comments = (<CommentArea page={props.page} type="note" comments={props.comments} id={props.id} />);
   const versions = (<VersionArea page={'NoteDetailPageVersion'} id={props.id} versions={props.versions} setVersion={props.setVersion} isAuthor={props.isAuthor} />);
@@ -643,22 +642,9 @@ const OptionMenu = (props) => {
           icon: <UserOutlined style={{ color: "#333" }} />
         },
         {
-          label: (
-            props.voting ?
-              "Kick User1"
-              :
-              <Popover
-                content={kickUserList}
-                title={<Text color='black' cls='Small' content={"Choose a user"} fontSize='17' display="inline-block" />}
-                trigger="hover"
-                placement="left">
-                Kick User1
-              </Popover>
-
-          ),
+          label: (<a onClick={() => props.showKickWindow()}>Kick User</a>),
           key: "8",
           icon: <UserOutlined style={{ color: "#333" }} />,
-          disabled: props.voting ? true : false
         },
         {
           label: props.public ? (<a onClick={setStatus}>Set Private</a>) : (<a onClick={setStatus}>Set Public</a>),
@@ -669,6 +655,27 @@ const OptionMenu = (props) => {
     } />
   );
 
+  /*
+  {
+          label: (
+            props.voting ?
+              "Kick User"
+              :
+              <Popover
+                content={kickUserList}
+                title={<Text color='black' cls='Small' content={"Choose a user"} fontSize='17' display="inline-block" />}
+                trigger="hover"
+                placement="left">
+                Kick User
+              </Popover>
+
+          ),
+          key: "8",
+          icon: <UserOutlined style={{ color: "#333" }} />,
+          disabled: props.voting ? true : false
+        },
+  
+  */
   const VersionDetailMenuAuthor = (
     <Menu items={
       [
@@ -842,14 +849,6 @@ const OptionMenu = (props) => {
       case 'CollabDetailPage':
         if (props.isAuthor) {
           if (props.isManager) {
-            setKickUserList(
-              <List
-                dataSource={props.author}
-                renderItem={(item, index) => (
-                  <List.Item className='userItem' onClick={() => kickUser(item.email)}><span>{item.name}</span></List.Item>
-                )}
-              />
-            )
             setChooseManagerList(
               <>
                 <List.Item className='currUserItem' >
@@ -887,7 +886,7 @@ const OptionMenu = (props) => {
   useEffect(() => {
     if (props.page == 'CollabDetailPage')
       setMenu(CollabDetailMenuOfManager);
-  }, [kickUserList, chooseManagerList])
+  }, [chooseManagerList])
 
   useEffect(() => {
     switch (drawerType) {

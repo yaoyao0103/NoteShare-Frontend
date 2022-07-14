@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Layout, Row, Col, Tag, Progress, message } from "antd";
+import { Layout, Row, Col, Tag, Progress, message, notification, Avatar, Modal, DatePicker, Select  } from "antd";
 import Button from "../Button/Button";
 import Text from "../Text/Text";
 import Title from "../Title/Title";
@@ -18,6 +18,7 @@ import axios from "../axios/axios";
 import Cookie from '../../components/Cookies/Cookies';
 import { Base64 } from 'js-base64';
 const { Header, Content, Sider, Footer } = Layout;
+const { Option } = Select;
 
 const PageDetailContentTemplate = (props) => {
 
@@ -37,10 +38,13 @@ const PageDetailContentTemplate = (props) => {
     const [manager, setManager] = useState('')
     const [haveApplied, setHaveApplied] = useState(null)
     const [isPublic, setIsPublic] = useState(true)
-    const [vote, setVote] = useState(null)
     const [authorEmail, setAuthorEmail] = useState('')
     const [noteType, setNoteType] = useState(null)
     const [isSubmit, setIsSubmit] = useState(false)
+    const [isModalVisible, setIsModalVisible] = useState(false);
+    const [kickTarget, setKickTarget] = useState('')
+    const [kickDate, setKickDate] = useState(null)
+    const [kickUserList, setKickUserList] = useState(<></>)
 
     useEffect(() => {
         const cookieParser = new Cookie(document.cookie)
@@ -75,30 +79,13 @@ const PageDetailContentTemplate = (props) => {
             const noteId = props.data.answers[0];
             setNoteId(noteId);
             setIsPublic(props.data?.public)
-            if (props.data?.voteUserObj.length > 0) {
-                if (props.data?.voteUserObj[0].result == "invalid") {
-                    // remove vote
-                    axios.delete(`http://localhost:8080/schedule/delete/${props.postId}/${props.data?.voteUserObj[0].id}`)
-                        .then(res => {
-                        })
-                        .catch(err => {
-                        })
-                }
-                else if (props.data?.voteUserObj[0].result == "valid") {
-
-                }
-                else {
-                    setVote(props.data?.vote.length > 0 ? props.data?.voteUserObj[0] : null)
-                }
-
-            }
-
             axios.get(`http://localhost:8080/note/${noteId}`)
                 .then(res => {
                     console.log(res.data.res)
                     const tempNote = res.data.res
                     setVersions(tempNote.version)
                     setManager(tempNote.managerUserObj)
+
 
                     /*for(let i = 0; i < props.data?.authorUserObj.length; i++){
                         if(props.data?.emailUserObj[i].userObjEmail == tempEmail){
@@ -152,6 +139,8 @@ const PageDetailContentTemplate = (props) => {
                 .catch(err => {
                     console.log(err)
                 })
+
+                
             //if(isManager) setPoppedContent( props.data.wantEnterUsersEmail );
             //if(isManager) setPoppedContent( props.data.collabApply );
         }
@@ -174,6 +163,59 @@ const PageDetailContentTemplate = (props) => {
         }
 
     }, [props.data])
+
+    useEffect(()=>{
+        if (props.data?.voteUserObj.length > 0 && isAuthor) {
+            for(let i = 0; i < props.data?.voteUserObj.length; i++){
+                    //setVote(props.data?.vote.length > 0 ? props.data?.voteUserObj[0] : null)
+                notification.open({
+                    message: (
+                    <> 
+                        <a>Vote: Kick</a>
+                        <a className='vote__Header__Avatar'>
+                            <Avatar className='vote__Header__Avatar' style={{cursor:"pointer", marginRight:".5em"}} size={25} src={props.data?.voteUserObj[i].kickTargetUserObj.userObjAvatar} onClick={() => props.setPageProps({page: 'ProfilePage', email: props.data?.voteUserObj[i].kickTargetUserObj.userObjEmail})}></Avatar>
+                            <Text className='vote__Header__Name' color='black' cls='Default' content={props.data?.voteUserObj[i].kickTargetUserObj.userObjName} fontSize='15' display="inline-block" />
+                        </a>
+                        <a>out of group!</a>
+                    </>),
+                    description:(
+                        <VoteArea vote={props.data?.voteUserObj[i]} total={props.data?.emailUserObj.length} postId={props.postId} email={email} />
+                    ),
+                    placement: 'topLeft',
+                    style:{
+                        width: "auto"
+                    }
+                });
+            }
+
+        }
+    },[isAuthor])
+
+    useEffect(()=>{
+        if(isManager && author){
+            let votingList = []
+            if(props.data?.vote.length > 0){
+                for(let i = 0; i < props.data?.vote.length; i++){
+                    if(props.data?.vote[i].result == 'yet'){
+                        votingList.push(props.data?.vote[i].kickTarget)
+                    }
+                }
+            }
+            
+            setKickUserList(<>
+                {author.map((item, index) => (
+                    (item.email==props.data?.author || item.email==manager.userObjEmail || votingList.includes(item.email))?
+                        <Option value={item.email} disabled>{item.name}</Option>
+                        :
+                        <Option value={item.email}>{item.name}</Option>
+                    
+                    
+                ))}
+            </>)
+        }
+    },[isManager, author])
+
+
 
     const setVersion = (index) => {
         if (props.page == "NoteDetailPage")
@@ -246,7 +288,42 @@ const PageDetailContentTemplate = (props) => {
             })
     }
 
+    /////////// Kick User //////// 
+    const showModal = () => {
+        setIsModalVisible(true);
+      };
+    
+      const handleOk = () => {
+        const date = kickDate.split('-')
+        const data = {
+            year: date[0],
+            month: date[1],
+            day: date[2],
+            kickTargetEmail: kickTarget,
+          }
+          console.log("data", data)
+          axios.post(`http://localhost:8080/schedule/vote/${props.postId}`, data)
+            .then(res => {
+              message.success("Vote Submit!!")
+              // Todo: remove applicant from list
+            })
+            .catch(err => {
+              console.log(err)
+            })
+        setIsModalVisible(false);
+      };
+    
+      const handleCancel = () => {
+        setIsModalVisible(false);
+      };
+      const onDateChange = (date, dateString) => {
+        setKickDate(dateString)
+      };
 
+      const onKickUserChange = (value) => {
+        setKickTarget(value);
+      }
+    //////////////////////////
     return (
 
         <div className="contentTemplate" >
@@ -291,7 +368,7 @@ const PageDetailContentTemplate = (props) => {
                                         isArchive={isArchive}
                                         noteType={props.data?.type}
                                         setIsArchive={setIsArchive}
-                                        voting={vote ? true : false}
+                                        showKickWindow={showModal}
                                     /></div>
 
                             </Col>
@@ -423,13 +500,22 @@ const PageDetailContentTemplate = (props) => {
                 <PoppedContent email={email}sendPrivateMessage={props.sendPrivateMessage} page={props.page} content={poppedContent} apply={apply} setPoppedContentShow={setPoppedContentShow} isAuthor={isAuthor} isManager={isManager} postId={props.postId} haveApplied={haveApplied} setHaveApplied={setHaveApplied} />
             </div>
 
-            {(vote && isAuthor) &&
-                <div className={`detailNotice ${noticeShow && 'detailNotice--show'}`}>
-                    <DetailNotice setNoticeShow={setNoticeShow} type={"vote"} kickUser={vote.kickTargetUserObj} setPageProps={props.setPageProps}>
-                        <VoteArea vote={vote} total={props.data?.emailUserObj.length} postId={props.postId} email={email} />
-                    </DetailNotice>
-                </div>
-            }
+            <Modal title="Kick User" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+                <DatePicker onChange={onDateChange} />
+                <Select
+                    onChange={onKickUserChange}
+                    style={{
+                        width: "auto",
+                        marginLeft: "1em"
+                    }}
+                    placeholder="Select a user"
+                    >
+                    {kickUserList}
+                    {/* <Option value="jack">Jack</Option>
+                    <Option value="lucy">Lucy</Option>
+                    <Option value="Yiminghe">yiminghe</Option> */}
+                </Select>
+            </Modal>
 
         </div>
     );

@@ -141,7 +141,7 @@ function CommentArea(props) {
         axios.post(`http://localhost:8080/comment/${props.id}`, tempComment)
         .then(res => {
             console.log("Comment Response: ",res.data.res)
-            
+            setComment('');
             message.success("Submit!")
             refresh()
 

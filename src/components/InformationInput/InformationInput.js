@@ -43,7 +43,7 @@ const InformationInput = ({information, setInformation}) => {
         }
         {information?.professor!=null &&
             <div className="informationInput__item informationInput__Input">
-                <Text color='black' cls='Small' content={"professor"} fontSize='15' display="inline-block" />
+                <Text color='black' cls='Small' content={"Professor"} fontSize='15' display="inline-block" />
                 <Input showCount maxLength={20} placeholder="professor" onChange={(ev) => setInformation({...information, professor: ev.target.value})} value={information?.professor} /> 
             </div>  
         }

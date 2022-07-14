@@ -45,34 +45,29 @@ const VoteArea = (props) => {
     }
     return (
         <>
-            <Content className='voteArea__Content'>
-                <Text color='black' cls='Small' content={"Agree"} fontSize='15' />
-                <Progress percent={(agreeCount*100/props.total)} status="active" strokeColor="#2894FF"/>
-                <Text color='black' cls='Small' content={"Disagree"} fontSize='15'/>
-                <Progress percent={(disagreeCount*100/props.total)} status="active" strokeColor="#FF5151" />
-            </Content>
-            <Sider className='voteArea__Sider' width={"30%"}>
-                {!voted?
-                <>
-                    <div className='voteArea__Button voteArea__Button__agree' onClick={agree}>
-                        <Button color={"blue"}><Text color='white' cls='Large' content={"Agree"} fontSize='15' display="inline-block" /></Button>
-                    </div>
-                    <div className='voteArea__Button voteArea__Button__disagree' onClick={disagree}>
-                        <Button color={"red"}><Text color='white' cls='Large' content={"Disagree"} fontSize='15' display="inline-block" /></Button>
-                    </div>
-                </>
-                :
-                <>
-                    <div className='voteArea__Button voteArea__Button__agree'>
-                        <Button color={"blue--disable"}><Text color='white' cls='Large' content={"Agree"} fontSize='15' display="inline-block" /></Button>
-                    </div>
-                    <div className='voteArea__Button voteArea__Button__disagree'>
-                        <Button color={"red--disable"}><Text color='white' cls='Large' content={"Disagree"} fontSize='15' display="inline-block" /></Button>
-                    </div>
-                </>
-
-                }
-            </Sider>    
+            <Text color='black' cls='Small' content={"Agree"} fontSize='15' />
+            <Progress percent={(agreeCount*100/props.total)} status="active" strokeColor="#2894FF"/>
+            <Text color='black' cls='Small' content={"Disagree"} fontSize='15'/>
+            <Progress percent={(disagreeCount*100/props.total)} status="active" strokeColor="#FF5151" />
+            {!voted?
+            <>
+                <div className='voteArea__Button voteArea__Button__agree' onClick={agree}>
+                    <Button color={"blue"}><Text color='white' cls='Large' content={"Agree"} fontSize='15' display="inline-block" /></Button>
+                </div>
+                <div className='voteArea__Button voteArea__Button__disagree' onClick={disagree}>
+                    <Button color={"red"}><Text color='white' cls='Large' content={"Disagree"} fontSize='15' display="inline-block" /></Button>
+                </div>
+            </>
+            :
+            <>
+                <div className='voteArea__Button voteArea__Button__agree'>
+                    <Button color={"blue--disable"}><Text color='white' cls='Large' content={"Agree"} fontSize='15' display="inline-block" /></Button>
+                </div>
+                <div className='voteArea__Button voteArea__Button__disagree'>
+                    <Button color={"red--disable"}><Text color='white' cls='Large' content={"Disagree"} fontSize='15' display="inline-block" /></Button>
+                </div>
+            </>
+            }
         </>
     )
 }
