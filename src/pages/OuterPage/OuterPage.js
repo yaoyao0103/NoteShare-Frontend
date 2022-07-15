@@ -182,10 +182,11 @@ const OuterPage = () => {
 
 
     useEffect(() => {
-        connect();
+        
         const cookieParser = new Cookie(document.cookie)
         const email = cookieParser.getCookieByName('email')
         if (email) {
+            connect();
             setLoggedIn(true);
             setPageProps({ page: 'PersonalPage' })
         }

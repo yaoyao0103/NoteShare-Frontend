@@ -21,7 +21,7 @@ function QnADetailPage(props) {
             })
         }
         getQnAById();
-    }, []);
+    }, [props]);
 
     return (
         <>
