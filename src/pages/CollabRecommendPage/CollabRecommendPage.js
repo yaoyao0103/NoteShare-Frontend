@@ -6,7 +6,7 @@ import axios from "axios";
 
 function CollabRecommendPage(props) {
     const page='CollabRecommendPage';
-    const [pageNumber, setPageNumber] = useState(1);
+   
     const [Collab, setCollab] = useState([]);
     const [sortMode,setSortMode] =useState('date');
 
@@ -17,7 +17,7 @@ function CollabRecommendPage(props) {
             try {
                 const sortBy=sortMode;
                 
-                await axios.get('http://localhost:8080/search/post/'+ String(pageNumber-1) + '/20?keyword=interrupt&haveCollaboration='+true+'&sortBy='+sortBy).then((res) => {
+                await axios.get('http://localhost:8080/search/post/'+ String(props.pageNumber-1) + '/20?keyword=interrupt&haveCollaboration='+true+'&sortBy='+sortBy).then((res) => {
 
                     setCollab(oldArray => [...oldArray, res.data.search]);
                     props.setLoading(false);
@@ -40,7 +40,7 @@ function CollabRecommendPage(props) {
             try {
                 const sortBy=sortMode;
                 
-                await axios.get('http://localhost:8080/search/post/'+ String(pageNumber-1) + '/20?keyword=interrupt&haveCollaboration='+true+'&sortBy='+sortBy).then((res) => {
+                await axios.get('http://localhost:8080/search/post/'+ String(props.pageNumber-1) + '/20?keyword=interrupt&haveCollaboration='+true+'&sortBy='+sortBy).then((res) => {
                     setCollab(oldArray => [...oldArray, res.data.search]);
                     window.scrollTo(0, 0);
                     props.setLoading(false)
@@ -58,12 +58,12 @@ function CollabRecommendPage(props) {
         getCollabById();
 
         
-    }, [pageNumber,sortMode]);
+    }, [sortMode]);
    
     return (
         <>
             {Collab.length > 0 && 
-                <PageOutlineContentTemplate page={page}  hasSwitch={false} mode='Post' Post={Collab} pageNumber={pageNumber} changePageNumber={(pagenumber) => { setPageNumber(pagenumber); }} changeSortMode={(sortMode)=>{setSortMode(sortMode);}} setPageProps={props.setPageProps}/>
+                <PageOutlineContentTemplate page={page}  hasSwitch={false} mode='Post' Post={Collab} pageNumber={props.pageNumber} changePageNumber={props.setPageNumber} changeSortMode={(sortMode)=>{setSortMode(sortMode);}} setPageProps={props.setPageProps}/>
             }
         </>
     );

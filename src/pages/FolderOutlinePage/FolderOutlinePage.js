@@ -7,7 +7,6 @@ import axios from "axios";
 const { Header, Content, Footer } = Layout;
 function FolderOutlinePage(props) {
     const page = 'FolderOutlinePage';
-    const [pageNumber, setPageNumber] = useState(1);
     const [Folder, setFolder] = useState([]);
     const [sortMode, setSortMode] = useState('date');
 
@@ -16,9 +15,10 @@ function FolderOutlinePage(props) {
         console.log(props.headerName)
         async function getFolderById() {
             try {
-                await axios.get('http://localhost:8080/search/folder/' + String(pageNumber - 1) + '/20?keyword=' + (props.keyword ? props.keyword : '') + '&creator=' + (props.headerName ? props.headerName : '')).then((res) => {
+                await axios.get('http://localhost:8080/search/folder/' + String(props.pageNumber - 1) + '/20?keyword=' + (props.keyword ? props.keyword : '') + '&creator=' + (props.headerName ? props.headerName : '')).then((res) => {
                     console.log(res.data.search);
                     setFolder(oldArray => [...oldArray = [], res.data.search]);
+                    props.setLoading(false)
                 });
             } catch (error) {
                 console.log(error.message);
@@ -27,14 +27,14 @@ function FolderOutlinePage(props) {
         }
         getFolderById();
         //console.log('2222');
-    }, []);
+    }, [props]);
     useEffect(() => {
         props.setLoading(true)
         async function getFolderById() {
             try {
 
 
-                await axios.get('http://localhost:8080/search/folder/' + String(pageNumber - 1) + '/20?keyword=' + (props.keyword ? props.keyword : '') + '&creator=' + (props.headerName ? props.headerName : '')).then((res) => {
+                await axios.get('http://localhost:8080/search/folder/' + String(props.pageNumber - 1) + '/20?keyword=' + (props.keyword ? props.keyword : '') + '&creator=' + (props.headerName ? props.headerName : '')).then((res) => {
                     setFolder(oldArray => [...oldArray = [], res.data.search]);
                     window.scrollTo(0, 0);
                     //console.log(pageNumber);
@@ -52,17 +52,12 @@ function FolderOutlinePage(props) {
         getFolderById();
         //console.log('1111');
 
-    }, [pageNumber, sortMode]);
-    useEffect(() => {
-        console.log(Folder);
+    }, [sortMode]);
 
-
-
-    }, [Folder])
     return (
         <>
             {Folder.length > 0 &&
-                <PageOutlineContentTemplate setPageProps={props.setPageProps} pageNumber={pageNumber} page={page} hasSwitch={false} mode='Folder' Post={Folder} changePageNumber={(pagenumber) => { setPageNumber(pagenumber); }} changeSortMode={(sortMode) => { setSortMode(sortMode); }} />
+                <PageOutlineContentTemplate setPageProps={props.setPageProps} pageNumber={props.pageNumber} page={page} hasSwitch={false} mode='Folder' Post={Folder} changePageNumber={props.setPageNumber} changeSortMode={(sortMode) => { setSortMode(sortMode); }} />
             }
         </>
     );

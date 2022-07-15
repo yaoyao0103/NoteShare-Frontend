@@ -4,7 +4,6 @@ import PageOutlineContentTemplate from '../../components/PageOutlineContentTempl
 import axios from "axios";
 function QnAOutlinePage(props) {
     const page = "QnAOutlinePage";
-    const [pageNumber, setPageNumber] = useState(1);
     const [QnA, setQnA] = useState([]);
     const [sortMode, setSortMode] = useState('date');
 
@@ -15,7 +14,7 @@ function QnAOutlinePage(props) {
 
                 const sortBy = sortMode;
 
-                await axios.get('http://localhost:8080/search/post/' + String(pageNumber - 1) + '/20?keyword=' + (props.keyword ? props.keyword : '') + '&department=' + (props.department ? props.department : '') + '&subject=' + (props.subject ? props.subject : '') + '&haveQA=' + true + '&sortBy=' + sortBy).then((res) => {
+                await axios.get('http://localhost:8080/search/post/' + String(props.pageNumber - 1) + '/20?keyword=' + (props.keyword ? props.keyword : '') + '&department=' + (props.department ? props.department : '') + '&subject=' + (props.subject ? props.subject : '') + '&haveQA=' + true + '&sortBy=' + sortBy).then((res) => {
                     setQnA(oldArray => [...oldArray, res.data.search]);
                    
                     console.log(res.data.search)
@@ -37,7 +36,7 @@ function QnAOutlinePage(props) {
 
                 const sortBy = sortMode;
 
-                await axios.get('http://localhost:8080/search/post/' + String(pageNumber - 1) + '/20?keyword=' + (props.keyword ? props.keyword : '') + '&department=' + (props.department ? props.department : '') + '&subject=' + (props.subject ? props.subject : '') + '&haveQA=' + true + '&sortBy=' + sortBy).then((res) => {
+                await axios.get('http://localhost:8080/search/post/' + String(props.pageNumber - 1) + '/20?keyword=' + (props.keyword ? props.keyword : '') + '&department=' + (props.department ? props.department : '') + '&subject=' + (props.subject ? props.subject : '') + '&haveQA=' + true + '&sortBy=' + sortBy).then((res) => {
                     setQnA(oldArray => [...oldArray, res.data.search]);
                    
                     window.scrollTo(0, 0);
@@ -50,12 +49,12 @@ function QnAOutlinePage(props) {
         }
         setQnA([])
         getQnAById();
-    }, [pageNumber, sortMode]);
+    }, [sortMode]);
 
     return (
         <>
             {QnA.length > 0 &&
-                <PageOutlineContentTemplate page={page} hasSwitch={false} mode='Post' Post={QnA} pageNumber={pageNumber}changePageNumber={(pagenumber) => { setPageNumber(pagenumber); }} changeSortMode={(sortMode) => { setSortMode(sortMode); }} setPageProps={props.setPageProps} />
+                <PageOutlineContentTemplate page={page} hasSwitch={false} mode='Post' Post={QnA} pageNumber={props.pageNumber} changePageNumber={props.setPageNumber} changeSortMode={(sortMode) => { setSortMode(sortMode); }} setPageProps={props.setPageProps} />
 
             }
         </>

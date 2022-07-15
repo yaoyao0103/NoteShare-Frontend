@@ -96,7 +96,7 @@ function ProfilePage(props) {
         let avatar = cookieParser.getCookieByName('avatar');
         if (!isFollow) {
             axios.put("http://localhost:8080/follow/" + email + '/' + props.email,).then(res => {
-                props.sendPrivateMessage(email+'has following you','Follow',)
+                //props.sendPrivateMessage(email+'has following you','Follow',)
                 //setProfile(content);
                 setIsFollow(true);
                 setFansNum(fansNum + 1);
