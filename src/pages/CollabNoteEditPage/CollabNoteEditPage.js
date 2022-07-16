@@ -93,6 +93,7 @@ const CollabNoteEditPage = (props) => {
             }
         })
         .catch(err =>{
+            message.error("Server Error! Please try again later. (Get Note Error)")
             console.log(err)
         })
     },[props])
@@ -138,6 +139,7 @@ const CollabNoteEditPage = (props) => {
                     setQueueDom({...temp});
                 })
                 .catch (err => {
+                    message.error("Server Error! Please try again later. (Get Author Information In Queue Error)")
                     console.log(err)
                 })
                 
@@ -184,7 +186,7 @@ const CollabNoteEditPage = (props) => {
             message.error("Title can't be empty");
             return;
         }
-        message.success("Update info")
+        message.success("You updated the information of note")
         const tempNote = JSON.parse(JSON.stringify(note))
         tempNote.department = information.department
         tempNote.subject = information.subject
@@ -204,6 +206,7 @@ const CollabNoteEditPage = (props) => {
             setStep(1);
         })
         .catch (err => {
+            message.error("Server Error! Please try again later. (Update Note Error)")
             console.log(err)
         })
         //setStep(1);
@@ -241,8 +244,10 @@ const CollabNoteEditPage = (props) => {
                     setMyEditor(<MyEditor noteId={props.noteId} version={'0'} page={props.page} email={email} name={name} avatar={avatar} isCollab={true} setQueue={setQueue}/>)
                     setStep(0);
                     setStep(1);
+                    message.success("You changed the version!")
                 })
                 .catch (err => {
+                    message.error("Server Error! Please try again later. (Change Version Error)")
                     console.log(err)
                 })
             })
@@ -277,14 +282,16 @@ const CollabNoteEditPage = (props) => {
                 axios.put(`http://localhost:8080/note/${props.noteId}`, tempNote)
                     .then(res => {
                         console.log(res);
-                        message.success("Submit!");
+                        message.success("You submitted the tags!");
                         props.setPageProps({page:'PersonalPage'})
                     })
                     .catch (err => {
+                        message.error("Server Error! Please try again later. (Submit Tag Error)")
                         console.log(err)
                     }) 
             })
             .catch (err => {
+                message.error("Server Error! Please try again later. (Get Tag Error)")
                 console.log(err)
             })   
         
@@ -343,12 +350,13 @@ const CollabNoteEditPage = (props) => {
         VersionFormat.content = [ContentFormat]
         axios.put(`http://localhost:8080/note/${props.noteId}/${versionLength}`, VersionFormat)
         .then ( res => {
-            message.success("Saved")
+            message.success("You saved current note as the new version!")
             const version = res.data.res;
             setVersions([...versions, version])
             editor.storeVersion({}, versionLength)
         })
         .catch (err => {
+            message.error("Server Error! Please try again later. (Create Version Error)")
             console.log(err)
         })
     }

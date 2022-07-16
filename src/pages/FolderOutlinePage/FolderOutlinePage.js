@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Navbar from '../../components/Navbar/Navbar';
 import PageOutlineTemplate from '../../components/PageOutlineTemplate/PageOutlineTemplate';
 import PageOutlineContentTemplate from '../../components/PageOutlineContentTemplate/PageOutlineContentTemplate';
-import { Layout } from "antd";
+import { Layout, message } from "antd";
 import axios from "axios";
 const { Header, Content, Footer } = Layout;
 function FolderOutlinePage(props) {
@@ -22,6 +22,7 @@ function FolderOutlinePage(props) {
                 });
             } catch (error) {
                 console.log(error.message);
+                message.error("Server Error! Please try again later. (Get Folder Outline Error)")
                 setFolder(error.message);
             }
         }
@@ -43,6 +44,7 @@ function FolderOutlinePage(props) {
 
             } catch (error) {
                 //console.log(error.message);
+                message.error("Server Error! Please try again later. (Get Folder Outline Error)")
                 setFolder(error.message);
 
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./OptionMenu.css";
 import { Link, useNavigate } from "react-router-dom";
-import { Menu, Dropdown, Space, Drawer, message, Input, Tooltip, Button, Popover, List, Avatar } from "antd";
+import { Menu, Dropdown, Space, Drawer, message, Input, Tooltip, Button, Popover, List, Avatar, Modal } from "antd";
 import { StarOutlined, CopyOutlined, EditOutlined, CommentOutlined, CheckOutlined, CloseOutlined, ShareAltOutlined, InboxOutlined, DeleteOutlined, EyeOutlined, InfoCircleOutlined, UserOutlined, LikeOutlined } from "@ant-design/icons";
 import VersionArea from "../VersionArea/VersionArea";
 import CommentArea from "../CommentArea/CommentArea";
@@ -11,19 +11,16 @@ import MyButton from "../Button/Button";
 import Cookie from "../Cookies/Cookies";
 import axios from "../axios/axios";
 import MyEditor from "../MyEditor/MyEditor";
+import { set } from "react-hook-form";
 
 const OptionMenu = (props) => {
   const navigate = useNavigate()
   const [visible, setVisible] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
   const [menu, setMenu] = useState(
     <Menu />
   );
-  const [drawer, setDrawer] = useState(<CommentArea page={props.page} type="note" comments={props.comments} id={props.id} />);
-  const [drawerType, setDrawerType] = useState('');
   const [chooseManagerList, setChooseManagerList] = useState(<></>)
-
-  const comments = (<CommentArea page={props.page} type="note" comments={props.comments} id={props.id} />);
-  const versions = (<VersionArea page={'NoteDetailPageVersion'} id={props.id} versions={props.versions} setVersion={props.setVersion} isAuthor={props.isAuthor} />);
 
   const showDrawer = () => {
     setVisible(true);
@@ -38,7 +35,7 @@ const OptionMenu = (props) => {
   const archive = () => {
     axios.put(`http://localhost:8080/post/archive/${props.id}`)
       .then(res => {
-        message.success("Archived")
+        message.success("You archived a post")
         props.setIsArchive(true)
         /*console.log("status", res.data.res.public)
         if(res.data.res.public)
@@ -47,6 +44,7 @@ const OptionMenu = (props) => {
           message.success("set non-archive")*/
       })
       .catch(err => {
+        message.error("Server Error! Please try again later. (Archive Post Error)")
         console.log(err)
       })
   }
@@ -57,11 +55,23 @@ const OptionMenu = (props) => {
       .then(res => {
         props.setIsPublic(res.data.res.public)
         if (res.data.res.public)
-          message.success("Set public")
+          message.success("You set the post public!")
         else
-          message.success("set private")
+          message.success("You set the post private!")
       })
       .catch(err => {
+        message.error("Server Error! Please try again later. (Set Post Public/Private Error)")
+        console.log(err)
+      })
+  }
+
+  const setNoteStatus = () => {
+    axios.put(`http://localhost:8080/note/publish/${props.id}`)
+      .then(res => {
+          message.success("You set the note public!")
+      })
+      .catch(err => {
+        message.error("Server Error! Please try again later. (Set Note Public/Private Error)")
         console.log(err)
       })
   }
@@ -77,11 +87,12 @@ const OptionMenu = (props) => {
     axios.put(`http://localhost:8080/note/publish/${props.id}/${index}`)
       .then(res => {
         if (!res.data.res.temp)
-          message.success("Set public")
+          message.success("You set this version public!")
         else
-          message.success("set private")
+          message.success("You set this version private!")
       })
       .catch(err => {
+        message.error("Server Error! Please try again later. (Set Version Public/Private Error)")
         console.log(err)
       })
   }
@@ -114,12 +125,13 @@ const OptionMenu = (props) => {
       //message.info("choose: "+ id + " best");
       axios.put(`http://localhost:8080/post/reward/best/${props.postId}/${id}`)
       .then ( res => {
-          message.success("Best!")
+          message.success("You selected the note as best!")
           props.refreshAnswer()
           // Todo: remove applicant from list
       })
       .catch(err =>{
-          console.log(err)
+        message.error("Server Error! Please try again later. (Select Reward Best Error)")
+        console.log(err)
       })
     }
 
@@ -127,12 +139,13 @@ const OptionMenu = (props) => {
       //message.info("choose: "+ id + " ref");
       axios.put(`http://localhost:8080/post/reward/reference/${props.postId}/${id}`)
       .then ( res => {
-          message.success("Reference!")
+        message.success("You selected the note for reference!")
           props.refreshAnswer()
           // Todo: remove applicant from list
       })
       .catch(err =>{
-          console.log(err)
+        message.error("Server Error! Please try again later. (Select Reward For Reference Error)")
+        console.log(err)
       })
       // Todo: connect choose ref API
     }
@@ -143,11 +156,11 @@ const OptionMenu = (props) => {
     message.success("Agree applier: " + email);
     axios.put(`http://localhost:8080/post/add/${props.postId}/${email}`)
       .then(res => {
-        
-        message.success("Agree!!")
+        message.success("You agreed the applier!")
         // Todo: remove applicant from list
       })
       .catch(err => {
+        message.error("Server Error! Please try again later. (Agree Applier Error)")
         console.log(err)
       })
   }
@@ -156,10 +169,11 @@ const OptionMenu = (props) => {
     message.success("Reject applier: " + email);
     axios.delete(`http://localhost:8080/post/apply/${props.postId}/${email}`)
       .then(res => {
-        message.success("reject!!")
+        message.success("You rejected the applier!")
         // Todo: remove applicant from list
       })
       .catch(err => {
+        message.error("Server Error! Please try again later. (Reject Applier Error)")
         console.log(err)
       })
   }
@@ -170,7 +184,7 @@ const OptionMenu = (props) => {
     if(props.type == "note"){
       axios.put(`http://localhost:8080/note/delete/${props.id}/${props.folderId}`)
       .then(res => {
-        message.success("Delete!!")
+        message.success("You deleted a note!")
         if (props.page == 'PersonalPage')
           props.rerenderNotes()
         else {
@@ -184,12 +198,15 @@ const OptionMenu = (props) => {
         if(err.response.status === 409){
           message.warn("You cannot delete the last note!")
         }
+        else{
+          message.error("Server Error! Please try again later. (Delete Note Error)")
+        }
       })
     }
     else{
       axios.delete(`http://localhost:8080/post/${props.id}`)
       .then(res => {
-        message.success("Delete!!")
+        message.success("You deleted a post!")
         if (props.page == 'PersonalPage')
           props.rerenderPosts()
         else {
@@ -200,6 +217,8 @@ const OptionMenu = (props) => {
         // Todo: remove applicant from list
       })
       .catch(err => {
+        message.error("Server Error! Please try again later. (Delete Post Error)")
+
         console.log(err)
       })
     }
@@ -209,11 +228,12 @@ const OptionMenu = (props) => {
   const favorite = () => {
     axios.put(`http://localhost:8080/favorite/note/${props.id}/${props.email}`)
     .then ( res => {
-        message.success("Favorite!")
+        message.success("You set the note as favorite!")
         props.setIsFavoriter(true)
         // Todo: remove applicant from list
     })
     .catch(err =>{
+        message.error("Server Error! Please try again later. (Set As Favorite Error)")
         console.log(err)
     })
   }
@@ -221,11 +241,12 @@ const OptionMenu = (props) => {
   const unfavorite = () => {
     axios.put(`http://localhost:8080/favorite/note/${props.id}/${props.email}`)
     .then ( res => {
-        message.success("Unfavorite!")
+        message.success("You set the note as unfavorite!")
         props.setIsFavoriter(false)
         // Todo: remove applicant from list
     })
     .catch(err =>{
+        message.error("Server Error! Please try again later. (Set As Unfavorite Error)")
         console.log(err)
     })
   }
@@ -233,7 +254,7 @@ const OptionMenu = (props) => {
   const chooseManager = (userObj) => {
     axios.put(`http://localhost:8080/note/admin/${props.noteId}/${userObj.email}`)
       .then(res => {
-        message.success("Success!!")
+        message.success("You chose a new manager!")
         setChooseManagerList(
           <>
             <List.Item className='currUserItem' >
@@ -255,11 +276,13 @@ const OptionMenu = (props) => {
         // Todo: remove applicant from list
       })
       .catch(err => {
+        message.error("Server Error! Please try again later. (Choose Manager Error)")
+
         console.log(err)
       })
   }
 
-  const kickUser = (email) => {
+  /*const kickUser = (email) => {
     const data = {
       year: 2022,
       month: 7,
@@ -274,6 +297,55 @@ const OptionMenu = (props) => {
       .catch(err => {
         console.log(err)
       })
+  }*/
+
+  /////////// Kick User //////// 
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleOk = () => {
+    axios.delete(`http://localhost:8080/post/${props.id}`)
+      .then(res => {
+        message.success("You deleted the post!")
+          props.setPageProps({
+            page: 'PersonalPage'
+          })
+        // Todo: remove applicant from list
+      })
+      .catch(err => {
+        message.error("Server Error! Please try again later. (Delete Post Error)")
+        console.log(err)
+      })
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
+
+  //////////////////////////
+
+  const showHistoricalVoting = () => {
+    Modal.info({
+      title: 'Vote History',
+      content: (
+        <List
+        size="small"
+        bordered
+        dataSource={props.vote}
+        renderItem={(item) => <List.Item 
+          actions={[<p>{item.result.charAt(0).toUpperCase() + item.result.slice(1)}</p>]}
+        >
+          <div>
+            <Avatar style={{ cursor: "pointer" }} size={20} src={item.kickTargetUserObj.userObjAvatar} onClick={() => props.setPageProps({ page: 'ProfilePage', email: item.kickTargetUserObj.userObjEmail })}></Avatar>
+            <Text color='black' cls='Default' content={item.kickTargetUserObj.userObjName} fontSize='12' display="inline-block" />
+          </div>  
+        </List.Item>}
+      />
+      ),
+  
+      onOk() {},
+    });
   }
 
     const NoteDetailMenuReward = (
@@ -306,22 +378,16 @@ const OptionMenu = (props) => {
         {
           label: (<a onClick=
             {() => {
-              setDrawerType('Comment');
-              showDrawer();
-            }}
-          >Comment</a>),
-          key: "2",
-          icon: <CommentOutlined />
-        },
-        {
-          label: (<a onClick=
-            {() => {
-              setDrawerType('Version');
               showDrawer();
             }}
           >Manage Version</a>),
-          key: "3",
+          key: "2",
           icon: <InfoCircleOutlined />
+        },
+        {
+          label: props.public ? (<a onClick={setNoteStatus}>Set Private</a>) : (<a onClick={setNoteStatus}>Set Public</a>),
+          key: "3",
+          icon: <UserOutlined style={{ color: "#333" }} />
         },
       ]
     } />
@@ -339,17 +405,7 @@ const OptionMenu = (props) => {
           label: "Share",
           key: "2",
           icon: <ShareAltOutlined />
-        },
-        {
-          label: (<a onClick=
-            {() => {
-              setDrawerType('Comment');
-              showDrawer();
-            }}
-          >Comment</a>),
-          key: "3",
-          icon: <CommentOutlined />
-          }
+        }
       ]
     } />
   );
@@ -370,21 +426,10 @@ const OptionMenu = (props) => {
         {
           label: (<a onClick=
             {() => {
-              setDrawerType('Comment');
-              showDrawer();
-            }}
-          >Comment</a>),
-          key: "3",
-          icon: <CommentOutlined />
-        },
-        {
-          label: (<a onClick=
-            {() => {
-              setDrawerType('Version');
               showDrawer();
             }}
           >Manage Version</a>),
-          key: "4",
+          key: "3",
           icon: <InfoCircleOutlined />
         },
       ]
@@ -435,11 +480,6 @@ const OptionMenu = (props) => {
           key: "4",
           icon: <UserOutlined style={{ color: "#333" }} />
         },
-        {
-          label: (<a onClick={deletePost} style={{ color: "red" }}>Delete</a>),
-          key: "5",
-          icon: <DeleteOutlined style={{ color: "red" }} />
-        },
 
 
       ]
@@ -479,11 +519,6 @@ const OptionMenu = (props) => {
           key: "4",
           icon: <UserOutlined style={{ color: "#333" }} />
         },
-        {
-          label: (<a onClick={deletePost} style={{ color: "red" }}>Delete</a>),
-          key: "5",
-          icon: <DeleteOutlined style={{ color: "red" }} />
-        },
 
 
       ]
@@ -513,12 +548,27 @@ const OptionMenu = (props) => {
           icon: <ShareAltOutlined />
         },
         {
-          label: (<a onClick={deletePost} style={{ color: "red" }}>Delete</a>),
+          label: (
+            props.isAnswered?
+            <a onClick={deletePost} style={{ color: "red" }}>Delete</a>
+            :
+            <Tooltip title={"You have to select all best/reference answers before delete the post."}>
+              <a style={{ color: "red", opacity: "0.4", textDecoration: "none" }}>Delete</a>
+            </Tooltip>
+          ),
           key: "3",
-          icon: <DeleteOutlined style={{ color: "red" }} />
+          icon: (
+            props.isAnswered?
+            <DeleteOutlined style={{ color: "red" }} />
+            :
+            <DeleteOutlined style={{ color: "red", opacity: "0.4" }} />
+          ),
+          
         }]
     } />
   );
+
+  
 
   const RewardDetailMenu = (
     <Menu items={
@@ -535,18 +585,8 @@ const OptionMenu = (props) => {
     <Menu items={
       [
         {
-          label: (<a onClick=
-            {() => {
-              setDrawerType('Comment');
-              showDrawer();
-            }}
-          >Comment</a>),
-          key: "1",
-          icon: <CommentOutlined />
-        },
-        {
           label: "Share",
-          key: "2",
+          key: "1",
           icon: <ShareAltOutlined />
         },
       ]
@@ -590,7 +630,6 @@ const OptionMenu = (props) => {
         {
           label: (<a onClick=
             {() => {
-              setDrawerType('Version');
               showDrawer();
             }}
           >Manage Version</a>),
@@ -598,22 +637,23 @@ const OptionMenu = (props) => {
           icon: <InfoCircleOutlined />
         },
         {
-          label: (<a onClick=
-            {() => {
-              setDrawerType('Comment');
-              showDrawer();
-            }}
-          >Comment</a>),
+          label: "Share",
           key: "4",
-          icon: <CommentOutlined />
+          icon: <ShareAltOutlined />
         },
         {
-          label: "Share",
+          label: (<a onClick=
+            {() => {
+              showHistoricalVoting();
+            }}
+          >Historical Voting</a>),
           key: "5",
-          icon: <ShareAltOutlined />
-        }]
+          icon: <InfoCircleOutlined />
+        },
+        ]
     } />
   );
+
 
   const CollabDetailMenuOfManager = (
     <Menu items={
@@ -656,7 +696,6 @@ const OptionMenu = (props) => {
         {
           label: (<a onClick=
             {() => {
-              setDrawerType('Version');
               showDrawer();
             }}
           >Manage Version</a>),
@@ -664,18 +703,8 @@ const OptionMenu = (props) => {
           icon: <InfoCircleOutlined />
         },
         {
-          label: (<a onClick=
-            {() => {
-              setDrawerType('Comment');
-              showDrawer();
-            }}
-          >Comment</a>),
-          key: "5",
-          icon: <CommentOutlined />
-        },
-        {
           label: "Share",
-          key: "6",
+          key: "5",
           icon: <ShareAltOutlined />
         },
         {
@@ -688,18 +717,27 @@ const OptionMenu = (props) => {
               Choose Manager
             </Popover>
           ),
-          key: "7",
+          key: "6",
           icon: <UserOutlined style={{ color: "#333" }} />
         },
         {
           label: (<a onClick={() => props.showKickWindow()}>Kick User</a>),
-          key: "8",
+          key: "7",
           icon: <UserOutlined style={{ color: "#333" }} />,
         },
         {
           label: props.public ? (<a onClick={setStatus}>Set Private</a>) : (<a onClick={setStatus}>Set Public</a>),
-          key: "9",
+          key: "8",
           icon: <UserOutlined style={{ color: "#333" }} />
+        },
+        {
+          label: (<a onClick=
+            {() => {
+              showHistoricalVoting();
+            }}
+          >Historical Voting</a>),
+          key: "9",
+          icon: <InfoCircleOutlined />
         },
       ]
     } />
@@ -944,13 +982,10 @@ const OptionMenu = (props) => {
   }, [chooseManagerList])
 
   useEffect(() => {
-    switch (drawerType) {
-      case 'Comment': setDrawer(comments); break;
-      case 'Version': setDrawer(versions); break;
-
+    if(props.isAnswered){
+      showModal()
     }
-  }, [drawerType])
-
+  }, [props.isAnswered])
 
 
   return (
@@ -961,15 +996,17 @@ const OptionMenu = (props) => {
           overlay={menu}
         ></Dropdown.Button>
       </Space>
-      <Drawer title={drawerType} placement="right" onClose={onClose} visible={visible}>
-        {drawer}
+      <Drawer title={"Version"} placement="right" onClose={onClose} visible={visible}>
+        <VersionArea page={'NoteDetailPageVersion'} id={props.id} versions={props.versions} setVersion={props.setVersion} isAuthor={props.isAuthor} />
       </Drawer>
+      <Modal title="Notification" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+        You have selected all best/reference answers. Would you want to delete this reward post now?
+      </Modal>
     </>
   );
 }
 
 OptionMenu.defaultProps = {
-  comments: [],
   versions: [],
   public: false,
   setVersion: () => { },

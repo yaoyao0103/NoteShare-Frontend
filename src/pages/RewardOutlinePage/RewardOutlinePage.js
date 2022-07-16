@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Navbar from '../../components/Navbar/Navbar';
 import PageOutlineTemplate from '../../components/PageOutlineTemplate/PageOutlineTemplate';
 import PageOutlineContentTemplate from '../../components/PageOutlineContentTemplate/PageOutlineContentTemplate';
-import { Layout } from "antd";
+import { Layout, message } from "antd";
 import axios from "axios";
 const { Header, Content, Footer } = Layout;
 function RewardOutlinePage(props) {
@@ -24,6 +24,7 @@ function RewardOutlinePage(props) {
                 });
 
             } catch (error) {
+                message.error("Server Error! Please try again later. (Get Reward Post Error)")
                 console.log(error.message);
                 setReward(error.message);
 
@@ -48,7 +49,7 @@ function RewardOutlinePage(props) {
                 });
 
             } catch (error) {
-
+                message.error("Server Error! Please try again later. (Get Reward Post Error)")
                 setReward(error.message);
 
 

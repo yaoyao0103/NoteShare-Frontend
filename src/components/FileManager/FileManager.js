@@ -35,6 +35,7 @@ const FileManager = (props) => {
                 props.setLoading(false)
             })
             .catch(err =>{
+                message.error("Server Error! Please try again later. (Get Root File Error)")
                 console.log(err)
             })
         }
@@ -106,6 +107,7 @@ const FileManager = (props) => {
         })
         .catch(err =>{
             console.log(err)
+            message.error("Server Error! Please try again later. (Enter Folder Error)")
             props.setLoading(false)
         })
     }
@@ -154,6 +156,7 @@ const FileManager = (props) => {
         })
         .catch(err =>{
             console.log(err)
+            message.error("Server Error! Please try again later. (Enter Post Folder Error)")
             props.setLoading(false)
         })
     }
@@ -229,6 +232,7 @@ const FileManager = (props) => {
             })
             .catch(err =>{
                 console.log(err)
+                message.error("Server Error! Please try again later. (Back To Last Layer Error)")
                 props.setLoading(false)
             })
         }
@@ -248,6 +252,7 @@ const FileManager = (props) => {
             })
             .catch(err =>{
                 console.log(err)
+                message.error("Server Error! Please try again later. (Back To Last Layer Error)")
                 props.setLoading(false)
             })
         }
@@ -255,23 +260,28 @@ const FileManager = (props) => {
     }
 
     const createFolder = (name) => {
-        props.setLoading(true)
         const data = {
             folderName: name,
             parent: current,
             path: path + `/${name}`,
             public: true,
-
+            
         }
+        if(!name){
+            message.warn("The folder name cannot be empty!")
+            return;
+        }
+        props.setLoading(true)
         //console.log("path", data)
         axios.post(`http://localhost:8080/folder/${props.email}`, data)
             .then(res => {
                 console.log(res.data.res);
                 onClickFolderZone(current)
                 setNewFolder(false)
-                props.setLoading(false)
+                message.success("You created a folder!")
             })
             .catch(err =>{
+                message.error("Server Error! Please try again later. (Create Folder Error)")
                 console.log(err)
             })
     }
@@ -283,8 +293,10 @@ const FileManager = (props) => {
                 console.log(res);
                 onClickFolderZone(current)
                 props.setLoading(false)
+                message.success("You deleted a folder!")
             })
             .catch(err =>{
+                message.error("Server Error! Please try again later. (Delete Folder Error)")
                 console.log(err)
             })
     }
@@ -294,12 +306,13 @@ const FileManager = (props) => {
         axios.put(`http://localhost:8080/folder/rename/${props.email}/${folderId}/${newName}`)
             .then(res => {
                 console.log(res);
-                message.success("Success")
+                message.success("You renamed a folder")
                 setRenaming(false)
                 onClickFolderZone(current)
                 props.setLoading(false)
             })
             .catch(err =>{
+                message.error("Server Error! Please try again later. (Rename Folder Error)")
                 console.log(err)
             })
     }
@@ -356,19 +369,20 @@ const FileManager = (props) => {
         message.destroy();
         axios.put(`http://localhost:8080/note/save/${copy}/${current}`)
             .then(res => {
-                message.success("Success!")
+                message.success("You copied a note!")
                 onClickFolderZone(current)
                 setCopy(null)
                 props.setLoading(false)
             })
             .catch(err =>{
-                message.error("Error!")
+                message.error("Server Error! Please try again later. (Copy Note Error)")
                 setCopy(null)
             })
         
     }
 
     const moveFolder = () => {
+        message.destroy(); 
         props.setLoading(true)
         const data = {
             path: path + '/' + move.folderName,
@@ -377,13 +391,12 @@ const FileManager = (props) => {
         
         axios.put(`http://localhost:8080/folder/save/${props.email}/${move.folderId}`, data)
             .then(res => {
-                message.success("Success!")
                 onClickFolderZone(current)
                 setMove(null)
-                props.setLoading(false)
+                message.success("You moved a folder!")
             })
             .catch(err =>{
-                message.error("Error!")
+                message.error("Server Error! Please try again later. (Move Folder Error)")
             })
     }
     return (

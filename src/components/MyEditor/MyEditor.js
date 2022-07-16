@@ -53,7 +53,7 @@ const MyEditor = (props) => {
               </>
               :
               <>
-                  <div id="editor"></div>
+                  <div id="editor" className="editor__disabled"></div>
               </>
             }
             

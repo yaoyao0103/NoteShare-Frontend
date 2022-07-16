@@ -80,6 +80,7 @@ function AvatarButton(props) {
                 setAvatarNum(props.changeAvatar);
                 document.cookie = "avatar=" + res.data.res;
                 //message.info('Change avatar');
+                
             }).catch((error) => {
                 //message.info(error.response.error);
 

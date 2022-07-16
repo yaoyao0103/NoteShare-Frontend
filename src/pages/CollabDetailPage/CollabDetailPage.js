@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import PageDetailTemplate from '../../components/PageDetailTemplate/PageDetailTemplate'
 import PageDetailContentTemplate from '../../components/PageDetailContentTemplate/PageDetailContentTemplate';
 import axios from '../../components/axios/axios';
+import { message } from "antd";
+
 function NoteDetailPage(props){
     const [ post, setPost ] = useState();
     
@@ -14,6 +16,7 @@ function NoteDetailPage(props){
                 props.setLoading(false)
             })
             .catch(err =>{
+                message.error("Server Error! Please try again later. (Get Collaboration Post Error)")
                 console.log(err)
             })
         }

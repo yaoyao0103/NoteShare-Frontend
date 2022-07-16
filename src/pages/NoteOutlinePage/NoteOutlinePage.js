@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import PageOutlineTemplate from '../../components/PageOutlineTemplate/PageOutlineTemplate';
 import PageOutlineContentTemplate from '../../components/PageOutlineContentTemplate/PageOutlineContentTemplate';
 import axios from "axios";
+import { message } from "antd";
+
 function NoteOutlinePage(props) {
     const page = 'NoteOutlinePage';
     const [pageNumber, setPageNumber] = useState(1);
@@ -21,6 +23,7 @@ function NoteOutlinePage(props) {
                 });
 
             } catch (error) {
+                message.error("Server Error! Please try again later. (Get Note Error)")
                 console.log(error.message);
                 setNote(error.message);
 
@@ -48,6 +51,7 @@ function NoteOutlinePage(props) {
 
             } catch (error) {
                 //console.log(error.message);
+                message.error("Server Error! Please try again later. (Get note Error)")
                 setNote(error.message);
 
 

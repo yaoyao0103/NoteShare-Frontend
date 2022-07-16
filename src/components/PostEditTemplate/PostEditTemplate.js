@@ -132,10 +132,11 @@ const PostEditTemplate = (props) => {
         axios.put(`http://localhost:8080/post/${props.postId}`, post)
         .then(res => {
             console.log(res.data)
-            message.success("Update!!");
+            message.success("You updated the information!");
             props.setPageProps({page:page, postId: props.postId});
         })
         .catch(err =>{
+            message.error("Server Error! Please try again later. (Update Post Error)")
             console.log(err)
         })
 
@@ -182,7 +183,7 @@ const PostEditTemplate = (props) => {
         axios.post(`http://localhost:8080/post/${email}`, data)
         .then(res => {
             console.log(res.data.res)
-            message.success("Submit!!");
+            message.success("You submitted a post!");
             if(props.type=='collaboration'){
                 const tempId = res.data.res.answers[0]
                 VersionFormat.name = "default"
@@ -199,6 +200,7 @@ const PostEditTemplate = (props) => {
             props.setPageProps({page:'PersonalPage'});
         })
         .catch(err =>{
+            message.error("Server Error! Please try again later. (Submit Post Error)")
             console.log(err)
         })
     } 

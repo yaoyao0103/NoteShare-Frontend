@@ -2,6 +2,8 @@ import React, {useState, useEffect} from 'react';
 import PageDetailTemplate from '../../components/PageDetailTemplate/PageDetailTemplate'
 import PostEditTemplate from '../../components/PostEditTemplate/PostEditTemplate';
 import axios from 'axios';
+import { message } from "antd";
+
 function QnAEditPage(props){
     const [post, setPost] = useState(null);
 
@@ -13,6 +15,7 @@ function QnAEditPage(props){
                 setPost(res.data.res)
             })
             .catch(err =>{
+                message.error("Server Error! Please try again later. (Get Reward Post Error)")
                 console.log(err)
             })
         }

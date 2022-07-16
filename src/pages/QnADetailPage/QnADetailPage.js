@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import PageDetailTemplate from "../../components/PageDetailTemplate/PageDetailTemplate"
 import PageDetailContentTemplate from '../../components/PageDetailContentTemplate/PageDetailContentTemplate';
+import { message } from "antd";
 
 function QnADetailPage(props) {
     const [post, setPost] = useState([]);
@@ -17,6 +18,7 @@ function QnADetailPage(props) {
                 props.setLoading(false);
             })
             .catch(err =>{
+                message.error("Server Error! Please try again later. (Get Reward Post Error)")
                 console.log(err)
             })
         }

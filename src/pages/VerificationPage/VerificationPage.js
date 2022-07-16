@@ -80,20 +80,22 @@ function VerificationPage(props) {
     useEffect(() => {
         if (resendFail) {
             setLoading(false);
+            message.error("Server Error! Please try again later. (Resend Error)")
             message.error(error.msg);
         }
     }, [resendFail]);
     useEffect(() => {
         if (openSuccess )
+            message.success("Success!")
             props.setPageProps({
                 page: 'LoginPage'
             })
-  
+            
 
     }, [openSuccess]);
     useEffect(() => {
         if (openFail) {
-
+            message.error("Server Error! Please try again later. (Verify Error)")
             message.error(error.msg);
         }
     }, [openFail]);

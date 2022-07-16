@@ -176,3 +176,38 @@
     margin-left: .3em;
     margin-right: .7em;
 }
+
+
+
+.note__CommentAreaButton{
+    position: fixed;
+    background-color: #fff;
+    width: 2.5em;
+    right: 0;
+    top: 20vh;
+    border-radius: 1em 0 0 1em;
+    padding-top: .5em;
+    padding-bottom: .5em;
+    padding-left: .5em;
+    padding-right: .5em;
+    z-index: 99;
+    text-align: center;
+    cursor: pointer;
+    box-shadow: rgba(50, 50, 93, 0.3) -2px 3px 20px -2px
+}
+
+.note__CommentAreaButton:hover .anticon, .note__CommentAreaButton:hover .note__CommentAreaButton__Title{
+    color: #555;
+    transition: .3s;
+}
+
+.note__CommentAreaButton .anticon{
+    color: #ccc;
+    cursor: pointer;
+}
+
+.note__CommentAreaButton__Title{
+    color: #888;
+    writing-mode: vertical-lr;
+    margin-top: .5em;
+}

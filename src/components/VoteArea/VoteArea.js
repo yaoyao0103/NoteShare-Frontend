@@ -22,11 +22,12 @@ const VoteArea = (props) => {
         // Todo: check agree list
         axios.put(`http://localhost:8080/post/vote/${props.postId}/${props.vote.id}/${props.email}`, {option: 'agree'})
             .then ( res => {
-                message.success("Agree!");
+                message.success("You agreed to kick the author!");
                 setAgreeCount(agreeCount +1);
                 setVoted(true)
             })
             .catch(err =>{
+                message.error("Server Error! Please try again later. (Agree Kicking Author Error)")
                 console.log(err)
             })
         
@@ -35,11 +36,12 @@ const VoteArea = (props) => {
         // Todo: check agree list
         axios.put(`http://localhost:8080/post/vote/${props.postId}/${props.vote.id}/${props.email}`, {option: 'agree'})
             .then ( res => {
-                message.success("Disagree!");
+                message.success("You disagreed to kick the author!");
                 setDisagreeCount(disagreeCount +1);
                 setVoted(true)
             })
             .catch(err =>{
+                message.error("Server Error! Please try again later. (Disagree Kicking Author Error)")
                 console.log(err)
             })
     }

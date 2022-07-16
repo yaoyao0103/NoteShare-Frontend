@@ -3,6 +3,7 @@ import Navbar from '../../components/Navbar/Navbar';
 import PageOutlineTemplate from '../../components/PageOutlineTemplate/PageOutlineTemplate';
 import PageOutlineContentTemplate from '../../components/PageOutlineContentTemplate/PageOutlineContentTemplate';
 import axios from "axios";
+import { message } from "antd";
 
 function RewardRecommendPage(props) {
     const page = 'RewardRecommendPage';
@@ -23,6 +24,7 @@ function RewardRecommendPage(props) {
                 });
 
             } catch (error) {
+                message.error("Server Error! Please try again later. (Get Reward Post Error)")
                 console.log(error.message);
                 setReward(error.message);
 
@@ -48,7 +50,7 @@ function RewardRecommendPage(props) {
                 });
 
             } catch (error) {
-
+                message.error("Server Error! Please try again later. (Get Reward Post Error)")
                 setReward(error.message);
 
 

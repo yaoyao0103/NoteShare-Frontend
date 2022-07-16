@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Row, Col, Tooltip } from "antd";
+import { Row, Col, Tooltip, Skeleton  } from "antd";
 import PropTypes from 'prop-types';
 import Text from "../Text/Text";
 import './Information.css'
@@ -14,27 +14,27 @@ function Information(props) {
                         <div>
                             <Text color='black' cls='Small' content={"School"} fontSize='5' display="inline-block" />
                         </div>
-                        {props.school}
+                        {props.school? props.school:<Skeleton />}
                     </Col>
                 )}
                 <Col className='information__Department'>
                     <div>
                         <Text color='black' cls='Small' content={"Department"} fontSize='5' display="inline-block" />
                     </div>
-                    {props.department}
+                    {props.department? props.department:<Skeleton />}
                 </Col>
                 <Col className='information__Subject'>
                     <div>
                     <Text color='black' cls='Small' content={"Subject"} fontSize='5' display="inline-block" />
                     </div>
-                    {props.subject}
+                    {props.subject? props.subject:<Skeleton />}
                 </Col>
                 {props.professor!=null &&(
                     <Col className='information__Instructor'>
                         <div>
-                            <Text color='black' cls='Small' content={"Professor"} fontSize='5' display="inline-block" />
+                            <Text color='black' cls='Small' content={"Instructor"} fontSize='5' display="inline-block" />
                         </div>
-                        {props.professor}
+                        {props.professor? props.professor:<Skeleton />}
                     </Col>
                 )}
                 <div className="information__top__right">
@@ -104,15 +104,4 @@ function Information(props) {
     );
 }
 
-Information.defaultProps = {
-    school: null,
-    department: 'Unknown',
-    subject: 'Unknown',
-    professor: null,
-    likeCount: null,
-    favoriteCount: null,
-    unlockCount: null,
-    downloadable: null,
-    bestPrice: null,
-};
 export default Information;

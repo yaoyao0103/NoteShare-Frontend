@@ -33,7 +33,7 @@ function CommentArea(props) {
     const openNotification = () => {
         setIsArchive(true)
         notification.open({
-            message: 'The post had been archived by author!',
+            message: 'The post has been archived by author!',
             description:
                 'After being archived, you cannot leave any comment or click the like button',
             placement: 'bottomLeft'
@@ -94,6 +94,7 @@ function CommentArea(props) {
                 });
         })
         .catch(err => {
+            message.error("Server Error! Please try again later.(Refresh Error)")
             console.log(err)
         })
     }
@@ -103,10 +104,11 @@ function CommentArea(props) {
         axios.put(`http://localhost:8080/favorite/${props.type}/${props.id}/${commentId}/${email}`)
         .then(res => {
             console.log(res.data.res)
-            message.success("Like!")
+            message.success("You liked the comment!")
             refresh()
         })
         .catch(err => {
+            message.error("Server Error! Please try again later. (Like Comment Error)")
             console.log(err)
         }) 
 
@@ -116,10 +118,11 @@ function CommentArea(props) {
         axios.put(`http://localhost:8080/unFavorite/${props.type}/${props.id}/${commentId}/${email}`)
         .then(res => {
             console.log(res.data.res)
-            message.success("UnLike!")
+            message.success("You withdraw a like the comment!")
             refresh()
         })
         .catch(err => {
+            message.error("Server Error! Please try again later. (Unlike Comment Error)")
             console.log(err)
         })  
 
@@ -142,11 +145,12 @@ function CommentArea(props) {
         .then(res => {
             console.log("Comment Response: ",res.data.res)
             setComment('');
-            message.success("Submit!")
+            message.success("You submitted a comment!")
             refresh()
 
         })
         .catch(err => {
+            message.error("Server Error! Please try again later. (Submit Comment Error)")
             console.log(err)
         }) 
     }
@@ -162,10 +166,11 @@ function CommentArea(props) {
         axios.put(`http://localhost:8080/post/qa/best/${props.id}/${commentIds}`)
         .then(res => {
             console.log("Set best response:", res.data.res)
-            message.success("Set!")
+            message.success("You set an answer as best !")
             refresh()
         })
         .catch(err => {
+            message.error("Server Error! Please try again later. (Select Best Answer Error)")
             console.log(err)
         }) 
     }
@@ -179,11 +184,12 @@ function CommentArea(props) {
         }
         axios.put(`http://localhost:8080/comment/${props.id}/${floor}`, data)
         .then(res => {
-            message.success("Update!")
+            message.success("You updated a comment!")
             refresh()
             setEditingComment('')
         })
         .catch(err => {
+            message.error("Server Error! Please try again later. (Update Comment Error)")
             console.log(err)
         })
     }
@@ -193,10 +199,11 @@ function CommentArea(props) {
         axios.delete(`http://localhost:8080/comment/${props.id}/${floor}`)
         .then(res => {
             console.log("Set best response:", res.data.res)
-            message.success("Delete!")
+            message.success("You deleted an comment!")
             refresh()
         })
         .catch(err => {
+            message.error("Server Error! Please try again later. (Delete Comment Error)")
             console.log(err)
         })
     }

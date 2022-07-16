@@ -73,6 +73,7 @@ function SignUpPage(props) {
             console.log(error.response.status);
         })
         if (openSuccess)
+            message.success("Success!")
             props.setPageProps({
                 page: 'VerificationPage',
                 email: email
@@ -81,6 +82,7 @@ function SignUpPage(props) {
     useEffect(() => {
         if (openFail) {
             setLoading(false);
+            message.error("Server Error! Please try again later. (Sign Up Error)")
             message.error(error.msg);
         }
     }, [openFail]);

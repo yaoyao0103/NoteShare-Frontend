@@ -80,13 +80,13 @@ function ProfilePage(props) {
     const SaveAvatar = () => {
         axios.put("http://localhost:8080/user/head/" + email, { headshotPhoto: Avatars[avatar] }).then(res => {
             setAvatarCurrent(Avatars[avatar]);
-            message.success('Change avatar');
+            message.success('You changed your avatar!');
             //console.log(avatarNum+1);
             setAvatarNum(avatarNum + 1);
             props.setAvatar(avatarNum + 1);
 
         }).catch((error) => {
-            message.error(error.response.error);
+            message.error("Server Error! Please try again later. (Change Avatar Error)")
         })
     }
 
@@ -109,8 +109,9 @@ function ProfilePage(props) {
                     '',
                     props.email
                 )
-                message.success('Follow ' + user.name);
+                message.success('You followed ' + user.name + " !");
             }).catch((error) => {
+                message.error("Server Error! Please try again later. (Follow User Error)")
                 console.log(error.response.error);
 
             })
@@ -121,8 +122,9 @@ function ProfilePage(props) {
                 //setProfile(content);
                 setIsFollow(false);
                 setFansNum(fansNum - 1);
-                message.success('Unfollow ' + user.name);
+                message.success('You unfollowed ' + user.name + " !");
             }).catch((error) => {
+                message.error("Server Error! Please try again later. (Unfollow User Error)")
                 console.log(error.response.error);
             })
         }
@@ -133,8 +135,9 @@ function ProfilePage(props) {
             axios.put('http://localhost:8080/cancelBell/'+ email + '/' + props.email,).then(res => {
                 //setProfile(content);
                 setIsBell(false);
-                message.success('Turn on the bell of ' + user.name);
+                message.success('You turned on the bell of ' + user.name + " !");
             }).catch((error) => {
+                message.error("Server Error! Please try again later. (Turn On The Bell Error)")
                 console.log(error.response.error);
             })
         }
@@ -142,8 +145,9 @@ function ProfilePage(props) {
             axios.put("http://localhost:8080/bell/" + email + '/' + props.email,).then(res => {
                 //setProfile(content);
                 setIsBell(true);
-                message.success('Turn on the bell of ' + user.name);
+                message.success('You turned off the bell of ' + user.name + " !");
             }).catch((error) => {
+                message.error("Server Error! Please try again later. (Turn Off The Bell Error)")
                 console.log(error.response.error);
             })
 
@@ -153,7 +157,9 @@ function ProfilePage(props) {
     const SaveProfile = (content) => {
         axios.put("http://localhost:8080/user/profile/" + email, { profile: content }).then(res => {
             setProfile(content);
+            message.success("You updated your profile!")
         }).catch((error) => {
+            message.error("Server Error! Please try again later. (Update Profile Error)")
             console.log(error.response.error);
         })
     };
@@ -164,7 +170,9 @@ function ProfilePage(props) {
         axios.put("http://localhost:8080/user/strength/" + email, { strength: tags }).then(res => {
             console.log(...strength, tag);
             setStrength(oldArray => [...oldArray, tag]);
+            message.success("You added a strength!")
         }).catch((error) => {
+            message.error("Server Error! Please try again later. (Add Strength Error)")
             console.log(error.response.error);
         })
     }
@@ -172,7 +180,9 @@ function ProfilePage(props) {
         const tags = [...strength.slice(0, key), ...strength.slice(key + 1, strength.length)]
         axios.put("http://localhost:8080/user/strength/" + email, { strength: tags }).then(res => {
             setStrength(oldArray => [...oldArray.slice(0, key), ...oldArray.slice(key + 1, strength.oldArray)]);
+            message.success("You deleted a strength!")
         }).catch((error) => {
+            message.error("Server Error! Please try again later. (Delete Strength Error)")
             console.log(error.response.error);
         })
     }
@@ -182,6 +192,7 @@ function ProfilePage(props) {
         }).then(res => {
             setCurrentFolderId(res.data.res.parent);
         }).catch((error) => {
+            message.error("Server Error! Please try again later. (Back To The Last Layer Error)")
             console.log(error.response.error);
         })
     };
@@ -208,6 +219,7 @@ function ProfilePage(props) {
                 setIsRoot(false);
             setGetFolderByIdSuccess(true);
         }).catch((error) => {
+            message.error("Server Error! Please try again later. (Get Folder Error)")
             //console.log(error.response.error);
         })
     };
@@ -219,6 +231,7 @@ function ProfilePage(props) {
             getFolderById(res.data.res[2].id);
             setIsRoot(true);
         }).catch((error) => {
+            message.error("Server Error! Please try again later. (Get All Folders Error)")
             //console.log(error.response.data);
             //setGetFolderFail(true);   
         });
@@ -231,6 +244,7 @@ function ProfilePage(props) {
             setCurrentFolderId('0');
             setGetFolderByIdSuccess(true);
         }).catch((error) => {
+            message.error("Server Error! Please try again later. (Get All Notes Error)")
             //console.log(error.response.data);
             //setGetFolderFail(true);
         });
@@ -281,6 +295,7 @@ function ProfilePage(props) {
             setGetUserSuccess(true);
             props.setLoading(false);
         }).catch((error) => {
+            message.error("Server Error! Please try again later. (Get User Error)")
             console.log(error);
         });
     };
