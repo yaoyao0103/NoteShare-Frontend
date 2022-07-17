@@ -38,7 +38,8 @@ const PageDetailContentTemplate = (props) => {
     const [author, setAuthor] = useState([])
     const [manager, setManager] = useState('')
     const [haveApplied, setHaveApplied] = useState(null)
-    const [isPublic, setIsPublic] = useState(true)
+    const [isPublic, setIsPublic] = useState(false)
+    const [isNotePublic, setIsNotePublic] = useState(false)
     const [authorEmail, setAuthorEmail] = useState('')
     const [noteType, setNoteType] = useState(null)
     const [isSubmit, setIsSubmit] = useState(false)
@@ -50,6 +51,8 @@ const PageDetailContentTemplate = (props) => {
     const [bestNum, setBestNum] = useState(0)
     const [isAnswered, setIsAnswered] = useState(false)
     const [visible, setVisible] = useState(false);
+    const [type, setType] = useState('')
+    const [publishDate, setPublishDate] = useState('')
 
     useEffect(() => {
         const cookieParser = new Cookie(document.cookie)
@@ -59,9 +62,10 @@ const PageDetailContentTemplate = (props) => {
         console.log("tempEmail", tempEmail)
         if (props.page == "NoteDetailPage") {
             setNoteId(props.data?.id);
+            setType("note")
             setEditor(<MyEditor noteId={props.data?.id} version={'0'} page={props.page} email={email} />)
             setNoteType(props.data?.type)
-            setIsPublic(props.data?.public)
+            setIsNotePublic(props.data?.public)
             setAuthorEmail(props.data?.headerUserObj.userObjEmail)
             if (props.data?.type == 'reward') {
                 console.log("props.data?.submit", props.data)
@@ -85,6 +89,7 @@ const PageDetailContentTemplate = (props) => {
         else if (props.page == "CollabDetailPage" && props.data) {
             const noteId = props.data.answers[0];
             setNoteId(noteId);
+            setType("collaboration")
             setIsPublic(props.data?.public)
             axios.get(`http://localhost:8080/note/${noteId}`)
                 .then(res => {
@@ -92,8 +97,8 @@ const PageDetailContentTemplate = (props) => {
                     const tempNote = res.data.res
                     setVersions(tempNote.version)
                     setManager(tempNote.managerUserObj)
-
-
+                    setIsNotePublic(tempNote.public)
+                    setPublishDate(tempNote.publishDate)
                     /*for(let i = 0; i < props.data?.authorUserObj.length; i++){
                         if(props.data?.emailUserObj[i].userObjEmail == tempEmail){
                             setEditor(<MyEditor noteId = {noteId} version={'0'} page={props.page} email={email}/>)
@@ -153,6 +158,7 @@ const PageDetailContentTemplate = (props) => {
             //if(isManager) setPoppedContent( props.data.collabApply );
         }
         else if (props.page == "RewardDetailPage") {
+            setType("reward")
             if(props.data?.answersUserObj?.length > 0){
                 for(let i = 0; i < props.data?.answersUserObj?.length; i++){
                     if(props.data?.answersUserObj[i].best){
@@ -167,6 +173,7 @@ const PageDetailContentTemplate = (props) => {
             }
         }
         else if (props.page == "QnADetailPage") {
+            setType("QA")
             setIsPublic(props.data?.public)
             setAuthorEmail(props.data?.author)
             if (props.data?.author == email) {
@@ -202,6 +209,7 @@ const PageDetailContentTemplate = (props) => {
         if (props.data?.voteUserObj?.length > 0 && isAuthor) {
             for(let i = 0; i < props.data?.voteUserObj.length; i++){
                     //setVote(props.data?.vote.length > 0 ? props.data?.voteUserObj[0] : null)
+                if(props.data?.voteUserObj[i].result == "yet")
                 notification.open({
                     message: (
                     <> 
@@ -419,7 +427,9 @@ const PageDetailContentTemplate = (props) => {
                                         comments={props.data?.commentsUserObj ? props.data.commentsUserObj : []}
                                         versions={versions ? versions : props.data?.version ? props.data.version : []}
                                         public={isPublic}
+                                        notePublic={isNotePublic}
                                         setIsPublic={setIsPublic}
+                                        setIsNotePublic={setIsNotePublic}
                                         setVersion={setVersion}
                                         isAuthor={isAuthor}
                                         isManager={isManager}
@@ -441,6 +451,8 @@ const PageDetailContentTemplate = (props) => {
                                         email={email}
                                         isAnswered={isAnswered}
                                         vote={props.data?.voteUserObj}
+                                        publishDate={publishDate}
+                                        type={type}
                                     /></div>
 
                             </Col>
@@ -463,6 +475,9 @@ const PageDetailContentTemplate = (props) => {
                                     remainBest={1-bestNum}
                                     remainRef={props.data?.referenceNumber}
                                     downloadable={props.data?.downloadable}
+                                    public={isPublic}
+                                    notePublic={isNotePublic}
+                                    type={type}
                                 />
                             </Col>
                         </Row>
@@ -483,6 +498,7 @@ const PageDetailContentTemplate = (props) => {
                         </Row>
                     </Content>
                     {/* Footer */}
+                    
                     <Footer className="contentTemplate__Footer">
                         {props.page == 'NoteDetailPage' &&
                             <>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Tooltip, List, Comment, Mentions, Avatar, message, notification, Row, Col, Menu, Dropdown, Input  } from "antd";
+import { Tooltip, List, Comment, Mentions, Avatar, message, notification, Row, Col, Menu, Dropdown, Input, Popconfirm  } from "antd";
 import Text from "../Text/Text";
 import Button from "../Button/Button";
 import './CommentArea.css'
@@ -195,7 +195,6 @@ function CommentArea(props) {
     }
 
     const commentDelete = (floor) => {
-        
         axios.delete(`http://localhost:8080/comment/${props.id}/${floor}`)
         .then(res => {
             console.log("Set best response:", res.data.res)
@@ -321,7 +320,7 @@ function CommentArea(props) {
                             />
                         </Col>
                         <Col className="comment_MoreOption" span={3}>
-                            {(item.userObj?.userObjEmail == email) &&
+                            {(item.userObj?.userObjEmail == email && !props.isArchive) &&
                             <Dropdown 
                             overlay={<Menu
                                 items={[
@@ -339,7 +338,17 @@ function CommentArea(props) {
                                     {
                                         key: '2',
                                         label: (
-                                            <a onClick={() => {commentDelete(item.floor)}} style={{textDecoration:"none", color:"red"}}>Delete</a>
+                                            <Popconfirm 
+                                                title="Are you sure to delete the comment?"
+                                                okText="Yes"
+                                                cancelText="No"
+                                                onConfirm={()=>{
+                                                    commentDelete(item.floor);
+                                                }}
+                                            >
+                                                <a style={{textDecoration:"none", color:"red"}}>Delete</a>
+                                            </Popconfirm>
+                                            
                                         ),
                                         icon: <DeleteOutlined style={{color:"red"}}/>
                                     }

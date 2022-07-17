@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./OptionMenu.css";
 import { Link, useNavigate } from "react-router-dom";
-import { Menu, Dropdown, Space, Drawer, message, Input, Tooltip, Button, Popover, List, Avatar, Modal } from "antd";
+import { Menu, Dropdown, Space, Drawer, message, Input, Tooltip, Button, Popover, List, Avatar, Modal, Popconfirm } from "antd";
 import { StarOutlined, CopyOutlined, EditOutlined, CommentOutlined, CheckOutlined, CloseOutlined, ShareAltOutlined, InboxOutlined, DeleteOutlined, EyeOutlined, InfoCircleOutlined, UserOutlined, LikeOutlined } from "@ant-design/icons";
 import VersionArea from "../VersionArea/VersionArea";
 import CommentArea from "../CommentArea/CommentArea";
@@ -12,6 +12,7 @@ import Cookie from "../Cookies/Cookies";
 import axios from "../axios/axios";
 import MyEditor from "../MyEditor/MyEditor";
 import { set } from "react-hook-form";
+import moment from 'moment';
 
 const OptionMenu = (props) => {
   const navigate = useNavigate()
@@ -66,9 +67,19 @@ const OptionMenu = (props) => {
   }
 
   const setNoteStatus = () => {
-    axios.put(`http://localhost:8080/note/publish/${props.id}`)
+    if(props.type == "collaboration"){
+      let publishDate = moment(props.publishDate)
+      let now = moment()
+      let diffHours = (now.diff(publishDate, 'hours', true))
+      if(diffHours > 24){
+        message.error("Once the note has been posted for more than 24 hours, you can never unpublish it!")
+        return;
+      }
+    }
+    axios.put(`http://localhost:8080/note/publish/${props.noteId}`)
       .then(res => {
-          message.success("You set the note public!")
+          message.success("Success!")
+          props.setIsNotePublic(!props.notePublic)
       })
       .catch(err => {
         message.error("Server Error! Please try again later. (Set Note Public/Private Error)")
@@ -385,7 +396,7 @@ const OptionMenu = (props) => {
           icon: <InfoCircleOutlined />
         },
         {
-          label: props.public ? (<a onClick={setNoteStatus}>Set Private</a>) : (<a onClick={setNoteStatus}>Set Public</a>),
+          label: props.public ? (<a onClick={setNoteStatus}>Unpublish the note</a>) : (<a onClick={setNoteStatus}>Publish the note</a>),
           key: "3",
           icon: <UserOutlined style={{ color: "#333" }} />
         },
@@ -476,7 +487,7 @@ const OptionMenu = (props) => {
           icon: <InboxOutlined />
         },
         {
-          label: props.public ? (<a onClick={setStatus}>Set Private</a>) : (<a onClick={setStatus}>Set Public</a>),
+          label: props.public ? (<a onClick={setStatus}>Set the post private</a>) : (<a onClick={setStatus}>Set the post public</a>),
           key: "4",
           icon: <UserOutlined style={{ color: "#333" }} />
         },
@@ -515,7 +526,7 @@ const OptionMenu = (props) => {
           disabled: true
         },
         {
-          label: props.public ? (<a onClick={setStatus}>Set Private</a>) : (<a onClick={setStatus}>Set Public</a>),
+          label: props.public ? (<a onClick={setStatus}>Set the post private</a>) : (<a onClick={setStatus}>Set the post public</a>),
           key: "4",
           icon: <UserOutlined style={{ color: "#333" }} />
         },
@@ -550,7 +561,14 @@ const OptionMenu = (props) => {
         {
           label: (
             props.isAnswered?
-            <a onClick={deletePost} style={{ color: "red" }}>Delete</a>
+            <Popconfirm 
+              title="Are you sure to delete the post?" 
+              okText="Yes" 
+              cancelText="No"
+              onConfirm={deletePost}
+            >
+                <a style={{ color: "red" }}>Delete</a>
+            </Popconfirm>
             :
             <Tooltip title={"You have to select all best/reference answers before delete the post."}>
               <a style={{ color: "red", opacity: "0.4", textDecoration: "none" }}>Delete</a>
@@ -726,8 +744,20 @@ const OptionMenu = (props) => {
           icon: <UserOutlined style={{ color: "#333" }} />,
         },
         {
-          label: props.public ? (<a onClick={setStatus}>Set Private</a>) : (<a onClick={setStatus}>Set Public</a>),
+          label: props.public ? (<a onClick={setStatus}>Set the post private</a>) : (<a onClick={setStatus}>Set the post public</a>),
           key: "8",
+          icon: <UserOutlined style={{ color: "#333" }} />
+        },
+        {
+          label: (
+            <Tooltip title={"Publish time: " + moment(props.publishDate).format('YYYY-MM-DD HH:mm:ss')}>
+              {props.notePublic ?
+                (<a onClick={setNoteStatus} style={{textDecoration:"none"}}>Unpublish the note</a>) : (<a onClick={setNoteStatus} style={{textDecoration:"none"}}>Publish the note</a>)
+              }
+            </Tooltip>
+            
+          ),
+          key: "9",
           icon: <UserOutlined style={{ color: "#333" }} />
         },
         {
@@ -736,7 +766,7 @@ const OptionMenu = (props) => {
               showHistoricalVoting();
             }}
           >Historical Voting</a>),
-          key: "9",
+          key: "10",
           icon: <InfoCircleOutlined />
         },
       ]
@@ -775,7 +805,7 @@ const OptionMenu = (props) => {
         {
           label: !props.versions[props.index]?.temp ? (<a onClick={() => versionPublish(props.index)}>Set Private</a>) : (<a onClick={() => versionPublish(props.index)}>Set Public</a>),
           key: "2",
-          icon: <DeleteOutlined />
+          icon: <EyeOutlined />
         }]
     } />
   );
@@ -802,7 +832,7 @@ const OptionMenu = (props) => {
         {
           label: props.versions[props.index]?.isTemp ? (<a >Set Private</a>) : (<a >Set Public</a>),
           key: "2",
-          icon: <DeleteOutlined />
+          icon: <EyeOutlined />
         }]
     } />
   );
@@ -879,7 +909,16 @@ const OptionMenu = (props) => {
           icon: <CopyOutlined />
         },
         {
-          label: (<a onClick={() => deletePost()} style={{ color: "red" }}>Delete</a>),
+          label: (
+            <Popconfirm 
+              title="Are you sure to delete the note from the folder?" 
+              okText="Yes" 
+              cancelText="No"
+              onConfirm={deletePost}
+            >
+                <a style={{ color: "red" }}>Delete</a>
+            </Popconfirm>
+          ),
           key: "4",
           icon: <DeleteOutlined style={{ color: "red" }} />
         },

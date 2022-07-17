@@ -78,7 +78,7 @@
 }
 
 .ant-popover-inner{
-    padding: 0;
+    padding: .5em 1em .5em 1em;
 }
 
 .ant-modal-confirm-content{

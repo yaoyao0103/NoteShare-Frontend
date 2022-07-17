@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
-import { List, Skeleton, Layout, message, Avatar, Dropdown, Menu, Input, Modal, Tooltip } from 'antd';
+import { List, Skeleton, Layout, message, Avatar, Dropdown, Menu, Input, Modal, Tooltip, Popconfirm } from 'antd';
 import Button from '../Button/Button';
 import Text from '../Text/Text';
 import axios from '../axios/axios';
@@ -31,7 +31,7 @@ const FileManager = (props) => {
             .then(res => {
                 console.log(res.data.res)
                 setFiles(res.data.res)
-                setPosts([{folderName:'QnA', value:'QA'}, {folderName:'Reward', value:'reward'}, {folderName:'Collab',value:'collaboration'}])
+                setPosts([{folderName:'My QnA Posts', value:'QA'}, {folderName:'My Reward Posts', value:'reward'}, {folderName:'My Collaboration Notes',value:'collaboration'}])
                 props.setLoading(false)
             })
             .catch(err =>{
@@ -446,7 +446,7 @@ const FileManager = (props) => {
                                         >
                                             
                                             
-                                            {renaming==item.id? <Input bordered={false} onPressEnter={(ev) => renameFolder(item.id, ev.target.value)} className="fileManage_Folder_Item_Input" addonAfter={<CloseOutlined onClick={()=>setRenaming(false)}/>}/>:<div className='fileManage_Folder_Item_Name' onClick={()=> onClickFolderZone(item.id)}><div>{item.folderName}</div></div>}
+                                            {renaming==item.id? <Input bordered={false} onPressEnter={(ev) => renameFolder(item.id, ev.target.value)} className="fileManage_Folder_Item_Input" addonAfter={<CloseOutlined onClick={()=>setRenaming(false)}/>}/>:<div className='fileManage_Folder_Item_Name' onClick={()=> onClickFolderZone(item.id)}><div>{item.folderName!="Temp Reward Note"?item.folderName:"Draft Reward Notes"}</div></div>}
                                             
                                             {renaming!=item.id && inFolder && 
                                                 <Dropdown overlay={<Menu
@@ -466,7 +466,15 @@ const FileManager = (props) => {
                                                         {
                                                         key: '3',
                                                         label: (
-                                                            <a onClick={() => deleteFolder(item.id)} style={{textDecoration:"none"}}>Delete</a>
+                                                            <Popconfirm 
+                                                                title="Are you sure to delete the folder?" 
+                                                                okText="Yes" 
+                                                                cancelText="No"
+                                                                onConfirm={()=>{
+                                                                    deleteFolder(item.id);
+                                                                }}>
+                                                                <a style={{textDecoration:"none", color: "red"}}>Delete</a>
+                                                            </Popconfirm>
                                                         ),
                                                         }
                                                     ]}
