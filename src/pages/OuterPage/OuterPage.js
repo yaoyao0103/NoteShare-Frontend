@@ -75,7 +75,7 @@ const OuterPage = () => {
     const connect = () => {
         // postID = (location.state === 'genewang7@gmail.com') ? 12345 : 67890
 
-        let sock = new SockJS('http://localhost:8080/our-websocket')
+        let sock = new SockJS('http://localhost:8080/websocket')
         stompClient = over(sock)
         stompClient.connect({}, onConnected, (err) => {
             console.log(err)
@@ -120,7 +120,7 @@ const OuterPage = () => {
 
         }
 
-        stompClient.send(`/ws/bell-messages/${userObjEmail}`, {}, JSON.stringify(messageObj))
+        stompClient.send(`/app/bell-messages/${userObjEmail}`, {}, JSON.stringify(messageObj))
     }
 
     const sendPrivateMessage = (msg, type, userObjEmail, userObjName, userObjAvatar, id, receiver) => {
@@ -135,7 +135,7 @@ const OuterPage = () => {
             'id': id,
             'receiverEmail': receiver
         }
-        stompClient.send("/ws/private-messages", {}, JSON.stringify(messageObj))
+        stompClient.send("/app/private-messages", {}, JSON.stringify(messageObj))
     }
 
     const openNotification = (placement, message) => {
