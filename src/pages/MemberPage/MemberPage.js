@@ -18,7 +18,7 @@ function MemberPage(props) {
                 const haveNormal= true;
                 const sortBy=sortMode;
                 console.log(props.department);
-                await axios.get('http://localhost:8080/search/note/'+ String(props.pageNumber-1) + '/10?keyword=os&department=&subject=&haveNormal='+true+'&sortBy='+sortBy).then((res) => {
+                await axios.get('http://localhost:8080/search/note/'+ String(props.pageNumber-1) + '/10?keyword='+(props.keyword?props.keyword:'')+'&department='+(props.department?props.department:'')+'&subject='+(props.subject?props.subject:'')+'&haveNormal=true&haveCollaboration=true&sortBy='+sortBy).then((res) => {
                     setNote(oldArray => [...oldArray, res.data.search]);
                     props.setLoading(false)
                 });
@@ -41,7 +41,7 @@ function MemberPage(props) {
                 const haveNormal= true;
                 const sortBy=sortMode;
             
-                await axios.get('http://localhost:8080/search/note/'+ String(props.pageNumber-1) + '/10?keyword=os&department=&subject=&haveNormal='+true+'&sortBy='+sortBy).then((res) => {
+                await axios.get('http://localhost:8080/search/note/'+ String(props.pageNumber-1) + '/10?keyword='+(props.keyword?props.keyword:'')+'&department='+(props.department?props.department:'')+'&subject='+(props.subject?props.subject:'')+'&haveNormal=true&haveCollaboration=true&sortBy='+sortBy).then((res) => {
                     setNote(oldArray => [...oldArray=[], res.data.search]);
                     
                     window.scrollTo(0, 0);
