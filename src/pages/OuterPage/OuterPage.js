@@ -91,7 +91,7 @@ const OuterPage = () => {
 
             for (let i in res.data.res) {   //訂閱"他人"地址，接收"他人"發送的訊息
                 stompClient.subscribe(`/topic/bell-messages/${res.data.res[i].userObjEmail}`, (message) => {   //拿user 後端轉bell
-                    // showMessage(message) 
+                    openNotification('bottomLeft', JSON.parse(message.body))
                 })
             }
         }).catch((error) => {
