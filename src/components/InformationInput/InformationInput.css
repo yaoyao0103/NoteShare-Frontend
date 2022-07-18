@@ -37,3 +37,12 @@
     display: flex;
     align-items: center; 
 }
+
+.informationInput__Public{
+    padding-top: 1em; 
+    position: relative;
+    float: right;
+    margin-right: 1.8em;
+    display: flex;
+    align-items: center; 
+}

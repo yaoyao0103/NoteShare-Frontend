@@ -3,6 +3,7 @@ import Navbar from '../../components/Navbar/Navbar';
 import PageOutlineTemplate from '../../components/PageOutlineTemplate/PageOutlineTemplate';
 import PageOutlineContentTemplate from '../../components/PageOutlineContentTemplate/PageOutlineContentTemplate';
 import axios from "axios";
+import { message } from "antd";
 
 function CollabRecommendPage(props) {
     const page='CollabRecommendPage';
@@ -25,6 +26,7 @@ function CollabRecommendPage(props) {
 
             } catch (error) {
                 console.log(error.message);
+                message.error("Server Error! Please try again later. (Get Collaboration Outline Error)")
                 setCollab(error.message);
 
 
@@ -48,7 +50,7 @@ function CollabRecommendPage(props) {
                 });
 
             } catch (error) {
-
+                message.error("Server Error! Please try again later. (Get Collaboration Outline Error)")
                 setCollab(error.message);
 
 

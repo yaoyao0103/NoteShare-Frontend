@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import PageDetailTemplate from '../../components/PageDetailTemplate/PageDetailTemplate'
 import NoteEditTemplate from '../../components/NoteEditTemplate/NoteEditTemplate';
 import axios from '../../components/axios/axios';
+import { message } from "antd";
+
 function NoteEditPage(props){
     const [note, setNote] = useState(null);
 
@@ -13,6 +15,7 @@ function NoteEditPage(props){
                 console.log(res.data.res)
             })
             .catch (err => {
+                message.error("Server Error! Please try again later. (Get Note Error)")
                 console.log(err)
             })
         }

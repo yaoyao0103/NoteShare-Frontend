@@ -58,7 +58,7 @@ const PoppedContent = (props) => {
                     props.postId,
                     email
                 )
-                message.success("Agree!!")
+                message.success("You approved the application!")
                 const tempList = new Array();
                 for (let i = 0; i < siderList.length; i++) {
                     if (siderList[i].userObj.userObjEmail != email) {
@@ -69,6 +69,7 @@ const PoppedContent = (props) => {
                 setContent()
             })
             .catch(err => {
+                message.error("Server Error! Please try again later. (Approve Application Error)")
                 console.log(err)
             })
     }
@@ -76,7 +77,7 @@ const PoppedContent = (props) => {
     const reject = (email) => {
         axios.delete(`http://localhost:8080/post/apply/${props.postId}/${email}`)
             .then(res => {
-                message.success("Reject!!")
+                message.success("You rejected the application!")
                 const tempList = new Array();
                 console.log("siderList", siderList)
                 for (let i = 0; i < siderList.length; i++) {
@@ -89,6 +90,7 @@ const PoppedContent = (props) => {
                 // Todo: remove applicant from list
             })
             .catch(err => {
+                message.error("Server Error! Please try again later. (Reject Application Error)")
                 console.log(err)
             })
     }

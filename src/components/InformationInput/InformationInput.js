@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Text from '../Text/Text';
-import { Input, Checkbox, Select } from 'antd'
+import { Input, Checkbox, Select, Switch } from 'antd'
 import NumericInput from '../NumericInput/NumericInput';
 import "./InformationInput.css"
 const { Option } = Select;
@@ -78,6 +78,20 @@ const InformationInput = ({information, setInformation}) => {
                     if(value[0]) setInformation({...information, downloadable: true})
                     else setInformation({...information, downloadable: false})
                 }} />
+            </div>  
+        }
+        {information?.public!=null &&
+            <div className="informationInput__item informationInput__Public">
+                {information?.public?
+                <Switch checkedChildren="Public" unCheckedChildren="Private" defaultChecked onChange={(checked) => {
+                    setInformation({...information, public: checked})}}
+                />
+                :
+                <Switch checkedChildren="Public" unCheckedChildren="Private" onChange={(checked) => {
+                    setInformation({...information, public: checked})}}
+                />
+                }
+                
             </div>  
         }
     </div>

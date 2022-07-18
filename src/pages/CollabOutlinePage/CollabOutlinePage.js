@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Navbar from '../../components/Navbar/Navbar';
 import PageOutlineTemplate from '../../components/PageOutlineTemplate/PageOutlineTemplate';
 import PageOutlineContentTemplate from '../../components/PageOutlineContentTemplate/PageOutlineContentTemplate';
-import { Layout } from "antd";
+import { Layout, message } from "antd";
 import axios from "axios";
 const { Header, Content, Footer } = Layout;
 function CollabOutlinePage(props) {
@@ -29,6 +29,7 @@ function CollabOutlinePage(props) {
 
             } catch (error) {
                 console.log(error.message);
+                message.error("Server Error! Please try again later. (Get Collaboration Outline Error)")
                 setCollab(error.message);
 
 
@@ -55,6 +56,7 @@ function CollabOutlinePage(props) {
 
             } catch (error) {
                 //console.log(error.message);
+                message.error("Server Error! Please try again later. (Get Collaboration Outline Error)")
                 setCollab(error.message);
 
 

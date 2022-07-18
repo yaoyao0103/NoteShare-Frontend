@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PageOutlineContentTemplate from '../../components/PageOutlineContentTemplate/PageOutlineContentTemplate';
 import axios from "axios";
+import { message } from "antd";
 
 function QnARecommendPage(props) {
     const page='QnARecommendPage';
@@ -21,6 +22,7 @@ function QnARecommendPage(props) {
                 });
 
             } catch (error) {
+                message.error("Server Error! Please try again later. (Get QA Post Error)")
                 console.log(error.message);
                 setQnA(error.message);
             }
@@ -42,6 +44,7 @@ function QnARecommendPage(props) {
                 });
 
             } catch (error) {
+                message.error("Server Error! Please try again later. (Get QA Post Error)")
                 setQnA(error.message);
             }
         }

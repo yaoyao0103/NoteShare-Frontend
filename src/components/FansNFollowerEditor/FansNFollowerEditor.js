@@ -19,10 +19,11 @@ function FansNFollowerEditor(props) {
                 setIsFans(true);
                 props.setFansNum(fansNum + 1);
                 setFansNum(fansNum + 1);
-
+                message.success("You followed this user!")
 
                 //message.info('Follow ' + user.name);
             }).catch((error) => {
+                message.error("Server Error! Please try again later. (Follow User Error)")
                 console.log(error.response.error);
 
             })
@@ -36,8 +37,9 @@ function FansNFollowerEditor(props) {
 
                 props.setFansNum(fansNum - 1);
                 setFansNum(fansNum - 1);
-                //message.info('Unfollow ' + user.name);
+                message.success('You unfollowed this user!');
             }).catch((error) => {
+                message.error("Server Error! Please try again later. (Unfollow User Error)")
                 console.log(error.response);
             })
         }
@@ -52,8 +54,9 @@ function FansNFollowerEditor(props) {
                 console.log(followingNum);
                 props.setFollowingNum(followingNum + 1);
                 setFollowingNum(followingNum + 1);
-                //message.info('Follow ' + user.name);
+                message.success('You followed this user!');
             }).catch((error) => {
+                message.error("Server Error! Please try again later. (Follow User Error)")
                 console.log(error.response);
 
             })

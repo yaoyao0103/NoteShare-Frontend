@@ -44,7 +44,6 @@ function ForgetPasswordPage(props) {
             console.log(res.data.res);
             axios.post("http://localhost:8080/verification/resendCode/" + email).then(res => {
                 console.log(res.data.msg);
-                
             }).catch((error) => {
                 console.log(error.response.status)
                 // if(error.response.status === 403){
@@ -53,7 +52,7 @@ function ForgetPasswordPage(props) {
                 setResendFail(true);
             })
             if (res.data.res.activate) {
-                message.success("Your new password has send to your email !");
+                message.success("Your new password has send to your email!");
                 setInterval(function () {
                     props.setPageProps({
                         page: 'LoginPage',
@@ -63,7 +62,7 @@ function ForgetPasswordPage(props) {
                 
             }
             else {
-                message.warn('You should verify your account first');
+                message.warn('You should verify your account first!');
                 setInterval(function () {
                     props.setPageProps({ page: 'VerificationPage', email: email });
                 }, 2000)
@@ -72,6 +71,7 @@ function ForgetPasswordPage(props) {
 
            
         }).catch((error) => {
+            message.error("Server Error! Please try again later. (Get User Information Error)")
             console.log(error.response.status)
             setError(error.response.status);
             // if(error.response.status === 403){

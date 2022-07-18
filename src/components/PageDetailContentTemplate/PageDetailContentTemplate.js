@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Layout, Row, Col, Tag, Progress, message, notification, Avatar, Modal, DatePicker, Select  } from "antd";
+import { Layout, Row, Col, Tag, Progress, message, notification, Avatar, Modal, DatePicker, Select, Skeleton, Drawer, Divider  } from "antd";
+import { CaretLeftFilled } from "@ant-design/icons";
 import Button from "../Button/Button";
 import Text from "../Text/Text";
 import Title from "../Title/Title";
@@ -37,7 +38,8 @@ const PageDetailContentTemplate = (props) => {
     const [author, setAuthor] = useState([])
     const [manager, setManager] = useState('')
     const [haveApplied, setHaveApplied] = useState(null)
-    const [isPublic, setIsPublic] = useState(true)
+    const [isPublic, setIsPublic] = useState(false)
+    const [isNotePublic, setIsNotePublic] = useState(false)
     const [authorEmail, setAuthorEmail] = useState('')
     const [noteType, setNoteType] = useState(null)
     const [isSubmit, setIsSubmit] = useState(false)
@@ -47,6 +49,10 @@ const PageDetailContentTemplate = (props) => {
     const [kickUserList, setKickUserList] = useState(<></>)
     const [refNum, setRefNum] = useState(0)
     const [bestNum, setBestNum] = useState(0)
+    const [isAnswered, setIsAnswered] = useState(false)
+    const [visible, setVisible] = useState(false);
+    const [type, setType] = useState('')
+    const [publishDate, setPublishDate] = useState('')
 
     useEffect(() => {
         const cookieParser = new Cookie(document.cookie)
@@ -56,8 +62,10 @@ const PageDetailContentTemplate = (props) => {
         console.log("tempEmail", tempEmail)
         if (props.page == "NoteDetailPage") {
             setNoteId(props.data?.id);
+            setType("note")
             setEditor(<MyEditor noteId={props.data?.id} version={'0'} page={props.page} email={email} />)
             setNoteType(props.data?.type)
+            setIsNotePublic(props.data?.public)
             setAuthorEmail(props.data?.headerUserObj.userObjEmail)
             if (props.data?.type == 'reward') {
                 console.log("props.data?.submit", props.data)
@@ -81,6 +89,7 @@ const PageDetailContentTemplate = (props) => {
         else if (props.page == "CollabDetailPage" && props.data) {
             const noteId = props.data.answers[0];
             setNoteId(noteId);
+            setType("collaboration")
             setIsPublic(props.data?.public)
             axios.get(`http://localhost:8080/note/${noteId}`)
                 .then(res => {
@@ -88,8 +97,8 @@ const PageDetailContentTemplate = (props) => {
                     const tempNote = res.data.res
                     setVersions(tempNote.version)
                     setManager(tempNote.managerUserObj)
-
-
+                    setIsNotePublic(tempNote.public)
+                    setPublishDate(tempNote.publishDate)
                     /*for(let i = 0; i < props.data?.authorUserObj.length; i++){
                         if(props.data?.emailUserObj[i].userObjEmail == tempEmail){
                             setEditor(<MyEditor noteId = {noteId} version={'0'} page={props.page} email={email}/>)
@@ -140,6 +149,7 @@ const PageDetailContentTemplate = (props) => {
                     setAuthor(tempAuthor)
                 })
                 .catch(err => {
+                    message.error("Server Error! Please try again later. (Get Collaboration Note Error)")
                     console.log(err)
                 })
 
@@ -148,6 +158,7 @@ const PageDetailContentTemplate = (props) => {
             //if(isManager) setPoppedContent( props.data.collabApply );
         }
         else if (props.page == "RewardDetailPage") {
+            setType("reward")
             if(props.data?.answersUserObj?.length > 0){
                 for(let i = 0; i < props.data?.answersUserObj?.length; i++){
                     if(props.data?.answersUserObj[i].best){
@@ -162,6 +173,7 @@ const PageDetailContentTemplate = (props) => {
             }
         }
         else if (props.page == "QnADetailPage") {
+            setType("QA")
             setIsPublic(props.data?.public)
             setAuthorEmail(props.data?.author)
             if (props.data?.author == email) {
@@ -176,6 +188,12 @@ const PageDetailContentTemplate = (props) => {
 
     useEffect(()=>{
         if(bestNum==1 && props.data?.referenceNumber==0){
+            setIsAnswered(true);
+        }
+    },[bestNum])
+
+    useEffect(()=>{
+        if(isAnswered){
             notification.open({
                 message: "The author has selected all answers",
                 description: "You cannot contribute any note now",
@@ -185,12 +203,13 @@ const PageDetailContentTemplate = (props) => {
                 }
             });
         }
-    },[bestNum])
+    },[isAnswered])
 
     useEffect(()=>{
         if (props.data?.voteUserObj?.length > 0 && isAuthor) {
             for(let i = 0; i < props.data?.voteUserObj.length; i++){
                     //setVote(props.data?.vote.length > 0 ? props.data?.voteUserObj[0] : null)
+                if(props.data?.voteUserObj[i].result == "yet")
                 notification.open({
                     message: (
                     <> 
@@ -256,9 +275,11 @@ const PageDetailContentTemplate = (props) => {
         console.log("data", data)
         axios.put(`http://localhost:8080/post/apply/${props.postId}`, data)
             .then(res => {
+                message.success("You submitted your application!")
                 console.log(res)
             })
             .catch(err => {
+            message.error("Server Error! Please try again later. (Submit Application Error)")
                 console.log(err)
             })
     }
@@ -271,7 +292,7 @@ const PageDetailContentTemplate = (props) => {
         axios.put(`http://localhost:8080/coin/note/${email}/${props.noteId}`)
             .then(res => {
                 console.log(res.data.res)
-                message.success("Bought!")
+                message.success("You bought this note!")
                 setIsBuyer(true);
                 if(props.data.type==='normal')
                 props.sendPrivateMessage(
@@ -285,6 +306,7 @@ const PageDetailContentTemplate = (props) => {
                 )
             })
             .catch(err => {
+                message.error("Server Error! Please try again later. (Buy Note Error)")
                 console.log(err)
             })
       
@@ -293,10 +315,11 @@ const PageDetailContentTemplate = (props) => {
     const submitRewardNote = () => {
         axios.put(`http://localhost:8080/note/submit/${props.noteId}`)
             .then(res => {
-                message.success("Submit!")
+                message.success("You submitted your reward note!")
                 setIsSubmit(true)
             })
             .catch(err => {
+                message.error("Server Error! Please try again later. (Submit Reward Note Error)")
                 console.log(err)
             })
     }
@@ -304,10 +327,11 @@ const PageDetailContentTemplate = (props) => {
     const withdrawRewardNote = () => {
         axios.put(`http://localhost:8080/note/withdraw/${props.noteId}`)
             .then(res => {
-                message.success("Withdraw!")
+                message.success("You withdrawn your reward note!")
                 setIsSubmit(false)
             })
             .catch(err => {
+                message.error("Server Error! Please try again later. (Withdraw Reward Note Error)")
                 console.log(err)
             })
     }
@@ -328,10 +352,11 @@ const PageDetailContentTemplate = (props) => {
           console.log("data", data)
           axios.post(`http://localhost:8080/schedule/vote/${props.postId}`, data)
             .then(res => {
-              message.success("Vote Submit!!")
+              message.success("You created a vote of kicking an author!")
               // Todo: remove applicant from list
             })
             .catch(err => {
+                message.error("Server Error! Please try again later. (Create Vote Error)")
               console.log(err)
             })
         setIsModalVisible(false);
@@ -355,9 +380,20 @@ const PageDetailContentTemplate = (props) => {
                 setPoppedContent( res.data.res.answersUserObj );
             })
             .catch(err => {
-              console.log(err)
+                message.error("Server Error! Please try again later. (Refresh Answer Error)")
+                console.log(err)
             })
     }
+
+    // Drawer
+    const showDrawer = () => {
+        setVisible(true);
+      };
+    
+      const onClose = () => {
+        setVisible(false);
+      };
+
     return (
 
         <div className="contentTemplate" >
@@ -378,7 +414,12 @@ const PageDetailContentTemplate = (props) => {
                                 >T</OPInfo>
                             </Col>
                             <Col className="contentTemplate__Header__middle" span={props.page != 'NoteDetailPage' ? 16 : 18}>
-                                <Title title={props.data?.title} size={props.page != 'NoteDetailPage' ? '30' : '35'} /></Col>
+                                {props.data?.title?
+                                <Title title={props.data.title} size={props.page != 'NoteDetailPage' ? '30' : '35'} />
+                                :
+                                <Skeleton />
+                                }
+                            </Col>
                             <Col className="contentTemplate__Header__right contentTemplate__Dropdown" span={props.page != 'NoteDetailPage' ? 1 : 2}>
                                 <div className="contentTemplate__Dropdown">
                                     <OptionMenu
@@ -386,7 +427,9 @@ const PageDetailContentTemplate = (props) => {
                                         comments={props.data?.commentsUserObj ? props.data.commentsUserObj : []}
                                         versions={versions ? versions : props.data?.version ? props.data.version : []}
                                         public={isPublic}
+                                        notePublic={isNotePublic}
                                         setIsPublic={setIsPublic}
+                                        setIsNotePublic={setIsNotePublic}
                                         setVersion={setVersion}
                                         isAuthor={isAuthor}
                                         isManager={isManager}
@@ -406,6 +449,10 @@ const PageDetailContentTemplate = (props) => {
                                         showKickWindow={showModal}
                                         isBuyer={isBuyer}
                                         email={email}
+                                        isAnswered={isAnswered}
+                                        vote={props.data?.voteUserObj}
+                                        publishDate={publishDate}
+                                        type={type}
                                     /></div>
 
                             </Col>
@@ -428,13 +475,16 @@ const PageDetailContentTemplate = (props) => {
                                     remainBest={1-bestNum}
                                     remainRef={props.data?.referenceNumber}
                                     downloadable={props.data?.downloadable}
+                                    public={isPublic}
+                                    notePublic={isNotePublic}
+                                    type={type}
                                 />
                             </Col>
                         </Row>
-
+                        <Divider />
                         <Row className='contentTemplate__Row'>
                             <Col className='contentTemplate__Content__Title' >
-                                <Text color='black' cls='Default' content={"Content:"} fontSize='22' display="inline-block" />
+                                <Text color='black' cls='Small' content={"Content:"} fontSize='22' display="inline-block" />
                             </Col>
                         </Row>
                         <Row className='contentTemplate__Row'>
@@ -448,6 +498,7 @@ const PageDetailContentTemplate = (props) => {
                         </Row>
                     </Content>
                     {/* Footer */}
+                    
                     <Footer className="contentTemplate__Footer">
                         {props.page == 'NoteDetailPage' &&
                             <>
@@ -555,16 +606,18 @@ const PageDetailContentTemplate = (props) => {
                 </Select>
             </Modal>
 
+            <div className='note__CommentAreaButton' onClick={showDrawer}>
+                <div className='note__CommentAreaButton__Title'>Comment</div>
+                <CaretLeftFilled />
+            </div>
+
+            <Drawer title={"Comment"} placement="right" onClose={onClose} visible={visible}>
+                <CommentArea page={props.page} type="note" comments={props.data?.commentsUserObj ? props.data.commentsUserObj : []} id={props.postId ? props.postId : props.noteId} />
+            </Drawer>
+
         </div>
     );
 }
 
-
-PageDetailContentTemplate.defaultProps = {
-    data: null,
-    versionId: '',
-    page: '',
-    footerBtn: null,
-};
 
 export default PageDetailContentTemplate;

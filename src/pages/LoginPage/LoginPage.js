@@ -103,6 +103,7 @@ function LoginPage(props) {
                 props.setPageProps({ page: 'PersonalPage' })
             }
             else {
+                message.warn("You have not activate your account!")
                 axios.post("http://localhost:8080/verification/resendCode/" + email).then(res => {
                     console.log(res.data.msg);
                 }).catch((error) => {
@@ -114,8 +115,12 @@ function LoginPage(props) {
 
         }).catch((error) => {
             console.log(error.response.status)
-
-            message.error(error.msg);
+            if(error.response.status === 403){
+                message.error("Please enter correct email or password!")
+            }
+            else{
+                message.error("Server Error! Please try again later. (Login Error)")
+            }
         })
 
     };

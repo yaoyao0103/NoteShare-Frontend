@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
-import { List, Skeleton, Layout, message, Avatar, Dropdown, Menu, Input, Modal, Tooltip } from 'antd';
+import { List, Skeleton, Layout, message, Avatar, Dropdown, Menu, Input, Modal, Tooltip, Popconfirm } from 'antd';
 import Button from '../Button/Button';
 import Text from '../Text/Text';
 import axios from '../axios/axios';
@@ -28,15 +28,17 @@ const FileManager = (props) => {
     useEffect(() => {
         async function getRootFile() {
             axios.get(`http://localhost:8080/folder/root/${props.email}`)
-            .then(res => {
-                console.log(res.data.res)
-                setFiles(res.data.res)
-                setPosts([{folderName:'QnA', value:'QA'}, {folderName:'Reward', value:'reward'}, {folderName:'Collab',value:'collaboration'}])
+            .then(folderRes => {
+                console.log(folderRes.data.res)
+                setFiles(folderRes.data.res)
+                setPosts([{folderName:'My QnA Posts', value:'QA'}, {folderName:'My Reward Posts', value:'reward'}, {folderName:'My Collaboration Notes',value:'collaboration'}])
                 props.setLoading(false)
             })
             .catch(err =>{
+                message.error("Server Error! Please try again later. (Get Root File Error)")
                 console.log(err)
             })
+            
         }
         if(props.email) getRootFile();
         //setRoot([{folderName:'Buy', value:'buy'}, {folderName:'Favorite', value:'favorite'}, {folderName:'Folder', value:'folder'}, {folderName:'QnA', value:'QA'}, {folderName:'Reward', value:'reward'}, {folderName:'CollabNote',value:'collaboration'}])
@@ -106,6 +108,7 @@ const FileManager = (props) => {
         })
         .catch(err =>{
             console.log(err)
+            message.error("Server Error! Please try again later. (Enter Folder Error)")
             props.setLoading(false)
         })
     }
@@ -118,6 +121,7 @@ const FileManager = (props) => {
             console.log(res.data.res)
             setFiles([])
             setPostShow(false)
+            setBackBtnShow(true);
             const tempPosts = res.data.res;
             if(tempPosts.length > 0){
                 setNotes(
@@ -154,8 +158,47 @@ const FileManager = (props) => {
         })
         .catch(err =>{
             console.log(err)
+            message.error("Server Error! Please try again later. (Enter Post Folder Error)")
             props.setLoading(false)
         })
+    }
+
+    const onClickAllNotes = () => {
+        props.setLoading(true)
+        axios.get(`http://localhost:8080/note/all/${props.email}`)
+            .then(res => {
+                setFiles([])
+                setPostShow(false)
+                setBackBtnShow(true);
+                setNotes(
+                    <List
+                        className="fileManage_Note fileManage_List"
+                        itemLayout="horizontal"
+                        dataSource={res.data.res}
+                        renderItem={(item, index) => (
+                            <List.Item
+                                className="fileManage_Note_Item fileManage_List_Item"                                
+                            >
+                                <List.Item.Meta
+                                    avatar={
+                                    <Tooltip title={item.headerUserObj.userObjName}>
+                                        <Avatar src={item.headerUserObj.userObjAvatar} />
+                                    </Tooltip>
+                                    }                 
+                                    title={item.title}
+                                    description={item.description.substring(0, 120) + '...'}
+                                    onClick={()=> onClickNote(item.type, item.id)}
+                                />
+                            </List.Item>
+                        )}
+                    />
+                )
+                props.setLoading(false)
+            })
+            .catch(err =>{
+                message.error("Server Error! Please try again later. (Get Root File Error)")
+                console.log(err)
+            })
     }
 
     const onClickNote = (id) => {
@@ -229,6 +272,7 @@ const FileManager = (props) => {
             })
             .catch(err =>{
                 console.log(err)
+                message.error("Server Error! Please try again later. (Back To Last Layer Error)")
                 props.setLoading(false)
             })
         }
@@ -248,6 +292,7 @@ const FileManager = (props) => {
             })
             .catch(err =>{
                 console.log(err)
+                message.error("Server Error! Please try again later. (Back To Last Layer Error)")
                 props.setLoading(false)
             })
         }
@@ -255,23 +300,28 @@ const FileManager = (props) => {
     }
 
     const createFolder = (name) => {
-        props.setLoading(true)
         const data = {
             folderName: name,
             parent: current,
             path: path + `/${name}`,
             public: true,
-
+            
         }
+        if(!name){
+            message.warn("The folder name cannot be empty!")
+            return;
+        }
+        props.setLoading(true)
         //console.log("path", data)
         axios.post(`http://localhost:8080/folder/${props.email}`, data)
             .then(res => {
                 console.log(res.data.res);
                 onClickFolderZone(current)
                 setNewFolder(false)
-                props.setLoading(false)
+                message.success("You created a folder!")
             })
             .catch(err =>{
+                message.error("Server Error! Please try again later. (Create Folder Error)")
                 console.log(err)
             })
     }
@@ -283,8 +333,10 @@ const FileManager = (props) => {
                 console.log(res);
                 onClickFolderZone(current)
                 props.setLoading(false)
+                message.success("You deleted a folder!")
             })
             .catch(err =>{
+                message.error("Server Error! Please try again later. (Delete Folder Error)")
                 console.log(err)
             })
     }
@@ -294,12 +346,13 @@ const FileManager = (props) => {
         axios.put(`http://localhost:8080/folder/rename/${props.email}/${folderId}/${newName}`)
             .then(res => {
                 console.log(res);
-                message.success("Success")
+                message.success("You renamed a folder")
                 setRenaming(false)
                 onClickFolderZone(current)
                 props.setLoading(false)
             })
             .catch(err =>{
+                message.error("Server Error! Please try again later. (Rename Folder Error)")
                 console.log(err)
             })
     }
@@ -356,19 +409,20 @@ const FileManager = (props) => {
         message.destroy();
         axios.put(`http://localhost:8080/note/save/${copy}/${current}`)
             .then(res => {
-                message.success("Success!")
+                message.success("You copied a note!")
                 onClickFolderZone(current)
                 setCopy(null)
                 props.setLoading(false)
             })
             .catch(err =>{
-                message.error("Error!")
+                message.error("Server Error! Please try again later. (Copy Note Error)")
                 setCopy(null)
             })
         
     }
 
     const moveFolder = () => {
+        message.destroy(); 
         props.setLoading(true)
         const data = {
             path: path + '/' + move.folderName,
@@ -377,13 +431,12 @@ const FileManager = (props) => {
         
         axios.put(`http://localhost:8080/folder/save/${props.email}/${move.folderId}`, data)
             .then(res => {
-                message.success("Success!")
                 onClickFolderZone(current)
                 setMove(null)
-                props.setLoading(false)
+                message.success("You moved a folder!")
             })
             .catch(err =>{
-                message.error("Error!")
+                message.error("Server Error! Please try again later. (Move Folder Error)")
             })
     }
     return (
@@ -422,6 +475,15 @@ const FileManager = (props) => {
                             </>}
                         </div>
                         <>
+                            {postShow &&
+                            <List.Item
+                                className={"fileManage_Folder_Item fileManage_List_Item"}
+                                //onClick={()=> onClickFolderZone(item.id)}
+                                >  
+                                    <div className='fileManage_Folder_Item_Name' onClick={()=> onClickAllNotes()}>My All Notes</div>
+                                </List.Item>
+                            }
+
                             <List
                                 className="fileManage_Folder fileManage_List"
                                 itemLayout="horizontal"
@@ -433,7 +495,7 @@ const FileManager = (props) => {
                                         >
                                             
                                             
-                                            {renaming==item.id? <Input bordered={false} onPressEnter={(ev) => renameFolder(item.id, ev.target.value)} className="fileManage_Folder_Item_Input" addonAfter={<CloseOutlined onClick={()=>setRenaming(false)}/>}/>:<div className='fileManage_Folder_Item_Name' onClick={()=> onClickFolderZone(item.id)}><div>{item.folderName}</div></div>}
+                                            {renaming==item.id? <Input bordered={false} onPressEnter={(ev) => renameFolder(item.id, ev.target.value)} className="fileManage_Folder_Item_Input" addonAfter={<CloseOutlined onClick={()=>setRenaming(false)}/>}/>:<div className='fileManage_Folder_Item_Name' onClick={()=> onClickFolderZone(item.id)}><div>{item.folderName!="Temp Reward Note"?item.folderName:"Draft Reward Notes"}</div></div>}
                                             
                                             {renaming!=item.id && inFolder && 
                                                 <Dropdown overlay={<Menu
@@ -453,7 +515,15 @@ const FileManager = (props) => {
                                                         {
                                                         key: '3',
                                                         label: (
-                                                            <a onClick={() => deleteFolder(item.id)} style={{textDecoration:"none"}}>Delete</a>
+                                                            <Popconfirm 
+                                                                title="Are you sure to delete the folder?" 
+                                                                okText="Yes" 
+                                                                cancelText="No"
+                                                                onConfirm={()=>{
+                                                                    deleteFolder(item.id);
+                                                                }}>
+                                                                <a style={{textDecoration:"none", color: "red"}}>Delete</a>
+                                                            </Popconfirm>
                                                         ),
                                                         }
                                                     ]}
@@ -481,7 +551,7 @@ const FileManager = (props) => {
                                         className="fileManage_Folder_Item fileManage_List_Item"
                                         onClick={()=> onClickPostZone(item.value)}
                                     >
-                                        <div className='fileManage_Folder_Item_Name' onClick={()=> onClickFolderZone(item.id)}><div>{item.folderName}</div></div>
+                                        <div className='fileManage_Folder_Item_Name' ><div>{item.folderName}</div></div>
                                     </List.Item>
                                 )}
                             />

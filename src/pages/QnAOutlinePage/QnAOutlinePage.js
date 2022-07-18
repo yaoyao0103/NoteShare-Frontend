@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import PageOutlineTemplate from '../../components/PageOutlineTemplate/PageOutlineTemplate';
 import PageOutlineContentTemplate from '../../components/PageOutlineContentTemplate/PageOutlineContentTemplate';
 import axios from "axios";
+import { message } from "antd";
+
 function QnAOutlinePage(props) {
     const page = "QnAOutlinePage";
     const [QnA, setQnA] = useState([]);
@@ -22,6 +24,7 @@ function QnAOutlinePage(props) {
                 });
 
             } catch (error) {
+                message.error("Server Error! Please try again later. (Get Reward Post Error)")
                 console.log(error.message);
                 setQnA(error.message);
             }
@@ -44,6 +47,7 @@ function QnAOutlinePage(props) {
                 });
 
             } catch (error) {
+                message.error("Server Error! Please try again later. (Get Reward Post Error)")
                 setQnA(error.message);
             }
         }

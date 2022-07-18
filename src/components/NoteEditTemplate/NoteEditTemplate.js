@@ -71,6 +71,7 @@ const NoteEditTemplate = (props) => {
                     setPostInfo(res.data.res);
                 })
                 .catch (err => {
+                    message.error("Server Error! Please try again later. (Get Reward Post Error)")
                     console.log(err)
                 }) 
             }
@@ -83,6 +84,7 @@ const NoteEditTemplate = (props) => {
                 professor: note.professor,
                 downloadable: note.downloadable,
                 price: note.price,
+                public: note.public
             })
             setContent(note.description)
             setNoteId(note.id)
@@ -108,6 +110,7 @@ const NoteEditTemplate = (props) => {
                 professor: '',
                 downloadable: false,
                 price: '0',
+                public: true,
             });
             setContent('')
         }
@@ -118,17 +121,15 @@ const NoteEditTemplate = (props) => {
                 department: '',
                 subject: '',
                 professor: '',
-                downloadable: false,
-                price: '0',
             });
             setContent('')
             // get post info
             axios.get(`http://localhost:8080/post/${props.postId}/`)
                 .then ( res => {
-                    console.log("------------", res.data.res)
                     setPostInfo(res.data.res);
                 })
                 .catch (err => {
+                    message.error("Server Error! Please try again later. (Get Post Information In Note Error)")
                     console.log(err)
                 })      
         }
@@ -167,7 +168,6 @@ const NoteEditTemplate = (props) => {
             return;
         }
         if(props.mode=="edit"){
-            message.success("Update info")
             const note = props.note;
             note.department = information.department
             note.subject = information.subject
@@ -177,13 +177,16 @@ const NoteEditTemplate = (props) => {
             note.downloadable = information.downloadable
             note.price = information.price
             note.description = content
+            note.public = information.public
 
             axios.put(`http://localhost:8080/note/${note.id}`, note)
             .then(contentRes => {
                 console.log(contentRes)
                 setStep(1);
+                message.success("You updated the information of note!")
             })
             .catch (err => {
+                message.error("Server Error! Please try again later. (Update Information Of Note Error)")
                 console.log(err)
             })
         }
@@ -197,6 +200,7 @@ const NoteEditTemplate = (props) => {
             NoteFormat.downloadable = information.downloadable
             NoteFormat.price = information.price
             NoteFormat.description = content
+            NoteFormat.public = information.public
 
             axios.post(`http://localhost:8080/note/${email}/${props.folderId}`, NoteFormat)
             .then(res => {
@@ -213,8 +217,10 @@ const NoteEditTemplate = (props) => {
                     const version = versionRes.data.res;
                     setVersions([version])
                     setStep(1);
+                    message.success("You submitted the information of note!")
                 })
                 .catch (err => {
+                    message.error("Server Error! Please try again later. (Submit Information Of Note Error)")
                     console.log(err)
                 })
             })
@@ -250,8 +256,10 @@ const NoteEditTemplate = (props) => {
                     const version = versionRes.data.res;
                     setVersions([version])
                     setStep(1);
+                    message.success("You submitted the information of note!")
                 })
                 .catch (err => {
+                    message.error("Server Error! Please try again later. (Submit Information Of Reward Note Error)")
                     console.log(err)
                 })
                 // props.sendPrivateMessage(
@@ -316,8 +324,10 @@ const NoteEditTemplate = (props) => {
                     setMyEditor(<MyEditor noteId={noteId} version={'0'} page={props.page} email={email}/>)
                     setStep(0);
                     setStep(1);
+                    message.success("You copied the version!")
                 })
                 .catch (err => {
+                    message.error("Server Error! Please try again later. (Copy Version Error)")
                     console.log(err)
                 })
             })
@@ -348,10 +358,11 @@ const NoteEditTemplate = (props) => {
                 axios.put(`http://localhost:8080/note/${noteId}`, tempNote)
                     .then(res => {
                         console.log(res);
-                        message.success("Submit!");
+                        message.success("You submitted the tags!");
                         props.setPageProps({page:'NoteDetailPage', noteId: noteId})
                     })
                     .catch (err => {
+                        message.error("Server Error! Please try again later. (Submit Tag Error)")
                         console.log(err)
                     }) 
             })
@@ -414,12 +425,13 @@ const NoteEditTemplate = (props) => {
         VersionFormat.content = [ContentFormat]
         axios.put(`http://localhost:8080/note/${noteId}/${versionLength}`, VersionFormat)
         .then ( res => {
-            message.success("Saved")
             const version = res.data.res;
             setVersions([...versions, version])
             editor.storeVersion({}, versionLength)
+            message.success("You created a new version")
         })
         .catch (err => {
+            message.error("Server Error! Please try again later. (New Version Error)")
             console.log(err)
         })
     }
@@ -438,21 +450,24 @@ const NoteEditTemplate = (props) => {
                     .then(res => {
                         axios.put(`http://localhost:8080/note/submit/${noteId}`)
                         .then ( res => {
-                            message.success("Submit!")
+                            message.success("You submitted a reward note!")
                             props.setPageProps({
                                 page: "NoteDetailPage",
                                 noteId: noteId
                             })
                         })
                         .catch(err =>{
+                            message.error("Server Error! Please try again later. (Publish Reward Note Error)")
                             console.log(err)
                         })
                     })
                     .catch (err => {
+                        message.error("Server Error! Please try again later. (Submit Reward Note Error)")
                         console.log(err)
                     }) 
             })
             .catch (err => {
+                message.error("Server Error! Please try again later. (Get Tags Error)")
                 console.log(err)
             })   
     }

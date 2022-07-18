@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Dropdown, Menu, Avatar, Badge, Row, Col, Typography } from 'antd';
+import { message, Dropdown, Menu, Avatar, Badge, Row, Col, Typography } from 'antd';
 import { BellOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 import './Ring.css';
 import Cookie from "../../Cookies/Cookies";
@@ -73,6 +73,7 @@ function Ring(props) {
             
             setRender(true)
         }).catch((error) => {
+            message.error("Server Error! Please try again later. (Get Notification Error)")
             //message.info(error.response.error);
 
         })

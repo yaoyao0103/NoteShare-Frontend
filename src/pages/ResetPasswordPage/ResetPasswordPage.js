@@ -48,7 +48,7 @@ function ResetPasswordPage(props) {
         console.log(newPassword);
         axios.post("http://localhost:8080/verification/resetPassword" , {password:oldPassword,newPassword:newPassword,email:props.email,}).then(res => {
             console.log(res);
-            message.success("Your password has reset, please log in again !");
+            message.success("Your password has reset! Please log in again!");
             document.cookie ='email=;';
             setInterval(function () {
                 props.setLoggedIn(false);
@@ -58,6 +58,7 @@ function ResetPasswordPage(props) {
                 })
             }, 2000)
         }).catch((error) => {
+            message.error("Server Error! Please try again later. (Reset Password Error)")
             console.log(error.response.status)
             // if(error.response.status === 403){
             //   setRedirectActivate(true);

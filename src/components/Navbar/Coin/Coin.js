@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { } from 'antd';
+import { message } from 'antd';
 import { Base64 } from 'js-base64';
 import { DollarOutlined} from '@ant-design/icons';
 import axios from "axios";
@@ -21,6 +21,7 @@ function Coin(props) {
             props.setCoinNum(res.data.res.coin);
             setGetUserSuccess(true);
         }).catch((error) => {
+            message.error("Server Error! Please try again later. (Get coin Error)")
             console.log(error);
         });
     };

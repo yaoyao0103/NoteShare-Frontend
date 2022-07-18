@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import PageDetailTemplate from '../../components/PageDetailTemplate/PageDetailTemplate'
 import PageDetailContentTemplate from '../../components/PageDetailContentTemplate/PageDetailContentTemplate';
 import axios from '../../components/axios/axios';
+import { message } from "antd";
+
 function NoteDetailPage(props){
     const [ note, setNote ] = useState();
     //const noteId = "62aee9682b646a3f85671a8b"
@@ -17,6 +19,7 @@ function NoteDetailPage(props){
                 props.setLoading(false)
             })
             .catch (err => {
+                message.error("Server Error! Please try again later. (Get Note Error)")
                 console.log(err)
             })
         }
