@@ -28,9 +28,9 @@ const FileManager = (props) => {
     useEffect(() => {
         async function getRootFile() {
             axios.get(`http://localhost:8080/folder/root/${props.email}`)
-            .then(res => {
-                console.log(res.data.res)
-                setFiles(res.data.res)
+            .then(folderRes => {
+                console.log(folderRes.data.res)
+                setFiles(folderRes.data.res)
                 setPosts([{folderName:'My QnA Posts', value:'QA'}, {folderName:'My Reward Posts', value:'reward'}, {folderName:'My Collaboration Notes',value:'collaboration'}])
                 props.setLoading(false)
             })
@@ -38,6 +38,7 @@ const FileManager = (props) => {
                 message.error("Server Error! Please try again later. (Get Root File Error)")
                 console.log(err)
             })
+            
         }
         if(props.email) getRootFile();
         //setRoot([{folderName:'Buy', value:'buy'}, {folderName:'Favorite', value:'favorite'}, {folderName:'Folder', value:'folder'}, {folderName:'QnA', value:'QA'}, {folderName:'Reward', value:'reward'}, {folderName:'CollabNote',value:'collaboration'}])
@@ -120,6 +121,7 @@ const FileManager = (props) => {
             console.log(res.data.res)
             setFiles([])
             setPostShow(false)
+            setBackBtnShow(true);
             const tempPosts = res.data.res;
             if(tempPosts.length > 0){
                 setNotes(
@@ -159,6 +161,44 @@ const FileManager = (props) => {
             message.error("Server Error! Please try again later. (Enter Post Folder Error)")
             props.setLoading(false)
         })
+    }
+
+    const onClickAllNotes = () => {
+        props.setLoading(true)
+        axios.get(`http://localhost:8080/note/all/${props.email}`)
+            .then(res => {
+                setFiles([])
+                setPostShow(false)
+                setBackBtnShow(true);
+                setNotes(
+                    <List
+                        className="fileManage_Note fileManage_List"
+                        itemLayout="horizontal"
+                        dataSource={res.data.res}
+                        renderItem={(item, index) => (
+                            <List.Item
+                                className="fileManage_Note_Item fileManage_List_Item"                                
+                            >
+                                <List.Item.Meta
+                                    avatar={
+                                    <Tooltip title={item.headerUserObj.userObjName}>
+                                        <Avatar src={item.headerUserObj.userObjAvatar} />
+                                    </Tooltip>
+                                    }                 
+                                    title={item.title}
+                                    description={item.description.substring(0, 120) + '...'}
+                                    onClick={()=> onClickNote(item.type, item.id)}
+                                />
+                            </List.Item>
+                        )}
+                    />
+                )
+                props.setLoading(false)
+            })
+            .catch(err =>{
+                message.error("Server Error! Please try again later. (Get Root File Error)")
+                console.log(err)
+            })
     }
 
     const onClickNote = (id) => {
@@ -435,6 +475,15 @@ const FileManager = (props) => {
                             </>}
                         </div>
                         <>
+                            {postShow &&
+                            <List.Item
+                                className={"fileManage_Folder_Item fileManage_List_Item"}
+                                //onClick={()=> onClickFolderZone(item.id)}
+                                >  
+                                    <div className='fileManage_Folder_Item_Name' onClick={()=> onClickAllNotes()}>My All Notes</div>
+                                </List.Item>
+                            }
+
                             <List
                                 className="fileManage_Folder fileManage_List"
                                 itemLayout="horizontal"
@@ -502,7 +551,7 @@ const FileManager = (props) => {
                                         className="fileManage_Folder_Item fileManage_List_Item"
                                         onClick={()=> onClickPostZone(item.value)}
                                     >
-                                        <div className='fileManage_Folder_Item_Name' onClick={()=> onClickFolderZone(item.id)}><div>{item.folderName}</div></div>
+                                        <div className='fileManage_Folder_Item_Name' ><div>{item.folderName}</div></div>
                                     </List.Item>
                                 )}
                             />
