@@ -53,7 +53,9 @@
     cursor: pointer;
     box-shadow: -2px 2px 20px 1px rgba(0, 0, 0, 0.2);
 }
-
+.toast__Avatar{
+    margin-right:10em;
+}
 .floatButton:hover{
     background-color: #FF9224;
     transform: scale(1.1) rotate(180deg);

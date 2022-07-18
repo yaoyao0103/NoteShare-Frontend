@@ -7,7 +7,6 @@ import { message } from "antd";
 
 function RewardRecommendPage(props) {
     const page = 'RewardRecommendPage';
-    const [pageNumber, setPageNumber] = useState(1);
     const [Reward, setReward] = useState([]);
     const [sortMode, setSortMode] = useState('date');
 
@@ -17,7 +16,7 @@ function RewardRecommendPage(props) {
             try {
                 const sortBy = sortMode;
 
-                await axios.get('http://localhost:8080/search/post/' + String(pageNumber - 1) + '/20?keyword=interrupt&department=&subject=&haveReward=' + true + '&sortBy=' + sortBy).then((res) => {
+                await axios.get('http://localhost:8080/search/post/' + String(props.pageNumber - 1) + '/20?keyword=interrupt&department=&subject=&haveReward=' + true + '&sortBy=' + sortBy).then((res) => {
 
                     setReward(oldArray => [...oldArray, res.data.search]);
                     props.setLoading(false)
@@ -41,7 +40,7 @@ function RewardRecommendPage(props) {
             try {
                 const sortBy = sortMode;
 
-                await axios.get('http://localhost:8080/search/post/' + String(pageNumber - 1) + '/20?keyword=interrupt&department=&subject=&haveReward=' + true + '&sortBy=' + sortBy).then((res) => {
+                await axios.get('http://localhost:8080/search/post/' + String(props.pageNumber - 1) + '/20?keyword=interrupt&department=&subject=&haveReward=' + true + '&sortBy=' + sortBy).then((res) => {
                     setReward(oldArray => [...oldArray, res.data.search]);
                     window.scrollTo(0, 0);
                     props.setLoading(false)
@@ -60,12 +59,12 @@ function RewardRecommendPage(props) {
         getRewardById();
 
 
-    }, [pageNumber, sortMode]);
+    }, [sortMode]);
 
     return (
         <>
             {Reward.length > 0 &&
-                <PageOutlineContentTemplate page={page} hasSwitch={false} mode='Post' Post={Reward} pageNumber={pageNumber} changePageNumber={(pagenumber) => { setPageNumber(pagenumber); }} changeSortMode={(sortMode) => { setSortMode(sortMode); }} setPageProps={props.setPageProps} />
+                <PageOutlineContentTemplate page={page} hasSwitch={false} mode='Post' Post={Reward} pageNumber={props.pageNumber} changePageNumber={props.setPageNumber} changeSortMode={(sortMode) => { setSortMode(sortMode); }} setPageProps={props.setPageProps} />
             }
         </>
     );

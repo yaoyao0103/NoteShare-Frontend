@@ -21,7 +21,7 @@ function RewardDetailPage(props) {
             })
         }
         getRewardById();
-    }, []);
+    }, [props]);
 
     return (
         <>

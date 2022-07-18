@@ -29,7 +29,7 @@ function RewardEditPage(props){
             {/* <PageDetailTemplate page={page}>
                 <PostEditTemplate page={page} type={"reward"} post={post} mode={mode}/>
             </PageDetailTemplate> */}
-            <PostEditTemplate page={props.page} type={props.type} post={post} postId={props.postId} mode={props.action} setPageProps={props.setPageProps} />
+            <PostEditTemplate sendBellMessage={props.sendBellMessage} page={props.page} type={props.type} post={post} postId={props.postId} mode={props.action} setPageProps={props.setPageProps} />
         </>
         
     );

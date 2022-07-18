@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import SockJS from "sockjs-client"
+import axios from 'axios';
+import { Base64 } from 'js-base64';
 import { over } from "stompjs"
 import MemberPage from "../MemberPage/MemberPage";
 import QnADetailPage from "../QnADetailPage/QnADetailPage";
@@ -30,14 +32,18 @@ import CollabNoteEditPage from "../CollabNoteEditPage/CollabNoteEditPage";
 import CollabRecommendPage from '../CollabRecommendPage/CollabRecommendPage';
 import ResetPasswordPage from '../ResetPasswordPage/ResetPasswordPage';
 import './OuterPage.css'
-import { Button, Drawer, message, Spin } from 'antd'
+import { Button, Drawer, message, Spin, notification, Avatar } from 'antd'
 import { LoadingOutlined } from '@ant-design/icons';
+
+import { RadiusBottomleftOutlined } from '@ant-design/icons';
 import { timers } from 'jquery';
 import Cookie from '../../components/Cookies/Cookies';
 import { set } from 'react-hook-form';
 import { editor } from '../../api_utils/geditor_config';
 var stompClient;
 const OuterPage = () => {
+    const [pageBeforeProps, setPageBeforeProps] = useState({ page: 'LoginPage' });
+    const [pageBeforeNumber, setPageBeforeNumber] = useState(1);
     const [pageProps, setPageProps] = useState({ page: 'LoginPage' });
     const [pageComponent, setPageComponent] = useState(<></>)
     const [visible, setVisible] = useState(false);
@@ -49,7 +55,9 @@ const OuterPage = () => {
     const [backMode, setBackMode] = useState(false);
     const [loading, setLoading] = useState(true);
     const [changePage, setChangePage] = useState(1);
+    const [pageNumber, setPageNumber] = useState(1);
     const [isChanging, setIsChanging] = useState(false);
+    const [api, contextHolder] = notification.useNotification();
 
     const changePageFunction = () => {
         setChangePage(current => current + 1)
@@ -63,11 +71,11 @@ const OuterPage = () => {
         setVisible(false);
     };
 
-    
+
     const connect = () => {
         // postID = (location.state === 'genewang7@gmail.com') ? 12345 : 67890
 
-        let sock = new SockJS('http://localhost:8080/our-websocket')
+        let sock = new SockJS('http://localhost:8080/websocket')
         stompClient = over(sock)
         stompClient.connect({}, onConnected, (err) => {
             console.log(err)
@@ -75,20 +83,31 @@ const OuterPage = () => {
     }
 
     const onConnected = (frame) => {
-        // stompClient.subscribe(`/topic/group-messages/${noteID}`, (message) => {
-        //     // showMessage(message) 
-        // })
-        // for (let i in bell) {   //訂閱"他人"地址，接收"他人"發送的訊息
-        //     stompClient.subscribe(`/topic/bell-messages/${bell[i]}`, (message) => {   //拿user 後端轉bell
-        //         // showMessage(message) 
-        //     })
-        // }
+
+        let cookieParser = new Cookie(document.cookie);
+        let tempEmail = cookieParser.getCookieByName('email');
+        tempEmail = Base64.decode(tempEmail);
+        axios.get("http://localhost:8080/bellBy/" + tempEmail,).then(res => {
+
+            for (let i in res.data.res) {   //訂閱"他人"地址，接收"他人"發送的訊息
+                stompClient.subscribe(`/topic/bell-messages/${res.data.res[i].userObjEmail}`, (message) => {   //拿user 後端轉bell
+                    // showMessage(message) 
+                })
+            }
+        }).catch((error) => {
+            //message.info(error.response.error);
+
+        })
+
         stompClient.subscribe('/user/topic/private-messages', (message) => {
-            // showMessage(message) 
+            // console.log(JSON.parse(message.body))
+
+            openNotification('bottomLeft', JSON.parse(message.body))
         })
     }
 
-      const sendGroupMessage = (msg, type, userObjEmail, userObjName, userObjAvatar, id) => {
+
+    const sendBellMessage = (msg, type, userObjEmail, userObjName, userObjAvatar, id) => {  //地址指向"自己"，由"自己"發送訊息
         let messageObj = {
             'message': msg,
             'type': type,
@@ -98,43 +117,10 @@ const OuterPage = () => {
                 'userObjAvatar': userObjAvatar
             },
             'id': id,
-          
-          // 'receiverEmail': receiver
+
         }
 
-        stompClient.send(`/ws/group-messages/${id}`, {}, JSON.stringify(messageObj))
-      }
-
-      const sendGroupMessageForManager = (msg, type, userObjEmail, userObjName, userObjAvatar, id) => {
-        let messageObj = {
-            'message': msg,
-            'type': type,
-            'userObj': {
-                'userObjEmail': userObjEmail,
-                'userObjName': userObjName,
-                'userObjAvatar': userObjAvatar
-            },
-            'id': id,
-          // 'receiverEmail': receiver
-        }
-
-        stompClient.send(`/ws/group-messages-manager/${id}`, {}, JSON.stringify(messageObj))
-      }
-
-    const sendBellMessage = (msg, type, userObjEmail, userObjName, userObjAvatar, id, receiver) => {  //地址指向"自己"，由"自己"發送訊息
-        let messageObj = {
-            'message': msg,
-            'type': type,
-            'userObj': {
-                'userObjEmail': userObjEmail,
-                'userObjName': userObjName,
-                'userObjAvatar': userObjAvatar
-            },
-            'id': id,
-            'receiverEmail': receiver
-        }
-
-        stompClient.send(`/ws/bell-messages/${userObjEmail}`, {}, JSON.stringify(messageObj))
+        stompClient.send(`/app/bell-messages/${userObjEmail}`, {}, JSON.stringify(messageObj))
     }
 
     const sendPrivateMessage = (msg, type, userObjEmail, userObjName, userObjAvatar, id, receiver) => {
@@ -149,25 +135,43 @@ const OuterPage = () => {
             'id': id,
             'receiverEmail': receiver
         }
-        if (stompClient)
-            stompClient.send("/ws/private-messages", {}, JSON.stringify(messageObj))
+        stompClient.send("/app/private-messages", {}, JSON.stringify(messageObj))
     }
+
+    const openNotification = (placement, message) => {
+        notification.info({
+            //message: message.userObj.userObjName,
+            description: message.message,
+            icon: (
+                <Avatar className="toast__Avatar" style={{ marginRight: '5em' }} size={40} src={message.userObj.userObjAvatar}></Avatar>
+            ),
+            placement,
+            style: {
+                width: '25em',
+                minHeight: "5em"
+            }
+
+        });
+    };
 
 
     useEffect(() => {
-        connect();
+
         const cookieParser = new Cookie(document.cookie)
         const email = cookieParser.getCookieByName('email')
         if (email) {
+            connect();
             setLoggedIn(true);
             setPageProps({ page: 'PersonalPage' })
         }
         const tempPageProps = cookieParser.getCookieByName('pageProps')
-        if (tempPageProps) {
+        const tempPageNumber = cookieParser.getCookieByName('pageNumber')
+        if (tempPageProps && tempPageNumber) {
             const temp = JSON.parse(tempPageProps)
-            console.log("temp", temp)
-
+            //console.log("temp", temp)
+            setPageNumber(pageNumber)
             setPageProps(temp)
+
         }
     }, [])
     useEffect(() => {
@@ -175,6 +179,7 @@ const OuterPage = () => {
         const tempPageProps = cookieParser.getCookieByName('pageProps')
         if (!tempPageProps) {
             if (loggedIn) {
+                connect();
                 setPageProps({ page: 'PersonalPage' })
             }
             else {
@@ -183,80 +188,184 @@ const OuterPage = () => {
         }
     }, [loggedIn])
 
+
+
     useEffect(() => {
-        if(editor){
-            editor.disconnectWS()
+        if ((pageProps.page === 'NoteEditPage' || pageProps.page === 'NoteNewPage' || pageProps.page === 'MemberPage' ||
+            pageProps.page === 'RewardEditPage' || pageProps.page === 'RewardNewPage' || pageProps.page === 'RewardRecommendPage' ||
+            pageProps.page === 'QnAEditPage' || pageProps.page === 'QnANewPage' || pageProps.page === 'QnARecommendPage' ||
+            pageProps.page === 'CollabEditPage' || pageProps.page === 'CollabNewPage' || pageProps.page === 'CollabRecommendPage' ||
+            pageProps.page === 'PersonalPage' || pageProps.page === 'ProfilePage' || pageProps.page === 'ResetPasswordPage' ||
+            pageProps.page === 'VerificationPage'
+        ) && !loggedIn) {
+            message.info('You should log in first !!!')
+            setPageProps({ page: "LoginPage" })
         }
-        console.log(changePage)
-        changePageFunction()
+        else {
 
-        console.log(changePage)
 
-        console.log("page", pageProps.page)
-        console.log("pageProps", pageProps)
-        //寫在這裡就是有弄loading的如果寫完了，就把他拿出去
-        console.log(loading)
-        if (pageProps.page === 'LoginPage' || pageProps.page === "ProfilePage" || pageProps.page === 'ForgetPasswordPage' || pageProps.page === 'ResetPasswordPage' ||
-            pageProps.page === 'SignUpPage' || pageProps.page === 'VerificationPage' ||
-            pageProps.page === 'CollabOutlinePage' || pageProps.page === 'CollabRecommendPage' || pageProps.page === 'CollabDetailPage' ||
-            pageProps.page === 'QnAOutlinePage' || pageProps.page === 'QnARecommendPage' || pageProps.page === 'QnAOutlinePage' || pageProps.page === 'QnADetailPage' ||
-            pageProps.page === 'NoteOutlinePage' || pageProps.page === 'MemberPage' || pageProps.page === 'NoteDetailPage' ||
-            pageProps.page === 'RewardOutlinePage' || pageProps.page === 'RewardRecommendPage' || pageProps.page === 'RewardDetailPage' ||
-            pageProps.page === 'FolderOutlinePage' || pageProps.page === 'PersonalPage'
-        )
-            setLoading(true)
-        else
-            setLoading(false)
-        document.cookie = "pageProps=" + JSON.stringify(pageProps);
-        //setStrength(oldArray => [...oldArray.slice(0, key), ...oldArray.slice(key + 1, strength.oldArray)]);
-        if (pageStack.length > 0)
-            setBackMode(true)
-        else
-            setBackMode(false)
-        setPageStack(oldArray => [...oldArray, pageProps]);
-        console.log(pageStack)
-        if (pageProps.page === 'NoteDetailPage' || pageProps.page === 'NoteOutlinePage' || pageProps.page === 'MemberPage' ||
-            pageProps.page === 'RewardDetailPage' || pageProps.page === 'RewardOutlinePage' || pageProps.page === 'RewardRecommendPage' ||
-            pageProps.page === 'QnADetailPage' || pageProps.page === 'QnAOutlinePage' || pageProps.page === 'QnARecommendPage' ||
-            pageProps.page === 'CollabDetailPage' || pageProps.page === 'CollabOutlinePage' || pageProps.page === 'CollabRecommendPage'
-        )
-            setFloatButtonVisable(true)
-        else
-            setFloatButtonVisable(false)
+            setPageBeforeNumber(pageNumber)
+            if (editor) {
+                editor.disconnectWS()
+            }
+            changePageFunction()
+            if (!(JSON.stringify(pageBeforeProps) === JSON.stringify(pageProps))) {
+                console.log('1111111')
+                setPageNumber(1)
+                setPageBeforeProps(pageProps);
+            }
+            //寫在這裡就是有弄loading的如果寫完了，就把他拿出去    
+            if (pageProps.page === 'LoginPage' || pageProps.page === "ProfilePage" || pageProps.page === 'ForgetPasswordPage' || pageProps.page === 'ResetPasswordPage' ||
+                pageProps.page === 'SignUpPage' || pageProps.page === 'VerificationPage' ||
+                pageProps.page === 'CollabOutlinePage' || pageProps.page === 'CollabRecommendPage' || pageProps.page === 'CollabDetailPage' ||
+                pageProps.page === 'QnAOutlinePage' || pageProps.page === 'QnARecommendPage' || pageProps.page === 'QnAOutlinePage' || pageProps.page === 'QnADetailPage' ||
+                pageProps.page === 'NoteOutlinePage' || pageProps.page === 'MemberPage' || pageProps.page === 'NoteDetailPage' ||
+                pageProps.page === 'RewardOutlinePage' || pageProps.page === 'RewardRecommendPage' || pageProps.page === 'RewardDetailPage' ||
+                pageProps.page === 'FolderOutlinePage' || pageProps.page === 'PersonalPage'
+            )
+                setLoading(true)
+            else
+                setLoading(false)
+            document.cookie = "pageProps=" + JSON.stringify(pageProps);
+            document.cookie = "pageNumber=" + JSON.stringify(pageNumber);
+            if (pageStack.length > 1)
+                setBackMode(true)
+            else
+                setBackMode(false)
+            if (pageProps.page !== 'LoginPage')
+                setPageStack(oldArray => [...oldArray, { pageProps: pageProps, pageNumber: pageNumber }]);
+            if (pageProps.page === 'NoteDetailPage' || pageProps.page === 'NoteOutlinePage' || pageProps.page === 'MemberPage' ||
+                pageProps.page === 'RewardDetailPage' || pageProps.page === 'RewardOutlinePage' || pageProps.page === 'RewardRecommendPage' ||
+                pageProps.page === 'QnADetailPage' || pageProps.page === 'QnAOutlinePage' || pageProps.page === 'QnARecommendPage' ||
+                pageProps.page === 'CollabDetailPage' || pageProps.page === 'CollabOutlinePage' || pageProps.page === 'CollabRecommendPage'
+            )
+                setFloatButtonVisable(true)
+            else
+                setFloatButtonVisable(false)
 
-        switch (pageProps.page) {
-            case 'NoteDetailPage': setPageComponent(<NoteDetailPage page='NoteDetailPage' sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
-            case 'NoteEditPage': setPageComponent(<NoteEditPage page='NoteEditPage' sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
-            case 'NoteNewPage': setPageComponent(<NoteEditPage page='NoteNewPage' sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
-            case 'NoteOutlinePage': setPageComponent(<NoteOutlinePage page='NoteOutlinePage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
-            case 'MemberPage': setPageComponent(<MemberPage page='MemberPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
-            case 'RewardDetailPage': setPageComponent(<RewardDetailPage page='RewardDetailPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
-            case 'RewardEditPage': setPageComponent(<RewardEditPage page='RewardEditPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
-            case 'RewardNewPage': setPageComponent(<RewardEditPage page='RewardNewPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
-            case 'RewardOutlinePage': setPageComponent(<RewardOutlinePage page='RewardOutlinePage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
-            case 'RewardRecommendPage': setPageComponent(<RewardRecommendPage page='RewardRecommendPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
-            case 'QnADetailPage': setPageComponent(<QnADetailPage page='QnADetailPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
-            case 'QnAOutlinePage': setPageComponent(<QnAOutlinePage page='QnAOutlinePage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
-            case 'QnAEditPage': setPageComponent(<QnAEditPage page='QnAEditPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
-            case 'QnANewPage': setPageComponent(<QnAEditPage page='QnANewPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
-            case 'QnARecommendPage': setPageComponent(<QnARecommendPage page='QnARecommendPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
-            case 'CollabDetailPage': setPageComponent(<CollabDetailPage page='CollabDetailPage' sendPrivateMessage={sendPrivateMessage}  changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
-            case 'CollabEditPage': setPageComponent(<CollabEditPage page='CollabEditPage' sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
-            case 'CollabNoteEditPage': setPageComponent(<CollabNoteEditPage page='CollabNoteEditPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
-            case 'CollabNewPage': setPageComponent(<CollabEditPage page='CollabNewPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
-            case 'CollabOutlinePage': setPageComponent(<CollabOutlinePage page='CollabOutlinePage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
-            case 'CollabRecommendPage': setPageComponent(<CollabRecommendPage page='CollabRecommendPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
-            case 'FolderOutlinePage': setPageComponent(<FolderOutlinePage page='FolderOutlinePage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
-            case 'PersonalPage': setPageComponent(<PersonalPage page='PersonalPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
-            case 'ProfilePage': setPageComponent(<ProfilePage page='ProfilePage' sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} Avatar={changeAvatar} setAvatar={setChangeAvatar} setPageProps={setPageProps} {...pageProps} />); break;
-            case 'LoginPage': setPageComponent(<LoginPage page='LoginPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} setLoggedIn={setLoggedIn} {...pageProps} />); break;
-            case 'SignUpPage': setPageComponent(<SignUpPage page='SignUpPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
-            case 'VerificationPage': setPageComponent(<VerificationPage page='VerificationPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
-            case 'ForgetPasswordPage': setPageComponent(<ForgetPasswordPage page='ForgetPasswordPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
-            case 'ResetPasswordPage': setPageComponent(<ResetPasswordPage setLoggedIn={setLoggedIn} page='ResetPasswordPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
-            default: setPageComponent(<></>); break;
+            switch (pageProps.page) {
+                case 'NoteDetailPage': setPageComponent(<NoteDetailPage page='NoteDetailPage' sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                case 'NoteEditPage': setPageComponent(<NoteEditPage page='NoteEditPage' sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
+                case 'NoteNewPage': setPageComponent(<NoteEditPage page='NoteNewPage' sendBellMessage={sendBellMessage} sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                case 'NoteOutlinePage': setPageComponent(<NoteOutlinePage page='NoteOutlinePage' pageNumber={pageNumber} setPageNumber={setPageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
+                case 'MemberPage': setPageComponent(<MemberPage page='MemberPage' pageNumber={pageNumber} setPageNumber={setPageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
+                case 'RewardDetailPage': setPageComponent(<RewardDetailPage page='RewardDetailPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                case 'RewardEditPage': setPageComponent(<RewardEditPage page='RewardEditPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                case 'RewardNewPage': setPageComponent(<RewardEditPage page='RewardNewPage' sendBellMessage={sendBellMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
+                case 'RewardOutlinePage': setPageComponent(<RewardOutlinePage page='RewardOutlinePage' pageNumber={pageNumber} setPageNumber={setPageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
+                case 'RewardRecommendPage': setPageComponent(<RewardRecommendPage page='RewardRecommendPage' pageNumber={pageNumber} setPageNumber={setPageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
+                case 'QnADetailPage': setPageComponent(<QnADetailPage page='QnADetailPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
+                case 'QnAOutlinePage': setPageComponent(<QnAOutlinePage page='QnAOutlinePage' pageNumber={pageNumber} setPageNumber={setPageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                case 'QnAEditPage': setPageComponent(<QnAEditPage page='QnAEditPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
+                case 'QnANewPage': setPageComponent(<QnAEditPage page='QnANewPage' sendBellMessage={sendBellMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                case 'QnARecommendPage': setPageComponent(<QnARecommendPage page='QnARecommendPage' pageNumber={pageNumber} setPageNumber={setPageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                case 'CollabDetailPage': setPageComponent(<CollabDetailPage page='CollabDetailPage' sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                case 'CollabEditPage': setPageComponent(<CollabEditPage page='CollabEditPage' sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                case 'CollabNoteEditPage': setPageComponent(<CollabNoteEditPage page='CollabNoteEditPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                case 'CollabNewPage': setPageComponent(<CollabEditPage page='CollabNewPage' sendBellMessage={sendBellMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                case 'CollabOutlinePage': setPageComponent(<CollabOutlinePage page='CollabOutlinePage' pageNumber={pageNumber} setPageNumber={setPageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                case 'CollabRecommendPage': setPageComponent(<CollabRecommendPage page='CollabRecommendPage' pageNumber={pageNumber} setPageNumber={setPageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                case 'FolderOutlinePage': setPageComponent(<FolderOutlinePage page='FolderOutlinePage' pageNumber={pageNumber} setPageNumber={setPageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                case 'PersonalPage': setPageComponent(<PersonalPage page='PersonalPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                case 'ProfilePage': setPageComponent(<ProfilePage page='ProfilePage' sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} Avatar={changeAvatar} setAvatar={setChangeAvatar} setPageProps={setPageProps} {...pageProps} />); break;
+                case 'LoginPage': setPageComponent(<LoginPage page='LoginPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} setLoggedIn={setLoggedIn} {...pageProps} />); break;
+                case 'SignUpPage': setPageComponent(<SignUpPage page='SignUpPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                case 'VerificationPage': setPageComponent(<VerificationPage page='VerificationPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                case 'ForgetPasswordPage': setPageComponent(<ForgetPasswordPage page='ForgetPasswordPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                case 'ResetPasswordPage': setPageComponent(<ResetPasswordPage setLoggedIn={setLoggedIn} page='ResetPasswordPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                default: setPageComponent(<></>); break;
+            }
         }
     }, [pageProps])
+
+    useEffect(() => {
+        if ((pageProps.page === 'NoteEditPage' || pageProps.page === 'NoteNewPage' || pageProps.page === 'MemberPage' ||
+            pageProps.page === 'RewardEditPage' || pageProps.page === 'RewardNewPage' || pageProps.page === 'RewardRecommendPage' ||
+            pageProps.page === 'QnAEditPage' || pageProps.page === 'QnANewPage' || pageProps.page === 'QnARecommendPage' ||
+            pageProps.page === 'CollabEditPage' || pageProps.page === 'CollabNewPage' || pageProps.page === 'CollabRecommendPage' ||
+            pageProps.page === 'PersonalPage' || pageProps.page === 'ProfilePage' || pageProps.page === 'ResetPasswordPage' ||
+            pageProps.page === 'VerificationPage'
+        ) && !loggedIn) {
+            setPageProps({ page: "LoginPage" })
+        }
+        else {
+            if (!(pageBeforeNumber === pageNumber)) {
+                setPageBeforeNumber(pageNumber)
+                if (editor) {
+                    editor.disconnectWS()
+                }
+                changePageFunction()
+                if (!(JSON.stringify(pageBeforeProps) === JSON.stringify(pageProps))) {
+                    console.log('1111111')
+                    setPageNumber(1)
+                    setPageBeforeProps(pageProps);
+                }
+                //寫在這裡就是有弄loading的如果寫完了，就把他拿出去
+                if (pageProps.page === 'LoginPage' || pageProps.page === "ProfilePage" || pageProps.page === 'ForgetPasswordPage' || pageProps.page === 'ResetPasswordPage' ||
+                    pageProps.page === 'SignUpPage' || pageProps.page === 'VerificationPage' ||
+                    pageProps.page === 'CollabOutlinePage' || pageProps.page === 'CollabRecommendPage' || pageProps.page === 'CollabDetailPage' ||
+                    pageProps.page === 'QnAOutlinePage' || pageProps.page === 'QnARecommendPage' || pageProps.page === 'QnAOutlinePage' || pageProps.page === 'QnADetailPage' ||
+                    pageProps.page === 'NoteOutlinePage' || pageProps.page === 'MemberPage' || pageProps.page === 'NoteDetailPage' ||
+                    pageProps.page === 'RewardOutlinePage' || pageProps.page === 'RewardRecommendPage' || pageProps.page === 'RewardDetailPage' ||
+                    pageProps.page === 'FolderOutlinePage' || pageProps.page === 'PersonalPage'
+                )
+                    setLoading(true)
+                else
+                    setLoading(false)
+                document.cookie = "pageProps=" + JSON.stringify(pageProps);
+                document.cookie = "pageNumber=" + JSON.stringify(pageNumber);
+
+                if (pageStack.length > 1)
+                    setBackMode(true)
+                else
+                    setBackMode(false)
+                if (pageProps.page !== 'LoginPage')
+                    setPageStack(oldArray => [...oldArray, { pageProps: pageProps, pageNumber: pageNumber }]);
+
+                if (pageProps.page === 'NoteDetailPage' || pageProps.page === 'NoteOutlinePage' || pageProps.page === 'MemberPage' ||
+                    pageProps.page === 'RewardDetailPage' || pageProps.page === 'RewardOutlinePage' || pageProps.page === 'RewardRecommendPage' ||
+                    pageProps.page === 'QnADetailPage' || pageProps.page === 'QnAOutlinePage' || pageProps.page === 'QnARecommendPage' ||
+                    pageProps.page === 'CollabDetailPage' || pageProps.page === 'CollabOutlinePage' || pageProps.page === 'CollabRecommendPage'
+                )
+                    setFloatButtonVisable(true)
+                else
+                    setFloatButtonVisable(false)
+
+                switch (pageProps.page) {
+                    case 'NoteDetailPage': setPageComponent(<NoteDetailPage page='NoteDetailPage' sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                    case 'NoteEditPage': setPageComponent(<NoteEditPage page='NoteEditPage' sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
+                    case 'NoteNewPage': setPageComponent(<NoteEditPage page='NoteNewPage' sendBellMessage={sendBellMessage} sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                    case 'NoteOutlinePage': setPageComponent(<NoteOutlinePage page='NoteOutlinePage' pageNumber={pageNumber} setPageNumber={setPageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
+                    case 'MemberPage': setPageComponent(<MemberPage page='MemberPage' pageNumber={pageNumber} setPageNumber={setPageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
+                    case 'RewardDetailPage': setPageComponent(<RewardDetailPage page='RewardDetailPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                    case 'RewardEditPage': setPageComponent(<RewardEditPage page='RewardEditPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                    case 'RewardNewPage': setPageComponent(<RewardEditPage page='RewardNewPage' sendBellMessage={sendBellMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
+                    case 'RewardOutlinePage': setPageComponent(<RewardOutlinePage page='RewardOutlinePage' pageNumber={pageNumber} setPageNumber={setPageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
+                    case 'RewardRecommendPage': setPageComponent(<RewardRecommendPage page='RewardRecommendPage' pageNumber={pageNumber} setPageNumber={setPageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
+                    case 'QnADetailPage': setPageComponent(<QnADetailPage page='QnADetailPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
+                    case 'QnAOutlinePage': setPageComponent(<QnAOutlinePage page='QnAOutlinePage' pageNumber={pageNumber} setPageNumber={setPageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                    case 'QnAEditPage': setPageComponent(<QnAEditPage page='QnAEditPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
+                    case 'QnANewPage': setPageComponent(<QnAEditPage page='QnANewPage' sendBellMessage={sendBellMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                    case 'QnARecommendPage': setPageComponent(<QnARecommendPage page='QnARecommendPage' pageNumber={pageNumber} setPageNumber={setPageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                    case 'CollabDetailPage': setPageComponent(<CollabDetailPage page='CollabDetailPage' sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                    case 'CollabEditPage': setPageComponent(<CollabEditPage page='CollabEditPage' sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                    case 'CollabNoteEditPage': setPageComponent(<CollabNoteEditPage page='CollabNoteEditPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                    case 'CollabNewPage': setPageComponent(<CollabEditPage page='CollabNewPage' sendBellMessage={sendBellMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                    case 'CollabOutlinePage': setPageComponent(<CollabOutlinePage page='CollabOutlinePage' pageNumber={pageNumber} setPageNumber={setPageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                    case 'CollabRecommendPage': setPageComponent(<CollabRecommendPage page='CollabRecommendPage' pageNumber={pageNumber} setPageNumber={setPageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                    case 'FolderOutlinePage': setPageComponent(<FolderOutlinePage page='FolderOutlinePage' pageNumber={pageNumber} setPageNumber={setPageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                    case 'PersonalPage': setPageComponent(<PersonalPage page='PersonalPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                    case 'ProfilePage': setPageComponent(<ProfilePage page='ProfilePage' sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} Avatar={changeAvatar} setAvatar={setChangeAvatar} setPageProps={setPageProps} {...pageProps} />); break;
+                    case 'LoginPage': setPageComponent(<LoginPage page='LoginPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} setLoggedIn={setLoggedIn} {...pageProps} />); break;
+                    case 'SignUpPage': setPageComponent(<SignUpPage page='SignUpPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                    case 'VerificationPage': setPageComponent(<VerificationPage page='VerificationPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                    case 'ForgetPasswordPage': setPageComponent(<ForgetPasswordPage page='ForgetPasswordPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                    case 'ResetPasswordPage': setPageComponent(<ResetPasswordPage setLoggedIn={setLoggedIn} page='ResetPasswordPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                    default: setPageComponent(<></>); break;
+                }
+            }
+        }
+    }, [pageNumber])
 
     const floatBtnOnClick = () => {
         message.info("float button click!")
@@ -280,17 +389,12 @@ const OuterPage = () => {
     }
 
     const lastPageBtnOnClick = () => {
-
-        //pageStack.pop();
-
         if (pageStack.length > 0) {
-
             //message.info("Back to last page!");
-            setPageProps(pageStack[pageStack.length - 2]);
+            setPageProps(pageStack[pageStack.length - 2].pageProps);
+            setPageNumber(pageStack[pageStack.length - 2].pageNumber);
             setPageStack(oldArray => [...oldArray.slice(0, pageStack.length - 2)]);
         }
-
-
     }
 
     const antIcon = (
@@ -328,7 +432,7 @@ const OuterPage = () => {
 
             </div>
             <div className='drawerBtn'>
-                <Button type="primary" onClick={showDrawer}>
+                <Button type="primary" onClick={() => { openNotification('bottomLeft', { message: '123', userObj: { userObjName: 'Plusx', userObjAvatar: "https://joeschmoe.io/api/v1/james" } }) }/*showDrawer*/}>
                     Open
                 </Button>
             </div>

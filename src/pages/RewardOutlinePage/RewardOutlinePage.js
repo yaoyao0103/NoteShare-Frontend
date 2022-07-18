@@ -7,7 +7,6 @@ import axios from "axios";
 const { Header, Content, Footer } = Layout;
 function RewardOutlinePage(props) {
     const page='RewardOutlinePage';
-    const [pageNumber, setPageNumber] = useState(1);
     const [Reward, setReward] = useState([]);
     const [sortMode,setSortMode] =useState('date');
 
@@ -17,7 +16,7 @@ function RewardOutlinePage(props) {
             try {
                 const sortBy=sortMode;
                 
-                await axios.get('http://localhost:8080/search/post/'+ String(pageNumber-1) + '/20?keyword='+(props.keyword?props.keyword:'')+'&department='+(props.department?props.department:'')+'&subject='+(props.subject?props.subject:'')+'&haveReward='+true+'&sortBy='+sortBy).then((res) => {
+                await axios.get('http://localhost:8080/search/post/'+ String(props.pageNumber-1) + '/20?keyword='+(props.keyword?props.keyword:'')+'&department='+(props.department?props.department:'')+'&subject='+(props.subject?props.subject:'')+'&haveReward='+true+'&sortBy='+sortBy).then((res) => {
 
                     setReward(oldArray => [...oldArray, res.data.search]);
                     props.setLoading(false)
@@ -41,7 +40,7 @@ function RewardOutlinePage(props) {
             try {
                 const sortBy=sortMode;
                 
-                await axios.get('http://localhost:8080/search/post/'+ String(pageNumber-1) + '/20?keyword='+(props.keyword?props.keyword:'')+'&department='+(props.department?props.department:'')+'&subject='+(props.subject?props.subject:'')+'&haveReward='+true+'&sortBy='+sortBy).then((res) => {
+                await axios.get('http://localhost:8080/search/post/'+ String(props.pageNumber-1) + '/20?keyword='+(props.keyword?props.keyword:'')+'&department='+(props.department?props.department:'')+'&subject='+(props.subject?props.subject:'')+'&haveReward='+true+'&sortBy='+sortBy).then((res) => {
                     setReward(oldArray => [...oldArray, res.data.search]);
                     window.scrollTo(0, 0);
                     props.setLoading(false)
@@ -59,12 +58,12 @@ function RewardOutlinePage(props) {
         getRewardById();
 
         
-    }, [pageNumber,sortMode]);
+    }, [sortMode]);
    
     return (
         <>
             {Reward.length > 0 && 
-                <PageOutlineContentTemplate page={page}  hasSwitch={false} mode='Post' Post={Reward} pageNumber={pageNumber} changePageNumber={(pagenumber) => { setPageNumber(pagenumber); }} changeSortMode={(sortMode)=>{setSortMode(sortMode);}} setPageProps={props.setPageProps}/>
+                <PageOutlineContentTemplate page={page}  hasSwitch={false} mode='Post' Post={Reward} pageNumber={props.pageNumber} changePageNumber={props.setPageNumber} changeSortMode={(sortMode)=>{setSortMode(sortMode);}} setPageProps={props.setPageProps}/>
             }
         </>
     );

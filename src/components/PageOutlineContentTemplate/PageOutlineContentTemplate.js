@@ -51,7 +51,7 @@ function PageOutlineContentTemplate(props) {
         console.log(cardList);
     }, [cardList])
     const onChange = (pagenumber) => {
-        //console.log(pagenumber);
+        console.log(pagenumber);
         setPageN(pagenumber);
         props.changePageNumber(pagenumber);
 

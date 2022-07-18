@@ -30,7 +30,7 @@ function QnAEditPage(props){
             {/* <PageDetailTemplate page={page}>
                 <PostEditTemplate page={page} type={"QA"} post={post} mode={mode} postId={postId}/>
             </PageDetailTemplate> */}
-            <PostEditTemplate page={props.page} type={props.type} post={post} mode={props.action} postId={props.postId} setPageProps={props.setPageProps}/>
+            <PostEditTemplate  sendBellMessage={props.sendBellMessage} page={props.page} type={props.type} post={post} mode={props.action} postId={props.postId} setPageProps={props.setPageProps}/>
         </>
         
     );

@@ -6,7 +6,6 @@ import { message } from "antd";
 
 function NoteOutlinePage(props) {
     const page = 'NoteOutlinePage';
-    const [pageNumber, setPageNumber] = useState(1);
     const [Note, setNote] = useState([]);
     const [sortMode,setSortMode] =useState('likeCount');
 
@@ -17,7 +16,7 @@ function NoteOutlinePage(props) {
                 const haveNormal= true;
                 const sortBy=sortMode;
                 console.log(props.department);
-                await axios.get('http://localhost:8080/search/note/'+ String(pageNumber-1) + '/10?keyword='+(props.keyword?props.keyword:'')+'&department='+(props.department?props.department:'')+'&subject='+(props.subject?props.subject:'')+'&haveNormal='+true+'&sortBy='+sortBy).then((res) => {
+                await axios.get('http://localhost:8080/search/note/'+ String(props.pageNumber-1) + '/10?keyword='+(props.keyword?props.keyword:'')+'&department='+(props.department?props.department:'')+'&subject='+(props.subject?props.subject:'')+'&haveNormal=true&haveCollaboration=true&sortBy='+sortBy).then((res) => {
                     setNote(oldArray => [...oldArray, res.data.search]);
                     props.setLoading(false)
                 });
@@ -41,7 +40,7 @@ function NoteOutlinePage(props) {
                 const haveNormal= true;
                 const sortBy=sortMode;
             
-                await axios.get('http://localhost:8080/search/note/'+ String(pageNumber-1) + '/10?keyword='+(props.keyword?props.keyword:'')+'&department='+(props.department?props.department:'')+'&subject='+(props.subject?props.subject:'')+'&haveNormal='+true+'&sortBy='+sortBy).then((res) => {
+                await axios.get('http://localhost:8080/search/note/'+ String(props.pageNumber-1) + '/10?keyword='+(props.keyword?props.keyword:'')+'&department='+(props.department?props.department:'')+'&subject='+(props.subject?props.subject:'')+'&haveNormal=true&haveCollaboration=true&sortBy='+sortBy).then((res) => {
                     setNote(oldArray => [...oldArray=[], res.data.search]);
                     window.scrollTo(0, 0);
                     props.setLoading(false)
@@ -61,12 +60,12 @@ function NoteOutlinePage(props) {
         getNoteById();
         //console.log('1111');
         
-    }, [pageNumber,sortMode]);
+    }, [sortMode]);
 
     return (
         <>
             {Note.length > 0 && 
-                <PageOutlineContentTemplate page={page}  hasSwitch={false} mode='Note' Post={Note} pageNumber={pageNumber} changePageNumber={(pagenumber) => { setPageNumber(pagenumber); }} changeSortMode={(sortMode)=>{setSortMode(sortMode);}} setPageProps={props.setPageProps}/>
+                <PageOutlineContentTemplate page={page}  hasSwitch={false} mode='Note' Post={Note} pageNumber={props.setPageNumber} changePageNumber={props.setPageNumber} changeSortMode={(sortMode)=>{setSortMode(sortMode);}} setPageProps={props.setPageProps}/>
        
             }
         </>

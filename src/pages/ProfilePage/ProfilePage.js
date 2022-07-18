@@ -34,6 +34,7 @@ function ProfilePage(props) {
     const [fansList, setFansList] = useState([]);
     const [followingList, setFollowingList] = useState([]);
     const [folderList, setFolderList] = useState([]);
+    const [noteList, setNoteList] = useState([]);
     const [avatarCurrent, setAvatarCurrent] = useState(0);
 
     const [getFolderByIdSuccess, setGetFolderByIdSuccess] = useState(false);
@@ -54,12 +55,28 @@ function ProfilePage(props) {
 
     function changeFansSwitch() {
         if (fansOrFollower) {
+            props.setLoading(true)
             setGetFolderByIdSuccess(false);
             setFansOrFollower(false);
+            //console.log(isAuthor);
+            if (!isAuthor)
+                getAllNote(props.email);
+            else {
+                props.setLoading(false)
+                setGetFolderByIdSuccess(true);
+            }
         }
         else {
+            props.setLoading(true)
             setGetFolderByIdSuccess(false);
             setFansOrFollower(true);
+            //console.log(isAuthor);
+            if (!isAuthor)
+                getAllFolder(props.email);
+            else {
+                props.setLoading(false)
+                setGetFolderByIdSuccess(true);
+            }
         };
     }
 
@@ -96,12 +113,12 @@ function ProfilePage(props) {
         let avatar = cookieParser.getCookieByName('avatar');
         if (!isFollow) {
             axios.put("http://localhost:8080/follow/" + email + '/' + props.email,).then(res => {
-                props.sendPrivateMessage(email+'has following you','Follow',)
+                //props.sendPrivateMessage(email+'has following you','Follow',)
                 //setProfile(content);
                 setIsFollow(true);
                 setFansNum(fansNum + 1);
                 props.sendPrivateMessage(
-                    name+' has following you !',
+                    name + ' has following you !',
                     'ProfilePage',
                     email,
                     name,
@@ -115,7 +132,7 @@ function ProfilePage(props) {
                 console.log(error.response.error);
 
             })
-            
+
         }
         else {
             axios.put("http://localhost:8080/unfollow/" + email + '/' + props.email,).then(res => {
@@ -132,7 +149,7 @@ function ProfilePage(props) {
 
     const changeBell = () => {
         if (isBell) {
-            axios.put('http://localhost:8080/cancelBell/'+ email + '/' + props.email,).then(res => {
+            axios.put('http://localhost:8080/cancelBell/' + email + '/' + props.email,).then(res => {
                 //setProfile(content);
                 setIsBell(false);
                 message.success('You turned on the bell of ' + user.name + " !");
@@ -165,7 +182,7 @@ function ProfilePage(props) {
     };
 
     const AddStrength = (tag) => {
-        console.log(tag);
+        //console.log(tag);
         const tags = [...strength, tag];
         axios.put("http://localhost:8080/user/strength/" + email, { strength: tags }).then(res => {
             console.log(...strength, tag);
@@ -188,9 +205,11 @@ function ProfilePage(props) {
     }
 
     const ClickBack = (id) => {
+        props.setLoading(true)
         axios.get("http://localhost:8080/folder/" + id, {
         }).then(res => {
             setCurrentFolderId(res.data.res.parent);
+
         }).catch((error) => {
             message.error("Server Error! Please try again later. (Back To The Last Layer Error)")
             console.log(error.response.error);
@@ -218,6 +237,8 @@ function ProfilePage(props) {
             else
                 setIsRoot(false);
             setGetFolderByIdSuccess(true);
+            props.setLoading(false);
+
         }).catch((error) => {
             message.error("Server Error! Please try again later. (Get Folder Error)")
             //console.log(error.response.error);
@@ -227,7 +248,7 @@ function ProfilePage(props) {
     function getAllFolder(Email) {
         axios.get("http://localhost:8080/folder/root/" + Email, {
         }).then(res => {
-            console.log(res.data.res[2]);
+            //console.log(res.data.res[2]);
             getFolderById(res.data.res[2].id);
             setIsRoot(true);
         }).catch((error) => {
@@ -240,9 +261,10 @@ function ProfilePage(props) {
     function getAllNote(Email) {
         axios.get("http://localhost:8080/note/all/" + Email, {
         }).then(res => {
-            setFolderList(oldArray => [...oldArray.slice(0, 0), res.data.res]);
+            setNoteList(oldArray => [...oldArray.slice(0, 0), res.data.res]);
             setCurrentFolderId('0');
             setGetFolderByIdSuccess(true);
+            props.setLoading(false)
         }).catch((error) => {
             message.error("Server Error! Please try again later. (Get All Notes Error)")
             //console.log(error.response.data);
@@ -266,11 +288,11 @@ function ProfilePage(props) {
             var tempFollowingList = [];
             for (let i = 0; i < res.data.res.belledByUserObj.length; i++) {
 
-                if (res.data.res.belledByUserObj[i].userObjEmail === Email){
+                if (res.data.res.belledByUserObj[i].userObjEmail === Email) {
                     console.log(Email);
                     setIsBell(true);
                 }
-                    
+
 
 
             }
@@ -293,7 +315,7 @@ function ProfilePage(props) {
             setFollowingList(oldArray => [...oldArray.slice(0, 0), tempFollowingList]);
 
             setGetUserSuccess(true);
-            props.setLoading(false);
+
         }).catch((error) => {
             message.error("Server Error! Please try again later. (Get User Error)")
             console.log(error);
@@ -301,35 +323,52 @@ function ProfilePage(props) {
     };
 
     useEffect(() => {
+        console.log('111')
+        props.setLoading(true)
+        setGetFolderByIdSuccess(false);
+        setIsAuthor(false);
         setFansOrFollower(true);
         setIsFollow(false);
+        setFolderList(oldArray => [...oldArray.slice(0, 0)]);
         setGetUserSuccess(false);
         let cookieParser = new Cookie(document.cookie);
         let tempEmail = cookieParser.getCookieByName('email')
         tempEmail = Base64.decode(tempEmail);
-        console.log(tempEmail);
-        getUserByEmail(tempEmail);
+        //console.log(tempEmail);
+        //console.log(props.email);
+
         if (tempEmail === props.email) {
             setIsAuthor(true);
             setGetFolderByIdSuccess(true);
+            props.setLoading(false);
         }
         else {
+            //console.log('111')
             setIsAuthor(false);
+            if (fansOrFollower)
+                getAllFolder(props.email);
+            else if (!fansOrFollower)
+                getAllNote(props.email);
+
+
         }
+        getUserByEmail(tempEmail);
         setEmail(tempEmail);
 
 
     }, [props]);
-    useEffect(() => {
-        //console.log(props.email);
-        if (fansOrFollower && !isAuthor)
-            getAllFolder(props.email);
-        else if (!fansOrFollower && !isAuthor)
-            getAllNote(props.email);
-        if (isAuthor)
-            setGetFolderByIdSuccess(true);
-
-    }, [props, fansOrFollower]);
+    /* useEffect(() => {
+         console.log(isAuthor);
+         if (fansOrFollower && !isAuthor)
+             getAllFolder(props.email);
+         else if (!fansOrFollower && !isAuthor)
+             getAllNote(props.email);
+         if (isAuthor) {
+             props.setLoading(false)
+             setGetFolderByIdSuccess(true);
+         }
+ 
+     }, [fansOrFollower && isAuthor]);*/
 
     useEffect(() => {
 
@@ -380,11 +419,11 @@ function ProfilePage(props) {
                                             </Col>
                                         }
                                         <Col className='Profile__Bell' span={8}>
-                                        {!isBell && <Tooltip arrowPointAtCenter={true} placement="top" title={"Turn on the notification of " + user.name} color={'#000'}>
+                                            {!isBell && <Tooltip arrowPointAtCenter={true} placement="top" title={"Turn on the notification of " + user.name} color={'#000'}>
                                                 <BellOutlined className='Profile__Bell__Icon' style={{ fontSize: '22px' }} onClick={() => { changeBell() }} />
                                             </Tooltip>}
-                                            {isBell &&<Tooltip arrowPointAtCenter={true} placement="top" title={"Turn off the notification of " + user.name} color={'#000'}>
-                                                 <BellFilled className='Profile__Bell__Icon' style={{ fontSize: '22px' }} onClick={() => { changeBell() }} />
+                                            {isBell && <Tooltip arrowPointAtCenter={true} placement="top" title={"Turn off the notification of " + user.name} color={'#000'}>
+                                                <BellFilled className='Profile__Bell__Icon' style={{ fontSize: '22px' }} onClick={() => { changeBell() }} />
                                             </Tooltip>}
 
                                         </Col>
@@ -404,31 +443,31 @@ function ProfilePage(props) {
                     </Content>
 
                     <Sider className='Profile__Sider' width='60%'>
-                        <Spin className='signUpPage__Spin' indicator={antIcon} spinning={!getFolderByIdSuccess}>
-                            {isAuthor && <Row className='Profile__Sider__Fir__Row'>
-                                <ToggleSwitch SwitchLeft='Following' SwitchRight="Fans" ChangeSwitch={() => changeFansSwitch()} />
-                            </Row>}
-                            {!isAuthor && <Row className='Profile__Sider__Fir__Row'>
-                                <ToggleSwitch SwitchLeft='Note' SwitchRight="Folder" ChangeSwitch={() => changeFansSwitch()} />
-                            </Row>}
-                            <Divider />
-                            {isAuthor && fansOrFollower && <div className='Profile_Sider__Main_Content'>
-                                {fansList}
+                        {/* <Spin className='signUpPage__Spin' indicator={antIcon} spinning={!getFolderByIdSuccess}> */}
+                        {isAuthor && <Row className='Profile__Sider__Fir__Row'>
+                            <ToggleSwitch SwitchLeft='Following' SwitchRight="Fans" ChangeSwitch={() => changeFansSwitch()} />
+                        </Row>}
+                        {!isAuthor && <Row className='Profile__Sider__Fir__Row'>
+                            <ToggleSwitch SwitchLeft='Note' SwitchRight="Folder" ChangeSwitch={() => changeFansSwitch()} />
+                        </Row>}
+                        <Divider />
+                        {isAuthor && fansOrFollower && <div className='Profile_Sider__Main_Content'>
+                            {fansList}
 
-                            </div>}
-                            {isAuthor && !fansOrFollower && <div className='Profile_Sider__Main_Content'>
-                                {followingList}
-                            </div>}
-                            {!isAuthor && getFolderByIdSuccess && fansOrFollower && <div className='Profile_Sider__Main_Content'>
-                                <FolderCard folderList={folderList} isFolder={true} setPageProps={props.setPageProps} isRoot={isRoot} clickBack={(id) => { ClickBack(id) }} clickFolder={(id) => { setCurrentFolderId(id); }} />
+                        </div>}
+                        {isAuthor && !fansOrFollower && <div className='Profile_Sider__Main_Content'>
+                            {followingList}
+                        </div>}
+                        {!isAuthor && getFolderByIdSuccess && fansOrFollower && <div className='Profile_Sider__Main_Content'>
+                            <FolderCard setLoading={props.setLoading} folderList={folderList} isFolder={true} setPageProps={props.setPageProps} isRoot={isRoot} clickBack={(id) => { ClickBack(id) }} clickFolder={(id) => { setCurrentFolderId(id); }} />
 
-                            </div>}
+                        </div>}
 
-                            {!isAuthor && !fansOrFollower && getFolderByIdSuccess && <div className='Profile_Sider__Main_Content'>
-                                <FolderCard folderList={folderList} isFolder={true} setPageProps={props.setPageProps} isRoot={isRoot} clickBack={(id) => { ClickBack(id) }} clickFolder={(id) => { setCurrentFolderId(id); }} />
+                        {!isAuthor && !fansOrFollower && getFolderByIdSuccess && <div className='Profile_Sider__Main_Content'>
+                            <FolderCard setLoading={props.setLoading} folderList={noteList} isFolder={true} setPageProps={props.setPageProps} isRoot={isRoot} clickBack={(id) => { ClickBack(id) }} clickFolder={(id) => { setCurrentFolderId(id); }} />
 
-                            </div>}
-                        </Spin>
+                        </div>}
+                        {/* </Spin> */}
                     </Sider>
 
                     <Modal

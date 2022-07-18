@@ -8,6 +8,7 @@ import './FolderCard.css'
 
 function FolderCard(props) {
     const folderClick = (item) => {
+        props.setLoading(true)
         if (item.notes.length !== 0 && item.folderName) {
             props.clickFolder(item.id);
         }
@@ -17,8 +18,10 @@ function FolderCard(props) {
         else
             message.info("There has no note in this folder!");
     }
-    console.log(props.folderList);
+    //console.log(props.folderList);
     const generatedFolder = (item) => {
+       // console.log(props.folderList)
+        //console.log(item)
         if (item.public) {
             return (
                 < List.Item className='FolderCard__List__Item' onClick={() => folderClick(item)}>
@@ -57,11 +60,11 @@ function FolderCard(props) {
     }
     return (
         <div className='FolderCard'>
-            {!props.isRoot && <div onClick={() => props.clickBack(props.folderList[0].parent)}><ArrowLeftOutlined className='FolderCard__Back' /></div>}
+            {!props.isRoot && <div onClick={() => {props.clickBack(props.folderList[0][0].parent)}}><ArrowLeftOutlined className='FolderCard__Back' /></div>}
             <List
                 className='FolderCard__List'
                 itemLayout="horizontal"
-                dataSource={props.folderList}
+                dataSource={props.folderList[0]}
                 renderItem={(item) => generatedFolder(item)}
             />
 
