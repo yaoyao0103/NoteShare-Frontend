@@ -40,8 +40,10 @@ import { timers } from 'jquery';
 import Cookie from '../../components/Cookies/Cookies';
 import { set } from 'react-hook-form';
 import { editor } from '../../api_utils/geditor_config';
+var sock
 var stompClient;
 const OuterPage = () => {
+    const [isConnect, setIsConnect] = useState(false)
     const [pageBeforeProps, setPageBeforeProps] = useState({ page: 'LoginPage' });
     const [pageBeforeNumber, setPageBeforeNumber] = useState(1);
     const [pageProps, setPageProps] = useState({ page: 'LoginPage' });
@@ -56,6 +58,8 @@ const OuterPage = () => {
     const [loading, setLoading] = useState(true);
     const [changePage, setChangePage] = useState(1);
     const [pageNumber, setPageNumber] = useState(1);
+    const [ringNumber, setRingNumber] = useState(0);
+    const [ringList, setRingList] = useState([]);
     const [isChanging, setIsChanging] = useState(false);
     const [api, contextHolder] = notification.useNotification();
 
@@ -74,12 +78,20 @@ const OuterPage = () => {
 
     const connect = () => {
         // postID = (location.state === 'genewang7@gmail.com') ? 12345 : 67890
+        if (!isConnect) {
+            setIsConnect(true)
+            sock = new SockJS('http://localhost:8080/websocket')
+            stompClient = over(sock)
+            stompClient.connect({}, onConnected, (err) => {
+                setIsConnect(false)
+                console.log(err)
+            })
+        }
+    }
 
-        let sock = new SockJS('http://localhost:8080/websocket')
-        stompClient = over(sock)
-        stompClient.connect({}, onConnected, (err) => {
-            console.log(err)
-        })
+    function closeConnection() {
+        if (isConnect)
+            sock.close();
     }
 
     const onConnected = (frame) => {
@@ -87,13 +99,17 @@ const OuterPage = () => {
         let cookieParser = new Cookie(document.cookie);
         let tempEmail = cookieParser.getCookieByName('email');
         tempEmail = Base64.decode(tempEmail);
+        let tempRing = ringNumber
         axios.get("http://localhost:8080/bellBy/" + tempEmail,).then(res => {
 
             for (let i in res.data.res) {   //訂閱"他人"地址，接收"他人"發送的訊息
                 stompClient.subscribe(`/topic/bell-messages/${res.data.res[i].userObjEmail}`, (message) => {   //拿user 後端轉bell
                     openNotification('bottomLeft', JSON.parse(message.body))
+                    setRingNumber(tempRing + 1)
+                    setRingList(oldArray => [...oldArray,JSON.parse(message.body)])
                 })
             }
+
         }).catch((error) => {
             //message.info(error.response.error);
 
@@ -103,6 +119,9 @@ const OuterPage = () => {
             // console.log(JSON.parse(message.body))
 
             openNotification('bottomLeft', JSON.parse(message.body))
+            setRingNumber(tempRing + 1)
+            setRingList(oldArray => [...oldArray,JSON.parse(message.body)])
+
         })
     }
 
@@ -179,18 +198,27 @@ const OuterPage = () => {
         const tempPageProps = cookieParser.getCookieByName('pageProps')
         if (!tempPageProps) {
             if (loggedIn) {
-                connect();
+
                 setPageProps({ page: 'PersonalPage' })
             }
             else {
+
                 setPageProps({ page: 'LoginPage' })
             }
         }
+
+        if (!loggedIn)
+            closeConnection()
+        else
+            connect();
     }, [loggedIn])
 
-
+    useEffect(() => {
+        console.log('ringNumber:', ringNumber)
+    }, [ringNumber])
 
     useEffect(() => {
+
         if ((pageProps.page === 'NoteEditPage' || pageProps.page === 'NoteNewPage' || pageProps.page === 'MemberPage' ||
             pageProps.page === 'RewardEditPage' || pageProps.page === 'RewardNewPage' || pageProps.page === 'RewardRecommendPage' ||
             pageProps.page === 'QnAEditPage' || pageProps.page === 'QnANewPage' || pageProps.page === 'QnARecommendPage' ||
@@ -201,6 +229,7 @@ const OuterPage = () => {
             message.info('You should log in first !!!')
             setPageProps({ page: "LoginPage" })
         }
+
         else {
 
 
@@ -279,6 +308,7 @@ const OuterPage = () => {
     }, [pageProps])
 
     useEffect(() => {
+
         if ((pageProps.page === 'NoteEditPage' || pageProps.page === 'NoteNewPage' || pageProps.page === 'MemberPage' ||
             pageProps.page === 'RewardEditPage' || pageProps.page === 'RewardNewPage' || pageProps.page === 'RewardRecommendPage' ||
             pageProps.page === 'QnAEditPage' || pageProps.page === 'QnANewPage' || pageProps.page === 'QnARecommendPage' ||
@@ -410,7 +440,7 @@ const OuterPage = () => {
         <>
             <div className='outerPage'>
 
-                <Navbar coinNum={coinNum} setCoinNum={setCoinNum} pageProps={pageProps} changeAvatar={changeAvatar} loggedIn={loggedIn} setPageProps={setPageProps} setLoggedIn={setLoggedIn} />
+                <Navbar ringList={ringList} setRingList={setRingList} ringNumber={ringNumber} setRingNumber={setRingNumber} coinNum={coinNum} setCoinNum={setCoinNum} pageProps={pageProps} changeAvatar={changeAvatar} loggedIn={loggedIn} setPageProps={setPageProps} setLoggedIn={setLoggedIn} />
 
                 <>
                     <Spin wrapperClassName={'outerPage__Loading'} indicator={antIcon} spinning={loading} style={{ width: '100%', height: '100%' }}>

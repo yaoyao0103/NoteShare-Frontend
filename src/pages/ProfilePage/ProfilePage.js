@@ -338,6 +338,7 @@ function ProfilePage(props) {
         //console.log(props.email);
 
         if (tempEmail === props.email) {
+            console.log('isAuthor')
             setIsAuthor(true);
             setGetFolderByIdSuccess(true);
             props.setLoading(false);
@@ -371,8 +372,8 @@ function ProfilePage(props) {
      }, [fansOrFollower && isAuthor]);*/
 
     useEffect(() => {
-
-        getFolderById(currentFolderId);
+        if (currentFolderId !== '')
+            getFolderById(currentFolderId);
 
     }, [currentFolderId]);
 
