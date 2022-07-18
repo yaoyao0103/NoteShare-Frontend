@@ -7,77 +7,6 @@ import { message } from 'antd';
 import './FansNFollowerEditor.css'
 import axios from "axios";
 function FansNFollowerEditor(props) {
-<<<<<<< HEAD
-    const [isFollow,setIsFollow]=useState(true);
-    const [isFans,setIsFans]=useState(true);
-    const [followingNum,setFollowingNum]=useState(props.followingNum);
-    const [fansNum,,setFansNum]=useState(props.fansNum);
-        const removeFans=()=>{
-            if (!isFans) {
-                axios.put("http://localhost:8080/follow/" + props.targetEmail + '/' + props.email,).then(res => {
-                    //setProfile(content);
-                    setIsFans(true);
-                    props.setFansNum(fansNum+1);
-                    setFansNum (fansNum+1);
-                    message.success("You followed this user!")
-    
-                    //message.info('Follow ' + user.name);
-                }).catch((error) => {
-                    message.error("Server Error! Please try again later. (Follow User Error)")
-                    console.log(error.response.error);
-    
-                })
-            }
-            else {
-                console.log('props.targetEmail ' ,props.targetEmail)
-                console.log('props.email',props.email)
-                axios.put("http://localhost:8080/unfollow/" + props.targetEmail + '/' + props.email,).then(res => {
-                    //setProfile(content);
-                    setIsFans(false);
-                    
-                    props.setFansNum(fansNum-1);
-                    setFansNum(fansNum-1);
-                    message.success('You unfollowed this user!');
-                }).catch((error) => {
-                    message.error("Server Error! Please try again later. (Unfollow User Error)")
-                    console.log(error.response.error);
-                })
-            }
-        }
-        const cancelFollowing=()=>{
-            if (!isFollow) {
-                axios.put("http://localhost:8080/follow/" + props.email + '/' + props.targetEmail,).then(res => {
-                    //setProfile(content);
-                    
-                    setIsFollow(true);
-                    
-                    console.log(followingNum);
-                    props.setFollowingNum(followingNum+1);
-                    setFollowingNum(followingNum+1);
-                    message.success('You followed this user!');
-                }).catch((error) => {
-                    message.error("Server Error! Please try again later. (Follow User Error)")
-                    console.log(error.response);
-    
-                })
-            }
-            else {
-                axios.put("http://localhost:8080/unfollow/" + props.email + '/' + props.targetEmail,).then(res => {
-                    //setProfile(content);
-                    
-                    setIsFollow(false);
-                    
-                    console.log(followingNum);
-                    props.setFollowingNum(followingNum-1);
-                    setFollowingNum(followingNum-1);
-                    message.success('You unfollowed this user!');
-                    //message.info('Unfollow ' + user.name);
-                }).catch((error) => {
-                    message.error("Server Error! Please try again later. (Unfollow User Error)")
-                    console.log(error.response.error);
-                })
-            }
-=======
     const [isFollow, setIsFollow] = useState(true);
     const [isFans, setIsFans] = useState(true);
     const [followingNum, setFollowingNum] = useState(props.followingNum);
@@ -90,10 +19,11 @@ function FansNFollowerEditor(props) {
                 setIsFans(true);
                 props.setFansNum(fansNum + 1);
                 setFansNum(fansNum + 1);
-
+                message.success("You followed this user!")
 
                 //message.info('Follow ' + user.name);
             }).catch((error) => {
+                message.error("Server Error! Please try again later. (Follow User Error)")
                 console.log(error.response.error);
 
             })
@@ -107,8 +37,9 @@ function FansNFollowerEditor(props) {
 
                 props.setFansNum(fansNum - 1);
                 setFansNum(fansNum - 1);
-                //message.info('Unfollow ' + user.name);
+                message.success('You unfollowed this user!');
             }).catch((error) => {
+                message.error("Server Error! Please try again later. (Unfollow User Error)")
                 console.log(error.response);
             })
         }
@@ -123,12 +54,12 @@ function FansNFollowerEditor(props) {
                 console.log(followingNum);
                 props.setFollowingNum(followingNum + 1);
                 setFollowingNum(followingNum + 1);
-                //message.info('Follow ' + user.name);
+                message.success('You followed this user!');
             }).catch((error) => {
+                message.error("Server Error! Please try again later. (Follow User Error)")
                 console.log(error.response);
 
             })
->>>>>>> c1f4dc4ed1d3ca2ce462984aa163dd0f707aaaa1
         }
         else {
             axios.put("http://localhost:8080/unfollow/" + props.email + '/' + props.targetEmail,).then(res => {
