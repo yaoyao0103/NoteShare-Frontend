@@ -3,17 +3,20 @@ import { message } from "antd";
 import PropTypes from 'prop-types';
 import './ToggleSwitch.css';
 function ToggleSwitch(props) {
-    const [Switch, setSwitch] = useState([]);
+    const [Switch, setSwitch] = useState('');
+    const [length,setLength]=useState(0);
     const [Fontlength, setFontlength] = useState();
     const SwitchOn = () => {
-        if (Switch === '') {
-            setSwitch('__actived');
+        if (!props.isSwitch) {
+            setSwitch('');
+            setLength(2)
             message.info(props.SwitchLeft);
         } else {
-            setSwitch('');
+            setSwitch('__actived');
+            setLength(1)
             message.info(props.SwitchRight);
         }
-        if(props.ChangeSwitch)props.ChangeSwitch();
+        //if(props.ChangeSwitch)props.ChangeSwitch();
     }
     useEffect(() => {
         setSwitch('');
@@ -25,11 +28,15 @@ function ToggleSwitch(props) {
             setFontlength(Rlength);
         console.log(Fontlength);
     }, []);
+    useEffect(() => {
+        SwitchOn()
+        
+    }, [props.isSwitch]);
     return (
         <div className="switch__button__outer" >
             <div className={"switch__button" + Switch} data-before={props.SwitchLeft} style={{ '--length': Fontlength * (5) + 'px' }}>
-                <input className="switch-button-checkbox" type="checkbox" onClick={() => SwitchOn()} style={{ '--length': Fontlength * (5) + 'px' }}></input>
-                <label className="switch-button-label" for="" style={{ '--color': props.checkedColor, '--length': Fontlength * 5 + 'px' }} ><span className={"switch-button-label-span" + Switch} data-length={Fontlength}>{props.SwitchRight}</span></label>
+                <input className={"switch-button-checkbox"+ Switch} type="checkbox" onClick={() => props.ChangeSwitch()} style={{ '--length': Fontlength * (5) + 'px' }}></input>
+                <label className={"switch-button-label"+ Switch} for="" style={{ '--divide':length,'--color': props.checkedColor, '--length': Fontlength *5 + 'px' }} ><span className={"switch-button-label-span" + Switch} data-length={Fontlength}>{props.SwitchRight}</span></label>
             </div>
         </div>
     )

@@ -67,7 +67,7 @@
     z-index: 3;
     pointer-events: none;
   }
-  .switch-button-checkbox {
+  .switch-button-checkbox,.switch-button-checkbox__actived {
     cursor: pointer;
     position: absolute;
     top: 0;
@@ -78,11 +78,23 @@
     opacity: 0;
     z-index: 2;
   }
-  .switch-button-checkbox:checked + .switch-button-label:before {
+  .switch-button-checkbox:checked + .switch-button-label:before{
+    transform: translateX( calc((220px + var(--length))/2));
+    transition: transform 100ms linear;
+  }
+  .switch-button-checkbox__actived:checked + .switch-button-label__actived:before{
     transform: translateX( calc((220px + var(--length))/2));
     transition: transform 100ms linear;
   }
   .switch-button-checkbox + .switch-button-label {
+    position: relative;
+    height: 100%;
+    /* padding: 15px 0; */
+    display: block;
+    user-select: none;
+    pointer-events: none;
+  }
+  .switch-button-checkbox__actived + .switch-button-label__actived {
     position: relative;
     height: 100%;
     /* padding: 15px 0; */
@@ -102,7 +114,35 @@
     transform: translateX(0);
     transition: transform 100ms;
   }
-  .switch-button-checkbox + .switch-button-label .switch-button-label-span {
+  .switch-button-checkbox__actived + .switch-button-label__actived:before {
+    content: "";
+    background: var(--color);
+    height: 100%;
+    width: calc((220px + var(--length))/2);
+    position: absolute;
+    left: 0;
+    top: 0;
+    border-radius: 30px;
+    transform: translateX(calc((220px + var(--length))/2));
+    transition: transform 100ms;
+  }
+  .switch-button-label__actived:before{
+    content: "";
+    background: var(--color);
+    height: 100%;
+    width: calc((220px + var(--length))/2);
+    position: absolute;
+    left: 0;
+    top: 0;
+    border-radius: 30px;
+    transform: translateX(0);
+    transition: transform 100ms;
+  }
+  .switch-button-checkbox + .switch-button-label .switch-button-label-span  {
+    position: relative;
+    
+  }
+  .switch-button-checkbox__actived + .switch-button-label__actived .switch-button-label-span__actived{
     position: relative;
     
   }

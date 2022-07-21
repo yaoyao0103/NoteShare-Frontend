@@ -17,7 +17,7 @@ function Coin(props) {
 
         axios.get("http://localhost:8080/user/" + Email, {
         }).then(res => {
-            console.log(res.data.res.coin);
+            //console.log(res.data.res.coin);
             props.setCoinNum(res.data.res.coin);
             setGetUserSuccess(true);
         }).catch((error) => {

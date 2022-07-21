@@ -39,7 +39,7 @@ function QnARecommendPage(props) {
 
                 await axios.get('http://localhost:8080/search/post/' + String(props.pageNumber - 1) + '/20?keyword=array&department=' + (props.department ? props.department : '') + '&subject=' + (props.subject ? props.subject : '') + '&haveQA=' + true + '&sortBy=' + sortBy).then((res) => {
                     setQnA(oldArray => [...oldArray, res.data.search]);
-                    window.scrollTo(0, 0);
+                    //window.scrollTo(0, 0);
                     props.setLoading(false)
                 });
 

@@ -15,7 +15,7 @@ function NoteOutlinePage(props) {
             try {
                 const haveNormal= true;
                 const sortBy=sortMode;
-                console.log(props.department);
+                //console.log(props.department);
                 await axios.get('http://localhost:8080/search/note/'+ String(props.pageNumber-1) + '/10?keyword='+(props.keyword?props.keyword:'')+'&department='+(props.department?props.department:'')+'&subject='+(props.subject?props.subject:'')+'&haveNormal=true&haveCollaboration=true&sortBy='+sortBy).then((res) => {
                     setNote(oldArray => [...oldArray, res.data.search]);
                     props.setLoading(false)
@@ -42,7 +42,7 @@ function NoteOutlinePage(props) {
             
                 await axios.get('http://localhost:8080/search/note/'+ String(props.pageNumber-1) + '/10?keyword='+(props.keyword?props.keyword:'')+'&department='+(props.department?props.department:'')+'&subject='+(props.subject?props.subject:'')+'&haveNormal=true&haveCollaboration=true&sortBy='+sortBy).then((res) => {
                     setNote(oldArray => [...oldArray=[], res.data.search]);
-                    window.scrollTo(0, 0);
+                    //window.scrollTo(0, 0);
                     props.setLoading(false)
                     //console.log(pageNumber);
 

@@ -17,9 +17,9 @@ function Ring(props) {
         let tempEmail = cookieParser.getCookieByName('email');
         tempEmail = Base64.decode(tempEmail);
         setEmail(tempEmail);
-        console.log(tempEmail)
+        //console.log(tempEmail)
         axios.get("http://localhost:8080/notification/" + tempEmail,).then(res => {
-            console.log(res.data.notification);
+            //console.log(res.data.notification);
             props.setRingNumber(res.data.notification.unreadMessageCount);
             props.setRingList(oldArray => [...res.data.notification.messageReturn,...oldArray.slice(0,0) ])
         }).catch((error) => {
@@ -31,7 +31,7 @@ function Ring(props) {
 
     }, []);
     useEffect(() => {
-            console.log(props.ringList)
+            //console.log(props.ringList)
             setRingList(oldArray=> [...oldArray.slice(0,0) ])
             for (let i = 0; i < props.ringList.length; i++) {
                 let type=props.ringList[i].type

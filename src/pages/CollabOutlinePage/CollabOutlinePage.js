@@ -49,7 +49,7 @@ function CollabOutlinePage(props) {
 
                 await axios.get('http://localhost:8080/search/post/' + String(props.pageNumber - 1) + '/20?keyword=' + (props.keyword ? props.keyword : '') + '&department=' + (props.department ? props.department : '') + '&subject=' + (props.subject ? props.subject : '') + '&haveCollaboration=' + true + '&sortBy=' + sortBy).then((res) => {
                     setCollab(oldArray => [...oldArray, res.data.search]);
-                    window.scrollTo(0, 0);
+                    //window.scrollTo(0, 0);
                     //console.log(pageNumber);
                     props.setLoading(false);
                 });

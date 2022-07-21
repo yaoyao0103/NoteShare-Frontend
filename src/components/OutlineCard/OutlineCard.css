@@ -17,6 +17,7 @@
     background-color: #fff;
     transform: scale(1.005);
     transition: .3s;
+    
     box-shadow: rgba(50, 50, 93, 0.25) 0px 20px 100px -20px
    
     
@@ -107,8 +108,13 @@
 .OutlineCard__Layout__Outer__Note:hover{
     position:relative;
     height: 20em;
-    width:45%;
+    width: 90%;
+    max-width: 90%;
     background-color: #fff;
+    margin-left:5%;
+    margin-right:5%;
+    margin-top:2.5%;
+    margin-bottom:2.5%;
     transform: scale(1.005);
     transition: .3s;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 20px 100px -20px

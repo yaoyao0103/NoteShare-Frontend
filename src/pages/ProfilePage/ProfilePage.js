@@ -30,7 +30,7 @@ function ProfilePage(props) {
     const [fansNum, setFansNum] = useState(0);
     const [followingNum, setFollowingNum] = useState(0);
 
-    const [fansOrFollower, setFansOrFollower] = useState(true);
+    const [fansOrFollower, setFansOrFollower] = useState(false);
     const [fansList, setFansList] = useState([]);
     const [followingList, setFollowingList] = useState([]);
     const [folderList, setFolderList] = useState([]);
@@ -60,9 +60,10 @@ function ProfilePage(props) {
             setFansOrFollower(false);
             //console.log(isAuthor);
             if (!isAuthor)
-                getAllNote(props.email);
+                getAllFolder(props.email);
             else {
-                props.setLoading(false)
+                props.setLoading(true)
+                getFans()
                 setGetFolderByIdSuccess(true);
             }
         }
@@ -72,9 +73,10 @@ function ProfilePage(props) {
             setFansOrFollower(true);
             //console.log(isAuthor);
             if (!isAuthor)
-                getAllFolder(props.email);
+                getAllNote(props.email);
             else {
-                props.setLoading(false)
+                props.setLoading(true)
+                getFollowing()
                 setGetFolderByIdSuccess(true);
             }
         };
@@ -92,7 +94,36 @@ function ProfilePage(props) {
         AvatarsList.push(<Avatar className={temp} size={84} src={Avatars[i]} onClick={() => { setAvatar(i); }}></Avatar>)
     };
 
+    const getFans = () => {
+        axios.get("http://localhost:8080/followers/" + email).then(res => {
+            let tempFansList = [];
+            for (let i = 0; i < res.data.followers.length; i++) {
 
+
+                tempFansList.push(<FansNFollowerEditor setPageProps={props.setPageProps} setFansNum={setFansNum} fansNum={res.data.followers.length} email={email} targetEmail={res.data.followers[i].userObjEmail} Name={res.data.followers[i].userObjName} Avatar={res.data.followers[i].userObjAvatar} isSwitch={true} />)
+            }
+            setFansList(oldArray => [...oldArray.slice(0, 0), tempFansList]);
+            props.setLoading(false)
+
+        }).catch((error) => {
+            message.error("Server Error! Please try again later. (Get Fans Error)")
+        })
+    }
+
+    const getFollowing = () => {
+        axios.get("http://localhost:8080/following/" + email).then(res => {
+            let tempFollowingList = [];
+            for (let i = 0; i < res.data.following.length; i++) {
+
+                tempFollowingList.push(<FansNFollowerEditor setPageProps={props.setPageProps} setFollowingNum={setFollowingNum} followingNum={res.data.following.length} email={email} targetEmail={res.data.following[i].userObjEmail} Name={res.data.following[i].userObjName} Avatar={res.data.following[i].userObjAvatar} isSwitch={false} />)
+            }
+
+            setFollowingList(oldArray => [...oldArray.slice(0, 0), tempFollowingList]);
+            props.setLoading(false)
+        }).catch((error) => {
+            message.error("Server Error! Please try again later. (Get Following Error)")
+        })
+    }
 
     const SaveAvatar = () => {
         axios.put("http://localhost:8080/user/head/" + email, { headshotPhoto: Avatars[avatar] }).then(res => {
@@ -185,7 +216,7 @@ function ProfilePage(props) {
         //console.log(tag);
         const tags = [...strength, tag];
         axios.put("http://localhost:8080/user/strength/" + email, { strength: tags }).then(res => {
-            console.log(...strength, tag);
+            //console.log(...strength, tag);
             setStrength(oldArray => [...oldArray, tag]);
             message.success("You added a strength!")
         }).catch((error) => {
@@ -259,10 +290,11 @@ function ProfilePage(props) {
     };
 
     function getAllNote(Email) {
+        //console.log('123')
         axios.get("http://localhost:8080/note/all/" + Email, {
         }).then(res => {
             setNoteList(oldArray => [...oldArray.slice(0, 0), res.data.res]);
-            setCurrentFolderId('0');
+            setCurrentFolderId('');
             setGetFolderByIdSuccess(true);
             props.setLoading(false)
         }).catch((error) => {
@@ -289,7 +321,6 @@ function ProfilePage(props) {
             for (let i = 0; i < res.data.res.belledByUserObj.length; i++) {
 
                 if (res.data.res.belledByUserObj[i].userObjEmail === Email) {
-                    console.log(Email);
                     setIsBell(true);
                 }
 
@@ -323,11 +354,10 @@ function ProfilePage(props) {
     };
 
     useEffect(() => {
-        console.log('111')
         props.setLoading(true)
         setGetFolderByIdSuccess(false);
         setIsAuthor(false);
-        setFansOrFollower(true);
+        setFansOrFollower(false);
         setIsFollow(false);
         setFolderList(oldArray => [...oldArray.slice(0, 0)]);
         setGetUserSuccess(false);
@@ -338,7 +368,7 @@ function ProfilePage(props) {
         //console.log(props.email);
 
         if (tempEmail === props.email) {
-            console.log('isAuthor')
+            //console.log('isAuthor')
             setIsAuthor(true);
             setGetFolderByIdSuccess(true);
             props.setLoading(false);
@@ -346,9 +376,9 @@ function ProfilePage(props) {
         else {
             //console.log('111')
             setIsAuthor(false);
-            if (fansOrFollower)
+            if (!fansOrFollower)
                 getAllFolder(props.email);
-            else if (!fansOrFollower)
+            else if (fansOrFollower)
                 getAllNote(props.email);
 
 
@@ -446,25 +476,25 @@ function ProfilePage(props) {
                     <Sider className='Profile__Sider' width='60%'>
                         {/* <Spin className='signUpPage__Spin' indicator={antIcon} spinning={!getFolderByIdSuccess}> */}
                         {isAuthor && <Row className='Profile__Sider__Fir__Row'>
-                            <ToggleSwitch SwitchLeft='Following' SwitchRight="Fans" ChangeSwitch={() => changeFansSwitch()} />
+                            <ToggleSwitch isSwitch={fansOrFollower} SwitchLeft='Following' SwitchRight="Fans" ChangeSwitch={() => changeFansSwitch()} />
                         </Row>}
                         {!isAuthor && <Row className='Profile__Sider__Fir__Row'>
-                            <ToggleSwitch SwitchLeft='Note' SwitchRight="Folder" ChangeSwitch={() => changeFansSwitch()} />
+                            <ToggleSwitch isSwitch={fansOrFollower} SwitchLeft='Note' SwitchRight="Folder" ChangeSwitch={() => changeFansSwitch()} />
                         </Row>}
                         <Divider />
-                        {isAuthor && fansOrFollower && <div className='Profile_Sider__Main_Content'>
+                        {isAuthor && !fansOrFollower && <div className='Profile_Sider__Main_Content'>
                             {fansList}
 
                         </div>}
-                        {isAuthor && !fansOrFollower && <div className='Profile_Sider__Main_Content'>
+                        {isAuthor && fansOrFollower && <div className='Profile_Sider__Main_Content'>
                             {followingList}
                         </div>}
-                        {!isAuthor && getFolderByIdSuccess && fansOrFollower && <div className='Profile_Sider__Main_Content'>
+                        {!isAuthor && getFolderByIdSuccess && !fansOrFollower && <div className='Profile_Sider__Main_Content'>
                             <FolderCard setLoading={props.setLoading} folderList={folderList} isFolder={true} setPageProps={props.setPageProps} isRoot={isRoot} clickBack={(id) => { ClickBack(id) }} clickFolder={(id) => { setCurrentFolderId(id); }} />
 
                         </div>}
 
-                        {!isAuthor && !fansOrFollower && getFolderByIdSuccess && <div className='Profile_Sider__Main_Content'>
+                        {!isAuthor && fansOrFollower && getFolderByIdSuccess && <div className='Profile_Sider__Main_Content'>
                             <FolderCard setLoading={props.setLoading} folderList={noteList} isFolder={true} setPageProps={props.setPageProps} isRoot={isRoot} clickBack={(id) => { ClickBack(id) }} clickFolder={(id) => { setCurrentFolderId(id); }} />
 
                         </div>}

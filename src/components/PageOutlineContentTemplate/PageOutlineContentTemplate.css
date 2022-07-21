@@ -69,3 +69,8 @@
     justify-content: center; 
     background-color:#EFF1F4;
 }
+.outlineContentTemplate__Content__Loading{
+    position: relative;
+    height: 100%;
+    width:100%;
+}

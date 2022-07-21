@@ -289,9 +289,17 @@ function OutlineCard(props) {
         authorFontSize = '22';
         dateFontSize = '16';
         date = props.cardContent.publishDate;
-        email = props.cardContent.headerEmailUserObj.userObjEmail;
-        author = props.cardContent.headerEmailUserObj.userObjName;
-        avatar = props.cardContent.headerEmailUserObj.userObjAvatar;
+        if(props.cardContent.headerEmailUserObj){
+            //console.log('1')
+            email = props.cardContent.headerEmailUserObj.userObjEmail;
+            author = props.cardContent.headerEmailUserObj.userObjName;
+            avatar = props.cardContent.headerEmailUserObj.userObjAvatar;
+        }
+        else{
+            email = props.cardContent.headerUserObj.userObjEmail;
+            author = props.cardContent.headerUserObj.userObjName;
+            avatar = props.cardContent.headerUserObj.userObjAvatar;
+        }
     }
 
     useEffect(() => {
@@ -306,7 +314,7 @@ function OutlineCard(props) {
             case 'NoteOutlinePage': setSider(NoteSider); break;
             case 'MemberPage': setSider(NoteSider); break;
         }
-        console.log(props.page);
+        //console.log(props.page);
     }, [props])
     return (
         <Layout className={"OutlineCard__Layout__Outer" + '__' + props.mode}>

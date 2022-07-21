@@ -16,7 +16,7 @@ function FolderOutlinePage(props) {
         async function getFolderById() {
             try {
                 await axios.get('http://localhost:8080/search/folder/'+props.keyword+'/'+ String(pageNumber - 1) + '/20?creator='+props.author).then((res) => {
-                    console.log(res.data.search);
+                    //console.log(res.data.search);
                     setFolder(oldArray => [...oldArray, res.data.search]);
                 });
             } catch (error) {

@@ -29,8 +29,8 @@ function FansNFollowerEditor(props) {
             })
         }
         else {
-            console.log('props.targetEmail ', props.targetEmail)
-            console.log('props.email', props.email)
+            //console.log('props.targetEmail ', props.targetEmail)
+            //console.log('props.email', props.email)
             axios.put("http://localhost:8080/unfollow/" + props.targetEmail + '/' + props.email,).then(res => {
                 //setProfile(content);
                 setIsFans(false);
@@ -51,7 +51,7 @@ function FansNFollowerEditor(props) {
 
                 setIsFollow(true);
 
-                console.log(followingNum);
+                //console.log(followingNum);
                 props.setFollowingNum(followingNum + 1);
                 setFollowingNum(followingNum + 1);
                 message.success('You followed this user!');
@@ -67,7 +67,7 @@ function FansNFollowerEditor(props) {
 
                 setIsFollow(false);
 
-                console.log(followingNum);
+                //console.log(followingNum);
                 props.setFollowingNum(followingNum - 1);
                 setFollowingNum(followingNum - 1);
                 //message.info('Unfollow ' + user.name);

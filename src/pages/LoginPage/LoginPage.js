@@ -24,11 +24,11 @@ function LoginPage(props) {
     //const form =createRef();
     const handleEmailChange = (event) => {
         setEmail(event.target.value);
-        console.log(email);
+        //console.log(email);
     }
     const handlePasswordChange = (event) => {
         setPassword(event.target.value);
-        console.log(password);
+        //console.log(password);
     }
 
     useEffect(() => {
@@ -44,9 +44,9 @@ function LoginPage(props) {
             setHasRemember('A');
 
             startEmail = Base64.decode(rEmail);
-            console.log(startEmail);
+            //console.log(startEmail);
             startPassword = Base64.decode(rPassword);
-            console.log(startPassword);
+            //console.log(startPassword);
             form.setFieldsValue({
                 email: startEmail,
                 password: startPassword
@@ -90,14 +90,14 @@ function LoginPage(props) {
 
             str = Base64.encode(password);
             document.cookie = "rPassword=" + str;
-            console.log('1111111')
+            //console.log('1111111')
         }
         axios.post("http://localhost:8080/verification/login", {
             email: email,
             password: password
         }).then(res => {
             document.cookie = "token=" + res.data.token;
-            console.log(document.cookie);
+            //console.log(document.cookie);
             if (res.data.activate) {
                 props.setLoggedIn(true)
                 props.setPageProps({ page: 'PersonalPage' })
@@ -105,7 +105,7 @@ function LoginPage(props) {
             else {
                 message.warn("You have not activate your account!")
                 axios.post("http://localhost:8080/verification/resendCode/" + email).then(res => {
-                    console.log(res.data.msg);
+                    //console.log(res.data.msg);
                 }).catch((error) => {
                     console.log(error.response.status);
                 })

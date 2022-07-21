@@ -42,7 +42,7 @@ function RewardRecommendPage(props) {
 
                 await axios.get('http://localhost:8080/search/post/' + String(props.pageNumber - 1) + '/20?keyword=interrupt&department=&subject=&haveReward=' + true + '&sortBy=' + sortBy).then((res) => {
                     setReward(oldArray => [...oldArray, res.data.search]);
-                    window.scrollTo(0, 0);
+                    //window.scrollTo(0, 0);
                     props.setLoading(false)
 
 

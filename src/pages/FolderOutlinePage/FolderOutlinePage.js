@@ -12,11 +12,11 @@ function FolderOutlinePage(props) {
 
 
     useEffect(() => {
-        console.log(props.headerName)
+        //console.log(props.headerName)
         async function getFolderById() {
             try {
                 await axios.get('http://localhost:8080/search/folder/' + String(props.pageNumber - 1) + '/20?keyword=' + (props.keyword ? props.keyword : '') + '&creator=' + (props.headerName ? props.headerName : '')).then((res) => {
-                    console.log(res.data.search);
+                    //console.log(res.data.search);
                     setFolder(oldArray => [...oldArray = [], res.data.search]);
                     props.setLoading(false)
                 });
@@ -37,7 +37,7 @@ function FolderOutlinePage(props) {
 
                 await axios.get('http://localhost:8080/search/folder/' + String(props.pageNumber - 1) + '/20?keyword=' + (props.keyword ? props.keyword : '') + '&creator=' + (props.headerName ? props.headerName : '')).then((res) => {
                     setFolder(oldArray => [...oldArray = [], res.data.search]);
-                    window.scrollTo(0, 0);
+                    //window.scrollTo(0, 0);
                     //console.log(pageNumber);
                     props.setLoading(false)
                 });

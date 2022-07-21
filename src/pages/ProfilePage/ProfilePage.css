@@ -149,8 +149,8 @@
     height:80%;
     min-height: 80%;
     max-height: 80%;
-    display: inline-flex;
-    flex-wrap: wrap;
+    /* display: inline-flex;
+    flex-flow: row wrap; */
     width: 100%;
 }
 .Profile__Introduction{

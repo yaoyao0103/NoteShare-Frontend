@@ -44,7 +44,7 @@ function CollabRecommendPage(props) {
                 
                 await axios.get('http://localhost:8080/search/post/'+ String(props.pageNumber-1) + '/20?keyword=interrupt&haveCollaboration='+true+'&sortBy='+sortBy).then((res) => {
                     setCollab(oldArray => [...oldArray, res.data.search]);
-                    window.scrollTo(0, 0);
+                    //window.scrollTo(0, 0);
                     props.setLoading(false)
 
                 });
