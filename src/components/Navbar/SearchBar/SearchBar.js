@@ -35,7 +35,8 @@ const SearchBar = (props) => {
   const onSearch = () => {
     props.setPageProps({
       keyword:keyword,
-      page:'NoteOutlinePage'
+      page:'NoteOutlinePage',
+      pageNumber:1
     });
     message.info(keyword);
 

@@ -118,6 +118,9 @@ function LoginPage(props) {
             if(error.response.status === 403){
                 message.error("Please enter correct email or password!")
             }
+            else  if(error.response.status === 404){
+                message.error("Please sign up first!")
+            }
             else{
                 message.error("Server Error! Please try again later. (Login Error)")
             }

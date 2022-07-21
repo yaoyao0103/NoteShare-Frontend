@@ -102,7 +102,7 @@ function PageOutlineContentTemplate(props) {
                                 <Col className="outlineContentTemplate__Header__RecommendSwitch" span={props.hasSwitch ? 6 : 9}> {props.hasSwitch && <ToggleSwitch isSwitch={props.isFollowingSwitch} ChangeSwitch={props.changeFollowingSwitch} />}</Col>
                                 <Col className="outlineContentTemplate__Header__FolderSwitch" span={props.hasSwitch ? 6 : 9}>{props.hasSwitch && <ToggleSwitch isSwitch={props.isNoteSwitch} ChangeSwitch={props.changeNoteSwitch} SwitchLeft='Note' SwitchRight="Folder" checkedColor="#8015e8" />}</Col>
                                 <Col className="outlineContentTemplate__Header__Dropdown" span={props.hasSwitch ? 12 : 6}>
-                                    {!isFolder &&
+                                    {!isFolder && (props.isMember&&!props.isFollowingSwitch)&&
                                         <div className="outlineContentTemplate__Dropdown">
                                             <SortMeun
                                                 changeSortMode={props.changeSortMode}

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from '../../components/Navbar/Navbar';
-import { Layout, Form, Input, Spin,message } from "antd";
-import { LoadingOutlined} from '@ant-design/icons';
+import { Layout, Form, Input, Spin, message } from "antd";
+import { LoadingOutlined } from '@ant-design/icons';
 import Button from '../../components/Button/Button';
 import Text from '../../components/Text/Text';
 import axios from "axios";
@@ -19,28 +19,22 @@ function SignUpPage(props) {
     const [render, setRender] = useState(false);
     const [loading, setLoading] = useState(false);
     const [openSuccess, setOpenSuccess] = useState(false);
-    const [openFail, setOpenFail] = useState(false);
-    const [error,setError]= useState('');
     useEffect(() => {
         setPage('SignUpPage');
     }, [Page]);
-    var startEmail = '';
-    var startPassword = '';
     useEffect(() => {
-
-
         setRender(true);
     });
     useEffect(() => {
-        if(render)
-        props.setLoading(false);
+        if (render)
+            props.setLoading(false);
 
 
     }, [props]);
     useEffect(() => {
         props.setLoading(false)
     }, [render]);
-    const onFinish = (values) => {
+    const onFinish = () => {
         //console.log('Received values of form: ', values);
 
         SignUp();
@@ -51,41 +45,41 @@ function SignUpPage(props) {
             email: email,
             password: password,
             name: name,
-            headshotPhoto:'https://joeschmoe.io/api/v1/james'
+            headshotPhoto: 'https://joeschmoe.io/api/v1/james'
         }).then(res => {
             console.log(res.data.msg);
             setOpenSuccess(true);
         }).catch((error) => {
-            //console.log(error.response.data)
-            setError(error.response.data)
-            // if(error.response.status === 403){
-            //   setRedirectActivate(true);
-            // }
-            setOpenFail(true);
+            console.log(error.response.status)
+            if(error.response.status === 406){
+                message.error("This name has been registered!")
+            }
+            else  if(error.response.status === 409){
+                message.error("This email has been registered!")
+            }
+            else{
+                message.error("Server Error! Please try again later. (Sign up Error)")
+            }
         })
         setLoading(true);
 
     };
     useEffect(() => {
-        axios.post("http://localhost:8080/verification/resendCode/" + email).then(res => {
-            console.log(res.data.msg);
-        }).catch((error) => {
-            console.log(error.response.status);
-        })
-        if (openSuccess)
+        if (openSuccess) {
+            axios.post("http://localhost:8080/verification/resendCode/" + email).then(res => {
+                console.log(res.data.msg);
+            }).catch((error) => {
+                console.log(error.response.status);
+            })
+
             message.success("Success!")
             props.setPageProps({
                 page: 'VerificationPage',
                 email: email
             })
-    }, [openSuccess]);
-    useEffect(() => {
-        if (openFail) {
-            setLoading(false);
-            message.error("Server Error! Please try again later. (Sign Up Error)")
-            message.error(error.msg);
         }
-    }, [openFail]);
+    }, [openSuccess]);
+
     const formItemLayout = {
         labelCol: {
             xs: {
@@ -118,28 +112,28 @@ function SignUpPage(props) {
     };
     const antIcon = (
         <LoadingOutlined
-          style={{
-            fontSize: 24,
-          }}
-          spin
+            style={{
+                fontSize: 24,
+            }}
+            spin
         />
-      );
+    );
     return (
         <div className='signUpPage'>
             {render &&
                 <div className='signUpPage__Outer'>
-                    <Spin className='signUpPage__Spin'indicator={antIcon}  spinning={loading}>
+                    <Spin className='signUpPage__Spin' indicator={antIcon} spinning={loading}>
                         <Layout className='signUpPagee__Outer'>
                             <Sider className='signUpPage__Sider' width={"60%"}>
                                 <img src="https://static.vecteezy.com/system/resources/previews/004/482/351/original/single-one-line-drawing-couple-with-laptop-sitting-at-the-park-together-freelance-distance-learning-online-courses-studying-concept-modern-continuous-line-draw-design-graphic-illustration-vector.jpg" alt="一張圖片" />
                             </Sider>
                             <Content className='signUpPage__Content'>
                                 <div className='signUpPage__Content__Text'>
-                                    <Text color='black' cls='Large' content='Welcome to Note' fontSize='22'/>
-                                    <Text color='purple' cls='Large' content='Share' fontSize='22'/>
+                                    <Text color='black' cls='Large' content='Welcome to Note' fontSize='22' />
+                                    <Text color='purple' cls='Large' content='Share' fontSize='22' />
                                 </div>
                                 <div className='signUpPage__Content__Text signUpPage__Content__Text__Bottom'>
-                                    <Text color='black' cls='Default' content='Write your own note!' fontSize='10'/>
+                                    <Text color='black' cls='Default' content='Write your own note!' fontSize='10' />
                                 </div>
                                 <div className="signUpPage__Form">
                                     <Form
@@ -152,7 +146,7 @@ function SignUpPage(props) {
                                         scrollToFirstError
                                     >
                                         <div className='signUpPage__Content__Form__Text'>
-                                            <Text color='black' cls='Small' content='Email' fontSize='13'/>
+                                            <Text color='black' cls='Small' content='Email' fontSize='13' />
                                         </div>
                                         <Form.Item
                                             name="email"
@@ -173,7 +167,7 @@ function SignUpPage(props) {
 
 
                                         <div className='signUpPage__Content__Form__Text'>
-                                            <Text color='black' cls='Small' content='Password' fontSize='13'/>
+                                            <Text color='black' cls='Small' content='Password' fontSize='13' />
                                         </div>
                                         <Form.Item
                                             className='signUpPage__Form__Item'
@@ -191,7 +185,7 @@ function SignUpPage(props) {
                                         </Form.Item>
 
                                         <div className='signUpPage__Content__Form__Text'>
-                                            <Text color='black' cls='Small' content='Confirm Password' fontSize='13'/>
+                                            <Text color='black' cls='Small' content='Confirm Password' fontSize='13' />
                                         </div>
                                         <Form.Item
                                             className='signUpPage__Form__Item'
@@ -219,8 +213,8 @@ function SignUpPage(props) {
                                         </Form.Item>
 
                                         <div className='signUpPage__Content__Form__Text'>
-                                            <Text color='black' cls='Small' content='Name' fontSize='13'/>
-                                        </div>    
+                                            <Text color='black' cls='Small' content='Name' fontSize='13' />
+                                        </div>
                                         <Form.Item
                                             className='signUpPage__Form__Item'
                                             name="Name"
@@ -231,17 +225,17 @@ function SignUpPage(props) {
                                                     required: true,
                                                     message: 'Please input your Name!',
                                                     whitespace: true,
-                                                },
+                                                }
                                             ]}
                                         >
-                                            <Input placeholder="Name" onChange={(e) => { setName(e.target.value) }} />
+                                            <Input showCount maxLength={10} placeholder="Name" onChange={(e) => { setName(e.target.value) }} />
                                         </Form.Item>
 
 
 
 
                                         <Form.Item {...tailFormItemLayout} className='signUpPage__Form__Item'>
-                                            <a className="signUpPage__Login__Button" href="javascript: return false;"onClick={()=>(props.setPageProps({page:'LoginPage'}))}>Login now!</a>
+                                            <a className="signUpPage__Login__Button" href="javascript: return false;" onClick={() => (props.setPageProps({ page: 'LoginPage' }))}>Login now!</a>
                                             <div className="signUpPage__Button">
                                                 <Button color={"green"}><Text color='white' cls='Large' content={" Register"} fontSize='15' display="inline-block" /></Button>
                                             </div>
@@ -249,8 +243,8 @@ function SignUpPage(props) {
                                         </Form.Item>
                                     </Form>
                                 </div>
-                        </Content>
-                    </Layout>
+                            </Content>
+                        </Layout>
                     </Spin>
                 </div>
             }

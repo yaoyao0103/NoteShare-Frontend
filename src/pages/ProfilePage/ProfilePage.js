@@ -346,6 +346,11 @@ function ProfilePage(props) {
             setFollowingList(oldArray => [...oldArray.slice(0, 0), tempFollowingList]);
 
             setGetUserSuccess(true);
+            let cookieParser = new Cookie(document.cookie);
+            let tempEmail = cookieParser.getCookieByName('email')
+            tempEmail = Base64.decode(tempEmail);
+            if (tempEmail === props.email)
+                props.setLoading(false);
 
         }).catch((error) => {
             message.error("Server Error! Please try again later. (Get User Error)")
@@ -368,13 +373,17 @@ function ProfilePage(props) {
         //console.log(props.email);
 
         if (tempEmail === props.email) {
+            getUserByEmail(tempEmail);
+            setEmail(tempEmail);
             //console.log('isAuthor')
             setIsAuthor(true);
             setGetFolderByIdSuccess(true);
-            props.setLoading(false);
+
         }
         else {
             //console.log('111')
+            getUserByEmail(tempEmail);
+            setEmail(tempEmail);
             setIsAuthor(false);
             if (!fansOrFollower)
                 getAllFolder(props.email);
@@ -383,8 +392,7 @@ function ProfilePage(props) {
 
 
         }
-        getUserByEmail(tempEmail);
-        setEmail(tempEmail);
+
 
 
     }, [props]);

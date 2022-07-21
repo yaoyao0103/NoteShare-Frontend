@@ -29,7 +29,7 @@ function NavButton(props) {
         QnA: false,
         Collab: false,
       });
-      props.setPageProps({ page: 'RewardRecommendPage' });
+      props.setPageProps({ page: 'RewardRecommendPage', pageNumber: 1 });
     } else if (e.target.innerText === 'QnA') {
       setShowing({
         PersonalPage: false,
@@ -37,7 +37,7 @@ function NavButton(props) {
         QnA: true,
         Collab: false,
       });
-      props.setPageProps({ page: 'QnARecommendPage' });
+      props.setPageProps({ page: 'QnARecommendPage', pageNumber: 1 });
     } else if (e.target.innerText === 'Collab') {
       setShowing({
         PersonalPage: false,
@@ -45,7 +45,7 @@ function NavButton(props) {
         QnA: false,
         Collab: true,
       });
-      props.setPageProps({ page: 'CollabRecommendPage' });
+      props.setPageProps({ page: 'CollabRecommendPage', pageNumber: 1 });
     }
     else {
       setShowing({

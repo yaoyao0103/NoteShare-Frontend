@@ -11,6 +11,7 @@ import "./AdvancedSearch.css";
 const AdvancedSearch = (props) => {
     const [ options, setOptions ] = useState([]);
     const [ condition, setCondition ] = useState({
+        pageNumber:1,
         keyword: null,
         school: null,
         subject: null,
