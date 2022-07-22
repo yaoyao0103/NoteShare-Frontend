@@ -94,6 +94,7 @@ function Ring(props) {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
               }
         }).then(res => {
+            console.log('ring')
             props.setRingNumber(0);
         }).catch((error) => {
             //message.info(error.response.error);
