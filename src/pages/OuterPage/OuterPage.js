@@ -68,15 +68,15 @@ const OuterPage = () => {
     const changePageNumber = (pageNumber) => {
         setPageProps({
             page: pageProps.page,
-            pageNumber:pageNumber,
-            keyword: pageProps.keyword?pageProps.keyword:null,
-            school: pageProps.school?pageProps.school:null,
-            subject: pageProps.subject?pageProps.subject:null,
-            department: pageProps.department?pageProps.department:null,
-            professor: pageProps.professord?pageProps.professor:null,
-            headerName: pageProps.headerName?pageProps.headerName:null,
-            tag: pageProps.tag?pageProps.tag:[],
-            download: pageProps.download?pageProps.download:null,
+            pageNumber: pageNumber,
+            keyword: pageProps.keyword ? pageProps.keyword : null,
+            school: pageProps.school ? pageProps.school : null,
+            subject: pageProps.subject ? pageProps.subject : null,
+            department: pageProps.department ? pageProps.department : null,
+            professor: pageProps.professord ? pageProps.professor : null,
+            headerName: pageProps.headerName ? pageProps.headerName : null,
+            tag: pageProps.tag ? pageProps.tag : [],
+            download: pageProps.download ? pageProps.download : null,
         })
     }
     const changePageFunction = () => {
@@ -117,7 +117,11 @@ const OuterPage = () => {
         let tempEmail = cookieParser.getCookieByName('email');
         tempEmail = Base64.decode(tempEmail);
         let tempRing = ringNumber
-        axios.get("http://localhost:8080/bellBy/" + tempEmail,).then(res => {
+        axios.get("http://localhost:8080/bellBy/" + tempEmail, {
+            headers: {
+                'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+            }
+        }).then(res => {
 
             for (let i in res.data.res) {   //訂閱"他人"地址，接收"他人"發送的訊息
                 stompClient.subscribe(`/topic/bell-messages/${res.data.res[i].userObjEmail}`, (message) => {   //拿user 後端轉bell
@@ -201,7 +205,7 @@ const OuterPage = () => {
             setPageProps({ page: 'PersonalPage' })
         }
         const tempPageProps = cookieParser.getCookieByName('pageProps')
-        if (tempPageProps ) {
+        if (tempPageProps) {
             const temp = JSON.parse(tempPageProps)
             //console.log("temp", temp)
             setPageProps(temp)
@@ -213,8 +217,9 @@ const OuterPage = () => {
         const tempPageProps = cookieParser.getCookieByName('pageProps')
         if (!tempPageProps) {
             if (loggedIn) {
-
+                setPageStack(oldArray => [...oldArray.slice(0, 0)]);
                 setPageProps({ page: 'PersonalPage' })
+
             }
             else {
 
@@ -227,6 +232,11 @@ const OuterPage = () => {
         else
             connect();
     }, [loggedIn])
+
+    useEffect(() => {
+        if (pageStack[0]?.pageProps.page === 'LoginPage' && pageStack[1]?.pageProps.page === 'LoginPage')
+            setPageStack(oldArray => [...oldArray.slice(0, 1)])
+    }, [pageStack])
 
     useEffect(() => {
         //console.log('ringNumber:', ringNumber)
@@ -244,7 +254,12 @@ const OuterPage = () => {
             message.info('You should log in first !!!')
             setPageProps({ page: "LoginPage" })
         }
-
+        else if ((pageProps.page === 'LoginPage' || pageProps.page === 'SignUpPage' ||
+            pageProps.page === 'VerificationPage' || pageProps.page === 'ForgetPasswordPage'
+        ) && loggedIn) {
+            message.info('You should log out first !!!')
+            setPageProps({ page: "PersonalPage" })
+        }
         else {
 
 
@@ -279,7 +294,7 @@ const OuterPage = () => {
             document.cookie = "pageProps=" + JSON.stringify(pageProps);
             //document.cookie = "pageNumber=" + JSON.stringify(pageNumber);
 
-            if (pageProps.page !== 'LoginPage'||!loggedIn) {
+            if (pageProps.page !== 'LoginPage' || !loggedIn) {
                 setPageStack(oldArray => [...oldArray, { pageProps: pageProps }]);
             }
             if (pageProps.page === 'NoteDetailPage' || pageProps.page === 'NoteOutlinePage' || pageProps.page === 'MemberPage' ||
@@ -295,25 +310,25 @@ const OuterPage = () => {
                 case 'NoteDetailPage': setPageComponent(<NoteDetailPage page='NoteDetailPage' sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
                 case 'NoteEditPage': setPageComponent(<NoteEditPage page='NoteEditPage' sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
                 case 'NoteNewPage': setPageComponent(<NoteEditPage page='NoteNewPage' sendBellMessage={sendBellMessage} sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
-                case 'NoteOutlinePage': setPageComponent(<NoteOutlinePage page='NoteOutlinePage'  setPageNumber={ changePageNumber } changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
-                case 'MemberPage': setPageComponent(<MemberPage page='MemberPage'  setPageNumber={ changePageNumber } changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
+                case 'NoteOutlinePage': setPageComponent(<NoteOutlinePage page='NoteOutlinePage' setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
+                case 'MemberPage': setPageComponent(<MemberPage page='MemberPage' setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
                 case 'RewardDetailPage': setPageComponent(<RewardDetailPage page='RewardDetailPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
                 case 'RewardEditPage': setPageComponent(<RewardEditPage page='RewardEditPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
                 case 'RewardNewPage': setPageComponent(<RewardEditPage page='RewardNewPage' sendBellMessage={sendBellMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
-                case 'RewardOutlinePage': setPageComponent(<RewardOutlinePage page='RewardOutlinePage'  setPageNumber={ changePageNumber } changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
-                case 'RewardRecommendPage': setPageComponent(<RewardRecommendPage page='RewardRecommendPage'  setPageNumber={ changePageNumber } changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
+                case 'RewardOutlinePage': setPageComponent(<RewardOutlinePage page='RewardOutlinePage' setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
+                case 'RewardRecommendPage': setPageComponent(<RewardRecommendPage page='RewardRecommendPage' setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
                 case 'QnADetailPage': setPageComponent(<QnADetailPage page='QnADetailPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
-                case 'QnAOutlinePage': setPageComponent(<QnAOutlinePage page='QnAOutlinePage'  setPageNumber={ changePageNumber } changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                case 'QnAOutlinePage': setPageComponent(<QnAOutlinePage page='QnAOutlinePage' setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
                 case 'QnAEditPage': setPageComponent(<QnAEditPage page='QnAEditPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
                 case 'QnANewPage': setPageComponent(<QnAEditPage page='QnANewPage' sendBellMessage={sendBellMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
-                case 'QnARecommendPage': setPageComponent(<QnARecommendPage page='QnARecommendPage'  setPageNumber={ changePageNumber } changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                case 'QnARecommendPage': setPageComponent(<QnARecommendPage page='QnARecommendPage' setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
                 case 'CollabDetailPage': setPageComponent(<CollabDetailPage page='CollabDetailPage' sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
                 case 'CollabEditPage': setPageComponent(<CollabEditPage page='CollabEditPage' sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
                 case 'CollabNoteEditPage': setPageComponent(<CollabNoteEditPage page='CollabNoteEditPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
                 case 'CollabNewPage': setPageComponent(<CollabEditPage page='CollabNewPage' sendBellMessage={sendBellMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
-                case 'CollabOutlinePage': setPageComponent(<CollabOutlinePage page='CollabOutlinePage'  setPageNumber={ changePageNumber } changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
-                case 'CollabRecommendPage': setPageComponent(<CollabRecommendPage page='CollabRecommendPage'  setPageNumber={ changePageNumber } changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
-                case 'FolderOutlinePage': setPageComponent(<FolderOutlinePage page='FolderOutlinePage'  setPageNumber={ changePageNumber } changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                case 'CollabOutlinePage': setPageComponent(<CollabOutlinePage page='CollabOutlinePage' setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                case 'CollabRecommendPage': setPageComponent(<CollabRecommendPage page='CollabRecommendPage' setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                case 'FolderOutlinePage': setPageComponent(<FolderOutlinePage page='FolderOutlinePage' setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
                 case 'PersonalPage': setPageComponent(<PersonalPage page='PersonalPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
                 case 'ProfilePage': setPageComponent(<ProfilePage page='ProfilePage' sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} Avatar={changeAvatar} setAvatar={setChangeAvatar} setPageProps={setPageProps} {...pageProps} />); break;
                 case 'LoginPage': setPageComponent(<LoginPage page='LoginPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} setLoggedIn={setLoggedIn} {...pageProps} />); break;
@@ -328,13 +343,20 @@ const OuterPage = () => {
     }, [pageProps])
     useEffect(() => {
         console.log(pageStack)
+
         if (pageStack.length > 1)
             setBackMode(true)
         else
             setBackMode(false)
+        if (pageStack[0]?.pageProps.page === 'LoginPage' && pageStack[1]?.pageProps.page === 'LoginPage'){
+            setBackMode(false)
+            console.log('123')
+        }
+
+            
     }, [pageStack])
 
-   
+
 
     const floatBtnOnClick = () => {
         message.info("float button click!")

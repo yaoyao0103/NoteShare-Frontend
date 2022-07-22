@@ -3,14 +3,19 @@ import PageDetailTemplate from '../../components/PageDetailTemplate/PageDetailTe
 import PostEditTemplate from '../../components/PostEditTemplate/PostEditTemplate';
 import axios from '../../components/axios/axios';
 import { message } from "antd";
-
+import Cookie from '../../components/Cookies/Cookies';
+const cookieParser=new Cookie(document.cookie)
 function QnAEditPage(props){
     //const postId = '62b07f9c0997e642d14020c6';
     const [post, setPost] = useState(null);
 
     useEffect(() => {
         async function getCollabNoteById() {
-            axios.get(`http://localhost:8080/post/${props.postId}`)
+            axios.get(`http://localhost:8080/post/${props.postId}`,{
+                headers: {
+                    'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+                  }
+            })
             .then(res => {
                 console.log(res.data.res)
                 setPost(res.data.res)

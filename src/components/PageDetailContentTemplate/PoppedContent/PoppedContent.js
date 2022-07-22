@@ -11,7 +11,7 @@ import "./PoppedContent.css";
 import { set } from 'react-hook-form';
 const { Header, Content, Sider, Footer } = Layout;
 const { TextArea } = Input;
-
+const cookieParser = new Cookie(document.cookie);
 
 const PoppedContent = (props) => {
     const { setPoppedContentShow } = props;
@@ -43,11 +43,15 @@ const PoppedContent = (props) => {
     };
 
     const approve = (email) => {
-        let cookieParser = new Cookie(document.cookie);
+        
         let name = cookieParser.getCookieByName('name');
         let avatar = cookieParser.getCookieByName('avatar');
         
-        axios.put(`http://localhost:8080/post/add/${props.postId}/${email}`)
+        axios.put(`http://localhost:8080/post/add/${props.postId}/${email}`,{
+            headers: {
+                'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+              }
+        })
             .then(res => {
                 props.sendPrivateMessage(
                     name + ' has agreed your application !',
@@ -75,7 +79,11 @@ const PoppedContent = (props) => {
     }
 
     const reject = (email) => {
-        axios.delete(`http://localhost:8080/post/apply/${props.postId}/${email}`)
+        axios.delete(`http://localhost:8080/post/apply/${props.postId}/${email}`,{
+            headers: {
+                'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+              }
+        })
             .then(res => {
                 message.success("You rejected the application!")
                 const tempList = new Array();

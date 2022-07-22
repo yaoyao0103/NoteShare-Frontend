@@ -11,7 +11,7 @@ import './LoginPage.css'
 import Logo from '../../components/Navbar/Logo/Logo';
 
 const { Header, Sider, Content, Footer } = Layout;
-
+const cookieParser =new Cookie(document.cookie)
 function LoginPage(props) {
     const [Page, setPage] = useState('LoginPage');
     const [email, setEmail] = useState("");
@@ -37,7 +37,6 @@ function LoginPage(props) {
     var startEmail = '';
     var startPassword = '';
     useEffect(() => {
-        let cookieParser = new Cookie(document.cookie);
         let rEmail = cookieParser.getCookieByName('rEmail');
         let rPassword = cookieParser.getCookieByName('rPassword');
         if (rEmail && rPassword) {

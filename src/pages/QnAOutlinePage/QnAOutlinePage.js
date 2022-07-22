@@ -3,7 +3,8 @@ import PageOutlineTemplate from '../../components/PageOutlineTemplate/PageOutlin
 import PageOutlineContentTemplate from '../../components/PageOutlineContentTemplate/PageOutlineContentTemplate';
 import axios from "axios";
 import { message } from "antd";
-
+import Cookie from '../../components/Cookies/Cookies';
+const cookieParser=new Cookie(document.cookie)
 function QnAOutlinePage(props) {
     const page = "QnAOutlinePage";
     const [QnA, setQnA] = useState([]);
@@ -16,7 +17,11 @@ function QnAOutlinePage(props) {
 
                 const sortBy = sortMode;
 
-                await axios.get('http://localhost:8080/search/post/' + String(props.pageNumber - 1) + '/20?keyword=' + (props.keyword ? props.keyword : '') + '&department=' + (props.department ? props.department : '') + '&subject=' + (props.subject ? props.subject : '') + '&haveQA=' + true + '&sortBy=' + sortBy).then((res) => {
+                await axios.get('http://localhost:8080/search/post/' + String(props.pageNumber - 1) + '/20?keyword=' + (props.keyword ? props.keyword : '') + '&department=' + (props.department ? props.department : '') + '&subject=' + (props.subject ? props.subject : '') + '&haveQA=' + true + '&sortBy=' + sortBy,{
+                    headers: {
+                        'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+                      }
+                }).then((res) => {
                     setQnA(oldArray => [...oldArray, res.data.search]);
                     props.setLoading(false)
                 });
@@ -37,7 +42,11 @@ function QnAOutlinePage(props) {
 
                 const sortBy = sortMode;
 
-                await axios.get('http://localhost:8080/search/post/' + String(props.pageNumber - 1) + '/20?keyword=' + (props.keyword ? props.keyword : '') + '&department=' + (props.department ? props.department : '') + '&subject=' + (props.subject ? props.subject : '') + '&haveQA=' + true + '&sortBy=' + sortBy).then((res) => {
+                await axios.get('http://localhost:8080/search/post/' + String(props.pageNumber - 1) + '/20?keyword=' + (props.keyword ? props.keyword : '') + '&department=' + (props.department ? props.department : '') + '&subject=' + (props.subject ? props.subject : '') + '&haveQA=' + true + '&sortBy=' + sortBy,{
+                    headers: {
+                        'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+                      }
+                }).then((res) => {
                     setQnA(oldArray => [...oldArray, res.data.search]);
                    
                     //window.scrollTo(0, 0);

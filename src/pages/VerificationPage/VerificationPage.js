@@ -7,8 +7,9 @@ import Text from '../../components/Text/Text';
 import axios from "axios";
 import './VerificationPage.css'
 import Logo from '../../components/Navbar/Logo/Logo';
+import Cookie from '../../components/Cookies/Cookies';
 const { Header, Sider, Content, Footer } = Layout;
-
+const cookieParser= new Cookie(document.cookie)
 function VerificationPage(props) {
     const [Page, setPage] = useState('VerificationPage');
     const [render, setRender] = useState(false);

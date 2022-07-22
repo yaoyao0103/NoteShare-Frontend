@@ -20,7 +20,7 @@ import Cookie from '../../components/Cookies/Cookies';
 import { Base64 } from 'js-base64';
 const { Header, Content, Sider, Footer } = Layout;
 const { Option } = Select;
-
+const cookieParser = new Cookie(document.cookie)
 const PageDetailContentTemplate = (props) => {
 
     const [noteId, setNoteId] = useState(null);
@@ -55,7 +55,7 @@ const PageDetailContentTemplate = (props) => {
     const [publishDate, setPublishDate] = useState('')
 
     useEffect(() => {
-        const cookieParser = new Cookie(document.cookie)
+       
         const temp = cookieParser.getCookieByName('email')
         const tempEmail = Base64.decode(temp);
         setEmail(tempEmail)
@@ -91,7 +91,11 @@ const PageDetailContentTemplate = (props) => {
             setNoteId(noteId);
             setType("collaboration")
             setIsPublic(props.data?.public)
-            axios.get(`http://localhost:8080/note/${noteId}`)
+            axios.get(`http://localhost:8080/note/${noteId}`,{
+                headers: {
+                    'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+                  }
+            })
                 .then(res => {
                     console.log(res.data.res)
                     const tempNote = res.data.res
@@ -273,7 +277,11 @@ const PageDetailContentTemplate = (props) => {
             commentFromApplicant: content
         }
         console.log("data", data)
-        axios.put(`http://localhost:8080/post/apply/${props.postId}`, data)
+        axios.put(`http://localhost:8080/post/apply/${props.postId}`, data,{
+            headers: {
+                'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+              }
+        })
             .then(res => {
                 message.success("You submitted your application!")
                 console.log(res)
@@ -289,7 +297,11 @@ const PageDetailContentTemplate = (props) => {
         let name = cookieParser.getCookieByName('name');
         let avatar = cookieParser.getCookieByName('avatar');
         let success = false;
-        axios.put(`http://localhost:8080/coin/note/${email}/${props.noteId}`)
+        axios.put(`http://localhost:8080/coin/note/${email}/${props.noteId}`,{
+            headers: {
+                'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+              }
+        })
             .then(res => {
                 console.log(res.data.res)
                 message.success("You bought this note!")
@@ -313,7 +325,11 @@ const PageDetailContentTemplate = (props) => {
     }
 
     const submitRewardNote = () => {
-        axios.put(`http://localhost:8080/note/submit/${props.noteId}`)
+        axios.put(`http://localhost:8080/note/submit/${props.noteId}`,{
+            headers: {
+                'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+              }
+        })
             .then(res => {
                 message.success("You submitted your reward note!")
                 setIsSubmit(true)
@@ -325,7 +341,11 @@ const PageDetailContentTemplate = (props) => {
     }
 
     const withdrawRewardNote = () => {
-        axios.put(`http://localhost:8080/note/withdraw/${props.noteId}`)
+        axios.put(`http://localhost:8080/note/withdraw/${props.noteId}`,{
+            headers: {
+                'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+              }
+        })
             .then(res => {
                 message.success("You withdrawn your reward note!")
                 setIsSubmit(false)
@@ -350,7 +370,11 @@ const PageDetailContentTemplate = (props) => {
             kickTargetEmail: kickTarget,
           }
           console.log("data", data)
-          axios.post(`http://localhost:8080/schedule/vote/${props.postId}`, data)
+          axios.post(`http://localhost:8080/schedule/vote/${props.postId}`, data,{
+            headers: {
+                'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+              }
+        })
             .then(res => {
               message.success("You created a vote of kicking an author!")
               // Todo: remove applicant from list
@@ -375,7 +399,11 @@ const PageDetailContentTemplate = (props) => {
     //////////////////////////
 
     const refreshAnswer = () => {
-        axios.get(`http://localhost:8080/post/${props.postId}`)
+        axios.get(`http://localhost:8080/post/${props.postId}`,{
+            headers: {
+                'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+              }
+        })
             .then(res => {
                 setPoppedContent( res.data.res.answersUserObj );
             })

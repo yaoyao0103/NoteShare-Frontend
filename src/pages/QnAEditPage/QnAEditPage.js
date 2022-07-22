@@ -3,13 +3,18 @@ import PageDetailTemplate from '../../components/PageDetailTemplate/PageDetailTe
 import PostEditTemplate from '../../components/PostEditTemplate/PostEditTemplate';
 import axios from 'axios';
 import { message } from "antd";
-
+import Cookie from '../../components/Cookies/Cookies';
+const cookieParser=new Cookie(document.cookie)
 function QnAEditPage(props){
     const [post, setPost] = useState(null);
 
     useEffect(() => {
         async function getQnAById() {
-            axios.get(`http://localhost:8080/post/${props.postId}`)
+            axios.get(`http://localhost:8080/post/${props.postId}`,{
+                headers: {
+                    'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+                  }
+            })
             .then(res => {
                 console.log(res.data.res)
                 setPost(res.data.res)

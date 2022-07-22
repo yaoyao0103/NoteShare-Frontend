@@ -3,13 +3,18 @@ import PageDetailTemplate from '../../components/PageDetailTemplate/PageDetailTe
 import NoteEditTemplate from '../../components/NoteEditTemplate/NoteEditTemplate';
 import axios from '../../components/axios/axios';
 import { message } from "antd";
-
+import Cookie from '../../components/Cookies/Cookies';
+const cookieParser=new Cookie(document.cookie)
 function NoteEditPage(props){
     const [note, setNote] = useState(null);
 
     useEffect(() => {
         async function getNoteById() {
-            axios.get(`http://localhost:8080/note/${props.noteId}`)
+            axios.get(`http://localhost:8080/note/${props.noteId}`,{
+                headers: {
+                    'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+                  }
+            })
             .then(res => {
                 setNote(res.data.res)
                 console.log(res.data.res)

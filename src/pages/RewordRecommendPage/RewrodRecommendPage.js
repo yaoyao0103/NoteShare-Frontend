@@ -4,7 +4,8 @@ import PageOutlineTemplate from '../../components/PageOutlineTemplate/PageOutlin
 import PageOutlineContentTemplate from '../../components/PageOutlineContentTemplate/PageOutlineContentTemplate';
 import axios from "axios";
 import { message } from "antd";
-
+import Cookie from '../../components/Cookies/Cookies';
+const cookieParser = new Cookie(document.cookie)
 function RewardRecommendPage(props) {
     const page = 'RewardRecommendPage';
     const [Reward, setReward] = useState([]);
@@ -16,7 +17,11 @@ function RewardRecommendPage(props) {
             try {
                 const sortBy = sortMode;
 
-                await axios.get('http://localhost:8080/search/post/' + String(props.pageNumber - 1) + '/20?keyword=interrupt&department=&subject=&haveReward=' + true + '&sortBy=' + sortBy).then((res) => {
+                await axios.get('http://localhost:8080/search/post/' + String(props.pageNumber - 1) + '/20?keyword=interrupt&department=&subject=&haveReward=' + true + '&sortBy=' + sortBy, {
+                    headers: {
+                        'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+                    }
+                }).then((res) => {
 
                     setReward(oldArray => [...oldArray, res.data.search]);
                     props.setLoading(false)
@@ -40,7 +45,11 @@ function RewardRecommendPage(props) {
             try {
                 const sortBy = sortMode;
 
-                await axios.get('http://localhost:8080/search/post/' + String(props.pageNumber - 1) + '/20?keyword=interrupt&department=&subject=&haveReward=' + true + '&sortBy=' + sortBy).then((res) => {
+                await axios.get('http://localhost:8080/search/post/' + String(props.pageNumber - 1) + '/20?keyword=interrupt&department=&subject=&haveReward=' + true + '&sortBy=' + sortBy, {
+                    headers: {
+                        'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+                    }
+                }).then((res) => {
                     setReward(oldArray => [...oldArray, res.data.search]);
                     //window.scrollTo(0, 0);
                     props.setLoading(false)

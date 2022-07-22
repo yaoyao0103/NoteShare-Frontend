@@ -7,7 +7,7 @@ import { message } from "antd";
 import Cookie from '../../components/Cookies/Cookies';
 import { Base64 } from 'js-base64';
 import { suppressDeprecationWarnings } from 'moment';
-
+const cookieParser =new Cookie(document.cookie)
 function MemberPage(props) {
     const page = 'MemberPage';
 
@@ -49,7 +49,11 @@ function MemberPage(props) {
     }
     async function getFollowingNoteById(email) {
         try {
-            await axios.get('http://localhost:8080/note/following/' + email + '/' + String(props.pageNumber - 1) + '/10').then((res) => {
+            await axios.get('http://localhost:8080/note/following/' + email + '/' + String(props.pageNumber - 1) + '/10',{
+                headers: {
+                    'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+                  }
+            }).then((res) => {
                 setNote(oldArray => [...oldArray, res.data.res]);
                 console.log(res.data.res)
                 props.setLoading(false)
@@ -68,7 +72,11 @@ function MemberPage(props) {
             const haveNormal = true;
             const sortBy = sortMode;
             //console.log(props.department);
-            await axios.get('http://localhost:8080/search/note/' + String(props.pageNumber - 1) + '/10?keyword=' + (props.keyword ? props.keyword : '') + '&department=' + (props.department ? props.department : '') + '&subject=' + (props.subject ? props.subject : '') + '&haveNormal=true&haveCollaboration=true&sortBy=' + sortBy).then((res) => {
+            await axios.get('http://localhost:8080/search/note/' + String(props.pageNumber - 1) + '/10?keyword=' + (props.keyword ? props.keyword : '') + '&department=' + (props.department ? props.department : '') + '&subject=' + (props.subject ? props.subject : '') + '&haveNormal=true&haveCollaboration=true&sortBy=' + sortBy,{
+                headers: {
+                    'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+                  }
+            }).then((res) => {
                 setNote(oldArray => [...oldArray, res.data.search]);
                 props.setLoading(false)
             });

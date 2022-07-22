@@ -14,7 +14,7 @@ import Cookie from '../../components/Cookies/Cookies';
 import { Base64 } from 'js-base64';
 import axios from "axios";
 const { Header, Sider, Content, Footer } = Layout;
-
+const cookieParser=new Cookie(document.cookie)
 function ProfilePage(props) {
     const page = 'ProfilePage';
     const [user, setUser] = useState({});
@@ -95,7 +95,11 @@ function ProfilePage(props) {
     };
 
     const getFans = () => {
-        axios.get("http://localhost:8080/followers/" + email).then(res => {
+        axios.get("http://localhost:8080/followers/" + email,{
+            headers: {
+                'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+              }
+        }).then(res => {
             let tempFansList = [];
             for (let i = 0; i < res.data.followers.length; i++) {
 
@@ -111,7 +115,11 @@ function ProfilePage(props) {
     }
 
     const getFollowing = () => {
-        axios.get("http://localhost:8080/following/" + email).then(res => {
+        axios.get("http://localhost:8080/following/" + email,{
+            headers: {
+                'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+              }
+        }).then(res => {
             let tempFollowingList = [];
             for (let i = 0; i < res.data.following.length; i++) {
 
@@ -126,7 +134,11 @@ function ProfilePage(props) {
     }
 
     const SaveAvatar = () => {
-        axios.put("http://localhost:8080/user/head/" + email, { headshotPhoto: Avatars[avatar] }).then(res => {
+        axios.put("http://localhost:8080/user/head/" + email, { headshotPhoto: Avatars[avatar] },{
+            headers: {
+                'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+              }
+        }).then(res => {
             setAvatarCurrent(Avatars[avatar]);
             message.success('You changed your avatar!');
             //console.log(avatarNum+1);
@@ -139,11 +151,15 @@ function ProfilePage(props) {
     }
 
     const Follow = () => {
-        let cookieParser = new Cookie(document.cookie);
+       
         let name = cookieParser.getCookieByName('name');
         let avatar = cookieParser.getCookieByName('avatar');
         if (!isFollow) {
-            axios.put("http://localhost:8080/follow/" + email + '/' + props.email,).then(res => {
+            axios.put("http://localhost:8080/follow/" + email + '/' + props.email,{
+                headers: {
+                    'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+                  }
+            }).then(res => {
                 //props.sendPrivateMessage(email+'has following you','Follow',)
                 //setProfile(content);
                 setIsFollow(true);
@@ -166,7 +182,11 @@ function ProfilePage(props) {
 
         }
         else {
-            axios.put("http://localhost:8080/unfollow/" + email + '/' + props.email,).then(res => {
+            axios.put("http://localhost:8080/unfollow/" + email + '/' + props.email,{
+                headers: {
+                    'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+                  }
+            }).then(res => {
                 //setProfile(content);
                 setIsFollow(false);
                 setFansNum(fansNum - 1);
@@ -180,7 +200,11 @@ function ProfilePage(props) {
 
     const changeBell = () => {
         if (isBell) {
-            axios.put('http://localhost:8080/cancelBell/' + email + '/' + props.email,).then(res => {
+            axios.put('http://localhost:8080/cancelBell/' + email + '/' + props.email,{
+                headers: {
+                    'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+                  }
+            }).then(res => {
                 //setProfile(content);
                 setIsBell(false);
                 message.success('You turned on the bell of ' + user.name + " !");
@@ -190,7 +214,11 @@ function ProfilePage(props) {
             })
         }
         else {
-            axios.put("http://localhost:8080/bell/" + email + '/' + props.email,).then(res => {
+            axios.put("http://localhost:8080/bell/" + email + '/' + props.email,{
+                headers: {
+                    'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+                  }
+            }).then(res => {
                 //setProfile(content);
                 setIsBell(true);
                 message.success('You turned off the bell of ' + user.name + " !");
@@ -203,7 +231,11 @@ function ProfilePage(props) {
     }
 
     const SaveProfile = (content) => {
-        axios.put("http://localhost:8080/user/profile/" + email, { profile: content }).then(res => {
+        axios.put("http://localhost:8080/user/profile/" + email, { profile: content },{
+            headers: {
+                'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+              }
+        }).then(res => {
             setProfile(content);
             message.success("You updated your profile!")
         }).catch((error) => {
@@ -215,7 +247,11 @@ function ProfilePage(props) {
     const AddStrength = (tag) => {
         //console.log(tag);
         const tags = [...strength, tag];
-        axios.put("http://localhost:8080/user/strength/" + email, { strength: tags }).then(res => {
+        axios.put("http://localhost:8080/user/strength/" + email, { strength: tags },{
+            headers: {
+                'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+              }
+        }).then(res => {
             //console.log(...strength, tag);
             setStrength(oldArray => [...oldArray, tag]);
             message.success("You added a strength!")
@@ -226,7 +262,11 @@ function ProfilePage(props) {
     }
     const DeleteStrength = (key) => {
         const tags = [...strength.slice(0, key), ...strength.slice(key + 1, strength.length)]
-        axios.put("http://localhost:8080/user/strength/" + email, { strength: tags }).then(res => {
+        axios.put("http://localhost:8080/user/strength/" + email, { strength: tags },{
+            headers: {
+                'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+              }
+        }).then(res => {
             setStrength(oldArray => [...oldArray.slice(0, key), ...oldArray.slice(key + 1, strength.oldArray)]);
             message.success("You deleted a strength!")
         }).catch((error) => {
@@ -237,7 +277,10 @@ function ProfilePage(props) {
 
     const ClickBack = (id) => {
         props.setLoading(true)
-        axios.get("http://localhost:8080/folder/" + id, {
+        axios.get("http://localhost:8080/folder/" + id,{
+            headers: {
+                'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+              }
         }).then(res => {
             setCurrentFolderId(res.data.res.parent);
 
@@ -258,7 +301,10 @@ function ProfilePage(props) {
         />
     );
     const getFolderById = (id) => {
-        axios.get("http://localhost:8080/folder/" + id, {
+        axios.get("http://localhost:8080/folder/" + id,{
+            headers: {
+                'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+              }
         }).then(res => {
             const list = res.data.res.children.concat(res.data.res.notes);
             //console.log(list);
@@ -277,7 +323,10 @@ function ProfilePage(props) {
     };
 
     function getAllFolder(Email) {
-        axios.get("http://localhost:8080/folder/root/" + Email, {
+        axios.get("http://localhost:8080/folder/root/" + Email,{
+            headers: {
+                'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+              }
         }).then(res => {
             //console.log(res.data.res[2]);
             getFolderById(res.data.res[2].id);
@@ -291,7 +340,10 @@ function ProfilePage(props) {
 
     function getAllNote(Email) {
         //console.log('123')
-        axios.get("http://localhost:8080/note/all/" + Email, {
+        axios.get("http://localhost:8080/note/all/" + Email,{
+            headers: {
+                'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+              }
         }).then(res => {
             setNoteList(oldArray => [...oldArray.slice(0, 0), res.data.res]);
             setCurrentFolderId('');
@@ -306,7 +358,10 @@ function ProfilePage(props) {
 
     function getUserByEmail(Email) {
 
-        axios.get("http://localhost:8080/user/" + props.email, {
+        axios.get("http://localhost:8080/user/" + props.email,{
+            headers: {
+                'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+              }
         }).then(res => {
             setUser(res.data.res);
             setAvatarCurrent(res.data.res.headshotPhoto);
@@ -346,7 +401,7 @@ function ProfilePage(props) {
             setFollowingList(oldArray => [...oldArray.slice(0, 0), tempFollowingList]);
 
             setGetUserSuccess(true);
-            let cookieParser = new Cookie(document.cookie);
+            
             let tempEmail = cookieParser.getCookieByName('email')
             tempEmail = Base64.decode(tempEmail);
             if (tempEmail === props.email)
@@ -366,7 +421,7 @@ function ProfilePage(props) {
         setIsFollow(false);
         setFolderList(oldArray => [...oldArray.slice(0, 0)]);
         setGetUserSuccess(false);
-        let cookieParser = new Cookie(document.cookie);
+        
         let tempEmail = cookieParser.getCookieByName('email')
         tempEmail = Base64.decode(tempEmail);
         //console.log(tempEmail);

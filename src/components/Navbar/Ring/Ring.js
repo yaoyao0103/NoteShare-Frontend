@@ -6,6 +6,7 @@ import Cookie from "../../Cookies/Cookies";
 import { Base64 } from 'js-base64';
 import axios from "axios";
 const { Paragraph } = Typography;
+const cookieParser = new Cookie(document.cookie);
 function Ring(props) {
     const [email, setEmail] = useState('');
     
@@ -13,12 +14,16 @@ function Ring(props) {
     const [render, setRender] = useState(false);
     useEffect(() => {
         setRingList(oldArray => [...oldArray.slice(0,0) ]);
-        let cookieParser = new Cookie(document.cookie);
+        
         let tempEmail = cookieParser.getCookieByName('email');
         tempEmail = Base64.decode(tempEmail);
         setEmail(tempEmail);
         //console.log(tempEmail)
-        axios.get("http://localhost:8080/notification/" + tempEmail,).then(res => {
+        axios.get("http://localhost:8080/notification/" + tempEmail,{
+            headers: {
+                'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+              }
+        }).then(res => {
             //console.log(res.data.notification);
             props.setRingNumber(res.data.notification.unreadMessageCount);
             props.setRingList(oldArray => [...res.data.notification.messageReturn,...oldArray.slice(0,0) ])
@@ -84,7 +89,11 @@ function Ring(props) {
     const [ellipsis, setEllipsis] = useState(true);
     const setUnReadNumZero=()=>{
         
-        axios.put("http://localhost:8080/notification/unreadMessage/" + email,).then(res => {
+        axios.put("http://localhost:8080/notification/unreadMessage/" + email,{
+            headers: {
+                'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+              }
+        }).then(res => {
             props.setRingNumber(0);
         }).catch((error) => {
             //message.info(error.response.error);

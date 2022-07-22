@@ -3,13 +3,18 @@ import PageDetailTemplate from '../../components/PageDetailTemplate/PageDetailTe
 import PageDetailContentTemplate from '../../components/PageDetailContentTemplate/PageDetailContentTemplate';
 import axios from '../../components/axios/axios';
 import { message } from "antd";
-
+import Cookie from '../../components/Cookies/Cookies';
+const cookieParser =new Cookie(document.cookie)
 function NoteDetailPage(props){
     const [ post, setPost ] = useState();
     
     useEffect(() => {
         async function getCollabById() {
-            axios.get(`http://localhost:8080/post/${props.postId}`)
+            axios.get(`http://localhost:8080/post/${props.postId}`,{
+                headers: {
+                    'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+                  }
+            })
             .then(res => {
                 console.log(res.data.res)
                 setPost(res.data.res)

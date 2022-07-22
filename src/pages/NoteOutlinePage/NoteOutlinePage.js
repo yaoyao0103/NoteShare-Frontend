@@ -3,7 +3,8 @@ import PageOutlineTemplate from '../../components/PageOutlineTemplate/PageOutlin
 import PageOutlineContentTemplate from '../../components/PageOutlineContentTemplate/PageOutlineContentTemplate';
 import axios from "axios";
 import { message } from "antd";
-
+import Cookie from '../../components/Cookies/Cookies';
+const cookieParser=new Cookie(document.cookie)
 function NoteOutlinePage(props) {
     const page = 'NoteOutlinePage';
     const [Note, setNote] = useState([]);
@@ -16,7 +17,11 @@ function NoteOutlinePage(props) {
                 const haveNormal= true;
                 const sortBy=sortMode;
                 //console.log(props.department);
-                await axios.get('http://localhost:8080/search/note/'+ String(props.pageNumber-1) + '/10?keyword='+(props.keyword?props.keyword:'')+'&department='+(props.department?props.department:'')+'&subject='+(props.subject?props.subject:'')+'&haveNormal=true&haveCollaboration=true&sortBy='+sortBy).then((res) => {
+                await axios.get('http://localhost:8080/search/note/'+ String(props.pageNumber-1) + '/10?keyword='+(props.keyword?props.keyword:'')+'&department='+(props.department?props.department:'')+'&subject='+(props.subject?props.subject:'')+'&haveNormal=true&haveCollaboration=true&sortBy='+sortBy,{
+                    headers: {
+                        'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+                      }
+                }).then((res) => {
                     setNote(oldArray => [...oldArray, res.data.search]);
                     props.setLoading(false)
                 });
@@ -40,7 +45,11 @@ function NoteOutlinePage(props) {
                 const haveNormal= true;
                 const sortBy=sortMode;
             
-                await axios.get('http://localhost:8080/search/note/'+ String(props.pageNumber-1) + '/10?keyword='+(props.keyword?props.keyword:'')+'&department='+(props.department?props.department:'')+'&subject='+(props.subject?props.subject:'')+'&haveNormal=true&haveCollaboration=true&sortBy='+sortBy).then((res) => {
+                await axios.get('http://localhost:8080/search/note/'+ String(props.pageNumber-1) + '/10?keyword='+(props.keyword?props.keyword:'')+'&department='+(props.department?props.department:'')+'&subject='+(props.subject?props.subject:'')+'&haveNormal=true&haveCollaboration=true&sortBy='+sortBy,{
+                    headers: {
+                        'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+                      }
+                }).then((res) => {
                     setNote(oldArray => [...oldArray=[], res.data.search]);
                     //window.scrollTo(0, 0);
                     props.setLoading(false)

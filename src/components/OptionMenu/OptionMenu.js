@@ -13,7 +13,7 @@ import axios from "../axios/axios";
 import MyEditor from "../MyEditor/MyEditor";
 import { set } from "react-hook-form";
 import moment from 'moment';
-
+const cookieParser = new Cookie(document.cookie)
 const OptionMenu = (props) => {
   const navigate = useNavigate()
   const [visible, setVisible] = useState(false);
@@ -34,7 +34,11 @@ const OptionMenu = (props) => {
 
 
   const archive = () => {
-    axios.put(`http://localhost:8080/post/archive/${props.id}`)
+    axios.put(`http://localhost:8080/post/archive/${props.id}`, {
+      headers: {
+        'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+      }
+    })
       .then(res => {
         message.success("You archived a post")
         props.setIsArchive(true)
@@ -52,7 +56,11 @@ const OptionMenu = (props) => {
 
   // set private or public
   const setStatus = () => {
-    axios.put(`http://localhost:8080/post/publish/${props.id}`)
+    axios.put(`http://localhost:8080/post/publish/${props.id}`, {
+      headers: {
+        'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+      }
+    })
       .then(res => {
         props.setIsPublic(res.data.res.public)
         if (res.data.res.public)
@@ -67,19 +75,23 @@ const OptionMenu = (props) => {
   }
 
   const setNoteStatus = () => {
-    if(props.type == "collaboration"){
+    if (props.type == "collaboration") {
       let publishDate = moment(props.publishDate)
       let now = moment()
       let diffHours = (now.diff(publishDate, 'hours', true))
-      if(diffHours > 24){
+      if (diffHours > 24) {
         message.error("Once the note has been posted for more than 24 hours, you can never unpublish it!")
         return;
       }
     }
-    axios.put(`http://localhost:8080/note/publish/${props.noteId}`)
+    axios.put(`http://localhost:8080/note/publish/${props.noteId}`, {
+      headers: {
+        'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+      }
+    })
       .then(res => {
-          message.success("Success!")
-          props.setIsNotePublic(!props.notePublic)
+        message.success("Success!")
+        props.setIsNotePublic(!props.notePublic)
       })
       .catch(err => {
         message.error("Server Error! Please try again later. (Set Note Public/Private Error)")
@@ -95,7 +107,11 @@ const OptionMenu = (props) => {
   }
 
   const versionPublish = (index) => {
-    axios.put(`http://localhost:8080/note/publish/${props.id}/${index}`)
+    axios.put(`http://localhost:8080/note/publish/${props.id}/${index}`, {
+      headers: {
+        'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+      }
+    })
       .then(res => {
         if (!res.data.res.temp)
           message.success("You set this version public!")
@@ -107,10 +123,10 @@ const OptionMenu = (props) => {
         console.log(err)
       })
   }
-    const contentBrowse = (noteId) => {
-      //message.info("browse: "+ noteId);
-      setContent(<MyEditor noteId={noteId} version={'0'} page={props.page}/>)
-    }
+  const contentBrowse = (noteId) => {
+    //message.info("browse: "+ noteId);
+    setContent(<MyEditor noteId={noteId} version={'0'} page={props.page} />)
+  }
 
   const commentBrowse = (comment, index) => {
     //message.info("browse: " + index);
@@ -132,40 +148,52 @@ const OptionMenu = (props) => {
     )
   }
 
-    const chooseBest = (id) => {
-      //message.info("choose: "+ id + " best");
-      axios.put(`http://localhost:8080/post/reward/best/${props.postId}/${id}`)
-      .then ( res => {
-          message.success("You selected the note as best!")
-          props.refreshAnswer()
-          // Todo: remove applicant from list
+  const chooseBest = (id) => {
+    //message.info("choose: "+ id + " best");
+    axios.put(`http://localhost:8080/post/reward/best/${props.postId}/${id}`, {
+      headers: {
+        'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+      }
+    })
+      .then(res => {
+        message.success("You selected the note as best!")
+        props.refreshAnswer()
+        // Todo: remove applicant from list
       })
-      .catch(err =>{
+      .catch(err => {
         message.error("Server Error! Please try again later. (Select Reward Best Error)")
         console.log(err)
       })
-    }
+  }
 
-    const chooseRef = (id) => {
-      //message.info("choose: "+ id + " ref");
-      axios.put(`http://localhost:8080/post/reward/reference/${props.postId}/${id}`)
-      .then ( res => {
+  const chooseRef = (id) => {
+    //message.info("choose: "+ id + " ref");
+    axios.put(`http://localhost:8080/post/reward/reference/${props.postId}/${id}`, {
+      headers: {
+        'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+      }
+    })
+      .then(res => {
         message.success("You selected the note for reference!")
-          props.refreshAnswer()
-          // Todo: remove applicant from list
+        props.refreshAnswer()
+        // Todo: remove applicant from list
       })
-      .catch(err =>{
+      .catch(err => {
         message.error("Server Error! Please try again later. (Select Reward For Reference Error)")
         console.log(err)
       })
-      // Todo: connect choose ref API
-    }
+    // Todo: connect choose ref API
+  }
 
   const approve = (email) => {
-    
-    
+
+
     message.success("Agree applier: " + email);
-    axios.put(`http://localhost:8080/post/add/${props.postId}/${email}`)
+    axios.put(`http://localhost:8080/post/add/${props.postId}/${email}`, {
+      headers: {
+        'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+      }
+    })
       .then(res => {
         message.success("You agreed the applier!")
         // Todo: remove applicant from list
@@ -178,7 +206,11 @@ const OptionMenu = (props) => {
 
   const reject = (email) => {
     message.success("Reject applier: " + email);
-    axios.delete(`http://localhost:8080/post/apply/${props.postId}/${email}`)
+    axios.delete(`http://localhost:8080/post/apply/${props.postId}/${email}`, {
+      headers: {
+        'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+      }
+    })
       .then(res => {
         message.success("You rejected the applier!")
         // Todo: remove applicant from list
@@ -192,78 +224,98 @@ const OptionMenu = (props) => {
   const deletePost = () => {
     //message.info("delete post: " + props.id);
     console.log("type:", props)
-    if(props.type == "note"){
-      axios.put(`http://localhost:8080/note/delete/${props.id}/${props.folderId}`)
-      .then(res => {
-        message.success("You deleted a note!")
-        if (props.page == 'PersonalPage')
-          props.rerenderNotes()
-        else {
-          props.setPageProps({
-            page: 'PersonalPage'
-          })
-        }
-        // Todo: remove applicant from list
-      })
-      .catch(err => {
-        if(err.response.status === 409){
-          message.warn("You cannot delete the last note!")
-        }
-        else{
-          message.error("Server Error! Please try again later. (Delete Note Error)")
+    if (props.type == "note") {
+      axios.put(`http://localhost:8080/note/delete/${props.id}/${props.folderId}`, {
+        headers: {
+          'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
         }
       })
+        .then(res => {
+          message.success("You deleted a note!")
+          if (props.page == 'PersonalPage')
+            props.rerenderNotes()
+          else {
+            props.setPageProps({
+              page: 'PersonalPage'
+            })
+          }
+          // Todo: remove applicant from list
+        })
+        .catch(err => {
+          if (err.response.status === 409) {
+            message.warn("You cannot delete the last note!")
+          }
+          else {
+            message.error("Server Error! Please try again later. (Delete Note Error)")
+          }
+        })
     }
-    else{
-      axios.delete(`http://localhost:8080/post/${props.id}`)
-      .then(res => {
-        message.success("You deleted a post!")
-        if (props.page == 'PersonalPage')
-          props.rerenderPosts()
-        else {
-          props.setPageProps({
-            page: 'PersonalPage'
-          })
+    else {
+      axios.delete(`http://localhost:8080/post/${props.id}`, {
+        headers: {
+          'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
         }
-        // Todo: remove applicant from list
       })
-      .catch(err => {
-        message.error("Server Error! Please try again later. (Delete Post Error)")
+        .then(res => {
+          message.success("You deleted a post!")
+          if (props.page == 'PersonalPage')
+            props.rerenderPosts()
+          else {
+            props.setPageProps({
+              page: 'PersonalPage'
+            })
+          }
+          // Todo: remove applicant from list
+        })
+        .catch(err => {
+          message.error("Server Error! Please try again later. (Delete Post Error)")
 
-        console.log(err)
-      })
+          console.log(err)
+        })
     }
-    
+
   }
 
   const favorite = () => {
-    axios.put(`http://localhost:8080/favorite/note/${props.id}/${props.email}`)
-    .then ( res => {
+    axios.put(`http://localhost:8080/favorite/note/${props.id}/${props.email}`, {
+      headers: {
+        'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+      }
+    })
+      .then(res => {
         message.success("You set the note as favorite!")
         props.setIsFavoriter(true)
         // Todo: remove applicant from list
-    })
-    .catch(err =>{
+      })
+      .catch(err => {
         message.error("Server Error! Please try again later. (Set As Favorite Error)")
         console.log(err)
-    })
+      })
   }
 
   const unfavorite = () => {
-    axios.put(`http://localhost:8080/favorite/note/${props.id}/${props.email}`)
-    .then ( res => {
+    axios.put(`http://localhost:8080/favorite/note/${props.id}/${props.email}`, {
+      headers: {
+        'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+      }
+    })
+      .then(res => {
         message.success("You set the note as unfavorite!")
         props.setIsFavoriter(false)
         // Todo: remove applicant from list
-    })
-    .catch(err =>{
+      })
+      .catch(err => {
         message.error("Server Error! Please try again later. (Set As Unfavorite Error)")
         console.log(err)
-    })
+      })
   }
 
   const chooseManager = (userObj) => {
-    axios.put(`http://localhost:8080/note/admin/${props.noteId}/${userObj.email}`)
+    axios.put(`http://localhost:8080/note/admin/${props.noteId}/${userObj.email}`, {
+      headers: {
+        'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+      }
+    })
       .then(res => {
         message.success("You chose a new manager!")
         setChooseManagerList(
@@ -300,7 +352,11 @@ const OptionMenu = (props) => {
       day: 10,
       kickTargetEmail: email,
     }
-    axios.post(`http://localhost:8080/schedule/vote/${props.id}`, data)
+    axios.post(`http://localhost:8080/schedule/vote/${props.id}`, data,{
+                    headers: {
+                        'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+                      }
+                })
       .then(res => {
         message.success("Vote Submit!!")
         // Todo: remove applicant from list
@@ -316,12 +372,16 @@ const OptionMenu = (props) => {
   };
 
   const handleOk = () => {
-    axios.delete(`http://localhost:8080/post/${props.id}`)
+    axios.delete(`http://localhost:8080/post/${props.id}`, {
+      headers: {
+        'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+      }
+    })
       .then(res => {
         message.success("You deleted the post!")
-          props.setPageProps({
-            page: 'PersonalPage'
-          })
+        props.setPageProps({
+          page: 'PersonalPage'
+        })
         // Todo: remove applicant from list
       })
       .catch(err => {
@@ -341,42 +401,42 @@ const OptionMenu = (props) => {
       title: 'Vote History',
       content: (
         <List
-        size="small"
-        bordered
-        dataSource={props.vote}
-        renderItem={(item) => <List.Item 
-          actions={[<p>{item.result.charAt(0).toUpperCase() + item.result.slice(1)}</p>]}
-        >
-          <div>
-            <Avatar style={{ cursor: "pointer" }} size={20} src={item.kickTargetUserObj.userObjAvatar} onClick={() => props.setPageProps({ page: 'ProfilePage', email: item.kickTargetUserObj.userObjEmail })}></Avatar>
-            <Text color='black' cls='Default' content={item.kickTargetUserObj.userObjName} fontSize='12' display="inline-block" />
-          </div>  
-        </List.Item>}
-      />
+          size="small"
+          bordered
+          dataSource={props.vote}
+          renderItem={(item) => <List.Item
+            actions={[<p>{item.result.charAt(0).toUpperCase() + item.result.slice(1)}</p>]}
+          >
+            <div>
+              <Avatar style={{ cursor: "pointer" }} size={20} src={item.kickTargetUserObj.userObjAvatar} onClick={() => props.setPageProps({ page: 'ProfilePage', email: item.kickTargetUserObj.userObjEmail })}></Avatar>
+              <Text color='black' cls='Default' content={item.kickTargetUserObj.userObjName} fontSize='12' display="inline-block" />
+            </div>
+          </List.Item>}
+        />
       ),
-  
-      onOk() {},
+
+      onOk() { },
     });
   }
 
-    const NoteDetailMenuReward = (
-      <Menu items={
-        [
-          {
-            label: (<a onClick=
-              {() => {
-                props.setPageProps({
-                  postId: props.postId,
-                  page:'RewardDetailPage'
-                })
-              }}
-              >Goto Reward Post</a>),
-            key: "1",
-            icon: <EyeOutlined />
-          },
-        ]
-      }/>
-      );
+  const NoteDetailMenuReward = (
+    <Menu items={
+      [
+        {
+          label: (<a onClick=
+            {() => {
+              props.setPageProps({
+                postId: props.postId,
+                page: 'RewardDetailPage'
+              })
+            }}
+          >Goto Reward Post</a>),
+          key: "1",
+          icon: <EyeOutlined />
+        },
+      ]
+    } />
+  );
 
   const NoteDetailMenuAuthor = (
     <Menu items={
@@ -560,33 +620,33 @@ const OptionMenu = (props) => {
         },
         {
           label: (
-            props.isAnswered?
-            <Popconfirm 
-              title="Are you sure to delete the post?" 
-              okText="Yes" 
-              cancelText="No"
-              onConfirm={deletePost}
-            >
+            props.isAnswered ?
+              <Popconfirm
+                title="Are you sure to delete the post?"
+                okText="Yes"
+                cancelText="No"
+                onConfirm={deletePost}
+              >
                 <a style={{ color: "red" }}>Delete</a>
-            </Popconfirm>
-            :
-            <Tooltip title={"You have to select all best/reference answers before delete the post."}>
-              <a style={{ color: "red", opacity: "0.4", textDecoration: "none" }}>Delete</a>
-            </Tooltip>
+              </Popconfirm>
+              :
+              <Tooltip title={"You have to select all best/reference answers before delete the post."}>
+                <a style={{ color: "red", opacity: "0.4", textDecoration: "none" }}>Delete</a>
+              </Tooltip>
           ),
           key: "3",
           icon: (
-            props.isAnswered?
-            <DeleteOutlined style={{ color: "red" }} />
-            :
-            <DeleteOutlined style={{ color: "red", opacity: "0.4" }} />
+            props.isAnswered ?
+              <DeleteOutlined style={{ color: "red" }} />
+              :
+              <DeleteOutlined style={{ color: "red", opacity: "0.4" }} />
           ),
-          
+
         }]
     } />
   );
 
-  
+
 
   const RewardDetailMenu = (
     <Menu items={
@@ -668,7 +728,7 @@ const OptionMenu = (props) => {
           key: "5",
           icon: <InfoCircleOutlined />
         },
-        ]
+      ]
     } />
   );
 
@@ -752,10 +812,10 @@ const OptionMenu = (props) => {
           label: (
             <Tooltip title={"Publish time: " + moment(props.publishDate).format('YYYY-MM-DD HH:mm:ss')}>
               {props.notePublic ?
-                (<a onClick={setNoteStatus} style={{textDecoration:"none"}}>Unpublish the note</a>) : (<a onClick={setNoteStatus} style={{textDecoration:"none"}}>Publish the note</a>)
+                (<a onClick={setNoteStatus} style={{ textDecoration: "none" }}>Unpublish the note</a>) : (<a onClick={setNoteStatus} style={{ textDecoration: "none" }}>Publish the note</a>)
               }
             </Tooltip>
-            
+
           ),
           key: "9",
           icon: <UserOutlined style={{ color: "#333" }} />
@@ -910,13 +970,13 @@ const OptionMenu = (props) => {
         },
         {
           label: (
-            <Popconfirm 
-              title="Are you sure to delete the note from the folder?" 
-              okText="Yes" 
+            <Popconfirm
+              title="Are you sure to delete the note from the folder?"
+              okText="Yes"
               cancelText="No"
               onConfirm={deletePost}
             >
-                <a style={{ color: "red" }}>Delete</a>
+              <a style={{ color: "red" }}>Delete</a>
             </Popconfirm>
           ),
           key: "4",
@@ -939,10 +999,10 @@ const OptionMenu = (props) => {
             setMenu(NoteDetailMenuAuthor); break;
           }
           else {
-            if(props.isBuyer){
+            if (props.isBuyer) {
               setMenu(NoteDetailMenuBuyer); break;
             }
-            else{
+            else {
               setMenu(NoteDetailMenu); break;
             }
           }
@@ -1021,7 +1081,7 @@ const OptionMenu = (props) => {
   }, [chooseManagerList])
 
   useEffect(() => {
-    if(props.isAnswered){
+    if (props.isAnswered) {
       showModal()
     }
   }, [props.isAnswered])

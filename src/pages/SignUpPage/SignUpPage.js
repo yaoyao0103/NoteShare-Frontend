@@ -7,7 +7,8 @@ import Text from '../../components/Text/Text';
 import axios from "axios";
 import './SignUpPage.css'
 import Logo from '../../components/Navbar/Logo/Logo';
-
+import Cookie from '../../components/Cookies/Cookies';
+const cookieParser =new Cookie(document.cookie)
 const { Header, Sider, Content, Footer } = Layout;
 
 

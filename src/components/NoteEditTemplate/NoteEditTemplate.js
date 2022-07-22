@@ -23,7 +23,7 @@ const { Header, Content, Sider, Footer } = Layout;
 const { Step } = Steps;
 const { TextArea } = Input;
 const { Option } = Select;
-
+const cookieParser = new Cookie(document.cookie)
 
 
 const NoteEditTemplate = (props) => {
@@ -55,7 +55,7 @@ const NoteEditTemplate = (props) => {
     const { pages } = pageStore;
 
     useEffect(() => {
-        const cookieParser = new Cookie(document.cookie)
+        
         const temp = cookieParser.getCookieByName('email')
         const tempEmail = Base64.decode(temp);
         setEmail(tempEmail)
@@ -66,7 +66,11 @@ const NoteEditTemplate = (props) => {
         if(note && props.mode == 'edit'){
             if(note?.type == 'reward'){
                 setPostId(note?.postId);
-                axios.get(`http://localhost:8080/post/${note?.postId}/`)
+                axios.get(`http://localhost:8080/post/${note?.postId}/`,{
+                    headers: {
+                        'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+                      }
+                })
                 .then ( res => {
                     setPostInfo(res.data.res);
                 })
@@ -124,7 +128,11 @@ const NoteEditTemplate = (props) => {
             });
             setContent('')
             // get post info
-            axios.get(`http://localhost:8080/post/${props.postId}/`)
+            axios.get(`http://localhost:8080/post/${props.postId}/`,{
+                headers: {
+                    'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+                  }
+            })
                 .then ( res => {
                     setPostInfo(res.data.res);
                 })
@@ -179,7 +187,11 @@ const NoteEditTemplate = (props) => {
             note.description = content
             note.public = information.public
 
-            axios.put(`http://localhost:8080/note/${note.id}`, note)
+            axios.put(`http://localhost:8080/note/${note.id}`, note,{
+                headers: {
+                    'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+                  }
+            })
             .then(contentRes => {
                 console.log(contentRes)
                 setStep(1);
@@ -202,7 +214,11 @@ const NoteEditTemplate = (props) => {
             NoteFormat.description = content
             NoteFormat.public = information.public
 
-            axios.post(`http://localhost:8080/note/${email}/${props.folderId}`, NoteFormat)
+            axios.post(`http://localhost:8080/note/${email}/${props.folderId}`, NoteFormat,{
+                headers: {
+                    'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+                  }
+            })
             .then(res => {
                 const tempNote = res.data.res
                 console.log(tempNote)
@@ -211,7 +227,11 @@ const NoteEditTemplate = (props) => {
                 VersionFormat.name = "default"
                 VersionFormat.slug = "default"
                 VersionFormat.content = [ContentFormat]
-                axios.put(`http://localhost:8080/note/${tempId}/0`, VersionFormat)
+                axios.put(`http://localhost:8080/note/${tempId}/0`, VersionFormat,{
+                    headers: {
+                        'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+                      }
+                })
                 .then ( versionRes => {
                     setMyEditor(<MyEditor noteId={tempId} version={'0'} page={props.page} email={email}/>)
                     const version = versionRes.data.res;
@@ -241,7 +261,11 @@ const NoteEditTemplate = (props) => {
             // let name = cookieParser.getCookieByName('name');
             // let avatar = cookieParser.getCookieByName('avatar');
 
-            axios.post(`http://localhost:8080/post/reward/${props.postId}/${email}`, NoteFormat)
+            axios.post(`http://localhost:8080/post/reward/${props.postId}/${email}`, NoteFormat,{
+                headers: {
+                    'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+                  }
+            })
             .then(res => {
                 const tempNote = res.data.res
                 console.log(tempNote)
@@ -250,7 +274,11 @@ const NoteEditTemplate = (props) => {
                 VersionFormat.name = "default"
                 VersionFormat.slug = "default"
                 VersionFormat.content = [ContentFormat]
-                axios.put(`http://localhost:8080/note/${tempId}/0`, VersionFormat)
+                axios.put(`http://localhost:8080/note/${tempId}/0`, VersionFormat,{
+                    headers: {
+                        'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+                      }
+                })
                 .then ( versionRes => {
                     setMyEditor(<MyEditor noteId={tempId} version={'0'} page={props.page} email={email}/>)
                     const version = versionRes.data.res;
@@ -314,12 +342,20 @@ const NoteEditTemplate = (props) => {
 
 
     const setVersion = (index) => {
-        axios.get(`http://localhost:8080/note/${noteId}/${index}`)
+        axios.get(`http://localhost:8080/note/${noteId}/${index}`,{
+            headers: {
+                'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+              }
+        })
             .then(res => {
                 const defaultVersion = res.data.res
                 defaultVersion.name = "default"
                 defaultVersion.slug = "default"
-                axios.put(`http://localhost:8080/note/${noteId}/0`, defaultVersion)
+                axios.put(`http://localhost:8080/note/${noteId}/0`, defaultVersion,{
+                    headers: {
+                        'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+                      }
+                })
                 .then ( async versionRes => {
                     setMyEditor(<MyEditor noteId={noteId} version={'0'} page={props.page} email={email}/>)
                     setStep(0);
@@ -351,11 +387,19 @@ const NoteEditTemplate = (props) => {
     }
 
     const tagSubmit = async () => {
-        axios.get(`http://localhost:8080/note/${noteId}`)
+        axios.get(`http://localhost:8080/note/${noteId}`,{
+            headers: {
+                'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+              }
+        })
             .then(res => {
                 const tempNote = res.data.res
                 tempNote.tag = tagSelected
-                axios.put(`http://localhost:8080/note/${noteId}`, tempNote)
+                axios.put(`http://localhost:8080/note/${noteId}`, tempNote,{
+                    headers: {
+                        'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+                      }
+                })
                     .then(res => {
                         console.log(res);
                         message.success("You submitted the tags!");
@@ -423,7 +467,11 @@ const NoteEditTemplate = (props) => {
         VersionFormat.name = name
         VersionFormat.slug = name
         VersionFormat.content = [ContentFormat]
-        axios.put(`http://localhost:8080/note/${noteId}/${versionLength}`, VersionFormat)
+        axios.put(`http://localhost:8080/note/${noteId}/${versionLength}`, VersionFormat,{
+            headers: {
+                'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+              }
+        })
         .then ( res => {
             const version = res.data.res;
             setVersions([...versions, version])
@@ -442,13 +490,25 @@ const NoteEditTemplate = (props) => {
     }
 
     const submitRewardNote = () => {
-        axios.get(`http://localhost:8080/note/${noteId}`)
+        axios.get(`http://localhost:8080/note/${noteId}`,{
+            headers: {
+                'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+              }
+        })
             .then(res => {
                 const tempNote = res.data.res
                 tempNote.tag = tagSelected
-                axios.put(`http://localhost:8080/note/${noteId}`, tempNote)
+                axios.put(`http://localhost:8080/note/${noteId}`, tempNote,{
+                    headers: {
+                        'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+                      }
+                })
                     .then(res => {
-                        axios.put(`http://localhost:8080/note/submit/${noteId}`)
+                        axios.put(`http://localhost:8080/note/submit/${noteId}`,{
+                            headers: {
+                                'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+                              }
+                        })
                         .then ( res => {
                             message.success("You submitted a reward note!")
                             props.setPageProps({

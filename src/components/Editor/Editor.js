@@ -8,6 +8,7 @@ import Sidebar from "../Page/Sidebar";
 import TopNav from "../Page/TopNav";
 import Navbar from "../Navbar/Navbar"
 import geditorConfig from "../../api_utils/geditor_config";
+import Cookie from "../Cookies/Cookies";
 //import PageSection from "../Page/PageSection";
 
 const Editor = () => {
@@ -17,11 +18,15 @@ const Editor = () => {
 
   const { pageStore } = useSelector((state) => state);
   const { pages } = pageStore;
-
+  const cookieParser = new Cookie(document.cookie)
   useEffect(() => {
     async function getAllAssets() {
       try {
-        const response = await axios.get(`${API_HOST}assets/`);
+        const response = await axios.get(`${API_HOST}assets/`,{
+          headers: {
+              'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+            }
+      });
         setAssets(response.data);
       } catch (error) {
         setAssets(error.message);

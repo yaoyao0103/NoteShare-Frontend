@@ -17,7 +17,11 @@ const ContentEditor = ( { versionId } ) => {
   /*useEffect(() => {
     async function getAllAssets() {
       try {
-        const response = await axios.get(`${API_HOST}assets/`);
+        const response = await axios.get(`${API_HOST}assets/`,{
+            headers: {
+                'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+              }
+        });
         setAssets(response.data);
       } catch (error) {
         setAssets(error.message);

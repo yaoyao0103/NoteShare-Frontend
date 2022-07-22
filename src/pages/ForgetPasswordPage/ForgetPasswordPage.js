@@ -6,8 +6,9 @@ import Button from '../../components/Button/Button';
 import Text from '../../components/Text/Text';
 import axios from "axios";
 import './ForgetPasswordPage.css'
+import Cookie from '../../components/Cookies/Cookies';
 const { Sider, Content } = Layout;
-
+const cookieParser=new Cookie(document.cookie)
 function ForgetPasswordPage(props) {
     const [Page, setPage] = useState('ForgetPasswordPage');
     const [render, setRender] = useState(false);

@@ -4,7 +4,8 @@ import PageOutlineTemplate from '../../components/PageOutlineTemplate/PageOutlin
 import PageOutlineContentTemplate from '../../components/PageOutlineContentTemplate/PageOutlineContentTemplate';
 import axios from "axios";
 import { message } from "antd";
-
+import Cookie from '../../components/Cookies/Cookies';
+const cookieParser=new Cookie(document.cookie)
 function CollabRecommendPage(props) {
     const page='CollabRecommendPage';
    
@@ -18,7 +19,11 @@ function CollabRecommendPage(props) {
             try {
                 const sortBy=sortMode;
                 
-                await axios.get('http://localhost:8080/search/post/'+ String(props.pageNumber-1) + '/20?keyword=interrupt&haveCollaboration='+true+'&sortBy='+sortBy).then((res) => {
+                await axios.get('http://localhost:8080/search/post/'+ String(props.pageNumber-1) + '/20?keyword=interrupt&haveCollaboration='+true+'&sortBy='+sortBy,{
+                    headers: {
+                        'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+                      }
+                }).then((res) => {
 
                     setCollab(oldArray => [...oldArray, res.data.search]);
                     props.setLoading(false);
@@ -42,7 +47,11 @@ function CollabRecommendPage(props) {
             try {
                 const sortBy=sortMode;
                 
-                await axios.get('http://localhost:8080/search/post/'+ String(props.pageNumber-1) + '/20?keyword=interrupt&haveCollaboration='+true+'&sortBy='+sortBy).then((res) => {
+                await axios.get('http://localhost:8080/search/post/'+ String(props.pageNumber-1) + '/20?keyword=interrupt&haveCollaboration='+true+'&sortBy='+sortBy,{
+                    headers: {
+                        'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+                      }
+                }).then((res) => {
                     setCollab(oldArray => [...oldArray, res.data.search]);
                     //window.scrollTo(0, 0);
                     props.setLoading(false)

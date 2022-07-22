@@ -9,7 +9,7 @@ import axios from "axios";
 import './AvatarButton.css';
 import Text from "../../Text/Text";
 import Cookie from "../../Cookies/Cookies";
-
+const cookieParser=new Cookie(document.cookie)
 function AvatarButton(props) {
     const [email, setEmail] = useState('');
     const [avatar, setAvatar] = useState('');
@@ -66,7 +66,10 @@ function AvatarButton(props) {
         let tempEmail = cookieParser.getCookieByName('email');
         tempEmail = Base64.decode(tempEmail);
         setEmail(tempEmail);
-        axios.get("http://localhost:8080/user/name/" + tempEmail, {
+        axios.get("http://localhost:8080/user/name/" + tempEmail,{
+            headers: {
+                'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+              }
         }).then(res => {
             document.cookie = "name=" + res.data.res;
         }).catch((error) => {
@@ -75,7 +78,11 @@ function AvatarButton(props) {
         //console.log(props.changeAvatar);
         //console.log(avatarNum);
         if (props.changeAvatar > avatarNum) {
-            axios.get("http://localhost:8080/user/head/" + tempEmail,).then(res => {
+            axios.get("http://localhost:8080/user/head/" + tempEmail,{
+                headers: {
+                    'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+                  }
+            }).then(res => {
                 setAvatar(res.data.res);
                 setAvatarNum(props.changeAvatar);
                 document.cookie = "avatar=" + res.data.res;

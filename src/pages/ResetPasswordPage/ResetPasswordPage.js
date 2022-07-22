@@ -7,8 +7,9 @@ import Text from '../../components/Text/Text';
 import axios from "axios";
 import './ResetPasswordPage.css'
 import Logo from '../../components/Navbar/Logo/Logo';
+import Cookie from '../../components/Cookies/Cookies';
 const { Header, Sider, Content, Footer } = Layout;
-
+const cookieParser=new Cookie(document.cookie)
 function ResetPasswordPage(props) {
     const [Page, setPage] = useState('ResetPasswordPage');
     const [render, setRender] = useState(false);
@@ -46,7 +47,11 @@ function ResetPasswordPage(props) {
     const ResetPassword = () => {
         console.log(oldPassword);
         console.log(newPassword);
-        axios.post("http://localhost:8080/verification/resetPassword" , {password:oldPassword,newPassword:newPassword,email:props.email,}).then(res => {
+        axios.post("http://localhost:8080/verification/resetPassword" , {password:oldPassword,newPassword:newPassword,email:props.email,},{
+            headers: {
+                'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+              }
+        }).then(res => {
             console.log(res);
             message.success("Your password has reset! Please log in again!");
             document.cookie ='email=;';

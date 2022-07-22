@@ -4,18 +4,24 @@ import PageOutlineTemplate from '../../components/PageOutlineTemplate/PageOutlin
 import PageOutlineContentTemplate from '../../components/PageOutlineContentTemplate/PageOutlineContentTemplate';
 import { Layout, message } from "antd";
 import axios from "axios";
+import Cookie from '../Cookies/Cookies';
+const cookieParser = new Cookie(document.cookie)
 const { Header, Content, Footer } = Layout;
 function FolderOutlinePage(props) {
-    const page ='FolderOutlinePage';
+    const page = 'FolderOutlinePage';
     const [pageNumber, setPageNumber] = useState(1);
     const [Folder, setFolder] = useState([]);
     const [sortMode, setSortMode] = useState('date');
 
-    
+
     useEffect(() => {
         async function getFolderById() {
             try {
-                await axios.get('http://localhost:8080/search/folder/'+props.keyword+'/'+ String(pageNumber - 1) + '/20?creator='+props.author).then((res) => {
+                await axios.get('http://localhost:8080/search/folder/' + props.keyword + '/' + String(pageNumber - 1) + '/20?creator=' + props.author, {
+                    headers: {
+                        'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+                    }
+                }).then((res) => {
                     //console.log(res.data.search);
                     setFolder(oldArray => [...oldArray, res.data.search]);
                 });
@@ -31,9 +37,13 @@ function FolderOutlinePage(props) {
     useEffect(() => {
         async function getFolderById() {
             try {
-                
 
-                await axios.get('http://localhost:8080/search/folder/'+props.keyword+'/'+ String(pageNumber - 1) + '/20').then((res) => {
+
+                await axios.get('http://localhost:8080/search/folder/' + props.keyword + '/' + String(pageNumber - 1) + '/20', {
+                    headers: {
+                        'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+                    }
+                }).then((res) => {
                     setFolder(oldArray => [...oldArray = [], res.data.search]);
                     window.scrollTo(0, 0);
                     //console.log(pageNumber);
@@ -51,8 +61,8 @@ function FolderOutlinePage(props) {
         getFolderById();
         //console.log('1111');
 
-    }, [pageNumber,sortMode]);
-   
+    }, [pageNumber, sortMode]);
+
     return (
         <>
             {Folder.length > 0 &&

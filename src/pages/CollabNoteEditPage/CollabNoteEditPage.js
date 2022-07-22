@@ -19,7 +19,7 @@ const { Header, Content, Sider, Footer } = Layout;
 const { Step } = Steps;
 const { TextArea } = Input;
 const { Option } = Select;
-
+const cookieParser = new Cookie(document.cookie)
 //const email = "00857028@email.ntou.edu.tw";
 //const folderID  = "62aee78ee913643da31b59e9";
 const author = "Yao"
@@ -60,7 +60,7 @@ const CollabNoteEditPage = (props) => {
     const { pageStore } = useSelector((state) => state);
 
     useEffect(() => {
-        const cookieParser = new Cookie(document.cookie)
+       
         const temp = cookieParser.getCookieByName('email')
         const tempEmail = Base64.decode(temp);
         const tempName = cookieParser.getCookieByName('name')
@@ -70,7 +70,11 @@ const CollabNoteEditPage = (props) => {
         setAvatar(tempAvatar)
         console.log("tempEmail", tempEmail)
         //const note = props.note;
-        axios.get(`http://localhost:8080/note/${props.noteId}`)
+        axios.get(`http://localhost:8080/note/${props.noteId}`,{
+            headers: {
+                'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+              }
+        })
         .then ( res => {
             console.log(res.data.res)
             const tempNote = res.data.res
@@ -130,7 +134,11 @@ const CollabNoteEditPage = (props) => {
         }
         if(newcomer.length!=0){
             newcomer.map(userEmail => {
-                axios.get(`http://localhost:8080/user/${userEmail}`)
+                axios.get(`http://localhost:8080/user/${userEmail}`,{
+                    headers: {
+                        'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+                      }
+                })
                 .then(res => {
                     const temp = queueDom;
                     temp[userEmail] = (<Tooltip title={res.data.res.name}>
@@ -200,7 +208,11 @@ const CollabNoteEditPage = (props) => {
         console.log("tempNote:", tempNote);
 
 
-        axios.put(`http://localhost:8080/note/${props.noteId}`, tempNote)
+        axios.put(`http://localhost:8080/note/${props.noteId}`, tempNote,{
+            headers: {
+                'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+              }
+        })
         .then(contentRes => {
             console.log(contentRes)
             setStep(1);
@@ -234,12 +246,20 @@ const CollabNoteEditPage = (props) => {
 
 
     const setVersion = (index) => {
-        axios.get(`http://localhost:8080/note/${props.noteId}/${index}`)
+        axios.get(`http://localhost:8080/note/${props.noteId}/${index}`,{
+            headers: {
+                'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+              }
+        })
             .then(res => {
                 const defaultVersion = res.data.res
                 defaultVersion.name = "default"
                 defaultVersion.slug = "default"
-                axios.put(`http://localhost:8080/note/${props.noteId}/0`, defaultVersion)
+                axios.put(`http://localhost:8080/note/${props.noteId}/0`, defaultVersion,{
+                    headers: {
+                        'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+                      }
+                })
                 .then ( async versionRes => {
                     setMyEditor(<MyEditor noteId={props.noteId} version={'0'} page={props.page} email={email} name={name} avatar={avatar} isCollab={true} setQueue={setQueue}/>)
                     setStep(0);
@@ -275,11 +295,19 @@ const CollabNoteEditPage = (props) => {
     }
 
     const tagSubmit = async () => {
-        axios.get(`http://localhost:8080/note/${props.noteId}`)
+        axios.get(`http://localhost:8080/note/${props.noteId}`,{
+            headers: {
+                'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+              }
+        })
             .then(res => {
                 const tempNote = res.data.res
                 tempNote.tag = tagSelected
-                axios.put(`http://localhost:8080/note/${props.noteId}`, tempNote)
+                axios.put(`http://localhost:8080/note/${props.noteId}`, tempNote,{
+                    headers: {
+                        'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+                      }
+                })
                     .then(res => {
                         console.log(res);
                         message.success("You submitted the tags!");
@@ -348,7 +376,11 @@ const CollabNoteEditPage = (props) => {
         VersionFormat.name = name
         VersionFormat.slug = name
         VersionFormat.content = [ContentFormat]
-        axios.put(`http://localhost:8080/note/${props.noteId}/${versionLength}`, VersionFormat)
+        axios.put(`http://localhost:8080/note/${props.noteId}/${versionLength}`, VersionFormat,{
+            headers: {
+                'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+              }
+        })
         .then ( res => {
             message.success("You saved current note as the new version!")
             const version = res.data.res;

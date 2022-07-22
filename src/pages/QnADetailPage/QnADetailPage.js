@@ -3,7 +3,8 @@ import axios from "axios";
 import PageDetailTemplate from "../../components/PageDetailTemplate/PageDetailTemplate"
 import PageDetailContentTemplate from '../../components/PageDetailContentTemplate/PageDetailContentTemplate';
 import { message } from "antd";
-
+import Cookie from '../../components/Cookies/Cookies';
+const cookieParser=new Cookie(document.cookie)
 function QnADetailPage(props) {
     const [post, setPost] = useState([]);
     const page = "QnADetailPage";
@@ -11,7 +12,11 @@ function QnADetailPage(props) {
 
     useEffect(() => {
         async function getQnAById() {
-            axios.get(`http://localhost:8080/post/${props.postId}`)
+            axios.get(`http://localhost:8080/post/${props.postId}`,{
+                headers: {
+                    'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+                  }
+            })
             .then(res => {
                 setPost(res.data.res)
                 console.log("QnA:",res.data.res)

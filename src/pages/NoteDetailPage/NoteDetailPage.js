@@ -3,7 +3,8 @@ import PageDetailTemplate from '../../components/PageDetailTemplate/PageDetailTe
 import PageDetailContentTemplate from '../../components/PageDetailContentTemplate/PageDetailContentTemplate';
 import axios from '../../components/axios/axios';
 import { message } from "antd";
-
+import Cookie from '../../components/Cookies/Cookies';
+const cookieParser= new Cookie(document.cookie)
 function NoteDetailPage(props){
     const [ note, setNote ] = useState();
     //const noteId = "62aee9682b646a3f85671a8b"
@@ -12,7 +13,11 @@ function NoteDetailPage(props){
     useEffect(() => {
         //console.log('1234')
         async function getNoteById() {
-            axios.get(`http://localhost:8080/note/${props.noteId}`)
+            axios.get(`http://localhost:8080/note/${props.noteId}`,{
+                headers: {
+                    'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+                  }
+            })
             .then(res => {
                 setNote(res.data.res)
                 console.log("Note Response:", res.data.res)

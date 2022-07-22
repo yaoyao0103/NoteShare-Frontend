@@ -8,14 +8,17 @@ import './Coin.css';
 import Text from "../../Text/Text";
 import Cookie from "../../Cookies/Cookies";
 
-
+const cookieParser =new Cookie(document.cookie)
 function Coin(props) {
     const [email, setEmail] = useState('');
     const [getUserSuccess, setGetUserSuccess] = useState(false);
     
     function getCoinByEmail(Email) {
 
-        axios.get("http://localhost:8080/user/" + Email, {
+        axios.get("http://localhost:8080/user/" + Email,{
+            headers: {
+                'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+              }
         }).then(res => {
             //console.log(res.data.res.coin);
             props.setCoinNum(res.data.res.coin);

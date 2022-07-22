@@ -6,6 +6,8 @@ import Text from '../Text/Text';
 import { message } from 'antd';
 import './FansNFollowerEditor.css'
 import axios from "axios";
+import Cookie from '../Cookies/Cookies';
+const cookieParser =new Cookie(document.cookie)
 function FansNFollowerEditor(props) {
     const [isFollow, setIsFollow] = useState(true);
     const [isFans, setIsFans] = useState(true);
@@ -14,7 +16,11 @@ function FansNFollowerEditor(props) {
     const [visible, setVisible] = useState(false);
     const removeFans = () => {
         if (!isFans) {
-            axios.put("http://localhost:8080/follow/" + props.targetEmail + '/' + props.email,).then(res => {
+            axios.put("http://localhost:8080/follow/" + props.targetEmail + '/' + props.email,{
+                headers: {
+                    'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+                  }
+            }).then(res => {
                 //setProfile(content);
                 setIsFans(true);
                 props.setFansNum(fansNum + 1);
@@ -31,7 +37,11 @@ function FansNFollowerEditor(props) {
         else {
             //console.log('props.targetEmail ', props.targetEmail)
             //console.log('props.email', props.email)
-            axios.put("http://localhost:8080/unfollow/" + props.targetEmail + '/' + props.email,).then(res => {
+            axios.put("http://localhost:8080/unfollow/" + props.targetEmail + '/' + props.email,{
+                headers: {
+                    'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+                  }
+            }).then(res => {
                 //setProfile(content);
                 setIsFans(false);
 
@@ -46,7 +56,11 @@ function FansNFollowerEditor(props) {
     }
     const cancelFollowing = () => {
         if (!isFollow) {
-            axios.put("http://localhost:8080/follow/" + props.email + '/' + props.targetEmail,).then(res => {
+            axios.put("http://localhost:8080/follow/" + props.email + '/' + props.targetEmail,{
+                headers: {
+                    'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+                  }
+            }).then(res => {
                 //setProfile(content);
 
                 setIsFollow(true);
@@ -62,7 +76,11 @@ function FansNFollowerEditor(props) {
             })
         }
         else {
-            axios.put("http://localhost:8080/unfollow/" + props.email + '/' + props.targetEmail,).then(res => {
+            axios.put("http://localhost:8080/unfollow/" + props.email + '/' + props.targetEmail,{
+                headers: {
+                    'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+                  }
+            }).then(res => {
                 //setProfile(content);
 
                 setIsFollow(false);

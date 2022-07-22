@@ -5,8 +5,9 @@ import { CloseOutlined } from "@ant-design/icons";
 import Text from '../Text/Text';
 import Button from '../Button/Button';
 import axios from '../axios/axios';
+import Cookie from '../Cookies/Cookies';
 const { Header, Content, Sider, Footer } = Layout;
-
+const cookieParser=new Cookie(document.cookie)
 const VoteArea = (props) => {
 
     const [agreeCount, setAgreeCount] = useState(0);
@@ -20,7 +21,11 @@ const VoteArea = (props) => {
     },[props]);
     const agree = () => {
         // Todo: check agree list
-        axios.put(`http://localhost:8080/post/vote/${props.postId}/${props.vote.id}/${props.email}`, {option: 'agree'})
+        axios.put(`http://localhost:8080/post/vote/${props.postId}/${props.vote.id}/${props.email}`, {option: 'agree'},{
+            headers: {
+                'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+              }
+        })
             .then ( res => {
                 message.success("You agreed to kick the author!");
                 setAgreeCount(agreeCount +1);
@@ -34,7 +39,11 @@ const VoteArea = (props) => {
     }
     const disagree = () => {
         // Todo: check agree list
-        axios.put(`http://localhost:8080/post/vote/${props.postId}/${props.vote.id}/${props.email}`, {option: 'agree'})
+        axios.put(`http://localhost:8080/post/vote/${props.postId}/${props.vote.id}/${props.email}`, {option: 'agree'},{
+            headers: {
+                'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+              }
+        })
             .then ( res => {
                 message.success("You disagreed to kick the author!");
                 setDisagreeCount(disagreeCount +1);

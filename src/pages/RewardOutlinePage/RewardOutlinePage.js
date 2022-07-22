@@ -4,6 +4,8 @@ import PageOutlineTemplate from '../../components/PageOutlineTemplate/PageOutlin
 import PageOutlineContentTemplate from '../../components/PageOutlineContentTemplate/PageOutlineContentTemplate';
 import { Layout, message } from "antd";
 import axios from "axios";
+import Cookie from '../../components/Cookies/Cookies';
+const cookieParser= new Cookie(document.cookie)
 const { Header, Content, Footer } = Layout;
 function RewardOutlinePage(props) {
     const page='RewardOutlinePage';
@@ -16,7 +18,11 @@ function RewardOutlinePage(props) {
             try {
                 const sortBy=sortMode;
                 
-                await axios.get('http://localhost:8080/search/post/'+ String(props.pageNumber-1) + '/20?keyword='+(props.keyword?props.keyword:'')+'&department='+(props.department?props.department:'')+'&subject='+(props.subject?props.subject:'')+'&haveReward='+true+'&sortBy='+sortBy).then((res) => {
+                await axios.get('http://localhost:8080/search/post/'+ String(props.pageNumber-1) + '/20?keyword='+(props.keyword?props.keyword:'')+'&department='+(props.department?props.department:'')+'&subject='+(props.subject?props.subject:'')+'&haveReward='+true+'&sortBy='+sortBy,{
+                    headers: {
+                        'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+                      }
+                }).then((res) => {
 
                     setReward(oldArray => [...oldArray, res.data.search]);
                     props.setLoading(false)
@@ -40,7 +46,11 @@ function RewardOutlinePage(props) {
             try {
                 const sortBy=sortMode;
                 
-                await axios.get('http://localhost:8080/search/post/'+ String(props.pageNumber-1) + '/20?keyword='+(props.keyword?props.keyword:'')+'&department='+(props.department?props.department:'')+'&subject='+(props.subject?props.subject:'')+'&haveReward='+true+'&sortBy='+sortBy).then((res) => {
+                await axios.get('http://localhost:8080/search/post/'+ String(props.pageNumber-1) + '/20?keyword='+(props.keyword?props.keyword:'')+'&department='+(props.department?props.department:'')+'&subject='+(props.subject?props.subject:'')+'&haveReward='+true+'&sortBy='+sortBy,{
+                    headers: {
+                        'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+                      }
+                }).then((res) => {
                     setReward(oldArray => [...oldArray, res.data.search]);
                     //window.scrollTo(0, 0);
                     props.setLoading(false)
