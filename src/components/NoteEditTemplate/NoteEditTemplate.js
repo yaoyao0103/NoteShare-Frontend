@@ -504,7 +504,7 @@ const NoteEditTemplate = (props) => {
                       }
                 })
                     .then(res => {
-                        axios.put(`http://localhost:8080/note/submit/${noteId}`,{
+                        axios.put(`http://localhost:8080/note/submit/${noteId}`,{},{
                             headers: {
                                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
                               }

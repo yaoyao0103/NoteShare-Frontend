@@ -88,16 +88,16 @@ function Ring(props) {
     }, [props.ringList]);
     const [ellipsis, setEllipsis] = useState(true);
     const setUnReadNumZero=()=>{
-        
-        axios.put("http://localhost:8080/notification/unreadMessage/" + email,{
+        console.log('Authorization', 'Bearer ' , cookieParser.getCookieByName("token"))
+        axios.put("http://localhost:8080/notification/unreadMessage/" + email,{},{
             headers: {
-                'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+                'Authorization': 'Bearer ' + cookieParser.getCookieByName("token")
               }
         }).then(res => {
             console.log('ring')
             props.setRingNumber(0);
         }).catch((error) => {
-            //message.info(error.response.error);
+           console.log(error);
 
         })
     }

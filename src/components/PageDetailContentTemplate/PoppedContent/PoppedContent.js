@@ -47,7 +47,7 @@ const PoppedContent = (props) => {
         let name = cookieParser.getCookieByName('name');
         let avatar = cookieParser.getCookieByName('avatar');
         
-        axios.put(`http://localhost:8080/post/add/${props.postId}/${email}`,{
+        axios.put(`http://localhost:8080/post/add/${props.postId}/${email}`,{},{
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
               }

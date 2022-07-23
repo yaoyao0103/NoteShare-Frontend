@@ -297,7 +297,7 @@ const PageDetailContentTemplate = (props) => {
         let name = cookieParser.getCookieByName('name');
         let avatar = cookieParser.getCookieByName('avatar');
         let success = false;
-        axios.put(`http://localhost:8080/coin/note/${email}/${props.noteId}`,{
+        axios.put(`http://localhost:8080/coin/note/${email}/${props.noteId}`,{},{
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
               }
@@ -325,7 +325,7 @@ const PageDetailContentTemplate = (props) => {
     }
 
     const submitRewardNote = () => {
-        axios.put(`http://localhost:8080/note/submit/${props.noteId}`,{
+        axios.put(`http://localhost:8080/note/submit/${props.noteId}`,{},{
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
               }
@@ -341,7 +341,7 @@ const PageDetailContentTemplate = (props) => {
     }
 
     const withdrawRewardNote = () => {
-        axios.put(`http://localhost:8080/note/withdraw/${props.noteId}`,{
+        axios.put(`http://localhost:8080/note/withdraw/${props.noteId}`,{},{
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
               }

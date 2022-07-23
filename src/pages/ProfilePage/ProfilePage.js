@@ -155,7 +155,7 @@ function ProfilePage(props) {
         let name = cookieParser.getCookieByName('name');
         let avatar = cookieParser.getCookieByName('avatar');
         if (!isFollow) {
-            axios.put("http://localhost:8080/follow/" + email + '/' + props.email,{
+            axios.put("http://localhost:8080/follow/" + email + '/' + props.email,{},{
                 headers: {
                     'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
                   }
@@ -182,7 +182,7 @@ function ProfilePage(props) {
 
         }
         else {
-            axios.put("http://localhost:8080/unfollow/" + email + '/' + props.email,{
+            axios.put("http://localhost:8080/unfollow/" + email + '/' + props.email,{},{
                 headers: {
                     'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
                   }
@@ -200,7 +200,7 @@ function ProfilePage(props) {
 
     const changeBell = () => {
         if (isBell) {
-            axios.put('http://localhost:8080/cancelBell/' + email + '/' + props.email,{
+            axios.put('http://localhost:8080/cancelBell/' + email + '/' + props.email,{},{
                 headers: {
                     'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
                   }
@@ -214,7 +214,7 @@ function ProfilePage(props) {
             })
         }
         else {
-            axios.put("http://localhost:8080/bell/" + email + '/' + props.email,{
+            axios.put("http://localhost:8080/bell/" + email + '/' + props.email,{},{
                 headers: {
                     'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
                   }

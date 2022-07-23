@@ -205,7 +205,7 @@ const FileManager = (props) => {
                                     }
                                     title={item.title}
                                     description={item.description.substring(0, 120) + '...'}
-                                    onClick={() => onClickNote(item.type, item.id)}
+                                    onClick={() => onClickNote(item.id)}
                                 />
                             </List.Item>
                         )}
@@ -339,10 +339,10 @@ const FileManager = (props) => {
         }
         props.setLoading(true)
         //console.log("path", data)
-        axios.post(`http://localhost:8080/folder/${props.email}`, data,{
+        axios.post(`http://localhost:8080/folder/${props.email}`, data, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
-              }
+            }
         })
             .then(res => {
                 console.log(res.data.res);
@@ -377,7 +377,7 @@ const FileManager = (props) => {
 
     const renameFolder = (folderId, newName) => {
         props.setLoading(true)
-        axios.put(`http://localhost:8080/folder/rename/${props.email}/${folderId}/${newName}`, {
+        axios.put(`http://localhost:8080/folder/rename/${props.email}/${folderId}/${newName}`, {},{
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
             }
@@ -445,7 +445,7 @@ const FileManager = (props) => {
     const copyNote = () => {
         props.setLoading(true)
         message.destroy();
-        axios.put(`http://localhost:8080/note/save/${copy}/${current}`, {
+        axios.put(`http://localhost:8080/note/save/${copy}/${current}`, {},{
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
             }
@@ -471,10 +471,10 @@ const FileManager = (props) => {
             parent: current,
         }
 
-        axios.put(`http://localhost:8080/folder/save/${props.email}/${move.folderId}`, data,{
+        axios.put(`http://localhost:8080/folder/save/${props.email}/${move.folderId}`, data, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
-              }
+            }
         })
             .then(res => {
                 onClickFolderZone(current)
@@ -523,12 +523,14 @@ const FileManager = (props) => {
                         </div>
                         <>
                             {postShow &&
-                                <List.Item
-                                    className={"fileManage_Folder_Item fileManage_List_Item"}
-                                //onClick={()=> onClickFolderZone(item.id)}
-                                >
-                                    <div className='fileManage_Folder_Item_Name' onClick={() => onClickAllNotes()}>My All Notes</div>
-                                </List.Item>
+                                <List>
+                                    <List.Item
+                                        className={"fileManage_Folder_Item fileManage_List_Item"}
+                                    //onClick={()=> onClickFolderZone(item.id)}
+                                    >
+                                        <div className='fileManage_Folder_Item_Name' onClick={() => onClickAllNotes()}>My All Notes</div>
+                                    </List.Item>
+                                </List>
                             }
 
                             <List

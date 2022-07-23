@@ -105,7 +105,7 @@ function CommentArea(props) {
 
 
     const like = (commentId) => {
-        axios.put(`http://localhost:8080/favorite/${props.type}/${props.id}/${commentId}/${email}`, {
+        axios.put(`http://localhost:8080/favorite/${props.type}/${props.id}/${commentId}/${email}`,{}, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
             }
@@ -123,7 +123,7 @@ function CommentArea(props) {
     };
 
     const unlike = (commentId) => {
-        axios.put(`http://localhost:8080/unFavorite/${props.type}/${props.id}/${commentId}/${email}`, {
+        axios.put(`http://localhost:8080/unFavorite/${props.type}/${props.id}/${commentId}/${email}`,{}, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
             }
@@ -179,7 +179,7 @@ function CommentArea(props) {
 
     const setTheBest = (commentIds) => {
         //message.info(`Set ${commentIds} as the best answer`);
-        axios.put(`http://localhost:8080/post/qa/best/${props.id}/${commentIds}`, {
+        axios.put(`http://localhost:8080/post/qa/best/${props.id}/${commentIds}`, {},{
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
             }
