@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Layout, Row, Col, List, Empty, Input, Avatar, message } from 'antd';
 import { CloseOutlined } from '@ant-design/icons'
 import OptionMenu from '../../OptionMenu/OptionMenu';
-import { ScreenCapture } from 'react-screen-capture';
+//import { ScreenCapture } from 'react-screen-capture';
 import axios from '../../axios/axios';
 import Cookie from '../../Cookies/Cookies';
 import Button from '../../Button/Button';

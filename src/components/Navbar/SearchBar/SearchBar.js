@@ -36,7 +36,8 @@ const SearchBar = (props) => {
     props.setPageProps({
       keyword:keyword,
       page:'NoteOutlinePage',
-      pageNumber:1
+      pageNumber:1,
+      sortMode:'price'
     });
     message.info(keyword);
 
@@ -78,9 +79,9 @@ const SearchBar = (props) => {
           <TabPane className="navSearchBar__AdvancedSearch__Tab__Pane" tab={<Text color='black' cls='Small' content={"QnA"} fontSize={"14"} display="inline-block" />} key="4">
             <AdvancedSearch setPageProps={props.setPageProps} type={"QnA"} className="navSearchBar__AdvancedSearch__Tab__Items"/>
           </TabPane>
-          <TabPane className="navSearchBar__AdvancedSearch__Tab__Pane" tab={<Text color='black' cls='Small' content={"Folder"} fontSize={"14"} display="inline-block" />} key="5">
+          {/* <TabPane className="navSearchBar__AdvancedSearch__Tab__Pane" tab={<Text color='black' cls='Small' content={"Folder"} fontSize={"14"} display="inline-block" />} key="5">
             <AdvancedSearch setPageProps={props.setPageProps} type={"folder"} className="navSearchBar__AdvancedSearch__Tab__Items"/>
-          </TabPane>
+          </TabPane> */}
         </Tabs>
       </div>
       

@@ -32,7 +32,6 @@
     "jquery": "^3.6.0",
     "js-base64": "^3.7.2",
     "moment": "^2.29.3",
-    "node-sass": "^6.0.1",
     "prop-types": "^15.8.1",
     "react": "^17.0.2",
     "react-bootstrap": "^2.0.0-rc.1",
@@ -40,15 +39,17 @@
     "react-hook-form": "^7.33.0",
     "react-redux": "^7.2.5",
     "react-router-dom": "^6.3.0",
-    "react-screen-capture": "^1.0.1",
     "react-scripts": "4.0.3",
     "redux": "^4.1.1",
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.3.0",
+    "sass": "^1.54.0",
+    "sass-loader": "^13.0.2",
     "save": "^2.5.0",
     "sockjs-client": "^1.6.1",
     "stompjs": "^2.3.3",
-    "web-vitals": "^1.1.2"
+    "web-vitals": "^1.1.2",
+    "webpack": "^4.44.2"
   },
   "scripts": {
     "start": "react-scripts start",

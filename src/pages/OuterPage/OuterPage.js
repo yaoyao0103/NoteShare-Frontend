@@ -9,12 +9,12 @@ import NoteDetailPage from "../NoteDetailPage/NoteDetailPage";
 import NoteOutlinePage from "../NoteOutlinePage/NoteOutlinePage";
 import RewardDetailPage from "../RewardDetailPage/RewardDetailPage";
 import RewardOutlinePage from "../RewardOutlinePage/RewardOutlinePage";
-import RewardRecommendPage from '../RewordRecommendPage/RewrodRecommendPage';
+import RewardRecommendPage from '../RewardRecommendPage/RewardRecommendPage';
 import QnAOutlinePage from "../QnAOutlinePage/QnAOutlinePage";
 import QnARecommendPage from '../QnARecommendPage/QnARecommendPage';
 import CollabDetailPage from "../CollabDetailPage/CollabDetailPage";
 import CollabOutlinePage from "../CollabOutlinePage/CollabOutlinePage";
-import ScreenShotCapture from "../ScreenShotCapture";
+//import ScreenShotCapture from "../ScreenShotCapture";
 import QnAEditPage from "../QnAEditPage/QnAEditPage";
 import RewardEditPage from "../RewardEditPage/RewardEditPage";
 import CollabEditPage from "../CollabEditPage/CollabEditPage";
@@ -66,9 +66,28 @@ const OuterPage = () => {
     const [isChanging, setIsChanging] = useState(false);
     const [api, contextHolder] = notification.useNotification();
     const changePageNumber = (pageNumber) => {
+        console.log('1231')
         setPageProps({
             page: pageProps.page,
             pageNumber: pageNumber,
+            sortMode: pageProps.sortMode ? pageProps.sortMode : '',
+            keyword: pageProps.keyword ? pageProps.keyword : null,
+            school: pageProps.school ? pageProps.school : null,
+            subject: pageProps.subject ? pageProps.subject : null,
+            department: pageProps.department ? pageProps.department : null,
+            professor: pageProps.professord ? pageProps.professor : null,
+            headerName: pageProps.headerName ? pageProps.headerName : null,
+            tag: pageProps.tag ? pageProps.tag : [],
+            download: pageProps.download ? pageProps.download : null,
+        })
+    }
+
+    const setSortMode = (sortMode) => {
+        console.log('2231')
+        setPageProps({
+            page: pageProps.page,
+            pageNumber: 1,
+            sortMode: sortMode,
             keyword: pageProps.keyword ? pageProps.keyword : null,
             school: pageProps.school ? pageProps.school : null,
             subject: pageProps.subject ? pageProps.subject : null,
@@ -136,7 +155,7 @@ const OuterPage = () => {
 
         })
 
-        stompClient.subscribe('/user/'+tempEmail+'/topic/private-messages', (message) => {
+        stompClient.subscribe('/user/' + tempEmail + '/topic/private-messages', (message) => {
             // console.log(JSON.parse(message.body))
 
             openNotification('bottomLeft', JSON.parse(message.body))
@@ -291,6 +310,7 @@ const OuterPage = () => {
                 setLoading(true)
             else
                 setLoading(false)
+            console.log('123')
             document.cookie = "pageProps=" + JSON.stringify(pageProps);
             //document.cookie = "pageNumber=" + JSON.stringify(pageNumber);
 
@@ -310,24 +330,24 @@ const OuterPage = () => {
                 case 'NoteDetailPage': setPageComponent(<NoteDetailPage page='NoteDetailPage' sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
                 case 'NoteEditPage': setPageComponent(<NoteEditPage page='NoteEditPage' sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
                 case 'NoteNewPage': setPageComponent(<NoteEditPage page='NoteNewPage' sendBellMessage={sendBellMessage} sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
-                case 'NoteOutlinePage': setPageComponent(<NoteOutlinePage page='NoteOutlinePage' setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
+                case 'NoteOutlinePage': setPageComponent(<NoteOutlinePage page='NoteOutlinePage' changeSortMode={setSortMode} setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
                 case 'MemberPage': setPageComponent(<MemberPage page='MemberPage' setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
                 case 'RewardDetailPage': setPageComponent(<RewardDetailPage page='RewardDetailPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
                 case 'RewardEditPage': setPageComponent(<RewardEditPage page='RewardEditPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
                 case 'RewardNewPage': setPageComponent(<RewardEditPage page='RewardNewPage' sendBellMessage={sendBellMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
-                case 'RewardOutlinePage': setPageComponent(<RewardOutlinePage page='RewardOutlinePage' setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
-                case 'RewardRecommendPage': setPageComponent(<RewardRecommendPage page='RewardRecommendPage' setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
+                case 'RewardOutlinePage': setPageComponent(<RewardOutlinePage page='RewardOutlinePage' changeSortMode={setSortMode} setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
+                case 'RewardRecommendPage': setPageComponent(<RewardRecommendPage page='RewardRecommendPage' changeSortMode={setSortMode} setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
                 case 'QnADetailPage': setPageComponent(<QnADetailPage page='QnADetailPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
-                case 'QnAOutlinePage': setPageComponent(<QnAOutlinePage page='QnAOutlinePage' setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                case 'QnAOutlinePage': setPageComponent(<QnAOutlinePage page='QnAOutlinePage' changeSortMode={setSortMode} setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
                 case 'QnAEditPage': setPageComponent(<QnAEditPage page='QnAEditPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
                 case 'QnANewPage': setPageComponent(<QnAEditPage page='QnANewPage' sendBellMessage={sendBellMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
-                case 'QnARecommendPage': setPageComponent(<QnARecommendPage page='QnARecommendPage' setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                case 'QnARecommendPage': setPageComponent(<QnARecommendPage page='QnARecommendPage' changeSortMode={setSortMode} setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
                 case 'CollabDetailPage': setPageComponent(<CollabDetailPage page='CollabDetailPage' sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
                 case 'CollabEditPage': setPageComponent(<CollabEditPage page='CollabEditPage' sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
                 case 'CollabNoteEditPage': setPageComponent(<CollabNoteEditPage page='CollabNoteEditPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
                 case 'CollabNewPage': setPageComponent(<CollabEditPage page='CollabNewPage' sendBellMessage={sendBellMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
-                case 'CollabOutlinePage': setPageComponent(<CollabOutlinePage page='CollabOutlinePage' setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
-                case 'CollabRecommendPage': setPageComponent(<CollabRecommendPage page='CollabRecommendPage' setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                case 'CollabOutlinePage': setPageComponent(<CollabOutlinePage page='CollabOutlinePage' changeSortMode={setSortMode} setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                case 'CollabRecommendPage': setPageComponent(<CollabRecommendPage page='CollabRecommendPage' changeSortMode={setSortMode} setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
                 case 'FolderOutlinePage': setPageComponent(<FolderOutlinePage page='FolderOutlinePage' setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
                 case 'PersonalPage': setPageComponent(<PersonalPage page='PersonalPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
                 case 'ProfilePage': setPageComponent(<ProfilePage page='ProfilePage' sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} Avatar={changeAvatar} setAvatar={setChangeAvatar} setPageProps={setPageProps} {...pageProps} />); break;
@@ -348,12 +368,12 @@ const OuterPage = () => {
             setBackMode(true)
         else
             setBackMode(false)
-        if (pageStack[0]?.pageProps.page === 'LoginPage' && pageStack[1]?.pageProps.page === 'LoginPage'){
+        if (pageStack[0]?.pageProps.page === 'LoginPage' && pageStack[1]?.pageProps.page === 'LoginPage') {
             setBackMode(false)
             console.log('123')
         }
 
-            
+
     }, [pageStack])
 
 
@@ -404,11 +424,11 @@ const OuterPage = () => {
     return (
         <>
             <div className='outerPage'>
-
-                <Navbar ringList={ringList} setRingList={setRingList} ringNumber={ringNumber} setRingNumber={setRingNumber} coinNum={coinNum} setCoinNum={setCoinNum} pageProps={pageProps} changeAvatar={changeAvatar} loggedIn={loggedIn} setPageProps={setPageProps} setLoggedIn={setLoggedIn} />
-
                 <>
                     <Spin wrapperClassName={'outerPage__Loading'} indicator={antIcon} spinning={loading} style={{ width: '100%', height: '100%' }}>
+                        <Navbar ringList={ringList} setRingList={setRingList} ringNumber={ringNumber} setRingNumber={setRingNumber} coinNum={coinNum} setCoinNum={setCoinNum} pageProps={pageProps} changeAvatar={changeAvatar} loggedIn={loggedIn} setPageProps={setPageProps} setLoggedIn={setLoggedIn} />
+
+
                         <div className='outerPage__Layout'>
                             {pageComponent && pageComponent}
                         </div>

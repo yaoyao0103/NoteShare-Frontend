@@ -27,7 +27,7 @@ function NavMenu(props){
   return (
       <div className='navMenu'>
         {/* <Menu id='Menu'mode="inline" items={items}/> */}
-        <Select defaultValue={"Department"} showSearch className="navMenu__Dropdown" onChange={(department) => {props.setPageProps({page:'NoteOutlinePage', department:department})}}>
+        <Select defaultValue={"Department"} showSearch className="navMenu__Dropdown" onChange={(department) => {props.setPageProps({page:'NoteOutlinePage', pageNumber:1,sortMode:'likeCount',department:department})}}>
             {data.departments.map((department) => (
                 <Option key={department}>{department}</Option>
             )

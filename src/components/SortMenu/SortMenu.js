@@ -119,7 +119,7 @@ const SortMeun = (props) => {
                             SortByFavoriteCount();
                         }}
                     >收藏數</a>),
-                    key: "4",
+                    key: "5",
                     icon: <StarOutlined />
                 },
 

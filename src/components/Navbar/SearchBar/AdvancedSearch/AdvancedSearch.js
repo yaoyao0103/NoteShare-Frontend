@@ -54,6 +54,10 @@ const AdvancedSearch = (props) => {
         temp.page = temp.page+'OutlinePage'
         temp.setPageProps = props.setPageProps
         temp.pageNumber=1
+        if(temp.page!=='NoteOutlinePage')
+            temp.sortMode='date'
+        else
+            temp.sortMode='likeCount'
         //console.log(temp)
         props.setPageProps(temp);
         

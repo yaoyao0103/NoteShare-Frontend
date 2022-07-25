@@ -53,7 +53,7 @@ function PageOutlineContentTemplate(props) {
     }, [cardList])
     const onChange = (pagenumber) => {
         console.log(pagenumber);
-        setPageN(pagenumber);
+        //setPageN(pagenumber);
         props.changePageNumber(pagenumber);
 
 
@@ -100,9 +100,10 @@ function PageOutlineContentTemplate(props) {
                         <Header className="outlineContentTemplate__Header">
                             <Row className="outlineContentTemplate__Header__Row">
                                 <Col className="outlineContentTemplate__Header__RecommendSwitch" span={props.hasSwitch ? 6 : 9}> {props.hasSwitch && <ToggleSwitch isSwitch={props.isFollowingSwitch} ChangeSwitch={props.changeFollowingSwitch} />}</Col>
-                                <Col className="outlineContentTemplate__Header__FolderSwitch" span={props.hasSwitch ? 6 : 9}>{props.hasSwitch && <ToggleSwitch isSwitch={props.isNoteSwitch} ChangeSwitch={props.changeNoteSwitch} SwitchLeft='Note' SwitchRight="Folder" checkedColor="#8015e8" />}</Col>
+                                {/* <Col className="outlineContentTemplate__Header__FolderSwitch" span={props.hasSwitch ? 6 : 9}>{props.hasSwitch && <ToggleSwitch isSwitch={props.isNoteSwitch} ChangeSwitch={props.changeNoteSwitch} SwitchLeft='Note' SwitchRight="Folder" checkedColor="#8015e8" />}</Col> */}
+                                <Col className="outlineContentTemplate__Header__FolderSwitch" span={props.hasSwitch ? 6 : 9}></Col>
                                 <Col className="outlineContentTemplate__Header__Dropdown" span={props.hasSwitch ? 12 : 6}>
-                                    {!isFolder && (props.isMember&&!props.isFollowingSwitch)&&
+                                    {!isFolder && !props.isMember&&
                                         <div className="outlineContentTemplate__Dropdown">
                                             <SortMeun
                                                 changeSortMode={props.changeSortMode}

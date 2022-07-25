@@ -5,7 +5,7 @@ import Text from '../../Text/Text'
 const Logo = (props) => {
 
     return (
-        <div className='logo' onClick={()=>{props.setPageProps({page:'MemberPage',pageNumber:1})}}>
+        <div className='logo' onClick={()=>{props.setPageProps({page:'MemberPage',pageNumber:1,sortMode:'likeCount'})}}>
                 <Text color='black' cls='Large' content='Note' fontSize='28'/>
                 <Text color='purple' cls='Large' content='Share'fontSize='28'/>                
         </div>
