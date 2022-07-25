@@ -107,7 +107,7 @@ function MemberPage(props) {
     return (
         <>
             {Note.length > 0 &&
-                <PageOutlineContentTemplate isMember={true}loading={loading} setLoading={setLoading}isFollowingSwitch={isFollowingSwitch} isNoteSwitch={isNoteSwitch} changeFollowingSwitch={changeFollowingSwitch} changeNoteSwitch={changeNoteSwitch} page={page} hasSwitch={true} mode='Note' Post={Note} pageNumber={props.pageNumber} changePageNumber={props.setPageNumber} changeSortMode={(sortMode) => { setSortMode(sortMode); }} setPageProps={props.setPageProps} />
+                <PageOutlineContentTemplate isMember={true}loading={loading} setLoading={setLoading}isFollowingSwitch={isFollowingSwitch} isNoteSwitch={isNoteSwitch} changeFollowingSwitch={changeFollowingSwitch} changeNoteSwitch={changeNoteSwitch} page={page} hasSwitch={true} mode='Note' Post={Note} pageNumber={props.pageNumber} changePageNumber={props.setPageNumber} changeSortMode={props.changeSortMode} setPageProps={props.setPageProps} />
 
             }
         </>
