@@ -136,7 +136,7 @@ const OuterPage = () => {
 
         })
 
-        stompClient.subscribe('/user/topic/private-messages', (message) => {
+        stompClient.subscribe('/user/'+tempEmail+'/topic/private-messages', (message) => {
             // console.log(JSON.parse(message.body))
 
             openNotification('bottomLeft', JSON.parse(message.body))
