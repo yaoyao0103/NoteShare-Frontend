@@ -14,15 +14,15 @@ function QnARecommendPage(props) {
         async function getQnAById() {
             try {
                 props.setLoading(true)
-                const sortBy = props.sortMode;
+                //const sortBy = props.sortMode;
 
-                await axios.get('http://localhost:8080/search/post/' + String(props.pageNumber - 1) + '/20?keyword=array&department=' + (props.department ? props.department : '') + '&subject=' + (props.subject ? props.subject : '') + '&haveQA=' + true + '&sortBy=' + sortBy,{
+                await axios.get('http://localhost:8080/post/hotPosts/' + String(props.pageNumber - 1) + '/20/QA',{
                     headers: {
                         'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
                       }
                 }).then((res) => {
-                    setQnA(oldArray => [...oldArray, res.data.search]);
-                    console.log(res.data.search)
+                    setQnA(oldArray => [...oldArray, res.data.res]);
+                    console.log(res.data.res)
                     props.setLoading(false)
                 });
 
@@ -64,7 +64,7 @@ function QnARecommendPage(props) {
     return (
         <>
             {QnA.length > 0 &&
-                <PageOutlineContentTemplate page={page} hasSwitch={false} mode='Post' Post={QnA} pageNumber={props.pageNumber} changePageNumber={props.setPageNumber} changeSortMode={props.changeSortMode} setPageProps={props.setPageProps} />
+                <PageOutlineContentTemplate page={page}  isMember={true} hasSwitch={false} mode='Post' Post={QnA} pageNumber={props.pageNumber} changePageNumber={props.setPageNumber} changeSortMode={props.changeSortMode} setPageProps={props.setPageProps} />
 
             }
         </>

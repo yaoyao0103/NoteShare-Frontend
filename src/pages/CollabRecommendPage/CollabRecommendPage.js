@@ -17,15 +17,13 @@ function CollabRecommendPage(props) {
         props.setLoading(true);
         async function getCollabById() {
             try {
-                const sortBy=props.sortMode;
-                
-                await axios.get('http://localhost:8080/search/post/'+ String(props.pageNumber-1) + '/20?keyword=interrupt&haveCollaboration='+true+'&sortBy='+sortBy,{
+                await axios.get('http://localhost:8080/post/hotPosts/' + String(props.pageNumber - 1) + '/20/collaboration',{
                     headers: {
                         'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
                       }
                 }).then((res) => {
 
-                    setCollab(oldArray => [...oldArray, res.data.search]);
+                    setCollab(oldArray => [...oldArray, res.data.res]);
                     props.setLoading(false);
                 });
 
@@ -46,7 +44,7 @@ function CollabRecommendPage(props) {
     return (
         <>
             {Collab.length > 0 && 
-                <PageOutlineContentTemplate page={page}  hasSwitch={false} mode='Post' Post={Collab} pageNumber={props.pageNumber} changePageNumber={props.setPageNumber} changeSortMode={props.changeSortMode} setPageProps={props.setPageProps}/>
+                <PageOutlineContentTemplate page={page}   isMember={true} hasSwitch={false} mode='Post' Post={Collab} pageNumber={props.pageNumber} changePageNumber={props.setPageNumber} changeSortMode={props.changeSortMode} setPageProps={props.setPageProps}/>
             }
         </>
     );

@@ -69,15 +69,14 @@ function MemberPage(props) {
     }
     async function getRecommendNoteById() {
         try {
-            const haveNormal = true;
-            const sortBy = sortMode;
+            
             //console.log(props.department);
-            await axios.get('http://localhost:8080/search/note/' + String(props.pageNumber - 1) + '/10?keyword=' + (props.keyword ? props.keyword : '') + '&department=' + (props.department ? props.department : '') + '&subject=' + (props.subject ? props.subject : '') + '&haveNormal=true&haveCollaboration=true&sortBy=' + sortBy,{
+            await axios.get('http://localhost:8080/note/hotNotes/' + String(props.pageNumber - 1) + '/10',{
                 headers: {
                     'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
                   }
             }).then((res) => {
-                setNote(oldArray => [...oldArray, res.data.search]);
+                setNote(oldArray => [...oldArray, res.data.res]);
                 props.setLoading(false)
             });
 

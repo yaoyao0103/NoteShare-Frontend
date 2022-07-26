@@ -17,13 +17,13 @@ function RewardRecommendPage(props) {
             try {
                 const sortBy = props.sortMode;
 
-                await axios.get('http://localhost:8080/search/post/' + String(props.pageNumber - 1) + '/20?keyword=interrupt&department=&subject=&haveReward=' + true + '&sortBy=' + sortBy, {
+                await axios.get('http://localhost:8080/post/hotPosts/' + String(props.pageNumber - 1) + '/20/reward', {
                     headers: {
                         'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
                     }
                 }).then((res) => {
 
-                    setReward(oldArray => [...oldArray, res.data.search]);
+                    setReward(oldArray => [...oldArray, res.data.res]);
                     props.setLoading(false)
                 });
 
@@ -73,7 +73,7 @@ function RewardRecommendPage(props) {
     return (
         <>
             {Reward.length > 0 &&
-                <PageOutlineContentTemplate page={page} hasSwitch={false} mode='Post' Post={Reward} pageNumber={props.pageNumber} changePageNumber={props.setPageNumber} changeSortMode={props.changeSortMode} setPageProps={props.setPageProps} />
+                <PageOutlineContentTemplate page={page}  isMember={true} hasSwitch={false} mode='Post' Post={Reward} pageNumber={props.pageNumber} changePageNumber={props.setPageNumber} changeSortMode={props.changeSortMode} setPageProps={props.setPageProps} />
             }
         </>
     );
