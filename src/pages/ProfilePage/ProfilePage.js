@@ -165,7 +165,7 @@ function ProfilePage(props) {
                 setIsFollow(true);
                 setFansNum(fansNum + 1);
                 props.sendPrivateMessage(
-                    name + ' has following you !',
+                    name + ' has followed you !',
                     'ProfilePage',
                     email,
                     name,

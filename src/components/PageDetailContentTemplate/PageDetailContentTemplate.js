@@ -250,7 +250,7 @@ const PageDetailContentTemplate = (props) => {
             
             setKickUserList(<>
                 {author.map((item, index) => (
-                    (item.email==props.data?.author || item.email==manager.userObjEmail || votingList.includes(item.email))?
+                    (item.email==props.data?.author || item.email==manager?.userObjEmail || votingList.includes(item.email))?
                         <Option value={item.email} disabled>{item.name}</Option>
                         :
                         <Option value={item.email}>{item.name}</Option>

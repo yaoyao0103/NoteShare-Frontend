@@ -284,7 +284,12 @@ const OuterPage = () => {
 
             //setPageBeforeNumber(pageNumber)
             if (editor) {
-                editor.disconnectWS()
+                try{
+                    editor.disconnectWS()
+                }
+                catch(e){
+                    
+                }
             }
             changePageFunction()
             //console.log('1', JSON.stringify(pageBeforeProps), '2', JSON.stringify(pageProps))
