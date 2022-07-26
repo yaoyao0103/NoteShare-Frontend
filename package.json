@@ -48,8 +48,7 @@
     "save": "^2.5.0",
     "sockjs-client": "^1.6.1",
     "stompjs": "^2.3.3",
-    "web-vitals": "^1.1.2",
-    "webpack": "^4.44.2"
+    "web-vitals": "^1.1.2"
   },
   "scripts": {
     "start": "react-scripts start",
