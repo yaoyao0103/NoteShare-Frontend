@@ -214,7 +214,8 @@ const NoteEditTemplate = (props) => {
             NoteFormat.description = content
             NoteFormat.public = information.public
 
-            axios.post(`http://localhost:8080/note/${email}/${props.folderId}`, NoteFormat,{
+            let path = props.folderId? `http://localhost:8080/note/${email}/${props.folderId}`:`http://localhost:8080/note/${email}`
+            axios.post(path, NoteFormat,{
                 headers: {
                     'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
                   }
