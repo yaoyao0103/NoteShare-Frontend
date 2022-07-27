@@ -1,4 +1,4 @@
-import grapesjs from "grapesjs";
+import grapesjs from "grapesjs-clot";
 import loadComponents from "./components";
 import loadBlocks from "./blocks";
 

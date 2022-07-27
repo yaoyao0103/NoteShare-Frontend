@@ -270,13 +270,13 @@ const OuterPage = () => {
             pageProps.page === 'PersonalPage' || pageProps.page === 'ProfilePage' || pageProps.page === 'ResetPasswordPage' ||
             pageProps.page === 'VerificationPage'
         ) && !loggedIn) {
-            message.info('You should log in first !!!')
+            message.warn("You have to log in first!")
             setPageProps({ page: "LoginPage" })
         }
         else if ((pageProps.page === 'LoginPage' || pageProps.page === 'SignUpPage' ||
             pageProps.page === 'VerificationPage' || pageProps.page === 'ForgetPasswordPage'
         ) && loggedIn) {
-            message.info('You should log out first !!!')
+            message.warn("You have to log in first!")
             setPageProps({ page: "PersonalPage" })
         }
         else {
@@ -325,7 +325,7 @@ const OuterPage = () => {
             if (pageProps.page === 'NoteDetailPage' || pageProps.page === 'NoteOutlinePage' || pageProps.page === 'MemberPage' ||
                 pageProps.page === 'RewardDetailPage' || pageProps.page === 'RewardOutlinePage' || pageProps.page === 'RewardRecommendPage' ||
                 pageProps.page === 'QnADetailPage' || pageProps.page === 'QnAOutlinePage' || pageProps.page === 'QnARecommendPage' ||
-                pageProps.page === 'CollabDetailPage' || pageProps.page === 'CollabOutlinePage' || pageProps.page === 'CollabRecommendPage'
+                pageProps.page === 'CollabDetailPage' || pageProps.page === 'CollabOutlinePage' || pageProps.page === 'CollabRecommendPage' || pageProps.page === 'PersonalPage'
             )
                 setFloatButtonVisable(true)
             else
@@ -387,6 +387,7 @@ const OuterPage = () => {
         message.info("float button click!")
 
         switch (pageProps.page) {
+            case 'PersonalPage': setPageProps({ page: 'NoteNewPage', action: "new", }); break;
             case 'NoteDetailPage': setPageProps({ page: 'NoteNewPage', action: "new", }); break;
             case 'NoteOutlinePage': setPageProps({ page: 'NoteNewPage', action: "new", }); break;
             case 'MemberPage': setPageProps({ page: 'NoteNewPage', action: "new", }); break;

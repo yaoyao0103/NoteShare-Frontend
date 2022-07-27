@@ -59,12 +59,6 @@ const InformationInput = ({information, setInformation}) => {
                 <Input placeholder="$" onChange={(ev) => setInformation({...information, referencePrice: ev.target.value})} value={information?.referencePrice} /> 
             </div>  
         }
-        {information?.referenceNumber!=null &&
-            <div className="informationInput__item informationInput__InputNumber">
-                <Text color='black' cls='Small' content={"Ref Num"} fontSize='15' display="inline-block" />
-                <Input placeholder="$" onChange={(ev) => setInformation({...information, referenceNumber: ev.target.value})} value={information?.referenceNumber} /> 
-            </div>  
-        }
         {information?.downloadable!=null &&
             <div className="informationInput__item informationInput__Checkbox">
                 <Checkbox.Group 

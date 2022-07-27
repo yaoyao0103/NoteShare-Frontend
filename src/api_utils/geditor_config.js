@@ -1,4 +1,4 @@
-import grapesjs from "grapesjs";
+import grapesjs from "grapesjs-clot";
 import gjsBlockBasic from "grapesjs-blocks-basic";
 import $ from "jquery";
 

@@ -39,6 +39,12 @@ button .anticon-user{
     transition: 0.2s;
 }
 
+.btn-blue--disable{
+    background-color: 	#7F00DB;
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
 .btn-black{
     background-color: #000;
 }

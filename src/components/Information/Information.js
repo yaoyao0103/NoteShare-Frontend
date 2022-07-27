@@ -43,33 +43,10 @@ function Information(props) {
                         <div >
                             <Text color='black' cls='Small' content={"Downloadable"} fontSize='5' display="inline-block" />
                         </div>
-                        {props.downloadable? "Downloadable":"not Downloadable"}
-                    </Col>
-                )}
-                {props.bestPrice!=null &&(
-                    <Col className='information__Price'>
-                        <Tooltip title={"Remainder: " + props.remainBest + " people" }>
-                            <div className='information__Price'>
-                                <Text color='black' cls='Small' content={(props.type=="note" || props.type=="collaboration")?"Price":"Best Solution"} fontSize='5' display="inline-block" />
-                            </div>
-                            {props.bestPrice}
-                        </Tooltip>
+                        {props.downloadable? "Downloadable":"Not Downloadable"}
                     </Col>
                 )}
                 
-                {props.referencePrice!=null &&(
-                    <Col className='information__RefPrice'>
-                        <Tooltip title={"Remainder: " + props.remainRef + " people" }>
-                            <div className='information__Price'>
-                                <Text color='black' cls='Small' content={"Ref Solution"} fontSize='5' display="inline-block" />
-                            </div>
-                            {props.referencePrice}
-                        </Tooltip>
-                    </Col>
-                    // <div className='information__RefPrice information__top__info'>
-                    //     <Text color='black' cls='Default' content={"Ref Solution: " + props.referencePrice + '/person , Total: ' + props.referenceNumber + ' person(s)'} fontSize='17' display="inline-block" />
-                    // </div>
-                )}
                 {props.public!=null &&(
                     <Col className='information__RefPrice'>
                         <Tooltip title={"The post/note can't be seen by other users when it is private."}>
@@ -90,6 +67,31 @@ function Information(props) {
                                 <Text color='black' cls='Small' content={"Note State"} fontSize='5' display="inline-block" />
                             </div>
                             {props.notePublic?<span style={{color: "#00BB00"}}>Public</span>:<span style={{color: "red"}}>Private</span>}
+                        </Tooltip>
+                    </Col>
+                    // <div className='information__RefPrice information__top__info'>
+                    //     <Text color='black' cls='Default' content={"Ref Solution: " + props.referencePrice + '/person , Total: ' + props.referenceNumber + ' person(s)'} fontSize='17' display="inline-block" />
+                    // </div>
+                )}
+
+                {props.bestPrice!=null &&(
+                    <Col className='information__Price'>
+                        <Tooltip title={"Remainder: " + props.remainBest + " people" }>
+                            <div className='information__Price'>
+                                <Text color='black' cls='Small' content={(props.type=="note" || props.type=="collaboration")?"Price":"Best Solution"} fontSize='5' display="inline-block" />
+                            </div>
+                            {props.bestPrice}
+                        </Tooltip>
+                    </Col>
+                )}
+                
+                {props.referencePrice!=null &&(
+                    <Col className='information__RefPrice'>
+                        <Tooltip title={"Remainder: " + props.remainRef + " people" }>
+                            <div className='information__Price'>
+                                <Text color='black' cls='Small' content={"Ref Solution"} fontSize='5' display="inline-block" />
+                            </div>
+                            {props.referencePrice}
                         </Tooltip>
                     </Col>
                     // <div className='information__RefPrice information__top__info'>

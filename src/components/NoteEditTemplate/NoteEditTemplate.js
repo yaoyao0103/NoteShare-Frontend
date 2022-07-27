@@ -154,7 +154,9 @@ const NoteEditTemplate = (props) => {
                         </Tooltip>
                     )}
                 />
-                <List.Item className='newVersion'><Input placeholder="New Version" onPressEnter={(ev) => newVersion(ev.target.value)}/></List.Item>
+                {versions.length < 6 &&
+                    <List.Item className='newVersion'><Input placeholder="New Version" onPressEnter={(ev) => newVersion(ev.target.value)}/></List.Item>
+                }
             </>
         )
     },[versions])
@@ -596,7 +598,7 @@ const NoteEditTemplate = (props) => {
                     {step==2 &&
                         <div className='noteEditTemplate__Content__Tags'>
                             <div className='noteEditTemplate__Content__Tag noteEditTemplate__Content__RecommendTag'>
-                                <Text color='black' cls='Small' content={"Recommend Tags"} fontSize='20' display="inline-block" />
+                                <Text color='black' cls='Small' content={"Recommended Tags"} fontSize='20' display="inline-block" />
                                 <Select
                                     dropdownClassName="noteEditTemplate__Content__Tag__List"
                                     defaultValue={recommendTag}
@@ -649,11 +651,20 @@ const NoteEditTemplate = (props) => {
                         </>
                         :
                         <>
-                            <div className="noteEditTemplate__Footer__Button" onClick={noteFinish}>
-                                <Button color={"purple"}><Text color='white' cls='Large' content={"Next"} fontSize='17' display="inline-block" /></Button>
-                            </div>
+                            {versions.length==1?
+                                <Tooltip title={"You have to create a version first!"}>  
+                                    <div className="noteEditTemplate__Footer__Button">
+                                        <Button color={"purple--disabled"}><Text color='white' cls='Large' content={"Next"} fontSize='17' display="inline-block" /></Button>
+                                    </div>
+                                </Tooltip>
+                            :
+                                <div className="noteEditTemplate__Footer__Button" onClick={noteFinish}>
+                                    <Button color={"purple"}><Text color='white' cls='Large' content={"Next"} fontSize='17' display="inline-block" /></Button>
+                                </div>
+                            }
                             <Popover 
                                 content={popoverContent} 
+                                overlayInnerStyle={{padding:"0 0 0.05em 0"}}
                                 title={<Text color='black' cls='Small' content={"Choose a version to save"} fontSize='17' display="inline-block" />}
                                 trigger="click">
                                 <div className="noteEditTemplate__Footer__Button">
