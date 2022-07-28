@@ -233,4 +233,6 @@
 .OutlineCard__Sider__Footer__Note{
     background-color: #FFF; 
 }
-
+.OutlineCard__Sider__Footer__Icon__Note{
+   cursor: pointer;
+}

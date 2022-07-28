@@ -26,44 +26,48 @@ function OutlineCard(props) {
         }
     }
 
+    const likeNote = () => {
+        message.success('Like it successfully!')
+    }
+
     const QnASider = (
         <>{props.mode === 'Post' &&
             < Sider onClick={props.onClick} className={"OutlineCard__Sider__Outer" + '__' + props.mode} width='35%' >
-               
 
-                        <Row className={"OutlineCard__Sider__First__Row" + '__' + props.mode}>
-                            <Col className={"OutlineCard__Sider__Department" + '__' + props.mode} span={18}>
-                                <Text cls='Default' fontSize="16" content={props.cardContent.department} />
-                            </Col>
 
-                        </Row>
-                        <Row className={"OutlineCard__Sider__Sec__Row" + '__' + props.mode}>
-                            <Col className={"OutlineCard__Sider__Subject" + '__' + props.mode} span={20}>
-                                <Text cls='Default' fontSize="16" content={props.cardContent.subject} />
-                            </Col>
-                        </Row>
-                        <Row className={"OutlineCard__Sider__Third__Row" + '__' + props.mode}>
-                            <Col className={"OutlineCard__Sider__CommentCount" + '__' + props.mode} span={20}>
-                                <Text cls='Default' fontSize="16" content={'留言數 : ' + props.cardContent.comments.length} />
-                            </Col>
-                        </Row>
-                        {props.cardContent.answers.length !== 0 &&
-                            <Row className={"OutlineCard__Sider__Fourth__Row" + '__' + props.mode}>
-                                <Col className={"OutlineCard__Sider__HasBestAns" + '__' + props.mode} span={20}>
-                                    <Text cls='Default' fontSize="16" content='已解答' color='green' />
-                                </Col>
-                            </Row>
-                        }
-                        {props.cardContent.answers.length === 0 &&
-                            <Row className={"OutlineCard__Sider__Fourth__Row" + '__' + props.mode}>
-                                <Col className={"OutlineCard__Sider__Price" + '__' + props.mode} span={20}>
-                                    <Text cls='Default' fontSize="16" content={'最高賞金 : ' + props.cardContent.bestPrice} color='red' />
-                                </Col>
-                            </Row>
-                        }
-                 
-                   
-             
+                <Row className={"OutlineCard__Sider__First__Row" + '__' + props.mode}>
+                    <Col className={"OutlineCard__Sider__Department" + '__' + props.mode} span={18}>
+                        <Text cls='Default' fontSize="16" content={props.cardContent.department} />
+                    </Col>
+
+                </Row>
+                <Row className={"OutlineCard__Sider__Sec__Row" + '__' + props.mode}>
+                    <Col className={"OutlineCard__Sider__Subject" + '__' + props.mode} span={20}>
+                        <Text cls='Default' fontSize="16" content={props.cardContent.subject} />
+                    </Col>
+                </Row>
+                <Row className={"OutlineCard__Sider__Third__Row" + '__' + props.mode}>
+                    <Col className={"OutlineCard__Sider__CommentCount" + '__' + props.mode} span={20}>
+                        <Text cls='Default' fontSize="16" content={'留言數 : ' + props.cardContent.comments.length} />
+                    </Col>
+                </Row>
+                {props.cardContent.answers.length !== 0 &&
+                    <Row className={"OutlineCard__Sider__Fourth__Row" + '__' + props.mode}>
+                        <Col className={"OutlineCard__Sider__HasBestAns" + '__' + props.mode} span={20}>
+                            <Text cls='Default' fontSize="16" content='已解答' color='green' />
+                        </Col>
+                    </Row>
+                }
+                {props.cardContent.answers.length === 0 &&
+                    <Row className={"OutlineCard__Sider__Fourth__Row" + '__' + props.mode}>
+                        <Col className={"OutlineCard__Sider__Price" + '__' + props.mode} span={20}>
+                            <Text cls='Default' fontSize="16" content={'最高賞金 : ' + props.cardContent.bestPrice} color='red' />
+                        </Col>
+                    </Row>
+                }
+
+
+
 
             </Sider >
         }</>
@@ -71,40 +75,40 @@ function OutlineCard(props) {
     const RewardSider = (
         <>{props.mode === 'Post' &&
             < Sider onClick={props.onClick} className={"OutlineCard__Sider__Outer" + '__' + props.mode} width='35%' >
-                
-                        <Row className={"OutlineCard__Sider__First__Row" + '__' + props.mode}>
-                            <Col className={"OutlineCard__Sider__Department" + '__' + props.mode} span={20}>
-                                <Text cls='Default' fontSize="16" content={props.cardContent.department} />
-                            </Col>
-                        </Row>
-                        <Row className={"OutlineCard__Sider__Sec__Row" + '__' + props.mode}>
-                            <Col className={"OutlineCard__Sider__Subject" + '__' + props.mode} span={20}>
-                                <Text cls='Default' fontSize="16" content={props.cardContent.subject} />
-                            </Col>
-                        </Row>
-                        <Row className={"OutlineCard__Sider__Sec__Row" + '__' + props.mode}>
-                            <Col className={"OutlineCard__Sider__Professor" + '__' + props.mode} span={20}>
-                                <Text cls='Default' fontSize="16" content={'教授 : ' + props.cardContent.professor} />
-                            </Col>
-                        </Row>
-                        <Row className={"OutlineCard__Sider__Third__Row" + '__' + props.mode}>
-                            <Col className={"OutlineCard__Sider__CommentCount" + '__' + props.mode} span={20}>
-                                <Text cls='Default' fontSize="16" content={'留言數 : ' + props.cardContent.comments.length} />
-                            </Col>
-                        </Row>
 
-                        <Row className={"OutlineCard__Sider__Fourth__Row" + '__' + props.mode}>
-                            <Col className={"OutlineCard__Sider__BestPrice" + '__' + props.mode} span={20}>
-                                <Text cls='Default' fontSize="16" content={'最佳解賞金 : ' + props.cardContent.bestPrice} />
-                            </Col>
+                <Row className={"OutlineCard__Sider__First__Row" + '__' + props.mode}>
+                    <Col className={"OutlineCard__Sider__Department" + '__' + props.mode} span={20}>
+                        <Text cls='Default' fontSize="16" content={props.cardContent.department} />
+                    </Col>
+                </Row>
+                <Row className={"OutlineCard__Sider__Sec__Row" + '__' + props.mode}>
+                    <Col className={"OutlineCard__Sider__Subject" + '__' + props.mode} span={20}>
+                        <Text cls='Default' fontSize="16" content={props.cardContent.subject} />
+                    </Col>
+                </Row>
+                <Row className={"OutlineCard__Sider__Sec__Row" + '__' + props.mode}>
+                    <Col className={"OutlineCard__Sider__Professor" + '__' + props.mode} span={20}>
+                        <Text cls='Default' fontSize="16" content={'教授 : ' + props.cardContent.professor} />
+                    </Col>
+                </Row>
+                <Row className={"OutlineCard__Sider__Third__Row" + '__' + props.mode}>
+                    <Col className={"OutlineCard__Sider__CommentCount" + '__' + props.mode} span={20}>
+                        <Text cls='Default' fontSize="16" content={'留言數 : ' + props.cardContent.comments.length} />
+                    </Col>
+                </Row>
 
-                        </Row>
-                        <Row className={"OutlineCard__Sider__Fifth__Row" + '__' + props.mode}>
-                            <Col className={"OutlineCard__Sider__RefPrice" + '__' + props.mode} span={20}>
-                                <Text cls='Default' fontSize="16" content={'參考解賞金 : ' + props.cardContent.referencePrice} />
-                            </Col>
-                        </Row>
-                   
+                <Row className={"OutlineCard__Sider__Fourth__Row" + '__' + props.mode}>
+                    <Col className={"OutlineCard__Sider__BestPrice" + '__' + props.mode} span={20}>
+                        <Text cls='Default' fontSize="16" content={'最佳解賞金 : ' + props.cardContent.bestPrice} />
+                    </Col>
+
+                </Row>
+                <Row className={"OutlineCard__Sider__Fifth__Row" + '__' + props.mode}>
+                    <Col className={"OutlineCard__Sider__RefPrice" + '__' + props.mode} span={20}>
+                        <Text cls='Default' fontSize="16" content={'參考解賞金 : ' + props.cardContent.referencePrice} />
+                    </Col>
+                </Row>
+
 
             </Sider >
         }</>
@@ -112,28 +116,28 @@ function OutlineCard(props) {
     const CollabSider = (
         <>{props.mode === 'Post' &&
             < Sider onClick={props.onClick} className={"OutlineCard__Sider__Outer" + '__' + props.mode} width='35%' >
-              
-                        <Row className={"OutlineCard__Sider__First__Row" + '__' + props.mode}>
-                            <Col className={"OutlineCard__Sider__Department" + '__' + props.mode} span={20}>
-                                <Text cls='Default' fontSize="16" content={props.cardContent.department} />
-                            </Col>
-                        </Row>
-                        <Row className={"OutlineCard__Sider__Sec__Row" + '__' + props.mode}>
-                            <Col className={"OutlineCard__Sider__Subject" + '__' + props.mode} span={20}>
-                                <Text cls='Default' fontSize="16" content={props.cardContent.subject} />
-                            </Col>
-                        </Row>
-                        <Row className={"OutlineCard__Sider__Third__Row" + '__' + props.mode}>
-                            <Col className={"OutlineCard__Sider__School" + '__' + props.mode} span={20}>
-                                <Text cls='Default' fontSize="16" content={props.cardContent.school} />
-                            </Col>
-                        </Row>
-                        <Row className={"OutlineCard__Sider__Fourth__Row" + '__' + props.mode}>
-                            <Col className={"OutlineCard__Sider__Professor" + '__' + props.mode} span={20}>
-                                <Text cls='Default' fontSize="16" content={'教授 : ' + props.cardContent.professor} />
-                            </Col>
-                        </Row>
-                   
+
+                <Row className={"OutlineCard__Sider__First__Row" + '__' + props.mode}>
+                    <Col className={"OutlineCard__Sider__Department" + '__' + props.mode} span={20}>
+                        <Text cls='Default' fontSize="16" content={props.cardContent.department} />
+                    </Col>
+                </Row>
+                <Row className={"OutlineCard__Sider__Sec__Row" + '__' + props.mode}>
+                    <Col className={"OutlineCard__Sider__Subject" + '__' + props.mode} span={20}>
+                        <Text cls='Default' fontSize="16" content={props.cardContent.subject} />
+                    </Col>
+                </Row>
+                <Row className={"OutlineCard__Sider__Third__Row" + '__' + props.mode}>
+                    <Col className={"OutlineCard__Sider__School" + '__' + props.mode} span={20}>
+                        <Text cls='Default' fontSize="16" content={props.cardContent.school} />
+                    </Col>
+                </Row>
+                <Row className={"OutlineCard__Sider__Fourth__Row" + '__' + props.mode}>
+                    <Col className={"OutlineCard__Sider__Professor" + '__' + props.mode} span={20}>
+                        <Text cls='Default' fontSize="16" content={'教授 : ' + props.cardContent.professor} />
+                    </Col>
+                </Row>
+
             </Sider >
         }</>
     );
@@ -215,7 +219,7 @@ function OutlineCard(props) {
                         <Row>
                             <Col span={22}>
                             </Col>
-                            <Col span={2}>
+                            <Col onClick={() => {likeNote()}} span={2} className={"OutlineCard__Sider__Footer__Icon" + '__' + props.mode}>
                                 <LikeOutlined style={{
                                     fontSize: '26px',
                                 }} size={'large'} />
