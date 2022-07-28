@@ -276,7 +276,7 @@ const OuterPage = () => {
         else if ((pageProps.page === 'LoginPage' || pageProps.page === 'SignUpPage' ||
             pageProps.page === 'VerificationPage' || pageProps.page === 'ForgetPasswordPage'
         ) && loggedIn) {
-            message.warn("You have to log in first!")
+            message.warn("You have to log out first!")
             setPageProps({ page: "PersonalPage" })
         }
         else {

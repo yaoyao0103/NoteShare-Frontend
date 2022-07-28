@@ -6,28 +6,59 @@ import OutlineCard from "../OutlineCard/OutlineCard";
 import FolderOutlineCard from "../FolderOutlineCard/FolderOutlineCard";
 import './PageOutlineContentTemplate.css'
 import { LoadingOutlined } from '@ant-design/icons';
+import Cookie from "../Cookies/Cookies";
+import { Base64 } from "js-base64";
 import axios from "axios";
 const { Header, Content, Footer } = Layout;
-
+const cookieParser=new Cookie(document.cookie)
 function PageOutlineContentTemplate(props) {
     const [pageN, setPageN] = useState(1);
     const [searchResult, setSearchResult] = useState([]);
 
+    
     const [pageTotal, setPageTotal] = useState();
     const [cardList, setCardList] = useState([]);
-    useEffect(() => {
-        setSearchResult(oldArray => [oldArray.length = 0, props.Post]);
-        //console.log(props.Post);
-        //console.log(searchResult);
-    }, [props.Post]);
+
     useEffect(() => {
         console.log(props.Post[0].items)
+        setSearchResult(oldArray => [oldArray.length = 0, props.Post]);
         var tempcardLists = [];
-
+        const temp = cookieParser.getCookieByName('email')
+        const tempEmail = Base64.decode(temp);
         if (!(props.Post[0].totalPages === 0) && props.mode !== 'Folder') {
-            console.log('1111');
+            //console.log('1111');
+           
             for (let i = 0; i <= props.Post[0].items.length - 1; i++) {
-                tempcardLists.push(<OutlineCard onClick={() => onClickCard(props.Post[0].items[i].type, props.Post[0].items[i].id)} setPageProps={props.setPageProps} page={props.page} mode={props.mode} cardContent={props.Post[0].items[i]} />);
+                let hasBuy=false;
+                let hasJoin=false;
+                let hasLike=false;
+                console.log(props.Post[0].items[i])
+                if(props.mode==='Note'){
+                    for(let j =0; j<props.Post[0].items[i].buyer.length;j++){
+                        if(tempEmail===props.Post[0].items[i].buyer[j]){
+                            hasBuy=true;
+                            //console.log(props.Post[0].items[i].buyer[j])
+                        }
+                            
+                    }
+                    for(let j =0; j<props.Post[0].items[i].liker.length;j++){
+                        if(tempEmail===props.Post[0].items[i].liker[j]){
+                            hasLike=true;
+                            //console.log(props.Post[0].items[i].buyer[j])
+                        }
+                            
+                    }
+                }
+                if(props.page==='CollabRecommendPage'||props.page==='CollabOutlinePage'){
+                    for(let j =0; j<props.Post[0].items[i].email.length;j++){
+                        if(tempEmail===props.Post[0].items[i].email[j]){
+                            hasJoin=true;
+                            //console.log(props.Post[0].items[i].email[j])
+                        }
+                            
+                    }
+                }
+                tempcardLists.push(<OutlineCard key={i}email={tempEmail}hasLike={hasLike} hasJoin={hasJoin}hasBuy={hasBuy} setPageProps={props.setPageProps} page={props.page} mode={props.mode} cardContent={props.Post[0].items[i]} />);
             };
 
             setCardList(tempcardLists);
@@ -59,28 +90,6 @@ function PageOutlineContentTemplate(props) {
 
     }
 
-    const onClickCard = (type, id) => {
-        console.log(type, id)
-        switch (type) {
-            case 'QA': props.setPageProps({
-                page: 'QnADetailPage',
-                postId: id,
-            }); break;
-            case 'reward': props.setPageProps({
-                page: 'RewardDetailPage',
-                postId: id,
-            }); break;
-            case 'collaboration': props.setPageProps({
-                page: 'CollabDetailPage',
-                postId: id,
-            }); break;
-            case 'normal': props.setPageProps({
-                page: 'NoteDetailPage',
-                noteId: id,
-            }); break;
-        }
-
-    }
     const antIcon = (
         <LoadingOutlined
             style={{

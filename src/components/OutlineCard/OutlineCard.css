@@ -23,6 +23,7 @@
     
 }
 .OutlineCard__Content__Outer__Post{
+    cursor: pointer;
     position: relative;
     height: 100%;
     width: 100%;
@@ -103,9 +104,22 @@
     background-color: #FFF; 
 }
 .OutlineCard__Sider__Footer__Post{
-    
     position: relative;
+    width: inherit;
     background-color: #FFF; 
+    padding-bottom:24px;
+    padding-right:0;
+    padding-top:0;
+    padding-left:13px
+   
+}
+.OutlineCard__Sider__Footer__Fir__Post{
+    position: relative;
+    width:100%
+}
+.OutlineCard__Sider__Footer__Buy__Post{
+    align-content: left;      
+    
 }
 
 .OutlineCard__Layout__Outer__Note{
@@ -137,6 +151,7 @@
 
 }
 .OutlineCard__Content__Outer__Note{
+    cursor: pointer;
     position: relative;
     height: 100%;
     width: 100%;
@@ -231,8 +246,23 @@
     width: inherit;
 }
 .OutlineCard__Sider__Footer__Note{
+    position: relative;
+    width: inherit;
     background-color: #FFF; 
+    padding-bottom:24px;
+    padding-right:0;
+    padding-top:0;
+    padding-left:20px
+}
+.OutlineCard__Sider__Footer__Fir__Note{
+    position: relative;
+    width:100%
+}
+.OutlineCard__Sider__Footer__Buy__Note{
+    align-content: left;      
+    
 }
 .OutlineCard__Sider__Footer__Icon__Note{
+    
    cursor: pointer;
 }

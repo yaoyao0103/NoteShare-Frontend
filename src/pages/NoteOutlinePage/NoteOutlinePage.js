@@ -23,6 +23,7 @@ function NoteOutlinePage(props) {
                         'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
                       }
                 }).then((res) => {
+                    console.log(res.data.search)
                     setNote(oldArray => [...oldArray, res.data.search]);
                     props.setLoading(false)
                 });
@@ -37,40 +38,8 @@ function NoteOutlinePage(props) {
         }
         setNote([])
         getNoteById();
-        //console.log('2222');
     }, [props]);
-    // useEffect(() => {
-    //     props.setLoading(true)
-    //     async function getNoteById() {
-    //         try {
-    //             const haveNormal= true;
-    //             const sortBy=sortMode;
-            
-    //             await axios.get('http://localhost:8080/search/note/'+ String(props.pageNumber-1) + '/10?keyword='+(props.keyword?props.keyword:'')+'&department='+(props.department?props.department:'')+'&subject='+(props.subject?props.subject:'')+'&haveNormal=true&haveCollaboration=true&sortBy='+sortBy,{
-    //                 headers: {
-    //                     'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
-    //                   }
-    //             }).then((res) => {
-    //                 setNote(oldArray => [...oldArray=[], res.data.search]);
-    //                 //window.scrollTo(0, 0);
-    //                 props.setLoading(false)
-    //                 //console.log(pageNumber);
 
-    //             });
-
-    //         } catch (error) {
-    //             //console.log(error.message);
-    //             message.error("Server Error! Please try again later. (Get note Error)")
-    //             setNote(error.message);
-
-
-    //         }
-    //     }
-    //     //console.log(pageNumber-1);
-    //     getNoteById();
-    //     //console.log('1111');
-        
-    // }, [sortMode]);
 
     return (
         <>
