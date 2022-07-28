@@ -37,7 +37,7 @@ const FileManager = (props) => {
                 .then(folderRes => {
                     console.log(folderRes.data.res)
                     setFiles(folderRes.data.res)
-                    setPosts([{ folderName: 'My QnA Posts', value: 'QA' }, { folderName: 'My Reward Posts', value: 'reward' }, { folderName: 'My Collaboration Notes', value: 'collaboration' }])
+                    setPosts([{ folderName: 'My QA Posts', value: 'QA' }, { folderName: 'My Reward Posts', value: 'reward' }, { folderName: 'My Collaboration Notes', value: 'collaboration' }])
                     props.setLoading(false)
                 })
                 .catch(err => {

@@ -88,7 +88,7 @@ const PageDetailContentTemplate = (props) => {
                 }
             }
         }
-        else if (props.page == "CollabDetailPage" && props.data) {
+        else if (props.page === "CollabDetailPage" && props.data) {
             const noteId = props.data.answers[0];
             setNoteId(noteId);
             setType("collaboration")
@@ -163,7 +163,7 @@ const PageDetailContentTemplate = (props) => {
             //if(isManager) setPoppedContent( props.data.wantEnterUsersEmail );
             //if(isManager) setPoppedContent( props.data.collabApply );
         }
-        else if (props.page == "RewardDetailPage") {
+        else if (props.page === "RewardDetailPage") {
             setType("reward")
             if(props.data?.answersUserObj?.length > 0){
                 for(let i = 0; i < props.data?.answersUserObj?.length; i++){
@@ -178,7 +178,7 @@ const PageDetailContentTemplate = (props) => {
                 setIsAuthor(true)
             }
         }
-        else if (props.page == "QnADetailPage") {
+        else if (props.page === "QnADetailPage") {
             setType("QA")
             setIsPublic(props.data?.public)
             setAuthorEmail(props.data?.author)
@@ -193,7 +193,7 @@ const PageDetailContentTemplate = (props) => {
     }, [props.data])
 
     useEffect(()=>{
-        if(bestNum==1 && props.data?.referenceNumber==0){
+        if(bestNum===1 && props.data?.referenceNumber===0){
             setIsAnswered(true);
         }
     },[bestNum])

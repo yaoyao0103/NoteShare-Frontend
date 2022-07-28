@@ -545,7 +545,7 @@ const OuterPage = () => {
                         page: 'QnAOutlinePage'
                     })
                 }}>
-                    QnAOutlinePage
+                    QAOutlinePage
                 </Button>
                 <Button type="primary" onClick={() => {
                     setPageProps({
@@ -553,7 +553,7 @@ const OuterPage = () => {
                         page: 'QnADetailPage'
                     })
                 }}>
-                    QnADetailPage
+                    QADetailPage
                 </Button>
                 <Button type="primary" onClick={() => {
                     setPageProps({
@@ -563,7 +563,7 @@ const OuterPage = () => {
                         page: 'QnAEditPage'
                     })
                 }}>
-                    QnAEditPage
+                    QAEditPage
                 </Button>
                 <Button type="primary" onClick={() => {
                     setPageProps({
@@ -572,7 +572,7 @@ const OuterPage = () => {
                         page: 'QnANewPage'
                     })
                 }}>
-                    QnANewPage
+                    QANewPage
                 </Button>
 
                 <Button type="primary" onClick={() => {

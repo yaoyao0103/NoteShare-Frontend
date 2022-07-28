@@ -76,7 +76,7 @@ const SearchBar = (props) => {
           <TabPane className="navSearchBar__AdvancedSearch__Tab__Pane" tab={<Text color='black' cls='Small' content={"Reward"} fontSize={"14"} display="inline-block" />} key="3">
             <AdvancedSearch  setPageProps={props.setPageProps} type={"reward"} className="navSearchBar__AdvancedSearch__Tab__Items"/>
           </TabPane>
-          <TabPane className="navSearchBar__AdvancedSearch__Tab__Pane" tab={<Text color='black' cls='Small' content={"QnA"} fontSize={"14"} display="inline-block" />} key="4">
+          <TabPane className="navSearchBar__AdvancedSearch__Tab__Pane" tab={<Text color='black' cls='Small' content={"QA"} fontSize={"14"} display="inline-block" />} key="4">
             <AdvancedSearch setPageProps={props.setPageProps} type={"QnA"} className="navSearchBar__AdvancedSearch__Tab__Items"/>
           </TabPane>
           {/* <TabPane className="navSearchBar__AdvancedSearch__Tab__Pane" tab={<Text color='black' cls='Small' content={"Folder"} fontSize={"14"} display="inline-block" />} key="5">

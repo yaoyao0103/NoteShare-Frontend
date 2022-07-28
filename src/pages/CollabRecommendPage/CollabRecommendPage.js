@@ -22,7 +22,7 @@ function CollabRecommendPage(props) {
                         'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
                       }
                 }).then((res) => {
-
+                    //console.log(res.data.res)
                     setCollab(oldArray => [...oldArray, res.data.res]);
                     props.setLoading(false);
                 });

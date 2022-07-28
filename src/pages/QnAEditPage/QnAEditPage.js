@@ -24,7 +24,7 @@ function QnAEditPage(props){
                 console.log(err)
             })
         }
-        if(props.action=="edit"){
+        if(props.action==="edit"){
             getQnAById();
         }
         

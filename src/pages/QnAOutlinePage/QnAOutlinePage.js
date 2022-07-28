@@ -35,32 +35,7 @@ function QnAOutlinePage(props) {
         setQnA([])
         getQnAById();
     }, [props]);
-    // useEffect(() => {
-    //     props.setLoading(true)
-    //     async function getQnAById() {
-    //         try {
-
-    //             const sortBy = sortMode;
-
-    //             await axios.get('http://localhost:8080/search/post/' + String(props.pageNumber - 1) + '/20?keyword=' + (props.keyword ? props.keyword : '') + '&department=' + (props.department ? props.department : '') + '&subject=' + (props.subject ? props.subject : '') + '&haveQA=' + true + '&sortBy=' + sortBy,{
-    //                 headers: {
-    //                     'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
-    //                   }
-    //             }).then((res) => {
-    //                 setQnA(oldArray => [...oldArray, res.data.search]);
-                   
-    //                 //window.scrollTo(0, 0);
-    //                 props.setLoading(false)
-    //             });
-
-    //         } catch (error) {
-    //             message.error("Server Error! Please try again later. (Get Reward Post Error)")
-    //             setQnA(error.message);
-    //         }
-    //     }
-    //     setQnA([])
-    //     getQnAById();
-    // }, [sortMode]);
+   
 
     return (
         <>
