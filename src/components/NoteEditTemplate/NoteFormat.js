@@ -40,7 +40,7 @@ export const VersionFormat = {
     content: [],
     picURL: [],
     fileURL: [],
-    temp: true
+    temp: false
 }
 
 export const ContentFormat = {

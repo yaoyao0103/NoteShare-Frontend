@@ -113,10 +113,22 @@ const OptionMenu = (props) => {
       }
     })
       .then(res => {
-        if (!res.data.res.temp)
+        if (!res.data.res.temp){
+          let tempVersions = props.versions
+          let tempVersion = tempVersions[index]
+          tempVersion.temp = false;
+          tempVersions[index] = tempVersion
+          props.setVersions([...tempVersions])
           message.success("You set this version public!")
-        else
+        }
+        else{
+          let tempVersions = props.versions
+          let tempVersion = tempVersions[index]
+          tempVersion.temp = true;
+          tempVersions[index] = tempVersion
+          props.setVersions([...tempVersions])
           message.success("You set this version private!")
+        }
       })
       .catch(err => {
         message.error("Server Error! Please try again later. (Set Version Public/Private Error)")
@@ -431,16 +443,23 @@ const OptionMenu = (props) => {
     <Menu items={
       [
         {
-          label: (<a onClick=
+          label: (
+            props.rewardIsEnd?
+            <Tooltip title={"You can't access the post because the reward is over."}>
+              <a style={{cursor: "not-allowed", opacity: 0.5, textDecoration:"none"}}>Goto Reward Post</a>
+            </Tooltip>
+          :
+          <a onClick=
             {() => {
               props.setPageProps({
                 postId: props.postId,
                 page: 'RewardDetailPage'
               })
             }}
-          >Goto Reward Post</a>),
+          >Goto Reward Post</a>
+          ),
           key: "1",
-          icon: <EyeOutlined />
+          icon: <EyeOutlined />,
         },
       ]
     } />
@@ -898,7 +917,8 @@ const OptionMenu = (props) => {
           icon: <EditOutlined />
         },
         {
-          label: props.versions[props.index]?.isTemp ? (<a >Set Private</a>) : (<a >Set Public</a>),
+          
+          label: !props.versions[props.index]?.temp ? (<a onClick={() => versionPublish(props.index)}>Set Private</a>) : (<a onClick={() => versionPublish(props.index)}>Set Public</a>),
           key: "2",
           icon: <EyeOutlined />
         }]
@@ -1104,7 +1124,7 @@ const OptionMenu = (props) => {
         ></Dropdown.Button>
       </Space>
       <Drawer title={"Version"} placement="right" onClose={onClose} visible={visible}>
-        <VersionArea page={'NoteDetailPageVersion'} id={props.id} versions={props.versions} setVersion={props.setVersion} isAuthor={props.isAuthor} />
+        <VersionArea page={'NoteDetailPageVersion'} id={props.id} versions={props.versions} setVersions={props.setVersions} setVersion={props.setVersion} isAuthor={props.isAuthor} />
       </Drawer>
       <Modal title="Notification" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
         You have selected all best/reference answers. Would you want to delete this reward post now?

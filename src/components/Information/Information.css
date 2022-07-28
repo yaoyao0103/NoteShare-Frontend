@@ -20,6 +20,6 @@
     margin-bottom: 2em;
 }
 
-.information__RefPrice , .information__Price{
+.information__RefPrice , .information__Price, .information__Downloadable{
     text-align: right;
 }

@@ -39,7 +39,7 @@ const PageDetailContentTemplate = (props) => {
     const [manager, setManager] = useState('')
     const [haveApplied, setHaveApplied] = useState(null)
     const [isPublic, setIsPublic] = useState(false)
-    const [isNotePublic, setIsNotePublic] = useState(false)
+    const [isNotePublic, setIsNotePublic] = useState(null)
     const [authorEmail, setAuthorEmail] = useState('')
     const [noteType, setNoteType] = useState(null)
     const [isSubmit, setIsSubmit] = useState(false)
@@ -53,6 +53,7 @@ const PageDetailContentTemplate = (props) => {
     const [visible, setVisible] = useState(false);
     const [type, setType] = useState('')
     const [publishDate, setPublishDate] = useState('')
+    const [rewardIsEnd, setRewardIsEnd] = useState(false)
 
     useEffect(() => {
        
@@ -70,6 +71,7 @@ const PageDetailContentTemplate = (props) => {
             if (props.data?.type == 'reward') {
                 console.log("props.data?.submit", props.data)
                 if (props.data?.submit) setIsSubmit(true)
+                if(props.data?.best || props.data?.reference) setRewardIsEnd(true)
             }
             if (props.data?.headerUserObj.userObjEmail == tempEmail) setIsAuthor(true)
             else setIsAuthor(false)
@@ -489,6 +491,7 @@ const PageDetailContentTemplate = (props) => {
                                         vote={props.data?.voteUserObj}
                                         publishDate={publishDate}
                                         type={type}
+                                        rewardIsEnd={rewardIsEnd}
                                     /></div>
 
                             </Col>

@@ -233,7 +233,7 @@ const CollabNoteEditPage = (props) => {
     const showDrawer = (type) => {
         switch(type){
             case 'version':  
-                setDrawer(<VersionArea page={'NoteEditPageVersion'} versions={versions} setVersion={setVersion}/>);
+                setDrawer(<VersionArea page={'NoteEditPageVersion'} id={note.id} versions={versions} setVersions={setVersions} setVersion={setVersion}/>);
                 setDrawerPlacement('right'); 
                 setDrawerTitle('Version')
                 break;
@@ -283,7 +283,19 @@ const CollabNoteEditPage = (props) => {
     }
     const noteFinish = async () => {
         if(props.isManager){
-            setStep(2);
+            axios.put(`http://localhost:8080/note/tag/wordSuggestion/${note.id}`, {}, {
+            headers: {
+                'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+              }
+        })
+            .then(res => {
+                console.log("suggestive tag: ", res)
+                setRecommendTag(res.data.generatedTags)
+                setStep(2);
+            })
+            .catch (err => {
+                console.log(err)
+            })  
         }
         else{
             // end
