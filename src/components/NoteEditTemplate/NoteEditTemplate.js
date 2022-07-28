@@ -14,10 +14,10 @@ import MyEditor from '../MyEditor/MyEditor';
 import { NoteFormat, VersionFormat, ContentFormat } from './NoteFormat';
 import axios from '../axios/axios';
 import VersionArea from '../VersionArea/VersionArea';
-import { editor } from '../../api_utils/geditor_config';
 import moment from 'moment';
 import Cookie from '../../components/Cookies/Cookies';
 import { Base64 } from 'js-base64';
+import { editor } from '../../api_utils/geditor_config';
 
 const { Header, Content, Sider, Footer } = Layout;
 const { Step } = Steps;
@@ -53,6 +53,10 @@ const NoteEditTemplate = (props) => {
 
     const { pageStore } = useSelector((state) => state);
     const { pages } = pageStore;
+
+    /*useEffect(()=>{
+        if(editor) editor.setPreviewMode()
+    },[editor])*/
 
     useEffect(() => {
         

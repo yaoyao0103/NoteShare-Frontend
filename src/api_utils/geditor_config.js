@@ -33,7 +33,7 @@ import tailwindComponent from "../plugins/tailwind";
 import codeComponent from "../plugins/code";
 import tUIImageEditor from "../plugins/tUIImageEditor";
 
-export let editor;
+export var editor = null;
 
 async function geditorConfig(assets, noteId, version, isCollab, email, username, avatar, setQueue){
   $(".panel__devices").html("");
@@ -127,6 +127,9 @@ async function geditorConfig(assets, noteId, version, isCollab, email, username,
     mainContent.addClass("main-content");
     panelTopBar.removeClass("d-none");
   });
+
+  //editor.stopCommand("sw-visibility");
+  editor.getModel().stopDefault()
 
   setTimeout(() => {
     let categories = editor.BlockManager.getCategories();
