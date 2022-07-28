@@ -207,7 +207,7 @@ function ProfilePage(props) {
             }).then(res => {
                 //setProfile(content);
                 setIsBell(false);
-                message.success('You turned on the bell of ' + user.name + " !");
+                message.success('You turned off the bell of ' + user.name + " !");
             }).catch((error) => {
                 message.error("Server Error! Please try again later. (Turn On The Bell Error)")
                 console.log(error.response.error);
@@ -221,7 +221,7 @@ function ProfilePage(props) {
             }).then(res => {
                 //setProfile(content);
                 setIsBell(true);
-                message.success('You turned off the bell of ' + user.name + " !");
+                message.success('You turned on the bell of ' + user.name + " !");
             }).catch((error) => {
                 message.error("Server Error! Please try again later. (Turn Off The Bell Error)")
                 console.log(error.response.error);

@@ -136,7 +136,7 @@ const OuterPage = () => {
         let tempEmail = cookieParser.getCookieByName('email');
         tempEmail = Base64.decode(tempEmail);
         let tempRing = ringNumber
-        axios.get("http://localhost:8080/bellBy/" + tempEmail, {
+        axios.get("http://localhost:8080/bell/" + tempEmail, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
             }
