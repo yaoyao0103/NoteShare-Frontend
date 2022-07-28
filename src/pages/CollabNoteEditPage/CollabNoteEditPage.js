@@ -13,7 +13,7 @@ import VersionArea from '../../components/VersionArea/VersionArea';
 import { editor } from '../../api_utils/geditor_config';
 import Cookie from '../../components/Cookies/Cookies';
 import { Base64 } from 'js-base64';
-
+import moment from 'moment';
 
 const { Header, Content, Sider, Footer } = Layout;
 const { Step } = Steps;
@@ -107,9 +107,15 @@ const CollabNoteEditPage = (props) => {
             <>
                 <List
                     dataSource={versions}
-                    renderItem={(item, index) => (index !=0 && <List.Item className='versionItem' onClick={()=>saveVersion(index)}><span>{item.name}</span></List.Item>)}
+                    renderItem={(item, index) => (index !=0 && 
+                        <Tooltip placement='left' title={moment(item.date).format('YYYY-MM-DD HH:mm:ss')}>
+                            <List.Item className='versionItem' onClick={()=>saveVersion(index)}><span>{item.name}</span></List.Item>
+                        </Tooltip>
+                    )}
                 />
-                <List.Item className='newVersion'><Input placeholder="New Version" onPressEnter={(ev) => newVersion(ev.target.value)}/></List.Item>
+                {versions.length < 6 &&
+                    <List.Item className='newVersion'><Input placeholder="New Version" onPressEnter={(ev) => newVersion(ev.target.value)}/></List.Item>
+                }
             </>
         )
     },[versions])
@@ -500,13 +506,32 @@ const CollabNoteEditPage = (props) => {
                 }
                 {step==1 &&
                     <Footer className="collabNoteEditPage__Footer">
-                        <div className="collabNoteEditPage__Footer__Button" onClick={noteFinish}>
-                            {props.isManager? 
-                            <Button color={"purple"}><Text color='white' cls='Large' content={"Next"} fontSize='17' display="inline-block" /></Button>
+                        {props.isManager? 
+                            (versions.length==1?
+                                <Tooltip title={"You have to create a version first!"}>  
+                                    <div className="collabNoteEditPage__Footer__Button">
+                                        <Button color={"purple--disabled"}><Text color='white' cls='Large' content={"Next"} fontSize='17' display="inline-block" /></Button>
+                                    </div>
+                                </Tooltip>
                             :
-                            <Button color={"purple"}><Text color='white' cls='Large' content={"Finish"} fontSize='17' display="inline-block" /></Button>
-                            }
-                        </div>
+                            <div className="collabNoteEditPage__Footer__Button" onClick={noteFinish}>
+                                <Button color={"purple"}><Text color='white' cls='Large' content={"Next"} fontSize='17' display="inline-block" /></Button>
+                            </div>
+                            )
+                            :
+                            (versions.length==1?
+                                <Tooltip title={"You have to create a version first!"}>  
+                                    <div className="collabNoteEditPage__Footer__Button" onClick={noteFinish}>
+                                        <Button color={"purple--disabled"}><Text color='white' cls='Large' content={"Finish"} fontSize='17' display="inline-block" /></Button>
+                                    </div>
+                                </Tooltip>
+                            :
+                            <div className="collabNoteEditPage__Footer__Button" onClick={noteFinish}>
+                                <Button color={"purple"}><Text color='white' cls='Large' content={"Finish"} fontSize='17' display="inline-block" /></Button>
+                            </div>
+                            )
+                        }
+
                         <Popover 
                             content={popoverContent} 
                             title={<Text color='black' cls='Small' content={"Choose a version to save"} fontSize='17' display="inline-block" />}
