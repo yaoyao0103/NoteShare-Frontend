@@ -29,10 +29,7 @@ function OutlineCard(props) {
     const QnASider = (
         <>{props.mode === 'Post' &&
             < Sider onClick={props.onClick} className={"OutlineCard__Sider__Outer" + '__' + props.mode} width='35%' >
-                <Layout className={"OutlineCard__Sider__Inner__Layout" + '__' + props.mode}>
-
-                    <Content className={"OutlineCard__Sider__Inner__Content" + '__' + props.mode}>
-
+               
 
                         <Row className={"OutlineCard__Sider__First__Row" + '__' + props.mode}>
                             <Col className={"OutlineCard__Sider__Department" + '__' + props.mode} span={18}>
@@ -64,20 +61,9 @@ function OutlineCard(props) {
                                 </Col>
                             </Row>
                         }
-                    </Content>
-                    <Footer className={"OutlineCard__Sider__Footer" + '__' + props.mode}>
-                        <Row>
-                            <Col span={18}>
-                            </Col>
-                            <Col span={6}>
-                                <LikeOutlined style={{
-                                    fontSize: '26px',
-                                }} size={'large'} />
-                            </Col>
-                        </Row>
-
-                    </Footer>
-                </Layout>
+                 
+                   
+             
 
             </Sider >
         }</>
@@ -85,9 +71,7 @@ function OutlineCard(props) {
     const RewardSider = (
         <>{props.mode === 'Post' &&
             < Sider onClick={props.onClick} className={"OutlineCard__Sider__Outer" + '__' + props.mode} width='35%' >
-                <Layout className={"OutlineCard__Sider__Inner__Layout" + '__' + props.mode}>
-
-                    <Content className={"OutlineCard__Sider__Inner__Content" + '__' + props.mode}>
+                
                         <Row className={"OutlineCard__Sider__First__Row" + '__' + props.mode}>
                             <Col className={"OutlineCard__Sider__Department" + '__' + props.mode} span={20}>
                                 <Text cls='Default' fontSize="16" content={props.cardContent.department} />
@@ -120,20 +104,7 @@ function OutlineCard(props) {
                                 <Text cls='Default' fontSize="16" content={'參考解賞金 : ' + props.cardContent.referencePrice} />
                             </Col>
                         </Row>
-                    </Content>
-                    <Footer className={"OutlineCard__Sider__Footer" + '__' + props.mode}>
-                        <Row>
-                            <Col span={18}>
-                            </Col>
-                            <Col span={6}>
-                                <LikeOutlined style={{
-                                    fontSize: '26px',
-                                }} size={'large'} />
-                            </Col>
-                        </Row>
-
-                    </Footer>
-                </Layout>
+                   
 
             </Sider >
         }</>
@@ -141,9 +112,7 @@ function OutlineCard(props) {
     const CollabSider = (
         <>{props.mode === 'Post' &&
             < Sider onClick={props.onClick} className={"OutlineCard__Sider__Outer" + '__' + props.mode} width='35%' >
-                <Layout className={"OutlineCard__Sider__Inner__Layout" + '__' + props.mode}>
-
-                    <Content className={"OutlineCard__Sider__Inner__Content" + '__' + props.mode}>
+              
                         <Row className={"OutlineCard__Sider__First__Row" + '__' + props.mode}>
                             <Col className={"OutlineCard__Sider__Department" + '__' + props.mode} span={20}>
                                 <Text cls='Default' fontSize="16" content={props.cardContent.department} />
@@ -164,20 +133,7 @@ function OutlineCard(props) {
                                 <Text cls='Default' fontSize="16" content={'教授 : ' + props.cardContent.professor} />
                             </Col>
                         </Row>
-                    </Content>
-                    <Footer className={"OutlineCard__Sider__Footer" + '__' + props.mode}>
-                        <Row>
-                            <Col span={18}>
-                            </Col>
-                            <Col span={6}>
-                                <LikeOutlined style={{
-                                    fontSize: '26px',
-                                }} size={'large'} />
-                            </Col>
-                        </Row>
-
-                    </Footer>
-                </Layout>
+                   
             </Sider >
         }</>
     );
