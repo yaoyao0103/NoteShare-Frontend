@@ -417,6 +417,7 @@ const FileManager = (props) => {
                     label: (
                         <Link to={'/CollabEditPage/new/0'} style={{ textDecoration: "none" }}>Collaboration Note</Link>
                     ),
+                    disabled: true
                 }
             ]}
         />

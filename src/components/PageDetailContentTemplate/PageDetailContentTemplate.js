@@ -271,7 +271,7 @@ const PageDetailContentTemplate = (props) => {
     }
 
     const apply = (content) => {
-        message.success("apply")
+        //message.success("apply")
         const data = {
             wantEnterUsersEmail: email,
             commentFromApplicant: content
@@ -297,30 +297,38 @@ const PageDetailContentTemplate = (props) => {
         let name = cookieParser.getCookieByName('name');
         let avatar = cookieParser.getCookieByName('avatar');
         let success = false;
-        axios.put(`http://localhost:8080/coin/note/${email}/${props.noteId}`,{},{
-            headers: {
-                'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
-              }
-        })
-            .then(res => {
-                console.log(res.data.res)
-                message.success("You bought this note!")
-                setIsBuyer(true);
-                if(props.data.type==='normal')
-                props.sendPrivateMessage(
-                    name + ' has bought your note !',
-                    'note',
-                    email,
-                    name,
-                    avatar,
-                    props.noteId,
-                    props.data.headerEmail
-                )
+        if(email){
+            axios.put(`http://localhost:8080/coin/note/${email}/${props.noteId}`,{},{
+                headers: {
+                    'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+                  }
             })
-            .catch(err => {
-                message.error("Server Error! Please try again later. (Buy Note Error)")
-                console.log(err)
+                .then(res => {
+                    console.log(res.data.res)
+                    message.success("You bought this note!")
+                    setIsBuyer(true);
+                    if(props.data.type==='normal')
+                    props.sendPrivateMessage(
+                        name + ' has bought your note !',
+                        'note',
+                        email,
+                        name,
+                        avatar,
+                        props.noteId,
+                        props.data.headerEmail
+                    )
+                })
+                .catch(err => {
+                    message.error("Server Error! Please try again later. (Buy Note Error)")
+                    console.log(err)
+                })
+        }
+        else{
+            message.warn("You have to log in first!")
+            props.setPageProps({
+                page: "LoginPage"
             })
+        }
       
     }
 
@@ -498,7 +506,7 @@ const PageDetailContentTemplate = (props) => {
                                     likeCount={props.data?.likeCount}
                                     favoriteCount={props.data?.favoriteCount}
                                     unlockCount={props.data?.unlockCount}
-                                    bestPrice={props.data?.bestPrice}
+                                    bestPrice={props.data?.bestPrice? props.data?.bestPrice:props.data?.price}
                                     referencePrice={props.data?.referencePrice}
                                     remainBest={1-bestNum}
                                     remainRef={props.data?.referenceNumber}
@@ -605,7 +613,7 @@ const PageDetailContentTemplate = (props) => {
                 {/* Sider */}
                 {(props.page != 'NoteDetailPage' && props.page != 'CollabDetailPage') &&
                     <>
-                        <Sider id="contentTemplate__Comment" className="contentTemplate__Comment" width='40%'>
+                        <Sider id="contentTemplate__Comment" className="contentTemplate__Comment" width={props.page=="RewardDetailPage"? '50%':'40%'}>
                             <CommentArea type="post" page={props.page} comments={props.data?.commentsUserObj ? props.data.commentsUserObj : []} id={props.postId} isArchive={isArchive} isAuthor={isAuthor} authorEmail={authorEmail} />
                         </Sider>
                     </>
@@ -614,10 +622,10 @@ const PageDetailContentTemplate = (props) => {
             {/* Popped up Part */}
             <div className={poppedContentShow && 'popped__blur'}></div>
             <div className={`${props.page != 'CollabDetailPage' ? 'popped__Answer' : 'popped__Apply'} ${poppedContentShow && 'popped--show'}`} >
-                <PoppedContent email={email} sendPrivateMessage={props.sendPrivateMessage} page={props.page} content={poppedContent} apply={apply} setPoppedContentShow={setPoppedContentShow} isAuthor={isAuthor} isManager={isManager} postId={props.postId} haveApplied={haveApplied} setHaveApplied={setHaveApplied} refreshAnswer={refreshAnswer}/>
+                <PoppedContent email={email} sendPrivateMessage={props.sendPrivateMessage} page={props.page} content={poppedContent} apply={apply} setPoppedContentShow={setPoppedContentShow} isAuthor={isAuthor} isManager={isManager} postId={props.postId} haveApplied={haveApplied} setHaveApplied={setHaveApplied} refreshAnswer={refreshAnswer} setPageProps={props.setPageProps}/>
             </div>
 
-            <Modal title="Kick User" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+            <Modal title="Kick User Vote" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
                 <DatePicker onChange={onDateChange} />
                 <Select
                     onChange={onKickUserChange}
@@ -634,10 +642,12 @@ const PageDetailContentTemplate = (props) => {
                 </Select>
             </Modal>
 
-            <div className='note__CommentAreaButton' onClick={showDrawer}>
-                <div className='note__CommentAreaButton__Title'>Comment</div>
-                <CaretLeftFilled />
-            </div>
+            {(props.page=="NoteDetailPage" || props.page=="CollabDetailPage")&&
+                <div className='note__CommentAreaButton' onClick={showDrawer}>
+                    <div className='note__CommentAreaButton__Title'>Comment</div>
+                    <CaretLeftFilled />
+                </div>
+             }
 
             <Drawer title={"Comment"} placement="right" onClose={onClose} visible={visible}>
                 <CommentArea page={props.page} type="note" comments={props.data?.commentsUserObj ? props.data.commentsUserObj : []} id={props.postId ? props.postId : props.noteId} />

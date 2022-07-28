@@ -458,7 +458,7 @@ const CollabNoteEditPage = (props) => {
                     {step==2 &&
                         <div className='collabNoteEditPage__Content__Tags'>
                             <div className='collabNoteEditPage__Content__Tag collabNoteEditPage__Content__RecommendTag'>
-                                <Text color='black' cls='Small' content={"Recommend Tags"} fontSize='20' display="inline-block" />
+                                <Text color='black' cls='Small' content={"Recommended Tags"} fontSize='20' display="inline-block" />
                                 <Select
                                     dropdownClassName="collabNoteEditPage__Content__Tag__List"
                                     defaultValue={recommendTag}

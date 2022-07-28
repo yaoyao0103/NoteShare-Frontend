@@ -277,20 +277,28 @@ const OptionMenu = (props) => {
   }
 
   const favorite = () => {
-    axios.put(`http://localhost:8080/favorite/note/${props.id}/${props.email}`,{}, {
-      headers: {
-        'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
-      }
-    })
-      .then(res => {
-        message.success("You set the note as favorite!")
-        props.setIsFavoriter(true)
-        // Todo: remove applicant from list
+    if(props.email){
+      axios.put(`http://localhost:8080/favorite/note/${props.id}/${props.email}`,{}, {
+        headers: {
+          'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+        }
       })
-      .catch(err => {
-        message.error("Server Error! Please try again later. (Set As Favorite Error)")
-        console.log(err)
+        .then(res => {
+          message.success("You set the note as favorite!")
+          props.setIsFavoriter(true)
+          // Todo: remove applicant from list
+        })
+        .catch(err => {
+          message.error("Server Error! Please try again later. (Set As Favorite Error)")
+          console.log(err)
+        })
+    }
+    else{
+      message.warn("You have to log in first!")
+      props.setPageProps({
+          page: "LoginPage"
       })
+    }
   }
 
   const unfavorite = () => {
@@ -499,7 +507,7 @@ const OptionMenu = (props) => {
             {() => {
               showDrawer();
             }}
-          >Manage Version</a>),
+          >View All Versions</a>),
           key: "3",
           icon: <InfoCircleOutlined />
         },
