@@ -30,7 +30,7 @@ function NavButton(props) {
         Collab: false,
       });
       props.setPageProps({ page: 'RewardRecommendPage', pageNumber: 1,sortMode:'date'});
-    } else if (e.target.innerText === 'QnA') {
+    } else if (e.target.innerText === 'QA') {
       setShowing({
         PersonalPage: false,
         Reward: false,
@@ -107,7 +107,7 @@ function NavButton(props) {
     <div id="navButton" className="navButton" >
       <Button type='text' className='button__first' value='PersonalPage' id={`button${Showing.PersonalPage ? '--active' : ''}`} onClick={onClick}>Personal Page</Button>
       <Button type='text' className='button__second' value='RewardOutlinePage' id={`button${Showing.Reward ? '--active' : ''}`} onClick={onClick}>Reward</Button>
-      <Button type='text' className='button__third' value='QnAOutlinePage' id={`button${Showing.QnA ? '--active' : ''}`} onClick={onClick}>QnA</Button>
+      <Button type='text' className='button__third' value='QnAOutlinePage' id={`button${Showing.QnA ? '--active' : ''}`} onClick={onClick}>QA</Button>
       <Button type='text' className='button__forth' value='CollabOutlinePage' id={`button${Showing.Collab ? '--active' : ''}`} onClick={onClick}>Collab</Button>
     </div>
   );

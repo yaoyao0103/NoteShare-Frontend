@@ -13,6 +13,7 @@
     "bootstrap": "^5.1.1",
     "devextreme": "21.2.8",
     "devextreme-react": "21.2.8",
+    "grapesjs": "^0.17.22",
     "grapesjs-blocks-basic": "^0.1.8",
     "grapesjs-blocks-bootstrap4": "^0.2.3",
     "grapesjs-clot": "^0.18.698",

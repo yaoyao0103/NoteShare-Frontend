@@ -72,6 +72,7 @@
     margin-left:10%;
     margin-right:3%;
 }
+
 .OutlineCard__Paragraph__Post{
     position: relative;
     font-size: 18px;
@@ -81,16 +82,31 @@
 .OutlineCard__Sider__Outer__Post{
     position: relative;
     height: 100%;
-    
+    width: 100%;
     background-color: #FFF; 
 }
 .OutlineCard__Sider__First__Row__Post,.OutlineCard__Sider__Sec__Row__Post,.OutlineCard__Sider__Third__Row__Post,.OutlineCard__Sider__Fourth__Row__Post,.OutlineCard__Sider__Fifth__Row__Post{
     position: relative;
-    padding-top:8%;
+    padding-top:6%;
     padding-left: 5%;
 }
-
-
+.OutlineCard__Sider__Inner__Layout__Post{
+    position: relative;
+    height: inherit;
+    width: inherit;
+    background-color: #FFF; 
+}
+.OutlineCard__Sider__Inner__Content__Post{
+    position: relative;
+    height: inherit;
+    width: inherit;
+    background-color: #FFF; 
+}
+.OutlineCard__Sider__Footer__Post{
+    
+    position: relative;
+    background-color: #FFF; 
+}
 
 .OutlineCard__Layout__Outer__Note{
     position:relative;
@@ -202,5 +218,19 @@
     font-family: 'Poppins', sans-serif;
     font-weight: 200;
 }
-
+.OutlineCard__Sider__Inner__Layout__Note{
+    position: relative;
+    height: inherit;
+    width: inherit;
+    background-color: #FFF; 
+}
+.OutlineCard__Sider__Inner__Content__Note{
+    position: relative;
+    height: inherit;
+    background-color: #FFF; 
+    width: inherit;
+}
+.OutlineCard__Sider__Footer__Note{
+    background-color: #FFF; 
+}
 

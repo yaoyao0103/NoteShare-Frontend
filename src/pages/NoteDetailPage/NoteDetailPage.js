@@ -28,7 +28,7 @@ function NoteDetailPage(props){
                 console.log(err)
             })
         }
-        console.log("--------------------")
+        //console.log("--------------------")
         getNoteById();
         }, [props]);
     return(

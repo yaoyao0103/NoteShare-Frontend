@@ -158,7 +158,7 @@ const PostEditTemplate = (props) => {
             QnAFormat.bestPrice = information.bestPrice
             QnAFormat.content = content
             data = QnAFormat
-            msg = ' has posted a Q&A'
+            msg = ' has posted a QA'
             type = 'QnADetailPage'
         }
         else if (props.type == 'reward') {

@@ -40,7 +40,7 @@ function Ring(props) {
             setRingList(oldArray=> [...oldArray.slice(0,0) ])
             for (let i = 0; i < props.ringList.length; i++) {
                 let type=props.ringList[i].type
-                
+                console.log('i:',i,props.ringList[i])
                 if(props.ringList[i].type==='note'||props.ringList[i].type==='normal'){
                     type='NoteDetailPage';
                 }
@@ -56,7 +56,7 @@ function Ring(props) {
 
                 let tempItem = {
                     label: (
-                        <>  <Row onClick={() => props.setPageProps({ page: type, noteId: props.ringList[i].id, postId: props.ringList[i].id, email: props.ringList[i].userObj.userObjEmail })}>
+                        <>  <Row onClick={() => {if(props.ringList[i].userObj.userObjEmail!=='noteshare@gmail.com')props.setPageProps({ page: type, noteId: props.ringList[i].id, postId: props.ringList[i].id, email: props.ringList[i].userObj.userObjEmail })}}>
                             <Col span={5} className={"Ring__Icon"}>
                                 {/* <ExclamationCircleOutlined /> */}
                                 <Avatar className={"Ring__Avatar"} size={36} src={props.ringList[i].userObj.userObjAvatar} ></Avatar>
@@ -112,7 +112,7 @@ function Ring(props) {
                                 <Menu
                                     items={ringList} />
                             )}
-                            overlayStyle={{ width: '300px', maxHeight: '200px', overflowY: 'scroll', overflowX: 'hidden' }}
+                            overlayStyle={{ width: '300px', maxHeight: '230px', overflowY: 'scroll', overflowX: 'hidden' }}
                             trigger='click'
                             placement="bottom"
                             onClick={setUnReadNumZero}
