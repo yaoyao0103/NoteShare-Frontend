@@ -223,13 +223,16 @@ const PostEditTemplate = (props) => {
                         }
                     })
                         .then(versionRes => {
-                            console.log(versionRes.data.res)
+                            props.setPageProps({ page: type, postId: res.data.res.id });
                         })
                         .catch(err => {
                             console.log(err)
                         })
                 }
-                props.setPageProps({ page: 'PersonalPage' });
+                else{
+                    props.setPageProps({ page: type, postId: res.data.res.id });
+                }
+                
             })
             .catch(err => {
                 message.error("Server Error! Please try again later. (Submit Post Error)")

@@ -36,7 +36,7 @@ const NoteEditTemplate = (props) => {
     const [myEditor, setMyEditor] = useState(<></>);
 
     const [tagSelected, setTagSelected] = useState([])
-    const [recommendTag, setRecommendTag] = useState(['OS', 'VM', 'Pagination', 'Virtual machine'])
+    const [recommendTag, setRecommendTag] = useState([])
     //['OS', 'VM', 'Pagination', 'Virtual machine']
 
     const [visible, setVisible] = useState(false);
@@ -159,6 +159,7 @@ const NoteEditTemplate = (props) => {
                 }
             </>
         )
+        setDrawer(<VersionArea page={'NoteEditPageVersion'} id={noteId} versions={versions} setVersions={setVersions} setVersion={setVersion} isAuthor={isAuthor}/>);
     },[versions])
     const customDot = (dot, { status, index }) => (
         <Popover
@@ -313,7 +314,7 @@ const NoteEditTemplate = (props) => {
     const showDrawer = (type) => {
         switch(type){
             case 'version':  
-                setDrawer(<VersionArea page={'NoteEditPageVersion'} versions={versions} setVersion={setVersion} isAuthor={isAuthor}/>);
+                setDrawer(<VersionArea page={'NoteEditPageVersion'} id={noteId} versions={versions} setVersions={setVersions} setVersion={setVersion} isAuthor={isAuthor}/>);
                 setDrawerPlacement('right'); 
                 setDrawerTitle('Version')
                 break;
@@ -375,13 +376,21 @@ const NoteEditTemplate = (props) => {
             })    
     }
     const noteFinish = async () => {
-        /*const res = createPage(title)(dispatch);
-        await res.then( result => {
-            setNoteId(result._id)
-            setEditor(<MyEditor noteId={result._id}/>)
-            }
-        )*/
-        setStep(2);
+
+        axios.put(`http://localhost:8080/note/tag/wordSuggestion/${noteId}`, {}, {
+            headers: {
+                'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+              }
+        })
+            .then(res => {
+                console.log("suggestive tag: ", res)
+                setRecommendTag(res.data.generatedTags)
+                setStep(2);
+            })
+            .catch (err => {
+                console.log(err)
+            })    
+        
         
     }
 
