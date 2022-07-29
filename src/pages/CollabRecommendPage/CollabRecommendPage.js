@@ -17,11 +17,7 @@ function CollabRecommendPage(props) {
         props.setLoading(true);
         async function getCollabById() {
             try {
-                await axios.get('http://localhost:8080/post/hotPosts/' + String(props.pageNumber - 1) + '/20/collaboration',{
-                    headers: {
-                        'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
-                      }
-                }).then((res) => {
+                await axios.get('http://localhost:8080/post/hotPosts/' + String(props.pageNumber - 1) + '/20/collaboration').then((res) => {
                     //console.log(res.data.res)
                     setCollab(oldArray => [...oldArray, res.data.res]);
                     props.setLoading(false);
@@ -31,6 +27,12 @@ function CollabRecommendPage(props) {
                 console.log(error.message);
                 message.error("Server Error! Please try again later. (Get Collaboration Outline Error)")
                 setCollab(error.message);
+                if (error.response.status === 500 || error.response.status === 404){
+                    document.cookie = 'error=true'
+                }
+                else if (error.response.status === 403){
+                    document.cookie = 'error=Jwt'                       
+                }
 
 
             }

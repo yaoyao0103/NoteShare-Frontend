@@ -30,6 +30,12 @@ const Editor = () => {
         setAssets(response.data);
       } catch (error) {
         setAssets(error.message);
+        if (error.response.status === 500 || error.response.status === 404){
+          document.cookie = 'error=true'
+      }
+      else if (error.response.status === 403){
+          document.cookie = 'error=Jwt'                       
+      }
       }
     }
 

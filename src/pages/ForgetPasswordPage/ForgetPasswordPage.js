@@ -50,6 +50,12 @@ function ForgetPasswordPage(props) {
                 // if(error.response.status === 403){
                 //   setRedirectActivate(true);
                 // }
+                if (error.response.status === 500 || error.response.status === 404){
+                    document.cookie = 'error=true'
+                }
+                else if (error.response.status === 403){
+                    document.cookie = 'error=Jwt'                       
+                }
                 setResendFail(true);
             })
             if (res.data.res.activate) {
@@ -78,6 +84,12 @@ function ForgetPasswordPage(props) {
             // if(error.response.status === 403){
             //   setRedirectActivate(true);
             // }
+            if (error.response.status === 500 || error.response.status === 404){
+                document.cookie = 'error=true'
+            }
+            else if (error.response.status === 403){
+                document.cookie = 'error=Jwt'                       
+            }
             setResendFail(true);
         })
 

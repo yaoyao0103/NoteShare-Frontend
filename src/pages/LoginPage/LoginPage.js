@@ -107,6 +107,12 @@ function LoginPage(props) {
                     //console.log(res.data.msg);
                 }).catch((error) => {
                     console.log(error.response.status);
+                    if (error.response.status === 500 || error.response.status === 404){
+                        document.cookie = 'error=true'
+                    }
+                    else if (error.response.status === 403){
+                        document.cookie = 'error=Jwt'                       
+                    }
                 })
 
                 props.setPageProps({ page: 'VerificationPage', email: email });

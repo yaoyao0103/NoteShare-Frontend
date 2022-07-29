@@ -17,11 +17,7 @@ function FolderOutlinePage(props) {
         //console.log(props.headerName)
         async function getFolderById() {
             try {
-                await axios.get('http://localhost:8080/search/folder/' + String(props.pageNumber - 1) + '/20?keyword=' + (props.keyword ? props.keyword : '') + '&creator=' + (props.headerName ? props.headerName : ''),{
-                    headers: {
-                        'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
-                      }
-                }).then((res) => {
+                await axios.get('http://localhost:8080/search/folder/' + String(props.pageNumber - 1) + '/20?keyword=' + (props.keyword ? props.keyword : '') + '&creator=' + (props.headerName ? props.headerName : '')).then((res) => {
                     //console.log(res.data.search);
                     setFolder(oldArray => [...oldArray = [], res.data.search]);
                     props.setLoading(false)
@@ -30,6 +26,12 @@ function FolderOutlinePage(props) {
                 console.log(error.message);
                 message.error("Server Error! Please try again later. (Get Folder Outline Error)")
                 setFolder(error.message);
+                if (error.response.status === 500 || error.response.status === 404){
+                    document.cookie = 'error=true'
+                }
+                else if (error.response.status === 403){
+                    document.cookie = 'error=Jwt'                       
+                }
             }
         }
         getFolderById();
@@ -41,11 +43,7 @@ function FolderOutlinePage(props) {
             try {
 
 
-                await axios.get('http://localhost:8080/search/folder/' + String(props.pageNumber - 1) + '/20?keyword=' + (props.keyword ? props.keyword : '') + '&creator=' + (props.headerName ? props.headerName : ''),{
-                    headers: {
-                        'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
-                      }
-                }).then((res) => {
+                await axios.get('http://localhost:8080/search/folder/' + String(props.pageNumber - 1) + '/20?keyword=' + (props.keyword ? props.keyword : '') + '&creator=' + (props.headerName ? props.headerName : '')).then((res) => {
                     setFolder(oldArray => [...oldArray = [], res.data.search]);
                     //window.scrollTo(0, 0);
                     //console.log(pageNumber);
@@ -56,6 +54,13 @@ function FolderOutlinePage(props) {
                 //console.log(error.message);
                 message.error("Server Error! Please try again later. (Get Folder Outline Error)")
                 setFolder(error.message);
+                if (error.response.status === 500 || error.response.status === 404){
+                    document.cookie = 'error=true'
+                }
+                else if (error.response.status === 403){
+                    document.cookie = 'error=Jwt'                       
+                }
+
 
 
             }

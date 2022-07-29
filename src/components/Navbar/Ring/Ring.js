@@ -30,6 +30,12 @@ function Ring(props) {
         }).catch((error) => {
             message.error("Server Error! Please try again later. (Get Notification Error)")
             //message.info(error.response.error);
+            if (error.response.status === 500 || error.response.status === 404){
+                document.cookie = 'error=true'
+            }
+            else if (error.response.status === 403){
+                document.cookie = 'error=Jwt'                       
+            }
 
         })
         
@@ -98,6 +104,12 @@ function Ring(props) {
             props.setRingNumber(0);
         }).catch((error) => {
            console.log(error);
+           if (error.response.status === 500 || error.response.status === 404){
+            document.cookie = 'error=true'
+        }
+        else if (error.response.status === 403){
+            document.cookie = 'error=Jwt'                       
+        }
 
         })
     }

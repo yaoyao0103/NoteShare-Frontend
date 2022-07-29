@@ -23,6 +23,7 @@ export const pageLoad = () => async (dispatch) => {
     dispatch({ type: TYPES.LIST_PAGE_REQUEST_SUCCESS, data: response.data });
   } catch (error) {
     dispatch({ type: TYPES.LIST_PAGE_REQUEST_ERROR, error: error });
+   
   }
 };
 
@@ -38,5 +39,6 @@ export const createPage = (name) => async (dispatch) => {
     return response.data;
   } catch (error) {
     dispatch({ type: TYPES.CREATE_PAGE_ERROR, data: error });
+    
   }
 };

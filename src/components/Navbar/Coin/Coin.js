@@ -26,6 +26,12 @@ function Coin(props) {
         }).catch((error) => {
             message.error("Server Error! Please try again later. (Get coin Error)")
             console.log(error);
+            if (error.response.status === 500 || error.response.status === 404){
+                document.cookie = 'error=true'
+            }
+            else if (error.response.status === 403){
+                document.cookie = 'error=Jwt'                       
+            }
         });
     };
 

@@ -63,7 +63,12 @@ function MemberPage(props) {
             //console.log(error.message);
             message.error("Server Error! Please try again later. (Get Notes Error)")
             setNote(error.message);
-
+            if (error.response.status === 500 || error.response.status === 404){
+                document.cookie = 'error=true'
+            }
+            else if (error.response.status === 403){
+                document.cookie = 'error=Jwt'                       
+            }
 
         }
     }
@@ -71,11 +76,7 @@ function MemberPage(props) {
         try {
             
             //console.log(props.department);
-            await axios.get('http://localhost:8080/note/hotNotes/' + String(props.pageNumber - 1) + '/10',{
-                headers: {
-                    'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
-                  }
-            }).then((res) => {
+            await axios.get('http://localhost:8080/note/hotNotes/' + String(props.pageNumber - 1) + '/10').then((res) => {
                 setNote(oldArray => [...oldArray, res.data.res]);
                 props.setLoading(false)
             });
@@ -84,7 +85,12 @@ function MemberPage(props) {
             console.log(error.message);
             message.error("Server Error! Please try again later. (Get Notes Error)")
             setNote(error.message);
-
+            if (error.response.status === 500 || error.response.status === 404){
+                document.cookie = 'error=true'
+            }
+            else if (error.response.status === 403){
+                document.cookie = 'error=Jwt'                       
+            }
 
         }
     }

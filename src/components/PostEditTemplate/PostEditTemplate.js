@@ -142,6 +142,12 @@ const PostEditTemplate = (props) => {
             .catch(err => {
                 message.error("Server Error! Please try again later. (Update Post Error)")
                 console.log(err)
+                if (err.response.status === 500 || err.response.status === 404){
+                    document.cookie = 'error=true'
+                }
+                else if (err.response.status === 403){
+                    document.cookie = 'error=Jwt'                       
+                }
             })
 
     }
@@ -227,6 +233,12 @@ const PostEditTemplate = (props) => {
                         })
                         .catch(err => {
                             console.log(err)
+                            if (err.response.status === 500 || err.response.status === 404){
+                                document.cookie = 'error=true'
+                            }
+                            else if (err.response.status === 403){
+                                document.cookie = 'error=Jwt'                       
+                            }
                         })
                 }
                 else{
@@ -237,6 +249,12 @@ const PostEditTemplate = (props) => {
             .catch(err => {
                 message.error("Server Error! Please try again later. (Submit Post Error)")
                 console.log(err)
+                if (err.response.status === 500 || err.response.status === 404){
+                    document.cookie = 'error=true'
+                }
+                else if (err.response.status === 403){
+                    document.cookie = 'error=Jwt'                       
+                }
             })
     }
 

@@ -93,11 +93,7 @@ const PageDetailContentTemplate = (props) => {
             setNoteId(noteId);
             setType("collaboration")
             setIsPublic(props.data?.public)
-            axios.get(`http://localhost:8080/note/${noteId}`,{
-                headers: {
-                    'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
-                  }
-            })
+            axios.get(`http://localhost:8080/note/${noteId}`)
                 .then(res => {
                     console.log(res.data.res)
                     const tempNote = res.data.res
@@ -157,6 +153,12 @@ const PageDetailContentTemplate = (props) => {
                 .catch(err => {
                     message.error("Server Error! Please try again later. (Get Collaboration Note Error)")
                     console.log(err)
+                    if (err.response.status === 500 || err.response.status === 404){
+                        document.cookie = 'error=true'
+                    }
+                    else if (err.response.status === 403){
+                        document.cookie = 'error=Jwt'                       
+                    }
                 })
 
                 
@@ -297,6 +299,12 @@ const PageDetailContentTemplate = (props) => {
             .catch(err => {
             message.error("Server Error! Please try again later. (Submit Application Error)")
                 console.log(err)
+                if (err.response.status === 500 || err.response.status === 404){
+                    document.cookie = 'error=true'
+                }
+                else if (err.response.status === 403){
+                    document.cookie = 'error=Jwt'                       
+                }
             })
     }
 
@@ -330,6 +338,12 @@ const PageDetailContentTemplate = (props) => {
                 .catch(err => {
                     message.error("Server Error! Please try again later. (Buy Note Error)")
                     console.log(err)
+                    if (err.response.status === 500 || err.response.status === 404){
+                        document.cookie = 'error=true'
+                    }
+                    else if (err.response.status === 403){
+                        document.cookie = 'error=Jwt'                       
+                    }
                 })
         }
         else{
@@ -354,6 +368,12 @@ const PageDetailContentTemplate = (props) => {
             .catch(err => {
                 message.error("Server Error! Please try again later. (Submit Reward Note Error)")
                 console.log(err)
+                if (err.response.status === 500 || err.response.status === 404){
+                    document.cookie = 'error=true'
+                }
+                else if (err.response.status === 403){
+                    document.cookie = 'error=Jwt'                       
+                }
             })
     }
 
@@ -370,6 +390,12 @@ const PageDetailContentTemplate = (props) => {
             .catch(err => {
                 message.error("Server Error! Please try again later. (Withdraw Reward Note Error)")
                 console.log(err)
+                if (err.response.status === 500 || err.response.status === 404){
+                    document.cookie = 'error=true'
+                }
+                else if (err.response.status === 403){
+                    document.cookie = 'error=Jwt'                       
+                }
             })
     }
 
@@ -399,6 +425,12 @@ const PageDetailContentTemplate = (props) => {
             .catch(err => {
                 message.error("Server Error! Please try again later. (Create Vote Error)")
               console.log(err)
+              if (err.response.status === 500 || err.response.status === 404){
+                document.cookie = 'error=true'
+            }
+            else if (err.response.status === 403){
+                document.cookie = 'error=Jwt'                       
+            }
             })
         setIsModalVisible(false);
       };
@@ -416,17 +448,19 @@ const PageDetailContentTemplate = (props) => {
     //////////////////////////
 
     const refreshAnswer = () => {
-        axios.get(`http://localhost:8080/post/${props.postId}`,{
-            headers: {
-                'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
-              }
-        })
+        axios.get(`http://localhost:8080/post/${props.postId}`)
             .then(res => {
                 setPoppedContent( res.data.res.answersUserObj );
             })
             .catch(err => {
                 message.error("Server Error! Please try again later. (Refresh Answer Error)")
                 console.log(err)
+                if (err.response.status === 500 || err.response.status === 404){
+                    document.cookie = 'error=true'
+                }
+                else if (err.response.status === 403){
+                    document.cookie = 'error=Jwt'                       
+                }
             })
     }
 

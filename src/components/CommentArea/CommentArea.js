@@ -100,6 +100,13 @@ function CommentArea(props) {
             .catch(err => {
                 message.error("Server Error! Please try again later.(Refresh Error)")
                 console.log(err)
+                if (err.response.status === 500 || err.response.status === 404){
+                    document.cookie = 'error=true'
+                }
+                else if (err.response.status === 403){
+                    document.cookie = 'error=Jwt'                       
+                }
+                   
             })
     }
 
@@ -118,6 +125,13 @@ function CommentArea(props) {
             .catch(err => {
                 message.error("Server Error! Please try again later. (Like Comment Error)")
                 console.log(err)
+                if (err.response.status === 500 || err.response.status === 404){
+                    document.cookie = 'error=true'
+                }
+                else if (err.response.status === 403){
+                    document.cookie = 'error=Jwt'                       
+                }
+                   
             })
 
     };
@@ -136,6 +150,13 @@ function CommentArea(props) {
             .catch(err => {
                 message.error("Server Error! Please try again later. (Unlike Comment Error)")
                 console.log(err)
+                if (err.response.status === 500 || err.response.status === 404){
+                    document.cookie = 'error=true'
+                }
+                else if (err.response.status === 403){
+                    document.cookie = 'error=Jwt'                       
+                }
+                   
             })
 
     };
@@ -169,6 +190,12 @@ function CommentArea(props) {
             .catch(err => {
                 message.error("Server Error! Please try again later. (Submit Comment Error)")
                 console.log(err)
+                if (err.response.status === 500 || err.response.status === 404){
+                    document.cookie = 'error=true'
+                }
+                else if (err.response.status === 403){
+                    document.cookie = 'error=Jwt'                       
+                }
             })
         }
         else{
@@ -197,6 +224,12 @@ function CommentArea(props) {
             .catch(err => {
                 message.error("Server Error! Please try again later. (Select Best Answer Error)")
                 console.log(err)
+                if (err.response.status === 500 || err.response.status === 404){
+                    document.cookie = 'error=true'
+                }
+                else if (err.response.status === 403){
+                    document.cookie = 'error=Jwt'                       
+                }
             })
     }
 
@@ -220,6 +253,12 @@ function CommentArea(props) {
             .catch(err => {
                 message.error("Server Error! Please try again later. (Update Comment Error)")
                 console.log(err)
+                if (err.response.status === 500 || err.response.status === 404){
+                    document.cookie = 'error=true'
+                }
+                else if (err.response.status === 403){
+                    document.cookie = 'error=Jwt'                       
+                }
             })
     }
 
@@ -237,6 +276,12 @@ function CommentArea(props) {
             .catch(err => {
                 message.error("Server Error! Please try again later. (Delete Comment Error)")
                 console.log(err)
+                if (err.response.status === 500 || err.response.status === 404){
+                    document.cookie = 'error=true'
+                }
+                else if (err.response.status === 403){
+                    document.cookie = 'error=Jwt'                       
+                }
             })
     }
 

@@ -22,11 +22,7 @@ function CollabOutlinePage(props) {
                 const haveCollaboration = true;
                 const sortBy = props.sortMode;
 
-                await axios.get('http://localhost:8080/search/post/' + String(props.pageNumber - 1) + '/20?keyword=' + (props.keyword ? props.keyword : '') + '&department=' + (props.department ? props.department : '') + '&subject=' + (props.subject ? props.subject : '') + '&haveCollaboration=' + true + '&sortBy=' + sortBy,{
-                    headers: {
-                        'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
-                      }
-                }).then((res) => {
+                await axios.get('http://localhost:8080/search/post/' + String(props.pageNumber - 1) + '/20?keyword=' + (props.keyword ? props.keyword : '') + '&department=' + (props.department ? props.department : '') + '&subject=' + (props.subject ? props.subject : '') + '&haveCollaboration=' + true + '&sortBy=' + sortBy).then((res) => {
                     //console.log(res.data.search);
                     setCollab(oldArray => [...oldArray, res.data.search]);
                     props.setLoading(false);
@@ -37,6 +33,12 @@ function CollabOutlinePage(props) {
                 console.log(error.message);
                 message.error("Server Error! Please try again later. (Get Collaboration Outline Error)")
                 setCollab(error.message);
+                if (error.response.status === 500 || error.response.status === 404){
+                    document.cookie = 'error=true'
+                }
+                else if (error.response.status === 403){
+                    document.cookie = 'error=Jwt'                       
+                }
 
 
             }

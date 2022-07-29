@@ -10,11 +10,7 @@ function RewardDetailPage(props) {
     //const postId = '62b0891f0997e642d1402113'
     useEffect(() => {
         async function getRewardById() {
-            axios.get(`http://localhost:8080/post/${props.postId}`,{
-                headers: {
-                    'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
-                  }
-            })
+            axios.get(`http://localhost:8080/post/${props.postId}`)
             .then(res => {
                 console.log(res.data.res)
                 setPost(res.data.res)
@@ -23,6 +19,13 @@ function RewardDetailPage(props) {
             .catch(err =>{
                 message.error("Server Error! Please try again later. (Get Reward Post Error)")
                 console.log(err)
+                if (err.response.status === 500 || err.response.status === 404){
+                    document.cookie = 'error=true'
+                }
+                else if (err.response.status === 403){
+                    document.cookie = 'error=Jwt'                       
+                }
+                
             })
         }
         getRewardById();

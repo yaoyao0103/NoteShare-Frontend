@@ -12,11 +12,7 @@ function QnADetailPage(props) {
 
     useEffect(() => {
         async function getQnAById() {
-            axios.get(`http://localhost:8080/post/${props.postId}`,{
-                headers: {
-                    'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
-                  }
-            })
+            axios.get(`http://localhost:8080/post/${props.postId}`)
             .then(res => {
                 setPost(res.data.res)
                 
@@ -25,6 +21,12 @@ function QnADetailPage(props) {
             .catch(err =>{
                 message.error("Server Error! Please try again later. (Get Reward Post Error)")
                 console.log(err)
+                if (err.response.status === 500 || err.response.status === 404){
+                    document.cookie = 'error=true'
+                }
+                else if (err.response.status === 403){
+                    document.cookie = 'error=Jwt'                       
+                }
             })
         }
         getQnAById();

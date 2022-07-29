@@ -16,11 +16,7 @@ function QnARecommendPage(props) {
                 props.setLoading(true)
                 //const sortBy = props.sortMode;
 
-                await axios.get('http://localhost:8080/post/hotPosts/' + String(props.pageNumber - 1) + '/20/QA',{
-                    headers: {
-                        'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
-                      }
-                }).then((res) => {
+                await axios.get('http://localhost:8080/post/hotPosts/' + String(props.pageNumber - 1) + '/20/QA').then((res) => {
                     setQnA(oldArray => [...oldArray, res.data.res]);
                     console.log(res.data.res)
                     props.setLoading(false)
@@ -30,6 +26,12 @@ function QnARecommendPage(props) {
                 message.error("Server Error! Please try again later. (Get QA Post Error)")
                 console.log(error.message);
                 setQnA(error.message);
+                if (error.response.status === 500 || error.response.status === 404){
+                    document.cookie = 'error=true'
+                }
+                else if (error.response.status === 403){
+                    document.cookie = 'error=Jwt'                       
+                }
             }
         }
         setQnA([])

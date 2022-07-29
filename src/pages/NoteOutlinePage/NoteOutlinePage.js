@@ -18,11 +18,7 @@ function NoteOutlinePage(props) {
                 const sortBy=props.sortMode;
                 console.log(sortBy)
                 //console.log(props.department);
-                await axios.get('http://localhost:8080/search/note/'+ String(props.pageNumber-1) + '/10?keyword='+(props.keyword?props.keyword:'')+'&department='+(props.department?props.department:'')+'&subject='+(props.subject?props.subject:'')+'&haveNormal=true&haveCollaboration=true&sortBy='+sortBy,{
-                    headers: {
-                        'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
-                      }
-                }).then((res) => {
+                await axios.get('http://localhost:8080/search/note/'+ String(props.pageNumber-1) + '/10?keyword='+(props.keyword?props.keyword:'')+'&department='+(props.department?props.department:'')+'&subject='+(props.subject?props.subject:'')+'&haveNormal=true&haveCollaboration=true&sortBy='+sortBy).then((res) => {
                     console.log(res.data.search)
                     setNote(oldArray => [...oldArray, res.data.search]);
                     props.setLoading(false)
@@ -32,7 +28,12 @@ function NoteOutlinePage(props) {
                 message.error("Server Error! Please try again later. (Get Note Error)")
                 console.log(error.message);
                 setNote(error.message);
-
+                if (error.response.status === 500 || error.response.status === 404){
+                    document.cookie = 'error=true'
+                }
+                else if (error.response.status === 403){
+                    document.cookie = 'error=Jwt'                       
+                }
 
             }
         }

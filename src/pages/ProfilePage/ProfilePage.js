@@ -111,6 +111,12 @@ function ProfilePage(props) {
 
         }).catch((error) => {
             message.error("Server Error! Please try again later. (Get Fans Error)")
+            if (error.response.status === 500 || error.response.status === 404){
+                document.cookie = 'error=true'
+            }
+            else if (error.response.status === 403){
+                document.cookie = 'error=Jwt'                       
+            }
         })
     }
 
@@ -130,6 +136,12 @@ function ProfilePage(props) {
             props.setLoading(false)
         }).catch((error) => {
             message.error("Server Error! Please try again later. (Get Following Error)")
+            if (error.response.status === 500 || error.response.status === 404){
+                document.cookie = 'error=true'
+            }
+            else if (error.response.status === 403){
+                document.cookie = 'error=Jwt'                       
+            }
         })
     }
 
@@ -148,6 +160,12 @@ function ProfilePage(props) {
 
             }).catch((error) => {
                 message.error("Server Error! Please try again later. (Change Avatar Error)")
+                if (error.response.status === 500 || error.response.status === 404){
+                    document.cookie = 'error=true'
+                }
+                else if (error.response.status === 403){
+                    document.cookie = 'error=Jwt'                       
+                }
             })
         }
         else{
@@ -182,6 +200,12 @@ function ProfilePage(props) {
             }).catch((error) => {
                 message.error("Server Error! Please try again later. (Follow User Error)")
                 console.log(error.response.error);
+                if (error.response.status === 500 || error.response.status === 404){
+                    document.cookie = 'error=true'
+                }
+                else if (error.response.status === 403){
+                    document.cookie = 'error=Jwt'                       
+                }
 
             })
 
@@ -199,6 +223,12 @@ function ProfilePage(props) {
             }).catch((error) => {
                 message.error("Server Error! Please try again later. (Unfollow User Error)")
                 console.log(error.response.error);
+                if (error.response.status === 500 || error.response.status === 404){
+                    document.cookie = 'error=true'
+                }
+                else if (error.response.status === 403){
+                    document.cookie = 'error=Jwt'                       
+                }
             })
         }
     }
@@ -216,6 +246,12 @@ function ProfilePage(props) {
             }).catch((error) => {
                 message.error("Server Error! Please try again later. (Turn On The Bell Error)")
                 console.log(error.response.error);
+                if (error.response.status === 500 || error.response.status === 404){
+                    document.cookie = 'error=true'
+                }
+                else if (error.response.status === 403){
+                    document.cookie = 'error=Jwt'                       
+                }
             })
         }
         else {
@@ -230,6 +266,12 @@ function ProfilePage(props) {
             }).catch((error) => {
                 message.error("Server Error! Please try again later. (Turn Off The Bell Error)")
                 console.log(error.response.error);
+                if (error.response.status === 500 || error.response.status === 404){
+                    document.cookie = 'error=true'
+                }
+                else if (error.response.status === 403){
+                    document.cookie = 'error=Jwt'                       
+                }
             })
 
         }
@@ -246,6 +288,12 @@ function ProfilePage(props) {
         }).catch((error) => {
             message.error("Server Error! Please try again later. (Update Profile Error)")
             console.log(error.response.error);
+            if (error.response.status === 500 || error.response.status === 404){
+                document.cookie = 'error=true'
+            }
+            else if (error.response.status === 403){
+                document.cookie = 'error=Jwt'                       
+            }
         })
     };
 
@@ -263,6 +311,12 @@ function ProfilePage(props) {
         }).catch((error) => {
             message.error("Server Error! Please try again later. (Add Strength Error)")
             console.log(error.response.error);
+            if (error.response.status === 500 || error.response.status === 404){
+                document.cookie = 'error=true'
+            }
+            else if (error.response.status === 403){
+                document.cookie = 'error=Jwt'                       
+            }
         })
     }
     const DeleteStrength = (key) => {
@@ -277,6 +331,12 @@ function ProfilePage(props) {
         }).catch((error) => {
             message.error("Server Error! Please try again later. (Delete Strength Error)")
             console.log(error.response.error);
+            if (error.response.status === 500 || error.response.status === 404){
+                document.cookie = 'error=true'
+            }
+            else if (error.response.status === 403){
+                document.cookie = 'error=Jwt'                       
+            }
         })
     }
 
@@ -292,6 +352,12 @@ function ProfilePage(props) {
         }).catch((error) => {
             message.error("Server Error! Please try again later. (Back To The Last Layer Error)")
             console.log(error.response.error);
+            if (error.response.status === 500 || error.response.status === 404){
+                document.cookie = 'error=true'
+            }
+            else if (error.response.status === 403){
+                document.cookie = 'error=Jwt'                       
+            }
         })
     };
 
@@ -324,6 +390,12 @@ function ProfilePage(props) {
         }).catch((error) => {
             message.error("Server Error! Please try again later. (Get Folder Error)")
             //console.log(error.response.error);
+            if (error.response.status === 500 || error.response.status === 404){
+                document.cookie = 'error=true'
+            }
+            else if (error.response.status === 403){
+                document.cookie = 'error=Jwt'                       
+            }
         })
     };
 
@@ -340,6 +412,12 @@ function ProfilePage(props) {
             message.error("Server Error! Please try again later. (Get All Folders Error)")
             //console.log(error.response.data);
             //setGetFolderFail(true);   
+            if (error.response.status === 500 || error.response.status === 404){
+                document.cookie = 'error=true'
+            }
+            else if (error.response.status === 403){
+                document.cookie = 'error=Jwt'                       
+            }
         });
     };
 
@@ -358,6 +436,12 @@ function ProfilePage(props) {
             message.error("Server Error! Please try again later. (Get All Notes Error)")
             //console.log(error.response.data);
             //setGetFolderFail(true);
+            if (error.response.status === 500 || error.response.status === 404){
+                document.cookie = 'error=true'
+            }
+            else if (error.response.status === 403){
+                document.cookie = 'error=Jwt'                       
+            }
         });
     };
 
@@ -415,6 +499,12 @@ function ProfilePage(props) {
         }).catch((error) => {
             message.error("Server Error! Please try again later. (Get User Error)")
             console.log(error);
+            if (error.response.status === 500 || error.response.status === 404){
+                document.cookie = 'error=true'
+            }
+            else if (error.response.status === 403){
+                document.cookie = 'error=Jwt'                       
+            }
         });
     };
 

@@ -17,11 +17,7 @@ function RewardRecommendPage(props) {
             try {
                 const sortBy = props.sortMode;
 
-                await axios.get('http://localhost:8080/post/hotPosts/' + String(props.pageNumber - 1) + '/20/reward', {
-                    headers: {
-                        'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
-                    }
-                }).then((res) => {
+                await axios.get('http://localhost:8080/post/hotPosts/' + String(props.pageNumber - 1) + '/20/reward').then((res) => {
 
                     setReward(oldArray => [...oldArray, res.data.res]);
                     props.setLoading(false)
@@ -31,7 +27,12 @@ function RewardRecommendPage(props) {
                 message.error("Server Error! Please try again later. (Get Reward Post Error)")
                 console.log(error.message);
                 setReward(error.message);
-
+                if (error.response.status === 500 || error.response.status === 404){
+                    document.cookie = 'error=true'
+                }
+                else if (error.response.status === 403){
+                    document.cookie = 'error=Jwt'                       
+                }
 
             }
         }
@@ -39,36 +40,7 @@ function RewardRecommendPage(props) {
         getRewardById();
 
     }, [props]);
-    // useEffect(() => {
-    //     props.setLoading(true)
-    //     async function getRewardById() {
-    //         try {
-    //             const sortBy = sortMode;
-
-    //             await axios.get('http://localhost:8080/search/post/' + String(props.pageNumber - 1) + '/20?keyword=interrupt&department=&subject=&haveReward=' + true + '&sortBy=' + sortBy, {
-    //                 headers: {
-    //                     'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
-    //                 }
-    //             }).then((res) => {
-    //                 setReward(oldArray => [...oldArray, res.data.search]);
-    //                 //window.scrollTo(0, 0);
-    //                 props.setLoading(false)
-
-
-    //             });
-
-    //         } catch (error) {
-    //             message.error("Server Error! Please try again later. (Get Reward Post Error)")
-    //             setReward(error.message);
-
-
-    //         }
-    //     }
-    //     setReward([]);
-    //     getRewardById();
-
-
-    // }, [sortMode]);
+    
 
     return (
         <>

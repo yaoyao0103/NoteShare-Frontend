@@ -71,17 +71,19 @@ const NoteEditTemplate = (props) => {
         if(note && props.mode == 'edit'){
             if(note?.type == 'reward'){
                 setPostId(note?.postId);
-                axios.get(`http://localhost:8080/post/${note?.postId}/`,{
-                    headers: {
-                        'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
-                      }
-                })
+                axios.get(`http://localhost:8080/post/${note?.postId}/`)
                 .then ( res => {
                     setPostInfo(res.data.res);
                 })
                 .catch (err => {
                     message.error("Server Error! Please try again later. (Get Reward Post Error)")
                     console.log(err)
+                    if (err.response.status === 500 || err.response.status === 404){
+                        document.cookie = 'error=true'
+                    }
+                    else if (err.response.status === 403){
+                        document.cookie = 'error=Jwt'                       
+                    }
                 }) 
             }
             setTitle(note.title);
@@ -133,17 +135,19 @@ const NoteEditTemplate = (props) => {
             });
             setContent('')
             // get post info
-            axios.get(`http://localhost:8080/post/${props.postId}/`,{
-                headers: {
-                    'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
-                  }
-            })
+            axios.get(`http://localhost:8080/post/${props.postId}/`)
                 .then ( res => {
                     setPostInfo(res.data.res);
                 })
                 .catch (err => {
                     message.error("Server Error! Please try again later. (Get Post Information In Note Error)")
                     console.log(err)
+                    if (err.response.status === 500 || err.response.status === 404){
+                        document.cookie = 'error=true'
+                    }
+                    else if (err.response.status === 403){
+                        document.cookie = 'error=Jwt'                       
+                    }
                 })      
         }
     },[props])
@@ -201,6 +205,12 @@ const NoteEditTemplate = (props) => {
             .catch(err => {
                 message.error("Server Error! Please try again later. (Rename Folder Error)")
                 console.log(err)
+                if (err.response.status === 500 || err.response.status === 404){
+                    document.cookie = 'error=true'
+                }
+                else if (err.response.status === 403){
+                    document.cookie = 'error=Jwt'                       
+                }
             })
 
     }
@@ -247,6 +257,12 @@ const NoteEditTemplate = (props) => {
             .catch (err => {
                 message.error("Server Error! Please try again later. (Update Information Of Note Error)")
                 console.log(err)
+                if (err.response.status === 500 || err.response.status === 404){
+                    document.cookie = 'error=true'
+                }
+                else if (err.response.status === 403){
+                    document.cookie = 'error=Jwt'                       
+                }
             })
         }
         else if(props.mode=="new"){
@@ -290,10 +306,22 @@ const NoteEditTemplate = (props) => {
                 .catch (err => {
                     message.error("Server Error! Please try again later. (Submit Information Of Note Error)")
                     console.log(err)
+                    if (err.response.status === 500 || err.response.status === 404){
+                        document.cookie = 'error=true'
+                    }
+                    else if (err.response.status === 403){
+                        document.cookie = 'error=Jwt'                       
+                    }
                 })
             })
             .catch (err => {
                 console.log(err)
+                if (err.response.status === 500 || err.response.status === 404){
+                    document.cookie = 'error=true'
+                }
+                else if (err.response.status === 403){
+                    document.cookie = 'error=Jwt'                       
+                }
             })    
         }
         else if(props.mode=="newReward"){
@@ -337,6 +365,12 @@ const NoteEditTemplate = (props) => {
                 .catch (err => {
                     message.error("Server Error! Please try again later. (Submit Information Of Reward Note Error)")
                     console.log(err)
+                    if (err.response.status === 500 || err.response.status === 404){
+                        document.cookie = 'error=true'
+                    }
+                    else if (err.response.status === 403){
+                        document.cookie = 'error=Jwt'                       
+                    }
                 })
                 // props.sendPrivateMessage(
                 //     name + ' has provided answers to your reward !',
@@ -350,6 +384,12 @@ const NoteEditTemplate = (props) => {
             })
             .catch (err => {
                 console.log(err)
+                if (err.response.status === 500 || err.response.status === 404){
+                    document.cookie = 'error=true'
+                }
+                else if (err.response.status === 403){
+                    document.cookie = 'error=Jwt'                       
+                }
             })    
         }
         
@@ -390,11 +430,7 @@ const NoteEditTemplate = (props) => {
 
 
     const setVersion = (index) => {
-        axios.get(`http://localhost:8080/note/${noteId}/${index}`,{
-            headers: {
-                'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
-              }
-        })
+        axios.get(`http://localhost:8080/note/${noteId}/${index}`)
             .then(res => {
                 const defaultVersion = res.data.res
                 defaultVersion.name = "default"
@@ -413,10 +449,22 @@ const NoteEditTemplate = (props) => {
                 .catch (err => {
                     message.error("Server Error! Please try again later. (Copy Version Error)")
                     console.log(err)
+                    if (err.response.status === 500 || err.response.status === 404){
+                        document.cookie = 'error=true'
+                    }
+                    else if (err.response.status === 403){
+                        document.cookie = 'error=Jwt'                       
+                    }
                 })
             })
             .catch (err => {
                 console.log(err)
+                if (err.response.status === 500 || err.response.status === 404){
+                    document.cookie = 'error=true'
+                }
+                else if (err.response.status === 403){
+                    document.cookie = 'error=Jwt'                       
+                }
             })    
     }
     const noteFinish = async () => {
@@ -433,6 +481,12 @@ const NoteEditTemplate = (props) => {
             })
             .catch (err => {
                 console.log(err)
+                if (err.response.status === 500 || err.response.status === 404){
+                    document.cookie = 'error=true'
+                }
+                else if (err.response.status === 403){
+                    document.cookie = 'error=Jwt'                       
+                }
             })    
         
         
@@ -464,10 +518,22 @@ const NoteEditTemplate = (props) => {
                     .catch (err => {
                         message.error("Server Error! Please try again later. (Submit Tag Error)")
                         console.log(err)
+                        if (err.response.status === 500 || err.response.status === 404){
+                            document.cookie = 'error=true'
+                        }
+                        else if (err.response.status === 403){
+                            document.cookie = 'error=Jwt'                       
+                        }
                     }) 
             })
             .catch (err => {
                 console.log(err)
+                if (err.response.status === 500 || err.response.status === 404){
+                    document.cookie = 'error=true'
+                }
+                else if (err.response.status === 403){
+                    document.cookie = 'error=Jwt'                       
+                }
             })   
         
     }
@@ -537,6 +603,12 @@ const NoteEditTemplate = (props) => {
         .catch (err => {
             message.error("Server Error! Please try again later. (New Version Error)")
             console.log(err)
+            if (err.response.status === 500 || err.response.status === 404){
+                document.cookie = 'error=true'
+            }
+            else if (err.response.status === 403){
+                document.cookie = 'error=Jwt'                       
+            }
         })
     }
 
@@ -546,11 +618,7 @@ const NoteEditTemplate = (props) => {
     }
 
     const submitRewardNote = () => {
-        axios.get(`http://localhost:8080/note/${noteId}`,{
-            headers: {
-                'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
-              }
-        })
+        axios.get(`http://localhost:8080/note/${noteId}`)
             .then(res => {
                 const tempNote = res.data.res
                 tempNote.tag = tagSelected
@@ -575,16 +643,34 @@ const NoteEditTemplate = (props) => {
                         .catch(err =>{
                             message.error("Server Error! Please try again later. (Publish Reward Note Error)")
                             console.log(err)
+                            if (err.response.status === 500 || err.response.status === 404){
+                                document.cookie = 'error=true'
+                            }
+                            else if (err.response.status === 403){
+                                document.cookie = 'error=Jwt'                       
+                            }
                         })
                     })
                     .catch (err => {
                         message.error("Server Error! Please try again later. (Submit Reward Note Error)")
                         console.log(err)
+                        if (err.response.status === 500 || err.response.status === 404){
+                            document.cookie = 'error=true'
+                        }
+                        else if (err.response.status === 403){
+                            document.cookie = 'error=Jwt'                       
+                        }
                     }) 
             })
             .catch (err => {
                 message.error("Server Error! Please try again later. (Get Tags Error)")
                 console.log(err)
+                if (err.response.status === 500 || err.response.status === 404){
+                    document.cookie = 'error=true'
+                }
+                else if (err.response.status === 403){
+                    document.cookie = 'error=Jwt'                       
+                }
             })   
     }
 

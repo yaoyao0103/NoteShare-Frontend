@@ -8,7 +8,7 @@ import './IntroductionEditor.css'
 const { TextArea } = Input;
 function IntroductionEditor(props) {
     const [editing, setEditing] = useState(false);
-    const [introduction, setIntroduction] = useState('您好，我是林祈安，畢業於政治大學的企業管理學系，專長是專案管理與內容行銷，對行銷擁有極大的熱情，並具備分析、解決問題的能力，以及開放積極的特質。我在大學時，曾在蝦皮的行銷部門擔任實習生，負責社群經營及線上活動執行......。');
+    const [introduction, setIntroduction] = useState('');
     const Save = () => {
         // setName(value);
         props.edit(introduction);

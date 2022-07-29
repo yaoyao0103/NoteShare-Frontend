@@ -81,6 +81,12 @@ function OutlineCard(props) {
         }).catch(err => {
             message.error("Server Error! Please try again later. (like Note Error)")
             console.log(err)
+            if (err.response.status === 500 || err.response.status === 404){
+                document.cookie = 'error=true'
+            }
+            else if (err.response.status === 403){
+                document.cookie = 'error=Jwt'                       
+            }
         });
 
     }
@@ -99,6 +105,12 @@ function OutlineCard(props) {
         }).catch(err => {
             message.error("Server Error! Please try again later. (Cancel like Error)")
             console.log(err)
+            if (err.response.status === 500 || err.response.status === 404){
+                document.cookie = 'error=true'
+            }
+            else if (err.response.status === 403){
+                document.cookie = 'error=Jwt'                       
+            }
         });
 
     }

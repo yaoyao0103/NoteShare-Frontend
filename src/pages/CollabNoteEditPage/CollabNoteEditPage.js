@@ -70,11 +70,7 @@ const CollabNoteEditPage = (props) => {
         setAvatar(tempAvatar)
         console.log("tempEmail", tempEmail)
         //const note = props.note;
-        axios.get(`http://localhost:8080/note/${props.noteId}`,{
-            headers: {
-                'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
-              }
-        })
+        axios.get(`http://localhost:8080/note/${props.noteId}`)
         .then ( res => {
             console.log(res.data.res)
             const tempNote = res.data.res
@@ -99,6 +95,12 @@ const CollabNoteEditPage = (props) => {
         .catch(err =>{
             message.error("Server Error! Please try again later. (Get Note Error)")
             console.log(err)
+            if (err.response.status === 500 || err.response.status === 404){
+                document.cookie = 'error=true'
+            }
+            else if (err.response.status === 403){
+                document.cookie = 'error=Jwt'                       
+            }
         })
     },[props])
 
@@ -155,6 +157,12 @@ const CollabNoteEditPage = (props) => {
                 .catch (err => {
                     message.error("Server Error! Please try again later. (Get Author Information In Queue Error)")
                     console.log(err)
+                    if (err.response.status === 500 || err.response.status === 404){
+                        document.cookie = 'error=true'
+                    }
+                    else if (err.response.status === 403){
+                        document.cookie = 'error=Jwt'                       
+                    }
                 })
                 
             })
@@ -226,6 +234,12 @@ const CollabNoteEditPage = (props) => {
         .catch (err => {
             message.error("Server Error! Please try again later. (Update Note Error)")
             console.log(err)
+            if (err.response.status === 500 || err.response.status === 404){
+                document.cookie = 'error=true'
+            }
+            else if (err.response.status === 403){
+                document.cookie = 'error=Jwt'                       
+            }
         })
         //setStep(1);
     }
@@ -252,11 +266,7 @@ const CollabNoteEditPage = (props) => {
 
 
     const setVersion = (index) => {
-        axios.get(`http://localhost:8080/note/${props.noteId}/${index}`,{
-            headers: {
-                'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
-              }
-        })
+        axios.get(`http://localhost:8080/note/${props.noteId}/${index}`)
             .then(res => {
                 const defaultVersion = res.data.res
                 defaultVersion.name = "default"
@@ -275,10 +285,22 @@ const CollabNoteEditPage = (props) => {
                 .catch (err => {
                     message.error("Server Error! Please try again later. (Change Version Error)")
                     console.log(err)
+                    if (err.response.status === 500 || err.response.status === 404){
+                        document.cookie = 'error=true'
+                    }
+                    else if (err.response.status === 403){
+                        document.cookie = 'error=Jwt'                       
+                    }
                 })
             })
             .catch (err => {
                 console.log(err)
+                if (err.response.status === 500 || err.response.status === 404){
+                    document.cookie = 'error=true'
+                }
+                else if (err.response.status === 403){
+                    document.cookie = 'error=Jwt'                       
+                }
             })    
     }
     const noteFinish = async () => {
@@ -295,6 +317,12 @@ const CollabNoteEditPage = (props) => {
             })
             .catch (err => {
                 console.log(err)
+                if (err.response.status === 500 || err.response.status === 404){
+                    document.cookie = 'error=true'
+                }
+                else if (err.response.status === 403){
+                    document.cookie = 'error=Jwt'                       
+                }
             })  
         }
         else{
@@ -313,11 +341,7 @@ const CollabNoteEditPage = (props) => {
     }
 
     const tagSubmit = async () => {
-        axios.get(`http://localhost:8080/note/${props.noteId}`,{
-            headers: {
-                'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
-              }
-        })
+        axios.get(`http://localhost:8080/note/${props.noteId}`)
             .then(res => {
                 const tempNote = res.data.res
                 tempNote.tag = tagSelected
@@ -334,11 +358,23 @@ const CollabNoteEditPage = (props) => {
                     .catch (err => {
                         message.error("Server Error! Please try again later. (Submit Tag Error)")
                         console.log(err)
+                        if (err.response.status === 500 || err.response.status === 404){
+                            document.cookie = 'error=true'
+                        }
+                        else if (err.response.status === 403){
+                            document.cookie = 'error=Jwt'                       
+                        }
                     }) 
             })
             .catch (err => {
                 message.error("Server Error! Please try again later. (Get Tag Error)")
                 console.log(err)
+                if (err.response.status === 500 || err.response.status === 404){
+                    document.cookie = 'error=true'
+                }
+                else if (err.response.status === 403){
+                    document.cookie = 'error=Jwt'                       
+                }
             })   
         
     }
@@ -408,6 +444,12 @@ const CollabNoteEditPage = (props) => {
         .catch (err => {
             message.error("Server Error! Please try again later. (Create Version Error)")
             console.log(err)
+            if (err.response.status === 500 || err.response.status === 404){
+                document.cookie = 'error=true'
+            }
+            else if (err.response.status === 403){
+                document.cookie = 'error=Jwt'                       
+            }
         })
     }
 

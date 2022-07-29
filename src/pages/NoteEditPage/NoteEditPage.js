@@ -10,11 +10,7 @@ function NoteEditPage(props){
 
     useEffect(() => {
         async function getNoteById() {
-            axios.get(`http://localhost:8080/note/${props.noteId}`,{
-                headers: {
-                    'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
-                  }
-            })
+            axios.get(`http://localhost:8080/note/${props.noteId}`)
             .then(res => {
                 setNote(res.data.res)
                 console.log(res.data.res)
@@ -22,6 +18,12 @@ function NoteEditPage(props){
             .catch (err => {
                 message.error("Server Error! Please try again later. (Get Note Error)")
                 console.log(err)
+                if (err.response.status === 500 || err.response.status === 404){
+                    document.cookie = 'error=true'
+                }
+                else if (err.response.status === 403){
+                    document.cookie = 'error=Jwt'                       
+                }
             })
         }
         if(props.action=='edit'){

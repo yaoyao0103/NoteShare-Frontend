@@ -31,6 +31,12 @@ function FansNFollowerEditor(props) {
             }).catch((error) => {
                 message.error("Server Error! Please try again later. (Follow User Error)")
                 console.log(error.response.error);
+                if (error.response.status === 500 || error.response.status === 404){
+                    document.cookie = 'error=true'
+                }
+                else if (error.response.status === 403){
+                    document.cookie = 'error=Jwt'                       
+                }
 
             })
         }
@@ -51,6 +57,12 @@ function FansNFollowerEditor(props) {
             }).catch((error) => {
                 message.error("Server Error! Please try again later. (Unfollow User Error)")
                 console.log(error.response);
+                if (error.response.status === 500 || error.response.status === 404){
+                    document.cookie = 'error=true'
+                }
+                else if (error.response.status === 403){
+                    document.cookie = 'error=Jwt'                       
+                }
             })
         }
     }
@@ -72,6 +84,12 @@ function FansNFollowerEditor(props) {
             }).catch((error) => {
                 message.error("Server Error! Please try again later. (Follow User Error)")
                 console.log(error.response);
+                if (error.response.status === 500 || error.response.status === 404){
+                    document.cookie = 'error=true'
+                }
+                else if (error.response.status === 403){
+                    document.cookie = 'error=Jwt'                       
+                }
 
             })
         }
@@ -91,6 +109,12 @@ function FansNFollowerEditor(props) {
                 //message.info('Unfollow ' + user.name);
             }).catch((error) => {
                 console.log(error.response.res);
+                if (error.response.status === 500 || error.response.status === 404){
+                    document.cookie = 'error=true'
+                }
+                else if (error.response.status === 403){
+                    document.cookie = 'error=Jwt'                       
+                }
             })
         }
     }

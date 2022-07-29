@@ -73,7 +73,13 @@ function AvatarButton(props) {
         }).then(res => {
             document.cookie = "name=" + res.data.res;
         }).catch((error) => {
-            console.log(error);
+            console.log(error.response.data.message);
+            if (error.response.status === 500 || error.response.status === 404){
+                document.cookie = 'error=true'
+            }
+            else if (error.response.status === 403){
+                document.cookie = 'error=Jwt'                       
+            }
         });
         //console.log(props.changeAvatar);
         //console.log(avatarNum);
@@ -91,6 +97,12 @@ function AvatarButton(props) {
             }).catch((error) => {
                 //message.info(error.response.error);
 
+                if (error.response.status === 500 || error.response.status === 404){
+                    document.cookie = 'error=true'
+                }
+                else if (error.response.status === 403){
+                    document.cookie = 'error=Jwt'                       
+                }
             })
         }
     }, [props]);
