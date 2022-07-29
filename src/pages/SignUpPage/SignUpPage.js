@@ -37,7 +37,7 @@ function SignUpPage(props) {
     }, [render]);
     const onFinish = () => {
         //console.log('Received values of form: ', values);
-
+        setLoading(true);
         SignUp();
     };
 
@@ -50,6 +50,7 @@ function SignUpPage(props) {
         }).then(res => {
             console.log(res.data.msg);
             setOpenSuccess(true);
+            setLoading(false);
         }).catch((error) => {
             console.log(error.response.status)
             if(error.response.status === 406){
@@ -61,8 +62,9 @@ function SignUpPage(props) {
             else{
                 message.error("Server Error! Please try again later. (Sign up Error)")
             }
+            setLoading(false);
         })
-        setLoading(true);
+        
 
     };
     useEffect(() => {

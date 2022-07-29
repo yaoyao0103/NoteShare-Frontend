@@ -90,18 +90,19 @@ function MemberPage(props) {
     }
     useEffect(() => {
         props.setLoading(true)
+        setIsFollowingSwitch(false)
         setNote(oldArray => [...oldArray.slice(0, 0)])
         getRecommendNoteById();
         //console.log('2222');
     }, [props]);
-    useEffect(() => {
-        props.setLoading(true)
-        //console.log(pageNumber-1);
-        setNote(oldArray => [...oldArray.slice(0, 0)])
-        getRecommendNoteById();
-        //console.log('1111');
+    // useEffect(() => {
+    //     props.setLoading(true)
+    //     //console.log(pageNumber-1);
+    //     setNote(oldArray => [...oldArray.slice(0, 0)])
+    //     getRecommendNoteById();
+    //     //console.log('1111');
 
-    }, [sortMode]);
+    // }, [sortMode]);
 
     return (
         <>

@@ -136,7 +136,7 @@ const OuterPage = () => {
         let tempEmail = cookieParser.getCookieByName('email');
         tempEmail = Base64.decode(tempEmail);
         let tempRing = ringNumber
-        axios.get("http://localhost:8080/bellBy/" + tempEmail, {
+        axios.get("http://localhost:8080/bell/" + tempEmail, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
             }
@@ -215,7 +215,7 @@ const OuterPage = () => {
 
 
     useEffect(() => {
-
+        console.log('111')
         const cookieParser = new Cookie(document.cookie)
         const email = cookieParser.getCookieByName('email')
         if (email) {
@@ -232,6 +232,7 @@ const OuterPage = () => {
         }
     }, [])
     useEffect(() => {
+        console.log('222')
         const cookieParser = new Cookie(document.cookie)
         const tempPageProps = cookieParser.getCookieByName('pageProps')
         if (!tempPageProps) {
@@ -262,13 +263,13 @@ const OuterPage = () => {
     }, [ringNumber])
 
     useEffect(() => {
-
+        console.log('333')
+        console.log(pageProps.page)
         if ((pageProps.page === 'NoteEditPage' || pageProps.page === 'NoteNewPage' || pageProps.page === 'MemberPage' ||
             pageProps.page === 'RewardEditPage' || pageProps.page === 'RewardNewPage' || pageProps.page === 'RewardRecommendPage' ||
             pageProps.page === 'QnAEditPage' || pageProps.page === 'QnANewPage' || pageProps.page === 'QnARecommendPage' ||
             pageProps.page === 'CollabEditPage' || pageProps.page === 'CollabNewPage' || pageProps.page === 'CollabRecommendPage' ||
-            pageProps.page === 'PersonalPage' || pageProps.page === 'ProfilePage' || pageProps.page === 'ResetPasswordPage' ||
-            pageProps.page === 'VerificationPage'
+            pageProps.page === 'PersonalPage' || pageProps.page === 'ProfilePage' || pageProps.page === 'ResetPasswordPage' 
         ) && !loggedIn) {
             message.warn("You have to log in first!")
             setPageProps({ page: "LoginPage" })
@@ -276,7 +277,7 @@ const OuterPage = () => {
         else if ((pageProps.page === 'LoginPage' || pageProps.page === 'SignUpPage' ||
             pageProps.page === 'VerificationPage' || pageProps.page === 'ForgetPasswordPage'
         ) && loggedIn) {
-            message.warn("You have to log in first!")
+            message.warn("You have to log out first!")
             setPageProps({ page: "PersonalPage" })
         }
         else {
@@ -292,16 +293,7 @@ const OuterPage = () => {
                 }
             }
             changePageFunction()
-            //console.log('1', JSON.stringify(pageBeforeProps), '2', JSON.stringify(pageProps))
 
-            // if (!(JSON.stringify(pageBeforeProps) === JSON.stringify(pageProps))) {
-            //     //console.log('1111111')
-            //     setPageNumber(1)
-            //     if (pageBeforeNumber !== 1)
-
-
-            //     setPageBeforeProps(pageProps);
-            // }
             //寫在這裡就是有弄loading的如果寫完了，就把他拿出去    
 
             if (pageProps.page === 'LoginPage' || pageProps.page === "ProfilePage" || pageProps.page === 'ForgetPasswordPage' || pageProps.page === 'ResetPasswordPage' ||
@@ -332,7 +324,7 @@ const OuterPage = () => {
                 setFloatButtonVisable(false)
 
             switch (pageProps.page) {
-                case 'NoteDetailPage': setPageComponent(<NoteDetailPage page='NoteDetailPage' sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                case 'NoteDetailPage': setPageComponent(<NoteDetailPage page='NoteDetailPage'coinNum={coinNum} setCoinNum={setCoinNum} sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
                 case 'NoteEditPage': setPageComponent(<NoteEditPage page='NoteEditPage' sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
                 case 'NoteNewPage': setPageComponent(<NoteEditPage page='NoteNewPage' sendBellMessage={sendBellMessage} sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
                 case 'NoteOutlinePage': setPageComponent(<NoteOutlinePage page='NoteOutlinePage' changeSortMode={setSortMode} setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;

@@ -36,7 +36,7 @@ function NoteDetailPage(props){
             {/* <PageDetailTemplate page={page}>
                 <PageDetailContentTemplate page={page} data={note} noteId={props.noteId}/>
             </PageDetailTemplate> */}
-            <PageDetailContentTemplate sendPrivateMessage={props.sendPrivateMessage}page={page} data={note} noteId={props.noteId} setPageProps={props.setPageProps} />
+            <PageDetailContentTemplate setLoading={props.setLoading} coinNum={props.coinNum} setCoinNum={props.setCoinNum}sendPrivateMessage={props.sendPrivateMessage}page={page} data={note} noteId={props.noteId} setPageProps={props.setPageProps} />
         </>
         
     );

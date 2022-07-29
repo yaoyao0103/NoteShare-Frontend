@@ -45,39 +45,7 @@ function CollabOutlinePage(props) {
         getCollabById();
         //console.log('2222');
     }, [props]);
-    // useEffect(() => {
-    //     props.setLoading(true);
-        
-    //     async function getCollabById() {
-    //         try {
-    //             const haveCollaboration = true;
-    //             const sortBy = sortMode;
 
-    //             await axios.get('http://localhost:8080/search/post/' + String(props.pageNumber - 1) + '/20?keyword=' + (props.keyword ? props.keyword : '') + '&department=' + (props.department ? props.department : '') + '&subject=' + (props.subject ? props.subject : '') + '&haveCollaboration=' + true + '&sortBy=' + sortBy,{
-    //                 headers: {
-    //                     'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
-    //                   }
-    //             }).then((res) => {
-    //                 setCollab(oldArray => [...oldArray, res.data.search]);
-    //                 //window.scrollTo(0, 0);
-    //                 //console.log(pageNumber);
-    //                 props.setLoading(false);
-    //             });
-
-    //         } catch (error) {
-    //             //console.log(error.message);
-    //             message.error("Server Error! Please try again later. (Get Collaboration Outline Error)")
-    //             setCollab(error.message);
-
-
-    //         }
-    //     }
-    //     //console.log(pageNumber-1);
-    //     setCollab([]);
-    //     getCollabById();
-    //     //console.log('1111');
-
-    // }, [ sortMode]);
 
     return (
         <>

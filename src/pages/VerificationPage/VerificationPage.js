@@ -9,7 +9,7 @@ import './VerificationPage.css'
 import Logo from '../../components/Navbar/Logo/Logo';
 import Cookie from '../../components/Cookies/Cookies';
 const { Header, Sider, Content, Footer } = Layout;
-const cookieParser= new Cookie(document.cookie)
+const cookieParser = new Cookie(document.cookie)
 function VerificationPage(props) {
     const [Page, setPage] = useState('VerificationPage');
     const [render, setRender] = useState(false);
@@ -24,14 +24,12 @@ function VerificationPage(props) {
     //console.log(email);
     let newEmail = props.email.replace('@', '%40');
     useEffect(() => {
-        setPage('VerificationPage');
-    }, [Page]);
-    useEffect(() => {
         setRender(true);
     });
     useEffect(() => {
-        if(render)
-        props.setLoading(false);
+        console.log('4444')
+        if (render)
+            props.setLoading(false);
 
 
     }, [props]);
@@ -86,12 +84,13 @@ function VerificationPage(props) {
         }
     }, [resendFail]);
     useEffect(() => {
-        if (openSuccess )
+        //console.log(openSuccess)
+        if (openSuccess) {
             message.success("Success!")
             props.setPageProps({
                 page: 'LoginPage'
             })
-            
+        }
 
     }, [openSuccess]);
     useEffect(() => {
@@ -157,7 +156,7 @@ function VerificationPage(props) {
                             <Form
                                 {...formItemLayout}
                                 name="register"
-                                onFinish={onFinish}
+                                onFinish={() => { onFinish() }}
                                 initialValues={{
                                     email: email
                                 }}
