@@ -42,7 +42,7 @@ function NoteEditPage(props){
             {/* <PageDetailTemplate page={page}>
                 <NoteEditTemplate page={page} note={note} mode={props.action}/>
             </PageDetailTemplate> */}
-            <NoteEditTemplate sendBellMessage={props.sendBellMessage} page={props.page} sendPrivateMessage={props.sendPrivateMessage}rewardAuthorEmail={props.rewardAuthorEmail}note={note} mode={props.action} setPageProps={props.setPageProps} folderId={props.folderId} postId={props.postId}/>
+            <NoteEditTemplate sendBellMessage={props.sendBellMessage} page={props.page} sendPrivateMessage={props.sendPrivateMessage}rewardAuthorEmail={props.rewardAuthorEmail}note={note} mode={props.action} setPageProps={props.setPageProps} folderId={props.folderId} postId={props.postId} setLoading={props.setLoading}/>
         </>
         
     );

@@ -154,3 +154,18 @@
     writing-mode: vertical-lr;
     margin-top: .5em;
 }
+
+.version__rename{
+    border-bottom: solid .1px #ddd;
+    margin: .8em 5% .8em 5%;
+    width: 90%;
+}
+
+.version__rename .ant-input-group-addon{
+    padding: 0 0.6em;
+    cursor: pointer;
+    font-size: .7em;
+    border: 0;
+    background-color: #fff;
+    color: #777;
+}

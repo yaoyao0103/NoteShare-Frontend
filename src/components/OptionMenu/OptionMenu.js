@@ -34,24 +34,29 @@ const OptionMenu = (props) => {
 
 
   const archive = () => {
-    axios.put(`http://localhost:8080/post/archive/${props.id}`,{}, {
-      headers: {
-        'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
-      }
-    })
-      .then(res => {
-        message.success("You archived a post")
-        props.setIsArchive(true)
-        /*console.log("status", res.data.res.public)
-        if(res.data.res.public)
-          message.success("Set archive")
-        else
-          message.success("set non-archive")*/
+    if(props.isAnswered){
+      axios.put(`http://localhost:8080/post/archive/${props.id}`,{}, {
+        headers: {
+          'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+        }
       })
-      .catch(err => {
-        message.error("Server Error! Please try again later. (Archive Post Error)")
-        console.log(err)
-      })
+        .then(res => {
+          message.success("You archived a post")
+          props.setIsArchive(true)
+          /*console.log("status", res.data.res.public)
+          if(res.data.res.public)
+            message.success("Set archive")
+          else
+            message.success("set non-archive")*/
+        })
+        .catch(err => {
+          message.error("Server Error! Please try again later. (Archive Post Error)")
+          console.log(err)
+        })
+    }
+    else{
+      message.warn("You have to choose a best answer first before you archive the post!")
+    }
   }
 
   // set private or public
@@ -471,7 +476,8 @@ const OptionMenu = (props) => {
         {
           label: "Share",
           key: "1",
-          icon: <ShareAltOutlined />
+          icon: <ShareAltOutlined />,
+          disabled: true
         },
         {
           label: (<a onClick=
@@ -502,7 +508,8 @@ const OptionMenu = (props) => {
         {
           label: "Share",
           key: "2",
-          icon: <ShareAltOutlined />
+          icon: <ShareAltOutlined />,
+          disabled: true
         }
       ]
     } />
@@ -519,7 +526,8 @@ const OptionMenu = (props) => {
         {
           label: "Share",
           key: "2",
-          icon: <ShareAltOutlined />
+          icon: <ShareAltOutlined />,
+          disabled: true
         },
         {
           label: (<a onClick=
@@ -540,7 +548,8 @@ const OptionMenu = (props) => {
         {
           label: "Share",
           key: "",
-          icon: <ShareAltOutlined />
+          icon: <ShareAltOutlined />,
+          disabled: true
         }
       ]
     } />
@@ -566,7 +575,8 @@ const OptionMenu = (props) => {
         {
           label: "Share",
           key: "2",
-          icon: <ShareAltOutlined />
+          icon: <ShareAltOutlined />,
+          disabled: true
         },
         {
           label: (<a onClick={archive}>Archive</a>),
@@ -604,7 +614,8 @@ const OptionMenu = (props) => {
         {
           label: "Share",
           key: "2",
-          icon: <ShareAltOutlined />
+          icon: <ShareAltOutlined />,
+          disabled: true
         },
         {
           label: (<a>Archive</a>),
@@ -643,7 +654,8 @@ const OptionMenu = (props) => {
         {
           label: "Share",
           key: "2",
-          icon: <ShareAltOutlined />
+          icon: <ShareAltOutlined />,
+          disabled: true
         },
         {
           label: (
@@ -681,7 +693,8 @@ const OptionMenu = (props) => {
         {
           label: "Share",
           key: "1",
-          icon: <ShareAltOutlined />
+          icon: <ShareAltOutlined />,
+          disabled: true
         }]
     } />
   );
@@ -692,7 +705,8 @@ const OptionMenu = (props) => {
         {
           label: "Share",
           key: "1",
-          icon: <ShareAltOutlined />
+          icon: <ShareAltOutlined />,
+          disabled: true
         },
       ]
     } />
@@ -744,7 +758,8 @@ const OptionMenu = (props) => {
         {
           label: "Share",
           key: "4",
-          icon: <ShareAltOutlined />
+          icon: <ShareAltOutlined />,
+          disabled: true
         },
         {
           label: (<a onClick=
@@ -810,7 +825,8 @@ const OptionMenu = (props) => {
         {
           label: "Share",
           key: "5",
-          icon: <ShareAltOutlined />
+          icon: <ShareAltOutlined />,
+          disabled: true
         },
         {
           label: (
@@ -989,7 +1005,8 @@ const OptionMenu = (props) => {
         {
           label: (<a onClick={() => { message.info("Share: " + props.id) }}>Share</a>),
           key: "2",
-          icon: <ShareAltOutlined />
+          icon: <ShareAltOutlined />,
+          disabled: true
         },
         {
           label: (<a onClick={() => { props.setCopy(props.id) }}>Copy</a>),
@@ -1126,9 +1143,11 @@ const OptionMenu = (props) => {
       <Drawer title={"Version"} placement="right" onClose={onClose} visible={visible}>
         <VersionArea page={'NoteDetailPageVersion'} id={props.id} versions={props.versions} setVersions={props.setVersions} setVersion={props.setVersion} isAuthor={props.isAuthor} />
       </Drawer>
-      <Modal title="Notification" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
-        You have selected all best/reference answers. Would you want to delete this reward post now?
-      </Modal>
+      {(props.page=="RewardDetailPage" && props.isAuthor) &&
+        <Modal title="Notification" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+          You have selected all best/reference answers. Would you want to delete this reward post now?
+        </Modal>
+      }
     </>
   );
 }

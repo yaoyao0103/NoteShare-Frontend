@@ -56,7 +56,8 @@ const SearchBar = (props) => {
           onBlur={() => setSelected(false)} 
           onChange={onChange}
           onKeyPress={event => {
-            if (event.key === 'Enter') onSearch()
+            if (event.key === 'Enter' && keyword) onSearch()
+            else message.info("You have to enter a keyword")
           }}
           type="text" 
           className='navSearchBar__Input' 

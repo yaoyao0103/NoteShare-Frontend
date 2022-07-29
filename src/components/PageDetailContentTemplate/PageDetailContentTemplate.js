@@ -185,9 +185,15 @@ const PageDetailContentTemplate = (props) => {
             if (props.data?.author == email) {
                 setIsAuthor(true)
             }
+            if(props.data?.answers){
+                if(props.data?.answers.length == 1){
+                    setIsAnswered(true)
+                }
+            }
             if (props.data?.archive) {
                 setIsArchive(true)
             }
+            
         }
 
     }, [props.data])
@@ -199,7 +205,7 @@ const PageDetailContentTemplate = (props) => {
     },[bestNum])
 
     useEffect(()=>{
-        if(isAnswered){
+        if(isAnswered && props.page == 'RewardDetailPage'){
             notification.open({
                 message: "The author has selected all answers",
                 description: "You cannot contribute any note now",
@@ -584,7 +590,7 @@ const PageDetailContentTemplate = (props) => {
                                 <Button color={"green"}><Text color='white' cls='Large' content={"Show user-contributed Notes"} fontSize='17' display="inline-block" /></Button>
                             </div>
                         }
-                        {(props.page == 'RewardDetailPage' && !isAuthor && bestNum!=1 &&props.data?.referenceNumber!=0) &&
+                        {((props.page == 'RewardDetailPage') && !isAuthor && !(bestNum==1 && props.data?.referenceNumber==0)) &&
                             <div
                                 className="contentTemplate__Footer__Button"
                                 onClick={() => {
@@ -599,6 +605,7 @@ const PageDetailContentTemplate = (props) => {
                                 <Button color={"green"}><Text color='white' cls='Large' content={"Contribute Note"} fontSize='17' display="inline-block" /></Button>
                             </div>
                         }
+                        
                         {(props.page == 'CollabDetailPage' && !isAuthor) &&
                             <div className="contentTemplate__Footer__Button" onClick={() => setPoppedContentShow(true)}>
                                 <Button color={"green"}><Text color='white' cls='Large' content={"Apply"} fontSize='17' display="inline-block" /></Button>
@@ -616,7 +623,7 @@ const PageDetailContentTemplate = (props) => {
                 {/* Sider */}
                 {(props.page != 'NoteDetailPage' && props.page != 'CollabDetailPage') &&
                     <>
-                        <Sider id="contentTemplate__Comment" className="contentTemplate__Comment" width={props.page=="RewardDetailPage"? '50%':'40%'}>
+                        <Sider id="contentTemplate__Comment" className="contentTemplate__Comment" width={props.page=="QnADetailPage"? '50%':'40%'}>
                             <CommentArea type="post" page={props.page} comments={props.data?.commentsUserObj ? props.data.commentsUserObj : []} id={props.postId} isArchive={isArchive} isAuthor={isAuthor} authorEmail={authorEmail} />
                         </Sider>
                     </>

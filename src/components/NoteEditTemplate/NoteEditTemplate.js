@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useNavigate, useParams } from "react-router-dom";
+import { renderMatches, useNavigate, useParams } from "react-router-dom";
 import { Steps, Layout, Row, Col, Input, Popover, message, Select, Tag, Drawer, List, Tooltip } from 'antd';
 import "./NoteEditTemplate.css"
 import PostEditTemplate from '../PostEditTemplate/PostEditTemplate';
@@ -9,7 +9,7 @@ import InformationInput from '../InformationInput/InformationInput';
 import RewardInformation from './RewardInformation/RewardInformation';
 import { useSelector, useDispatch } from "react-redux";
 import { createPage } from "../../redux/actions/pageAction";
-import { CaretLeftOutlined, CheckOutlined, InfoCircleOutlined, CaretRightFilled } from "@ant-design/icons";
+import { CaretLeftOutlined, CheckOutlined, InfoCircleOutlined, CaretRightFilled, EditOutlined, CloseOutlined } from "@ant-design/icons";
 import MyEditor from '../MyEditor/MyEditor';
 import { NoteFormat, VersionFormat, ContentFormat } from './NoteFormat';
 import axios from '../axios/axios';
@@ -50,6 +50,7 @@ const NoteEditTemplate = (props) => {
     const [drawerTitle, setDrawerTitle] = useState('Version')
     const [drawerPlacement, setDrawerPlacement] = useState('right')
     const [postId, setPostId] = useState('');
+    const [renaming, setRenaming] = useState(false)
 
     const { pageStore } = useSelector((state) => state);
     const { pages } = pageStore;
@@ -154,7 +155,20 @@ const NoteEditTemplate = (props) => {
                     dataSource={versions}
                     renderItem={(item, index) => (index !=0 && 
                         <Tooltip placement='left' title={moment(item.date).format('YYYY-MM-DD HH:mm:ss')}>
-                            <List.Item className='versionItem' onClick={()=>saveVersion(index)}><span>{item.name}</span></List.Item>
+                            {renaming == index ? 
+                            <Input placeholder="New version name" bordered={false} onPressEnter={(ev) => renameVersion(index, ev.target.value)} className="version__rename" addonAfter={<CloseOutlined onClick={() => setRenaming(false)} />} /> 
+                            :
+                            <List.Item 
+                                className='versionItem' 
+                                
+                                actions={[<EditOutlined onClick={()=>{setRenaming(index)}}/>]}
+                            >
+                                <List.Item.Meta
+                                    title={item.name}
+                                    onClick={()=>saveVersion(index)}
+                                />
+                            </List.Item>
+                            }
                         </Tooltip>
                     )}
                 />
@@ -164,7 +178,33 @@ const NoteEditTemplate = (props) => {
             </>
         )
         setDrawer(<VersionArea page={'NoteEditPageVersion'} id={noteId} versions={versions} setVersions={setVersions} setVersion={setVersion} isAuthor={isAuthor}/>);
-    },[versions])
+    },[versions, renaming])
+
+
+    const renameVersion = (index, name) => {
+        props.setLoading(true)
+        axios.put(`http://localhost:8080/note/${noteId}/${index}/${name}`, {},{
+            headers: {
+                'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+            }
+        })
+            .then(res => {
+                message.success("You renamed a version")
+                setRenaming(false)
+                let tempVersions = versions;
+                let modifiedVersion = versions[index]
+                modifiedVersion.name = name
+                tempVersions[index] = modifiedVersion
+                setVersions([...tempVersions])
+                props.setLoading(false)
+            })
+            .catch(err => {
+                message.error("Server Error! Please try again later. (Rename Folder Error)")
+                console.log(err)
+            })
+
+    }
+
     const customDot = (dot, { status, index }) => (
         <Popover
             content={

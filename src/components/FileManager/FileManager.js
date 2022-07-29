@@ -101,7 +101,7 @@ const FileManager = (props) => {
                                                 <Avatar src={item.headerUserObj.userObjAvatar} />
                                             </Tooltip>}
                                         title={item.title}
-                                        description={item.description.substring(0, 120) + '...'}
+                                        description={item.description? item.description.substring(0, 120)+"...":"..."}
                                         onClick={() => onClickNote(item.id)}
                                     />
                                 </List.Item>
@@ -204,7 +204,7 @@ const FileManager = (props) => {
                                         </Tooltip>
                                     }
                                     title={item.title}
-                                    description={item.description.substring(0, 120) + '...'}
+                                    description={item.description? item.description.substring(0, 120)+"...":"..."}
                                     onClick={() => onClickNote(item.id)}
                                 />
                             </List.Item>
@@ -282,7 +282,7 @@ const FileManager = (props) => {
                                                 </Tooltip>
                                             }
                                             title={item.title}
-                                            description={item.description.substring(0, 120) + '...'}
+                                            description={item.description? item.description.substring(0, 120)+"...":"..."}
                                             onClick={() => onClickNote(item.id)}
                                         />
                                     </List.Item>
@@ -337,6 +337,12 @@ const FileManager = (props) => {
             message.warn("The folder name cannot be empty!")
             return;
         }
+        for(let i = 0; i < files.length; i++){
+            if(files[i].folderName == name){
+                message.warn("The folder name is exist!")
+                return;
+            }
+        }
         props.setLoading(true)
         //console.log("path", data)
         axios.post(`http://localhost:8080/folder/${props.email}`, data, {
@@ -376,6 +382,12 @@ const FileManager = (props) => {
     }
 
     const renameFolder = (folderId, newName) => {
+        for(let i = 0; i < files.length; i++){
+            if(files[i].folderName == newName){
+                message.warn("The folder name is exist!")
+                return;
+            }
+        }
         props.setLoading(true)
         axios.put(`http://localhost:8080/folder/rename/${props.email}/${folderId}/${newName}`, {},{
             headers: {

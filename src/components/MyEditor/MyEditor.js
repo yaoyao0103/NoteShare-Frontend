@@ -32,7 +32,8 @@ const MyEditor = (props) => {
 
   useEffect(() => {
     console.log("MyEditor props", props)
-    const editor = geditorConfig(assets, props.noteId, props.version, props.isCollab? props.isCollab:false, props.email, props.name, props.avatar, props.setQueue);
+    let previewMode = (props.page == 'NoteEditPage' || props.page == 'NoteNewPage' || props.page == 'CollabNoteEditPage')? false:true;
+    const editor = geditorConfig(assets, props.noteId, props.version, props.isCollab? props.isCollab:false, props.email, props.name, props.avatar, props.setQueue, previewMode);
     setEditor(editor);
     
   }, [props.noteId, props.version, props.isCollab, props.email, props.name, props.avatar, assets]);
@@ -53,7 +54,7 @@ const MyEditor = (props) => {
               </>
               :
               <>
-                  <div id="editor" className="editor__disabled"></div>
+                  <div id="editor"></div>
               </>
             }
             

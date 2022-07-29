@@ -35,7 +35,7 @@ import tUIImageEditor from "../plugins/tUIImageEditor";
 
 export var editor = null;
 
-async function geditorConfig(assets, noteId, version, isCollab, email, username, avatar, setQueue){
+async function geditorConfig(assets, noteId, version, isCollab, email, username, avatar, setQueue, previewMode){
   $(".panel__devices").html("");
   $(".panel__basic-actions").html("");
   $(".panel__editor").html("");
@@ -128,12 +128,12 @@ async function geditorConfig(assets, noteId, version, isCollab, email, username,
     panelTopBar.removeClass("d-none");
   });
 
-  //editor.stopCommand("sw-visibility");
-  editor.getModel().stopDefault()
+  let myCommand = editor.Commands.get("preview")
 
   setTimeout(() => {
     let categories = editor.BlockManager.getCategories();
     categories.each((category) => category.set("open", false));
+    if(previewMode) myCommand.run(editor, {isDetailPreview:true})
   }, 1000);
   return editor;
 };

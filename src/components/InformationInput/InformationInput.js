@@ -47,7 +47,7 @@ const InformationInput = ({information, setInformation}) => {
                 <Input showCount maxLength={20} placeholder="professor" onChange={(ev) => setInformation({...information, professor: ev.target.value})} value={information?.professor} /> 
             </div>  
         }
-        {information?.bestPrice!=null &&
+        {(information?.bestPrice!=null || information?.price!=null) &&
             <div className="informationInput__item informationInput__InputNumber">
                 <Text color='black' cls='Small' content={"Price"} fontSize='15' display="inline-block" />
                 <NumericInput placeholder="$" onChange={(value) => setInformation({...information, bestPrice: value})} value={information?.bestPrice} /> 

@@ -537,6 +537,7 @@ export const addEditorCommand = (editor) => {
   editor.Commands.add("export", {
     run: (editor) => editor.runCommand("gjs-export-zip"),
   });
+
 };
 
 export const storageSetting = (noteId, version = '0') => {
