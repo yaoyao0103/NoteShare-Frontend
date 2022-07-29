@@ -17,7 +17,7 @@ export default (editor, opts = {}) => {
 			defaults: {
 				component: Code,
 				resizable: false,
-				editable: true,
+				editable: false,
 				draggable: true,
 				droppable: true,
 				traits: [
