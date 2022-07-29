@@ -79,9 +79,9 @@ function PageOutlineContentTemplate(props) {
         }
         setPageTotal(props.Post[0].totalPages * 10);
     }, [props.Post]);
-    useEffect(() => {
-        console.log(cardList);
-    }, [cardList])
+    // useEffect(() => {
+    //     console.log(cardList);
+    // }, [cardList])
     const onChange = (pagenumber) => {
         console.log(pagenumber);
         //setPageN(pagenumber);
@@ -103,7 +103,7 @@ function PageOutlineContentTemplate(props) {
         isFolder = true;
     return (
         <>
-            {cardList.length > 0 &&
+            {(cardList.length > 0) &&
                 <div className="outlineContentTemplate">
                     <Layout className="outlineContentTemplate__Layout__Outer">
                         <Header className="outlineContentTemplate__Header">

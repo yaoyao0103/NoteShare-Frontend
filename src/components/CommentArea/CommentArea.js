@@ -153,6 +153,7 @@ function CommentArea(props) {
             content: comment,
         }
         const type = props.page == 'NoteDetailPage' ? 'note' : 'post'
+        if(comment.length>0){
         axios.post(`http://localhost:8080/comment/${props.id}`, tempComment,{
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
@@ -169,6 +170,10 @@ function CommentArea(props) {
                 message.error("Server Error! Please try again later. (Submit Comment Error)")
                 console.log(err)
             })
+        }
+        else{
+            message.warning('Please enter something!')
+        }
     }
 
     const onReply = (commentId) => {

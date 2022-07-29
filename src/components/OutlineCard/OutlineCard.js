@@ -17,6 +17,7 @@ const cookieParser = new Cookie(document.cookie)
 function OutlineCard(props) {
     const [ellipsis, setEllipsis] = useState(true);
     const [hasLike, setHasLike] = useState(props.hasLike);
+    const [likeNum,setLikeNum]=useState(props.cardContent.likeCount)
     const [sider, setSider] = useState(
         <Sider className={"OutlineCard__Sider__Outer" + '__' + props.mode} width='35%' ></Sider>
     );
@@ -32,27 +33,40 @@ function OutlineCard(props) {
     }
     const onClickCard = (type, id) => {
         console.log(type, id)
-        switch (type) {
-            case 'QA': props.setPageProps({
-                page: 'QnADetailPage',
-                postId: id,
-            }); break;
-            case 'reward': props.setPageProps({
-                page: 'RewardDetailPage',
-                postId: id,
-            }); break;
-            case 'collaboration': props.setPageProps({
-                page: 'CollabDetailPage',
-                postId: id,
-            }); break;
-            case 'normal': props.setPageProps({
+        if (props.mode === 'Note') {
+            props.setPageProps({
                 page: 'NoteDetailPage',
                 noteId: id,
-            }); break;
+            })
+        }
+        else {
+            switch (type) {
+                case 'QA': props.setPageProps({
+                    page: 'QnADetailPage',
+                    postId: id,
+                }); break;
+                case 'reward': props.setPageProps({
+                    page: 'RewardDetailPage',
+                    postId: id,
+                }); break;
+                case 'collaboration': props.setPageProps({
+                    page: 'CollabDetailPage',
+                    postId: id,
+                }); break;
+                case 'normal': props.setPageProps({
+                    page: 'NoteDetailPage',
+                    noteId: id,
+                }); break;
+            }
         }
 
+
     }
+    useEffect(()=>{
+        console.log(likeNum)
+    },[likeNum])
     const likeNote = () => {
+        
         axios.put('http://localhost:8080/like/note/' + props.cardContent.id + '/' + props.email, {}, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
@@ -60,6 +74,10 @@ function OutlineCard(props) {
         }).then((res) => {
             message.success('Like it successfully!')
             setHasLike(true)
+            if(props.hasLike)
+            setLikeNum(props.cardContent.likeCount)
+            else
+            setLikeNum(props.cardContent.likeCount+1)
         }).catch(err => {
             message.error("Server Error! Please try again later. (like Note Error)")
             console.log(err)
@@ -74,6 +92,10 @@ function OutlineCard(props) {
         }).then((res) => {
             message.success('Cancel like successfully!')
             setHasLike(false)
+            if(props.hasLike)
+            setLikeNum(props.cardContent.likeCount-1)
+            else
+            setLikeNum(props.cardContent.likeCount)
         }).catch(err => {
             message.error("Server Error! Please try again later. (Cancel like Error)")
             console.log(err)
@@ -266,7 +288,7 @@ function OutlineCard(props) {
                         }
                         <Row className={"OutlineCard__Sider__Row__Like" + '__' + props.mode}>
                             <Col className={"OutlineCard__Sider__LikeCount" + '__' + props.mode} span={8}>
-                                <Text cls='Default' fontSize="14" content={'喜歡數 : ' + props.cardContent.likeCount} />
+                                <Text cls='Default' fontSize="14" content={'喜歡數 : ' + likeNum} />
                             </Col>
                             <Col className={"OutlineCard__Sider__UnlockCount" + '__' + props.mode} span={8}>
                                 <Text cls='Default' fontSize="14" content={'購買數 : ' + props.cardContent.unlockCount} />
@@ -440,7 +462,7 @@ function OutlineCard(props) {
             case 'MemberPage': setSider(NoteSider); break;
         }
         //console.log(props.page);
-    }, [hasLike])
+    }, [hasLike,likeNum])
     return (
         <Layout className={"OutlineCard__Layout__Outer" + '__' + props.mode}>
             <Content className={"OutlineCard__Content__Outer" + '__' + props.mode} onClick={() => onClickCard(props.cardContent.type, props.cardContent.id)}>

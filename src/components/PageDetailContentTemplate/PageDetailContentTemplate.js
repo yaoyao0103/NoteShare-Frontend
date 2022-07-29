@@ -306,6 +306,7 @@ const PageDetailContentTemplate = (props) => {
                   }
             })
                 .then(res => {
+                    props.setCoinNum(props.coinNum-props.data?.price)
                     console.log(res.data.res)
                     message.success("You bought this note!")
                     setIsBuyer(true);
