@@ -472,6 +472,25 @@ const OptionMenu = (props) => {
 
   const NoteDetailMenuAuthor = (
     <Menu items={
+      props.notePublic?
+      [
+        {
+          label: "Share",
+          key: "1",
+          icon: <ShareAltOutlined />,
+          disabled: true
+        },
+        {
+          label: (<a onClick=
+            {() => {
+              showDrawer();
+            }}
+          >Manage Version</a>),
+          key: "2",
+          icon: <InfoCircleOutlined />
+        },
+      ]
+      :
       [
         {
           label: "Share",
@@ -489,7 +508,15 @@ const OptionMenu = (props) => {
           icon: <InfoCircleOutlined />
         },
         {
-          label: props.public ? (<a onClick={setNoteStatus}>Unpublish the note</a>) : (<a onClick={setNoteStatus}>Publish the note</a>),
+          label: (
+            <Popconfirm
+              title="Are you sure to publish the note?"
+              okText="Yes"
+              cancelText="No"
+              onConfirm={setNoteStatus}
+          >
+            <a style={{ textDecoration: "none"}}>Publish the note</a>
+        </Popconfirm>),
           key: "3",
           icon: <UserOutlined style={{ color: "#333" }} />
         },

@@ -6583,10 +6583,10 @@
   "resolved" "https://registry.npmjs.org/grapesjs-tooltip/-/grapesjs-tooltip-0.1.5.tgz"
   "version" "0.1.5"
 
-"grapesjs@0.x", "grapesjs@npm:grapesjs-clot@^0.1.61":
-  "integrity" "sha512-UZOzvfynzOmX10erPATWwWyefw6hmwYsC+etA703MhPZdiYPGOAvuzf0A8oQf5eUgn62OPHOQNaBXHTUnC15Kg=="
-  "resolved" "https://registry.npmjs.org/grapesjs-clot/-/grapesjs-clot-0.1.61.tgz"
-  "version" "0.1.61"
+"grapesjs@0.x", "grapesjs@npm:grapesjs-clot@^0.1.72":
+  "integrity" "sha512-zsnKuyeMrH6SwBoxDG+i4f/4IBLZI7VggvOQzCRiSlj+T1yRuUnO524IYb0LGB/2dxmPsq6njVXvgnl2kUMdaQ=="
+  "resolved" "https://registry.npmjs.org/grapesjs-clot/-/grapesjs-clot-0.1.72.tgz"
+  "version" "0.1.72"
   dependencies:
     "axios" "^0.27.2"
     "backbone" "1.3.3"
