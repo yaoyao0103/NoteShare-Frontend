@@ -5,15 +5,15 @@ import PageOutlineContentTemplate from '../../components/PageOutlineContentTempl
 import { Layout, message } from "antd";
 import axios from "axios";
 import Cookie from '../../components/Cookies/Cookies';
-const cookieParser= new Cookie(document.cookie)
+const cookieParser = new Cookie(document.cookie)
 const { Header, Content, Footer } = Layout;
 function CollabOutlinePage(props) {
     const page = 'CollabOutlinePage';
-    
+
     const [Collab, setCollab] = useState([]);
     //const [sortMode, setSortMode] = useState('date');
-    
-   
+
+
     useEffect(() => {
         props.setLoading(true);
         async function getCollabById() {
@@ -33,11 +33,12 @@ function CollabOutlinePage(props) {
                 console.log(error.message);
                 message.error("Server Error! Please try again later. (Get Collaboration Outline Error)")
                 setCollab(error.message);
-                if (error.response.status === 500 || error.response.status === 404){
-                    document.cookie = 'error=true'
-                }
-                else if (error.response.status === 403){
-                    document.cookie = 'error=Jwt'                       
+                if (error.response.status === 500 || error.response.status === 404 || error.response.status === 403) {
+                    if (error.response.data.message.slice(0, 13) === 'Malformed JWT')
+                        document.cookie = 'error=Jwt'
+                    else
+                        document.cookie = 'error=true'
+                    message.warning('Please refresh again!')
                 }
 
 
@@ -52,7 +53,7 @@ function CollabOutlinePage(props) {
     return (
         <>
             {Collab.length > 0 &&
-                <PageOutlineContentTemplate page={page} hasSwitch={false} mode='Post' Post={Collab} pageNumber={props.pageNumber} changePageNumber={ props.setPageNumber} changeSortMode={props.changeSortMode} setPageProps={props.setPageProps} />
+                <PageOutlineContentTemplate page={page} hasSwitch={false} mode='Post' Post={Collab} pageNumber={props.pageNumber} changePageNumber={props.setPageNumber} changeSortMode={props.changeSortMode} setPageProps={props.setPageProps} />
             }
         </>
     );

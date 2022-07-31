@@ -5,7 +5,7 @@ import PageOutlineContentTemplate from '../../components/PageOutlineContentTempl
 import { Layout, message } from "antd";
 import axios from "axios";
 import Cookie from '../../components/Cookies/Cookies';
-const cookieParser =new Cookie(document.cookie)
+const cookieParser = new Cookie(document.cookie)
 const { Header, Content, Footer } = Layout;
 function FolderOutlinePage(props) {
     const page = 'FolderOutlinePage';
@@ -26,11 +26,12 @@ function FolderOutlinePage(props) {
                 console.log(error.message);
                 message.error("Server Error! Please try again later. (Get Folder Outline Error)")
                 setFolder(error.message);
-                if (error.response.status === 500 || error.response.status === 404){
-                    document.cookie = 'error=true'
-                }
-                else if (error.response.status === 403){
-                    document.cookie = 'error=Jwt'                       
+                if (error.response.status === 500 || error.response.status === 404 || error.response.status === 403) {
+                    if (error.response.data.message.slice(0, 13) === 'Malformed JWT')
+                        document.cookie = 'error=Jwt'
+                    else
+                        document.cookie = 'error=true'
+                    message.warning('Please refresh again!')
                 }
             }
         }
@@ -54,11 +55,12 @@ function FolderOutlinePage(props) {
                 //console.log(error.message);
                 message.error("Server Error! Please try again later. (Get Folder Outline Error)")
                 setFolder(error.message);
-                if (error.response.status === 500 || error.response.status === 404){
+                if (error.response.status === 500 || error.response.status === 404||error.response.status === 403){
+                    if(error.response.data.message.slice(0,13)==='Malformed JWT')
+                    document.cookie = 'error=Jwt'
+                    else
                     document.cookie = 'error=true'
-                }
-                else if (error.response.status === 403){
-                    document.cookie = 'error=Jwt'                       
+                    message.warning('Please refresh again!')
                 }
 
 

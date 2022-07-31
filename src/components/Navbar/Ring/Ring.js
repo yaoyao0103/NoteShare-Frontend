@@ -9,107 +9,110 @@ const { Paragraph } = Typography;
 const cookieParser = new Cookie(document.cookie);
 function Ring(props) {
     const [email, setEmail] = useState('');
-    
+
     const [ringList, setRingList] = useState([]);
     const [render, setRender] = useState(false);
     useEffect(() => {
-        setRingList(oldArray => [...oldArray.slice(0,0) ]);
-        
+        setRingList(oldArray => [...oldArray.slice(0, 0)]);
+
         let tempEmail = cookieParser.getCookieByName('email');
-        tempEmail = Base64.decode(tempEmail);
+        if (tempEmail)
+            tempEmail = Base64.decode(tempEmail);
         setEmail(tempEmail);
         //console.log(tempEmail)
-        axios.get("http://localhost:8080/notification/" + tempEmail,{
+        axios.get("http://localhost:8080/notification/" + tempEmail, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
-              }
+            }
         }).then(res => {
             //console.log(res.data.notification);
             props.setRingNumber(res.data.notification.unreadMessageCount);
-            props.setRingList(oldArray => [...res.data.notification.messageReturn,...oldArray.slice(0,0) ])
+            props.setRingList(oldArray => [...res.data.notification.messageReturn, ...oldArray.slice(0, 0)])
         }).catch((error) => {
             message.error("Server Error! Please try again later. (Get Notification Error)")
             //message.info(error.response.error);
-            if (error.response.status === 500 || error.response.status === 404){
-                document.cookie = 'error=true'
-            }
-            else if (error.response.status === 403){
-                document.cookie = 'error=Jwt'                       
+            if (error.response.status === 500 || error.response.status === 404 || error.response.status === 403) {
+                if (error.response.data.message.slice(0, 13) === 'Malformed JWT')
+                    document.cookie = 'error=Jwt'
+                else
+                    document.cookie = 'error=true'
+                message.warning('Please refresh again!')
             }
 
         })
-        
+
 
     }, []);
     useEffect(() => {
-            //console.log(props.ringList)
-            setRingList(oldArray=> [...oldArray.slice(0,0) ])
-            for (let i = 0; i < props.ringList.length; i++) {
-                let type=props.ringList[i].type
-                console.log('i:',i,props.ringList[i])
-                if(props.ringList[i].type==='note'||props.ringList[i].type==='normal'){
-                    type='NoteDetailPage';
-                }
-                else if(props.ringList[i].type==='qa'){
-                    type='QnADetailPage';
-                }
-                else if(props.ringList[i].type==='reward'){
-                    type='RewardDetailPage';
-                }
-                else if(props.ringList[i].type==='collaboration'){
-                    type='CollabDetailPage';
-                }
-
-                let tempItem = {
-                    label: (
-                        <>  <Row onClick={() => {if(props.ringList[i].userObj.userObjEmail!=='noteshare@gmail.com')props.setPageProps({ page: type, noteId: props.ringList[i].id, postId: props.ringList[i].id, email: props.ringList[i].userObj.userObjEmail })}}>
-                            <Col span={5} className={"Ring__Icon"}>
-                                {/* <ExclamationCircleOutlined /> */}
-                                <Avatar className={"Ring__Avatar"} size={36} src={props.ringList[i].userObj.userObjAvatar} ></Avatar>
-                            </Col>
-                            <Col span={19}>
-                                <Paragraph
-                                    className={"Ring__Paragraph"}
-                                    ellipsis={
-                                        ellipsis
-                                            ? {
-                                                rows: 3,
-                                                expandable: false,
-                                            }
-                                            : false
-                                    }
-                                >
-                                    {props.ringList[i].message}
-                                </Paragraph>
-
-                            </Col>
-                        </Row>
-                        </>
-                    ),
-                }
-                setRingList(oldArray => [tempItem,...oldArray ]);
-               
+        //console.log(props.ringList)
+        setRingList(oldArray => [...oldArray.slice(0, 0)])
+        for (let i = 0; i < props.ringList.length; i++) {
+            let type = props.ringList[i].type
+            console.log('i:', i, props.ringList[i])
+            if (props.ringList[i].type === 'note' || props.ringList[i].type === 'normal') {
+                type = 'NoteDetailPage';
             }
-            setRender(true)
+            else if (props.ringList[i].type === 'qa') {
+                type = 'QnADetailPage';
+            }
+            else if (props.ringList[i].type === 'reward') {
+                type = 'RewardDetailPage';
+            }
+            else if (props.ringList[i].type === 'collaboration') {
+                type = 'CollabDetailPage';
+            }
+
+            let tempItem = {
+                label: (
+                    <>  <Row onClick={() => { if (props.ringList[i].userObj.userObjEmail !== 'noteshare@gmail.com') props.setPageProps({ page: type, noteId: props.ringList[i].id, postId: props.ringList[i].id, email: props.ringList[i].userObj.userObjEmail }) }}>
+                        <Col span={5} className={"Ring__Icon"}>
+                            {/* <ExclamationCircleOutlined /> */}
+                            <Avatar className={"Ring__Avatar"} size={36} src={props.ringList[i].userObj.userObjAvatar} ></Avatar>
+                        </Col>
+                        <Col span={19}>
+                            <Paragraph
+                                className={"Ring__Paragraph"}
+                                ellipsis={
+                                    ellipsis
+                                        ? {
+                                            rows: 3,
+                                            expandable: false,
+                                        }
+                                        : false
+                                }
+                            >
+                                {props.ringList[i].message}
+                            </Paragraph>
+
+                        </Col>
+                    </Row>
+                    </>
+                ),
+            }
+            setRingList(oldArray => [tempItem, ...oldArray]);
+
+        }
+        setRender(true)
     }, [props.ringList]);
     const [ellipsis, setEllipsis] = useState(true);
-    const setUnReadNumZero=()=>{
-        console.log('Authorization', 'Bearer ' , cookieParser.getCookieByName("token"))
-        axios.put("http://localhost:8080/notification/unreadMessage/" + email,{},{
+    const setUnReadNumZero = () => {
+        console.log('Authorization', 'Bearer ', cookieParser.getCookieByName("token"))
+        axios.put("http://localhost:8080/notification/unreadMessage/" + email, {}, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token")
-              }
+            }
         }).then(res => {
             console.log('ring')
             props.setRingNumber(0);
         }).catch((error) => {
-           console.log(error);
-           if (error.response.status === 500 || error.response.status === 404){
-            document.cookie = 'error=true'
-        }
-        else if (error.response.status === 403){
-            document.cookie = 'error=Jwt'                       
-        }
+            console.log(error);
+            if (error.response.status === 500 || error.response.status === 404 || error.response.status === 403) {
+                if (error.response.data.message.slice(0, 13) === 'Malformed JWT')
+                    document.cookie = 'error=Jwt'
+                else
+                    document.cookie = 'error=true'
+                message.warning('Please refresh again!')
+            }
 
         })
     }

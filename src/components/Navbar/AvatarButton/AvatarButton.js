@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Dropdown, Menu, Avatar } from 'antd';
+import { Dropdown, Menu, Avatar, message } from 'antd';
 import { Base64 } from 'js-base64';
 import { BellOutlined } from '@ant-design/icons';
 
@@ -64,7 +64,8 @@ function AvatarButton(props) {
     useEffect(() => {
         let cookieParser = new Cookie(document.cookie);
         let tempEmail = cookieParser.getCookieByName('email');
-        tempEmail = Base64.decode(tempEmail);
+        if(tempEmail)
+            tempEmail = Base64.decode(tempEmail);
         setEmail(tempEmail);
         axios.get("http://localhost:8080/user/name/" + tempEmail,{
             headers: {
@@ -74,12 +75,14 @@ function AvatarButton(props) {
             document.cookie = "name=" + res.data.res;
         }).catch((error) => {
             console.log(error.response.data.message);
-            if (error.response.status === 500 || error.response.status === 404){
+            if (error.response.status === 500 || error.response.status === 404||error.response.status === 403){
+                if(error.response.data.message.slice(0,13)==='Malformed JWT')
+                document.cookie = 'error=Jwt'
+                else
                 document.cookie = 'error=true'
+                message.warning('Please refresh again!')
             }
-            else if (error.response.status === 403){
-                document.cookie = 'error=Jwt'                       
-            }
+           
         });
         //console.log(props.changeAvatar);
         //console.log(avatarNum);
@@ -97,11 +100,12 @@ function AvatarButton(props) {
             }).catch((error) => {
                 //message.info(error.response.error);
 
-                if (error.response.status === 500 || error.response.status === 404){
+                if (error.response.status === 500 || error.response.status === 404||error.response.status === 403){
+                    if(error.response.data.message.slice(0,13)==='Malformed JWT')
+                    document.cookie = 'error=Jwt'
+                    else
                     document.cookie = 'error=true'
-                }
-                else if (error.response.status === 403){
-                    document.cookie = 'error=Jwt'                       
+                    message.warning('Please refresh again!')
                 }
             })
         }

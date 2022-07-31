@@ -41,7 +41,7 @@ function LoginPage(props) {
         let rPassword = cookieParser.getCookieByName('rPassword');
         if (rEmail && rPassword) {
             setHasRemember('A');
-
+            
             startEmail = Base64.decode(rEmail);
             //console.log(startEmail);
             startPassword = Base64.decode(rPassword);
@@ -107,11 +107,12 @@ function LoginPage(props) {
                     //console.log(res.data.msg);
                 }).catch((error) => {
                     console.log(error.response.status);
-                    if (error.response.status === 500 || error.response.status === 404){
+                    if (error.response.status === 500 || error.response.status === 404||error.response.status === 403){
+                        if(error.response.data.message.slice(0,13)==='Malformed JWT')
+                        document.cookie = 'error=Jwt'
+                        else
                         document.cookie = 'error=true'
-                    }
-                    else if (error.response.status === 403){
-                        document.cookie = 'error=Jwt'                       
+                        message.warning('Please refresh again!')
                     }
                 })
 

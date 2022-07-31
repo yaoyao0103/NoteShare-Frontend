@@ -43,11 +43,12 @@ const FileManager = (props) => {
                 .catch(err => {
                     message.error("Server Error! Please try again later. (Get Root File Error)")
                     console.log(err)
-                    if (err.response.status === 500 || err.response.status === 404){
+                    if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
+                        if(err.response.data.message.slice(0,13)==='Malformed JWT')
+                        document.cookie = 'error=Jwt'
+                        else
                         document.cookie = 'error=true'
-                    }
-                    else if (err.response.status === 403){
-                        document.cookie = 'error=Jwt'                       
+                        message.warning('Please refresh again!')
                     }
                 })
 
@@ -126,11 +127,12 @@ const FileManager = (props) => {
                 console.log(err)
                 message.error("Server Error! Please try again later. (Enter Folder Error)")
                 props.setLoading(false)
-                if (err.response.status === 500 || err.response.status === 404){
+                if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
+                    if(err.response.data.message.slice(0,13)==='Malformed JWT')
+                    document.cookie = 'error=Jwt'
+                    else
                     document.cookie = 'error=true'
-                }
-                else if (err.response.status === 403){
-                    document.cookie = 'error=Jwt'                       
+                    message.warning('Please refresh again!')
                 }
             })
     }
@@ -186,11 +188,12 @@ const FileManager = (props) => {
                 console.log(err)
                 message.error("Server Error! Please try again later. (Enter Post Folder Error)")
                 props.setLoading(false)
-                if (err.response.status === 500 || err.response.status === 404){
+                if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
+                    if(err.response.data.message.slice(0,13)==='Malformed JWT')
+                    document.cookie = 'error=Jwt'
+                    else
                     document.cookie = 'error=true'
-                }
-                else if (err.response.status === 403){
-                    document.cookie = 'error=Jwt'                       
+                    message.warning('Please refresh again!')
                 }
             })
     }
@@ -234,11 +237,12 @@ const FileManager = (props) => {
             .catch(err => {
                 message.error("Server Error! Please try again later. (Get Root File Error)")
                 console.log(err)
-                if (err.response.status === 500 || err.response.status === 404){
+                if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
+                    if(err.response.data.message.slice(0,13)==='Malformed JWT')
+                    document.cookie = 'error=Jwt'
+                    else
                     document.cookie = 'error=true'
-                }
-                else if (err.response.status === 403){
-                    document.cookie = 'error=Jwt'                       
+                    message.warning('Please refresh again!')
                 }
             })
     }
@@ -320,11 +324,12 @@ const FileManager = (props) => {
                     console.log(err)
                     message.error("Server Error! Please try again later. (Back To Last Layer Error)")
                     props.setLoading(false)
-                    if (err.response.status === 500 || err.response.status === 404){
+                    if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
+                        if(err.response.data.message.slice(0,13)==='Malformed JWT')
+                        document.cookie = 'error=Jwt'
+                        else
                         document.cookie = 'error=true'
-                    }
-                    else if (err.response.status === 403){
-                        document.cookie = 'error=Jwt'                       
+                        message.warning('Please refresh again!')
                     }
                 })
         }
@@ -350,11 +355,12 @@ const FileManager = (props) => {
                     console.log(err)
                     message.error("Server Error! Please try again later. (Back To Last Layer Error)")
                     props.setLoading(false)
-                    if (err.response.status === 500 || err.response.status === 404){
+                    if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
+                        if(err.response.data.message.slice(0,13)==='Malformed JWT')
+                        document.cookie = 'error=Jwt'
+                        else
                         document.cookie = 'error=true'
-                    }
-                    else if (err.response.status === 403){
-                        document.cookie = 'error=Jwt'                       
+                        message.warning('Please refresh again!')
                     }
                 })
         }
@@ -395,11 +401,12 @@ const FileManager = (props) => {
             .catch(err => {
                 message.error("Server Error! Please try again later. (Create Folder Error)")
                 console.log(err)
-                if (err.response.status === 500 || err.response.status === 404){
+                if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
+                    if(err.response.data.message.slice(0,13)==='Malformed JWT')
+                    document.cookie = 'error=Jwt'
+                    else
                     document.cookie = 'error=true'
-                }
-                else if (err.response.status === 403){
-                    document.cookie = 'error=Jwt'                       
+                    message.warning('Please refresh again!')
                 }
             })
     }
@@ -420,11 +427,12 @@ const FileManager = (props) => {
             .catch(err => {
                 message.error("Server Error! Please try again later. (Delete Folder Error)")
                 console.log(err)
-                if (err.response.status === 500 || err.response.status === 404){
+                if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
+                    if(err.response.data.message.slice(0,13)==='Malformed JWT')
+                    document.cookie = 'error=Jwt'
+                    else
                     document.cookie = 'error=true'
-                }
-                else if (err.response.status === 403){
-                    document.cookie = 'error=Jwt'                       
+                    message.warning('Please refresh again!')
                 }
             })
     }
@@ -452,11 +460,12 @@ const FileManager = (props) => {
             .catch(err => {
                 message.error("Server Error! Please try again later. (Rename Folder Error)")
                 console.log(err)
-                if (err.response.status === 500 || err.response.status === 404){
+                if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
+                    if(err.response.data.message.slice(0,13)==='Malformed JWT')
+                    document.cookie = 'error=Jwt'
+                    else
                     document.cookie = 'error=true'
-                }
-                else if (err.response.status === 403){
-                    document.cookie = 'error=Jwt'                       
+                    message.warning('Please refresh again!')
                 }
             })
     }
@@ -526,11 +535,12 @@ const FileManager = (props) => {
             .catch(err => {
                 message.error("Server Error! Please try again later. (Copy Note Error)")
                 setCopy(null)
-                if (err.response.status === 500 || err.response.status === 404){
+                if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
+                    if(err.response.data.message.slice(0,13)==='Malformed JWT')
+                    document.cookie = 'error=Jwt'
+                    else
                     document.cookie = 'error=true'
-                }
-                else if (err.response.status === 403){
-                    document.cookie = 'error=Jwt'                       
+                    message.warning('Please refresh again!')
                 }
             })
 
@@ -556,11 +566,12 @@ const FileManager = (props) => {
             })
             .catch(err => {
                 message.error("Server Error! Please try again later. (Move Folder Error)")
-                if (err.response.status === 500 || err.response.status === 404){
+                if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
+                    if(err.response.data.message.slice(0,13)==='Malformed JWT')
+                    document.cookie = 'error=Jwt'
+                    else
                     document.cookie = 'error=true'
-                }
-                else if (err.response.status === 403){
-                    document.cookie = 'error=Jwt'                       
+                    message.warning('Please refresh again!')
                 }
             })
     }

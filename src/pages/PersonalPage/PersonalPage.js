@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import { Layout } from "antd";
 import Navbar from '../../components/Navbar/Navbar';
 import FileManager from '../../components/FileManager/FileManager';
@@ -12,18 +12,19 @@ const PersonalPage = (props) => {
     useEffect(() => {
         const cookieParser = new Cookie(document.cookie)
         const temp = cookieParser.getCookieByName('email');
-        const startEmail = Base64.decode(temp);
+        if (temp)
+            var startEmail = Base64.decode(temp);
         console.log("email", startEmail)
         setEmail(startEmail);
     }, [])
-    return(
+    return (
         // <div className='personalPage'>
         //     <Navbar currPage={page} changePage={ (page) => { setPage(page) }}/>
         //     <div className='personalPage__Layout'>
         //         <FileManager page={page}/>
         //     </div>
         // </div>
-        <FileManager page={props.page} email={email} setPageProps={props.setPageProps} setLoading={props.setLoading}/>
+        <FileManager page={props.page} email={email} setPageProps={props.setPageProps} setLoading={props.setLoading} />
     );
 
 }

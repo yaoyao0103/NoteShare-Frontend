@@ -17,7 +17,7 @@ const cookieParser = new Cookie(document.cookie)
 function OutlineCard(props) {
     const [ellipsis, setEllipsis] = useState(true);
     const [hasLike, setHasLike] = useState(props.hasLike);
-    const [likeNum,setLikeNum]=useState(props.cardContent.likeCount)
+    const [likeNum, setLikeNum] = useState(props.cardContent.likeCount)
     const [sider, setSider] = useState(
         <Sider className={"OutlineCard__Sider__Outer" + '__' + props.mode} width='35%' ></Sider>
     );
@@ -62,57 +62,68 @@ function OutlineCard(props) {
 
 
     }
-    useEffect(()=>{
+    useEffect(() => {
         console.log(likeNum)
-    },[likeNum])
+    }, [likeNum])
     const likeNote = () => {
-        
-        axios.put('http://localhost:8080/like/note/' + props.cardContent.id + '/' + props.email, {}, {
-            headers: {
-                'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
-            }
-        }).then((res) => {
-            message.success('Like it successfully!')
-            setHasLike(true)
-            if(props.hasLike)
-            setLikeNum(props.cardContent.likeCount)
-            else
-            setLikeNum(props.cardContent.likeCount+1)
-        }).catch(err => {
-            message.error("Server Error! Please try again later. (like Note Error)")
-            console.log(err)
-            if (err.response.status === 500 || err.response.status === 404){
-                document.cookie = 'error=true'
-            }
-            else if (err.response.status === 403){
-                document.cookie = 'error=Jwt'                       
-            }
-        });
-
+        if (cookieParser.getCookieByName('email')) {
+            axios.put('http://localhost:8080/like/note/' + props.cardContent.id + '/' + props.email, {}, {
+                headers: {
+                    'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+                }
+            }).then((res) => {
+                message.success('Like it successfully!')
+                setHasLike(true)
+                if (props.hasLike)
+                    setLikeNum(props.cardContent.likeCount)
+                else
+                    setLikeNum(props.cardContent.likeCount + 1)
+            }).catch(err => {
+                message.error("Server Error! Please try again later. (like Note Error)")
+                console.log(err)
+                if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
+                    if(err.response.data.message.slice(0,13)==='Malformed JWT')
+                    document.cookie = 'error=Jwt'
+                    else
+                    document.cookie = 'error=true'
+                    message.warning('Please refresh again!')
+                }
+            });
+        }
+        else {
+            message.warning("Please log in first!")
+            props.setPageProps({ page: 'LoginPage' })
+        }
     }
     const unLikeNote = () => {
-        axios.put('http://localhost:8080/unlike/note/' + props.cardContent.id + '/' + props.email, {}, {
-            headers: {
-                'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
-            }
-        }).then((res) => {
-            message.success('Cancel like successfully!')
-            setHasLike(false)
-            if(props.hasLike)
-            setLikeNum(props.cardContent.likeCount-1)
-            else
-            setLikeNum(props.cardContent.likeCount)
-        }).catch(err => {
-            message.error("Server Error! Please try again later. (Cancel like Error)")
-            console.log(err)
-            if (err.response.status === 500 || err.response.status === 404){
-                document.cookie = 'error=true'
-            }
-            else if (err.response.status === 403){
-                document.cookie = 'error=Jwt'                       
-            }
-        });
-
+        if (cookieParser.getCookieByName('email')) {
+            axios.put('http://localhost:8080/unlike/note/' + props.cardContent.id + '/' + props.email, {}, {
+                headers: {
+                    'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+                }
+            }).then((res) => {
+                message.success('Cancel like successfully!')
+                setHasLike(false)
+                if (props.hasLike)
+                    setLikeNum(props.cardContent.likeCount - 1)
+                else
+                    setLikeNum(props.cardContent.likeCount)
+            }).catch(err => {
+                message.error("Server Error! Please try again later. (Cancel like Error)")
+                console.log(err)
+                if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
+                    if(err.response.data.message.slice(0,13)==='Malformed JWT')
+                    document.cookie = 'error=Jwt'
+                    else
+                    document.cookie = 'error=true'
+                    message.warning('Please refresh again!')
+                }
+            });
+        }
+        else {
+            message.warning("Please log in first!")
+            props.setPageProps({ page: 'LoginPage' })
+        }
     }
 
     const QnASider = (
@@ -474,7 +485,7 @@ function OutlineCard(props) {
             case 'MemberPage': setSider(NoteSider); break;
         }
         //console.log(props.page);
-    }, [hasLike,likeNum])
+    }, [hasLike, likeNum])
     return (
         <Layout className={"OutlineCard__Layout__Outer" + '__' + props.mode}>
             <Content className={"OutlineCard__Content__Outer" + '__' + props.mode} onClick={() => onClickCard(props.cardContent.type, props.cardContent.id)}>

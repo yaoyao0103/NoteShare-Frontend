@@ -23,13 +23,13 @@ const MyEditor = (props) => {
         setAssets(response.data);
       } catch (error) {
         setAssets(error.message);
-         if (error.response.status === 500 || error.response.status === 404){
+             if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
+                    if(err.response.data.message.slice(0,13)==='Malformed JWT')
+                    document.cookie = 'error=Jwt'
+                    else
                     document.cookie = 'error=true'
+                    message.warning('Please refresh again!')
                 }
-                else if (error.response.status === 403){
-                    document.cookie = 'error=Jwt'                       
-                }
-      }
     }
 
     getAllAssets();
@@ -38,33 +38,33 @@ const MyEditor = (props) => {
 
   useEffect(() => {
     console.log("MyEditor props", props)
-    let previewMode = (props.page == 'NoteEditPage' || props.page == 'NoteNewPage' || props.page == 'CollabNoteEditPage')? false:true;
-    const editor = geditorConfig(assets, props.noteId, props.version, props.isCollab? props.isCollab:false, props.email, props.name, props.avatar, props.setQueue, previewMode);
+    let previewMode = (props.page == 'NoteEditPage' || props.page == 'NoteNewPage' || props.page == 'CollabNoteEditPage') ? false : true;
+    const editor = geditorConfig(assets, props.noteId, props.version, props.isCollab ? props.isCollab : false, props.email, props.name, props.avatar, props.setQueue, previewMode);
     setEditor(editor);
-    
+
   }, [props.noteId, props.version, props.isCollab, props.email, props.name, props.avatar, assets]);
 
   return (
-    
+
     <Layout className="myEditor">
-        <Row>
-            {props.page == 'NoteEditPage' || props.page == 'NoteNewPage' || props.page == 'CollabNoteEditPage'? 
-              <>
-                <Col span={5}>
-                <Sidebar />
-                </Col>
-                <Col span={19}>
-                    <TopNav />
-                    <div id="editor"></div>
-                </Col>
-              </>
-              :
-              <>
-                  <div id="editor"></div>
-              </>
-            }
-            
-        </Row>
+      <Row>
+        {props.page == 'NoteEditPage' || props.page == 'NoteNewPage' || props.page == 'CollabNoteEditPage' ?
+          <>
+            <Col span={5}>
+              <Sidebar />
+            </Col>
+            <Col span={19}>
+              <TopNav />
+              <div id="editor"></div>
+            </Col>
+          </>
+          :
+          <>
+            <div id="editor"></div>
+          </>
+        }
+
+      </Row>
     </Layout>
   );
 };

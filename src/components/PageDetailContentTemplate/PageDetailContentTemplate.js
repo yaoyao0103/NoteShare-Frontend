@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Layout, Row, Col, Tag, Progress, message, notification, Avatar, Modal, DatePicker, Select, Skeleton, Drawer, Divider  } from "antd";
+import { Layout, Row, Col, Tag, Progress, message, notification, Avatar, Modal, DatePicker, Select, Skeleton, Drawer, Divider } from "antd";
 import { CaretLeftFilled } from "@ant-design/icons";
 import Button from "../Button/Button";
 import Text from "../Text/Text";
@@ -56,9 +56,10 @@ const PageDetailContentTemplate = (props) => {
     const [rewardIsEnd, setRewardIsEnd] = useState(false)
 
     useEffect(() => {
-       
+
         const temp = cookieParser.getCookieByName('email')
-        const tempEmail = Base64.decode(temp);
+        if (temp)
+            var tempEmail = Base64.decode(temp);
         setEmail(tempEmail)
         console.log("tempEmail", tempEmail)
         if (props.page == "NoteDetailPage") {
@@ -71,7 +72,7 @@ const PageDetailContentTemplate = (props) => {
             if (props.data?.type == 'reward') {
                 console.log("props.data?.submit", props.data)
                 if (props.data?.submit) setIsSubmit(true)
-                if(props.data?.best || props.data?.reference) setRewardIsEnd(true)
+                if (props.data?.best || props.data?.reference) setRewardIsEnd(true)
             }
             if (props.data?.headerUserObj.userObjEmail == tempEmail) setIsAuthor(true)
             else setIsAuthor(false)
@@ -111,7 +112,7 @@ const PageDetailContentTemplate = (props) => {
                     }*/
 
 
-                    if ((tempNote.managerUserObj?.userObjEmail == tempEmail) || tempNote.headerUserObj.userObjEmail == tempEmail) {
+                    if (((tempNote.managerUserObj?.userObjEmail == tempEmail) || tempNote.headerUserObj.userObjEmail == tempEmail)&&tempEmail) {
                         setEditor(<MyEditor noteId={noteId} version={'0'} page={props.page} email={email} />)
                         setIsManager(true)
                         setIsAuthor(true)
@@ -119,7 +120,7 @@ const PageDetailContentTemplate = (props) => {
                         setPoppedContent(props.data.collabApplyUserObj);
                         console.log("props.data.collabApplyUserObj", props.data.collabApplyUserObj)
                     }
-                    else if (tempNote.authorEmail.includes(tempEmail)) {
+                    else if (tempNote.authorEmail.includes(tempEmail)&&tempEmail) {
                         setEditor(<MyEditor noteId={noteId} version={'0'} page={props.page} email={email} />)
                         setIsAuthor(true)
                     }
@@ -153,30 +154,31 @@ const PageDetailContentTemplate = (props) => {
                 .catch(err => {
                     message.error("Server Error! Please try again later. (Get Collaboration Note Error)")
                     console.log(err)
-                    if (err.response.status === 500 || err.response.status === 404){
+                    if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
+                        if(err.response.data.message.slice(0,13)==='Malformed JWT')
+                        document.cookie = 'error=Jwt'
+                        else
                         document.cookie = 'error=true'
-                    }
-                    else if (err.response.status === 403){
-                        document.cookie = 'error=Jwt'                       
+                        message.warning('Please refresh again!')
                     }
                 })
 
-                
+
             //if(isManager) setPoppedContent( props.data.wantEnterUsersEmail );
             //if(isManager) setPoppedContent( props.data.collabApply );
         }
         else if (props.page === "RewardDetailPage") {
             setType("reward")
-            if(props.data?.answersUserObj?.length > 0){
-                for(let i = 0; i < props.data?.answersUserObj?.length; i++){
-                    if(props.data?.answersUserObj[i].best){
-                        setBestNum(bestNum+1);
+            if (props.data?.answersUserObj?.length > 0) {
+                for (let i = 0; i < props.data?.answersUserObj?.length; i++) {
+                    if (props.data?.answersUserObj[i].best) {
+                        setBestNum(bestNum + 1);
                     }
                 }
             }
             setIsPublic(props.data?.public)
-            setPoppedContent( props.data?.answersUserObj );
-            if(props.data?.author == email){
+            setPoppedContent(props.data?.answersUserObj);
+            if (props.data?.author == email) {
                 setIsAuthor(true)
             }
         }
@@ -187,89 +189,89 @@ const PageDetailContentTemplate = (props) => {
             if (props.data?.author == email) {
                 setIsAuthor(true)
             }
-            if(props.data?.answers){
-                if(props.data?.answers.length == 1){
+            if (props.data?.answers) {
+                if (props.data?.answers.length == 1) {
                     setIsAnswered(true)
                 }
             }
             if (props.data?.archive) {
                 setIsArchive(true)
             }
-            
+
         }
 
     }, [props.data])
 
-    useEffect(()=>{
-        if(bestNum===1 && props.data?.referenceNumber===0){
+    useEffect(() => {
+        if (bestNum === 1 && props.data?.referenceNumber === 0) {
             setIsAnswered(true);
         }
-    },[bestNum])
+    }, [bestNum])
 
-    useEffect(()=>{
-        if(isAnswered && props.page == 'RewardDetailPage'){
+    useEffect(() => {
+        if (isAnswered && props.page == 'RewardDetailPage') {
             notification.open({
                 message: "The author has selected all answers",
                 description: "You cannot contribute any note now",
                 placement: 'bottomLeft',
-                style:{
+                style: {
                     width: "auto"
                 }
             });
         }
-    },[isAnswered])
+    }, [isAnswered])
 
-    useEffect(()=>{
+    useEffect(() => {
         if (props.data?.voteUserObj?.length > 0 && isAuthor) {
-            for(let i = 0; i < props.data?.voteUserObj.length; i++){
-                    //setVote(props.data?.vote.length > 0 ? props.data?.voteUserObj[0] : null)
-                if(props.data?.voteUserObj[i].result == "yet")
-                notification.open({
-                    message: (
-                    <> 
-                        <a>Vote: Kick</a>
-                        <a className='vote__Header__Avatar'>
-                            <Avatar className='vote__Header__Avatar' style={{cursor:"pointer", marginRight:".5em"}} size={25} src={props.data?.voteUserObj[i].kickTargetUserObj.userObjAvatar} onClick={() => props.setPageProps({page: 'ProfilePage', email: props.data?.voteUserObj[i].kickTargetUserObj.userObjEmail})}></Avatar>
-                            <Text className='vote__Header__Name' color='black' cls='Default' content={props.data?.voteUserObj[i].kickTargetUserObj.userObjName} fontSize='15' display="inline-block" />
-                        </a>
-                        <a>out of group!</a>
-                    </>),
-                    description:(
-                        <VoteArea vote={props.data?.voteUserObj[i]} total={props.data?.emailUserObj.length} postId={props.postId} email={email} />
-                    ),
-                    placement: 'topLeft',
-                    style:{
-                        width: "auto"
-                    }
-                });
+            for (let i = 0; i < props.data?.voteUserObj.length; i++) {
+                //setVote(props.data?.vote.length > 0 ? props.data?.voteUserObj[0] : null)
+                if (props.data?.voteUserObj[i].result == "yet")
+                    notification.open({
+                        message: (
+                            <>
+                                <a>Vote: Kick</a>
+                                <a className='vote__Header__Avatar'>
+                                    <Avatar className='vote__Header__Avatar' style={{ cursor: "pointer", marginRight: ".5em" }} size={25} src={props.data?.voteUserObj[i].kickTargetUserObj.userObjAvatar} onClick={() => props.setPageProps({ page: 'ProfilePage', email: props.data?.voteUserObj[i].kickTargetUserObj.userObjEmail })}></Avatar>
+                                    <Text className='vote__Header__Name' color='black' cls='Default' content={props.data?.voteUserObj[i].kickTargetUserObj.userObjName} fontSize='15' display="inline-block" />
+                                </a>
+                                <a>out of group!</a>
+                            </>),
+                        description: (
+                            <VoteArea vote={props.data?.voteUserObj[i]} total={props.data?.emailUserObj.length} postId={props.postId} email={email} />
+                        ),
+                        placement: 'topLeft',
+                        style: {
+                            width: "auto"
+                        }
+                    });
             }
 
         }
-    },[isAuthor])
+    }, [isAuthor])
 
-    useEffect(()=>{
-        if(isManager && author){
+    useEffect(() => {
+        if (isManager && author) {
             let votingList = []
-            if(props.data?.vote.length > 0){
-                for(let i = 0; i < props.data?.vote.length; i++){
-                    if(props.data?.vote[i].result == 'yet'){
+            if (props.data?.vote.length > 0) {
+                for (let i = 0; i < props.data?.vote.length; i++) {
+                    if (props.data?.vote[i].result == 'yet') {
                         votingList.push(props.data?.vote[i].kickTarget)
                     }
                 }
             }
-            
+
             setKickUserList(<>
                 {author.map((item, index) => (
-                    (item.email==props.data?.author || item.email==manager?.userObjEmail || votingList.includes(item.email))?
+                    (item.email == props.data?.author || item.email == manager?.userObjEmail || votingList.includes(item.email)) ?
                         <Option value={item.email} disabled>{item.name}</Option>
                         :
                         <Option value={item.email}>{item.name}</Option>
-                    
-                    
+
+
                 ))}
             </>)
         }
-    },[isManager, author])
+    }, [isManager, author])
 
 
 
@@ -281,31 +283,39 @@ const PageDetailContentTemplate = (props) => {
     }
 
     const apply = (content) => {
+
+        if( cookieParser.getCookieByName('email')){
         //message.success("apply")
         const data = {
             wantEnterUsersEmail: email,
             commentFromApplicant: content
         }
         console.log("data", data)
-        axios.put(`http://localhost:8080/post/apply/${props.postId}`, data,{
+        axios.put(`http://localhost:8080/post/apply/${props.postId}`, data, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
-              }
+            }
         })
             .then(res => {
                 message.success("You submitted your application!")
                 console.log(res)
             })
             .catch(err => {
-            message.error("Server Error! Please try again later. (Submit Application Error)")
+                message.error("Server Error! Please try again later. (Submit Application Error)")
                 console.log(err)
-                if (err.response.status === 500 || err.response.status === 404){
+                if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
+                    if(err.response.data.message.slice(0,13)==='Malformed JWT')
+                    document.cookie = 'error=Jwt'
+                    else
                     document.cookie = 'error=true'
-                }
-                else if (err.response.status === 403){
-                    document.cookie = 'error=Jwt'                       
+                    message.warning('Please refresh again!')
                 }
             })
+        }
+        else {
+            message.warning("Please log in first!")
+            props.setPageProps({ page: 'LoginPage' })
+        }
     }
 
     const buyNote = () => {
@@ -313,53 +323,54 @@ const PageDetailContentTemplate = (props) => {
         let name = cookieParser.getCookieByName('name');
         let avatar = cookieParser.getCookieByName('avatar');
         let success = false;
-        if(email){
-            axios.put(`http://localhost:8080/coin/note/${email}/${props.noteId}`,{},{
+        if (email) {
+            axios.put(`http://localhost:8080/coin/note/${email}/${props.noteId}`, {}, {
                 headers: {
                     'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
-                  }
+                }
             })
                 .then(res => {
-                    props.setCoinNum(props.coinNum-props.data?.price)
+                    props.setCoinNum(props.coinNum - props.data?.price)
                     console.log(res.data.res)
                     message.success("You bought this note!")
                     setIsBuyer(true);
-                    if(props.data.type==='normal')
-                    props.sendPrivateMessage(
-                        name + ' has bought your note !',
-                        'note',
-                        email,
-                        name,
-                        avatar,
-                        props.noteId,
-                        props.data.headerEmail
-                    )
+                    if (props.data.type === 'normal')
+                        props.sendPrivateMessage(
+                            name + ' has bought your note !',
+                            'note',
+                            email,
+                            name,
+                            avatar,
+                            props.noteId,
+                            props.data.headerEmail
+                        )
                 })
                 .catch(err => {
                     message.error("Server Error! Please try again later. (Buy Note Error)")
                     console.log(err)
-                    if (err.response.status === 500 || err.response.status === 404){
+                    if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
+                        if(err.response.data.message.slice(0,13)==='Malformed JWT')
+                        document.cookie = 'error=Jwt'
+                        else
                         document.cookie = 'error=true'
-                    }
-                    else if (err.response.status === 403){
-                        document.cookie = 'error=Jwt'                       
+                        message.warning('Please refresh again!')
                     }
                 })
         }
-        else{
+        else {
             message.warn("You have to log in first!")
             props.setPageProps({
                 page: "LoginPage"
             })
         }
-      
+
     }
 
     const submitRewardNote = () => {
-        axios.put(`http://localhost:8080/note/submit/${props.noteId}`,{},{
+        axios.put(`http://localhost:8080/note/submit/${props.noteId}`, {}, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
-              }
+            }
         })
             .then(res => {
                 message.success("You submitted your reward note!")
@@ -368,20 +379,21 @@ const PageDetailContentTemplate = (props) => {
             .catch(err => {
                 message.error("Server Error! Please try again later. (Submit Reward Note Error)")
                 console.log(err)
-                if (err.response.status === 500 || err.response.status === 404){
+                if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
+                    if(err.response.data.message.slice(0,13)==='Malformed JWT')
+                    document.cookie = 'error=Jwt'
+                    else
                     document.cookie = 'error=true'
-                }
-                else if (err.response.status === 403){
-                    document.cookie = 'error=Jwt'                       
+                    message.warning('Please refresh again!')
                 }
             })
     }
 
     const withdrawRewardNote = () => {
-        axios.put(`http://localhost:8080/note/withdraw/${props.noteId}`,{},{
+        axios.put(`http://localhost:8080/note/withdraw/${props.noteId}`, {}, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
-              }
+            }
         })
             .then(res => {
                 message.success("You withdrawn your reward note!")
@@ -390,11 +402,12 @@ const PageDetailContentTemplate = (props) => {
             .catch(err => {
                 message.error("Server Error! Please try again later. (Withdraw Reward Note Error)")
                 console.log(err)
-                if (err.response.status === 500 || err.response.status === 404){
+                if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
+                    if(err.response.data.message.slice(0,13)==='Malformed JWT')
+                    document.cookie = 'error=Jwt'
+                    else
                     document.cookie = 'error=true'
-                }
-                else if (err.response.status === 403){
-                    document.cookie = 'error=Jwt'                       
+                    message.warning('Please refresh again!')
                 }
             })
     }
@@ -402,64 +415,66 @@ const PageDetailContentTemplate = (props) => {
     /////////// Kick User //////// 
     const showModal = () => {
         setIsModalVisible(true);
-      };
-    
-      const handleOk = () => {
+    };
+
+    const handleOk = () => {
         const date = kickDate.split('-')
         const data = {
             year: date[0],
             month: date[1],
             day: date[2],
             kickTargetEmail: kickTarget,
-          }
-          console.log("data", data)
-          axios.post(`http://localhost:8080/schedule/vote/${props.postId}`, data,{
+        }
+        console.log("data", data)
+        axios.post(`http://localhost:8080/schedule/vote/${props.postId}`, data, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
-              }
+            }
         })
             .then(res => {
-              message.success("You created a vote of kicking an author!")
-              // Todo: remove applicant from list
+                message.success("You created a vote of kicking an author!")
+                // Todo: remove applicant from list
             })
             .catch(err => {
                 message.error("Server Error! Please try again later. (Create Vote Error)")
-              console.log(err)
-              if (err.response.status === 500 || err.response.status === 404){
-                document.cookie = 'error=true'
-            }
-            else if (err.response.status === 403){
-                document.cookie = 'error=Jwt'                       
-            }
+                console.log(err)
+                if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
+                    if(err.response.data.message.slice(0,13)==='Malformed JWT')
+                    document.cookie = 'error=Jwt'
+                    else
+                    document.cookie = 'error=true'
+                    message.warning('Please refresh again!')
+                }
             })
         setIsModalVisible(false);
-      };
-    
-      const handleCancel = () => {
-        setIsModalVisible(false);
-      };
-      const onDateChange = (date, dateString) => {
-        setKickDate(dateString)
-      };
+    };
 
-      const onKickUserChange = (value) => {
+    const handleCancel = () => {
+        setIsModalVisible(false);
+    };
+    const onDateChange = (date, dateString) => {
+        setKickDate(dateString)
+    };
+
+    const onKickUserChange = (value) => {
         setKickTarget(value);
-      }
+    }
     //////////////////////////
 
     const refreshAnswer = () => {
         axios.get(`http://localhost:8080/post/${props.postId}`)
             .then(res => {
-                setPoppedContent( res.data.res.answersUserObj );
+                setPoppedContent(res.data.res.answersUserObj);
             })
             .catch(err => {
                 message.error("Server Error! Please try again later. (Refresh Answer Error)")
                 console.log(err)
-                if (err.response.status === 500 || err.response.status === 404){
+                if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
+                    if(err.response.data.message.slice(0,13)==='Malformed JWT')
+                    document.cookie = 'error=Jwt'
+                    else
                     document.cookie = 'error=true'
-                }
-                else if (err.response.status === 403){
-                    document.cookie = 'error=Jwt'                       
+                    message.warning('Please refresh again!')
                 }
             })
     }
@@ -467,11 +482,11 @@ const PageDetailContentTemplate = (props) => {
     // Drawer
     const showDrawer = () => {
         setVisible(true);
-      };
-    
-      const onClose = () => {
+    };
+
+    const onClose = () => {
         setVisible(false);
-      };
+    };
 
     return (
 
@@ -493,10 +508,10 @@ const PageDetailContentTemplate = (props) => {
                                 >T</OPInfo>
                             </Col>
                             <Col className="contentTemplate__Header__middle" span={props.page != 'NoteDetailPage' ? 16 : 18}>
-                                {props.data?.title?
-                                <Title title={props.data.title} size={props.page != 'NoteDetailPage' ? '30' : '35'} />
-                                :
-                                <Skeleton />
+                                {props.data?.title ?
+                                    <Title title={props.data.title} size={props.page != 'NoteDetailPage' ? '30' : '35'} />
+                                    :
+                                    <Skeleton />
                                 }
                             </Col>
                             <Col className="contentTemplate__Header__right contentTemplate__Dropdown" span={props.page != 'NoteDetailPage' ? 1 : 2}>
@@ -550,9 +565,9 @@ const PageDetailContentTemplate = (props) => {
                                     likeCount={props.data?.likeCount}
                                     favoriteCount={props.data?.favoriteCount}
                                     unlockCount={props.data?.unlockCount}
-                                    bestPrice={props.data?.bestPrice? props.data?.bestPrice:props.data?.price}
+                                    bestPrice={props.data?.bestPrice ? props.data?.bestPrice : props.data?.price}
                                     referencePrice={props.data?.referencePrice}
-                                    remainBest={1-bestNum}
+                                    remainBest={1 - bestNum}
                                     remainRef={props.data?.referenceNumber}
                                     downloadable={props.data?.downloadable}
                                     public={isPublic}
@@ -578,7 +593,7 @@ const PageDetailContentTemplate = (props) => {
                         </Row>
                     </Content>
                     {/* Footer */}
-                    
+
                     <Footer className="contentTemplate__Footer">
                         {props.page == 'NoteDetailPage' &&
                             <>
@@ -625,7 +640,7 @@ const PageDetailContentTemplate = (props) => {
                                 <Button color={"green"}><Text color='white' cls='Large' content={"Show user-contributed Notes"} fontSize='17' display="inline-block" /></Button>
                             </div>
                         }
-                        {((props.page == 'RewardDetailPage') && !isAuthor && !(bestNum==1 && props.data?.referenceNumber==0)) &&
+                        {((props.page == 'RewardDetailPage') && !isAuthor && !(bestNum == 1 && props.data?.referenceNumber == 0)) &&
                             <div
                                 className="contentTemplate__Footer__Button"
                                 onClick={() => {
@@ -633,14 +648,14 @@ const PageDetailContentTemplate = (props) => {
                                         page: "NoteNewPage",
                                         action: "newReward",
                                         postId: props.postId,
-                                        rewardAuthorEmail:props.data?.authorUserObj?.userObjEmail
+                                        rewardAuthorEmail: props.data?.authorUserObj?.userObjEmail
                                     })
                                 }}
                             >
                                 <Button color={"green"}><Text color='white' cls='Large' content={"Contribute Note"} fontSize='17' display="inline-block" /></Button>
                             </div>
                         }
-                        
+
                         {(props.page == 'CollabDetailPage' && !isAuthor) &&
                             <div className="contentTemplate__Footer__Button" onClick={() => setPoppedContentShow(true)}>
                                 <Button color={"green"}><Text color='white' cls='Large' content={"Apply"} fontSize='17' display="inline-block" /></Button>
@@ -658,8 +673,8 @@ const PageDetailContentTemplate = (props) => {
                 {/* Sider */}
                 {(props.page != 'NoteDetailPage' && props.page != 'CollabDetailPage') &&
                     <>
-                        <Sider id="contentTemplate__Comment" className="contentTemplate__Comment" width={props.page=="QnADetailPage"? '50%':'40%'}>
-                            <CommentArea type="post" page={props.page} comments={props.data?.commentsUserObj ? props.data.commentsUserObj : []} id={props.postId} isArchive={isArchive} isAuthor={isAuthor} authorEmail={authorEmail} />
+                        <Sider id="contentTemplate__Comment" className="contentTemplate__Comment" width={props.page == "QnADetailPage" ? '50%' : '40%'}>
+                            <CommentArea type="post" setPageProps={props.setPageProps}page={props.page} comments={props.data?.commentsUserObj ? props.data.commentsUserObj : []} id={props.postId} isArchive={isArchive} isAuthor={isAuthor} authorEmail={authorEmail} />
                         </Sider>
                     </>
                 }
@@ -667,7 +682,7 @@ const PageDetailContentTemplate = (props) => {
             {/* Popped up Part */}
             <div className={poppedContentShow && 'popped__blur'}></div>
             <div className={`${props.page != 'CollabDetailPage' ? 'popped__Answer' : 'popped__Apply'} ${poppedContentShow && 'popped--show'}`} >
-                <PoppedContent email={email} sendPrivateMessage={props.sendPrivateMessage} page={props.page} content={poppedContent} apply={apply} setPoppedContentShow={setPoppedContentShow} isAuthor={isAuthor} isManager={isManager} postId={props.postId} haveApplied={haveApplied} setHaveApplied={setHaveApplied} refreshAnswer={refreshAnswer} setPageProps={props.setPageProps}/>
+                <PoppedContent email={email} sendPrivateMessage={props.sendPrivateMessage} page={props.page} content={poppedContent} apply={apply} setPoppedContentShow={setPoppedContentShow} isAuthor={isAuthor} isManager={isManager} postId={props.postId} haveApplied={haveApplied} setHaveApplied={setHaveApplied} refreshAnswer={refreshAnswer} setPageProps={props.setPageProps} />
             </div>
 
             <Modal title="Kick User Vote" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
@@ -679,7 +694,7 @@ const PageDetailContentTemplate = (props) => {
                         marginLeft: "1em"
                     }}
                     placeholder="Select a user"
-                    >
+                >
                     {kickUserList}
                     {/* <Option value="jack">Jack</Option>
                     <Option value="lucy">Lucy</Option>
@@ -687,15 +702,15 @@ const PageDetailContentTemplate = (props) => {
                 </Select>
             </Modal>
 
-            {(props.page=="NoteDetailPage" || props.page=="CollabDetailPage")&&
+            {(props.page == "NoteDetailPage" || props.page == "CollabDetailPage") &&
                 <div className='note__CommentAreaButton' onClick={showDrawer}>
                     <div className='note__CommentAreaButton__Title'>Comment</div>
                     <CaretLeftFilled />
                 </div>
-             }
+            }
 
             <Drawer title={"Comment"} placement="right" onClose={onClose} visible={visible}>
-                <CommentArea page={props.page} type="note" comments={props.data?.commentsUserObj ? props.data.commentsUserObj : []} id={props.postId ? props.postId : props.noteId} />
+                <CommentArea setPageProps={props.setPageProps} page={props.page} type="note" comments={props.data?.commentsUserObj ? props.data.commentsUserObj : []} id={props.postId ? props.postId : props.noteId} />
             </Drawer>
 
         </div>

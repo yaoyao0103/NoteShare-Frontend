@@ -9,6 +9,7 @@ import TopNav from "../Page/TopNav";
 import Navbar from "../Navbar/Navbar"
 import geditorConfig from "../../api_utils/geditor_config";
 import Cookie from "../Cookies/Cookies";
+import { message } from "antd";
 //import PageSection from "../Page/PageSection";
 
 const Editor = () => {
@@ -22,19 +23,20 @@ const Editor = () => {
   useEffect(() => {
     async function getAllAssets() {
       try {
-        const response = await axios.get(`${API_HOST}assets/`,{
+        const response = await axios.get(`${API_HOST}assets/`, {
           headers: {
-              'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
-            }
-      });
+            'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+          }
+        });
         setAssets(response.data);
       } catch (error) {
         setAssets(error.message);
-        if (error.response.status === 500 || error.response.status === 404){
+        if (error.response.status === 500 || error.response.status === 404||error.response.status === 403){
+          if(error.response.data.message.slice(0,13)==='Malformed JWT')
+          document.cookie = 'error=Jwt'
+          else
           document.cookie = 'error=true'
-      }
-      else if (error.response.status === 403){
-          document.cookie = 'error=Jwt'                       
+          message.warning('Please refresh again!')
       }
       }
     }
@@ -49,12 +51,12 @@ const Editor = () => {
   }, [pageId, assets]);
 
   return (
-    
+
     <div className="App">
       <Navbar />
-      <div id = "editor-area">
+      <div id="editor-area">
         <div className="sidenav d-flex flex-column overflow-scroll">
-        {/* <div id="navbar" className="sidenav d-flex flex-column overflow-scroll"> */}
+          {/* <div id="navbar" className="sidenav d-flex flex-column overflow-scroll"> */}
           {/* <nav className="navbar navbar-light">
             { <div className="container-fluid">
               <span className="navbar-brand mb-0 h3 logo">Code Dexterous</span>
@@ -66,7 +68,7 @@ const Editor = () => {
         <div className="main-content" id="main-content">
           <TopNav />
           <div id="editor"></div>
-          
+
         </div>
       </div>
     </div>

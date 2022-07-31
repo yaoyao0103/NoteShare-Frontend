@@ -19,11 +19,12 @@ function RewardDetailPage(props) {
             .catch(err =>{
                 message.error("Server Error! Please try again later. (Get Reward Post Error)")
                 console.log(err)
-                if (err.response.status === 500 || err.response.status === 404){
+                if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
+                    if(err.response.data.message.slice(0,13)==='Malformed JWT')
+                    document.cookie = 'error=Jwt'
+                    else
                     document.cookie = 'error=true'
-                }
-                else if (err.response.status === 403){
-                    document.cookie = 'error=Jwt'                       
+                    message.warning('Please refresh again!')
                 }
                 
             })

@@ -60,9 +60,10 @@ const CollabNoteEditPage = (props) => {
     const { pageStore } = useSelector((state) => state);
 
     useEffect(() => {
-       
+
         const temp = cookieParser.getCookieByName('email')
-        const tempEmail = Base64.decode(temp);
+        if (temp)
+            var tempEmail = Base64.decode(temp);
         const tempName = cookieParser.getCookieByName('name')
         const tempAvatar = cookieParser.getCookieByName('avatar')
         setEmail(tempEmail)
@@ -71,105 +72,107 @@ const CollabNoteEditPage = (props) => {
         console.log("tempEmail", tempEmail)
         //const note = props.note;
         axios.get(`http://localhost:8080/note/${props.noteId}`)
-        .then ( res => {
-            console.log(res.data.res)
-            const tempNote = res.data.res
-            setNote(res.data.res)
-            setTitle(tempNote.title);
-            setMyEditor(<MyEditor noteId={props.noteId} version={'0'} page={props.page} email={tempEmail} name={tempName} avatar={tempAvatar} isCollab={true} setQueue={setQueue}/>);
-            setInformation({
-                school: tempNote.school,
-                department: tempNote.department,
-                subject: tempNote.subject,
-                professor: tempNote.professor,
-                downloadable: tempNote.downloadable,
-                price: tempNote.price,
+            .then(res => {
+                console.log(res.data.res)
+                const tempNote = res.data.res
+                setNote(res.data.res)
+                setTitle(tempNote.title);
+                setMyEditor(<MyEditor noteId={props.noteId} version={'0'} page={props.page} email={tempEmail} name={tempName} avatar={tempAvatar} isCollab={true} setQueue={setQueue} />);
+                setInformation({
+                    school: tempNote.school,
+                    department: tempNote.department,
+                    subject: tempNote.subject,
+                    professor: tempNote.professor,
+                    downloadable: tempNote.downloadable,
+                    price: tempNote.price,
+                })
+                setContent(tempNote.description)
+                setVersions(tempNote.version)
+                setTagSelected(tempNote.tag)
+                if (!props.isManager) {
+                    setStep(1)
+                }
             })
-            setContent(tempNote.description)
-            setVersions(tempNote.version)
-            setTagSelected(tempNote.tag)
-            if(!props.isManager){
-                setStep(1)
-            }
-        })
-        .catch(err =>{
-            message.error("Server Error! Please try again later. (Get Note Error)")
-            console.log(err)
-            if (err.response.status === 500 || err.response.status === 404){
-                document.cookie = 'error=true'
-            }
-            else if (err.response.status === 403){
-                document.cookie = 'error=Jwt'                       
-            }
-        })
-    },[props])
+            .catch(err => {
+                message.error("Server Error! Please try again later. (Get Note Error)")
+                console.log(err)
+                if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
+                    if(err.response.data.message.slice(0,13)==='Malformed JWT')
+                    document.cookie = 'error=Jwt'
+                    else
+                    document.cookie = 'error=true'
+                    message.warning('Please refresh again!')
+                }
+            })
+    }, [props])
 
     useEffect(() => {
         setPopoverContent(
             <>
                 <List
                     dataSource={versions}
-                    renderItem={(item, index) => (index !=0 && 
+                    renderItem={(item, index) => (index != 0 &&
                         <Tooltip placement='left' title={moment(item.date).format('YYYY-MM-DD HH:mm:ss')}>
-                            <List.Item className='versionItem' onClick={()=>saveVersion(index)}><span>{item.name}</span></List.Item>
+                            <List.Item className='versionItem' onClick={() => saveVersion(index)}><span>{item.name}</span></List.Item>
                         </Tooltip>
                     )}
                 />
                 {versions.length < 6 &&
-                    <List.Item className='newVersion'><Input placeholder="New Version" onPressEnter={(ev) => newVersion(ev.target.value)}/></List.Item>
+                    <List.Item className='newVersion'><Input placeholder="New Version" onPressEnter={(ev) => newVersion(ev.target.value)} /></List.Item>
                 }
             </>
         )
-    },[versions])
+    }, [versions])
 
 
-    useEffect(()=>{
+    useEffect(() => {
         //  queue:[1,2,3,4], preQueue:[1,2], newcomer:[3,4]
         let newcomer = queue.filter(x => !preQueue.includes(x));
         // preQueue:[1,2,3,4] queue:[1,2], leaver:[3,4]
         let leaver = preQueue.filter(x => !queue.includes(x));
         setPreQueue(queue)
-        if(leaver.length!=0){
+        if (leaver.length != 0) {
             leaver.map(userEmail => {
                 setQueueDom(current => {
                     // 👇️ create copy of state object
-                    const copy = {...current};
+                    const copy = { ...current };
                     // 👇️ remove salary key from object
                     delete copy[userEmail];
                     return copy;
                 });
             })
         }
-        if(newcomer.length!=0){
+        if (newcomer.length != 0) {
             newcomer.map(userEmail => {
-                axios.get(`http://localhost:8080/user/${userEmail}`,{
+                axios.get(`http://localhost:8080/user/${userEmail}`, {
                     headers: {
                         'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
-                      }
-                })
-                .then(res => {
-                    const temp = queueDom;
-                    temp[userEmail] = (<Tooltip title={res.data.res.name}>
-                        <Avatar className={"Queue__Avatar"}  size={36} src={res.data.res.headshotPhoto} onClick={() => props.setPageProps({page: 'ProfilePage', email: userEmail})}></Avatar>
-                    </Tooltip>)
-                    setQueueDom({...temp});
-                })
-                .catch (err => {
-                    message.error("Server Error! Please try again later. (Get Author Information In Queue Error)")
-                    console.log(err)
-                    if (err.response.status === 500 || err.response.status === 404){
-                        document.cookie = 'error=true'
-                    }
-                    else if (err.response.status === 403){
-                        document.cookie = 'error=Jwt'                       
                     }
                 })
-                
+                    .then(res => {
+                        const temp = queueDom;
+                        temp[userEmail] = (<Tooltip title={res.data.res.name}>
+                            <Avatar className={"Queue__Avatar"} size={36} src={res.data.res.headshotPhoto} onClick={() => props.setPageProps({ page: 'ProfilePage', email: userEmail })}></Avatar>
+                        </Tooltip>)
+                        setQueueDom({ ...temp });
+                    })
+                    .catch(err => {
+                        message.error("Server Error! Please try again later. (Get Author Information In Queue Error)")
+                        console.log(err)
+                        if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
+                            if(err.response.data.message.slice(0,13)==='Malformed JWT')
+                            document.cookie = 'error=Jwt'
+                            else
+                            document.cookie = 'error=true'
+                            message.warning('Please refresh again!')
+                        }
+                    })
+
             })
         }
         console.log("queue: ", queue)
         //setQueueAvatar(<></>);
-    },[queue])
+    }, [queue])
 
     /*
     (
@@ -179,29 +182,29 @@ const CollabNoteEditPage = (props) => {
                     )
     */
 
-    useEffect(()=>{
+    useEffect(() => {
         console.log("queueDom:", queueDom)
         setQueueAvatar(
             <>
-            {Object.values(queueDom).map(item => (
-                item
-            ))}
+                {Object.values(queueDom).map(item => (
+                    item
+                ))}
             </>
-            
+
         )
-    },[queueDom])
+    }, [queueDom])
 
     const customDot = (dot, { status, index }) => (
         <Popover
             content={
-            <span>
-                step {index} status: {status}
-            </span>
+                <span>
+                    step {index} status: {status}
+                </span>
             }
         >
             {dot}
         </Popover>
-        );
+    );
 
     const infoSubmit = () => {
         if (!title) {
@@ -222,47 +225,48 @@ const CollabNoteEditPage = (props) => {
         console.log("tempNote:", tempNote);
 
 
-        axios.put(`http://localhost:8080/note/${props.noteId}`, tempNote,{
+        axios.put(`http://localhost:8080/note/${props.noteId}`, tempNote, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
-              }
-        })
-        .then(contentRes => {
-            console.log(contentRes)
-            setStep(1);
-        })
-        .catch (err => {
-            message.error("Server Error! Please try again later. (Update Note Error)")
-            console.log(err)
-            if (err.response.status === 500 || err.response.status === 404){
-                document.cookie = 'error=true'
-            }
-            else if (err.response.status === 403){
-                document.cookie = 'error=Jwt'                       
             }
         })
+            .then(contentRes => {
+                console.log(contentRes)
+                setStep(1);
+            })
+            .catch(err => {
+                message.error("Server Error! Please try again later. (Update Note Error)")
+                console.log(err)
+                if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
+                    if(err.response.data.message.slice(0,13)==='Malformed JWT')
+                    document.cookie = 'error=Jwt'
+                    else
+                    document.cookie = 'error=true'
+                    message.warning('Please refresh again!')
+                }
+            })
         //setStep(1);
     }
 
     const showDrawer = (type) => {
-        switch(type){
-            case 'version':  
-                setDrawer(<VersionArea page={'NoteEditPageVersion'} id={note.id} versions={versions} setVersions={setVersions} setVersion={setVersion}/>);
-                setDrawerPlacement('right'); 
+        switch (type) {
+            case 'version':
+                setDrawer(<VersionArea page={'NoteEditPageVersion'} id={note.id} versions={versions} setVersions={setVersions} setVersion={setVersion} />);
+                setDrawerPlacement('right');
                 setDrawerTitle('Version')
                 break;
-            case 'chatroom':  
-                setDrawer(<VersionArea page={'NoteEditPageVersion'} versions={versions} setVersion={setVersion}/>);
-                setDrawerPlacement('left'); 
+            case 'chatroom':
+                setDrawer(<VersionArea page={'NoteEditPageVersion'} versions={versions} setVersion={setVersion} />);
+                setDrawerPlacement('left');
                 setDrawerTitle('Chatroom');
                 break;
         }
         setVisible(true);
-      };
-    
-      const onClose = () => {
+    };
+
+    const onClose = () => {
         setVisible(false);
-      };
+    };
 
 
     const setVersion = (index) => {
@@ -271,69 +275,72 @@ const CollabNoteEditPage = (props) => {
                 const defaultVersion = res.data.res
                 defaultVersion.name = "default"
                 defaultVersion.slug = "default"
-                axios.put(`http://localhost:8080/note/${props.noteId}/0`, defaultVersion,{
+                axios.put(`http://localhost:8080/note/${props.noteId}/0`, defaultVersion, {
                     headers: {
                         'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
-                      }
-                })
-                .then ( async versionRes => {
-                    setMyEditor(<MyEditor noteId={props.noteId} version={'0'} page={props.page} email={email} name={name} avatar={avatar} isCollab={true} setQueue={setQueue}/>)
-                    setStep(0);
-                    setStep(1);
-                    message.success("You changed the version!")
-                })
-                .catch (err => {
-                    message.error("Server Error! Please try again later. (Change Version Error)")
-                    console.log(err)
-                    if (err.response.status === 500 || err.response.status === 404){
-                        document.cookie = 'error=true'
-                    }
-                    else if (err.response.status === 403){
-                        document.cookie = 'error=Jwt'                       
                     }
                 })
+                    .then(async versionRes => {
+                        setMyEditor(<MyEditor noteId={props.noteId} version={'0'} page={props.page} email={email} name={name} avatar={avatar} isCollab={true} setQueue={setQueue} />)
+                        setStep(0);
+                        setStep(1);
+                        message.success("You changed the version!")
+                    })
+                    .catch(err => {
+                        message.error("Server Error! Please try again later. (Change Version Error)")
+                        console.log(err)
+                        if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
+                            if(err.response.data.message.slice(0,13)==='Malformed JWT')
+                            document.cookie = 'error=Jwt'
+                            else
+                            document.cookie = 'error=true'
+                            message.warning('Please refresh again!')
+                        }
+                    })
             })
-            .catch (err => {
+            .catch(err => {
                 console.log(err)
-                if (err.response.status === 500 || err.response.status === 404){
+                if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
+                    if(err.response.data.message.slice(0,13)==='Malformed JWT')
+                    document.cookie = 'error=Jwt'
+                    else
                     document.cookie = 'error=true'
+                    message.warning('Please refresh again!')
                 }
-                else if (err.response.status === 403){
-                    document.cookie = 'error=Jwt'                       
-                }
-            })    
+            })
     }
     const noteFinish = async () => {
-        if(props.isManager){
+        if (props.isManager) {
             axios.put(`http://localhost:8080/note/tag/wordSuggestion/${note.id}`, {}, {
-            headers: {
-                'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
-              }
-        })
-            .then(res => {
-                console.log("suggestive tag: ", res)
-                setRecommendTag(res.data.generatedTags)
-                setStep(2);
+                headers: {
+                    'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+                }
             })
-            .catch (err => {
-                console.log(err)
-                if (err.response.status === 500 || err.response.status === 404){
-                    document.cookie = 'error=true'
-                }
-                else if (err.response.status === 403){
-                    document.cookie = 'error=Jwt'                       
-                }
-            })  
+                .then(res => {
+                    console.log("suggestive tag: ", res)
+                    setRecommendTag(res.data.generatedTags)
+                    setStep(2);
+                })
+                .catch(err => {
+                    console.log(err)
+                    if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
+                        if(err.response.data.message.slice(0,13)==='Malformed JWT')
+                        document.cookie = 'error=Jwt'
+                        else
+                        document.cookie = 'error=true'
+                        message.warning('Please refresh again!')
+                    }
+                })
         }
-        else{
+        else {
             // end
             props.setPageProps({
-                page:'CollabDetail',
+                page: 'CollabDetail',
                 postId: props.postId
             })
         }
-        
-        
+
+
     }
 
     const editNote = () => {
@@ -345,51 +352,53 @@ const CollabNoteEditPage = (props) => {
             .then(res => {
                 const tempNote = res.data.res
                 tempNote.tag = tagSelected
-                axios.put(`http://localhost:8080/note/${props.noteId}`, tempNote,{
+                axios.put(`http://localhost:8080/note/${props.noteId}`, tempNote, {
                     headers: {
                         'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
-                      }
+                    }
                 })
                     .then(res => {
                         console.log(res);
                         message.success("You submitted the tags!");
-                        props.setPageProps({page:'PersonalPage'})
+                        props.setPageProps({ page: 'PersonalPage' })
                     })
-                    .catch (err => {
+                    .catch(err => {
                         message.error("Server Error! Please try again later. (Submit Tag Error)")
                         console.log(err)
-                        if (err.response.status === 500 || err.response.status === 404){
+                        if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
+                            if(err.response.data.message.slice(0,13)==='Malformed JWT')
+                            document.cookie = 'error=Jwt'
+                            else
                             document.cookie = 'error=true'
+                            message.warning('Please refresh again!')
                         }
-                        else if (err.response.status === 403){
-                            document.cookie = 'error=Jwt'                       
-                        }
-                    }) 
+                    })
             })
-            .catch (err => {
+            .catch(err => {
                 message.error("Server Error! Please try again later. (Get Tag Error)")
                 console.log(err)
-                if (err.response.status === 500 || err.response.status === 404){
+                if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
+                    if(err.response.data.message.slice(0,13)==='Malformed JWT')
+                    document.cookie = 'error=Jwt'
+                    else
                     document.cookie = 'error=true'
+                    message.warning('Please refresh again!')
                 }
-                else if (err.response.status === 403){
-                    document.cookie = 'error=Jwt'                       
-                }
-            })   
-        
+            })
+
     }
 
     const recommendTagRender = (props) => {
         const { label, closable } = props;
         const onSelect = (e) => {
             e.preventDefault();
-            const value = e.target.parentNode.parentNode.parentNode.innerText.length!=0? e.target.parentNode.parentNode.parentNode.innerText:e.target.parentNode.parentNode.innerText.length!=0? e.target.parentNode.parentNode.innerText:'';
-            if(!tagSelected.includes(value) && value.length !=0)
+            const value = e.target.parentNode.parentNode.parentNode.innerText.length != 0 ? e.target.parentNode.parentNode.parentNode.innerText : e.target.parentNode.parentNode.innerText.length != 0 ? e.target.parentNode.parentNode.innerText : '';
+            if (!tagSelected.includes(value) && value.length != 0)
                 setTagSelected([...tagSelected, value])
             // console.log(value);
             // console.log(tagSelected)
         };
-    
+
         return (
             <Tag
                 color={'gold'}
@@ -399,7 +408,7 @@ const CollabNoteEditPage = (props) => {
                     marginRight: 3,
                 }}
                 closeIcon={<CheckOutlined />}
-                >
+            >
                 {label}
             </Tag>
         );
@@ -408,17 +417,17 @@ const CollabNoteEditPage = (props) => {
         const { label, closable, onClose } = props;
         return (
             <Tag
-                color={recommendTag.includes(label)?'gold':'green'}
+                color={recommendTag.includes(label) ? 'gold' : 'green'}
                 closable={closable}
                 onClose={onClose}
                 style={{
                     marginRight: 3,
                 }}
-                >
+            >
                 {label}
             </Tag>
         );
-        };
+    };
 
     const saveVersion = (index) => {
         editor.storeVersion({}, index)
@@ -430,54 +439,55 @@ const CollabNoteEditPage = (props) => {
         VersionFormat.name = name
         VersionFormat.slug = name
         VersionFormat.content = [ContentFormat]
-        axios.put(`http://localhost:8080/note/${props.noteId}/${versionLength}`, VersionFormat,{
+        axios.put(`http://localhost:8080/note/${props.noteId}/${versionLength}`, VersionFormat, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
-              }
-        })
-        .then ( res => {
-            message.success("You saved current note as the new version!")
-            const version = res.data.res;
-            setVersions([...versions, version])
-            editor.storeVersion({}, versionLength)
-        })
-        .catch (err => {
-            message.error("Server Error! Please try again later. (Create Version Error)")
-            console.log(err)
-            if (err.response.status === 500 || err.response.status === 404){
-                document.cookie = 'error=true'
-            }
-            else if (err.response.status === 403){
-                document.cookie = 'error=Jwt'                       
             }
         })
+            .then(res => {
+                message.success("You saved current note as the new version!")
+                const version = res.data.res;
+                setVersions([...versions, version])
+                editor.storeVersion({}, versionLength)
+            })
+            .catch(err => {
+                message.error("Server Error! Please try again later. (Create Version Error)")
+                console.log(err)
+                if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
+                    if(err.response.data.message.slice(0,13)==='Malformed JWT')
+                    document.cookie = 'error=Jwt'
+                    else
+                    document.cookie = 'error=true'
+                    message.warning('Please refresh again!')
+                }
+            })
     }
 
-    return (   
+    return (
         <div className="collabNoteEditPage">
-            <Layout  className="collabNoteEditPage__Layout" >
+            <Layout className="collabNoteEditPage__Layout" >
                 <Header className="collabNoteEditPage__Header">
                     <Row className="collabNoteEditPage__Row">
                         <Col className="postEditTemplate__Header__Title">
                             <Text color='black' cls='Default' content={`New Note`} fontSize='30' display="inline-block" />
                         </Col>
-                    </Row>  
+                    </Row>
                     {props.isManager &&
-                    <Row className="collabNoteEditPage__Row collabNoteEditPage__Steps" >
-                        <Steps current={step}  progressDot={customDot}>
-                            <Step title="Step 1" description="Information modify" icon={<InfoCircleOutlined />}/>
-                            <Step title="Step 2" description="Note edit" />
-                            <Step title="Step 3" description="Tag manage" />
-                        </Steps>
-                    </Row>  
+                        <Row className="collabNoteEditPage__Row collabNoteEditPage__Steps" >
+                            <Steps current={step} progressDot={customDot}>
+                                <Step title="Step 1" description="Information modify" icon={<InfoCircleOutlined />} />
+                                <Step title="Step 2" description="Note edit" />
+                                <Step title="Step 3" description="Tag manage" />
+                            </Steps>
+                        </Row>
                     }
                 </Header>
                 {/* ------------------------------- Content ---------------------------------- */}
                 <Content className="collabNoteEditPage__Content">
-                    {step==0 &&
+                    {step == 0 &&
                         <>
                             <Row className='collabNoteEditPage__Row'>
-                                <Col  className='postEditTemplate__Content__Label' >
+                                <Col className='postEditTemplate__Content__Label' >
                                     <Text color='black' cls='Small' content={"Title"} fontSize='22' display="inline-block" />
                                 </Col>
                             </Row>
@@ -487,35 +497,35 @@ const CollabNoteEditPage = (props) => {
                                 </Col>
                             </Row>
                             <Row className='collabNoteEditPage__Row'>
-                                <Col  className='postEditTemplate__Content__Label' >
+                                <Col className='postEditTemplate__Content__Label' >
                                     <Text color='black' cls='Small' content={"Information"} fontSize='22' display="inline-block" />
                                 </Col>
                             </Row>
                             <Row className='collabNoteEditPage__Row'>
                                 <Col className='postEditTemplate__Content__Information' >
-                                    <InformationInput 
+                                    <InformationInput
                                         information={information}
                                         setInformation={setInformation}
                                     />
                                 </Col>
                             </Row>
-                            
+
                             <Row className='collabNoteEditPage__Row'>
-                                <Col  className='postEditTemplate__Content__Label' >
+                                <Col className='postEditTemplate__Content__Label' >
                                     <Text color='black' cls='Small' content={"Description"} fontSize='22' display="inline-block" />
                                 </Col>
                             </Row>
                             <Row className='collabNoteEditPage__Row'>
                                 <Col className='postEditTemplate__Content__Main'>
-                                        <TextArea rows={10} placeholder="type something..." value={content} onChange={(ev) => setContent(ev.target.value)}/>
+                                    <TextArea rows={10} placeholder="type something..." value={content} onChange={(ev) => setContent(ev.target.value)} />
                                 </Col>
                             </Row>
-                        </> 
+                        </>
                     }
-                    {step==1 &&
+                    {step == 1 &&
                         myEditor
                     }
-                    {step==2 &&
+                    {step == 2 &&
                         <div className='collabNoteEditPage__Content__Tags'>
                             <div className='collabNoteEditPage__Content__Tag collabNoteEditPage__Content__RecommendTag'>
                                 <Text color='black' cls='Small' content={"Recommended Tags"} fontSize='20' display="inline-block" />
@@ -526,7 +536,7 @@ const CollabNoteEditPage = (props) => {
                                     mode="tags"
                                     //size='large'
                                     style={{
-                                    width: '100%',
+                                        width: '100%',
                                     }}
                                     removeIcon={<CheckOutlined />}
                                 >
@@ -548,46 +558,46 @@ const CollabNoteEditPage = (props) => {
                             </div>
                         </div>
                     }
-                    
+
                 </Content>
                 {/* ------------------------------- Footer ---------------------------------- */}
-                {step==0 &&
+                {step == 0 &&
                     <Footer className="collabNoteEditPage__Footer">
                         <div className="collabNoteEditPage__Footer__Button" onClick={infoSubmit}>
                             <Button color={"purple"}><Text color='white' cls='Large' content={"Submit"} fontSize='17' display="inline-block" /></Button>
                         </div>
                     </Footer>
                 }
-                {step==1 &&
+                {step == 1 &&
                     <Footer className="collabNoteEditPage__Footer">
-                        {props.isManager? 
-                            (versions.length==1?
-                                <Tooltip title={"You have to create a version first!"}>  
+                        {props.isManager ?
+                            (versions.length == 1 ?
+                                <Tooltip title={"You have to create a version first!"}>
                                     <div className="collabNoteEditPage__Footer__Button">
                                         <Button color={"purple--disabled"}><Text color='white' cls='Large' content={"Next"} fontSize='17' display="inline-block" /></Button>
                                     </div>
                                 </Tooltip>
-                            :
-                            <div className="collabNoteEditPage__Footer__Button" onClick={noteFinish}>
-                                <Button color={"purple"}><Text color='white' cls='Large' content={"Next"} fontSize='17' display="inline-block" /></Button>
-                            </div>
+                                :
+                                <div className="collabNoteEditPage__Footer__Button" onClick={noteFinish}>
+                                    <Button color={"purple"}><Text color='white' cls='Large' content={"Next"} fontSize='17' display="inline-block" /></Button>
+                                </div>
                             )
                             :
-                            (versions.length==1?
-                                <Tooltip title={"You have to create a version first!"}>  
+                            (versions.length == 1 ?
+                                <Tooltip title={"You have to create a version first!"}>
                                     <div className="collabNoteEditPage__Footer__Button" onClick={noteFinish}>
                                         <Button color={"purple--disabled"}><Text color='white' cls='Large' content={"Finish"} fontSize='17' display="inline-block" /></Button>
                                     </div>
                                 </Tooltip>
-                            :
-                            <div className="collabNoteEditPage__Footer__Button" onClick={noteFinish}>
-                                <Button color={"purple"}><Text color='white' cls='Large' content={"Finish"} fontSize='17' display="inline-block" /></Button>
-                            </div>
+                                :
+                                <div className="collabNoteEditPage__Footer__Button" onClick={noteFinish}>
+                                    <Button color={"purple"}><Text color='white' cls='Large' content={"Finish"} fontSize='17' display="inline-block" /></Button>
+                                </div>
                             )
                         }
 
-                        <Popover 
-                            content={popoverContent} 
+                        <Popover
+                            content={popoverContent}
                             title={<Text color='black' cls='Small' content={"Choose a version to save"} fontSize='17' display="inline-block" />}
                             trigger="click">
                             <div className="collabNoteEditPage__Footer__Button">
@@ -597,10 +607,10 @@ const CollabNoteEditPage = (props) => {
                         <div className="collabNoteEditPage__Footer__Button" onClick={() => showDrawer('version')}>
                             <Button color={"green"}><Text color='white' cls='Large' content={"Copy Version"} fontSize='17' display="inline-block" /></Button>
                         </div>
-                        
+
                     </Footer>
                 }
-                {step==2 &&
+                {step == 2 &&
                     <Footer className="collabNoteEditPage__Footer">
                         <Text color='black' cls='Large' content={"Tip: Press enter to confirm your tag"} fontSize='15' display="inline-block" />
                         <div className="collabNoteEditPage__Footer__Button" onClick={tagSubmit}>
@@ -616,15 +626,15 @@ const CollabNoteEditPage = (props) => {
                 {drawer}
                 {/* <VersionArea page={'NoteEditPageVersion'} versions={versions} setVersion={setVersion}/> */}
             </Drawer>
-            {step==1 &&
-            <div className='collabNoteEditPage__Queue'>
-                {queueAvatar}
-                {/* <Avatar className={"Ring__Avatar"} size={36} src='https://joeschmoe.io/api/v1/james' ></Avatar>
+            {step == 1 &&
+                <div className='collabNoteEditPage__Queue'>
+                    {queueAvatar}
+                    {/* <Avatar className={"Ring__Avatar"} size={36} src='https://joeschmoe.io/api/v1/james' ></Avatar>
                 <Avatar className={"Ring__Avatar"} size={36} src='https://joeschmoe.io/api/v1/james' ></Avatar>
                 <Avatar className={"Ring__Avatar"} size={36} src='https://joeschmoe.io/api/v1/james' ></Avatar>
                 <Avatar className={"Ring__Avatar"} size={36} src='https://joeschmoe.io/api/v1/james' ></Avatar> */}
-                <CaretRightFilled  className={"Ring__Avatar"} onClick={() => showDrawer('chatroom')}/>
-            </div>
+                    <CaretRightFilled className={"Ring__Avatar"} onClick={() => showDrawer('chatroom')} />
+                </div>
             }
         </div>
     )

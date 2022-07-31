@@ -53,14 +53,12 @@ function CommentArea(props) {
     const refresh = () => {
 
         const temp = cookieParser.getCookieByName('email')
-        const tempEmail = Base64.decode(temp);
+        if (temp) {
+            var tempEmail = Base64.decode(temp);
+        }
         setEmail(tempEmail)
         const type = props.page == 'NoteDetailPage' ? 'note' : 'post'
-        axios.get(`http://localhost:8080/${type}/${props.id}`, {
-            headers: {
-                'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
-            }
-        })
+        axios.get(`http://localhost:8080/${type}/${props.id}`)
             .then(res => {
                 //console.log(res.data.res)
                 const tempComment = res.data.res.commentsUserObj
@@ -100,64 +98,81 @@ function CommentArea(props) {
             .catch(err => {
                 message.error("Server Error! Please try again later.(Refresh Error)")
                 console.log(err)
-                if (err.response.status === 500 || err.response.status === 404){
+                if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
+                    if(err.response.data.message.slice(0,13)==='Malformed JWT')
+                    document.cookie = 'error=Jwt'
+                    else
                     document.cookie = 'error=true'
+                    message.warning('Please refresh again!')
                 }
-                else if (err.response.status === 403){
-                    document.cookie = 'error=Jwt'                       
-                }
-                   
+
             })
     }
 
 
     const like = (commentId) => {
-        axios.put(`http://localhost:8080/favorite/${props.type}/${props.id}/${commentId}/${email}`,{}, {
-            headers: {
-                'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
-            }
-        })
-            .then(res => {
-                console.log(res.data.res)
-                message.success("You liked the comment!")
-                refresh()
-            })
-            .catch(err => {
-                message.error("Server Error! Please try again later. (Like Comment Error)")
-                console.log(err)
-                if (err.response.status === 500 || err.response.status === 404){
-                    document.cookie = 'error=true'
+        if (cookieParser.getCookieByName("email")) {
+            axios.put(`http://localhost:8080/favorite/${props.type}/${props.id}/${commentId}/${email}`, {}, {
+                headers: {
+                    'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
                 }
-                else if (err.response.status === 403){
-                    document.cookie = 'error=Jwt'                       
-                }
-                   
             })
+                .then(res => {
+                    console.log(res.data.res)
+                    message.success("You liked the comment!")
+                    refresh()
+                })
+                .catch(err => {
+                    message.error("Server Error! Please try again later. (Like Comment Error)")
+                    console.log(err)
+                    if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
+                        if(err.response.data.message.slice(0,13)==='Malformed JWT')
+                        document.cookie = 'error=Jwt'
+                        else
+                        document.cookie = 'error=true'
+                        message.warning('Please refresh again!')
+                    }
+
+                })
+        }
+        else {
+            message.warning("Please log in first!")
+            props.setPageProps({ page: 'LoginPage' })
+        }
+
 
     };
 
     const unlike = (commentId) => {
-        axios.put(`http://localhost:8080/unFavorite/${props.type}/${props.id}/${commentId}/${email}`,{}, {
-            headers: {
-                'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
-            }
-        })
-            .then(res => {
-                console.log(res.data.res)
-                message.success("You withdraw a like the comment!")
-                refresh()
-            })
-            .catch(err => {
-                message.error("Server Error! Please try again later. (Unlike Comment Error)")
-                console.log(err)
-                if (err.response.status === 500 || err.response.status === 404){
-                    document.cookie = 'error=true'
+        if (cookieParser.getCookieByName("email")) {
+            axios.put(`http://localhost:8080/unFavorite/${props.type}/${props.id}/${commentId}/${email}`, {}, {
+                headers: {
+                    'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
                 }
-                else if (err.response.status === 403){
-                    document.cookie = 'error=Jwt'                       
-                }
-                   
             })
+                .then(res => {
+                    console.log(res.data.res)
+                    message.success("You withdraw a like the comment!")
+                    refresh()
+                })
+                .catch(err => {
+                    message.error("Server Error! Please try again later. (Unlike Comment Error)")
+                    console.log(err)
+                    if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
+                        if(err.response.data.message.slice(0,13)==='Malformed JWT')
+                        document.cookie = 'error=Jwt'
+                        else
+                        document.cookie = 'error=true'
+                        message.warning('Please refresh again!')
+                    }
+
+                })
+
+        }
+        else {
+            message.warning("Please log in first!")
+            props.setPageProps({ page: 'LoginPage' })
+        }
 
     };
 
@@ -165,53 +180,69 @@ function CommentArea(props) {
         setComment(str);
     }
     const onSubmit = (ev) => {
-        let cookieParser = new Cookie(document.cookie);
-        let name = cookieParser.getCookieByName('name');
-        let avatar = cookieParser.getCookieByName('avatar');
-        ev.preventDefault();
-        const tempComment = {
-            email: email,
-            content: comment,
-        }
-        const type = props.page == 'NoteDetailPage' ? 'note' : 'post'
-        if(comment.length>0){
-        axios.post(`http://localhost:8080/comment/${props.id}`, tempComment,{
-            headers: {
-                'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
-              }
-        })
-            .then(res => {
-                console.log("Comment Response: ", res.data.res)
-                setComment('');
-                message.success("You submitted a comment!")
-                refresh()
+        if (cookieParser.getCookieByName("email")) {
+            let cookieParser = new Cookie(document.cookie);
+            let name = cookieParser.getCookieByName('name');
+            let avatar = cookieParser.getCookieByName('avatar');
+            ev.preventDefault();
+            const tempComment = {
+                email: email,
+                content: comment,
+            }
+            const type = props.page == 'NoteDetailPage' ? 'note' : 'post'
+            if (comment.length > 0) {
+                axios.post(`http://localhost:8080/comment/${props.id}`, tempComment, {
+                    headers: {
+                        'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+                    }
+                })
+                    .then(res => {
+                        console.log("Comment Response: ", res.data.res)
+                        setComment('');
+                        message.success("You submitted a comment!")
+                        refresh()
 
-            })
-            .catch(err => {
-                message.error("Server Error! Please try again later. (Submit Comment Error)")
-                console.log(err)
-                if (err.response.status === 500 || err.response.status === 404){
-                    document.cookie = 'error=true'
-                }
-                else if (err.response.status === 403){
-                    document.cookie = 'error=Jwt'                       
-                }
-            })
+                    })
+                    .catch(err => {
+                        message.error("Server Error! Please try again later. (Submit Comment Error)")
+                        console.log(err)
+                        if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
+                            if(err.response.data.message.slice(0,13)==='Malformed JWT')
+                            document.cookie = 'error=Jwt'
+                            else
+                            document.cookie = 'error=true'
+                            message.warning('Please refresh again!')
+                        }
+                    })
+            }
+            else {
+                message.warning('Please enter something!')
+            }
+
         }
-        else{
-            message.warning('Please enter something!')
+        else {
+            message.warning("Please log in first!")
+            props.setPageProps({ page: 'LoginPage' })
         }
+
+
     }
 
     const onReply = (commentId) => {
-        message.info("Reply to: " + commentId);
-        setComment(comment + '@' + authors[commentId] + ' ');
+        if (cookieParser.getCookieByName("email")) {
+            message.info("Reply to: " + commentId);
+            setComment(comment + '@' + authors[commentId] + ' ');
+        }
+        else {
+            message.warning("Please Log in first!")
+            props.setPageProps({ page: 'LoginPage' })
+        }
     }
 
 
     const setTheBest = (commentIds) => {
         //message.info(`Set ${commentIds} as the best answer`);
-        axios.put(`http://localhost:8080/post/qa/best/${props.id}/${commentIds}`, {},{
+        axios.put(`http://localhost:8080/post/qa/best/${props.id}/${commentIds}`, {}, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
             }
@@ -224,11 +255,12 @@ function CommentArea(props) {
             .catch(err => {
                 message.error("Server Error! Please try again later. (Select Best Answer Error)")
                 console.log(err)
-                if (err.response.status === 500 || err.response.status === 404){
+                if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
+                    if(err.response.data.message.slice(0,13)==='Malformed JWT')
+                    document.cookie = 'error=Jwt'
+                    else
                     document.cookie = 'error=true'
-                }
-                else if (err.response.status === 403){
-                    document.cookie = 'error=Jwt'                       
+                    message.warning('Please refresh again!')
                 }
             })
     }
@@ -240,10 +272,10 @@ function CommentArea(props) {
             content: editingComment,
             picURL: []
         }
-        axios.put(`http://localhost:8080/comment/${props.id}/${floor}`, data,{
+        axios.put(`http://localhost:8080/comment/${props.id}/${floor}`, data, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
-              }
+            }
         })
             .then(res => {
                 message.success("You updated a comment!")
@@ -253,20 +285,21 @@ function CommentArea(props) {
             .catch(err => {
                 message.error("Server Error! Please try again later. (Update Comment Error)")
                 console.log(err)
-                if (err.response.status === 500 || err.response.status === 404){
+                if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
+                    if(err.response.data.message.slice(0,13)==='Malformed JWT')
+                    document.cookie = 'error=Jwt'
+                    else
                     document.cookie = 'error=true'
-                }
-                else if (err.response.status === 403){
-                    document.cookie = 'error=Jwt'                       
+                    message.warning('Please refresh again!')
                 }
             })
     }
 
     const commentDelete = (floor) => {
-        axios.delete(`http://localhost:8080/comment/${props.id}/${floor}`,{
+        axios.delete(`http://localhost:8080/comment/${props.id}/${floor}`, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
-              }
+            }
         })
             .then(res => {
                 console.log("Set best response:", res.data.res)
@@ -276,11 +309,12 @@ function CommentArea(props) {
             .catch(err => {
                 message.error("Server Error! Please try again later. (Delete Comment Error)")
                 console.log(err)
-                if (err.response.status === 500 || err.response.status === 404){
+                if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
+                    if(err.response.data.message.slice(0,13)==='Malformed JWT')
+                    document.cookie = 'error=Jwt'
+                    else
                     document.cookie = 'error=true'
-                }
-                else if (err.response.status === 403){
-                    document.cookie = 'error=Jwt'                       
+                    message.warning('Please refresh again!')
                 }
             })
     }
@@ -398,7 +432,7 @@ function CommentArea(props) {
                                 />
                             </Col>
                             <Col className="comment_MoreOption" span={3}>
-                                {(item.userObj?.userObjEmail == email && !props.isArchive) &&
+                                {(item.userObj?.userObjEmail == email && !props.isArchive&&cookieParser.getCookieByName('email')) &&
                                     <Dropdown
                                         overlay={<Menu
                                             items={[

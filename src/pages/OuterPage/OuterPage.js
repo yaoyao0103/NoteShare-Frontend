@@ -135,7 +135,8 @@ const OuterPage = () => {
 
 
         let tempEmail = cookieParser.getCookieByName('email');
-        tempEmail = Base64.decode(tempEmail);
+        if (tempEmail)
+            tempEmail = Base64.decode(tempEmail);
         let tempRing = ringNumber
         axios.get("http://localhost:8080/bell/" + tempEmail, {
             headers: {
@@ -153,11 +154,12 @@ const OuterPage = () => {
 
         }).catch((error) => {
             //message.info(error.response.error);
-            if (error.response.status === 500 || error.response.status === 404){
+            if (error.response.status === 500 || error.response.status === 404||error.response.status === 403){
+                if(error.response.data.message.slice(0,13)==='Malformed JWT')
+                document.cookie = 'error=Jwt'
+                else
                 document.cookie = 'error=true'
-            }
-            else if (error.response.status === 403){
-                document.cookie = 'error=Jwt'                       
+                message.warning('Please refresh again!')
             }
 
         })
@@ -274,12 +276,12 @@ const OuterPage = () => {
         console.log(pageProps.page)
 
         if (cookieParser.getCookieByName('error') && cookieParser.getCookieByName('error') === 'true') {
-            document.cookie = 'error='+'false'
+            document.cookie = 'error=' + 'false'
             setPageProps({ page: "PersonalPage" })
             message.warning('Server error!')
         }
-        else if(cookieParser.getCookieByName('error') && cookieParser.getCookieByName('error') === 'Jwt'){
-            document.cookie = 'error='+'false'
+        else if (cookieParser.getCookieByName('error') && cookieParser.getCookieByName('error') === 'Jwt') {
+            document.cookie = 'error=' + 'false'
             document.cookie = 'email='
             document.cookie = 'token='
             document.cookie = 'name='
@@ -289,20 +291,20 @@ const OuterPage = () => {
             message.warning('Server error!')
         }
         else {
-            document.cookie = 'error='+'false'
-            if ((pageProps.page === 'NoteEditPage' || pageProps.page === 'NoteNewPage' || pageProps.page === 'MemberPage' ||
-                pageProps.page === 'RewardEditPage' || pageProps.page === 'RewardNewPage'  ||
-                pageProps.page === 'QnAEditPage' || pageProps.page === 'QnANewPage'  ||
+            document.cookie = 'error=' + 'false'
+            if ((pageProps.page === 'NoteEditPage' || pageProps.page === 'NoteNewPage' || 
+                pageProps.page === 'RewardEditPage' || pageProps.page === 'RewardNewPage' ||
+                pageProps.page === 'QnAEditPage' || pageProps.page === 'QnANewPage' ||
                 pageProps.page === 'CollabEditPage' || pageProps.page === 'CollabNewPage' ||
                 pageProps.page === 'PersonalPage' || pageProps.page === 'ProfilePage' || pageProps.page === 'ResetPasswordPage'
             ) && !loggedIn) {
-                message.warn("You should log in first!")
+                message.warn("Please log in first!")
                 setPageProps({ page: "LoginPage" })
             }
             else if ((pageProps.page === 'LoginPage' || pageProps.page === 'SignUpPage' ||
                 pageProps.page === 'VerificationPage' || pageProps.page === 'ForgetPasswordPage'
             ) && loggedIn) {
-                message.warn("You should log out first!")
+                message.warn("Please log out first!")
                 setPageProps({ page: "PersonalPage" })
             }
             else {

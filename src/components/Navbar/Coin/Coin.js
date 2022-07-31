@@ -25,12 +25,12 @@ function Coin(props) {
             setGetUserSuccess(true);
         }).catch((error) => {
             message.error("Server Error! Please try again later. (Get coin Error)")
-            console.log(error);
-            if (error.response.status === 500 || error.response.status === 404){
+            if (error.response.status === 500 || error.response.status === 404||error.response.status === 403){
+                if(error.response.data.message.slice(0,13)==='Malformed JWT')
+                document.cookie = 'error=Jwt'
+                else
                 document.cookie = 'error=true'
-            }
-            else if (error.response.status === 403){
-                document.cookie = 'error=Jwt'                       
+                message.warning('Please refresh again!')
             }
         });
     };
@@ -39,6 +39,7 @@ function Coin(props) {
     useEffect(() => {
         let cookieParser = new Cookie(document.cookie);
         let tempEmail = cookieParser.getCookieByName('email');
+        if(tempEmail)
         tempEmail = Base64.decode(tempEmail);
         setEmail(tempEmail);
         getCoinByEmail(tempEmail);

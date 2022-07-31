@@ -52,11 +52,12 @@ const OptionMenu = (props) => {
         .catch(err => {
           message.error("Server Error! Please try again later. (Archive Post Error)")
           console.log(err)
-          if (err.response.status === 500 || err.response.status === 404){
+          if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
+            if(err.response.data.message.slice(0,13)==='Malformed JWT')
+            document.cookie = 'error=Jwt'
+            else
             document.cookie = 'error=true'
-        }
-        else if (err.response.status === 403){
-            document.cookie = 'error=Jwt'                       
+            message.warning('Please refresh again!')
         }
         })
     }
@@ -82,11 +83,12 @@ const OptionMenu = (props) => {
       .catch(err => {
         message.error("Server Error! Please try again later. (Set Post Public/Private Error)")
         console.log(err)
-        if (err.response.status === 500 || err.response.status === 404){
+        if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
+          if(err.response.data.message.slice(0,13)==='Malformed JWT')
+          document.cookie = 'error=Jwt'
+          else
           document.cookie = 'error=true'
-      }
-      else if (err.response.status === 403){
-          document.cookie = 'error=Jwt'                       
+          message.warning('Please refresh again!')
       }
       })
   }
@@ -113,11 +115,12 @@ const OptionMenu = (props) => {
       .catch(err => {
         message.error("Server Error! Please try again later. (Set Note Public/Private Error)")
         console.log(err)
-        if (err.response.status === 500 || err.response.status === 404){
+        if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
+          if(err.response.data.message.slice(0,13)==='Malformed JWT')
+          document.cookie = 'error=Jwt'
+          else
           document.cookie = 'error=true'
-      }
-      else if (err.response.status === 403){
-          document.cookie = 'error=Jwt'                       
+          message.warning('Please refresh again!')
       }
       })
   }
@@ -156,11 +159,12 @@ const OptionMenu = (props) => {
       .catch(err => {
         message.error("Server Error! Please try again later. (Set Version Public/Private Error)")
         console.log(err)
-        if (err.response.status === 500 || err.response.status === 404){
+        if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
+          if(err.response.data.message.slice(0,13)==='Malformed JWT')
+          document.cookie = 'error=Jwt'
+          else
           document.cookie = 'error=true'
-      }
-      else if (err.response.status === 403){
-          document.cookie = 'error=Jwt'                       
+          message.warning('Please refresh again!')
       }
       })
   }
@@ -204,11 +208,12 @@ const OptionMenu = (props) => {
       .catch(err => {
         message.error("Server Error! Please try again later. (Select Reward Best Error)")
         console.log(err)
-        if (err.response.status === 500 || err.response.status === 404){
+        if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
+          if(err.response.data.message.slice(0,13)==='Malformed JWT')
+          document.cookie = 'error=Jwt'
+          else
           document.cookie = 'error=true'
-      }
-      else if (err.response.status === 403){
-          document.cookie = 'error=Jwt'                       
+          message.warning('Please refresh again!')
       }
       })
   }
@@ -228,11 +233,12 @@ const OptionMenu = (props) => {
       .catch(err => {
         message.error("Server Error! Please try again later. (Select Reward For Reference Error)")
         console.log(err)
-        if (err.response.status === 500 || err.response.status === 404){
+        if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
+          if(err.response.data.message.slice(0,13)==='Malformed JWT')
+          document.cookie = 'error=Jwt'
+          else
           document.cookie = 'error=true'
-      }
-      else if (err.response.status === 403){
-          document.cookie = 'error=Jwt'                       
+          message.warning('Please refresh again!')
       }
       })
     // Todo: connect choose ref API
@@ -254,11 +260,12 @@ const OptionMenu = (props) => {
       .catch(err => {
         message.error("Server Error! Please try again later. (Agree Applier Error)")
         console.log(err)
-        if (err.response.status === 500 || err.response.status === 404){
+        if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
+          if(err.response.data.message.slice(0,13)==='Malformed JWT')
+          document.cookie = 'error=Jwt'
+          else
           document.cookie = 'error=true'
-      }
-      else if (err.response.status === 403){
-          document.cookie = 'error=Jwt'                       
+          message.warning('Please refresh again!')
       }
       })
   }
@@ -277,11 +284,12 @@ const OptionMenu = (props) => {
       .catch(err => {
         message.error("Server Error! Please try again later. (Reject Applier Error)")
         console.log(err)
-        if (err.response.status === 500 || err.response.status === 404){
+        if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
+          if(err.response.data.message.slice(0,13)==='Malformed JWT')
+          document.cookie = 'error=Jwt'
+          else
           document.cookie = 'error=true'
-      }
-      else if (err.response.status === 403){
-          document.cookie = 'error=Jwt'                       
+          message.warning('Please refresh again!')
       }
       })
   }
@@ -313,11 +321,12 @@ const OptionMenu = (props) => {
           else {
             message.error("Server Error! Please try again later. (Delete Note Error)")
           }
-          if (err.response.status === 500 || err.response.status === 404){
+          if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
+            if(err.response.data.message.slice(0,13)==='Malformed JWT')
+            document.cookie = 'error=Jwt'
+            else
             document.cookie = 'error=true'
-        }
-        else if (err.response.status === 403){
-            document.cookie = 'error=Jwt'                       
+            message.warning('Please refresh again!')
         }
         })
     }
@@ -342,11 +351,12 @@ const OptionMenu = (props) => {
           message.error("Server Error! Please try again later. (Delete Post Error)")
 
           console.log(err)
-          if (err.response.status === 500 || err.response.status === 404){
+          if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
+            if(err.response.data.message.slice(0,13)==='Malformed JWT')
+            document.cookie = 'error=Jwt'
+            else
             document.cookie = 'error=true'
-        }
-        else if (err.response.status === 403){
-            document.cookie = 'error=Jwt'                       
+            message.warning('Please refresh again!')
         }
         })
     }
@@ -368,11 +378,12 @@ const OptionMenu = (props) => {
         .catch(err => {
           message.error("Server Error! Please try again later. (Set As Favorite Error)")
           console.log(err)
-          if (err.response.status === 500 || err.response.status === 404){
+          if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
+            if(err.response.data.message.slice(0,13)==='Malformed JWT')
+            document.cookie = 'error=Jwt'
+            else
             document.cookie = 'error=true'
-        }
-        else if (err.response.status === 403){
-            document.cookie = 'error=Jwt'                       
+            message.warning('Please refresh again!')
         }
         })
     }
@@ -398,11 +409,12 @@ const OptionMenu = (props) => {
       .catch(err => {
         message.error("Server Error! Please try again later. (Set As Unfavorite Error)")
         console.log(err)
-        if (err.response.status === 500 || err.response.status === 404){
+        if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
+          if(err.response.data.message.slice(0,13)==='Malformed JWT')
+          document.cookie = 'error=Jwt'
+          else
           document.cookie = 'error=true'
-      }
-      else if (err.response.status === 403){
-          document.cookie = 'error=Jwt'                       
+          message.warning('Please refresh again!')
       }
       })
   }
@@ -439,11 +451,12 @@ const OptionMenu = (props) => {
         message.error("Server Error! Please try again later. (Choose Manager Error)")
 
         console.log(err)
-        if (err.response.status === 500 || err.response.status === 404){
+        if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
+          if(err.response.data.message.slice(0,13)==='Malformed JWT')
+          document.cookie = 'error=Jwt'
+          else
           document.cookie = 'error=true'
-      }
-      else if (err.response.status === 403){
-          document.cookie = 'error=Jwt'                       
+          message.warning('Please refresh again!')
       }
       })
   }
@@ -490,11 +503,12 @@ const OptionMenu = (props) => {
       .catch(err => {
         message.error("Server Error! Please try again later. (Delete Post Error)")
         console.log(err)
-        if (err.response.status === 500 || err.response.status === 404){
+        if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
+          if(err.response.data.message.slice(0,13)==='Malformed JWT')
+          document.cookie = 'error=Jwt'
+          else
           document.cookie = 'error=true'
-      }
-      else if (err.response.status === 403){
-          document.cookie = 'error=Jwt'                       
+          message.warning('Please refresh again!')
       }
       })
   };

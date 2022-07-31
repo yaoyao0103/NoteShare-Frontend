@@ -15,7 +15,7 @@ function QnARecommendPage(props) {
             try {
                 props.setLoading(true)
                 //const sortBy = props.sortMode;
-
+                console.log(props.pageNumber)
                 await axios.get('http://localhost:8080/post/hotPosts/' + String(props.pageNumber - 1) + '/20/QA').then((res) => {
                     setQnA(oldArray => [...oldArray, res.data.res]);
                     console.log(res.data.res)
@@ -23,16 +23,16 @@ function QnARecommendPage(props) {
                 });
 
             } catch (error) {
-                message.error("Server Error! Please try again later. (Get QA Post Error)")
-                console.log(error.message);
-                setQnA(error.message);
-                if (error.response.status === 500 || error.response.status === 404){
-                    document.cookie = 'error=true'
-                }
-                else if (error.response.status === 403){
-                    document.cookie = 'error=Jwt'                       
-                }
-            }
+            //     message.error("Server Error! Please try again later. (Get QA Post Error)")
+                 console.log(error);
+            //     setQnA(error.message);
+            //     if (error.response.status === 500 || error.response.status === 404){
+            //         document.cookie = 'error=true'
+            //     }
+            //     else if (error.response.status === 403){
+            //         document.cookie = 'error=Jwt'                       
+            //     }
+             }
         }
         setQnA([])
         getQnAById();

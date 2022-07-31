@@ -69,11 +69,12 @@ function ResetPasswordPage(props) {
             //   setRedirectActivate(true);
             // }
             setOpenFail(true);
-            if (error.response.status === 500 || error.response.status === 404){
+            if (error.response.status === 500 || error.response.status === 404||error.response.status === 403){
+                if(error.response.data.message.slice(0,13)==='Malformed JWT')
+                document.cookie = 'error=Jwt'
+                else
                 document.cookie = 'error=true'
-            }
-            else if (error.response.status === 403){
-                document.cookie = 'error=Jwt'                       
+                message.warning('Please refresh again!')
             }
         })
 

@@ -111,11 +111,12 @@ function ProfilePage(props) {
 
         }).catch((error) => {
             message.error("Server Error! Please try again later. (Get Fans Error)")
-            if (error.response.status === 500 || error.response.status === 404){
+            if (error.response.status === 500 || error.response.status === 404||error.response.status === 403){
+                if(error.response.data.message.slice(0,13)==='Malformed JWT')
+                document.cookie = 'error=Jwt'
+                else
                 document.cookie = 'error=true'
-            }
-            else if (error.response.status === 403){
-                document.cookie = 'error=Jwt'                       
+                message.warning('Please refresh again!')
             }
         })
     }
@@ -136,11 +137,12 @@ function ProfilePage(props) {
             props.setLoading(false)
         }).catch((error) => {
             message.error("Server Error! Please try again later. (Get Following Error)")
-            if (error.response.status === 500 || error.response.status === 404){
+            if (error.response.status === 500 || error.response.status === 404||error.response.status === 403){
+                if(error.response.data.message.slice(0,13)==='Malformed JWT')
+                document.cookie = 'error=Jwt'
+                else
                 document.cookie = 'error=true'
-            }
-            else if (error.response.status === 403){
-                document.cookie = 'error=Jwt'                       
+                message.warning('Please refresh again!')
             }
         })
     }
@@ -160,15 +162,16 @@ function ProfilePage(props) {
 
             }).catch((error) => {
                 message.error("Server Error! Please try again later. (Change Avatar Error)")
-                if (error.response.status === 500 || error.response.status === 404){
+                if (error.response.status === 500 || error.response.status === 404||error.response.status === 403){
+                    if(error.response.data.message.slice(0,13)==='Malformed JWT')
+                    document.cookie = 'error=Jwt'
+                    else
                     document.cookie = 'error=true'
-                }
-                else if (error.response.status === 403){
-                    document.cookie = 'error=Jwt'                       
+                    message.warning('Please refresh again!')
                 }
             })
         }
-        else{
+        else {
             message.warning("Please select your avatar!")
         }
     }
@@ -200,11 +203,12 @@ function ProfilePage(props) {
             }).catch((error) => {
                 message.error("Server Error! Please try again later. (Follow User Error)")
                 console.log(error.response.error);
-                if (error.response.status === 500 || error.response.status === 404){
+                if (error.response.status === 500 || error.response.status === 404||error.response.status === 403){
+                    if(error.response.data.message.slice(0,13)==='Malformed JWT')
+                    document.cookie = 'error=Jwt'
+                    else
                     document.cookie = 'error=true'
-                }
-                else if (error.response.status === 403){
-                    document.cookie = 'error=Jwt'                       
+                    message.warning('Please refresh again!')
                 }
 
             })
@@ -223,11 +227,12 @@ function ProfilePage(props) {
             }).catch((error) => {
                 message.error("Server Error! Please try again later. (Unfollow User Error)")
                 console.log(error.response.error);
-                if (error.response.status === 500 || error.response.status === 404){
+                if (error.response.status === 500 || error.response.status === 404||error.response.status === 403){
+                    if(error.response.data.message.slice(0,13)==='Malformed JWT')
+                    document.cookie = 'error=Jwt'
+                    else
                     document.cookie = 'error=true'
-                }
-                else if (error.response.status === 403){
-                    document.cookie = 'error=Jwt'                       
+                    message.warning('Please refresh again!')
                 }
             })
         }
@@ -246,11 +251,12 @@ function ProfilePage(props) {
             }).catch((error) => {
                 message.error("Server Error! Please try again later. (Turn On The Bell Error)")
                 console.log(error.response.error);
-                if (error.response.status === 500 || error.response.status === 404){
+                if (error.response.status === 500 || error.response.status === 404||error.response.status === 403){
+                    if(error.response.data.message.slice(0,13)==='Malformed JWT')
+                    document.cookie = 'error=Jwt'
+                    else
                     document.cookie = 'error=true'
-                }
-                else if (error.response.status === 403){
-                    document.cookie = 'error=Jwt'                       
+                    message.warning('Please refresh again!')
                 }
             })
         }
@@ -266,11 +272,12 @@ function ProfilePage(props) {
             }).catch((error) => {
                 message.error("Server Error! Please try again later. (Turn Off The Bell Error)")
                 console.log(error.response.error);
-                if (error.response.status === 500 || error.response.status === 404){
+                if (error.response.status === 500 || error.response.status === 404||error.response.status === 403){
+                    if(error.response.data.message.slice(0,13)==='Malformed JWT')
+                    document.cookie = 'error=Jwt'
+                    else
                     document.cookie = 'error=true'
-                }
-                else if (error.response.status === 403){
-                    document.cookie = 'error=Jwt'                       
+                    message.warning('Please refresh again!')
                 }
             })
 
@@ -288,11 +295,12 @@ function ProfilePage(props) {
         }).catch((error) => {
             message.error("Server Error! Please try again later. (Update Profile Error)")
             console.log(error.response.error);
-            if (error.response.status === 500 || error.response.status === 404){
+            if (error.response.status === 500 || error.response.status === 404||error.response.status === 403){
+                if(error.response.data.message.slice(0,13)==='Malformed JWT')
+                document.cookie = 'error=Jwt'
+                else
                 document.cookie = 'error=true'
-            }
-            else if (error.response.status === 403){
-                document.cookie = 'error=Jwt'                       
+                message.warning('Please refresh again!')
             }
         })
     };
@@ -311,11 +319,12 @@ function ProfilePage(props) {
         }).catch((error) => {
             message.error("Server Error! Please try again later. (Add Strength Error)")
             console.log(error.response.error);
-            if (error.response.status === 500 || error.response.status === 404){
+            if (error.response.status === 500 || error.response.status === 404||error.response.status === 403){
+                if(error.response.data.message.slice(0,13)==='Malformed JWT')
+                document.cookie = 'error=Jwt'
+                else
                 document.cookie = 'error=true'
-            }
-            else if (error.response.status === 403){
-                document.cookie = 'error=Jwt'                       
+                message.warning('Please refresh again!')
             }
         })
     }
@@ -331,11 +340,12 @@ function ProfilePage(props) {
         }).catch((error) => {
             message.error("Server Error! Please try again later. (Delete Strength Error)")
             console.log(error.response.error);
-            if (error.response.status === 500 || error.response.status === 404){
+            if (error.response.status === 500 || error.response.status === 404||error.response.status === 403){
+                if(error.response.data.message.slice(0,13)==='Malformed JWT')
+                document.cookie = 'error=Jwt'
+                else
                 document.cookie = 'error=true'
-            }
-            else if (error.response.status === 403){
-                document.cookie = 'error=Jwt'                       
+                message.warning('Please refresh again!')
             }
         })
     }
@@ -352,11 +362,12 @@ function ProfilePage(props) {
         }).catch((error) => {
             message.error("Server Error! Please try again later. (Back To The Last Layer Error)")
             console.log(error.response.error);
-            if (error.response.status === 500 || error.response.status === 404){
+            if (error.response.status === 500 || error.response.status === 404||error.response.status === 403){
+                if(error.response.data.message.slice(0,13)==='Malformed JWT')
+                document.cookie = 'error=Jwt'
+                else
                 document.cookie = 'error=true'
-            }
-            else if (error.response.status === 403){
-                document.cookie = 'error=Jwt'                       
+                message.warning('Please refresh again!')
             }
         })
     };
@@ -390,11 +401,12 @@ function ProfilePage(props) {
         }).catch((error) => {
             message.error("Server Error! Please try again later. (Get Folder Error)")
             //console.log(error.response.error);
-            if (error.response.status === 500 || error.response.status === 404){
+            if (error.response.status === 500 || error.response.status === 404||error.response.status === 403){
+                if(error.response.data.message.slice(0,13)==='Malformed JWT')
+                document.cookie = 'error=Jwt'
+                else
                 document.cookie = 'error=true'
-            }
-            else if (error.response.status === 403){
-                document.cookie = 'error=Jwt'                       
+                message.warning('Please refresh again!')
             }
         })
     };
@@ -412,11 +424,12 @@ function ProfilePage(props) {
             message.error("Server Error! Please try again later. (Get All Folders Error)")
             //console.log(error.response.data);
             //setGetFolderFail(true);   
-            if (error.response.status === 500 || error.response.status === 404){
+            if (error.response.status === 500 || error.response.status === 404||error.response.status === 403){
+                if(error.response.data.message.slice(0,13)==='Malformed JWT')
+                document.cookie = 'error=Jwt'
+                else
                 document.cookie = 'error=true'
-            }
-            else if (error.response.status === 403){
-                document.cookie = 'error=Jwt'                       
+                message.warning('Please refresh again!')
             }
         });
     };
@@ -436,11 +449,12 @@ function ProfilePage(props) {
             message.error("Server Error! Please try again later. (Get All Notes Error)")
             //console.log(error.response.data);
             //setGetFolderFail(true);
-            if (error.response.status === 500 || error.response.status === 404){
+            if (error.response.status === 500 || error.response.status === 404||error.response.status === 403){
+                if(error.response.data.message.slice(0,13)==='Malformed JWT')
+                document.cookie = 'error=Jwt'
+                else
                 document.cookie = 'error=true'
-            }
-            else if (error.response.status === 403){
-                document.cookie = 'error=Jwt'                       
+                message.warning('Please refresh again!')
             }
         });
     };
@@ -492,18 +506,20 @@ function ProfilePage(props) {
             setGetUserSuccess(true);
 
             let tempEmail = cookieParser.getCookieByName('email')
-            tempEmail = Base64.decode(tempEmail);
+            if (tempEmail)
+                tempEmail = Base64.decode(tempEmail);
             if (tempEmail === props.email)
                 props.setLoading(false);
 
         }).catch((error) => {
             message.error("Server Error! Please try again later. (Get User Error)")
             console.log(error);
-            if (error.response.status === 500 || error.response.status === 404){
+            if (error.response.status === 500 || error.response.status === 404||error.response.status === 403){
+                if(error.response.data.message.slice(0,13)==='Malformed JWT')
+                document.cookie = 'error=Jwt'
+                else
                 document.cookie = 'error=true'
-            }
-            else if (error.response.status === 403){
-                document.cookie = 'error=Jwt'                       
+                message.warning('Please refresh again!')
             }
         });
     };
@@ -518,7 +534,8 @@ function ProfilePage(props) {
         setGetUserSuccess(false);
 
         let tempEmail = cookieParser.getCookieByName('email')
-        tempEmail = Base64.decode(tempEmail);
+        if (tempEmail)
+            tempEmail = Base64.decode(tempEmail);
         //console.log(tempEmail);
         //console.log(props.email);
 

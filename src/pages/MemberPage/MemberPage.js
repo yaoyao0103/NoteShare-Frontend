@@ -7,7 +7,7 @@ import { message } from "antd";
 import Cookie from '../../components/Cookies/Cookies';
 import { Base64 } from 'js-base64';
 import { suppressDeprecationWarnings } from 'moment';
-const cookieParser =new Cookie(document.cookie)
+const cookieParser = new Cookie(document.cookie)
 function MemberPage(props) {
     const page = 'MemberPage';
 
@@ -20,26 +20,31 @@ function MemberPage(props) {
 
 
     const changeFollowingSwitch = () => {
+        if (cookieParser.getCookieByName('email')) {
+            if (!isFollowingSwitch) {
+                //console.log('0000')
+                props.setLoading(true)
+                setIsFollowingSwitch(true)
+                setNote(oldArray => [...oldArray.slice(0, 0)])
+                let cookieParser = new Cookie(document.cookie);
+                let tempEmail = cookieParser.getCookieByName('email')
+                if (tempEmail)
+                    tempEmail = Base64.decode(tempEmail);
+                getFollowingNoteById(tempEmail)
+            }
 
-        if (!isFollowingSwitch) {
-            //console.log('0000')
-            props.setLoading(true)
-            setIsFollowingSwitch(true)
-            setNote(oldArray => [...oldArray.slice(0, 0)])
-            let cookieParser = new Cookie(document.cookie);
-            let tempEmail = cookieParser.getCookieByName('email')
-            tempEmail = Base64.decode(tempEmail);
-            getFollowingNoteById(tempEmail)
+            else {
+                //console.log('1111')
+                props.setLoading(true)
+                setIsFollowingSwitch(false)
+                setNote(oldArray => [...oldArray.slice(0, 0)])
+                getRecommendNoteById();
+            }
         }
-
         else {
-            //console.log('1111')
-            props.setLoading(true)
-            setIsFollowingSwitch(false)
-            setNote(oldArray => [...oldArray.slice(0, 0)])
-            getRecommendNoteById();
+            message.warning("Please log in first!")
+            props.setPageProps({ page: 'LoginPage' })
         }
-
     }
     const changeNoteSwitch = () => {
         if (!isNoteSwitch)
@@ -49,10 +54,10 @@ function MemberPage(props) {
     }
     async function getFollowingNoteById(email) {
         try {
-            await axios.get('http://localhost:8080/note/following/' + email + '/' + String(props.pageNumber - 1) + '/10',{
+            await axios.get('http://localhost:8080/note/following/' + email + '/' + String(props.pageNumber - 1) + '/10', {
                 headers: {
                     'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
-                  }
+                }
             }).then((res) => {
                 setNote(oldArray => [...oldArray, res.data.res]);
                 console.log(res.data.res)
@@ -63,18 +68,19 @@ function MemberPage(props) {
             //console.log(error.message);
             message.error("Server Error! Please try again later. (Get Notes Error)")
             setNote(error.message);
-            if (error.response.status === 500 || error.response.status === 404){
+            if (error.response.status === 500 || error.response.status === 404||error.response.status === 403){
+                if(error.response.data.message.slice(0,13)==='Malformed JWT')
+                document.cookie = 'error=Jwt'
+                else
                 document.cookie = 'error=true'
-            }
-            else if (error.response.status === 403){
-                document.cookie = 'error=Jwt'                       
+                message.warning('Please refresh again!')
             }
 
         }
     }
     async function getRecommendNoteById() {
         try {
-            
+
             //console.log(props.department);
             await axios.get('http://localhost:8080/note/hotNotes/' + String(props.pageNumber - 1) + '/10').then((res) => {
                 setNote(oldArray => [...oldArray, res.data.res]);
@@ -85,11 +91,12 @@ function MemberPage(props) {
             console.log(error.message);
             message.error("Server Error! Please try again later. (Get Notes Error)")
             setNote(error.message);
-            if (error.response.status === 500 || error.response.status === 404){
+            if (error.response.status === 500 || error.response.status === 404||error.response.status === 403){
+                if(error.response.data.message.slice(0,13)==='Malformed JWT')
+                document.cookie = 'error=Jwt'
+                else
                 document.cookie = 'error=true'
-            }
-            else if (error.response.status === 403){
-                document.cookie = 'error=Jwt'                       
+                message.warning('Please refresh again!')
             }
 
         }
@@ -113,7 +120,7 @@ function MemberPage(props) {
     return (
         <>
             {Note.length > 0 &&
-                <PageOutlineContentTemplate isMember={true}loading={loading} setLoading={setLoading}isFollowingSwitch={isFollowingSwitch} isNoteSwitch={isNoteSwitch} changeFollowingSwitch={changeFollowingSwitch} changeNoteSwitch={changeNoteSwitch} page={page} hasSwitch={true} mode='Note' Post={Note} pageNumber={props.pageNumber} changePageNumber={props.setPageNumber} changeSortMode={props.changeSortMode} setPageProps={props.setPageProps} />
+                <PageOutlineContentTemplate isMember={true} loading={loading} setLoading={setLoading} isFollowingSwitch={isFollowingSwitch} isNoteSwitch={isNoteSwitch} changeFollowingSwitch={changeFollowingSwitch} changeNoteSwitch={changeNoteSwitch} page={page} hasSwitch={true} mode='Note' Post={Note} pageNumber={props.pageNumber} changePageNumber={props.setPageNumber} changeSortMode={props.changeSortMode} setPageProps={props.setPageProps} />
 
             }
         </>

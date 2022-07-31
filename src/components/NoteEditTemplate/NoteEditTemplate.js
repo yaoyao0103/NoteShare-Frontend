@@ -60,34 +60,36 @@ const NoteEditTemplate = (props) => {
     },[editor])*/
 
     useEffect(() => {
-        
+
         const temp = cookieParser.getCookieByName('email')
-        const tempEmail = Base64.decode(temp);
+        if (temp)
+            var tempEmail = Base64.decode(temp);
         setEmail(tempEmail)
         const note = props.note;
-        if(props.postId) setPostId(props.postId)
+        if (props.postId) setPostId(props.postId)
         setNoteType(note?.type)
         setIsSubmit(note?.submit)
-        if(note && props.mode == 'edit'){
-            if(note?.type == 'reward'){
+        if (note && props.mode == 'edit') {
+            if (note?.type == 'reward') {
                 setPostId(note?.postId);
                 axios.get(`http://localhost:8080/post/${note?.postId}/`)
-                .then ( res => {
-                    setPostInfo(res.data.res);
-                })
-                .catch (err => {
-                    message.error("Server Error! Please try again later. (Get Reward Post Error)")
-                    console.log(err)
-                    if (err.response.status === 500 || err.response.status === 404){
-                        document.cookie = 'error=true'
-                    }
-                    else if (err.response.status === 403){
-                        document.cookie = 'error=Jwt'                       
-                    }
-                }) 
+                    .then(res => {
+                        setPostInfo(res.data.res);
+                    })
+                    .catch(err => {
+                        message.error("Server Error! Please try again later. (Get Reward Post Error)")
+                        console.log(err)
+                        if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
+                            if(err.response.data.message.slice(0,13)==='Malformed JWT')
+                            document.cookie = 'error=Jwt'
+                            else
+                            document.cookie = 'error=true'
+                            message.warning('Please refresh again!')
+                        }
+                    })
             }
             setTitle(note.title);
-            setMyEditor(<MyEditor noteId={note.id} version={'0'} page={props.page} email={email}/>);
+            setMyEditor(<MyEditor noteId={note.id} version={'0'} page={props.page} email={email} />);
             setInformation({
                 school: note.school,
                 department: note.department,
@@ -100,7 +102,7 @@ const NoteEditTemplate = (props) => {
             setContent(note.description)
             setNoteId(note.id)
             setVersions(note.version)
-            setIsAuthor(note.headerEmail == tempEmail? true:false)
+            setIsAuthor(note.headerEmail == tempEmail ? true : false)
             /*setPopoverContent(
                 <>
                     <List
@@ -112,7 +114,7 @@ const NoteEditTemplate = (props) => {
             )*/
             setTagSelected(note.tag)
         }
-        else if(props.mode == 'new'){
+        else if (props.mode == 'new') {
             setTitle('')
             setInformation({
                 school: '',
@@ -125,7 +127,7 @@ const NoteEditTemplate = (props) => {
             });
             setContent('')
         }
-        else if(props.mode == 'newReward'){
+        else if (props.mode == 'newReward') {
             setTitle('')
             setInformation({
                 school: '',
@@ -136,58 +138,59 @@ const NoteEditTemplate = (props) => {
             setContent('')
             // get post info
             axios.get(`http://localhost:8080/post/${props.postId}/`)
-                .then ( res => {
+                .then(res => {
                     setPostInfo(res.data.res);
                 })
-                .catch (err => {
+                .catch(err => {
                     message.error("Server Error! Please try again later. (Get Post Information In Note Error)")
                     console.log(err)
-                    if (err.response.status === 500 || err.response.status === 404){
+                    if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
+                        if(err.response.data.message.slice(0,13)==='Malformed JWT')
+                        document.cookie = 'error=Jwt'
+                        else
                         document.cookie = 'error=true'
+                        message.warning('Please refresh again!')
                     }
-                    else if (err.response.status === 403){
-                        document.cookie = 'error=Jwt'                       
-                    }
-                })      
+                })
         }
-    },[props])
+    }, [props])
 
     useEffect(() => {
         setPopoverContent(
             <>
                 <List
                     dataSource={versions}
-                    renderItem={(item, index) => (index !=0 && 
+                    renderItem={(item, index) => (index != 0 &&
                         <Tooltip placement='left' title={moment(item.date).format('YYYY-MM-DD HH:mm:ss')}>
-                            {renaming == index ? 
-                            <Input placeholder="New version name" bordered={false} onPressEnter={(ev) => renameVersion(index, ev.target.value)} className="version__rename" addonAfter={<CloseOutlined onClick={() => setRenaming(false)} />} /> 
-                            :
-                            <List.Item 
-                                className='versionItem' 
-                                
-                                actions={[<EditOutlined onClick={()=>{setRenaming(index)}}/>]}
-                            >
-                                <List.Item.Meta
-                                    title={item.name}
-                                    onClick={()=>saveVersion(index)}
-                                />
-                            </List.Item>
+                            {renaming == index ?
+                                <Input placeholder="New version name" bordered={false} onPressEnter={(ev) => renameVersion(index, ev.target.value)} className="version__rename" addonAfter={<CloseOutlined onClick={() => setRenaming(false)} />} />
+                                :
+                                <List.Item
+                                    className='versionItem'
+
+                                    actions={[<EditOutlined onClick={() => { setRenaming(index) }} />]}
+                                >
+                                    <List.Item.Meta
+                                        title={item.name}
+                                        onClick={() => saveVersion(index)}
+                                    />
+                                </List.Item>
                             }
                         </Tooltip>
                     )}
                 />
                 {versions.length < 6 &&
-                    <List.Item className='newVersion'><Input placeholder="New Version" onPressEnter={(ev) => newVersion(ev.target.value)}/></List.Item>
+                    <List.Item className='newVersion'><Input placeholder="New Version" onPressEnter={(ev) => newVersion(ev.target.value)} /></List.Item>
                 }
             </>
         )
-        setDrawer(<VersionArea page={'NoteEditPageVersion'} id={noteId} versions={versions} setVersions={setVersions} setVersion={setVersion} isAuthor={isAuthor}/>);
-    },[versions, renaming])
+        setDrawer(<VersionArea page={'NoteEditPageVersion'} id={noteId} versions={versions} setVersions={setVersions} setVersion={setVersion} isAuthor={isAuthor} />);
+    }, [versions, renaming])
 
 
     const renameVersion = (index, name) => {
         props.setLoading(true)
-        axios.put(`http://localhost:8080/note/${noteId}/${index}/${name}`, {},{
+        axios.put(`http://localhost:8080/note/${noteId}/${index}/${name}`, {}, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
             }
@@ -205,11 +208,12 @@ const NoteEditTemplate = (props) => {
             .catch(err => {
                 message.error("Server Error! Please try again later. (Rename Folder Error)")
                 console.log(err)
-                if (err.response.status === 500 || err.response.status === 404){
+                if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
+                    if(err.response.data.message.slice(0,13)==='Malformed JWT')
+                    document.cookie = 'error=Jwt'
+                    else
                     document.cookie = 'error=true'
-                }
-                else if (err.response.status === 403){
-                    document.cookie = 'error=Jwt'                       
+                    message.warning('Please refresh again!')
                 }
             })
 
@@ -218,21 +222,21 @@ const NoteEditTemplate = (props) => {
     const customDot = (dot, { status, index }) => (
         <Popover
             content={
-            <span>
-                step {index} status: {status}
-            </span>
+                <span>
+                    step {index} status: {status}
+                </span>
             }
         >
             {dot}
         </Popover>
-        );
+    );
 
     const infoSubmit = () => {
         if (!title) {
             message.error("Title can't be empty");
             return;
         }
-        if(props.mode=="edit"){
+        if (props.mode == "edit") {
             const note = props.note;
             note.department = information.department
             note.subject = information.subject
@@ -244,28 +248,29 @@ const NoteEditTemplate = (props) => {
             note.description = content
             note.public = information.public
 
-            axios.put(`http://localhost:8080/note/${note.id}`, note,{
+            axios.put(`http://localhost:8080/note/${note.id}`, note, {
                 headers: {
                     'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
-                  }
-            })
-            .then(contentRes => {
-                console.log(contentRes)
-                setStep(1);
-                message.success("You updated the information of note!")
-            })
-            .catch (err => {
-                message.error("Server Error! Please try again later. (Update Information Of Note Error)")
-                console.log(err)
-                if (err.response.status === 500 || err.response.status === 404){
-                    document.cookie = 'error=true'
-                }
-                else if (err.response.status === 403){
-                    document.cookie = 'error=Jwt'                       
                 }
             })
+                .then(contentRes => {
+                    console.log(contentRes)
+                    setStep(1);
+                    message.success("You updated the information of note!")
+                })
+                .catch(err => {
+                    message.error("Server Error! Please try again later. (Update Information Of Note Error)")
+                    console.log(err)
+                    if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
+                        if(err.response.data.message.slice(0,13)==='Malformed JWT')
+                        document.cookie = 'error=Jwt'
+                        else
+                        document.cookie = 'error=true'
+                        message.warning('Please refresh again!')
+                    }
+                })
         }
-        else if(props.mode=="new"){
+        else if (props.mode == "new") {
             NoteFormat.type = "normal"
             NoteFormat.department = information.department
             NoteFormat.subject = information.subject
@@ -277,54 +282,56 @@ const NoteEditTemplate = (props) => {
             NoteFormat.description = content
             NoteFormat.public = information.public
 
-            let path = props.folderId? `http://localhost:8080/note/${email}/${props.folderId}`:`http://localhost:8080/note/${email}`
-            axios.post(path, NoteFormat,{
+            let path = props.folderId ? `http://localhost:8080/note/${email}/${props.folderId}` : `http://localhost:8080/note/${email}`
+            axios.post(path, NoteFormat, {
                 headers: {
                     'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
-                  }
+                }
             })
-            .then(res => {
-                const tempNote = res.data.res
-                console.log(tempNote)
-                const tempId = tempNote.id
-                setNoteId(tempId)
-                VersionFormat.name = "default"
-                VersionFormat.slug = "default"
-                VersionFormat.content = [ContentFormat]
-                axios.put(`http://localhost:8080/note/${tempId}/0`, VersionFormat,{
-                    headers: {
-                        'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
-                      }
+                .then(res => {
+                    const tempNote = res.data.res
+                    console.log(tempNote)
+                    const tempId = tempNote.id
+                    setNoteId(tempId)
+                    VersionFormat.name = "default"
+                    VersionFormat.slug = "default"
+                    VersionFormat.content = [ContentFormat]
+                    axios.put(`http://localhost:8080/note/${tempId}/0`, VersionFormat, {
+                        headers: {
+                            'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+                        }
+                    })
+                        .then(versionRes => {
+                            setMyEditor(<MyEditor noteId={tempId} version={'0'} page={props.page} email={email} />)
+                            const version = versionRes.data.res;
+                            setVersions([version])
+                            setStep(1);
+                            message.success("You submitted the information of note!")
+                        })
+                        .catch(err => {
+                            message.error("Server Error! Please try again later. (Submit Information Of Note Error)")
+                            console.log(err)
+                            if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
+                                if(err.response.data.message.slice(0,13)==='Malformed JWT')
+                                document.cookie = 'error=Jwt'
+                                else
+                                document.cookie = 'error=true'
+                                message.warning('Please refresh again!')
+                            }
+                        })
                 })
-                .then ( versionRes => {
-                    setMyEditor(<MyEditor noteId={tempId} version={'0'} page={props.page} email={email}/>)
-                    const version = versionRes.data.res;
-                    setVersions([version])
-                    setStep(1);
-                    message.success("You submitted the information of note!")
-                })
-                .catch (err => {
-                    message.error("Server Error! Please try again later. (Submit Information Of Note Error)")
+                .catch(err => {
                     console.log(err)
-                    if (err.response.status === 500 || err.response.status === 404){
+                    if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
+                        if(err.response.data.message.slice(0,13)==='Malformed JWT')
+                        document.cookie = 'error=Jwt'
+                        else
                         document.cookie = 'error=true'
-                    }
-                    else if (err.response.status === 403){
-                        document.cookie = 'error=Jwt'                       
+                        message.warning('Please refresh again!')
                     }
                 })
-            })
-            .catch (err => {
-                console.log(err)
-                if (err.response.status === 500 || err.response.status === 404){
-                    document.cookie = 'error=true'
-                }
-                else if (err.response.status === 403){
-                    document.cookie = 'error=Jwt'                       
-                }
-            })    
         }
-        else if(props.mode=="newReward"){
+        else if (props.mode == "newReward") {
             NoteFormat.type = "reward"
             NoteFormat.department = information.department
             NoteFormat.subject = information.subject
@@ -337,72 +344,74 @@ const NoteEditTemplate = (props) => {
             // let name = cookieParser.getCookieByName('name');
             // let avatar = cookieParser.getCookieByName('avatar');
 
-            axios.post(`http://localhost:8080/post/reward/${props.postId}/${email}`, NoteFormat,{
+            axios.post(`http://localhost:8080/post/reward/${props.postId}/${email}`, NoteFormat, {
                 headers: {
                     'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
-                  }
+                }
             })
-            .then(res => {
-                const tempNote = res.data.res
-                console.log(tempNote)
-                const tempId = tempNote.id
-                setNoteId(tempId)
-                VersionFormat.name = "default"
-                VersionFormat.slug = "default"
-                VersionFormat.content = [ContentFormat]
-                axios.put(`http://localhost:8080/note/${tempId}/0`, VersionFormat,{
-                    headers: {
-                        'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
-                      }
+                .then(res => {
+                    const tempNote = res.data.res
+                    console.log(tempNote)
+                    const tempId = tempNote.id
+                    setNoteId(tempId)
+                    VersionFormat.name = "default"
+                    VersionFormat.slug = "default"
+                    VersionFormat.content = [ContentFormat]
+                    axios.put(`http://localhost:8080/note/${tempId}/0`, VersionFormat, {
+                        headers: {
+                            'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+                        }
+                    })
+                        .then(versionRes => {
+                            setMyEditor(<MyEditor noteId={tempId} version={'0'} page={props.page} email={email} />)
+                            const version = versionRes.data.res;
+                            setVersions([version])
+                            setStep(1);
+                            message.success("You submitted the information of note!")
+                        })
+                        .catch(err => {
+                            message.error("Server Error! Please try again later. (Submit Information Of Reward Note Error)")
+                            console.log(err)
+                            if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
+                                if(err.response.data.message.slice(0,13)==='Malformed JWT')
+                                document.cookie = 'error=Jwt'
+                                else
+                                document.cookie = 'error=true'
+                                message.warning('Please refresh again!')
+                            }
+                        })
+                    // props.sendPrivateMessage(
+                    //     name + ' has provided answers to your reward !',
+                    //     'reward',
+                    //     email,
+                    //     name,
+                    //     avatar,
+                    //     props.noteId,
+                    //     props.rewardAuthorEmail
+                    // )
                 })
-                .then ( versionRes => {
-                    setMyEditor(<MyEditor noteId={tempId} version={'0'} page={props.page} email={email}/>)
-                    const version = versionRes.data.res;
-                    setVersions([version])
-                    setStep(1);
-                    message.success("You submitted the information of note!")
-                })
-                .catch (err => {
-                    message.error("Server Error! Please try again later. (Submit Information Of Reward Note Error)")
+                .catch(err => {
                     console.log(err)
-                    if (err.response.status === 500 || err.response.status === 404){
+                    if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
+                        if(err.response.data.message.slice(0,13)==='Malformed JWT')
+                        document.cookie = 'error=Jwt'
+                        else
                         document.cookie = 'error=true'
-                    }
-                    else if (err.response.status === 403){
-                        document.cookie = 'error=Jwt'                       
+                        message.warning('Please refresh again!')
                     }
                 })
-                // props.sendPrivateMessage(
-                //     name + ' has provided answers to your reward !',
-                //     'reward',
-                //     email,
-                //     name,
-                //     avatar,
-                //     props.noteId,
-                //     props.rewardAuthorEmail
-                // )
-            })
-            .catch (err => {
-                console.log(err)
-                if (err.response.status === 500 || err.response.status === 404){
-                    document.cookie = 'error=true'
-                }
-                else if (err.response.status === 403){
-                    document.cookie = 'error=Jwt'                       
-                }
-            })    
         }
-        
+
     }
 
     const showDrawer = (type) => {
-        switch(type){
-            case 'version':  
-                setDrawer(<VersionArea page={'NoteEditPageVersion'} id={noteId} versions={versions} setVersions={setVersions} setVersion={setVersion} isAuthor={isAuthor}/>);
-                setDrawerPlacement('right'); 
+        switch (type) {
+            case 'version':
+                setDrawer(<VersionArea page={'NoteEditPageVersion'} id={noteId} versions={versions} setVersions={setVersions} setVersion={setVersion} isAuthor={isAuthor} />);
+                setDrawerPlacement('right');
                 setDrawerTitle('Version')
                 break;
-            case 'postInfo':  
+            case 'postInfo':
                 setDrawer(
                     <RewardInformation
                         title={postInfo?.title}
@@ -416,17 +425,17 @@ const NoteEditTemplate = (props) => {
                         content={postInfo?.content}
                     />
                 );
-                setDrawerPlacement('left'); 
+                setDrawerPlacement('left');
                 setDrawerTitle('Reward Information');
                 break;
         }
         setVisible(true);
         setVisible(true);
-      };
-    
-      const onClose = () => {
+    };
+
+    const onClose = () => {
         setVisible(false);
-      };
+    };
 
 
     const setVersion = (index) => {
@@ -435,61 +444,64 @@ const NoteEditTemplate = (props) => {
                 const defaultVersion = res.data.res
                 defaultVersion.name = "default"
                 defaultVersion.slug = "default"
-                axios.put(`http://localhost:8080/note/${noteId}/0`, defaultVersion,{
+                axios.put(`http://localhost:8080/note/${noteId}/0`, defaultVersion, {
                     headers: {
                         'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
-                      }
-                })
-                .then ( async versionRes => {
-                    setMyEditor(<MyEditor noteId={noteId} version={'0'} page={props.page} email={email}/>)
-                    setStep(0);
-                    setStep(1);
-                    message.success("You copied the version!")
-                })
-                .catch (err => {
-                    message.error("Server Error! Please try again later. (Copy Version Error)")
-                    console.log(err)
-                    if (err.response.status === 500 || err.response.status === 404){
-                        document.cookie = 'error=true'
-                    }
-                    else if (err.response.status === 403){
-                        document.cookie = 'error=Jwt'                       
                     }
                 })
+                    .then(async versionRes => {
+                        setMyEditor(<MyEditor noteId={noteId} version={'0'} page={props.page} email={email} />)
+                        setStep(0);
+                        setStep(1);
+                        message.success("You copied the version!")
+                    })
+                    .catch(err => {
+                        message.error("Server Error! Please try again later. (Copy Version Error)")
+                        console.log(err)
+                        if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
+                            if(err.response.data.message.slice(0,13)==='Malformed JWT')
+                            document.cookie = 'error=Jwt'
+                            else
+                            document.cookie = 'error=true'
+                            message.warning('Please refresh again!')
+                        }
+                    })
             })
-            .catch (err => {
+            .catch(err => {
                 console.log(err)
-                if (err.response.status === 500 || err.response.status === 404){
+                if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
+                    if(err.response.data.message.slice(0,13)==='Malformed JWT')
+                    document.cookie = 'error=Jwt'
+                    else
                     document.cookie = 'error=true'
+                    message.warning('Please refresh again!')
                 }
-                else if (err.response.status === 403){
-                    document.cookie = 'error=Jwt'                       
-                }
-            })    
+            })
     }
     const noteFinish = async () => {
 
         axios.put(`http://localhost:8080/note/tag/wordSuggestion/${noteId}`, {}, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
-              }
+            }
         })
             .then(res => {
                 console.log("suggestive tag: ", res)
                 setRecommendTag(res.data.generatedTags)
                 setStep(2);
             })
-            .catch (err => {
+            .catch(err => {
                 console.log(err)
-                if (err.response.status === 500 || err.response.status === 404){
+                if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
+                    if(err.response.data.message.slice(0,13)==='Malformed JWT')
+                    document.cookie = 'error=Jwt'
+                    else
                     document.cookie = 'error=true'
+                    message.warning('Please refresh again!')
                 }
-                else if (err.response.status === 403){
-                    document.cookie = 'error=Jwt'                       
-                }
-            })    
-        
-        
+            })
+
+
     }
 
     const editNote = () => {
@@ -497,58 +509,60 @@ const NoteEditTemplate = (props) => {
     }
 
     const tagSubmit = async () => {
-        axios.get(`http://localhost:8080/note/${noteId}`,{
+        axios.get(`http://localhost:8080/note/${noteId}`, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
-              }
+            }
         })
             .then(res => {
                 const tempNote = res.data.res
                 tempNote.tag = tagSelected
-                axios.put(`http://localhost:8080/note/${noteId}`, tempNote,{
+                axios.put(`http://localhost:8080/note/${noteId}`, tempNote, {
                     headers: {
                         'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
-                      }
+                    }
                 })
                     .then(res => {
                         console.log(res);
                         message.success("You submitted the tags!");
-                        props.setPageProps({page:'NoteDetailPage', noteId: noteId})
+                        props.setPageProps({ page: 'NoteDetailPage', noteId: noteId })
                     })
-                    .catch (err => {
+                    .catch(err => {
                         message.error("Server Error! Please try again later. (Submit Tag Error)")
                         console.log(err)
-                        if (err.response.status === 500 || err.response.status === 404){
+                        if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
+                            if(err.response.data.message.slice(0,13)==='Malformed JWT')
+                            document.cookie = 'error=Jwt'
+                            else
                             document.cookie = 'error=true'
+                            message.warning('Please refresh again!')
                         }
-                        else if (err.response.status === 403){
-                            document.cookie = 'error=Jwt'                       
-                        }
-                    }) 
+                    })
             })
-            .catch (err => {
+            .catch(err => {
                 console.log(err)
-                if (err.response.status === 500 || err.response.status === 404){
+                if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
+                    if(err.response.data.message.slice(0,13)==='Malformed JWT')
+                    document.cookie = 'error=Jwt'
+                    else
                     document.cookie = 'error=true'
+                    message.warning('Please refresh again!')
                 }
-                else if (err.response.status === 403){
-                    document.cookie = 'error=Jwt'                       
-                }
-            })   
-        
+            })
+
     }
 
     const recommendTagRender = (props) => {
         const { label, closable } = props;
         const onSelect = (e) => {
             e.preventDefault();
-            const value = e.target.parentNode.parentNode.parentNode.innerText.length!=0? e.target.parentNode.parentNode.parentNode.innerText:e.target.parentNode.parentNode.innerText.length!=0? e.target.parentNode.parentNode.innerText:'';
-            if(!tagSelected.includes(value) && value.length !=0)
+            const value = e.target.parentNode.parentNode.parentNode.innerText.length != 0 ? e.target.parentNode.parentNode.parentNode.innerText : e.target.parentNode.parentNode.innerText.length != 0 ? e.target.parentNode.parentNode.innerText : '';
+            if (!tagSelected.includes(value) && value.length != 0)
                 setTagSelected([...tagSelected, value])
             // console.log(value);
             // console.log(tagSelected)
         };
-    
+
         return (
             <Tag
                 color={'gold'}
@@ -558,7 +572,7 @@ const NoteEditTemplate = (props) => {
                     marginRight: 3,
                 }}
                 closeIcon={<CheckOutlined />}
-                >
+            >
                 {label}
             </Tag>
         );
@@ -567,17 +581,17 @@ const NoteEditTemplate = (props) => {
         const { label, closable, onClose } = props;
         return (
             <Tag
-                color={recommendTag.includes(label)?'gold':'green'}
+                color={recommendTag.includes(label) ? 'gold' : 'green'}
                 closable={closable}
                 onClose={onClose}
                 style={{
                     marginRight: 3,
                 }}
-                >
+            >
                 {label}
             </Tag>
         );
-        };
+    };
 
     const saveVersion = (index) => {
         editor.storeVersion({}, index)
@@ -589,27 +603,28 @@ const NoteEditTemplate = (props) => {
         VersionFormat.name = name
         VersionFormat.slug = name
         VersionFormat.content = [ContentFormat]
-        axios.put(`http://localhost:8080/note/${noteId}/${versionLength}`, VersionFormat,{
+        axios.put(`http://localhost:8080/note/${noteId}/${versionLength}`, VersionFormat, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
-              }
-        })
-        .then ( res => {
-            const version = res.data.res;
-            setVersions([...versions, version])
-            editor.storeVersion({}, versionLength)
-            message.success("You created a new version")
-        })
-        .catch (err => {
-            message.error("Server Error! Please try again later. (New Version Error)")
-            console.log(err)
-            if (err.response.status === 500 || err.response.status === 404){
-                document.cookie = 'error=true'
-            }
-            else if (err.response.status === 403){
-                document.cookie = 'error=Jwt'                       
             }
         })
+            .then(res => {
+                const version = res.data.res;
+                setVersions([...versions, version])
+                editor.storeVersion({}, versionLength)
+                message.success("You created a new version")
+            })
+            .catch(err => {
+                message.error("Server Error! Please try again later. (New Version Error)")
+                console.log(err)
+                if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
+                    if(err.response.data.message.slice(0,13)==='Malformed JWT')
+                    document.cookie = 'error=Jwt'
+                    else
+                    document.cookie = 'error=true'
+                    message.warning('Please refresh again!')
+                }
+            })
     }
 
     const saveDefault = () => {
@@ -622,81 +637,84 @@ const NoteEditTemplate = (props) => {
             .then(res => {
                 const tempNote = res.data.res
                 tempNote.tag = tagSelected
-                axios.put(`http://localhost:8080/note/${noteId}`, tempNote,{
+                axios.put(`http://localhost:8080/note/${noteId}`, tempNote, {
                     headers: {
                         'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
-                      }
+                    }
                 })
                     .then(res => {
-                        axios.put(`http://localhost:8080/note/submit/${noteId}`,{},{
+                        axios.put(`http://localhost:8080/note/submit/${noteId}`, {}, {
                             headers: {
                                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
-                              }
+                            }
                         })
-                        .then ( res => {
-                            message.success("You submitted a reward note!")
-                            props.setPageProps({
-                                page: "NoteDetailPage",
-                                noteId: noteId
+                            .then(res => {
+                                message.success("You submitted a reward note!")
+                                props.setPageProps({
+                                    page: "NoteDetailPage",
+                                    noteId: noteId
+                                })
                             })
-                        })
-                        .catch(err =>{
-                            message.error("Server Error! Please try again later. (Publish Reward Note Error)")
-                            console.log(err)
-                            if (err.response.status === 500 || err.response.status === 404){
-                                document.cookie = 'error=true'
-                            }
-                            else if (err.response.status === 403){
-                                document.cookie = 'error=Jwt'                       
-                            }
-                        })
+                            .catch(err => {
+                                message.error("Server Error! Please try again later. (Publish Reward Note Error)")
+                                console.log(err)
+                                if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
+                                    if(err.response.data.message.slice(0,13)==='Malformed JWT')
+                                    document.cookie = 'error=Jwt'
+                                    else
+                                    document.cookie = 'error=true'
+                                    message.warning('Please refresh again!')
+                                }
+                            })
                     })
-                    .catch (err => {
+                    .catch(err => {
                         message.error("Server Error! Please try again later. (Submit Reward Note Error)")
                         console.log(err)
-                        if (err.response.status === 500 || err.response.status === 404){
+                        if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
+                            if(err.response.data.message.slice(0,13)==='Malformed JWT')
+                            document.cookie = 'error=Jwt'
+                            else
                             document.cookie = 'error=true'
+                            message.warning('Please refresh again!')
                         }
-                        else if (err.response.status === 403){
-                            document.cookie = 'error=Jwt'                       
-                        }
-                    }) 
+                    })
             })
-            .catch (err => {
+            .catch(err => {
                 message.error("Server Error! Please try again later. (Get Tags Error)")
                 console.log(err)
-                if (err.response.status === 500 || err.response.status === 404){
+                if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
+                    if(err.response.data.message.slice(0,13)==='Malformed JWT')
+                    document.cookie = 'error=Jwt'
+                    else
                     document.cookie = 'error=true'
+                    message.warning('Please refresh again!')
                 }
-                else if (err.response.status === 403){
-                    document.cookie = 'error=Jwt'                       
-                }
-            })   
+            })
     }
 
-    return (   
+    return (
         <div className="noteEditTemplate">
-            <Layout  className="noteEditTemplate__Layout" >
+            <Layout className="noteEditTemplate__Layout" >
                 <Header className="noteEditTemplate__Header">
                     <Row className="noteEditTemplate__Row">
                         <Col className="postEditTemplate__Header__Title">
                             <Text color='black' cls='Default' content={`New Note`} fontSize='30' display="inline-block" />
                         </Col>
-                    </Row>  
+                    </Row>
                     <Row className="noteEditTemplate__Row noteEditTemplate__Steps" >
-                        <Steps current={step}  progressDot={customDot}>
-                            <Step title="Step 1" description="Information modify" icon={<InfoCircleOutlined />}/>
+                        <Steps current={step} progressDot={customDot}>
+                            <Step title="Step 1" description="Information modify" icon={<InfoCircleOutlined />} />
                             <Step title="Step 2" description="Note edit" />
                             <Step title="Step 3" description="Tag manage" />
                         </Steps>
-                    </Row>  
+                    </Row>
                 </Header>
                 {/* ------------------------------- Content ---------------------------------- */}
                 <Content className="noteEditTemplate__Content">
-                    {step==0 &&
+                    {step == 0 &&
                         <>
                             <Row className='noteEditTemplate__Row'>
-                                <Col  className='postEditTemplate__Content__Label' >
+                                <Col className='postEditTemplate__Content__Label' >
                                     <Text color='black' cls='Small' content={"Title"} fontSize='22' display="inline-block" />
                                 </Col>
                             </Row>
@@ -706,35 +724,35 @@ const NoteEditTemplate = (props) => {
                                 </Col>
                             </Row>
                             <Row className='noteEditTemplate__Row'>
-                                <Col  className='postEditTemplate__Content__Label' >
+                                <Col className='postEditTemplate__Content__Label' >
                                     <Text color='black' cls='Small' content={"Information"} fontSize='22' display="inline-block" />
                                 </Col>
                             </Row>
                             <Row className='noteEditTemplate__Row'>
                                 <Col className='postEditTemplate__Content__Information' >
-                                    <InformationInput 
+                                    <InformationInput
                                         information={information}
                                         setInformation={setInformation}
                                     />
                                 </Col>
                             </Row>
-                            
+
                             <Row className='noteEditTemplate__Row'>
-                                <Col  className='postEditTemplate__Content__Label' >
+                                <Col className='postEditTemplate__Content__Label' >
                                     <Text color='black' cls='Small' content={"Description"} fontSize='22' display="inline-block" />
                                 </Col>
                             </Row>
                             <Row className='noteEditTemplate__Row'>
                                 <Col className='postEditTemplate__Content__Main'>
-                                        <TextArea rows={10} placeholder="type something..." value={content} onChange={(ev) => setContent(ev.target.value)}/>
+                                    <TextArea rows={10} placeholder="type something..." value={content} onChange={(ev) => setContent(ev.target.value)} />
                                 </Col>
                             </Row>
-                        </> 
+                        </>
                     }
-                    {step==1 &&
+                    {step == 1 &&
                         myEditor
                     }
-                    {step==2 &&
+                    {step == 2 &&
                         <div className='noteEditTemplate__Content__Tags'>
                             <div className='noteEditTemplate__Content__Tag noteEditTemplate__Content__RecommendTag'>
                                 <Text color='black' cls='Small' content={"Recommended Tags"} fontSize='20' display="inline-block" />
@@ -745,7 +763,7 @@ const NoteEditTemplate = (props) => {
                                     mode="tags"
                                     //size='large'
                                     style={{
-                                    width: '100%',
+                                        width: '100%',
                                     }}
                                     removeIcon={<CheckOutlined />}
                                 >
@@ -767,91 +785,91 @@ const NoteEditTemplate = (props) => {
                             </div>
                         </div>
                     }
-                    
+
                 </Content>
                 {/* ------------------------------- Footer ---------------------------------- */}
-                {step==0 &&
+                {step == 0 &&
                     <Footer className="noteEditTemplate__Footer">
                         <div className="noteEditTemplate__Footer__Button" onClick={infoSubmit}>
                             <Button color={"purple"}><Text color='white' cls='Large' content={"Submit"} fontSize='17' display="inline-block" /></Button>
                         </div>
                     </Footer>
                 }
-                {step==1 &&
+                {step == 1 &&
                     <Footer className="noteEditTemplate__Footer">
-                        {(noteType=='reward' || props.mode=='newReward')?
-                        <>
-                            <div className="noteEditTemplate__Footer__Button" onClick={noteFinish}>
-                                <Button color={"purple"}><Text color='white' cls='Large' content={"Next"} fontSize='17' display="inline-block" /></Button>
-                            </div>
-                            <div className="noteEditTemplate__Footer__Button" onClick={saveDefault}>
-                                <Button color={"green"}><Text color='white' cls='Large' content={"Save"} fontSize='17' display="inline-block" /></Button>
-                            </div>
-                        </>
-                        :
-                        <>
-                            {versions.length==1?
-                                <Tooltip title={"You have to create a version first!"}>  
-                                    <div className="noteEditTemplate__Footer__Button">
-                                        <Button color={"purple--disabled"}><Text color='white' cls='Large' content={"Next"} fontSize='17' display="inline-block" /></Button>
-                                    </div>
-                                </Tooltip>
-                            :
+                        {(noteType == 'reward' || props.mode == 'newReward') ?
+                            <>
                                 <div className="noteEditTemplate__Footer__Button" onClick={noteFinish}>
                                     <Button color={"purple"}><Text color='white' cls='Large' content={"Next"} fontSize='17' display="inline-block" /></Button>
                                 </div>
-                            }
-                            <Popover 
-                                content={popoverContent} 
-                                overlayInnerStyle={{padding:"0 0 0.05em 0"}}
-                                title={<Text color='black' cls='Small' content={"Choose a version to save"} fontSize='17' display="inline-block" />}
-                                trigger="click">
-                                <div className="noteEditTemplate__Footer__Button">
-                                    <Button color={"green"}><Text color='white' cls='Large' content={"Save Current Version"} fontSize='17' display="inline-block" /></Button>
-                                </div>
-                            </Popover>
-                            <div className="noteEditTemplate__Footer__Button" onClick={() => showDrawer('version')}>
-                                <Button color={"green"}><Text color='white' cls='Large' content={"Copy Version"} fontSize='17' display="inline-block" /></Button>
-                            </div>
-                        </>
-
-                        }
-                        
-                    </Footer>
-                }
-                {step==2 &&
-                    <Footer className="noteEditTemplate__Footer">
-                        <Text color='black' cls='Large' content={"Tip: Press enter to confirm your tag"} fontSize='15' display="inline-block" />
-                        {(noteType=='reward' || props.mode=='newReward')?
-                        <>
-                            {isSubmit?
-                            <div className="noteEditTemplate__Footer__Button" onClick={tagSubmit}>
-                                <Button color={"purple"}><Text color='white' cls='Large' content={"Save"} fontSize='17' display="inline-block" /></Button>
-                            </div>
-                            :
-                            <>
-                                <div className="noteEditTemplate__Footer__Button" onClick={submitRewardNote}>
-                                    <Button color={"purple"}><Text color='white' cls='Large' content={"Submit"} fontSize='17' display="inline-block" /></Button>
-                                </div>
-                                <div className="noteEditTemplate__Footer__Button" onClick={tagSubmit}>
-                                    <Button color={"purple"}><Text color='white' cls='Large' content={"Save as draft"} fontSize='17' display="inline-block" /></Button>
+                                <div className="noteEditTemplate__Footer__Button" onClick={saveDefault}>
+                                    <Button color={"green"}><Text color='white' cls='Large' content={"Save"} fontSize='17' display="inline-block" /></Button>
                                 </div>
                             </>
-                            }
-                            
-                            <div className="noteEditTemplate__Footer__Button" onClick={editNote}>
-                                <Button color={"green"}><CaretLeftOutlined /><Text color='white' cls='Large' content={"Edit Note"} fontSize='17' display="inline-block" /></Button>
-                            </div>
-                        </>
-                        :
-                        <>
-                            <div className="noteEditTemplate__Footer__Button" onClick={tagSubmit}>
-                                <Button color={"purple"}><Text color='white' cls='Large' content={"Submit"} fontSize='17' display="inline-block" /></Button>
-                            </div>
-                            <div className="noteEditTemplate__Footer__Button" onClick={editNote}>
-                                <Button color={"purple"}><CaretLeftOutlined /><Text color='white' cls='Large' content={"Edit Note"} fontSize='17' display="inline-block" /></Button>
-                            </div>
-                        </>
+                            :
+                            <>
+                                {versions.length == 1 ?
+                                    <Tooltip title={"You have to create a version first!"}>
+                                        <div className="noteEditTemplate__Footer__Button">
+                                            <Button color={"purple--disabled"}><Text color='white' cls='Large' content={"Next"} fontSize='17' display="inline-block" /></Button>
+                                        </div>
+                                    </Tooltip>
+                                    :
+                                    <div className="noteEditTemplate__Footer__Button" onClick={noteFinish}>
+                                        <Button color={"purple"}><Text color='white' cls='Large' content={"Next"} fontSize='17' display="inline-block" /></Button>
+                                    </div>
+                                }
+                                <Popover
+                                    content={popoverContent}
+                                    overlayInnerStyle={{ padding: "0 0 0.05em 0" }}
+                                    title={<Text color='black' cls='Small' content={"Choose a version to save"} fontSize='17' display="inline-block" />}
+                                    trigger="click">
+                                    <div className="noteEditTemplate__Footer__Button">
+                                        <Button color={"green"}><Text color='white' cls='Large' content={"Save Current Version"} fontSize='17' display="inline-block" /></Button>
+                                    </div>
+                                </Popover>
+                                <div className="noteEditTemplate__Footer__Button" onClick={() => showDrawer('version')}>
+                                    <Button color={"green"}><Text color='white' cls='Large' content={"Copy Version"} fontSize='17' display="inline-block" /></Button>
+                                </div>
+                            </>
+
+                        }
+
+                    </Footer>
+                }
+                {step == 2 &&
+                    <Footer className="noteEditTemplate__Footer">
+                        <Text color='black' cls='Large' content={"Tip: Press enter to confirm your tag"} fontSize='15' display="inline-block" />
+                        {(noteType == 'reward' || props.mode == 'newReward') ?
+                            <>
+                                {isSubmit ?
+                                    <div className="noteEditTemplate__Footer__Button" onClick={tagSubmit}>
+                                        <Button color={"purple"}><Text color='white' cls='Large' content={"Save"} fontSize='17' display="inline-block" /></Button>
+                                    </div>
+                                    :
+                                    <>
+                                        <div className="noteEditTemplate__Footer__Button" onClick={submitRewardNote}>
+                                            <Button color={"purple"}><Text color='white' cls='Large' content={"Submit"} fontSize='17' display="inline-block" /></Button>
+                                        </div>
+                                        <div className="noteEditTemplate__Footer__Button" onClick={tagSubmit}>
+                                            <Button color={"purple"}><Text color='white' cls='Large' content={"Save as draft"} fontSize='17' display="inline-block" /></Button>
+                                        </div>
+                                    </>
+                                }
+
+                                <div className="noteEditTemplate__Footer__Button" onClick={editNote}>
+                                    <Button color={"green"}><CaretLeftOutlined /><Text color='white' cls='Large' content={"Edit Note"} fontSize='17' display="inline-block" /></Button>
+                                </div>
+                            </>
+                            :
+                            <>
+                                <div className="noteEditTemplate__Footer__Button" onClick={tagSubmit}>
+                                    <Button color={"purple"}><Text color='white' cls='Large' content={"Submit"} fontSize='17' display="inline-block" /></Button>
+                                </div>
+                                <div className="noteEditTemplate__Footer__Button" onClick={editNote}>
+                                    <Button color={"purple"}><CaretLeftOutlined /><Text color='white' cls='Large' content={"Edit Note"} fontSize='17' display="inline-block" /></Button>
+                                </div>
+                            </>
                         }
                     </Footer>
                 }
@@ -860,10 +878,10 @@ const NoteEditTemplate = (props) => {
                 {drawer}
                 {/* <VersionArea page={'NoteEditPageVersion'} versions={versions} setVersion={setVersion} isAuthor={isAuthor}/> */}
             </Drawer>
-            {(noteType=='reward' || props.mode=='newReward') &&
+            {(noteType == 'reward' || props.mode == 'newReward') &&
                 <div className='noteEditTemplate__PostInfo' onClick={() => showDrawer('postInfo')}>
                     <div className='noteEditTemplate__PostInfo__Title'>Reward Information</div>
-                    <CaretRightFilled  className={"Ring__Avatar"} />
+                    <CaretRightFilled className={"Ring__Avatar"} />
                 </div>
             }
         </div>

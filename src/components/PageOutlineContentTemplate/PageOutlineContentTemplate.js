@@ -24,7 +24,11 @@ function PageOutlineContentTemplate(props) {
         setSearchResult(oldArray => [oldArray.length = 0, props.Post]);
         var tempcardLists = [];
         const temp = cookieParser.getCookieByName('email')
-        const tempEmail = Base64.decode(temp);
+        if(temp){
+            console.log(temp)
+            var tempEmail = Base64.decode(temp);
+        }
+            
         if (!(props.Post[0].totalPages === 0) && props.mode !== 'Folder') {
             //console.log('1111');
            
