@@ -5,7 +5,7 @@ import loadBlocks from "./blocks";
 export default grapesjs.plugins.add("codeComponent", (editor, opts = {}) => {
   let options = {
     label: "Code",
-    name: "Code",
+    name: "code",
     category: "Custom",
   };
   for (let name in options) {
