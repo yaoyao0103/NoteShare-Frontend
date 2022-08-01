@@ -1024,6 +1024,15 @@ const OptionMenu = (props) => {
   */
   const VersionDetailMenuAuthor = (
     <Menu items={
+      !props.notePublic?
+      [
+        {
+          label: (<a onClick={() => { versionBrowse(props.index) }}>Browse</a>),
+          key: "1",
+          icon: <EyeOutlined />
+        },
+      ]
+      :
       [
         {
           label: (<a onClick={() => { versionBrowse(props.index) }}>Browse</a>),
@@ -1051,6 +1060,15 @@ const OptionMenu = (props) => {
 
   const VersionEditMenu = (
     <Menu items={
+      !props.notePublic?
+      [
+        {
+          label: (<a onClick={() => { setVersion(props.index) }}>Copy</a>),
+          key: "1",
+          icon: <EditOutlined />
+        },
+      ]
+      :
       [
         {
           label: (<a onClick={() => { setVersion(props.index) }}>Copy</a>),
@@ -1266,7 +1284,7 @@ const OptionMenu = (props) => {
         ></Dropdown.Button>
       </Space>
       <Drawer title={"Version"} placement="right" onClose={onClose} visible={visible}>
-        <VersionArea page={'NoteDetailPageVersion'} id={props.id} versions={props.versions} setVersions={props.setVersions} setVersion={props.setVersion} isAuthor={props.isAuthor} />
+        <VersionArea page={'NoteDetailPageVersion'} notePublic={props.notePublic} id={props.id} versions={props.versions} setVersions={props.setVersions} setVersion={props.setVersion} isAuthor={props.isAuthor} />
       </Drawer>
       {(props.page=="RewardDetailPage" && props.isAuthor) &&
         <Modal title="Notification" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>

@@ -251,7 +251,7 @@ const CollabNoteEditPage = (props) => {
     const showDrawer = (type) => {
         switch (type) {
             case 'version':
-                setDrawer(<VersionArea page={'NoteEditPageVersion'} id={note.id} versions={versions} setVersions={setVersions} setVersion={setVersion} />);
+                setDrawer(<VersionArea page={'NoteEditPageVersion'} id={note.id} notePublic={note.public} versions={versions} setVersions={setVersions} setVersion={setVersion} />);
                 setDrawerPlacement('right');
                 setDrawerTitle('Version')
                 break;
@@ -335,7 +335,7 @@ const CollabNoteEditPage = (props) => {
         else {
             // end
             props.setPageProps({
-                page: 'CollabDetail',
+                page: 'CollabDetailPage',
                 postId: props.postId
             })
         }
@@ -360,7 +360,7 @@ const CollabNoteEditPage = (props) => {
                     .then(res => {
                         console.log(res);
                         message.success("You submitted the tags!");
-                        props.setPageProps({ page: 'PersonalPage' })
+                        props.setPageProps({ page: 'CollabDetailPage', postId: props.postId })
                     })
                     .catch(err => {
                         message.error("Server Error! Please try again later. (Submit Tag Error)")

@@ -38,7 +38,7 @@ const PageDetailContentTemplate = (props) => {
     const [author, setAuthor] = useState([])
     const [manager, setManager] = useState('')
     const [haveApplied, setHaveApplied] = useState(null)
-    const [isPublic, setIsPublic] = useState(false)
+    const [isPublic, setIsPublic] = useState(null)
     const [isNotePublic, setIsNotePublic] = useState(null)
     const [authorEmail, setAuthorEmail] = useState('')
     const [noteType, setNoteType] = useState(null)
@@ -54,6 +54,7 @@ const PageDetailContentTemplate = (props) => {
     const [type, setType] = useState('')
     const [publishDate, setPublishDate] = useState('')
     const [rewardIsEnd, setRewardIsEnd] = useState(false)
+    const [collabNoteTags, setCollabNoteTags] = useState([])
 
     useEffect(() => {
 
@@ -102,6 +103,7 @@ const PageDetailContentTemplate = (props) => {
                     setManager(tempNote.managerUserObj)
                     setIsNotePublic(tempNote.public)
                     setPublishDate(tempNote.publishDate)
+                    setCollabNoteTags(tempNote.tag)
                     /*for(let i = 0; i < props.data?.authorUserObj.length; i++){
                         if(props.data?.emailUserObj[i].userObjEmail == tempEmail){
                             setEditor(<MyEditor noteId = {noteId} version={'0'} page={props.page} email={email}/>)
@@ -635,7 +637,7 @@ const PageDetailContentTemplate = (props) => {
                             </>
                         }
                         {/* Todo: also check if he is an origin poster */}
-                        {(props.page == 'RewardDetailPage' && isAuthor) &&
+                        {(props.page == 'RewardDetailPage' && isAuthor) &&            
                             <div className="contentTemplate__Footer__Button" onClick={() => setPoppedContentShow(true)}>
                                 <Button color={"green"}><Text color='white' cls='Large' content={"Show user-contributed Notes"} fontSize='17' display="inline-block" /></Button>
                             </div>
@@ -657,14 +659,36 @@ const PageDetailContentTemplate = (props) => {
                         }
 
                         {(props.page == 'CollabDetailPage' && !isAuthor) &&
+                        <>
+                            <Text color='black' cls='Default' content={"Tags:"} fontSize='22' display="inline-block" />
+                            <span className="left-margin"></span>
+                            {collabNoteTags.map((tag) =>
+                                <>
+                                    {/* 
+                                    <Text color='black' cls='Default' content={tag} fontSize='18' display="inline-block" /> */}
+                                    <Tag style={{ fontSize: "15px" }}>{tag}</Tag>
+                                </>
+                            )}
                             <div className="contentTemplate__Footer__Button" onClick={() => setPoppedContentShow(true)}>
                                 <Button color={"green"}><Text color='white' cls='Large' content={"Apply"} fontSize='17' display="inline-block" /></Button>
                             </div>
+                        </>
                         }
                         {(props.page == 'CollabDetailPage' && isAuthor) &&
-                            <div className="contentTemplate__Footer__Button" onClick={() => { props.setPageProps({ page: 'CollabNoteEditPage', noteId: noteId, postId: props.postId, isAuthor: isAuthor, isManager: isManager }) }}>
-                                <Button color={"green"}><Text color='white' cls='Large' content={"Edit"} fontSize='17' display="inline-block" /></Button>
-                            </div>
+                            <>
+                                <Text color='black' cls='Default' content={"Tags:"} fontSize='22' display="inline-block" />
+                                <span className="left-margin"></span>
+                                {collabNoteTags.map((tag) =>
+                                    <>
+                                        {/* 
+                                        <Text color='black' cls='Default' content={tag} fontSize='18' display="inline-block" /> */}
+                                        <Tag style={{ fontSize: "15px" }}>{tag}</Tag>
+                                    </>
+                                )}
+                                <div className="contentTemplate__Footer__Button" onClick={() => { props.setPageProps({ page: 'CollabNoteEditPage', noteId: noteId, postId: props.postId, isAuthor: isAuthor, isManager: isManager }) }}>
+                                    <Button color={"green"}><Text color='white' cls='Large' content={"Edit"} fontSize='17' display="inline-block" /></Button>
+                                </div>
+                            </>
                         }
 
                     </Footer>

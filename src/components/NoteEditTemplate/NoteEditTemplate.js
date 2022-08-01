@@ -51,6 +51,7 @@ const NoteEditTemplate = (props) => {
     const [drawerPlacement, setDrawerPlacement] = useState('right')
     const [postId, setPostId] = useState('');
     const [renaming, setRenaming] = useState(false)
+    const [notShowSwitch, setNotShowSwitch] = useState(false)
 
     const { pageStore } = useSelector((state) => state);
     const { pages } = pageStore;
@@ -99,6 +100,7 @@ const NoteEditTemplate = (props) => {
                 price: note.price,
                 public: note.public
             })
+            setNotShowSwitch(note.public)
             setContent(note.description)
             setNoteId(note.id)
             setVersions(note.version)
@@ -184,7 +186,7 @@ const NoteEditTemplate = (props) => {
                 }
             </>
         )
-        setDrawer(<VersionArea page={'NoteEditPageVersion'} id={noteId} versions={versions} setVersions={setVersions} setVersion={setVersion} isAuthor={isAuthor} />);
+        setDrawer(<VersionArea page={'NoteEditPageVersion'} id={noteId} notePublic={props.data?.public} versions={versions} setVersions={setVersions} setVersion={setVersion} isAuthor={isAuthor} />);
     }, [versions, renaming])
 
 
@@ -407,7 +409,7 @@ const NoteEditTemplate = (props) => {
     const showDrawer = (type) => {
         switch (type) {
             case 'version':
-                setDrawer(<VersionArea page={'NoteEditPageVersion'} id={noteId} versions={versions} setVersions={setVersions} setVersion={setVersion} isAuthor={isAuthor} />);
+                setDrawer(<VersionArea page={'NoteEditPageVersion'} id={noteId} notePublic={props.data?.public} versions={versions} setVersions={setVersions} setVersion={setVersion} isAuthor={isAuthor} />);
                 setDrawerPlacement('right');
                 setDrawerTitle('Version')
                 break;
@@ -733,6 +735,7 @@ const NoteEditTemplate = (props) => {
                                     <InformationInput
                                         information={information}
                                         setInformation={setInformation}
+                                        notShowSwitch={notShowSwitch}
                                     />
                                 </Col>
                             </Row>
