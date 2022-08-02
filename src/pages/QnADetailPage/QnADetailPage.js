@@ -19,14 +19,15 @@ function QnADetailPage(props) {
                 props.setLoading(false);
             })
             .catch(err =>{
-                message.error("Server Error! Please try again later. (Get Reward Post Error)")
-                console.log(err)
                 if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
                     if(err.response.data.message.slice(0,13)==='Malformed JWT')
                     document.cookie = 'error=Jwt'
                     else
                     document.cookie = 'error=true'
-                    message.warning('Please refresh again!')
+                    message.error('Server Error! Please refresh again! (Get Reward Post Error)')
+                }
+                else{
+                    message.error("Server Error! Please try again later. (Get Reward Post Error)")
                 }
             })
         }

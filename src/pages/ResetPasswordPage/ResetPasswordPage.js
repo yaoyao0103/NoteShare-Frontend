@@ -63,18 +63,16 @@ function ResetPasswordPage(props) {
                 })
             }, 2000)
         }).catch((error) => {
-            message.error("Server Error! Please try again later. (Reset Password Error)")
-            console.log(error.response.status)
-            // if(error.response.status === 403){
-            //   setRedirectActivate(true);
-            // }
             setOpenFail(true);
             if (error.response.status === 500 || error.response.status === 404||error.response.status === 403){
                 if(error.response.data.message.slice(0,13)==='Malformed JWT')
                 document.cookie = 'error=Jwt'
                 else
                 document.cookie = 'error=true'
-                message.warning('Please refresh again!')
+                message.error('Server Error! Please refresh again! (Reset Password Error)')
+            }
+            else{
+                message.error("Server Error! Please try again later. (Reset Password Error)")
             }
         })
 
@@ -88,12 +86,7 @@ function ResetPasswordPage(props) {
                 page: 'LoginPage'
             })
     }, [openSuccess]);
-    useEffect(() => {
-        if (openFail) {
-
-            message.error(error.msg);
-        }
-    }, [openFail]);
+  
     const formItemLayout = {
         labelCol: {
             xs: {

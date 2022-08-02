@@ -73,14 +73,15 @@ const PoppedContent = (props) => {
                 setContent()
             })
             .catch(err => {
-                message.error("Server Error! Please try again later. (Approve Application Error)")
-                console.log(err)
                 if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
                     if(err.response.data.message.slice(0,13)==='Malformed JWT')
                     document.cookie = 'error=Jwt'
                     else
                     document.cookie = 'error=true'
-                    message.warning('Please refresh again!')
+                    message.error('Server Error! Please refresh again! (Approve Application Error)')
+                }
+                else{
+                    message.error("Server Error! Please try again later. (Approve Application Error)")
                 }
             })
     }
@@ -105,14 +106,15 @@ const PoppedContent = (props) => {
                 // Todo: remove applicant from list
             })
             .catch(err => {
-                message.error("Server Error! Please try again later. (Reject Application Error)")
-                console.log(err)
                 if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
                     if(err.response.data.message.slice(0,13)==='Malformed JWT')
                     document.cookie = 'error=Jwt'
                     else
                     document.cookie = 'error=true'
-                    message.warning('Please refresh again!')
+                    message.error('Server Error! Please refresh again! (Reject Application Error)')
+                }
+                else{
+                    message.error('Server Error! Please try again later. (Reject Application Error)')
                 }
             })
     }

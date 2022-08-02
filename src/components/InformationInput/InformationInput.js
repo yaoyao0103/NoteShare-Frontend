@@ -7,7 +7,7 @@ const { Option } = Select;
 
 const data = require("../../EducationSetV2.json");
 
-const InformationInput = ({information, setInformation}) => {
+const InformationInput = ({information, setInformation, notShowSwitch}) => {
 
     return (
     <div className="informationInput">
@@ -47,16 +47,28 @@ const InformationInput = ({information, setInformation}) => {
                 <Input showCount maxLength={20} placeholder="professor" onChange={(ev) => setInformation({...information, professor: ev.target.value})} value={information?.professor} /> 
             </div>  
         }
-        {(information?.bestPrice!=null || information?.price!=null) &&
+        {(information?.bestPrice!=null) &&
             <div className="informationInput__item informationInput__InputNumber">
                 <Text color='black' cls='Small' content={"Price"} fontSize='15' display="inline-block" />
                 <NumericInput placeholder="$" onChange={(value) => setInformation({...information, bestPrice: value})} value={information?.bestPrice} /> 
+            </div>  
+        }
+        {(information?.price!=null) &&
+            <div className="informationInput__item informationInput__InputNumber">
+                <Text color='black' cls='Small' content={"Price"} fontSize='15' display="inline-block" />
+                <NumericInput placeholder="$" onChange={(value) => setInformation({...information, price: value})} value={information?.price} /> 
             </div>  
         }
         {information?.referencePrice!=null &&
             <div className="informationInput__item informationInput__InputNumber">
                 <Text color='black' cls='Small' content={"Ref Price"} fontSize='15' display="inline-block" />
                 <Input placeholder="$" onChange={(ev) => setInformation({...information, referencePrice: ev.target.value})} value={information?.referencePrice} /> 
+            </div>  
+        }
+        {information?.referenceNumber!=null &&
+            <div className="informationInput__item informationInput__InputNumber">
+                <Text color='black' cls='Small' content={"Ref Number"} fontSize='15' display="inline-block" />
+                <Input placeholder="$" onChange={(ev) => setInformation({...information, referenceNumber: ev.target.value})} value={information?.referenceNumber} /> 
             </div>  
         }
         {information?.downloadable!=null &&
@@ -74,7 +86,7 @@ const InformationInput = ({information, setInformation}) => {
                 }} />
             </div>  
         }
-        {information?.public!=null &&
+        {( information?.public!=null && !notShowSwitch) &&
             <div className="informationInput__item informationInput__Public">
                 {information?.public?
                 <Switch checkedChildren="Public" unCheckedChildren="Private" defaultChecked onChange={(checked) => {

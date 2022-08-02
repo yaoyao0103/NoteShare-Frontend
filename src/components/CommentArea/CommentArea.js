@@ -96,14 +96,15 @@ function CommentArea(props) {
                 });
             })
             .catch(err => {
-                message.error("Server Error! Please try again later.(Refresh Error)")
-                console.log(err)
                 if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
                     if(err.response.data.message.slice(0,13)==='Malformed JWT')
                     document.cookie = 'error=Jwt'
                     else
                     document.cookie = 'error=true'
-                    message.warning('Please refresh again!')
+                    message.error('Server Error! Please refresh again! (Refresh Error)')
+                }
+                else{
+                    message.error("Server Error! Please try again later.(Refresh Error)")
                 }
 
             })
@@ -119,24 +120,25 @@ function CommentArea(props) {
             })
                 .then(res => {
                     console.log(res.data.res)
-                    message.success("You liked the comment!")
+                    //message.success("You liked the comment!")
                     refresh()
                 })
                 .catch(err => {
-                    message.error("Server Error! Please try again later. (Like Comment Error)")
-                    console.log(err)
                     if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
                         if(err.response.data.message.slice(0,13)==='Malformed JWT')
                         document.cookie = 'error=Jwt'
                         else
                         document.cookie = 'error=true'
-                        message.warning('Please refresh again!')
+                        message.error('Server Error! Please refresh again! (Like Comment Error)')
+                    }
+                    else{
+                        message.error("Server Error! Please try again later. (Like Comment Error)")
                     }
 
                 })
         }
         else {
-            message.warning("Please log in first!")
+            message.error("Please log in first!")
             props.setPageProps({ page: 'LoginPage' })
         }
 
@@ -152,25 +154,26 @@ function CommentArea(props) {
             })
                 .then(res => {
                     console.log(res.data.res)
-                    message.success("You withdraw a like the comment!")
+                    //message.success("You withdraw a like the comment!")
                     refresh()
                 })
                 .catch(err => {
-                    message.error("Server Error! Please try again later. (Unlike Comment Error)")
-                    console.log(err)
                     if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
                         if(err.response.data.message.slice(0,13)==='Malformed JWT')
                         document.cookie = 'error=Jwt'
                         else
                         document.cookie = 'error=true'
-                        message.warning('Please refresh again!')
+                        message.error('Server Error! Please refresh again! (Unlike Comment Error)')
+                    }
+                    else{
+                        message.error("Server Error! Please try again later. (Unlike Comment Error)")
                     }
 
                 })
 
         }
         else {
-            message.warning("Please log in first!")
+            message.error("Please log in first!")
             props.setPageProps({ page: 'LoginPage' })
         }
 
@@ -204,24 +207,25 @@ function CommentArea(props) {
 
                     })
                     .catch(err => {
-                        message.error("Server Error! Please try again later. (Submit Comment Error)")
-                        console.log(err)
                         if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
                             if(err.response.data.message.slice(0,13)==='Malformed JWT')
                             document.cookie = 'error=Jwt'
                             else
                             document.cookie = 'error=true'
-                            message.warning('Please refresh again!')
+                            message.error('Server Error! Please refresh again! (Submit Comment Error)')
+                        }
+                        else{
+                            message.error("Server Error! Please try again later. (Submit Comment Error)")
                         }
                     })
             }
             else {
-                message.warning('Please enter something!')
+                message.error('Please enter your comment!')
             }
 
         }
         else {
-            message.warning("Please log in first!")
+            message.error("Please log in first!")
             props.setPageProps({ page: 'LoginPage' })
         }
 
@@ -234,7 +238,7 @@ function CommentArea(props) {
             setComment(comment + '@' + authors[commentId] + ' ');
         }
         else {
-            message.warning("Please Log in first!")
+            message.error("Please log in first!")
             props.setPageProps({ page: 'LoginPage' })
         }
     }
@@ -253,14 +257,16 @@ function CommentArea(props) {
                 refresh()
             })
             .catch(err => {
-                message.error("Server Error! Please try again later. (Select Best Answer Error)")
-                console.log(err)
+               
                 if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
                     if(err.response.data.message.slice(0,13)==='Malformed JWT')
                     document.cookie = 'error=Jwt'
                     else
                     document.cookie = 'error=true'
-                    message.warning('Please refresh again!')
+                    message.error('Server Error! Please refresh again! (Select Best Answer Error)')
+                }
+                else{
+                    message.error("Server Error! Please try again later. (Select Best Answer Error)")
                 }
             })
     }
@@ -283,14 +289,15 @@ function CommentArea(props) {
                 setEditingComment('')
             })
             .catch(err => {
-                message.error("Server Error! Please try again later. (Update Comment Error)")
-                console.log(err)
                 if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
                     if(err.response.data.message.slice(0,13)==='Malformed JWT')
                     document.cookie = 'error=Jwt'
                     else
                     document.cookie = 'error=true'
-                    message.warning('Please refresh again!')
+                    message.error('Server Error! Please refresh again! (Update Comment Error)')
+                }
+                else{
+                    message.error("Server Error! Please try again later. (Update Comment Error)")
                 }
             })
     }
@@ -303,18 +310,19 @@ function CommentArea(props) {
         })
             .then(res => {
                 console.log("Set best response:", res.data.res)
-                message.success("You deleted an comment!")
+                //message.success("You deleted an comment!")
                 refresh()
             })
             .catch(err => {
-                message.error("Server Error! Please try again later. (Delete Comment Error)")
-                console.log(err)
                 if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
                     if(err.response.data.message.slice(0,13)==='Malformed JWT')
                     document.cookie = 'error=Jwt'
                     else
                     document.cookie = 'error=true'
-                    message.warning('Please refresh again!')
+                    message.error('Server Error! Please refresh again! (Delete Comment Error)')
+                }
+                else{
+                    message.error("Server Error! Please try again later. (Delete Comment Error)")
                 }
             })
     }

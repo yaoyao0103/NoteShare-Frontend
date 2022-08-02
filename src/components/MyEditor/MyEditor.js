@@ -28,7 +28,7 @@ const MyEditor = (props) => {
                     document.cookie = 'error=Jwt'
                     else
                     document.cookie = 'error=true'
-                    message.warning('Please refresh again!')
+                    message.error('There are no notes in this folder Please refresh again!')
                 }
     }
 

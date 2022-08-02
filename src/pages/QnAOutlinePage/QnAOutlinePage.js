@@ -23,15 +23,16 @@ function QnAOutlinePage(props) {
                 });
 
             } catch (error) {
-                message.error("Server Error! Please try again later. (Get Reward Post Error)")
-                console.log(error.message);
                 setQnA(error.message);
                 if (error.response.status === 500 || error.response.status === 404||error.response.status === 403){
                     if(error.response.data.message.slice(0,13)==='Malformed JWT')
                     document.cookie = 'error=Jwt'
                     else
                     document.cookie = 'error=true'
-                    message.warning('Please refresh again!')
+                    message.error('Server Error! Please refresh again! (Get Reward Post Error)')
+                }
+                else{
+                    message.error("Server Error! Please try again later. (Get Reward Post Error)")
                 }
             }
         }

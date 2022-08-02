@@ -51,6 +51,7 @@ const NoteEditTemplate = (props) => {
     const [drawerPlacement, setDrawerPlacement] = useState('right')
     const [postId, setPostId] = useState('');
     const [renaming, setRenaming] = useState(false)
+    const [notShowSwitch, setNotShowSwitch] = useState(false)
 
     const { pageStore } = useSelector((state) => state);
     const { pages } = pageStore;
@@ -77,14 +78,15 @@ const NoteEditTemplate = (props) => {
                         setPostInfo(res.data.res);
                     })
                     .catch(err => {
-                        message.error("Server Error! Please try again later. (Get Reward Post Error)")
-                        console.log(err)
                         if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
                             if(err.response.data.message.slice(0,13)==='Malformed JWT')
                             document.cookie = 'error=Jwt'
                             else
                             document.cookie = 'error=true'
-                            message.warning('Please refresh again!')
+                            message.error('Server Error! Please refresh again! (Get Reward Post Error)')
+                        }
+                        else{
+                            message.error("Server Error! Please try again later. (Get Reward Post Error)")
                         }
                     })
             }
@@ -99,6 +101,7 @@ const NoteEditTemplate = (props) => {
                 price: note.price,
                 public: note.public
             })
+            setNotShowSwitch(note.public)
             setContent(note.description)
             setNoteId(note.id)
             setVersions(note.version)
@@ -142,15 +145,17 @@ const NoteEditTemplate = (props) => {
                     setPostInfo(res.data.res);
                 })
                 .catch(err => {
-                    message.error("Server Error! Please try again later. (Get Post Information In Note Error)")
-                    console.log(err)
                     if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
                         if(err.response.data.message.slice(0,13)==='Malformed JWT')
                         document.cookie = 'error=Jwt'
                         else
                         document.cookie = 'error=true'
-                        message.warning('Please refresh again!')
+                        message.error('Server Error! Please refresh again! (Get Post Information In Note Error)')
                     }
+                    else{
+                        message.error("Server Error! Please try again later. (Get Post Information In Note Error)")
+                    }
+
                 })
         }
     }, [props])
@@ -184,7 +189,7 @@ const NoteEditTemplate = (props) => {
                 }
             </>
         )
-        setDrawer(<VersionArea page={'NoteEditPageVersion'} id={noteId} versions={versions} setVersions={setVersions} setVersion={setVersion} isAuthor={isAuthor} />);
+        setDrawer(<VersionArea page={'NoteEditPageVersion'} id={noteId} notePublic={props.data?.public} versions={versions} setVersions={setVersions} setVersion={setVersion} isAuthor={isAuthor} />);
     }, [versions, renaming])
 
 
@@ -196,7 +201,7 @@ const NoteEditTemplate = (props) => {
             }
         })
             .then(res => {
-                message.success("You renamed a version")
+                //message.success("You renamed a version")
                 setRenaming(false)
                 let tempVersions = versions;
                 let modifiedVersion = versions[index]
@@ -206,14 +211,15 @@ const NoteEditTemplate = (props) => {
                 props.setLoading(false)
             })
             .catch(err => {
-                message.error("Server Error! Please try again later. (Rename Folder Error)")
-                console.log(err)
                 if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
                     if(err.response.data.message.slice(0,13)==='Malformed JWT')
                     document.cookie = 'error=Jwt'
                     else
                     document.cookie = 'error=true'
-                    message.warning('Please refresh again!')
+                    message.error('Server Error! Please refresh again! (Rename Folder Error)')
+                }
+                else{
+                    message.error("Server Error! Please try again later. (Rename Folder Error)")
                 }
             })
 
@@ -259,14 +265,15 @@ const NoteEditTemplate = (props) => {
                     message.success("You updated the information of note!")
                 })
                 .catch(err => {
-                    message.error("Server Error! Please try again later. (Update Information Of Note Error)")
-                    console.log(err)
                     if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
                         if(err.response.data.message.slice(0,13)==='Malformed JWT')
                         document.cookie = 'error=Jwt'
                         else
                         document.cookie = 'error=true'
-                        message.warning('Please refresh again!')
+                        message.error('Server Error! Please refresh again! (Update Information Of Note Error)')
+                    }
+                    else{
+                        message.error("Server Error! Please try again later. (Update Information Of Note Error)")
                     }
                 })
         }
@@ -309,25 +316,29 @@ const NoteEditTemplate = (props) => {
                             message.success("You submitted the information of note!")
                         })
                         .catch(err => {
-                            message.error("Server Error! Please try again later. (Submit Information Of Note Error)")
-                            console.log(err)
                             if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
                                 if(err.response.data.message.slice(0,13)==='Malformed JWT')
                                 document.cookie = 'error=Jwt'
                                 else
                                 document.cookie = 'error=true'
-                                message.warning('Please refresh again!')
+                                message.error('Server Error! Please refresh again! (Submit Information Of Note Error)')
+                            }
+                            else{
+                                message.error("Server Error! Please try again later. (Submit Information Of Note Error)")
                             }
                         })
                 })
                 .catch(err => {
-                    console.log(err)
+                    //console.log(err)
                     if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
                         if(err.response.data.message.slice(0,13)==='Malformed JWT')
                         document.cookie = 'error=Jwt'
                         else
                         document.cookie = 'error=true'
-                        message.warning('Please refresh again!')
+                        message.error('Server Error! Please refresh again!')
+                    }
+                    else{
+                        message.error('Server Error! Please try again later!')
                     }
                 })
         }
@@ -370,14 +381,17 @@ const NoteEditTemplate = (props) => {
                             message.success("You submitted the information of note!")
                         })
                         .catch(err => {
-                            message.error("Server Error! Please try again later. (Submit Information Of Reward Note Error)")
-                            console.log(err)
+                            //
+                            //console.log(err)
                             if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
                                 if(err.response.data.message.slice(0,13)==='Malformed JWT')
                                 document.cookie = 'error=Jwt'
                                 else
                                 document.cookie = 'error=true'
-                                message.warning('Please refresh again!')
+                                message.error('Server Error! Please refresh again! (Submit Information Of Reward Note Error)')
+                            }
+                            else{
+                                message.error("Server Error! Please try again later. (Submit Information Of Reward Note Error)")
                             }
                         })
                     // props.sendPrivateMessage(
@@ -391,13 +405,16 @@ const NoteEditTemplate = (props) => {
                     // )
                 })
                 .catch(err => {
-                    console.log(err)
+                    //console.log(err)
                     if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
                         if(err.response.data.message.slice(0,13)==='Malformed JWT')
                         document.cookie = 'error=Jwt'
                         else
                         document.cookie = 'error=true'
-                        message.warning('Please refresh again!')
+                        message.error('Server Error! Please refresh again!')
+                    }
+                    else{
+                        message.error('Server Error! Please try again later.')
                     }
                 })
         }
@@ -407,7 +424,7 @@ const NoteEditTemplate = (props) => {
     const showDrawer = (type) => {
         switch (type) {
             case 'version':
-                setDrawer(<VersionArea page={'NoteEditPageVersion'} id={noteId} versions={versions} setVersions={setVersions} setVersion={setVersion} isAuthor={isAuthor} />);
+                setDrawer(<VersionArea page={'NoteEditPageVersion'} id={noteId} notePublic={props.data?.public} versions={versions} setVersions={setVersions} setVersion={setVersion} isAuthor={isAuthor} />);
                 setDrawerPlacement('right');
                 setDrawerTitle('Version')
                 break;
@@ -456,25 +473,29 @@ const NoteEditTemplate = (props) => {
                         message.success("You copied the version!")
                     })
                     .catch(err => {
-                        message.error("Server Error! Please try again later. (Copy Version Error)")
-                        console.log(err)
                         if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
                             if(err.response.data.message.slice(0,13)==='Malformed JWT')
                             document.cookie = 'error=Jwt'
                             else
                             document.cookie = 'error=true'
-                            message.warning('Please refresh again!')
+                            message.error('Server Error! Please refresh again! (Copy Version Error)')
+                        }
+                        else{
+                            message.error("Server Error! Please try again later. (Copy Version Error)")
                         }
                     })
             })
             .catch(err => {
-                console.log(err)
+                //console.log(err)
                 if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
                     if(err.response.data.message.slice(0,13)==='Malformed JWT')
                     document.cookie = 'error=Jwt'
                     else
                     document.cookie = 'error=true'
-                    message.warning('Please refresh again!')
+                    message.error('Server Error! Please refresh again!')
+                }
+                else{
+                    message.error('Server Error! Please try again later.')
                 }
             })
     }
@@ -491,13 +512,16 @@ const NoteEditTemplate = (props) => {
                 setStep(2);
             })
             .catch(err => {
-                console.log(err)
+                //console.log(err)
                 if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
                     if(err.response.data.message.slice(0,13)==='Malformed JWT')
                     document.cookie = 'error=Jwt'
                     else
                     document.cookie = 'error=true'
-                    message.warning('Please refresh again!')
+                    message.error('Server Error! Please refresh again!')
+                }
+                else{
+                    message.error('Server Error! Please try again later.')
                 }
             })
 
@@ -528,25 +552,29 @@ const NoteEditTemplate = (props) => {
                         props.setPageProps({ page: 'NoteDetailPage', noteId: noteId })
                     })
                     .catch(err => {
-                        message.error("Server Error! Please try again later. (Submit Tag Error)")
-                        console.log(err)
                         if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
                             if(err.response.data.message.slice(0,13)==='Malformed JWT')
                             document.cookie = 'error=Jwt'
                             else
                             document.cookie = 'error=true'
-                            message.warning('Please refresh again!')
+                            message.error('Server Error! Please refresh again! (Submit Tag Error)')
+                        }
+                        else{
+                            message.error('Server Error! Please try again later. (Submit Tag Error)')
                         }
                     })
             })
             .catch(err => {
-                console.log(err)
+                //console.log(err)
                 if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
                     if(err.response.data.message.slice(0,13)==='Malformed JWT')
                     document.cookie = 'error=Jwt'
                     else
                     document.cookie = 'error=true'
-                    message.warning('Please refresh again!')
+                    message.error('Server Error! Please refresh again!')
+                }
+                else{
+                    message.error('Server Error! Please try again later.')
                 }
             })
 
@@ -595,7 +623,7 @@ const NoteEditTemplate = (props) => {
 
     const saveVersion = (index) => {
         editor.storeVersion({}, index)
-        message.success("Saved")
+        message.success("Saved!")
     }
 
     const newVersion = (name) => {
@@ -612,17 +640,18 @@ const NoteEditTemplate = (props) => {
                 const version = res.data.res;
                 setVersions([...versions, version])
                 editor.storeVersion({}, versionLength)
-                message.success("You created a new version")
+                //message.success("You created a new version")
             })
             .catch(err => {
-                message.error("Server Error! Please try again later. (New Version Error)")
-                console.log(err)
                 if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
                     if(err.response.data.message.slice(0,13)==='Malformed JWT')
                     document.cookie = 'error=Jwt'
                     else
                     document.cookie = 'error=true'
-                    message.warning('Please refresh again!')
+                    message.error('Server Error! Please refresh again! (New Version Error)')
+                }
+                else{
+                    message.error("Server Error! Please try again later. (New Version Error)")
                 }
             })
     }
@@ -656,38 +685,41 @@ const NoteEditTemplate = (props) => {
                                 })
                             })
                             .catch(err => {
-                                message.error("Server Error! Please try again later. (Publish Reward Note Error)")
-                                console.log(err)
                                 if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
                                     if(err.response.data.message.slice(0,13)==='Malformed JWT')
                                     document.cookie = 'error=Jwt'
                                     else
                                     document.cookie = 'error=true'
-                                    message.warning('Please refresh again!')
+                                    message.error('Server Error! Please refresh again! (Publish Reward Note Error)')
+                                }
+                                else{
+                                    message.error("Server Error! Please try again later. (Publish Reward Note Error)")
                                 }
                             })
                     })
                     .catch(err => {
-                        message.error("Server Error! Please try again later. (Submit Reward Note Error)")
-                        console.log(err)
                         if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
                             if(err.response.data.message.slice(0,13)==='Malformed JWT')
                             document.cookie = 'error=Jwt'
                             else
                             document.cookie = 'error=true'
-                            message.warning('Please refresh again!')
+                            message.error('Server Error! Please refresh again! (Submit Reward Note Error)')
+                        }
+                        else{
+                            message.error("Server Error! Please try again later. (Submit Reward Note Error)")
                         }
                     })
             })
             .catch(err => {
-                message.error("Server Error! Please try again later. (Get Tags Error)")
-                console.log(err)
                 if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
                     if(err.response.data.message.slice(0,13)==='Malformed JWT')
                     document.cookie = 'error=Jwt'
                     else
                     document.cookie = 'error=true'
-                    message.warning('Please refresh again!')
+                    message.error('Server Error! Please refresh again! (Get Tags Error)')
+                }
+                else{
+                    message.error("Server Error! Please try again later. (Get Tags Error)")
                 }
             })
     }
@@ -733,6 +765,7 @@ const NoteEditTemplate = (props) => {
                                     <InformationInput
                                         information={information}
                                         setInformation={setInformation}
+                                        notShowSwitch={notShowSwitch}
                                     />
                                 </Col>
                             </Row>

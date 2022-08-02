@@ -38,7 +38,7 @@ const PageDetailContentTemplate = (props) => {
     const [author, setAuthor] = useState([])
     const [manager, setManager] = useState('')
     const [haveApplied, setHaveApplied] = useState(null)
-    const [isPublic, setIsPublic] = useState(false)
+    const [isPublic, setIsPublic] = useState(null)
     const [isNotePublic, setIsNotePublic] = useState(null)
     const [authorEmail, setAuthorEmail] = useState('')
     const [noteType, setNoteType] = useState(null)
@@ -54,6 +54,7 @@ const PageDetailContentTemplate = (props) => {
     const [type, setType] = useState('')
     const [publishDate, setPublishDate] = useState('')
     const [rewardIsEnd, setRewardIsEnd] = useState(false)
+    const [collabNoteTags, setCollabNoteTags] = useState([])
 
     useEffect(() => {
 
@@ -102,6 +103,7 @@ const PageDetailContentTemplate = (props) => {
                     setManager(tempNote.managerUserObj)
                     setIsNotePublic(tempNote.public)
                     setPublishDate(tempNote.publishDate)
+                    setCollabNoteTags(tempNote.tag)
                     /*for(let i = 0; i < props.data?.authorUserObj.length; i++){
                         if(props.data?.emailUserObj[i].userObjEmail == tempEmail){
                             setEditor(<MyEditor noteId = {noteId} version={'0'} page={props.page} email={email}/>)
@@ -152,14 +154,15 @@ const PageDetailContentTemplate = (props) => {
                     setAuthor(tempAuthor)
                 })
                 .catch(err => {
-                    message.error("Server Error! Please try again later. (Get Collaboration Note Error)")
-                    console.log(err)
                     if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
                         if(err.response.data.message.slice(0,13)==='Malformed JWT')
                         document.cookie = 'error=Jwt'
                         else
                         document.cookie = 'error=true'
-                        message.warning('Please refresh again!')
+                        message.error('Server Error! Please refresh again! (Get Collaboration Note Error)')
+                    }
+                    else{
+                        message.error("Server Error! Please try again later. (Get Collaboration Note Error)")
                     }
                 })
 
@@ -301,19 +304,20 @@ const PageDetailContentTemplate = (props) => {
                 console.log(res)
             })
             .catch(err => {
-                message.error("Server Error! Please try again later. (Submit Application Error)")
-                console.log(err)
                 if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
                     if(err.response.data.message.slice(0,13)==='Malformed JWT')
                     document.cookie = 'error=Jwt'
                     else
                     document.cookie = 'error=true'
-                    message.warning('Please refresh again!')
+                    message.error('Server Error! Please refresh again! (Submit Application Error)')
+                }
+                else{
+                    message.error("Server Error! Please try again later. (Submit Application Error)")
                 }
             })
         }
         else {
-            message.warning("Please log in first!")
+            message.error("Please log in first!")
             props.setPageProps({ page: 'LoginPage' })
         }
     }
@@ -346,19 +350,20 @@ const PageDetailContentTemplate = (props) => {
                         )
                 })
                 .catch(err => {
-                    message.error("Server Error! Please try again later. (Buy Note Error)")
-                    console.log(err)
                     if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
                         if(err.response.data.message.slice(0,13)==='Malformed JWT')
                         document.cookie = 'error=Jwt'
                         else
                         document.cookie = 'error=true'
-                        message.warning('Please refresh again!')
+                        message.error('Server Error! Please refresh again! (Buy Note Error)')
+                    }
+                    else{
+                        message.error("Server Error! Please try again later. (Buy Note Error)")
                     }
                 })
         }
         else {
-            message.warn("You have to log in first!")
+            message.warn("Please log in first!")
             props.setPageProps({
                 page: "LoginPage"
             })
@@ -377,14 +382,15 @@ const PageDetailContentTemplate = (props) => {
                 setIsSubmit(true)
             })
             .catch(err => {
-                message.error("Server Error! Please try again later. (Submit Reward Note Error)")
-                console.log(err)
                 if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
                     if(err.response.data.message.slice(0,13)==='Malformed JWT')
                     document.cookie = 'error=Jwt'
                     else
                     document.cookie = 'error=true'
-                    message.warning('Please refresh again!')
+                    message.error('Server Error! Please refresh again! (Submit Reward Note Error)')
+                }
+                else{
+                    message.error("Server Error! Please try again later. (Submit Reward Note Error)")
                 }
             })
     }
@@ -400,14 +406,15 @@ const PageDetailContentTemplate = (props) => {
                 setIsSubmit(false)
             })
             .catch(err => {
-                message.error("Server Error! Please try again later. (Withdraw Reward Note Error)")
-                console.log(err)
                 if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
                     if(err.response.data.message.slice(0,13)==='Malformed JWT')
                     document.cookie = 'error=Jwt'
                     else
                     document.cookie = 'error=true'
-                    message.warning('Please refresh again!')
+                    message.error('Server Error! Please refresh again! (Withdraw Reward Note Error)')
+                }
+                else{
+                    message.error("Server Error! Please try again later. (Withdraw Reward Note Error)")
                 }
             })
     }
@@ -436,14 +443,15 @@ const PageDetailContentTemplate = (props) => {
                 // Todo: remove applicant from list
             })
             .catch(err => {
-                message.error("Server Error! Please try again later. (Create Vote Error)")
-                console.log(err)
                 if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
                     if(err.response.data.message.slice(0,13)==='Malformed JWT')
                     document.cookie = 'error=Jwt'
                     else
                     document.cookie = 'error=true'
-                    message.warning('Please refresh again!')
+                    message.error('Server Error! Please refresh again! (Create Vote Error)')
+                }
+                else{
+                    message.error("Server Error! Please try again later. (Create Vote Error)")
                 }
             })
         setIsModalVisible(false);
@@ -467,14 +475,15 @@ const PageDetailContentTemplate = (props) => {
                 setPoppedContent(res.data.res.answersUserObj);
             })
             .catch(err => {
-                message.error("Server Error! Please try again later. (Refresh Answer Error)")
-                console.log(err)
                 if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
                     if(err.response.data.message.slice(0,13)==='Malformed JWT')
                     document.cookie = 'error=Jwt'
                     else
                     document.cookie = 'error=true'
-                    message.warning('Please refresh again!')
+                    message.error('Server Error! Please refresh again! (Refresh Answer Error)')
+                }
+                else{
+                    message.error("Server Error! Please try again later. (Refresh Answer Error)")
                 }
             })
     }
@@ -635,7 +644,7 @@ const PageDetailContentTemplate = (props) => {
                             </>
                         }
                         {/* Todo: also check if he is an origin poster */}
-                        {(props.page == 'RewardDetailPage' && isAuthor) &&
+                        {(props.page == 'RewardDetailPage' && isAuthor) &&            
                             <div className="contentTemplate__Footer__Button" onClick={() => setPoppedContentShow(true)}>
                                 <Button color={"green"}><Text color='white' cls='Large' content={"Show user-contributed Notes"} fontSize='17' display="inline-block" /></Button>
                             </div>
@@ -657,14 +666,36 @@ const PageDetailContentTemplate = (props) => {
                         }
 
                         {(props.page == 'CollabDetailPage' && !isAuthor) &&
+                        <>
+                            <Text color='black' cls='Default' content={"Tags:"} fontSize='22' display="inline-block" />
+                            <span className="left-margin"></span>
+                            {collabNoteTags.map((tag) =>
+                                <>
+                                    {/* 
+                                    <Text color='black' cls='Default' content={tag} fontSize='18' display="inline-block" /> */}
+                                    <Tag style={{ fontSize: "15px" }}>{tag}</Tag>
+                                </>
+                            )}
                             <div className="contentTemplate__Footer__Button" onClick={() => setPoppedContentShow(true)}>
                                 <Button color={"green"}><Text color='white' cls='Large' content={"Apply"} fontSize='17' display="inline-block" /></Button>
                             </div>
+                        </>
                         }
                         {(props.page == 'CollabDetailPage' && isAuthor) &&
-                            <div className="contentTemplate__Footer__Button" onClick={() => { props.setPageProps({ page: 'CollabNoteEditPage', noteId: noteId, postId: props.postId, isAuthor: isAuthor, isManager: isManager }) }}>
-                                <Button color={"green"}><Text color='white' cls='Large' content={"Edit"} fontSize='17' display="inline-block" /></Button>
-                            </div>
+                            <>
+                                <Text color='black' cls='Default' content={"Tags:"} fontSize='22' display="inline-block" />
+                                <span className="left-margin"></span>
+                                {collabNoteTags.map((tag) =>
+                                    <>
+                                        {/* 
+                                        <Text color='black' cls='Default' content={tag} fontSize='18' display="inline-block" /> */}
+                                        <Tag style={{ fontSize: "15px" }}>{tag}</Tag>
+                                    </>
+                                )}
+                                <div className="contentTemplate__Footer__Button" onClick={() => { props.setPageProps({ page: 'CollabNoteEditPage', noteId: noteId, postId: props.postId, isAuthor: isAuthor, isManager: isManager }) }}>
+                                    <Button color={"green"}><Text color='white' cls='Large' content={"Edit"} fontSize='17' display="inline-block" /></Button>
+                                </div>
+                            </>
                         }
 
                     </Footer>

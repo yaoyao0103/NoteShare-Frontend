@@ -141,14 +141,15 @@ const PostEditTemplate = (props) => {
                 props.setPageProps({ page: page, postId: props.postId });
             })
             .catch(err => {
-                message.error("Server Error! Please try again later. (Update Post Error)")
-                console.log(err)
                 if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
                     if(err.response.data.message.slice(0,13)==='Malformed JWT')
                     document.cookie = 'error=Jwt'
                     else
                     document.cookie = 'error=true'
-                    message.warning('Please refresh again!')
+                    message.error('Server Error! Please refresh again! (Update Post Error)')
+                }
+                else{
+                    message.error("Server Error! Please try again later. (Update Post Error)")
                 }
             })
 
@@ -234,13 +235,16 @@ const PostEditTemplate = (props) => {
                             props.setPageProps({ page: type, postId: res.data.res.id });
                         })
                         .catch(err => {
-                            console.log(err)
+                            //console.log(err)
                             if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
                                 if(err.response.data.message.slice(0,13)==='Malformed JWT')
                                 document.cookie = 'error=Jwt'
                                 else
                                 document.cookie = 'error=true'
-                                message.warning('Please refresh again!')
+                                message.error('Server Error! Please refresh again! (Upgrade Note Default Of Collaboration)')
+                            }
+                            else{
+                                message.error("Serevr Error! Please try again later. (Upgrade Note Default Of Collaboration)")
                             }
                         })
                 }
@@ -250,14 +254,15 @@ const PostEditTemplate = (props) => {
                 
             })
             .catch(err => {
-                message.error("Server Error! Please try again later. (Submit Post Error)")
-                console.log(err)
                 if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
                     if(err.response.data.message.slice(0,13)==='Malformed JWT')
                     document.cookie = 'error=Jwt'
                     else
                     document.cookie = 'error=true'
-                    message.warning('Please refresh again!')
+                    message.error('Server Error! Please refresh again! (Submit Post Error)')
+                }
+                else{
+                    message.error("Server Error! Please try again later. (Submit Post Error)")
                 }
             })
     }

@@ -39,14 +39,15 @@ const VoteArea = (props) => {
                 setVoted("Agree")
             })
             .catch(err =>{
-                message.error("Server Error! Please try again later. (Agree Kicking Author Error)")
-                console.log(err)
                 if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
                     if(err.response.data.message.slice(0,13)==='Malformed JWT')
                     document.cookie = 'error=Jwt'
                     else
                     document.cookie = 'error=true'
-                    message.warning('Please refresh again!')
+                    message.error('Server Error! Please refresh again! (Agree Kicking Author Error)')
+                }
+                else{
+                    message.error("Server Error! Please try again later. (Agree Kicking Author Error)")
                 }
             })
         
@@ -70,14 +71,15 @@ const VoteArea = (props) => {
                 setVoted("Disagree")
             })
             .catch(err =>{
-                message.error("Server Error! Please try again later. (Disagree Kicking Author Error)")
-                console.log(err)
                 if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
                     if(err.response.data.message.slice(0,13)==='Malformed JWT')
                     document.cookie = 'error=Jwt'
                     else
                     document.cookie = 'error=true'
-                    message.warning('Please refresh again!')
+                    message.error('Server Error! Please refresh again! (Disagree Kicking Author Error)')
+                }
+                else{
+                    message.error("Server Error! Please try again later. (Disagree Kicking Author Error)")
                 }
             })
     }

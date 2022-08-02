@@ -74,13 +74,16 @@ function AvatarButton(props) {
         }).then(res => {
             document.cookie = "name=" + res.data.res;
         }).catch((error) => {
-            console.log(error.response.data.message);
+            //console.log(error.response.data.message);
             if (error.response.status === 500 || error.response.status === 404||error.response.status === 403){
                 if(error.response.data.message.slice(0,13)==='Malformed JWT')
                 document.cookie = 'error=Jwt'
                 else
                 document.cookie = 'error=true'
-                message.warning('Please refresh again!')
+                message.error('Server Error! Please refresh again! (Get user name error)')
+            }
+            else{
+                message.error('Server Error! Please try again later! (Get user name error)')
             }
            
         });
@@ -98,14 +101,15 @@ function AvatarButton(props) {
                 //message.info('Change avatar');
                 
             }).catch((error) => {
-                //message.info(error.response.error);
-
                 if (error.response.status === 500 || error.response.status === 404||error.response.status === 403){
                     if(error.response.data.message.slice(0,13)==='Malformed JWT')
                     document.cookie = 'error=Jwt'
                     else
                     document.cookie = 'error=true'
-                    message.warning('Please refresh again!')
+                    message.error('Server Error! Please refresh again! (Get user avatar error)')
+                }
+                else{
+                    message.error('Server Error! Please try again later! (Get user avatar error)')
                 }
             })
         }

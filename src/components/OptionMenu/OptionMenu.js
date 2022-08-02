@@ -34,8 +34,8 @@ const OptionMenu = (props) => {
 
 
   const archive = () => {
-    if(props.isAnswered){
-      axios.put(`http://localhost:8080/post/archive/${props.id}`,{}, {
+    if (props.isAnswered) {
+      axios.put(`http://localhost:8080/post/archive/${props.id}`, {}, {
         headers: {
           'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
         }
@@ -50,25 +50,26 @@ const OptionMenu = (props) => {
             message.success("set non-archive")*/
         })
         .catch(err => {
-          message.error("Server Error! Please try again later. (Archive Post Error)")
-          console.log(err)
-          if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
-            if(err.response.data.message.slice(0,13)==='Malformed JWT')
-            document.cookie = 'error=Jwt'
+          if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
+            if (err.response.data.message.slice(0, 13) === 'Malformed JWT')
+              document.cookie = 'error=Jwt'
             else
-            document.cookie = 'error=true'
-            message.warning('Please refresh again!')
-        }
+              document.cookie = 'error=true'
+            message.error('Server Error! Please refresh again! (Archive Post Error)')
+          }
+          else {
+            message.error("Server Error! Please try again later. (Archive Post Error)")
+          }
         })
     }
-    else{
-      message.warn("You have to choose a best answer first before you archive the post!")
+    else {
+      message.error("You have to choose a best answer first before you archive the post!")
     }
   }
 
   // set private or public
   const setStatus = () => {
-    axios.put(`http://localhost:8080/post/publish/${props.id}`, {},{
+    axios.put(`http://localhost:8080/post/publish/${props.id}`, {}, {
       headers: {
         'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
       }
@@ -81,20 +82,21 @@ const OptionMenu = (props) => {
           message.success("You set the post private!")
       })
       .catch(err => {
-        message.error("Server Error! Please try again later. (Set Post Public/Private Error)")
-        console.log(err)
-        if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
-          if(err.response.data.message.slice(0,13)==='Malformed JWT')
-          document.cookie = 'error=Jwt'
+        if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
+          if (err.response.data.message.slice(0, 13) === 'Malformed JWT')
+            document.cookie = 'error=Jwt'
           else
-          document.cookie = 'error=true'
-          message.warning('Please refresh again!')
-      }
+            document.cookie = 'error=true'
+          message.error('Server Error! Please refresh again!  (Set Post Public/Private Error)')
+        }
+        else {
+          message.error("Server Error! Please try again later. (Set Post Public/Private Error)")
+        }
       })
   }
 
   const setNoteStatus = () => {
-    if (props.type == "collaboration") {
+    if (props.type === "collaboration") {
       let publishDate = moment(props.publishDate)
       let now = moment()
       let diffHours = (now.diff(publishDate, 'hours', true))
@@ -103,7 +105,7 @@ const OptionMenu = (props) => {
         return;
       }
     }
-    axios.put(`http://localhost:8080/note/publish/${props.noteId}`,{}, {
+    axios.put(`http://localhost:8080/note/publish/${props.noteId}`, {}, {
       headers: {
         'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
       }
@@ -113,15 +115,16 @@ const OptionMenu = (props) => {
         props.setIsNotePublic(!props.notePublic)
       })
       .catch(err => {
-        message.error("Server Error! Please try again later. (Set Note Public/Private Error)")
-        console.log(err)
-        if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
-          if(err.response.data.message.slice(0,13)==='Malformed JWT')
-          document.cookie = 'error=Jwt'
+        if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
+          if (err.response.data.message.slice(0, 13) === 'Malformed JWT')
+            document.cookie = 'error=Jwt'
           else
-          document.cookie = 'error=true'
-          message.warning('Please refresh again!')
-      }
+            document.cookie = 'error=true'
+          message.error('Server Error! Please refresh again!  (Set Note Public/Private Error)')
+        }
+        else {
+          message.error("Server Error! Please try again later. (Set Note Public/Private Error)")
+        }
       })
   }
 
@@ -133,13 +136,13 @@ const OptionMenu = (props) => {
   }
 
   const versionPublish = (index) => {
-    axios.put(`http://localhost:8080/note/publish/${props.id}/${index}`,{}, {
+    axios.put(`http://localhost:8080/note/publish/${props.id}/${index}`, {}, {
       headers: {
         'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
       }
     })
       .then(res => {
-        if (!res.data.res.temp){
+        if (!res.data.res.temp) {
           let tempVersions = props.versions
           let tempVersion = tempVersions[index]
           tempVersion.temp = false;
@@ -147,7 +150,7 @@ const OptionMenu = (props) => {
           props.setVersions([...tempVersions])
           message.success("You set this version public!")
         }
-        else{
+        else {
           let tempVersions = props.versions
           let tempVersion = tempVersions[index]
           tempVersion.temp = true;
@@ -157,15 +160,16 @@ const OptionMenu = (props) => {
         }
       })
       .catch(err => {
-        message.error("Server Error! Please try again later. (Set Version Public/Private Error)")
-        console.log(err)
-        if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
-          if(err.response.data.message.slice(0,13)==='Malformed JWT')
-          document.cookie = 'error=Jwt'
+        if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
+          if (err.response.data.message.slice(0, 13) === 'Malformed JWT')
+            document.cookie = 'error=Jwt'
           else
-          document.cookie = 'error=true'
-          message.warning('Please refresh again!')
-      }
+            document.cookie = 'error=true'
+          message.error('Server Error! Please refresh again! (Set Version Public/Private Error)')
+        }
+        else{
+          message.error("Server Error! Please try again later. (Set Version Public/Private Error)")
+        }
       })
   }
   const contentBrowse = (noteId) => {
@@ -195,7 +199,7 @@ const OptionMenu = (props) => {
 
   const chooseBest = (id) => {
     //message.info("choose: "+ id + " best");
-    axios.put(`http://localhost:8080/post/reward/best/${props.postId}/${id}`, {},{
+    axios.put(`http://localhost:8080/post/reward/best/${props.postId}/${id}`, {}, {
       headers: {
         'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
       }
@@ -206,21 +210,22 @@ const OptionMenu = (props) => {
         // Todo: remove applicant from list
       })
       .catch(err => {
-        message.error("Server Error! Please try again later. (Select Reward Best Error)")
-        console.log(err)
-        if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
-          if(err.response.data.message.slice(0,13)==='Malformed JWT')
-          document.cookie = 'error=Jwt'
+        if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
+          if (err.response.data.message.slice(0, 13) === 'Malformed JWT')
+            document.cookie = 'error=Jwt'
           else
-          document.cookie = 'error=true'
-          message.warning('Please refresh again!')
-      }
+            document.cookie = 'error=true'
+          message.error('Server Error! Please refresh again! (Select Reward Best Error)')
+        }
+        else{
+          message.error("Server Error! Please try again later. (Select Reward Best Error)")
+        }
       })
   }
 
   const chooseRef = (id) => {
     //message.info("choose: "+ id + " ref");
-    axios.put(`http://localhost:8080/post/reward/reference/${props.postId}/${id}`,{}, {
+    axios.put(`http://localhost:8080/post/reward/reference/${props.postId}/${id}`, {}, {
       headers: {
         'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
       }
@@ -231,15 +236,16 @@ const OptionMenu = (props) => {
         // Todo: remove applicant from list
       })
       .catch(err => {
-        message.error("Server Error! Please try again later. (Select Reward For Reference Error)")
-        console.log(err)
-        if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
-          if(err.response.data.message.slice(0,13)==='Malformed JWT')
-          document.cookie = 'error=Jwt'
+        if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
+          if (err.response.data.message.slice(0, 13) === 'Malformed JWT')
+            document.cookie = 'error=Jwt'
           else
-          document.cookie = 'error=true'
-          message.warning('Please refresh again!')
-      }
+            document.cookie = 'error=true'
+          message.error('Server Error! Please refresh again! (Select Reward For Reference Error)')
+        }
+        else{
+          message.error("Server Error! Please try again later. (Select Reward For Reference Error)")
+        }
       })
     // Todo: connect choose ref API
   }
@@ -248,7 +254,7 @@ const OptionMenu = (props) => {
 
 
     message.success("Agree applier: " + email);
-    axios.put(`http://localhost:8080/post/add/${props.postId}/${email}`,{}, {
+    axios.put(`http://localhost:8080/post/add/${props.postId}/${email}`, {}, {
       headers: {
         'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
       }
@@ -258,15 +264,16 @@ const OptionMenu = (props) => {
         // Todo: remove applicant from list
       })
       .catch(err => {
-        message.error("Server Error! Please try again later. (Agree Applier Error)")
-        console.log(err)
-        if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
-          if(err.response.data.message.slice(0,13)==='Malformed JWT')
-          document.cookie = 'error=Jwt'
+        if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
+          if (err.response.data.message.slice(0, 13) === 'Malformed JWT')
+            document.cookie = 'error=Jwt'
           else
-          document.cookie = 'error=true'
-          message.warning('Please refresh again!')
-      }
+            document.cookie = 'error=true'
+          message.error('Server Error! Please refresh again! (Agree Applier Error)')
+        }
+        else{
+          message.error("Server Error! Please try again later. (Agree Applier Error)")
+        }
       })
   }
 
@@ -282,15 +289,16 @@ const OptionMenu = (props) => {
         // Todo: remove applicant from list
       })
       .catch(err => {
-        message.error("Server Error! Please try again later. (Reject Applier Error)")
-        console.log(err)
-        if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
-          if(err.response.data.message.slice(0,13)==='Malformed JWT')
-          document.cookie = 'error=Jwt'
+        if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
+          if (err.response.data.message.slice(0, 13) === 'Malformed JWT')
+            document.cookie = 'error=Jwt'
           else
-          document.cookie = 'error=true'
-          message.warning('Please refresh again!')
-      }
+            document.cookie = 'error=true'
+          message.error('Server Error! Please refresh again! (Reject Applier Error)')
+        }
+        else{
+          message.error("Server Error! Please try again later. (Reject Applier Error)")
+        }
       })
   }
 
@@ -298,14 +306,14 @@ const OptionMenu = (props) => {
     //message.info("delete post: " + props.id);
     console.log("type:", props)
     if (props.type == "note") {
-      axios.put(`http://localhost:8080/note/delete/${props.id}/${props.folderId}`, {},{
+      axios.put(`http://localhost:8080/note/delete/${props.id}/${props.folderId}`, {}, {
         headers: {
           'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
         }
       })
         .then(res => {
           message.success("You deleted a note!")
-          if (props.page == 'PersonalPage')
+          if (props.page === 'PersonalPage')
             props.rerenderNotes()
           else {
             props.setPageProps({
@@ -318,16 +326,16 @@ const OptionMenu = (props) => {
           if (err.response.status === 409) {
             message.warn("You cannot delete the last note!")
           }
-          else {
-            message.error("Server Error! Please try again later. (Delete Note Error)")
-          }
-          if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
-            if(err.response.data.message.slice(0,13)==='Malformed JWT')
-            document.cookie = 'error=Jwt'
+          else if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
+            if (err.response.data.message.slice(0, 13) === 'Malformed JWT')
+              document.cookie = 'error=Jwt'
             else
-            document.cookie = 'error=true'
-            message.warning('Please refresh again!')
-        }
+              document.cookie = 'error=true'
+            message.error('Server Error! Please refresh again!')
+          }
+          else{
+            message.error('Server Error! Please try again later.')
+          }
         })
     }
     else {
@@ -338,7 +346,7 @@ const OptionMenu = (props) => {
       })
         .then(res => {
           message.success("You deleted a post!")
-          if (props.page == 'PersonalPage')
+          if (props.page === 'PersonalPage')
             props.rerenderPosts()
           else {
             props.setPageProps({
@@ -348,24 +356,24 @@ const OptionMenu = (props) => {
           // Todo: remove applicant from list
         })
         .catch(err => {
-          message.error("Server Error! Please try again later. (Delete Post Error)")
-
-          console.log(err)
-          if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
-            if(err.response.data.message.slice(0,13)==='Malformed JWT')
-            document.cookie = 'error=Jwt'
+          if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
+            if (err.response.data.message.slice(0, 13) === 'Malformed JWT')
+              document.cookie = 'error=Jwt'
             else
-            document.cookie = 'error=true'
-            message.warning('Please refresh again!')
-        }
+              document.cookie = 'error=true'
+            message.error('Server Error! Please refresh again! (Delete Post Error)')
+          }
+          else{
+            message.error("Server Error! Please try again later. (Delete Post Error)")
+          }
         })
     }
 
   }
 
   const favorite = () => {
-    if(props.email){
-      axios.put(`http://localhost:8080/favorite/note/${props.id}/${props.email}`,{}, {
+    if (props.email) {
+      axios.put(`http://localhost:8080/favorite/note/${props.id}/${props.email}`, {}, {
         headers: {
           'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
         }
@@ -376,27 +384,28 @@ const OptionMenu = (props) => {
           // Todo: remove applicant from list
         })
         .catch(err => {
-          message.error("Server Error! Please try again later. (Set As Favorite Error)")
-          console.log(err)
-          if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
-            if(err.response.data.message.slice(0,13)==='Malformed JWT')
-            document.cookie = 'error=Jwt'
+          if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
+            if (err.response.data.message.slice(0, 13) === 'Malformed JWT')
+              document.cookie = 'error=Jwt'
             else
-            document.cookie = 'error=true'
-            message.warning('Please refresh again!')
-        }
+              document.cookie = 'error=true'
+            message.error('Server Error! Please refresh again! (Set As Favorite Error)')
+          }
+          else{
+            message.error("Server Error! Please try again later. (Set As Favorite Error)")
+          }
         })
     }
-    else{
-      message.warn("You have to log in first!")
+    else {
+      message.warn("Please log in first!")
       props.setPageProps({
-          page: "LoginPage"
+        page: "LoginPage"
       })
     }
   }
 
   const unfavorite = () => {
-    axios.put(`http://localhost:8080/favorite/note/${props.id}/${props.email}`,{}, {
+    axios.put(`http://localhost:8080/favorite/note/${props.id}/${props.email}`, {}, {
       headers: {
         'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
       }
@@ -407,20 +416,21 @@ const OptionMenu = (props) => {
         // Todo: remove applicant from list
       })
       .catch(err => {
-        message.error("Server Error! Please try again later. (Set As Unfavorite Error)")
-        console.log(err)
-        if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
-          if(err.response.data.message.slice(0,13)==='Malformed JWT')
-          document.cookie = 'error=Jwt'
+        if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
+          if (err.response.data.message.slice(0, 13) === 'Malformed JWT')
+            document.cookie = 'error=Jwt'
           else
-          document.cookie = 'error=true'
-          message.warning('Please refresh again!')
-      }
+            document.cookie = 'error=true'
+          message.error('Server Error! Please refresh again! (Set As Unfavorite Error)')
+        }
+        else{
+          message.error("Server Error! Please try again later. (Set As Unfavorite Error)")
+        }
       })
   }
 
   const chooseManager = (userObj) => {
-    axios.put(`http://localhost:8080/note/admin/${props.noteId}/${userObj.email}`,{}, {
+    axios.put(`http://localhost:8080/note/admin/${props.noteId}/${userObj.email}`, {}, {
       headers: {
         'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
       }
@@ -448,16 +458,16 @@ const OptionMenu = (props) => {
         // Todo: remove applicant from list
       })
       .catch(err => {
-        message.error("Server Error! Please try again later. (Choose Manager Error)")
-
-        console.log(err)
-        if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
-          if(err.response.data.message.slice(0,13)==='Malformed JWT')
-          document.cookie = 'error=Jwt'
+        if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
+          if (err.response.data.message.slice(0, 13) === 'Malformed JWT')
+            document.cookie = 'error=Jwt'
           else
-          document.cookie = 'error=true'
-          message.warning('Please refresh again!')
-      }
+            document.cookie = 'error=true'
+          message.error('Server Error! Please refresh again! (Choose Manager Error)')
+        }
+        else{
+          message.error("Server Error! Please try again later. (Choose Manager Error)")
+        }
       })
   }
 
@@ -501,15 +511,16 @@ const OptionMenu = (props) => {
         // Todo: remove applicant from list
       })
       .catch(err => {
-        message.error("Server Error! Please try again later. (Delete Post Error)")
-        console.log(err)
-        if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
-          if(err.response.data.message.slice(0,13)==='Malformed JWT')
-          document.cookie = 'error=Jwt'
+        if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
+          if (err.response.data.message.slice(0, 13) === 'Malformed JWT')
+            document.cookie = 'error=Jwt'
           else
-          document.cookie = 'error=true'
-          message.warning('Please refresh again!')
-      }
+            document.cookie = 'error=true'
+          message.error('Server Error! Please refresh again! (Delete Post Error)')
+        }
+        else{
+          message.error("Server Error! Please try again later. (Delete Post Error)")
+        }
       })
   };
 
@@ -547,19 +558,19 @@ const OptionMenu = (props) => {
       [
         {
           label: (
-            props.rewardIsEnd?
-            <Tooltip title={"You can't access the post because the reward is over."}>
-              <a style={{cursor: "not-allowed", opacity: 0.5, textDecoration:"none"}}>Goto Reward Post</a>
-            </Tooltip>
-          :
-          <a onClick=
-            {() => {
-              props.setPageProps({
-                postId: props.postId,
-                page: 'RewardDetailPage'
-              })
-            }}
-          >Goto Reward Post</a>
+            props.rewardIsEnd ?
+              <Tooltip title={"You can't access the post because the reward is over."}>
+                <a style={{ cursor: "not-allowed", opacity: 0.5, textDecoration: "none" }}>Goto Reward Post</a>
+              </Tooltip>
+              :
+              <a onClick=
+                {() => {
+                  props.setPageProps({
+                    postId: props.postId,
+                    page: 'RewardDetailPage'
+                  })
+                }}
+              >Goto Reward Post</a>
           ),
           key: "1",
           icon: <EyeOutlined />,
@@ -570,55 +581,55 @@ const OptionMenu = (props) => {
 
   const NoteDetailMenuAuthor = (
     <Menu items={
-      props.notePublic?
-      [
-        {
-          label: "Share",
-          key: "1",
-          icon: <ShareAltOutlined />,
-          disabled: true
-        },
-        {
-          label: (<a onClick=
-            {() => {
-              showDrawer();
-            }}
-          >Manage Version</a>),
-          key: "2",
-          icon: <InfoCircleOutlined />
-        },
-      ]
-      :
-      [
-        {
-          label: "Share",
-          key: "1",
-          icon: <ShareAltOutlined />,
-          disabled: true
-        },
-        {
-          label: (<a onClick=
-            {() => {
-              showDrawer();
-            }}
-          >Manage Version</a>),
-          key: "2",
-          icon: <InfoCircleOutlined />
-        },
-        {
-          label: (
-            <Popconfirm
-              title="Are you sure to publish the note?"
-              okText="Yes"
-              cancelText="No"
-              onConfirm={setNoteStatus}
-          >
-            <a style={{ textDecoration: "none"}}>Publish the note</a>
-        </Popconfirm>),
-          key: "3",
-          icon: <UserOutlined style={{ color: "#333" }} />
-        },
-      ]
+      props.notePublic ?
+        [
+          {
+            label: "Share",
+            key: "1",
+            icon: <ShareAltOutlined />,
+            disabled: true
+          },
+          {
+            label: (<a onClick=
+              {() => {
+                showDrawer();
+              }}
+            >Manage Version</a>),
+            key: "2",
+            icon: <InfoCircleOutlined />
+          },
+        ]
+        :
+        [
+          {
+            label: "Share",
+            key: "1",
+            icon: <ShareAltOutlined />,
+            disabled: true
+          },
+          {
+            label: (<a onClick=
+              {() => {
+                showDrawer();
+              }}
+            >Manage Version</a>),
+            key: "2",
+            icon: <InfoCircleOutlined />
+          },
+          {
+            label: (
+              <Popconfirm
+                title="Are you sure to publish the note?"
+                okText="Yes"
+                cancelText="No"
+                onConfirm={setNoteStatus}
+              >
+                <a style={{ textDecoration: "none" }}>Publish the note</a>
+              </Popconfirm>),
+            key: "3",
+            icon: <UserOutlined style={{ color: "#333" }} />
+          },
+        ]
     } />
   );
 
@@ -1024,17 +1035,26 @@ const OptionMenu = (props) => {
   */
   const VersionDetailMenuAuthor = (
     <Menu items={
-      [
-        {
-          label: (<a onClick={() => { versionBrowse(props.index) }}>Browse</a>),
-          key: "1",
-          icon: <EyeOutlined />
-        },
-        {
-          label: !props.versions[props.index]?.temp ? (<a onClick={() => versionPublish(props.index)}>Set Private</a>) : (<a onClick={() => versionPublish(props.index)}>Set Public</a>),
-          key: "2",
-          icon: <EyeOutlined />
-        }]
+      !props.notePublic ?
+        [
+          {
+            label: (<a onClick={() => { versionBrowse(props.index) }}>Browse</a>),
+            key: "1",
+            icon: <EyeOutlined />
+          },
+        ]
+        :
+        [
+          {
+            label: (<a onClick={() => { versionBrowse(props.index) }}>Browse</a>),
+            key: "1",
+            icon: <EyeOutlined />
+          },
+          {
+            label: !props.versions[props.index]?.temp ? (<a onClick={() => versionPublish(props.index)}>Set Private</a>) : (<a onClick={() => versionPublish(props.index)}>Set Public</a>),
+            key: "2",
+            icon: <EyeOutlined />
+          }]
     } />
   );
 
@@ -1051,18 +1071,27 @@ const OptionMenu = (props) => {
 
   const VersionEditMenu = (
     <Menu items={
-      [
-        {
-          label: (<a onClick={() => { setVersion(props.index) }}>Copy</a>),
-          key: "1",
-          icon: <EditOutlined />
-        },
-        {
-          
-          label: !props.versions[props.index]?.temp ? (<a onClick={() => versionPublish(props.index)}>Set Private</a>) : (<a onClick={() => versionPublish(props.index)}>Set Public</a>),
-          key: "2",
-          icon: <EyeOutlined />
-        }]
+      !props.notePublic ?
+        [
+          {
+            label: (<a onClick={() => { setVersion(props.index) }}>Copy</a>),
+            key: "1",
+            icon: <EditOutlined />
+          },
+        ]
+        :
+        [
+          {
+            label: (<a onClick={() => { setVersion(props.index) }}>Copy</a>),
+            key: "1",
+            icon: <EditOutlined />
+          },
+          {
+
+            label: !props.versions[props.index]?.temp ? (<a onClick={() => versionPublish(props.index)}>Set Private</a>) : (<a onClick={() => versionPublish(props.index)}>Set Public</a>),
+            key: "2",
+            icon: <EyeOutlined />
+          }]
     } />
   );
 
@@ -1266,9 +1295,9 @@ const OptionMenu = (props) => {
         ></Dropdown.Button>
       </Space>
       <Drawer title={"Version"} placement="right" onClose={onClose} visible={visible}>
-        <VersionArea page={'NoteDetailPageVersion'} id={props.id} versions={props.versions} setVersions={props.setVersions} setVersion={props.setVersion} isAuthor={props.isAuthor} />
+        <VersionArea page={'NoteDetailPageVersion'} notePublic={props.notePublic} id={props.id} versions={props.versions} setVersions={props.setVersions} setVersion={props.setVersion} isAuthor={props.isAuthor} />
       </Drawer>
-      {(props.page=="RewardDetailPage" && props.isAuthor) &&
+      {(props.page == "RewardDetailPage" && props.isAuthor) &&
         <Modal title="Notification" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
           You have selected all best/reference answers. Would you want to delete this reward post now?
         </Modal>

@@ -29,14 +29,15 @@ function Ring(props) {
             props.setRingNumber(res.data.notification.unreadMessageCount);
             props.setRingList(oldArray => [...res.data.notification.messageReturn, ...oldArray.slice(0, 0)])
         }).catch((error) => {
-            message.error("Server Error! Please try again later. (Get Notification Error)")
-            //message.info(error.response.error);
             if (error.response.status === 500 || error.response.status === 404 || error.response.status === 403) {
                 if (error.response.data.message.slice(0, 13) === 'Malformed JWT')
                     document.cookie = 'error=Jwt'
                 else
                     document.cookie = 'error=true'
-                message.warning('Please refresh again!')
+                message.error('Server Error! Please refresh again!  (Get Notification Error)')
+            }
+            else{
+                message.error("Server Error! Please try again later. (Get Notification Error)")
             }
 
         })
@@ -111,7 +112,10 @@ function Ring(props) {
                     document.cookie = 'error=Jwt'
                 else
                     document.cookie = 'error=true'
-                message.warning('Please refresh again!')
+                message.error('Server Error! Please refresh again!')
+            }
+            else{
+                message.error("Server Error! Please try again later.")
             }
 
         })

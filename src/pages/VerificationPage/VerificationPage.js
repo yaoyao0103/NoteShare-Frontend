@@ -47,7 +47,7 @@ function VerificationPage(props) {
             console.log(res.data.msg);
             setOpenSuccess(true);
         }).catch((error) => {
-            console.log(error.response.status)
+            //console.log(error.response.status)
             // if(error.response.status === 403){
             //   setRedirectActivate(true);
             // }
@@ -56,7 +56,10 @@ function VerificationPage(props) {
                 document.cookie = 'error=Jwt'
                 else
                 document.cookie = 'error=true'
-                message.warning('Please refresh again!')
+                message.error('Server Error! Please refresh again! (Verify Error')
+            }
+            else{
+                message.error('Server Error! Please try again later. (Verify Error)')
             }
             setOpenFail(true);
         })
@@ -67,7 +70,7 @@ function VerificationPage(props) {
             console.log(res.data.msg);
             setResendSuccess(true);
         }).catch((error) => {
-            console.log(error.response.status)
+            //console.log(error.response.status)
             // if(error.response.status === 403){
             //   setRedirectActivate(true);
             // }
@@ -76,7 +79,10 @@ function VerificationPage(props) {
                 document.cookie = 'error=Jwt'
                 else
                 document.cookie = 'error=true'
-                message.warning('Please refresh again!')
+                message.error('Server Error! Please refresh again! (Resend Verify Code Error)')
+            }
+            else{
+                message.error('Server Error! Please try again later. (Resend Verify Code Error)')
             }
             setResendFail(true);
         })
@@ -93,8 +99,7 @@ function VerificationPage(props) {
     useEffect(() => {
         if (resendFail) {
             setLoading(false);
-            message.error("Server Error! Please try again later. (Resend Error)")
-            message.error(error.msg);
+           
         }
     }, [resendFail]);
     useEffect(() => {
@@ -107,12 +112,7 @@ function VerificationPage(props) {
         }
 
     }, [openSuccess]);
-    useEffect(() => {
-        if (openFail) {
-            message.error("Server Error! Please try again later. (Verify Error)")
-            message.error(error.msg);
-        }
-    }, [openFail]);
+   
     const formItemLayout = {
         labelCol: {
             xs: {

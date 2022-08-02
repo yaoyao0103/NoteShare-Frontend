@@ -55,7 +55,10 @@ function ForgetPasswordPage(props) {
                     document.cookie = 'error=Jwt'
                     else
                     document.cookie = 'error=true'
-                    message.warning('Please refresh again!')
+                    message.error('Server Error! Please refresh again! (Resend Verify Code Error)')
+                }
+                else{
+                    message.error('Server Error! Please try again later. (Resend Verify Code Error)')
                 }
                 setResendFail(true);
             })
@@ -79,8 +82,6 @@ function ForgetPasswordPage(props) {
 
            
         }).catch((error) => {
-            message.error("Server Error! Please try again later. (Get User Information Error)")
-            console.log(error.response.status)
             setError(error.response.status);
             // if(error.response.status === 403){
             //   setRedirectActivate(true);
@@ -90,7 +91,10 @@ function ForgetPasswordPage(props) {
                 document.cookie = 'error=Jwt'
                 else
                 document.cookie = 'error=true'
-                message.warning('Please refresh again!')
+                message.error('Server Error! Please refresh again! (Get User Information Error)')
+            }
+            else{
+                message.error("Server Error! Please try again later. (Get User Information Error)")
             }
             setResendFail(true);
         })
@@ -99,13 +103,7 @@ function ForgetPasswordPage(props) {
 
     }
 
-    useEffect(() => {
-        if (resendFail) {
-
-            message.error(error.msg);
-        }
-    }, [resendFail]);
-
+  
     const formItemLayout = {
         labelCol: {
             xs: {

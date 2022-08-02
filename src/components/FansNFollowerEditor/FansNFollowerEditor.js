@@ -25,18 +25,19 @@ function FansNFollowerEditor(props) {
                 setIsFans(true);
                 props.setFansNum(fansNum + 1);
                 setFansNum(fansNum + 1);
-                message.success("You followed this user!")
+                //message.success("You followed this user!")
 
                 //message.info('Follow ' + user.name);
             }).catch((error) => {
-                message.error("Server Error! Please try again later. (Follow User Error)")
-                console.log(error.response.error);
                 if (error.response.status === 500 || error.response.status === 404||error.response.status === 403){
                     if(error.response.data.message.slice(0,13)==='Malformed JWT')
                     document.cookie = 'error=Jwt'
                     else
                     document.cookie = 'error=true'
-                    message.warning('Please refresh again!')
+                    message.error('Server Error! Please refresh again! (Follow User Error)')
+                }
+                else{
+                    message.error("Server Error! Please try again later. (Follow User Error)")
                 }
 
             })
@@ -54,16 +55,17 @@ function FansNFollowerEditor(props) {
 
                 props.setFansNum(fansNum - 1);
                 setFansNum(fansNum - 1);
-                message.success('You unfollowed this user!');
+                //message.success('You unfollowed this user!');
             }).catch((error) => {
-                message.error("Server Error! Please try again later. (Unfollow User Error)")
-                console.log(error.response);
                 if (error.response.status === 500 || error.response.status === 404||error.response.status === 403){
                     if(error.response.data.message.slice(0,13)==='Malformed JWT')
                     document.cookie = 'error=Jwt'
                     else
                     document.cookie = 'error=true'
-                    message.warning('Please refresh again!')
+                    message.error('Server Error! Please refresh again! (Unfollow User Error)')
+                }
+                else{
+                    message.error("Server Error! Please try again later. (Unfollow User Error)")
                 }
             })
         }
@@ -82,16 +84,17 @@ function FansNFollowerEditor(props) {
                 //console.log(followingNum);
                 props.setFollowingNum(followingNum + 1);
                 setFollowingNum(followingNum + 1);
-                message.success('You followed this user!');
+                //message.success('You followed this user!');
             }).catch((error) => {
-                message.error("Server Error! Please try again later. (Follow User Error)")
-                console.log(error.response);
                 if (error.response.status === 500 || error.response.status === 404||error.response.status === 403){
                     if(error.response.data.message.slice(0,13)==='Malformed JWT')
                     document.cookie = 'error=Jwt'
                     else
                     document.cookie = 'error=true'
-                    message.warning('Please refresh again!')
+                    message.error('Server Error! Please refresh again! (Follow User Error)')
+                }
+                else{
+                    message.error("Server Error! Please try again later. (Follow User Error)")
                 }
 
             })
@@ -111,13 +114,16 @@ function FansNFollowerEditor(props) {
                 setFollowingNum(followingNum - 1);
                 //message.info('Unfollow ' + user.name);
             }).catch((error) => {
-                console.log(error.response.res);
+                //console.log(error.response.res);
                 if (error.response.status === 500 || error.response.status === 404||error.response.status === 403){
                     if(error.response.data.message.slice(0,13)==='Malformed JWT')
                     document.cookie = 'error=Jwt'
                     else
                     document.cookie = 'error=true'
-                    message.warning('Please refresh again!')
+                    message.error('Server Error! Please refresh again! (Unfollow User Error)')
+                }
+                else{
+                    message.error('Server Error! Please try again later! (Unfollow User Error)')
                 }
             })
         }
@@ -132,7 +138,7 @@ function FansNFollowerEditor(props) {
       };
     
       const handleCancel = () => {
-        message.info('Clicked cancel button');
+        //message.info('Clicked cancel button');
         setVisible(false);
       };
     return (

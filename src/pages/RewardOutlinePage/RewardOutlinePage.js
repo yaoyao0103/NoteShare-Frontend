@@ -25,8 +25,6 @@ function RewardOutlinePage(props) {
                 });
 
             } catch (error) {
-                message.error("Server Error! Please try again later. (Get Reward Post Error)")
-                console.log(error.message);
                 setReward(error.message);
 
                 if (error.response.status === 500 || error.response.status === 404||error.response.status === 403){
@@ -34,7 +32,10 @@ function RewardOutlinePage(props) {
                     document.cookie = 'error=Jwt'
                     else
                     document.cookie = 'error=true'
-                    message.warning('Please refresh again!')
+                    message.error('Server Error! Please refresh again! (Get Reward Post Error)')
+                }
+                else{
+                    message.error("Server Error! Please try again later. (Get Reward Post Error)")
                 }
             }
         }

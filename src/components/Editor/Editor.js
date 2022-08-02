@@ -31,13 +31,16 @@ const Editor = () => {
         setAssets(response.data);
       } catch (error) {
         setAssets(error.message);
-        if (error.response.status === 500 || error.response.status === 404||error.response.status === 403){
-          if(error.response.data.message.slice(0,13)==='Malformed JWT')
-          document.cookie = 'error=Jwt'
+        if (error.response.status === 500 || error.response.status === 404 || error.response.status === 403) {
+          if (error.response.data.message.slice(0, 13) === 'Malformed JWT')
+            document.cookie = 'error=Jwt'
           else
-          document.cookie = 'error=true'
-          message.warning('Please refresh again!')
-      }
+            document.cookie = 'error=true'
+          message.error('Server Error! Please refresh again!')
+        }
+        else{
+          message.error('Server Error! Please try again later.')
+        }
       }
     }
 

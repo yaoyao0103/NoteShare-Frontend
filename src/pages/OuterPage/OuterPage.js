@@ -159,7 +159,10 @@ const OuterPage = () => {
                 document.cookie = 'error=Jwt'
                 else
                 document.cookie = 'error=true'
-                message.warning('Please refresh again!')
+                message.error("Server Error! Please refresh again! (Get User's Bell Error)")
+            }
+            else{
+                message.error("Server Error! Please try again later. (Get User's Bell Error)")
             }
 
         })
@@ -278,7 +281,7 @@ const OuterPage = () => {
         if (cookieParser.getCookieByName('error') && cookieParser.getCookieByName('error') === 'true') {
             document.cookie = 'error=' + 'false'
             setPageProps({ page: "PersonalPage" })
-            message.warning('Server error!')
+            message.error('Server error!')
         }
         else if (cookieParser.getCookieByName('error') && cookieParser.getCookieByName('error') === 'Jwt') {
             document.cookie = 'error=' + 'false'
@@ -288,7 +291,7 @@ const OuterPage = () => {
             document.cookie = 'avatar='
             setLoggedIn(false)
             setPageProps({ page: "LoginPage" })
-            message.warning('Server error!')
+            message.error('Server error!')
         }
         else {
             document.cookie = 'error=' + 'false'

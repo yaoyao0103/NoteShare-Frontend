@@ -94,14 +94,15 @@ const CollabNoteEditPage = (props) => {
                 }
             })
             .catch(err => {
-                message.error("Server Error! Please try again later. (Get Note Error)")
-                console.log(err)
                 if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
                     if(err.response.data.message.slice(0,13)==='Malformed JWT')
                     document.cookie = 'error=Jwt'
                     else
                     document.cookie = 'error=true'
-                    message.warning('Please refresh again!')
+                    message.error('Server Error! Please refresh again! (Get Note Error)')
+                }
+                else{
+                    message.error("Server Error! Please try again later. (Get Note Error)")
                 }
             })
     }, [props])
@@ -157,14 +158,15 @@ const CollabNoteEditPage = (props) => {
                         setQueueDom({ ...temp });
                     })
                     .catch(err => {
-                        message.error("Server Error! Please try again later. (Get Author Information In Queue Error)")
-                        console.log(err)
                         if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
                             if(err.response.data.message.slice(0,13)==='Malformed JWT')
                             document.cookie = 'error=Jwt'
                             else
                             document.cookie = 'error=true'
-                            message.warning('Please refresh again!')
+                            message.error('Server Error! Please refresh again! (Get Author Information In Queue Error)')
+                        }
+                        else{
+                            message.error("Server Error! Please try again later. (Get Author Information In Queue Error)")
                         }
                     })
 
@@ -235,14 +237,15 @@ const CollabNoteEditPage = (props) => {
                 setStep(1);
             })
             .catch(err => {
-                message.error("Server Error! Please try again later. (Update Note Error)")
-                console.log(err)
                 if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
                     if(err.response.data.message.slice(0,13)==='Malformed JWT')
                     document.cookie = 'error=Jwt'
                     else
                     document.cookie = 'error=true'
-                    message.warning('Please refresh again!')
+                    message.error('Server Error! Please refresh again! (Update Note Error)')
+                }
+                else{
+                    message.error("Server Error! Please try again later. (Update Note Error)")
                 }
             })
         //setStep(1);
@@ -251,7 +254,7 @@ const CollabNoteEditPage = (props) => {
     const showDrawer = (type) => {
         switch (type) {
             case 'version':
-                setDrawer(<VersionArea page={'NoteEditPageVersion'} id={note.id} versions={versions} setVersions={setVersions} setVersion={setVersion} />);
+                setDrawer(<VersionArea page={'NoteEditPageVersion'} id={note.id} notePublic={note.public} versions={versions} setVersions={setVersions} setVersion={setVersion} />);
                 setDrawerPlacement('right');
                 setDrawerTitle('Version')
                 break;
@@ -287,25 +290,29 @@ const CollabNoteEditPage = (props) => {
                         message.success("You changed the version!")
                     })
                     .catch(err => {
-                        message.error("Server Error! Please try again later. (Change Version Error)")
-                        console.log(err)
                         if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
                             if(err.response.data.message.slice(0,13)==='Malformed JWT')
                             document.cookie = 'error=Jwt'
                             else
                             document.cookie = 'error=true'
-                            message.warning('Please refresh again!')
+                            message.error('Server Error! Please refresh again! (Change Version Error)')
+                        }
+                        else{
+                            message.error("Server Error! Please try again later. (Change Version Error)")
                         }
                     })
             })
             .catch(err => {
-                console.log(err)
+                //console.log(err)
                 if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
                     if(err.response.data.message.slice(0,13)==='Malformed JWT')
                     document.cookie = 'error=Jwt'
                     else
                     document.cookie = 'error=true'
-                    message.warning('Please refresh again!')
+                    message.error('Server Error! Please refresh again! (Get Note Versoin Error)')
+                }
+                else{
+                    message.error('Server Error! Please try again later. (Get Note Versoin Error)')
                 }
             })
     }
@@ -322,20 +329,23 @@ const CollabNoteEditPage = (props) => {
                     setStep(2);
                 })
                 .catch(err => {
-                    console.log(err)
+                    //console.log(err)
                     if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
                         if(err.response.data.message.slice(0,13)==='Malformed JWT')
                         document.cookie = 'error=Jwt'
                         else
                         document.cookie = 'error=true'
-                        message.warning('Please refresh again!')
+                        message.error('Server Error! Please refresh again! (Upgrade Note Recommend Tags Error)')
+                    }
+                    else{
+                        message.error('Server Error! Please try again later. (Upgrade Note Recommend Tags Error)')
                     }
                 })
         }
         else {
             // end
             props.setPageProps({
-                page: 'CollabDetail',
+                page: 'CollabDetailPage',
                 postId: props.postId
             })
         }
@@ -360,29 +370,31 @@ const CollabNoteEditPage = (props) => {
                     .then(res => {
                         console.log(res);
                         message.success("You submitted the tags!");
-                        props.setPageProps({ page: 'PersonalPage' })
+                        props.setPageProps({ page: 'CollabDetailPage', postId: props.postId })
                     })
                     .catch(err => {
-                        message.error("Server Error! Please try again later. (Submit Tag Error)")
-                        console.log(err)
                         if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
                             if(err.response.data.message.slice(0,13)==='Malformed JWT')
                             document.cookie = 'error=Jwt'
                             else
                             document.cookie = 'error=true'
-                            message.warning('Please refresh again!')
+                            message.error('Server Error! Please refresh again! (Submit Tag Error)')
+                        }
+                        else{
+                            message.error("Server Error! Please try again later. (Submit Tag Error)")
                         }
                     })
             })
             .catch(err => {
-                message.error("Server Error! Please try again later. (Get Tag Error)")
-                console.log(err)
                 if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
                     if(err.response.data.message.slice(0,13)==='Malformed JWT')
                     document.cookie = 'error=Jwt'
                     else
                     document.cookie = 'error=true'
-                    message.warning('Please refresh again!')
+                    message.error('Server Error! Please refresh again! (Get Tag Error)')
+                }
+                else{
+                    message.error("Server Error! Please try again later. (Get Tag Error)")
                 }
             })
 
@@ -431,7 +443,7 @@ const CollabNoteEditPage = (props) => {
 
     const saveVersion = (index) => {
         editor.storeVersion({}, index)
-        message.success("Saved")
+        message.success("Saved!")
     }
 
     const newVersion = (name) => {
@@ -451,14 +463,15 @@ const CollabNoteEditPage = (props) => {
                 editor.storeVersion({}, versionLength)
             })
             .catch(err => {
-                message.error("Server Error! Please try again later. (Create Version Error)")
-                console.log(err)
                 if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
                     if(err.response.data.message.slice(0,13)==='Malformed JWT')
                     document.cookie = 'error=Jwt'
                     else
                     document.cookie = 'error=true'
-                    message.warning('Please refresh again!')
+                    message.error('Server Error! Please refresh again! (Create Version Error)')
+                }
+                else{
+                    message.error("Server Error! Please try again later. (Create Version Error)")
                 }
             })
     }

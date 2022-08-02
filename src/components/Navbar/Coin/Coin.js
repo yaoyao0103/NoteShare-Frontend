@@ -24,13 +24,15 @@ function Coin(props) {
             props.setCoinNum(res.data.res.coin);
             setGetUserSuccess(true);
         }).catch((error) => {
-            message.error("Server Error! Please try again later. (Get coin Error)")
             if (error.response.status === 500 || error.response.status === 404||error.response.status === 403){
                 if(error.response.data.message.slice(0,13)==='Malformed JWT')
                 document.cookie = 'error=Jwt'
                 else
                 document.cookie = 'error=true'
-                message.warning('Please refresh again!')
+                message.error('Server Error! Please refresh again! (Get coin Error)')
+            }
+            else{
+                message.error("Server Error! Please try again later. (Get coin Error)")
             }
         });
     };

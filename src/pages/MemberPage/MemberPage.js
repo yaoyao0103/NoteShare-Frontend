@@ -42,7 +42,7 @@ function MemberPage(props) {
             }
         }
         else {
-            message.warning("Please log in first!")
+            message.error("Please log in first!")
             props.setPageProps({ page: 'LoginPage' })
         }
     }
@@ -65,15 +65,16 @@ function MemberPage(props) {
             });
 
         } catch (error) {
-            //console.log(error.message);
-            message.error("Server Error! Please try again later. (Get Notes Error)")
             setNote(error.message);
             if (error.response.status === 500 || error.response.status === 404||error.response.status === 403){
                 if(error.response.data.message.slice(0,13)==='Malformed JWT')
                 document.cookie = 'error=Jwt'
                 else
                 document.cookie = 'error=true'
-                message.warning('Please refresh again!')
+                message.error('Server Error! Please refresh again! (Get Notes Error)')
+            }
+            else{
+                message.error("Server Error! Please try again later. (Get Notes Error)")
             }
 
         }
@@ -88,15 +89,16 @@ function MemberPage(props) {
             });
 
         } catch (error) {
-            console.log(error.message);
-            message.error("Server Error! Please try again later. (Get Notes Error)")
             setNote(error.message);
             if (error.response.status === 500 || error.response.status === 404||error.response.status === 403){
                 if(error.response.data.message.slice(0,13)==='Malformed JWT')
                 document.cookie = 'error=Jwt'
                 else
                 document.cookie = 'error=true'
-                message.warning('Please refresh again!')
+                message.error('Server Error! Please refresh again! (Get Notes Error)')
+            }
+            else{
+                message.error("Server Error! Please try again later. (Get Notes Error)")
             }
 
         }

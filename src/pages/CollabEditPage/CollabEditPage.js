@@ -17,18 +17,19 @@ function QnAEditPage(props){
                 setPost(res.data.res)
             })
             .catch(err =>{
-                message.error("Server Error! Please try again later. (Get Collaboration Post Error)")
-                console.log(err)
                 if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
                     if(err.response.data.message.slice(0,13)==='Malformed JWT')
                     document.cookie = 'error=Jwt'
                     else
                     document.cookie = 'error=true'
-                    message.warning('Please refresh again!')
+                    message.error('Server Error! Please refresh again! (Get Collaboration Post Error)')
+                }
+                else{
+                    message.error("Server Error! Please try again later. (Get Collaboration Post Error)")
                 }
             })
         }
-        if(props.action=="edit"){
+        if(props.action==="edit"){
             getCollabNoteById();
         }
         

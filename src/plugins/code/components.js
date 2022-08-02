@@ -39,19 +39,24 @@ export default function(editor, opt = {}) {
 			setCodeMode(language)
 		  }
 		},
-	  }, {
-		isComponent(el) {
-		  if(el.getAttribute &&
-			el.getAttribute('data-gjs-type') == CODE_TYPE) {
-			return {
-			  type: CODE_TYPE
-			};
-		  }
-		},
 	  }),
   
   
-	  view: defaultView
+	  view: defaultView.extend({
+		init() {
+			this.listenTo(this.model, 'change:language', this.updateScript);
+			const comps = this.model.get('components');
+		}
+	  }),
+
+	isComponent(el) {
+		if(el.getAttribute &&
+		el.getAttribute('data-gjs-type') == CODE_TYPE) {
+		return {
+			type: CODE_TYPE
+		};
+		}
+	},
 	});
   }
   

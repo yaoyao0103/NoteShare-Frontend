@@ -23,15 +23,16 @@ function FolderOutlinePage(props) {
                     props.setLoading(false)
                 });
             } catch (error) {
-                console.log(error.message);
-                message.error("Server Error! Please try again later. (Get Folder Outline Error)")
                 setFolder(error.message);
                 if (error.response.status === 500 || error.response.status === 404 || error.response.status === 403) {
                     if (error.response.data.message.slice(0, 13) === 'Malformed JWT')
                         document.cookie = 'error=Jwt'
                     else
                         document.cookie = 'error=true'
-                    message.warning('Please refresh again!')
+                    message.error('Server Error! Please refresh again! (Get Folder Outline Error)')
+                }
+                else{
+                    message.error("Server Error! Please try again later. (Get Folder Outline Error)")
                 }
             }
         }
@@ -52,15 +53,15 @@ function FolderOutlinePage(props) {
                 });
 
             } catch (error) {
-                //console.log(error.message);
-                message.error("Server Error! Please try again later. (Get Folder Outline Error)")
-                setFolder(error.message);
                 if (error.response.status === 500 || error.response.status === 404||error.response.status === 403){
                     if(error.response.data.message.slice(0,13)==='Malformed JWT')
                     document.cookie = 'error=Jwt'
                     else
                     document.cookie = 'error=true'
-                    message.warning('Please refresh again!')
+                    message.error('Server Error! Please refresh again! (Get Folder Outline Error)')
+                }
+                else{
+                    message.error("Server Error! Please try again later. (Get Folder Outline Error)")
                 }
 
 

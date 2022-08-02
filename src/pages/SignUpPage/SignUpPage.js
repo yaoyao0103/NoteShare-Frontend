@@ -78,11 +78,14 @@ function SignUpPage(props) {
                     document.cookie = 'error=Jwt'
                     else
                     document.cookie = 'error=true'
-                    message.warning('Please refresh again!')
+                    message.error('Server Error! Please refresh again! (Send verify code error)')
+                }
+                else{
+                    message.error('Server Error! Please try again later. (Send verify code error)')
                 }
             })
 
-            message.success("Success!")
+            message.success("Send verify code Success!")
             props.setPageProps({
                 page: 'VerificationPage',
                 email: email

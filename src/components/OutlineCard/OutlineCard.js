@@ -72,26 +72,27 @@ function OutlineCard(props) {
                     'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
                 }
             }).then((res) => {
-                message.success('Like it successfully!')
+                //message.success('Like it successfully!')
                 setHasLike(true)
                 if (props.hasLike)
                     setLikeNum(props.cardContent.likeCount)
                 else
                     setLikeNum(props.cardContent.likeCount + 1)
             }).catch(err => {
-                message.error("Server Error! Please try again later. (like Note Error)")
-                console.log(err)
                 if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
                     if(err.response.data.message.slice(0,13)==='Malformed JWT')
                     document.cookie = 'error=Jwt'
                     else
                     document.cookie = 'error=true'
-                    message.warning('Please refresh again!')
+                    message.error('Server Error! Please refresh again! (like Note Error)')
+                }
+                else{
+                    message.error("Server Error! Please try again later. (like Note Error)")
                 }
             });
         }
         else {
-            message.warning("Please log in first!")
+            message.error("Please log in first!")
             props.setPageProps({ page: 'LoginPage' })
         }
     }
@@ -102,26 +103,27 @@ function OutlineCard(props) {
                     'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
                 }
             }).then((res) => {
-                message.success('Cancel like successfully!')
+                //message.success('Cancel like successfully!')
                 setHasLike(false)
                 if (props.hasLike)
                     setLikeNum(props.cardContent.likeCount - 1)
                 else
                     setLikeNum(props.cardContent.likeCount)
             }).catch(err => {
-                message.error("Server Error! Please try again later. (Cancel like Error)")
-                console.log(err)
                 if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
                     if(err.response.data.message.slice(0,13)==='Malformed JWT')
                     document.cookie = 'error=Jwt'
                     else
                     document.cookie = 'error=true'
-                    message.warning('Please refresh again!')
+                    message.error('Server Error! Please refresh again! (Cancel like Error)')
+                }
+                else{
+                    message.error("Server Error! Please try again later. (Cancel like Error)")
                 }
             });
         }
         else {
-            message.warning("Please log in first!")
+            message.error("Please log in first!")
             props.setPageProps({ page: 'LoginPage' })
         }
     }
