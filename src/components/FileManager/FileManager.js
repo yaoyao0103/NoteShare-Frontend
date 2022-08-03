@@ -216,7 +216,7 @@ const FileManager = (props) => {
                     <List
                         className="fileManage_Note fileManage_List"
                         itemLayout="horizontal"
-                        dataSource={res.data.res}
+                        dataSource={res.data.res.reverse()}
                         renderItem={(item, index) => (
                             <List.Item
                                 className="fileManage_Note_Item fileManage_List_Item"

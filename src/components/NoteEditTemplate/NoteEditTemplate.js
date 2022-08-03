@@ -509,7 +509,27 @@ const NoteEditTemplate = (props) => {
             .then(res => {
                 console.log("suggestive tag: ", res)
                 setRecommendTag(res.data.generatedTags)
-                setStep(2);
+                axios.get(`http://localhost:8080/note/plagiarism/${noteId}`, {
+                    headers: {
+                        'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+                    }
+                })
+                .then(plagiarismRes => {      
+                    setStep(2);
+                })
+                .catch(plagiarismRrr => {
+                    //console.log(err)
+                    if (plagiarismRrr.response.status === 500 || plagiarismRrr.response.status === 404||plagiarismRrr.response.status === 403){
+                        if(plagiarismRrr.response.data.message.slice(0,13)==='Malformed JWT')
+                        document.cookie = 'error=Jwt'
+                        else
+                        document.cookie = 'error=true'
+                        message.error('Server Error! Please refresh again!')
+                    }
+                    else{
+                        message.error('Server Error! Please try again later.')
+                    }
+                })
             })
             .catch(err => {
                 //console.log(err)
@@ -533,36 +553,17 @@ const NoteEditTemplate = (props) => {
     }
 
     const tagSubmit = async () => {
-        axios.get(`http://localhost:8080/note/${noteId}`, {
+        console.log("tagSelected", tagSelected)
+        console.log("tagSelected", {tagSelected})
+        axios.put(`http://localhost:8080/note/tag/updateTags/${noteId}`, {"tags":tagSelected},  {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
             }
         })
             .then(res => {
-                const tempNote = res.data.res
-                tempNote.tag = tagSelected
-                axios.put(`http://localhost:8080/note/${noteId}`, tempNote, {
-                    headers: {
-                        'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
-                    }
-                })
-                    .then(res => {
-                        console.log(res);
-                        message.success("You submitted the tags!");
-                        props.setPageProps({ page: 'NoteDetailPage', noteId: noteId })
-                    })
-                    .catch(err => {
-                        if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
-                            if(err.response.data.message.slice(0,13)==='Malformed JWT')
-                            document.cookie = 'error=Jwt'
-                            else
-                            document.cookie = 'error=true'
-                            message.error('Server Error! Please refresh again! (Submit Tag Error)')
-                        }
-                        else{
-                            message.error('Server Error! Please try again later. (Submit Tag Error)')
-                        }
-                    })
+                message.success("Success!")
+                props.setPageProps({page:"NoteDetailPage", noteId:noteId})
+            
             })
             .catch(err => {
                 //console.log(err)
