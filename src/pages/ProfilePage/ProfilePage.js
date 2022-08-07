@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useTransition } from 'react';
 import { Layout, Avatar, Modal, message, Row, Col, Divider, Spin, Tooltip } from "antd";
-import { EditFilled, UserAddOutlined, LoadingOutlined, BellOutlined, BellFilled, UserDeleteOutlined } from '@ant-design/icons';
+import { EditFilled, UserAddOutlined, LoadingOutlined, BellOutlined, BellFilled, UserDeleteOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 import './ProfilePage.css'
 import TextEditor from '../../components/TextEditor/TextEditor';
 import StrengthEditor from '../../components/StrengthEditor/StrengthEditor';
@@ -110,15 +110,15 @@ function ProfilePage(props) {
             props.setLoading(false)
 
         }).catch((error) => {
-            if (error.response.status === 500 || error.response.status === 404||error.response.status === 403){
-                if(error.response.data.message.slice(0,13)==='Malformed JWT')
-                document.cookie = 'error=Jwt'
+            if (error.response.status === 500 || error.response.status === 404 || error.response.status === 403) {
+                if (error.response.data.message.slice(0, 13) === 'Malformed JWT')
+                    document.cookie = 'error=Jwt'
                 else
-                document.cookie = 'error=true'
+                    document.cookie = 'error=true'
                 message.error('Server Error! Please refresh again! (Get Fans Error)')
             }
-            else{
-                message.error("Server Error! Please try again later. (Get Fans Error)")  
+            else {
+                message.error("Server Error! Please try again later. (Get Fans Error)")
             }
         })
     }
@@ -138,14 +138,14 @@ function ProfilePage(props) {
             setFollowingList(oldArray => [...oldArray.slice(0, 0), tempFollowingList]);
             props.setLoading(false)
         }).catch((error) => {
-            if (error.response.status === 500 || error.response.status === 404||error.response.status === 403){
-                if(error.response.data.message.slice(0,13)==='Malformed JWT')
-                document.cookie = 'error=Jwt'
+            if (error.response.status === 500 || error.response.status === 404 || error.response.status === 403) {
+                if (error.response.data.message.slice(0, 13) === 'Malformed JWT')
+                    document.cookie = 'error=Jwt'
                 else
-                document.cookie = 'error=true'
+                    document.cookie = 'error=true'
                 message.error('Server Error! Please refresh again! (Get Following Error)')
             }
-            else{
+            else {
                 message.error("Server Error! Please try again later. (Get Following Error)")
             }
         })
@@ -165,14 +165,14 @@ function ProfilePage(props) {
                 props.setAvatar(avatarNum + 1);
 
             }).catch((error) => {
-                if (error.response.status === 500 || error.response.status === 404||error.response.status === 403){
-                    if(error.response.data.message.slice(0,13)==='Malformed JWT')
-                    document.cookie = 'error=Jwt'
+                if (error.response.status === 500 || error.response.status === 404 || error.response.status === 403) {
+                    if (error.response.data.message.slice(0, 13) === 'Malformed JWT')
+                        document.cookie = 'error=Jwt'
                     else
-                    document.cookie = 'error=true'
+                        document.cookie = 'error=true'
                     message.error('Server Error! Please refresh again! (Change Avatar Error)')
                 }
-                else{
+                else {
                     message.error("Server Error! Please try again later. (Change Avatar Error)")
                 }
             })
@@ -207,14 +207,14 @@ function ProfilePage(props) {
                 )
                 //message.success('You followed ' + user.name + " !");
             }).catch((error) => {
-                if (error.response.status === 500 || error.response.status === 404||error.response.status === 403){
-                    if(error.response.data.message.slice(0,13)==='Malformed JWT')
-                    document.cookie = 'error=Jwt'
+                if (error.response.status === 500 || error.response.status === 404 || error.response.status === 403) {
+                    if (error.response.data.message.slice(0, 13) === 'Malformed JWT')
+                        document.cookie = 'error=Jwt'
                     else
-                    document.cookie = 'error=true'
+                        document.cookie = 'error=true'
                     message.error('Server Error! Please refresh again! (Follow User Error)')
                 }
-                else{
+                else {
                     message.error("Server Error! Please try again later. (Follow User Error)")
                 }
 
@@ -232,14 +232,14 @@ function ProfilePage(props) {
                 setFansNum(fansNum - 1);
                 //message.success('You unfollowed ' + user.name + " !");
             }).catch((error) => {
-                if (error.response.status === 500 || error.response.status === 404||error.response.status === 403){
-                    if(error.response.data.message.slice(0,13)==='Malformed JWT')
-                    document.cookie = 'error=Jwt'
+                if (error.response.status === 500 || error.response.status === 404 || error.response.status === 403) {
+                    if (error.response.data.message.slice(0, 13) === 'Malformed JWT')
+                        document.cookie = 'error=Jwt'
                     else
-                    document.cookie = 'error=true'
+                        document.cookie = 'error=true'
                     message.error('Server Error! Please refresh again! (Unfollow User Error)')
                 }
-                else{
+                else {
                     message.error("Server Error! Please try again later. (Unfollow User Error)")
                 }
             })
@@ -257,14 +257,14 @@ function ProfilePage(props) {
                 setIsBell(false);
                 message.success('You turned off the bell of ' + user.name + " !");
             }).catch((error) => {
-                if (error.response.status === 500 || error.response.status === 404||error.response.status === 403){
-                    if(error.response.data.message.slice(0,13)==='Malformed JWT')
-                    document.cookie = 'error=Jwt'
+                if (error.response.status === 500 || error.response.status === 404 || error.response.status === 403) {
+                    if (error.response.data.message.slice(0, 13) === 'Malformed JWT')
+                        document.cookie = 'error=Jwt'
                     else
-                    document.cookie = 'error=true'
+                        document.cookie = 'error=true'
                     message.error('Server Error! Please refresh again! (Turn Off The Bell Error)')
                 }
-                else{
+                else {
                     message.error("Server Error! Please try again later. (Turn Off The Bell Error)")
                 }
             })
@@ -279,14 +279,14 @@ function ProfilePage(props) {
                 setIsBell(true);
                 message.success('You turned on the bell of ' + user.name + " !");
             }).catch((error) => {
-                if (error.response.status === 500 || error.response.status === 404||error.response.status === 403){
-                    if(error.response.data.message.slice(0,13)==='Malformed JWT')
-                    document.cookie = 'error=Jwt'
+                if (error.response.status === 500 || error.response.status === 404 || error.response.status === 403) {
+                    if (error.response.data.message.slice(0, 13) === 'Malformed JWT')
+                        document.cookie = 'error=Jwt'
                     else
-                    document.cookie = 'error=true'
+                        document.cookie = 'error=true'
                     message.error('Server Error! Please refresh again! (Turn On The Bell Error)')
                 }
-                else{
+                else {
                     message.error("Server Error! Please try again later. (Turn On The Bell Error)")
                 }
             })
@@ -303,14 +303,14 @@ function ProfilePage(props) {
             setProfile(content);
             message.success("You updated your profile!")
         }).catch((error) => {
-            if (error.response.status === 500 || error.response.status === 404||error.response.status === 403){
-                if(error.response.data.message.slice(0,13)==='Malformed JWT')
-                document.cookie = 'error=Jwt'
+            if (error.response.status === 500 || error.response.status === 404 || error.response.status === 403) {
+                if (error.response.data.message.slice(0, 13) === 'Malformed JWT')
+                    document.cookie = 'error=Jwt'
                 else
-                document.cookie = 'error=true'
+                    document.cookie = 'error=true'
                 message.error('Server Error! Please refresh again! (Update Profile Error)')
             }
-            else{
+            else {
                 message.error("Server Error! Please try again later. (Update Profile Error)")
             }
         })
@@ -328,14 +328,14 @@ function ProfilePage(props) {
             setStrength(oldArray => [...oldArray, tag]);
             //message.success("You added a strength!")
         }).catch((error) => {
-            if (error.response.status === 500 || error.response.status === 404||error.response.status === 403){
-                if(error.response.data.message.slice(0,13)==='Malformed JWT')
-                document.cookie = 'error=Jwt'
+            if (error.response.status === 500 || error.response.status === 404 || error.response.status === 403) {
+                if (error.response.data.message.slice(0, 13) === 'Malformed JWT')
+                    document.cookie = 'error=Jwt'
                 else
-                document.cookie = 'error=true'
+                    document.cookie = 'error=true'
                 message.error('Server Error! Please refresh again! (Add Strength Error)')
             }
-            else{
+            else {
                 message.error("Server Error! Please try again later. (Add Strength Error)")
             }
         })
@@ -350,14 +350,14 @@ function ProfilePage(props) {
             setStrength(oldArray => [...oldArray.slice(0, key), ...oldArray.slice(key + 1, strength.oldArray)]);
             //message.success("You deleted a strength!")
         }).catch((error) => {
-            if (error.response.status === 500 || error.response.status === 404||error.response.status === 403){
-                if(error.response.data.message.slice(0,13)==='Malformed JWT')
-                document.cookie = 'error=Jwt'
+            if (error.response.status === 500 || error.response.status === 404 || error.response.status === 403) {
+                if (error.response.data.message.slice(0, 13) === 'Malformed JWT')
+                    document.cookie = 'error=Jwt'
                 else
-                document.cookie = 'error=true'
+                    document.cookie = 'error=true'
                 message.error('Server Error! Please refresh again! (Delete Strength Error)')
             }
-            else{
+            else {
                 message.error("Server Error! Please try again later. (Delete Strength Error)")
             }
         })
@@ -373,14 +373,14 @@ function ProfilePage(props) {
             setCurrentFolderId(res.data.res.parent);
 
         }).catch((error) => {
-            if (error.response.status === 500 || error.response.status === 404||error.response.status === 403){
-                if(error.response.data.message.slice(0,13)==='Malformed JWT')
-                document.cookie = 'error=Jwt'
+            if (error.response.status === 500 || error.response.status === 404 || error.response.status === 403) {
+                if (error.response.data.message.slice(0, 13) === 'Malformed JWT')
+                    document.cookie = 'error=Jwt'
                 else
-                document.cookie = 'error=true'
+                    document.cookie = 'error=true'
                 message.error('Server Error! Please refresh again! (Back To The Last Layer Error)')
             }
-            else{
+            else {
                 message.error("Server Error! Please try again later. (Back To The Last Layer Error)")
             }
         })
@@ -413,14 +413,14 @@ function ProfilePage(props) {
             props.setLoading(false);
 
         }).catch((error) => {
-            if (error.response.status === 500 || error.response.status === 404||error.response.status === 403){
-                if(error.response.data.message.slice(0,13)==='Malformed JWT')
-                document.cookie = 'error=Jwt'
+            if (error.response.status === 500 || error.response.status === 404 || error.response.status === 403) {
+                if (error.response.data.message.slice(0, 13) === 'Malformed JWT')
+                    document.cookie = 'error=Jwt'
                 else
-                document.cookie = 'error=true'
+                    document.cookie = 'error=true'
                 message.error('Server Error! Please refresh again! (Get Folder Error)')
             }
-            else{
+            else {
                 message.error("Server Error! Please try again later. (Get Folder Error)")
             }
         })
@@ -436,14 +436,14 @@ function ProfilePage(props) {
             getFolderById(res.data.res[2].id);
             setIsRoot(true);
         }).catch((error) => {
-            if (error.response.status === 500 || error.response.status === 404||error.response.status === 403){
-                if(error.response.data.message.slice(0,13)==='Malformed JWT')
-                document.cookie = 'error=Jwt'
+            if (error.response.status === 500 || error.response.status === 404 || error.response.status === 403) {
+                if (error.response.data.message.slice(0, 13) === 'Malformed JWT')
+                    document.cookie = 'error=Jwt'
                 else
-                document.cookie = 'error=true'
+                    document.cookie = 'error=true'
                 message.error('Server Error! Please refresh again! (Get All Folders Error)')
             }
-            else{
+            else {
                 message.error("Server Error! Please try again later. (Get All Folders Error)")
             }
         });
@@ -462,14 +462,14 @@ function ProfilePage(props) {
             props.setLoading(false)
         }).catch((error) => {
             //setGetFolderFail(true);
-            if (error.response.status === 500 || error.response.status === 404||error.response.status === 403){
-                if(error.response.data.message.slice(0,13)==='Malformed JWT')
-                document.cookie = 'error=Jwt'
+            if (error.response.status === 500 || error.response.status === 404 || error.response.status === 403) {
+                if (error.response.data.message.slice(0, 13) === 'Malformed JWT')
+                    document.cookie = 'error=Jwt'
                 else
-                document.cookie = 'error=true'
+                    document.cookie = 'error=true'
                 message.error('Server Error! Please refresh again! (Get All Notes Error)')
             }
-            else{
+            else {
                 message.error("Server Error! Please try again later. (Get All Notes Error)")
             }
         });
@@ -528,14 +528,14 @@ function ProfilePage(props) {
                 props.setLoading(false);
 
         }).catch((error) => {
-            if (error.response.status === 500 || error.response.status === 404||error.response.status === 403){
-                if(error.response.data.message.slice(0,13)==='Malformed JWT')
-                document.cookie = 'error=Jwt'
+            if (error.response.status === 500 || error.response.status === 404 || error.response.status === 403) {
+                if (error.response.data.message.slice(0, 13) === 'Malformed JWT')
+                    document.cookie = 'error=Jwt'
                 else
-                document.cookie = 'error=true'
+                    document.cookie = 'error=true'
                 message.error('Server Error! Please refresh again! (Get User Error)')
             }
-            else{
+            else {
                 message.error("Server Error! Please try again later. (Get User Error)")
             }
         });
@@ -706,8 +706,10 @@ function ProfilePage(props) {
                         {AvatarsList}
 
                     </Modal>
+                    <QuestionCircleOutlined style={{ position: 'absolute', fontSize: '28px', padding: '0.5em', top: '3.3em', right: '3.3em' }} />
                 </Layout >
             }
+           
         </>
     );
 
