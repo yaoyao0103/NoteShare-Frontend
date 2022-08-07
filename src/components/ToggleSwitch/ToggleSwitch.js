@@ -10,11 +10,9 @@ function ToggleSwitch(props) {
         if (!props.isSwitch) {
             setSwitch('');
             setLength(2)
-            message.info(props.SwitchRight);
         } else {
             setSwitch('__actived');
             setLength(1)
-            message.info(props.SwitchLeft);
             
         }
         //if(props.ChangeSwitch)props.ChangeSwitch();

@@ -38,13 +38,13 @@ const InformationInput = ({information, setInformation, notShowSwitch}) => {
         {information?.subject!=null &&
             <div className="informationInput__item informationInput__Input">
                 <Text color='black' cls='Small' content={"Subject"} fontSize='15' display="inline-block" />
-                <Input showCount maxLength={20} placeholder="subject" onChange={(ev) => setInformation({...information, subject: ev.target.value})} value={information?.subject} /> 
+                <Input showCount maxLength={20} placeholder="Subject" onChange={(ev) => setInformation({...information, subject: ev.target.value})} value={information?.subject} /> 
             </div>  
         }
         {information?.professor!=null &&
             <div className="informationInput__item informationInput__Input">
-                <Text color='black' cls='Small' content={"Professor"} fontSize='15' display="inline-block" />
-                <Input showCount maxLength={20} placeholder="professor" onChange={(ev) => setInformation({...information, professor: ev.target.value})} value={information?.professor} /> 
+                <Text color='black' cls='Small' content={"Instructor"} fontSize='15' display="inline-block" />
+                <Input showCount maxLength={20} placeholder="Instructor" onChange={(ev) => setInformation({...information, professor: ev.target.value})} value={information?.professor} /> 
             </div>  
         }
         {(information?.bestPrice!=null) &&
@@ -68,7 +68,7 @@ const InformationInput = ({information, setInformation, notShowSwitch}) => {
         {information?.referenceNumber!=null &&
             <div className="informationInput__item informationInput__InputNumber">
                 <Text color='black' cls='Small' content={"Ref Number"} fontSize='15' display="inline-block" />
-                <Input placeholder="$" onChange={(ev) => setInformation({...information, referenceNumber: ev.target.value})} value={information?.referenceNumber} /> 
+                <Input placeholder="Number" onChange={(ev) => setInformation({...information, referenceNumber: ev.target.value})} value={information?.referenceNumber} /> 
             </div>  
         }
         {information?.downloadable!=null &&

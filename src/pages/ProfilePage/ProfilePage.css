@@ -5,12 +5,12 @@
     width: 90%;
     height: 100vh; 
     /* height: auto; */
-    margin-top: 5%;
+    margin-top: 2em;
     background-color: #FFF;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 3%;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+    box-shadow: rgba(60, 60, 60, 0.25) 0px 5px 10px 0px;
 }
 .Profile__Content{
     height: 100%; 

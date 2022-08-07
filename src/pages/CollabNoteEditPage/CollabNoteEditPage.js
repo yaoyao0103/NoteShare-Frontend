@@ -506,7 +506,7 @@ const CollabNoteEditPage = (props) => {
                             </Row>
                             <Row className='collabNoteEditPage__Row'>
                                 <Col className='postEditTemplate__Content__Title' >
-                                    <Input showCount maxLength={50} placeholder="title" value={title} onChange={(ev) => setTitle(ev.target.value)} />
+                                    <Input showCount maxLength={50} placeholder="Title" value={title} onChange={(ev) => setTitle(ev.target.value)} />
                                 </Col>
                             </Row>
                             <Row className='collabNoteEditPage__Row'>

@@ -1,15 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;600&display=swap');
 #navButton{
-    position: absolute;
-    width: 45%;
-    left: 20%;
-    top:0;
-    margin-top: 1.5%;
+    position: relative;
+    height: 100%;
+    width: 28%;
     margin-left:0.3%;
-
+    
 }
 #navButton #button{
     position: relative;
+    height: 100%;
+    width: auto;
     font-family: 'Poppins', sans-serif;
     font-weight: 600;
     font-size: 15px;

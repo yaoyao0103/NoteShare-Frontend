@@ -14,31 +14,31 @@ const SortMeun = (props) => {
         setVisible(false);
     };
     const SortByBestPrice = () => {
-        message.info('依照賞金排序');
+        message.info('Sorted by Price');
         props.changeSortMode('bestPrice');
     };
     const SortByPrice = () => {
-        message.info('依照價格排序');
+        message.info('Sorted by Price');
         props.changeSortMode('price');
     };
     const SortByAns = () => {
-        message.info('依照留言數排序');
+        message.info('Sorted by Comments');
         props.changeSortMode('commentCount');
     };
     const SortByDate = () => {
-        message.info('依照日期排序');
+        message.info('Sorted by Date');
         props.changeSortMode('date');
     };
     const  SortByLikeCount = () => {
-        message.info('依照喜歡數排序');
+        message.info('Sorted by Likes');
         props.changeSortMode('likeCount');
     };
     const SortByUnlockCountCount = () => {
-        message.info('依照購買數排序');
+        message.info('Sorted by Quantity Sold');
         props.changeSortMode('unlockCount');
     };
     const  SortByFavoriteCount = () => {
-        message.info('依照收藏數排序');
+        message.info('Sorted by Favorites');
         props.changeSortMode('favoriteCount');
     };
     const QnAOutlineMenu = (

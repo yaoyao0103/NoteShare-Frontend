@@ -272,13 +272,6 @@ const PostEditTemplate = (props) => {
         <div className="postEditTemplate" >
             <Layout className="postEditTemplate__Layout">
                 {/* Header */}
-                <Header className="postEditTemplate__Header" >
-                    <Row className="postEditTemplate__Row">
-                        <Col className="postEditTemplate__Header__Title">
-                            <Text color='black' cls='Default' content={`New ${props.type}`} fontSize='30' display="inline-block" />
-                        </Col>
-                    </Row>
-                </Header>
                 {/* Content */}
                 <Content className="postEditTemplate__Content" >
                     <Row className='postEditTemplate__Row'>
@@ -288,7 +281,7 @@ const PostEditTemplate = (props) => {
                     </Row>
                     <Row className='postEditTemplate__Row'>
                         <Col className='postEditTemplate__Content__Title' >
-                            <Input showCount maxLength={20} placeholder="title" value={title} onChange={(ev) => setTitle(ev.target.value)} />
+                            <Input showCount maxLength={20} placeholder="Title" value={title} onChange={(ev) => setTitle(ev.target.value)} />
                         </Col>
                     </Row>
                     <Row className='postEditTemplate__Row'>

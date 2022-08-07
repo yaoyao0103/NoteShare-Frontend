@@ -5,14 +5,43 @@
     width:100%;
 }
 .ant-spin-container{
-    
     height: 100%;
     width:100%;
 }
-.outerPage__Layout{
+
+.outerPage__PageLabel{
     position: absolute;
     top: 8%;
-    background-color: #EFF1F4;
+    height: 12%;
+    background-color: #FFFFFF;
+    width: 100%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.outerPage__PageLabel p{
+    position: absolute;
+    bottom: 0;
+    left: 12%
+}
+
+.outerPage__Layout__PageLabel{
+    position: absolute;
+    background-color: #FFFFFF;
+    top: 20%;
+    width: 100%;
+    /* height: 100%;
+    padding-bottom: 3%; */
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.outerPage__Layout{
+    position: absolute;
+    background-color: #FFFFFF;
+    top: 18%;
     width: 100%;
     /* height: 100%;
     padding-bottom: 3%; */
@@ -29,8 +58,8 @@
 }
 .lastPageButton{
     position: absolute;
-    left: 2em;
-    top: 5.5em;
+    left: 8%;
+    top: 16%;
     cursor: pointer;
 }
 .lastPageButton:hover{

@@ -73,11 +73,12 @@ const NoteEditTemplate = (props) => {
         if (note && props.mode == 'edit') {
             if (note?.type == 'reward') {
                 setPostId(note?.postId);
-                axios.get(`http://localhost:8080/post/${note?.postId}/`)
+                axios.get(`http://localhost:8080/post/${note?.postId}`)
                     .then(res => {
                         setPostInfo(res.data.res);
                     })
                     .catch(err => {
+                        console.log("err", err)
                         if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
                             if(err.response.data.message.slice(0,13)==='Malformed JWT')
                             document.cookie = 'error=Jwt'
@@ -140,7 +141,7 @@ const NoteEditTemplate = (props) => {
             });
             setContent('')
             // get post info
-            axios.get(`http://localhost:8080/post/${props.postId}/`)
+            axios.get(`http://localhost:8080/post/${props.postId}`)
                 .then(res => {
                     setPostInfo(res.data.res);
                 })
@@ -168,7 +169,7 @@ const NoteEditTemplate = (props) => {
                     renderItem={(item, index) => (index != 0 &&
                         <Tooltip placement='left' title={moment(item.date).format('YYYY-MM-DD HH:mm:ss')}>
                             {renaming == index ?
-                                <Input placeholder="New version name" bordered={false} onPressEnter={(ev) => renameVersion(index, ev.target.value)} className="version__rename" addonAfter={<CloseOutlined onClick={() => setRenaming(false)} />} />
+                                <Input placeholder="New Version Name" bordered={false} onPressEnter={(ev) => renameVersion(index, ev.target.value)} className="version__rename" addonAfter={<CloseOutlined onClick={() => setRenaming(false)} />} />
                                 :
                                 <List.Item
                                     className='versionItem'
@@ -729,11 +730,6 @@ const NoteEditTemplate = (props) => {
         <div className="noteEditTemplate">
             <Layout className="noteEditTemplate__Layout" >
                 <Header className="noteEditTemplate__Header">
-                    <Row className="noteEditTemplate__Row">
-                        <Col className="postEditTemplate__Header__Title">
-                            <Text color='black' cls='Default' content={`New Note`} fontSize='30' display="inline-block" />
-                        </Col>
-                    </Row>
                     <Row className="noteEditTemplate__Row noteEditTemplate__Steps" >
                         <Steps current={step} progressDot={customDot}>
                             <Step title="Step 1" description="Information modify" icon={<InfoCircleOutlined />} />
@@ -753,7 +749,7 @@ const NoteEditTemplate = (props) => {
                             </Row>
                             <Row className='noteEditTemplate__Row'>
                                 <Col className='postEditTemplate__Content__Title' >
-                                    <Input showCount maxLength={50} placeholder="title" value={title} onChange={(ev) => setTitle(ev.target.value)} />
+                                    <Input showCount maxLength={50} placeholder="Title" value={title} onChange={(ev) => setTitle(ev.target.value)} />
                                 </Col>
                             </Row>
                             <Row className='noteEditTemplate__Row'>

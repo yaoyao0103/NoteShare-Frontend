@@ -61,7 +61,6 @@ const AdvancedSearch = (props) => {
         //console.log(temp)
         props.setPageProps(temp);
         
-        message.info("Search for type " + props.type)
         console.log("condition:", condition);
     }
 

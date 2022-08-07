@@ -1,9 +1,26 @@
+.Ring__Container{
+    position: absolute;  
+    height: 100%;
+    width: 100%;
+    
+}
+
+
+.Ring__Container .anticon{
+    margin: 0;
+}
+
+.Ring__Container .ant-badge{
+    top: 50%;
+    transform: translateY(-50%);
+}
 .Ring__Dropdown{
     padding-top:6px;
     width: auto !important;
+
 }
 .Ring__Bell__Button{
-   
+    
 }
 /* .ant-dropdown-menu{
     width:30px;
@@ -12,10 +29,12 @@
 } */
 .Ring__Icon{
     padding-top:0.2em;
+    
 }
 .Ring__Dropdown .ant-dropdown-menu-item{
     height: 80px;
     box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
+    
 }
 .Ring__Paragraph{
     word-wrap: break-word;
@@ -23,6 +42,7 @@
     font-size: 16px;
     font-family: 'Poppins', sans-serif;
     font-weight: 200;
+    
 }
 .Ring__item__text{
     

@@ -2,7 +2,7 @@
     position:relative;
     width: 90%;
     height: 100%; 
-    margin-top: 5%;
+    margin-top: 2em;
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -11,7 +11,7 @@
 
 .contentTemplate__Layout__outer{
     height: 100%;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
+    box-shadow: rgba(60, 60, 60, 0.25) 0px 5px 10px 0px;
 }
 
 .contentTemplate__Layout{
@@ -154,7 +154,7 @@
     top: 13%;
     left: 4%;
     height: 30vh;
-    box-shadow: rgba(50, 50, 93, 0.1) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
+    box-shadow: rgba(60, 60, 60, 0.25) 0px 5px 10px 0px;
     visibility: hidden;
     opacity: 0;
     z-index: 10;
@@ -193,7 +193,7 @@
     z-index: 99;
     text-align: center;
     cursor: pointer;
-    box-shadow: rgba(50, 50, 93, 0.3) -2px 3px 20px -2px
+    box-shadow: rgba(60, 60, 60, 0.25) 0px 5px 10px 0px;
 }
 
 .note__CommentAreaButton:hover .anticon, .note__CommentAreaButton:hover .note__CommentAreaButton__Title{

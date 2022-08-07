@@ -3,9 +3,10 @@
     height: 2em;
     width: 13%;
     left: 63%;
-    top: 1.1em;
     border: 0;
     border-bottom:1px #999 solid;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .navSearchBar--selected{

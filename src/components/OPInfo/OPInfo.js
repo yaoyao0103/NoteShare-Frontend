@@ -34,7 +34,7 @@ const OPInfo = (props) => {
                     }
                 </Col>
                 <Col id={"OPInfo__right"+'__'+props.mode} className={"OPInfo__right"+'__'+props.mode} >
-                    <Row id={'OPInfo__Author'+'__'+props.mode} className={'OPInfo__Author'+'__'+props.mode}><Text color='black' cls='Default' content={props.author.name} fontSize={props.authorFontSize}></Text></Row>
+                    <Row id={'OPInfo__Author'+'__'+props.mode} className={'OPInfo__Author'+'__'+props.mode}><p style={{fontSize:props.authorFontSize + 'px'}}>{props.author.name}</p></Row>
                     {props.date&&<Row id={'OPInfo__Date'+'__'+props.mode} className={'OPInfo__Date'+'__'+props.mode} ><Text color='black' cls='Small' content={props.date.split('T')[0]} fontSize={props.dateFontSize} display="inline-block" /></Row>}
                 </Col>
             </Row>

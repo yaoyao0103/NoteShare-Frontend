@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./OptionMenu.css";
 import { Link, useNavigate } from "react-router-dom";
-import { Menu, Dropdown, Space, Drawer, message, Input, Tooltip, Button, Popover, List, Avatar, Modal, Popconfirm } from "antd";
+import { Menu, Dropdown, Space, Drawer, message, Input, Tooltip, Button, Popover, List, Avatar, Modal, Popconfirm, notification } from "antd";
 import { StarOutlined, CopyOutlined, EditOutlined, CommentOutlined, CheckOutlined, CloseOutlined, ShareAltOutlined, InboxOutlined, DeleteOutlined, EyeOutlined, InfoCircleOutlined, UserOutlined, LikeOutlined } from "@ant-design/icons";
 import VersionArea from "../VersionArea/VersionArea";
 import CommentArea from "../CommentArea/CommentArea";
@@ -207,6 +207,10 @@ const OptionMenu = (props) => {
       .then(res => {
         message.success("You selected the note as best!")
         props.refreshAnswer()
+        notification.open({
+          message: 'The Note has been saved to Owned Folder.',
+          placement: 'bottomLeft'
+      });
         // Todo: remove applicant from list
       })
       .catch(err => {

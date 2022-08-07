@@ -6,8 +6,7 @@
     max-width: 45%;
     background-color: #fff;
     margin:2.5%;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 20px 100px -50px
-   
+    box-shadow: rgba(60, 60, 60, 0.25) 0px 5px 10px 0px;   
     
 }
 .OutlineCard__Layout__Outer__Post:hover{
@@ -18,8 +17,7 @@
     transform: scale(1.005);
     transition: .3s;
     
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 20px 100px -20px
-   
+    box-shadow: rgba(60, 60, 60, 0.25) 0px 5px 10px 0px; 
     
 }
 .OutlineCard__Content__Outer__Post{
@@ -44,6 +42,7 @@
     width: 100%;
     background-color: #FFF;
     margin: 0;
+    margin-top: 1.5%;
     padding: 0;
   
 }
@@ -88,7 +87,7 @@
 }
 .OutlineCard__Sider__First__Row__Post,.OutlineCard__Sider__Sec__Row__Post,.OutlineCard__Sider__Third__Row__Post,.OutlineCard__Sider__Fourth__Row__Post,.OutlineCard__Sider__Fifth__Row__Post{
     position: relative;
-    padding-top:6%;
+    padding-top:4%;
     padding-left: 5%;
 }
 .OutlineCard__Sider__Inner__Layout__Post{
@@ -103,6 +102,11 @@
     width: inherit;
     background-color: #FFF; 
 }
+
+.OutlineCard__Footer{
+    background-color: #FFF; 
+}
+
 .OutlineCard__Sider__Footer__Post{
     position: relative;
     width: inherit;
@@ -130,10 +134,9 @@
     background-color: #fff;
     margin-left:5%;
     margin-right:5%;
-    margin-top:2.5%;
-    margin-bottom:2.5%;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 20px 100px -50px
-    
+    margin-top:1.5em;
+    margin-bottom:1.5em;
+box-shadow: rgba(60, 60, 60, 0.25) 0px 5px 10px 0px;    
 }
 .OutlineCard__Layout__Outer__Note:hover{
     position:relative;
@@ -143,11 +146,11 @@
     background-color: #fff;
     margin-left:5%;
     margin-right:5%;
-    margin-top:2.5%;
-    margin-bottom:2.5%;
+    margin-top:1.5em;
+    margin-bottom:1.5em;
     transform: scale(1.005);
     transition: .3s;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 20px 100px -20px
+    box-shadow: rgba(60, 60, 60, 0.5) 0px 5px 20px 0px;
 
 }
 .OutlineCard__Content__Outer__Note{

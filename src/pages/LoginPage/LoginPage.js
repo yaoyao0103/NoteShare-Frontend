@@ -99,7 +99,7 @@ function LoginPage(props) {
             //console.log(document.cookie);
             if (res.data.activate) {
                 props.setLoggedIn(true)
-                props.setPageProps({ page: 'PersonalPage' })
+                props.setPageProps({page:'MemberPage',pageNumber:1,sortMode:'likeCount'})
             }
             else {
                 message.warn("You have not activate your account!")

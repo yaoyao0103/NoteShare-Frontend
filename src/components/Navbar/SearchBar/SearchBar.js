@@ -33,14 +33,16 @@ const SearchBar = (props) => {
   }, [ref]);
 
   const onSearch = () => {
+    if(keyword.length == 0){
+      message.info("You have to enter a keyword");
+      return;
+    }
     props.setPageProps({
       keyword:keyword,
       page:'NoteOutlinePage',
       pageNumber:1,
       sortMode:'price'
     });
-    message.info(keyword);
-
   }
   const onChange = (ev) =>{
     setKeyword(ev.target.value);

@@ -33,6 +33,7 @@ import CollabRecommendPage from '../CollabRecommendPage/CollabRecommendPage';
 import ResetPasswordPage from '../ResetPasswordPage/ResetPasswordPage';
 import './OuterPage.css'
 import { Button, Drawer, message, Spin, notification, Avatar } from 'antd'
+import Text from '../../components/Text/Text';
 import { LoadingOutlined } from '@ant-design/icons';
 
 import { RadiusBottomleftOutlined } from '@ant-design/icons';
@@ -52,7 +53,6 @@ const OuterPage = () => {
     //const [pageBeforeNumber, setPageBeforeNumber] = useState(1);
     const [pageProps, setPageProps] = useState({ page: 'LoginPage' });
     const [pageComponent, setPageComponent] = useState(<></>)
-    const [visible, setVisible] = useState(false);
     const [loggedIn, setLoggedIn] = useState(false);
     const [changeAvatar, setChangeAvatar] = useState(0);
     const [coinNum, setCoinNum] = useState(0);
@@ -65,7 +65,11 @@ const OuterPage = () => {
     const [ringNumber, setRingNumber] = useState(0);
     const [ringList, setRingList] = useState([]);
     const [isChanging, setIsChanging] = useState(false);
-    const [api, contextHolder] = notification.useNotification();
+    const [api, contextHolder] = notification.useNotification(); 
+    const [pageLabel, setPageLabel] = useState(null)
+
+
+
     const changePageNumber = (pageNumber) => {
         console.log('1231')
         setPageProps({
@@ -104,13 +108,6 @@ const OuterPage = () => {
         console.log(changePage)
     }
 
-    const showDrawer = () => {
-        setVisible(true);
-    };
-
-    const onClose = () => {
-        setVisible(false);
-    };
 
 
     const connect = () => {
@@ -233,7 +230,7 @@ const OuterPage = () => {
         if (email) {
             connect();
             setLoggedIn(true);
-            setPageProps({ page: 'PersonalPage' })
+            setPageProps({page:'MemberPage',pageNumber:1,sortMode:'likeCount'})
         }
         const tempPageProps = cookieParser.getCookieByName('pageProps')
         if (tempPageProps) {
@@ -250,7 +247,7 @@ const OuterPage = () => {
         if (!tempPageProps) {
             if (loggedIn) {
                 setPageStack(oldArray => [...oldArray.slice(0, 0)]);
-                setPageProps({ page: 'PersonalPage' })
+                setPageProps({page:'MemberPage',pageNumber:1,sortMode:'likeCount'})
 
             }
             else {
@@ -280,7 +277,7 @@ const OuterPage = () => {
 
         if (cookieParser.getCookieByName('error') && cookieParser.getCookieByName('error') === 'true') {
             document.cookie = 'error=' + 'false'
-            setPageProps({ page: "PersonalPage" })
+            setPageProps({page:'MemberPage',pageNumber:1,sortMode:'likeCount'})
             message.error('Server error!')
         }
         else if (cookieParser.getCookieByName('error') && cookieParser.getCookieByName('error') === 'Jwt') {
@@ -308,7 +305,7 @@ const OuterPage = () => {
                 pageProps.page === 'VerificationPage' || pageProps.page === 'ForgetPasswordPage'
             ) && loggedIn) {
                 message.warn("Please log out first!")
-                setPageProps({ page: "PersonalPage" })
+                setPageProps({page:'MemberPage',pageNumber:1,sortMode:'likeCount'})
             }
             else {
 
@@ -354,30 +351,30 @@ const OuterPage = () => {
                     setFloatButtonVisable(false)
 
                 switch (pageProps.page) {
-                    case 'NoteDetailPage': setPageComponent(<NoteDetailPage page='NoteDetailPage' coinNum={coinNum} setCoinNum={setCoinNum} sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
-                    case 'NoteEditPage': setPageComponent(<NoteEditPage page='NoteEditPage' sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
-                    case 'NoteNewPage': setPageComponent(<NoteEditPage page='NoteNewPage' sendBellMessage={sendBellMessage} sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
-                    case 'NoteOutlinePage': setPageComponent(<NoteOutlinePage page='NoteOutlinePage' changeSortMode={setSortMode} setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
-                    case 'MemberPage': setPageComponent(<MemberPage page='MemberPage' setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
-                    case 'RewardDetailPage': setPageComponent(<RewardDetailPage page='RewardDetailPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
-                    case 'RewardEditPage': setPageComponent(<RewardEditPage page='RewardEditPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
-                    case 'RewardNewPage': setPageComponent(<RewardEditPage page='RewardNewPage' sendBellMessage={sendBellMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
-                    case 'RewardOutlinePage': setPageComponent(<RewardOutlinePage page='RewardOutlinePage' changeSortMode={setSortMode} setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
-                    case 'RewardRecommendPage': setPageComponent(<RewardRecommendPage page='RewardRecommendPage' changeSortMode={setSortMode} setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
-                    case 'QnADetailPage': setPageComponent(<QnADetailPage page='QnADetailPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
-                    case 'QnAOutlinePage': setPageComponent(<QnAOutlinePage page='QnAOutlinePage' changeSortMode={setSortMode} setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
-                    case 'QnAEditPage': setPageComponent(<QnAEditPage page='QnAEditPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
-                    case 'QnANewPage': setPageComponent(<QnAEditPage page='QnANewPage' sendBellMessage={sendBellMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
-                    case 'QnARecommendPage': setPageComponent(<QnARecommendPage page='QnARecommendPage' changeSortMode={setSortMode} setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
-                    case 'CollabDetailPage': setPageComponent(<CollabDetailPage page='CollabDetailPage' sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
-                    case 'CollabEditPage': setPageComponent(<CollabEditPage page='CollabEditPage' sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
-                    case 'CollabNoteEditPage': setPageComponent(<CollabNoteEditPage page='CollabNoteEditPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
-                    case 'CollabNewPage': setPageComponent(<CollabEditPage page='CollabNewPage' sendBellMessage={sendBellMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
-                    case 'CollabOutlinePage': setPageComponent(<CollabOutlinePage page='CollabOutlinePage' changeSortMode={setSortMode} setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
-                    case 'CollabRecommendPage': setPageComponent(<CollabRecommendPage page='CollabRecommendPage' changeSortMode={setSortMode} setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
-                    case 'FolderOutlinePage': setPageComponent(<FolderOutlinePage page='FolderOutlinePage' setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
-                    case 'PersonalPage': setPageComponent(<PersonalPage page='PersonalPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
-                    case 'ProfilePage': setPageComponent(<ProfilePage page='ProfilePage' sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} Avatar={changeAvatar} setAvatar={setChangeAvatar} setPageProps={setPageProps} {...pageProps} />); break;
+                    case 'NoteDetailPage': setPageLabel("Note Detail");setPageComponent(<NoteDetailPage page='NoteDetailPage' coinNum={coinNum} setCoinNum={setCoinNum} sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                    case 'NoteEditPage': setPageLabel("Edit a Note"); setPageComponent(<NoteEditPage page='NoteEditPage' sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
+                    case 'NoteNewPage': setPageLabel("Create a Note");setPageComponent(<NoteEditPage page='NoteNewPage' sendBellMessage={sendBellMessage} sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                    case 'NoteOutlinePage': setPageLabel("Results"); setPageComponent(<NoteOutlinePage page='NoteOutlinePage' changeSortMode={setSortMode} setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
+                    case 'MemberPage': setPageLabel("Recommended Notes"); setPageComponent(<MemberPage page='MemberPage' setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
+                    case 'RewardDetailPage': setPageLabel("Reward Post Detail"); setPageComponent(<RewardDetailPage page='RewardDetailPage' pageLabel='Reward Detail' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                    case 'RewardEditPage': setPageLabel("Edit a Reward Post"); setPageComponent(<RewardEditPage page='RewardEditPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                    case 'RewardNewPage': setPageLabel("Create a Reward Post"); setPageComponent(<RewardEditPage page='RewardNewPage' sendBellMessage={sendBellMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
+                    case 'RewardOutlinePage': setPageLabel("Results"); setPageComponent(<RewardOutlinePage page='RewardOutlinePage' changeSortMode={setSortMode} setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
+                    case 'RewardRecommendPage': setPageLabel("Recommended Reward Posts"); setPageComponent(<RewardRecommendPage page='RewardRecommendPage' changeSortMode={setSortMode} setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
+                    case 'QnADetailPage': setPageLabel("QA Post Detail");setPageComponent(<QnADetailPage page='QnADetailPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
+                    case 'QnAOutlinePage': setPageLabel("Results");setPageComponent(<QnAOutlinePage page='QnAOutlinePage' changeSortMode={setSortMode} setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                    case 'QnAEditPage': setPageLabel("Edit a QA Post"); setPageComponent(<QnAEditPage page='QnAEditPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
+                    case 'QnANewPage': setPageLabel("Create a QA Post");setPageComponent(<QnAEditPage page='QnANewPage' sendBellMessage={sendBellMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                    case 'QnARecommendPage': setPageLabel("Recommended Reward Posts");setPageComponent(<QnARecommendPage page='QnARecommendPage' changeSortMode={setSortMode} setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                    case 'CollabDetailPage': setPageLabel("Collaborative Note Detail"); setPageComponent(<CollabDetailPage page='CollabDetailPage' sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                    case 'CollabEditPage': setPageLabel("Edit a Collaborative Note Post"); setPageComponent(<CollabEditPage page='CollabEditPage' sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                    case 'CollabNoteEditPage': setPageLabel("Edit a Collaborative Note");setPageComponent(<CollabNoteEditPage page='CollabNoteEditPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                    case 'CollabNewPage': setPageLabel("Create a Collaborative Note Post"); setPageComponent(<CollabEditPage page='CollabNewPage' sendBellMessage={sendBellMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                    case 'CollabOutlinePage': setPageLabel("Results");setPageComponent(<CollabOutlinePage page='CollabOutlinePage' changeSortMode={setSortMode} setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                    case 'CollabRecommendPage': setPageLabel("Recommended Collaborative Note Posts"); setPageComponent(<CollabRecommendPage page='CollabRecommendPage' changeSortMode={setSortMode} setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                    case 'FolderOutlinePage': setPageLabel("Recommended Folder"); setPageComponent(<FolderOutlinePage page='FolderOutlinePage' setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                    case 'PersonalPage': setPageLabel("Personal Area"); setPageComponent(<PersonalPage page='PersonalPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                    case 'ProfilePage': setPageLabel("Profile"); setPageComponent(<ProfilePage page='ProfilePage' sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} Avatar={changeAvatar} setAvatar={setChangeAvatar} setPageProps={setPageProps} {...pageProps} />); break;
                     case 'LoginPage': setPageComponent(<LoginPage page='LoginPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} setLoggedIn={setLoggedIn} {...pageProps} />); break;
                     case 'SignUpPage': setPageComponent(<SignUpPage page='SignUpPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
                     case 'VerificationPage': setPageComponent(<VerificationPage page='VerificationPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
@@ -406,7 +403,6 @@ const OuterPage = () => {
 
 
     const floatBtnOnClick = () => {
-        message.info("float button click!")
 
         switch (pageProps.page) {
             case 'PersonalPage': setPageProps({ page: 'NoteNewPage', action: "new", }); break;
@@ -456,8 +452,12 @@ const OuterPage = () => {
                     <Spin wrapperClassName={'outerPage__Loading'} indicator={antIcon} spinning={loading} style={{ width: '100%', height: '100%' }}>
                         <Navbar ringList={ringList} setRingList={setRingList} ringNumber={ringNumber} setRingNumber={setRingNumber} coinNum={coinNum} setCoinNum={setCoinNum} pageProps={pageProps} changeAvatar={changeAvatar} loggedIn={loggedIn} setPageProps={setPageProps} setLoggedIn={setLoggedIn} />
 
-
-                        <div className='outerPage__Layout'>
+                        {pageLabel&&
+                            <div className='outerPage__PageLabel'>
+                                <Text color='gray' cls='Default' content={pageLabel} fontSize='30' display="inline-block" />         
+                            </div>
+                        }
+                        <div className={pageLabel?'outerPage__Layout__PageLabel':'outerPage__Layout'} >
                             {pageComponent && pageComponent}
                         </div>
                         {backMode &&
@@ -474,236 +474,6 @@ const OuterPage = () => {
                 </>
 
             </div>
-            <div className='drawerBtn'>
-                <Button type="primary" onClick={() => { openNotification('bottomLeft', { message: '123', userObj: { userObjName: 'Plusx', userObjAvatar: "https://joeschmoe.io/api/v1/james" } }) }/*showDrawer*/}>
-                    Open
-                </Button>
-            </div>
-
-            <Drawer title="Basic Drawer" placement="right" onClose={onClose} visible={visible}>
-                <Button type="primary" onClick={() => {
-                    setPageProps({
-                        noteId: "62b477d9c291fe27002cae3c",
-                        page: "NoteDetailPage"
-                    })
-                }} >
-                    NoteDetailPage
-                </Button>
-                <Button type="primary" onClick={() => {
-                    setPageProps({
-                        noteId: "62b477d9c291fe27002cae3c",
-                        action: "edit",
-                        page: 'NoteEditPage'
-                    })
-                }}>
-                    NoteEditPage
-                </Button>
-                <Button type="primary" onClick={() => {
-                    setPageProps({
-                        action: "new",
-                        page: "NoteNewPage"
-                    })
-                }}>
-                    NoteNewPage
-                </Button>
-                <Button type="primary" onClick={() => {
-                    setPageProps({
-                        keyWord: 'OS',
-                        subject: '',
-                        department: '',
-                        professor: '',
-                        school: '',
-                        headName: '',
-                        Downloadable: true,
-                        page: 'NoteOutlinePage'
-                    })
-                }}>
-                    NoteOutlinePage
-                </Button>
-                <Button type="primary" onClick={() => {
-                    setPageProps({
-                        postId: '62b0891f0997e642d1402113',
-                        page: 'RewardDetailPage'
-                    })
-                }}>
-                    RewardDetailPage
-                </Button>
-                <Button type="primary" onClick={() => {
-                    setPageProps({
-                        postId: '62b0891f0997e642d1402113',
-                        type: 'reward',
-                        action: 'edit',
-                        page: 'RewardEditPage'
-                    })
-                }}>
-                    RewardEditPage
-                </Button>
-                <Button type="primary" onClick={() => {
-                    setPageProps({
-                        type: 'reward',
-                        action: 'new',
-                        page: 'RewardNewPage'
-                    })
-                }}>
-                    RewardNewPage
-                </Button>
-                <Button type="primary" onClick={() => {
-                    setPageProps({
-                        keyWord: 'interrupt',
-                        subject: '',
-                        department: '',
-                        professor: '',
-                        school: '',
-                        page: 'RewardOutlinePage'
-                    })
-                }}>
-                    RewardOutlinePage
-                </Button>
-                <Button type="primary" onClick={() => {
-                    setPageProps({
-                        keyWord: 'array',
-                        subject: '',
-                        department: '',
-                        page: 'QnAOutlinePage'
-                    })
-                }}>
-                    QAOutlinePage
-                </Button>
-                <Button type="primary" onClick={() => {
-                    setPageProps({
-                        postId: '62b076e50997e642d140206c',
-                        page: 'QnADetailPage'
-                    })
-                }}>
-                    QADetailPage
-                </Button>
-                <Button type="primary" onClick={() => {
-                    setPageProps({
-                        postId: '62b076e50997e642d140206c',
-                        type: 'QA',
-                        action: 'edit',
-                        page: 'QnAEditPage'
-                    })
-                }}>
-                    QAEditPage
-                </Button>
-                <Button type="primary" onClick={() => {
-                    setPageProps({
-                        type: 'QA',
-                        action: 'new',
-                        page: 'QnANewPage'
-                    })
-                }}>
-                    QANewPage
-                </Button>
-
-                <Button type="primary" onClick={() => {
-                    setPageProps({
-                        postId: '62bea68c4e0af13e28f37f62',
-                        page: 'CollabDetailPage'
-                    })
-                }}>
-                    CollabDetailPage
-                </Button>
-                <Button type="primary" onClick={() => {
-                    setPageProps({
-                        postId: '62b07f9c0997e642d14020c6',
-                        type: 'collaboration',
-                        action: 'edit',
-                        page: 'CollabEditPage'
-                    })
-                }}>
-                    CollabEditPage
-                </Button>
-                <Button type="primary" onClick={() => {
-                    setPageProps({
-                        type: 'collaboration',
-                        action: 'new',
-                        page: 'CollabNewPage'
-                    })
-                }}>
-                    CollabNewPage
-                </Button>
-                <Button type="primary" onClick={() => {
-                    setPageProps({
-                        keyWord: 'interrupt',
-                        subject: '',
-                        department: '',
-                        professor: '',
-                        school: '',
-                        headName: '',
-                        Downloadable: true,
-                        page: 'CollabOutlinePage'
-
-                    })
-                }}>
-                    CollabOutlinePage
-                </Button>
-                <Button type="primary" onClick={() => {
-                    setPageProps({
-                        keyWord: 'test',
-                        author: 'a',
-                        page: 'FolderOutlinePage'
-
-                    })
-                }}>
-                    FolderOutlinePage
-                </Button>
-                <Button type="primary" onClick={() => {
-                    setPageProps({
-                        page: 'PersonalPage'
-                    })
-                }}>
-                    PersonalPage
-                </Button>
-                <Button type="primary" onClick={() => {
-                    setPageProps({
-                        email: 'a147896325811@gmail.com',
-                        page: 'ProfilePage'
-                    });
-                }}>
-                    ProfilePage
-                </Button>
-
-                <Button type="primary" onClick={() => {
-                    setPageProps({
-                        page: 'LoginPage'
-                    })
-                }}>
-                    LoginPage
-                </Button>
-                <Button type="primary" onClick={() => {
-                    setPageProps({
-                        page: 'SignUpPage'
-                    })
-                }}>
-                    SignUpPage
-                </Button>
-                <Button type="primary" onClick={() => {
-                    setPageProps({
-                        email: 'testemail@email.ntou.edu.tw',
-                        page: 'VerificationPage'
-                    })
-                }}>
-                    VerificationPage
-                </Button>
-                <Button type="primary" onClick={() => {
-                    setPageProps({
-                        email: 'a5477547720@yahoo.com.tw',
-                        page: 'ForgetPasswordPage'
-                    })
-                }}>
-                    ForgetPasswordPage
-                </Button>
-                <Button type="primary" onClick={() => {
-                    setPageProps({
-                        email: 'a5477547720@yahoo.com.tw',
-                        page: 'ResetPasswordPage'
-                    })
-                }}>
-                    ResetPasswordPage
-                </Button>
-            </Drawer>
 
         </>
     )

@@ -49,12 +49,12 @@ function Coin(props) {
     }, [props]);
     return (
         <>{getUserSuccess&&
-            <>
+            <div className="Coin__Container">
             <DollarOutlined className="Coin__Icon" />
             <div  className="Coin__Text">
             <Text  color='Black' cls='Default' content={props.coinNum.toString()} fontSize='15' display="inline-block" />
             </div>
-            </>
+            </div>
             }
         </>
 

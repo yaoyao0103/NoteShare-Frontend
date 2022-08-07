@@ -11,7 +11,7 @@ function StrengthEditor(props) {
         if (Tag !== '') {
           
             props.add(Tag);
-            message.info('Add new strength');
+            message.success('Add a new strength');
         }
         else {
             message.info('Please enter something');
@@ -20,7 +20,7 @@ function StrengthEditor(props) {
     }
 
     const Delete = (key) => {
-        message.info('Remove ' + props.strength[key]);
+        message.success('Remove a strength');
         props.delete(key);
     }
 
@@ -53,7 +53,7 @@ function StrengthEditor(props) {
                 {!editing&&props.isAuthor &&
                     <PlusCircleOutlined style={{ fontSize: '14px' }} className='StrengthEditor__Add' onClick={() => { setEditing(true) }} />}
                 {editing&&props.isAuthor &&
-                    <Input className='StrengthEditor__Input' placeholder='Enter new Strength' onChange={(e) => { const Tag = e.target.value; setTag(Tag) }} />}
+                    <Input className='StrengthEditor__Input' placeholder='Enter New Strength' onChange={(e) => { const Tag = e.target.value; setTag(Tag) }} />}
                 {editing&&props.isAuthor &&
                     <SaveOutlined className='StrengthEditor__Save' style={{ fontSize: '22px' }} onClick={() => { Save(); }} />}
             </div>

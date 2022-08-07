@@ -123,7 +123,7 @@ function Ring(props) {
     return (
         <>
             {render &&
-                <div>
+                <div className="Ring__Container">
                     <Badge count={props.ringNumber} size="small" overflowCount={10} offset={[8, 8]}>
                         <Dropdown
                             className='Ring__Dropdown'

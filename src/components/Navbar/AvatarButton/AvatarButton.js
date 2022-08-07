@@ -115,7 +115,7 @@ function AvatarButton(props) {
         }
     }, [props]);
     return (
-        <div>
+        <div className="AvatarButton">
             <Dropdown
                 overlayClassName='AvatarButton__Dropdown'
                 overlay={menu}

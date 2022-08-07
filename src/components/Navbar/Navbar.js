@@ -28,10 +28,10 @@ function Navbar(props) {
           <Col span={6}>
             <Ring ringList={props.ringList} setRingList={props.setRingList} ringNumber={props.ringNumber} setRingNumber={props.setRingNumber} setPageProps={props.setPageProps} className="navbar__Ring" />
           </Col>
-          <Col span={8}>
+          <Col span={7}>
             <Coin setCoinNum={props.setCoinNum} coinNum={props.coinNum} />
           </Col>
-          <Col span={8}>
+          <Col span={7}>
             <AvatarButton className="navbar__AvatarButton" changeAvatar={props.changeAvatar} setPageProps={props.setPageProps} setLoggedIn={props.setLoggedIn} />
           </Col>
 

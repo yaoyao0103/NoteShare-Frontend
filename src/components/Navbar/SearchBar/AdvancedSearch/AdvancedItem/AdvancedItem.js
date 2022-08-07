@@ -12,12 +12,12 @@ export const Note = ({ setCondition }) => {
 
     return(
         <>
-            <Input type="text" placeholder='keyword' className="advanced__Item" onChange={(ev) => setTempCondition({...tempCondition, keyword: ev.target.value})} value={tempCondition.keyword}/>
-            <Input type="text" placeholder='school' className="advanced__Item" onChange={(ev) => setTempCondition({...tempCondition, school: ev.target.value})} value={tempCondition.school}/>
-            <Input type="text" placeholder='subject' className="advanced__Item" onChange={(ev) => setTempCondition({...tempCondition, subject: ev.target.value})} value={tempCondition.subject}/>
-            <Input type="text" placeholder='department' className="advanced__Item" onChange={(ev) => setTempCondition({...tempCondition, department: ev.target.value})} value={tempCondition.department}/>
-            <Input type="text" placeholder='professor' className="advanced__Item" onChange={(ev) => setTempCondition({...tempCondition, professor: ev.target.value})} value={tempCondition.professor}/>
-            <Input type="text" placeholder='headerName' className="advanced__Item" onChange={(ev) => setTempCondition({...tempCondition, headerName: ev.target.value})} value={tempCondition.headerName}/>
+            <Input type="text" placeholder='Keyword' className="advanced__Item" onChange={(ev) => setTempCondition({...tempCondition, keyword: ev.target.value})} value={tempCondition.keyword}/>
+            <Input type="text" placeholder='School' className="advanced__Item" onChange={(ev) => setTempCondition({...tempCondition, school: ev.target.value})} value={tempCondition.school}/>
+            <Input type="text" placeholder='Subject' className="advanced__Item" onChange={(ev) => setTempCondition({...tempCondition, subject: ev.target.value})} value={tempCondition.subject}/>
+            <Input type="text" placeholder='Department' className="advanced__Item" onChange={(ev) => setTempCondition({...tempCondition, department: ev.target.value})} value={tempCondition.department}/>
+            <Input type="text" placeholder='Instructor' className="advanced__Item" onChange={(ev) => setTempCondition({...tempCondition, professor: ev.target.value})} value={tempCondition.professor}/>
+            <Input type="text" placeholder='Author' className="advanced__Item" onChange={(ev) => setTempCondition({...tempCondition, headerName: ev.target.value})} value={tempCondition.headerName}/>
         </>
     )
 };
@@ -31,12 +31,12 @@ export const Collab = ({ setCondition }) => {
 
     return(
         <>
-            <Input type="text" placeholder='keyword' className="advanced__Item" onChange={(ev) => setTempCondition({...tempCondition, keyword: ev.target.value})} value={tempCondition.keyword}/>
-            <Input type="text" placeholder='school' className="advanced__Item" onChange={(ev) => setTempCondition({...tempCondition, school: ev.target.value})} value={tempCondition.school}/>
-            <Input type="text" placeholder='subject' className="advanced__Item" onChange={(ev) => setTempCondition({...tempCondition, subject: ev.target.value})} value={tempCondition.subject}/>
-            <Input type="text" placeholder='department' className="advanced__Item" onChange={(ev) => setTempCondition({...tempCondition, department: ev.target.value})} value={tempCondition.department}/>
-            <Input type="text" placeholder='professor' className="advanced__Item" onChange={(ev) => setTempCondition({...tempCondition, professor: ev.target.value})} value={tempCondition.professor}/>
-            <Input type="text" placeholder='headerName' className="advanced__Item" onChange={(ev) => setTempCondition({...tempCondition, headerName: ev.target.value})} value={tempCondition.headerName}/>
+            <Input type="text" placeholder='Keyword' className="advanced__Item" onChange={(ev) => setTempCondition({...tempCondition, keyword: ev.target.value})} value={tempCondition.keyword}/>
+            <Input type="text" placeholder='School' className="advanced__Item" onChange={(ev) => setTempCondition({...tempCondition, school: ev.target.value})} value={tempCondition.school}/>
+            <Input type="text" placeholder='Subject' className="advanced__Item" onChange={(ev) => setTempCondition({...tempCondition, subject: ev.target.value})} value={tempCondition.subject}/>
+            <Input type="text" placeholder='Department' className="advanced__Item" onChange={(ev) => setTempCondition({...tempCondition, department: ev.target.value})} value={tempCondition.department}/>
+            <Input type="text" placeholder='Instructor' className="advanced__Item" onChange={(ev) => setTempCondition({...tempCondition, professor: ev.target.value})} value={tempCondition.professor}/>
+            <Input type="text" placeholder='Author' className="advanced__Item" onChange={(ev) => setTempCondition({...tempCondition, headerName: ev.target.value})} value={tempCondition.headerName}/>
         </>
     )
 };
@@ -50,11 +50,11 @@ export const Reward = ({ setCondition }) => {
 
     return(
         <>
-            <Input type="text" placeholder='keyword' className="advanced__Item" onChange={(ev) => setTempCondition({...tempCondition, keyword: ev.target.value})} value={tempCondition.keyword}/>
-            <Input type="text" placeholder='school' className="advanced__Item" onChange={(ev) => setTempCondition({...tempCondition, school: ev.target.value})} value={tempCondition.school}/>
-            <Input type="text" placeholder='subject' className="advanced__Item" onChange={(ev) => setTempCondition({...tempCondition, subject: ev.target.value})} value={tempCondition.subject}/>
-            <Input type="text" placeholder='department' className="advanced__Item" onChange={(ev) => setTempCondition({...tempCondition, department: ev.target.value})} value={tempCondition.department}/>
-            <Input type="text" placeholder='professor' className="advanced__Item" onChange={(ev) => setTempCondition({...tempCondition, professor: ev.target.value})} value={tempCondition.professor}/>
+            <Input type="text" placeholder='Keyword' className="advanced__Item" onChange={(ev) => setTempCondition({...tempCondition, keyword: ev.target.value})} value={tempCondition.keyword}/>
+            <Input type="text" placeholder='School' className="advanced__Item" onChange={(ev) => setTempCondition({...tempCondition, school: ev.target.value})} value={tempCondition.school}/>
+            <Input type="text" placeholder='Subject' className="advanced__Item" onChange={(ev) => setTempCondition({...tempCondition, subject: ev.target.value})} value={tempCondition.subject}/>
+            <Input type="text" placeholder='Department' className="advanced__Item" onChange={(ev) => setTempCondition({...tempCondition, department: ev.target.value})} value={tempCondition.department}/>
+            <Input type="text" placeholder='Instructor' className="advanced__Item" onChange={(ev) => setTempCondition({...tempCondition, professor: ev.target.value})} value={tempCondition.professor}/>
         </>
     )
 };
@@ -68,9 +68,9 @@ export const QnA = ({ setCondition }) => {
 
     return(
         <>
-            <Input type="text" placeholder='keyword' className="advanced__Item" onChange={(ev) => setTempCondition({...tempCondition, keyword: ev.target.value})} value={tempCondition.keyword}/>
-            <Input type="text" placeholder='subject' className="advanced__Item" onChange={(ev) => setTempCondition({...tempCondition, subject: ev.target.value})} value={tempCondition.subject}/>
-            <Input type="text" placeholder='department' className="advanced__Item" onChange={(ev) => setTempCondition({...tempCondition, department: ev.target.value})} value={tempCondition.department}/>
+            <Input type="text" placeholder='Keyword' className="advanced__Item" onChange={(ev) => setTempCondition({...tempCondition, keyword: ev.target.value})} value={tempCondition.keyword}/>
+            <Input type="text" placeholder='Subject' className="advanced__Item" onChange={(ev) => setTempCondition({...tempCondition, subject: ev.target.value})} value={tempCondition.subject}/>
+            <Input type="text" placeholder='Department' className="advanced__Item" onChange={(ev) => setTempCondition({...tempCondition, department: ev.target.value})} value={tempCondition.department}/>
 
         </>
     )

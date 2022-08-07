@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Layout, Row, Col, Pagination, Empty, Spin } from "antd";
 import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
 import SortMeun from "../SortMenu/SortMenu";
+import Text from "../Text/Text";
 import OutlineCard from "../OutlineCard/OutlineCard";
 import FolderOutlineCard from "../FolderOutlineCard/FolderOutlineCard";
 import './PageOutlineContentTemplate.css'
@@ -15,7 +16,6 @@ function PageOutlineContentTemplate(props) {
     const [pageN, setPageN] = useState(1);
     const [searchResult, setSearchResult] = useState([]);
 
-    
     const [pageTotal, setPageTotal] = useState();
     const [cardList, setCardList] = useState([]);
 
@@ -110,8 +110,9 @@ function PageOutlineContentTemplate(props) {
             {(cardList.length > 0) &&
                 <div className="outlineContentTemplate">
                     <Layout className="outlineContentTemplate__Layout__Outer">
-                        <Header className="outlineContentTemplate__Header">
+                        <div className="outlineContentTemplate__Header">
                             <Row className="outlineContentTemplate__Header__Row">
+                                
                                 <Col className="outlineContentTemplate__Header__RecommendSwitch" span={props.hasSwitch ? 6 : 9}> {props.hasSwitch && <ToggleSwitch isSwitch={props.isFollowingSwitch} ChangeSwitch={props.changeFollowingSwitch} />}</Col>
                                 {/* <Col className="outlineContentTemplate__Header__FolderSwitch" span={props.hasSwitch ? 6 : 9}>{props.hasSwitch && <ToggleSwitch isSwitch={props.isNoteSwitch} ChangeSwitch={props.changeNoteSwitch} SwitchLeft='Note' SwitchRight="Folder" checkedColor="#8015e8" />}</Col> */}
                                 <Col className="outlineContentTemplate__Header__FolderSwitch" span={props.hasSwitch ? 6 : 9}></Col>
@@ -126,7 +127,7 @@ function PageOutlineContentTemplate(props) {
                                     }
                                 </Col>
                             </Row>
-                        </Header>
+                        </div>
                         <Content className="outlineContentTemplate__Content">
                             {cardList}
                         </Content>

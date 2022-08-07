@@ -9,7 +9,8 @@ const Text = (props) => {
         "white": "#fff",
         "black": "#000",
         "dark-green": "#019858",
-        "red": "#AE0000"
+        "red": "#AE0000",
+        "gray": "#444"
     }
   
     return (

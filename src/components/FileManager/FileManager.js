@@ -37,7 +37,7 @@ const FileManager = (props) => {
                 .then(folderRes => {
                     console.log(folderRes.data.res)
                     setFiles(folderRes.data.res)
-                    setPosts([{ folderName: 'My QA Posts', value: 'QA' }, { folderName: 'My Reward Posts', value: 'reward' }, { folderName: 'My Collaboration Notes', value: 'collaboration' }])
+                    setPosts([{ folderName: 'QA Posts', value: 'QA' }, { folderName: 'Reward Posts', value: 'reward' }, { folderName: 'Collaborative Notes', value: 'collaboration' }])
                     props.setLoading(false)
                 })
                 .catch(err => {
@@ -141,7 +141,6 @@ const FileManager = (props) => {
 
     const onClickPostZone = (value) => {
         props.setLoading(true)
-        message.info(value.charAt(0).toUpperCase() + value.slice(1))
         axios.get(`http://localhost:8080/post/${props.email}/${value}`, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
@@ -446,6 +445,10 @@ const FileManager = (props) => {
     }
 
     const renameFolder = (folderId, newName) => {
+        if(newName == ''){
+            message.warn("The folder name cannot be empty!")
+            return;
+        }
         for(let i = 0; i < files.length; i++){
             if(files[i].folderName == newName){
                 message.warn("The folder name is exist!")
@@ -459,7 +462,6 @@ const FileManager = (props) => {
             }
         })
             .then(res => {
-                console.log(res);
                 //message.success("You renamed a folder")
                 setRenaming(false)
                 onClickFolderZone(current)
@@ -631,7 +633,7 @@ const FileManager = (props) => {
                                         className={"fileManage_Folder_Item fileManage_List_Item"}
                                     //onClick={()=> onClickFolderZone(item.id)}
                                     >
-                                        <div className='fileManage_Folder_Item_Name' onClick={() => onClickAllNotes()}>My All Notes</div>
+                                        <div className='fileManage_Folder_Item_Name' onClick={() => onClickAllNotes()}>All Notes</div>
                                     </List.Item>
                                 </List>
                             }
@@ -647,7 +649,7 @@ const FileManager = (props) => {
                                     >
 
 
-                                        {renaming == item.id ? <Input bordered={false} onPressEnter={(ev) => renameFolder(item.id, ev.target.value)} className="fileManage_Folder_Item_Input" addonAfter={<CloseOutlined onClick={() => setRenaming(false)} />} /> : <div className='fileManage_Folder_Item_Name' onClick={() => onClickFolderZone(item.id)}><div>{item.folderName != "Temp Reward Note" ? item.folderName : "Draft Reward Notes"}</div></div>}
+                                        {renaming == item.id ? <Input placeholder='New Folder Name' bordered={false} onPressEnter={(ev) => renameFolder(item.id, ev.target.value)} className="fileManage_Folder_Item_Input" addonAfter={<CloseOutlined onClick={() => setRenaming(false)} />} /> : <div className='fileManage_Folder_Item_Name' onClick={() => onClickFolderZone(item.id)}><div>{item.folderName != "Temp Reward Note" ? item.folderName != "Buy"? item.folderName + 's': "Owned" : "Draft Reward Notes"}</div></div>}
 
                                         {renaming != item.id && inFolder &&
                                             <Dropdown overlay={<Menu
@@ -689,7 +691,7 @@ const FileManager = (props) => {
                             />
                             {newFolder &&
                                 <List.Item className="fileManage_Folder_Item fileManage_List_Item_NoHover">
-                                    <Input bordered={false} onPressEnter={(ev) => createFolder(ev.target.value)} className="fileManage_Folder_Item_Input" addonAfter={<CloseOutlined onClick={() => setNewFolder(false)} />} />
+                                    <Input placeholder='New Folder Name' bordered={false} onPressEnter={(ev) => createFolder(ev.target.value)} className="fileManage_Folder_Item_Input" addonAfter={<CloseOutlined onClick={() => setNewFolder(false)} />} />
                                 </List.Item>
                             }
                         </>

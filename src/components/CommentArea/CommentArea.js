@@ -234,7 +234,6 @@ function CommentArea(props) {
 
     const onReply = (commentId) => {
         if (cookieParser.getCookieByName("email")) {
-            message.info("Reply to: " + commentId);
             setComment(comment + '@' + authors[commentId] + ' ');
         }
         else {
@@ -420,6 +419,7 @@ function CommentArea(props) {
                                         <Input
                                             className="editing_Comment"
                                             value={editingComment}
+                                            placeholder="Say something..."
                                             onChange={(e) => { setEditingComment(e.target.value) }}
                                             onPressEnter={() => commentEdit(item.floor)}
                                             addonAfter={<CloseOutlined onClick={() => setCommentEditFloor(-1)} />}

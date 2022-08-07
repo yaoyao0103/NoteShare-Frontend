@@ -1,9 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;600&display=swap');
 .navMenu{
-    position: absolute;
+    position: relative;
     width: 10%;
-    left:50%;
-    margin-top: 1.4em;
+    height: 100%;
     background-color: white;
     font-weight: bolder;
 }
@@ -11,6 +10,8 @@
 .navMenu .navMenu__Dropdown{
     width: 100%;
     border: none;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 #navMenu #Menu{

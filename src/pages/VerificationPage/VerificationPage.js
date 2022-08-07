@@ -194,7 +194,7 @@ function VerificationPage(props) {
                                         },
                                     ]}
                                 >
-                                    <Input defaultValue={email} disabled />
+                                    <Input placeholder='Email' defaultValue={email} disabled />
 
                                 </Form.Item>
                                 <div className='verificationPage__Content__Form__Text'>
@@ -216,7 +216,7 @@ function VerificationPage(props) {
                                 >
                                     <Row gutter={0}>
                                         <Col span={20}>
-                                            <Input onChange={(e) => { setCode(e.target.value) }} />
+                                            <Input placeholder='Code' onChange={(e) => { setCode(e.target.value) }} />
                                         </Col>
                                         <Col className='Verification__Resend__Button' span={3}>
                                             <Tooltip arrowPointAtCenter={true} placement="top" title={"Resend verify code"} color={'#000'}>

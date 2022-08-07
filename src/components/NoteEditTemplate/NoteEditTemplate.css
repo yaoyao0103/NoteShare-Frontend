@@ -1,8 +1,8 @@
 .noteEditTemplate{
     position:relative;
     width: 90%;
-    height: 100%; 
-    margin-top: 5%;
+    height: 100%;
+    margin-top: 2em;
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -13,9 +13,8 @@
     position:relative;
     width: 100%; 
     background-color: white;
-    margin-top: 5%;
     padding: 3.5% 5% 3.5% 5%;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
+    box-shadow: rgba(60, 60, 60, 0.25) 0px 5px 10px 0px;
 }
 
 
@@ -136,7 +135,7 @@
     z-index: 99;
     text-align: center;
     cursor: pointer;
-    box-shadow: rgba(50, 50, 93, 0.3) 2px 3px 20px -2px
+    box-shadow: rgba(60, 60, 60, 0.25) 0px 5px 10px 0px;
 }
 
 .noteEditTemplate__PostInfo:hover .anticon, .noteEditTemplate__PostInfo:hover .noteEditTemplate__PostInfo__Title{

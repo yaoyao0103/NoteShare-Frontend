@@ -185,7 +185,7 @@ function ForgetPasswordPage(props) {
                                         },
                                     ]}
                                 >
-                                    <Input onChange={(e) => { setEmail(e.target.value) }} />
+                                    <Input placeholder='Email' onChange={(e) => { setEmail(e.target.value) }} />
 
                                 </Form.Item>
 

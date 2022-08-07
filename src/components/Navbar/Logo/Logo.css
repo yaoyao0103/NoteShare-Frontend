@@ -1,11 +1,26 @@
-.logo {
+/*.logo {
   cursor: pointer;
   width: 30%;
   position: absolute;
   width: 20%;
-  height: 30%;
+  
   left: 8%;
   top: 0;
   margin-top: 0.8em;
-}
+}*/
 /*# sourceMappingURL=Logo.css.map */
+
+.logo {
+  width: 20%;
+  height: 30%;
+  cursor: pointer;
+  margin: 0;
+  position: relative;
+  top: 50%;
+  left: 8%;
+  transform: translateY(-50%);
+}
+
+.logo p{
+  margin: 0;
+}
