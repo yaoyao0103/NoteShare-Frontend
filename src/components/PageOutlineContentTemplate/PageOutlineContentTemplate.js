@@ -6,7 +6,7 @@ import Text from "../Text/Text";
 import OutlineCard from "../OutlineCard/OutlineCard";
 import FolderOutlineCard from "../FolderOutlineCard/FolderOutlineCard";
 import './PageOutlineContentTemplate.css'
-import { LoadingOutlined } from '@ant-design/icons';
+import { LoadingOutlined,QuestionCircleOutlined } from '@ant-design/icons';
 import Cookie from "../Cookies/Cookies";
 import { Base64 } from "js-base64";
 import axios from "axios";
@@ -135,10 +135,11 @@ function PageOutlineContentTemplate(props) {
                             <Pagination defaultCurrent={1} current={props.pageNumber} total={pageTotal} onChange={onChange} />
                         </Footer>
                     </Layout>
-
+                    
                 </div>
 
             }
+            <QuestionCircleOutlined  style={{position:'absolute',fontSize:'28px' ,padding:'0.5em',top:'0.5em',right:'1em'}}/>
         </>
 
     );

@@ -4,7 +4,7 @@ import { List, Skeleton, Layout, message, Avatar, Dropdown, Menu, Input, Modal, 
 import Button from '../Button/Button';
 import Text from '../Text/Text';
 import axios from '../axios/axios';
-import { ArrowLeftOutlined, FolderAddOutlined, PlusOutlined, MoreOutlined, CloseOutlined, CheckOutlined } from "@ant-design/icons";
+import { ArrowLeftOutlined, FolderAddOutlined, PlusOutlined, MoreOutlined, CloseOutlined, CheckOutlined ,QuestionCircleOutlined} from "@ant-design/icons";
 import './FileManager.css';
 import { Note } from '../PostEditTemplate/InfoCategories';
 import OptionMenu from '../OptionMenu/OptionMenu';
@@ -593,9 +593,12 @@ const FileManager = (props) => {
     return (
         <>
             <div className='fileManager'>
+            
                 <Layout className='fileManager_Layout'>
+                    
                     <Sider className='fileManager_Sider'>
                         <div className='fileManager_Buttons' >
+                            
                             {backBtnShow ?
                                 <ArrowLeftOutlined onClick={back} />
                                 :
@@ -714,6 +717,7 @@ const FileManager = (props) => {
                     <Content className='fileManager_Content'>
                         {notes}
                     </Content>
+                    <QuestionCircleOutlined  style={{fontSize:'28px' ,padding:'0.5em'}}/>
                 </Layout>
 
             </div>

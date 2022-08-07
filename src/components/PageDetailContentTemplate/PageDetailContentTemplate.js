@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Layout, Row, Col, Tag, Progress, message, notification, Avatar, Modal, DatePicker, Select, Skeleton, Drawer, Divider } from "antd";
-import { CaretLeftFilled } from "@ant-design/icons";
+import { CaretLeftFilled,QuestionCircleOutlined } from "@ant-design/icons";
 import Button from "../Button/Button";
 import Text from "../Text/Text";
 import Title from "../Title/Title";
@@ -699,6 +699,7 @@ const PageDetailContentTemplate = (props) => {
                         }
 
                     </Footer>
+                    
                 </Layout>
 
                 {/* Sider */}
@@ -743,7 +744,7 @@ const PageDetailContentTemplate = (props) => {
             <Drawer title={"Comment"} placement="right" onClose={onClose} visible={visible}>
                 <CommentArea setPageProps={props.setPageProps} page={props.page} type="note" comments={props.data?.commentsUserObj ? props.data.commentsUserObj : []} id={props.postId ? props.postId : props.noteId} />
             </Drawer>
-
+            <QuestionCircleOutlined  style={{position:'absolute',fontSize:'28px' ,padding:'0.5em',top:'0.5em',right:'1em'}}/>
         </div>
     );
 }
