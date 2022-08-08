@@ -326,7 +326,27 @@ const CollabNoteEditPage = (props) => {
                 .then(res => {
                     console.log("suggestive tag: ", res)
                     setRecommendTag(res.data.generatedTags)
-                    setStep(2);
+                    axios.get(`http://localhost:8080/note/plagiarism/${note.id}`, {
+                        headers: {
+                            'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+                        }
+                    })
+                    .then(plagiarismRes => {      
+                        setStep(2);
+                    })
+                    .catch(plagiarismRrr => {
+                        //console.log(err)
+                        if (plagiarismRrr.response.status === 500 || plagiarismRrr.response.status === 404||plagiarismRrr.response.status === 403){
+                            if(plagiarismRrr.response.data.message.slice(0,13)==='Malformed JWT')
+                            document.cookie = 'error=Jwt'
+                            else
+                            document.cookie = 'error=true'
+                            message.error('Server Error! Please refresh again!')
+                        }
+                        else{
+                            message.error('Server Error! Please try again later.')
+                        }
+                    })
                 })
                 .catch(err => {
                     //console.log(err)
