@@ -551,7 +551,7 @@ export const storageSetting = (noteId, version = '0') => {
     storeCss: true,
     headers: {
       "Content-Type": "application/json",
-      'Access-Control-Allow-Origin': 'http://localhost:3000',
+      'Access-Control-Allow-Origin': 'http://192.168.0.7:8080:3000',
       'Access-Control-Allow-Credentials': 'true'
     },
     id: "mycustom_",
