@@ -15,7 +15,7 @@ function Coin(props) {
     
     function getCoinByEmail(Email) {
 
-        axios.get("http://localhost:8080/user/" + Email,{
+        axios.get("http://192.168.0.7:8080:8080/user/" + Email,{
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
               }
