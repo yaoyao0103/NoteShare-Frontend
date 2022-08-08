@@ -55,13 +55,11 @@ function ResetPasswordPage(props) {
             console.log(res);
             message.success("Your password has reset! Please log in again!");
             document.cookie ='email=;';
-            setInterval(function () {
-                props.setLoggedIn(false);
-                props.setPageProps({
-                    page: 'LoginPage',
+            props.setLoggedIn(false);
+            props.setPageProps({
+                page: 'LoginPage',
 
-                })
-            }, 2000)
+            })
         }).catch((error) => {
             setOpenFail(true);
             if (error.response.status === 500 || error.response.status === 404||error.response.status === 403){
@@ -80,12 +78,7 @@ function ResetPasswordPage(props) {
   
    
    
-    useEffect(() => {
-        if (openSuccess)
-            props.setPageProps({
-                page: 'LoginPage'
-            })
-    }, [openSuccess]);
+
   
     const formItemLayout = {
         labelCol: {
@@ -248,7 +241,6 @@ function ResetPasswordPage(props) {
 
 
                                     <Form.Item {...tailFormItemLayout} className='signUpPage__Form__Item'>
-                                        <a className="signUpPage__Login__Button" href="javascript: return false;"onClick={()=>(props.setPageProps({page:'LoginPage'}))}>Login now!</a>
                                         <div className="signUpPage__Button">
                                             <Button color={"green"}><Text color='white' cls='Large' content={"Reset"} fontSize='15' display="inline-block" /></Button>
                                         </div>

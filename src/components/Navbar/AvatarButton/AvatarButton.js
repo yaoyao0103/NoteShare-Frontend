@@ -36,9 +36,9 @@ function AvatarButton(props) {
                     label: (
                         <>
                             <SettingOutlined style={{ color: "#555" }} />
-                            <span className='AvatarButton__item__text'>
-                                <Text cls='Gerneral' fontSize='16' content={'Setting'} />
-                            </span>
+                            <a className='AvatarButton__item__text' onClick={() => props.setPageProps({ page: 'ResetPasswordPage', email: email  })}>
+                                <Text cls='Gerneral' fontSize='16' content={'ResetPassword'} />
+                            </a>
                         </>
                     ),
                 },
