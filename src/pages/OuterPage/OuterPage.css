@@ -82,6 +82,86 @@
     cursor: pointer;
     box-shadow: -2px 2px 20px 1px rgba(0, 0, 0, 0.2);
 }
+.floatButton__Hide {
+    position: fixed;
+    right: 2.2em;
+    bottom: 2.2em;
+    border-radius: 50%;
+    background-color: #FFAF60;
+    font-size: 2em;
+    padding: .6em;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    cursor: pointer;
+    box-shadow: -2px 2px 20px 1px rgba(0, 0, 0, 0.2);
+}
+.floatButton__Note {
+    position: fixed;
+    right: 2.2em;
+    bottom: 5em;
+    border-radius: 50%;
+    background-color: #FFAF60;
+    font-size: 2em;
+    padding: .6em;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    cursor: pointer;
+    box-shadow: -2px 2px 20px 1px rgba(0, 0, 0, 0.2);
+}
+.floatButton__QA {
+    position: fixed;
+    right: 2.2em;
+    bottom: 7.8em;
+    border-radius: 50%;
+    background-color: #FFAF60;
+    font-size: 2em;
+    padding: .6em;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    cursor: pointer;
+    box-shadow: -2px 2px 20px 1px rgba(0, 0, 0, 0.2);
+}
+.floatButton__Collab {
+    position: fixed;
+    right: 2.2em;
+    bottom: 10.6em;
+    border-radius: 50%;
+    background-color: #FFAF60;
+    font-size: 2em;
+    padding: .6em;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    cursor: pointer;
+    box-shadow: -2px 2px 20px 1px rgba(0, 0, 0, 0.2);
+}
+.floatButton__Reward {
+    position: fixed;
+    right: 2.2em;
+    bottom: 13.4em;
+    border-radius: 50%;
+    background-color: #FFAF60;
+    font-size: 2em;
+    padding: .6em;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    cursor: pointer;
+    box-shadow: -2px 2px 20px 1px rgba(0, 0, 0, 0.2);
+}
 .toast__Avatar{
     margin-right:10em;
 }

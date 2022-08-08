@@ -27,12 +27,12 @@ import SignUpPage from "../SignUpPage/SignUpPage";
 import VerificationPage from "../VerificationPage/VerificationPage";
 import ForgetPasswordPage from '../ForgetPasswordPage/ForgetPasswordPage';
 import Navbar from '../../components/Navbar/Navbar';
-import { PlusOutlined, ArrowLeftOutlined } from "@ant-design/icons";
+import { PlusOutlined, ArrowLeftOutlined, EllipsisOutlined, UpOutlined, DownOutlined, FileTextOutlined, MessageOutlined, TeamOutlined, FileSearchOutlined } from "@ant-design/icons";
 import CollabNoteEditPage from "../CollabNoteEditPage/CollabNoteEditPage";
 import CollabRecommendPage from '../CollabRecommendPage/CollabRecommendPage';
 import ResetPasswordPage from '../ResetPasswordPage/ResetPasswordPage';
 import './OuterPage.css'
-import { Button, Drawer, message, Spin, notification, Avatar } from 'antd'
+import { Button, Drawer, message, Spin, notification, Avatar, Tooltip } from 'antd'
 import Text from '../../components/Text/Text';
 import { LoadingOutlined } from '@ant-design/icons';
 
@@ -57,6 +57,7 @@ const OuterPage = () => {
     const [changeAvatar, setChangeAvatar] = useState(0);
     const [coinNum, setCoinNum] = useState(0);
     const [floatButtonVisable, setFloatButtonVisable] = useState(false);
+    const [floatButtonDetailVisable, setFloatButtonDetailVisable] = useState(false);
     const [pageStack, setPageStack] = useState([]);
     const [backMode, setBackMode] = useState(false);
     const [loading, setLoading] = useState(true);
@@ -65,7 +66,7 @@ const OuterPage = () => {
     const [ringNumber, setRingNumber] = useState(0);
     const [ringList, setRingList] = useState([]);
     const [isChanging, setIsChanging] = useState(false);
-    const [api, contextHolder] = notification.useNotification(); 
+    const [api, contextHolder] = notification.useNotification();
     const [pageLabel, setPageLabel] = useState(null)
 
 
@@ -151,14 +152,14 @@ const OuterPage = () => {
 
         }).catch((error) => {
             //message.info(error.response.error);
-            if (error.response.status === 500 || error.response.status === 404||error.response.status === 403){
-                if(error.response.data.message.slice(0,13)==='Malformed JWT')
-                document.cookie = 'error=Jwt'
+            if (error.response.status === 500 || error.response.status === 404 || error.response.status === 403) {
+                if (error.response.data.message.slice(0, 13) === 'Malformed JWT')
+                    document.cookie = 'error=Jwt'
                 else
-                document.cookie = 'error=true'
+                    document.cookie = 'error=true'
                 message.error("Server Error! Please refresh again! (Get User's Bell Error)")
             }
-            else{
+            else {
                 message.error("Server Error! Please try again later. (Get User's Bell Error)")
             }
 
@@ -230,7 +231,7 @@ const OuterPage = () => {
         if (email) {
             connect();
             setLoggedIn(true);
-            setPageProps({page:'MemberPage',pageNumber:1,sortMode:'likeCount'})
+            setPageProps({ page: 'MemberPage', pageNumber: 1, sortMode: 'likeCount' })
         }
         const tempPageProps = cookieParser.getCookieByName('pageProps')
         if (tempPageProps) {
@@ -247,7 +248,7 @@ const OuterPage = () => {
         if (!tempPageProps) {
             if (loggedIn) {
                 setPageStack(oldArray => [...oldArray.slice(0, 0)]);
-                setPageProps({page:'MemberPage',pageNumber:1,sortMode:'likeCount'})
+                setPageProps({ page: 'MemberPage', pageNumber: 1, sortMode: 'likeCount' })
 
             }
             else {
@@ -277,7 +278,7 @@ const OuterPage = () => {
 
         if (cookieParser.getCookieByName('error') && cookieParser.getCookieByName('error') === 'true') {
             document.cookie = 'error=' + 'false'
-            setPageProps({page:'MemberPage',pageNumber:1,sortMode:'likeCount'})
+            setPageProps({ page: 'MemberPage', pageNumber: 1, sortMode: 'likeCount' })
             message.error('Server error!')
         }
         else if (cookieParser.getCookieByName('error') && cookieParser.getCookieByName('error') === 'Jwt') {
@@ -292,7 +293,7 @@ const OuterPage = () => {
         }
         else {
             document.cookie = 'error=' + 'false'
-            if ((pageProps.page === 'NoteEditPage' || pageProps.page === 'NoteNewPage' || 
+            if ((pageProps.page === 'NoteEditPage' || pageProps.page === 'NoteNewPage' ||
                 pageProps.page === 'RewardEditPage' || pageProps.page === 'RewardNewPage' ||
                 pageProps.page === 'QnAEditPage' || pageProps.page === 'QnANewPage' ||
                 pageProps.page === 'CollabEditPage' || pageProps.page === 'CollabNewPage' ||
@@ -305,7 +306,7 @@ const OuterPage = () => {
                 pageProps.page === 'VerificationPage' || pageProps.page === 'ForgetPasswordPage'
             ) && loggedIn) {
                 message.warn("Please log out first!")
-                setPageProps({page:'MemberPage',pageNumber:1,sortMode:'likeCount'})
+                setPageProps({ page: 'MemberPage', pageNumber: 1, sortMode: 'likeCount' })
             }
             else {
 
@@ -344,16 +345,17 @@ const OuterPage = () => {
                 if (pageProps.page === 'NoteDetailPage' || pageProps.page === 'NoteOutlinePage' || pageProps.page === 'MemberPage' ||
                     pageProps.page === 'RewardDetailPage' || pageProps.page === 'RewardOutlinePage' || pageProps.page === 'RewardRecommendPage' ||
                     pageProps.page === 'QnADetailPage' || pageProps.page === 'QnAOutlinePage' || pageProps.page === 'QnARecommendPage' ||
-                    pageProps.page === 'CollabDetailPage' || pageProps.page === 'CollabOutlinePage' || pageProps.page === 'CollabRecommendPage' || pageProps.page === 'PersonalPage'
+                    pageProps.page === 'CollabDetailPage' || pageProps.page === 'CollabOutlinePage' || pageProps.page === 'CollabRecommendPage' || pageProps.page === 'PersonalPage'||
+                    pageProps.page==='ProfilePage'||pageProps.page==='FolderOutlinePage'
                 )
                     setFloatButtonVisable(true)
                 else
                     setFloatButtonVisable(false)
 
                 switch (pageProps.page) {
-                    case 'NoteDetailPage': setPageLabel("Note Detail");setPageComponent(<NoteDetailPage page='NoteDetailPage' coinNum={coinNum} setCoinNum={setCoinNum} sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                    case 'NoteDetailPage': setPageLabel("Note Detail"); setPageComponent(<NoteDetailPage page='NoteDetailPage' coinNum={coinNum} setCoinNum={setCoinNum} sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
                     case 'NoteEditPage': setPageLabel("Edit a Note"); setPageComponent(<NoteEditPage page='NoteEditPage' sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
-                    case 'NoteNewPage': setPageLabel("Create a Note");setPageComponent(<NoteEditPage page='NoteNewPage' sendBellMessage={sendBellMessage} sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                    case 'NoteNewPage': setPageLabel("Create a Note"); setPageComponent(<NoteEditPage page='NoteNewPage' sendBellMessage={sendBellMessage} sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
                     case 'NoteOutlinePage': setPageLabel("Results"); setPageComponent(<NoteOutlinePage page='NoteOutlinePage' changeSortMode={setSortMode} setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
                     case 'MemberPage': setPageLabel("Recommended Notes"); setPageComponent(<MemberPage page='MemberPage' setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
                     case 'RewardDetailPage': setPageLabel("Reward Post Detail"); setPageComponent(<RewardDetailPage page='RewardDetailPage' pageLabel='Reward Detail' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
@@ -361,16 +363,16 @@ const OuterPage = () => {
                     case 'RewardNewPage': setPageLabel("Create a Reward Post"); setPageComponent(<RewardEditPage page='RewardNewPage' sendBellMessage={sendBellMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
                     case 'RewardOutlinePage': setPageLabel("Results"); setPageComponent(<RewardOutlinePage page='RewardOutlinePage' changeSortMode={setSortMode} setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
                     case 'RewardRecommendPage': setPageLabel("Recommended Reward Posts"); setPageComponent(<RewardRecommendPage page='RewardRecommendPage' changeSortMode={setSortMode} setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
-                    case 'QnADetailPage': setPageLabel("QA Post Detail");setPageComponent(<QnADetailPage page='QnADetailPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
-                    case 'QnAOutlinePage': setPageLabel("Results");setPageComponent(<QnAOutlinePage page='QnAOutlinePage' changeSortMode={setSortMode} setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                    case 'QnADetailPage': setPageLabel("QA Post Detail"); setPageComponent(<QnADetailPage page='QnADetailPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
+                    case 'QnAOutlinePage': setPageLabel("Results"); setPageComponent(<QnAOutlinePage page='QnAOutlinePage' changeSortMode={setSortMode} setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
                     case 'QnAEditPage': setPageLabel("Edit a QA Post"); setPageComponent(<QnAEditPage page='QnAEditPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
-                    case 'QnANewPage': setPageLabel("Create a QA Post");setPageComponent(<QnAEditPage page='QnANewPage' sendBellMessage={sendBellMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
-                    case 'QnARecommendPage': setPageLabel("Recommended Reward Posts");setPageComponent(<QnARecommendPage page='QnARecommendPage' changeSortMode={setSortMode} setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                    case 'QnANewPage': setPageLabel("Create a QA Post"); setPageComponent(<QnAEditPage page='QnANewPage' sendBellMessage={sendBellMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                    case 'QnARecommendPage': setPageLabel("Recommended Reward Posts"); setPageComponent(<QnARecommendPage page='QnARecommendPage' changeSortMode={setSortMode} setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
                     case 'CollabDetailPage': setPageLabel("Collaborative Note Detail"); setPageComponent(<CollabDetailPage page='CollabDetailPage' sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
                     case 'CollabEditPage': setPageLabel("Edit a Collaborative Note Post"); setPageComponent(<CollabEditPage page='CollabEditPage' sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
-                    case 'CollabNoteEditPage': setPageLabel("Edit a Collaborative Note");setPageComponent(<CollabNoteEditPage page='CollabNoteEditPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                    case 'CollabNoteEditPage': setPageLabel("Edit a Collaborative Note"); setPageComponent(<CollabNoteEditPage page='CollabNoteEditPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
                     case 'CollabNewPage': setPageLabel("Create a Collaborative Note Post"); setPageComponent(<CollabEditPage page='CollabNewPage' sendBellMessage={sendBellMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
-                    case 'CollabOutlinePage': setPageLabel("Results");setPageComponent(<CollabOutlinePage page='CollabOutlinePage' changeSortMode={setSortMode} setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                    case 'CollabOutlinePage': setPageLabel("Results"); setPageComponent(<CollabOutlinePage page='CollabOutlinePage' changeSortMode={setSortMode} setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
                     case 'CollabRecommendPage': setPageLabel("Recommended Collaborative Note Posts"); setPageComponent(<CollabRecommendPage page='CollabRecommendPage' changeSortMode={setSortMode} setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
                     case 'FolderOutlinePage': setPageLabel("Recommended Folder"); setPageComponent(<FolderOutlinePage page='FolderOutlinePage' setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
                     case 'PersonalPage': setPageLabel("Personal Area"); setPageComponent(<PersonalPage page='PersonalPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
@@ -403,25 +405,42 @@ const OuterPage = () => {
 
 
     const floatBtnOnClick = () => {
-
-        switch (pageProps.page) {
-            case 'PersonalPage': setPageProps({ page: 'NoteNewPage', action: "new", }); break;
-            case 'NoteDetailPage': setPageProps({ page: 'NoteNewPage', action: "new", }); break;
-            case 'NoteOutlinePage': setPageProps({ page: 'NoteNewPage', action: "new", }); break;
-            case 'MemberPage': setPageProps({ page: 'NoteNewPage', action: "new", }); break;
-            case 'RewardDetailPage': setPageProps({ page: 'RewardNewPage', type: 'reward', action: 'new' }); break;
-            case 'RewardOutlinePage': setPageProps({ page: 'RewardNewPage', type: 'reward', action: 'new' }); break;
-            case 'RewardRecommendPage': setPageProps({ page: 'RewardNewPage', type: 'reward', action: 'new' }); break;
-            case 'QnADetailPage': setPageProps({ page: 'QnANewPage', type: 'QA', action: 'new', page: 'QnANewPage' }); break;
-            case 'QnAOutlinePage': setPageProps({ page: 'QnANewPage', type: 'QA', action: 'new', page: 'QnANewPage' }); break;
-            case 'QnARecommendPage': setPageProps({ page: 'QnANewPage', type: 'QA', action: 'new', page: 'QnANewPage' }); break;
-            case 'CollabDetailPage': setPageProps({ page: 'CollabNewPage', type: 'collaboration', action: 'new', page: 'CollabNewPage' }); break;
-            case 'CollabOutlinePage': setPageProps({ page: 'CollabNewPage', type: 'collaboration', action: 'new', page: 'CollabNewPage' }); break;
-            case 'CollabRecommendPage': setPageProps({ page: 'CollabNewPage', type: 'collaboration', action: 'new', page: 'CollabNewPage' }); break;
-            default: setPageComponent(<></>); break;
-        }
+        if (!floatButtonDetailVisable)
+            setFloatButtonDetailVisable(true);
+        else
+            setFloatButtonDetailVisable(false)
+        // switch (pageProps.page) {
+        //     case 'PersonalPage': setPageProps({ page: 'NoteNewPage', action: "new", }); break;
+        //     case 'NoteDetailPage': setPageProps({ page: 'NoteNewPage', action: "new", }); break;
+        //     case 'NoteOutlinePage': setPageProps({ page: 'NoteNewPage', action: "new", }); break;
+        //     case 'MemberPage': setPageProps({ page: 'NoteNewPage', action: "new", }); break;
+        //     case 'RewardDetailPage': setPageProps({ page: 'RewardNewPage', type: 'reward', action: 'new' }); break;
+        //     case 'RewardOutlinePage': setPageProps({ page: 'RewardNewPage', type: 'reward', action: 'new' }); break;
+        //     case 'RewardRecommendPage': setPageProps({ page: 'RewardNewPage', type: 'reward', action: 'new' }); break;
+        //     case 'QnADetailPage': setPageProps({ page: 'QnANewPage', type: 'QA', action: 'new', page: 'QnANewPage' }); break;
+        //     case 'QnAOutlinePage': setPageProps({ page: 'QnANewPage', type: 'QA', action: 'new', page: 'QnANewPage' }); break;
+        //     case 'QnARecommendPage': setPageProps({ page: 'QnANewPage', type: 'QA', action: 'new', page: 'QnANewPage' }); break;
+        //     case 'CollabDetailPage': setPageProps({ page: 'CollabNewPage', type: 'collaboration', action: 'new', page: 'CollabNewPage' }); break;
+        //     case 'CollabOutlinePage': setPageProps({ page: 'CollabNewPage', type: 'collaboration', action: 'new', page: 'CollabNewPage' }); break;
+        //     case 'CollabRecommendPage': setPageProps({ page: 'CollabNewPage', type: 'collaboration', action: 'new', page: 'CollabNewPage' }); break;
+        //     default: setPageComponent(<></>); break;
+        // }
 
     }
+    
+    const floatBtnNoteOnClick=()=>{
+        setPageProps({ page: 'NoteNewPage', action: "new", });
+    }
+    const floatBtnQAOnClick=()=>{
+        setPageProps({ page: 'QnANewPage', type: 'QA', action: 'new', page: 'QnANewPage' })
+    }
+    const floatBtnCollabOnClick=()=>{
+        setPageProps({ page: 'CollabNewPage', type: 'collaboration', action: 'new' })
+    }
+    const floatBtnRewardOnClick=()=>{
+        setPageProps({ page: 'RewardNewPage', type: 'reward', action: 'new' })
+    }
+   
 
     const lastPageBtnOnClick = () => {
         if (pageStack.length > 0) {
@@ -452,12 +471,12 @@ const OuterPage = () => {
                     <Spin wrapperClassName={'outerPage__Loading'} indicator={antIcon} spinning={loading} style={{ width: '100%', height: '100%' }}>
                         <Navbar ringList={ringList} setRingList={setRingList} ringNumber={ringNumber} setRingNumber={setRingNumber} coinNum={coinNum} setCoinNum={setCoinNum} pageProps={pageProps} changeAvatar={changeAvatar} loggedIn={loggedIn} setPageProps={setPageProps} setLoggedIn={setLoggedIn} />
 
-                        {pageLabel&&
+                        {pageLabel &&
                             <div className='outerPage__PageLabel'>
-                                <Text color='gray' cls='Default' content={pageLabel} fontSize='30' display="inline-block" />         
+                                <Text color='gray' cls='Default' content={pageLabel} fontSize='30' display="inline-block" />
                             </div>
                         }
-                        <div className={pageLabel?'outerPage__Layout__PageLabel':'outerPage__Layout'} >
+                        <div className={pageLabel ? 'outerPage__Layout__PageLabel' : 'outerPage__Layout'} >
                             {pageComponent && pageComponent}
                         </div>
                         {backMode &&
@@ -465,10 +484,57 @@ const OuterPage = () => {
                                 <ArrowLeftOutlined style={{ fontSize: '1.5em' }} />
                             </div>
                         }
-                        {floatButtonVisable &&
+                        {floatButtonVisable && !floatButtonDetailVisable &&
                             <div className="floatButton" onClick={floatBtnOnClick}>
                                 <PlusOutlined />
+                                {/* <UpOutlined /> */}
                             </div>
+                        }
+                        {floatButtonVisable && floatButtonDetailVisable &&
+                            <div className="floatButton__Hide" onClick={floatBtnOnClick}>
+                                {/* <PlusOutlined /> */}
+                                <DownOutlined />
+                            </div>
+                        }
+                        {floatButtonVisable && floatButtonDetailVisable &&
+                            <Tooltip arrowPointAtCenter={true} placement="left" title={"Create New Note"} color={'#000'}>
+                                <div className="floatButton__Note" onClick={floatBtnNoteOnClick}>
+                                    {/* <PlusOutlined /> */}
+
+                                    <FileTextOutlined />
+
+                                </div>
+                            </Tooltip>
+                        }
+                        {floatButtonVisable && floatButtonDetailVisable &&
+                            <Tooltip arrowPointAtCenter={true} placement="left" title={"Create New QA"} color={'#000'}>
+                                <div className="floatButton__QA" onClick={floatBtnQAOnClick}>
+                                    {/* <PlusOutlined /> */}
+
+                                    <MessageOutlined />
+
+                                </div>
+                            </Tooltip>
+                        }
+                        {floatButtonVisable && floatButtonDetailVisable &&
+                            <Tooltip arrowPointAtCenter={true} placement="left" title={"Create New Collab"} color={'#000'}>
+                                <div className="floatButton__Collab" onClick={floatBtnCollabOnClick}>
+                                    {/* <PlusOutlined /> */}
+
+                                    <TeamOutlined />
+
+                                </div>
+                            </Tooltip>
+                        }
+                        {floatButtonVisable && floatButtonDetailVisable &&
+                            <Tooltip arrowPointAtCenter={true} placement="left" title={"Create New Reward"} color={'#000'}>
+                                <div className="floatButton__Reward" onClick={floatBtnRewardOnClick}>
+                                    {/* <PlusOutlined /> */}
+
+                                    <FileSearchOutlined />
+
+                                </div>
+                            </Tooltip>
                         }
                     </Spin>
                 </>
