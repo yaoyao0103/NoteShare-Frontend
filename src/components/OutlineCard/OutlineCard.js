@@ -533,7 +533,7 @@ function OutlineCard(props) {
                 <Layout className={"OutlineCard__Layout__Inner" + '__' + props.mode}>
                     <Header className={"OutlineCard__Header" + '__' + props.mode} >
                         <Row className={"OutlineCard__Header__Row" + '__' + props.mode}>
-                            <Col onClick={null} className={"OutlineCard__Header__Left" + '__' + props.mode} span={props.mode=='Note'?6:8}>
+                            <Col onClick={null} className={"OutlineCard__Header__Left" + '__' + props.mode} span={props.mode=='Note'?6:10}>
                                 <OPInfo
                                     className="OutlineCard__OPInfo"
                                     mode="Outline"
@@ -546,10 +546,10 @@ function OutlineCard(props) {
                                     setPageProps={props.setPageProps}
                                 />
                             </Col>
-                            <Col onClick={props.onClick} className={"OutlineCard__Header__Right" + '__' + props.mode} span={props.mode=='Note'?15:13}>
+                            <Col onClick={props.onClick} className={"OutlineCard__Header__Right" + '__' + props.mode} span={props.mode=='Note'?15:12}>
                                 <p style={{fontSize:'26px',textAlign:'center', paddingTop: '.5em'}}>{props.cardContent.title}</p>
                             </Col>
-                            <Col span={3}></Col>
+                            <Col span={2}></Col>
                         </Row>
                     </Header>
                     <Content onClick={props.onClick} className={"OutlineCard__Content__Inner" + '__' + props.mode} >
