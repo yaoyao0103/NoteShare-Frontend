@@ -29,7 +29,7 @@ const FileManager = (props) => {
 
     useEffect(() => {
         async function getRootFile() {
-            axios.get(`http://192.168.0.7:8080:8080/folder/root/${props.email}`, {
+            axios.get(`http://192.168.0.7:8080/folder/root/${props.email}`, {
                 headers: {
                     'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
                 }
@@ -70,7 +70,7 @@ const FileManager = (props) => {
         props.setLoading(true)
         setCurrent(folderId)
         setBackBtnShow(true);
-        axios.get(`http://192.168.0.7:8080:8080/folder/${folderId}`, {
+        axios.get(`http://192.168.0.7:8080/folder/${folderId}`, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
             }
@@ -141,7 +141,7 @@ const FileManager = (props) => {
 
     const onClickPostZone = (value) => {
         props.setLoading(true)
-        axios.get(`http://192.168.0.7:8080:8080/post/${props.email}/${value}`, {
+        axios.get(`http://192.168.0.7:8080/post/${props.email}/${value}`, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
             }
@@ -202,7 +202,7 @@ const FileManager = (props) => {
 
     const onClickAllNotes = () => {
         props.setLoading(true)
-        axios.get(`http://192.168.0.7:8080:8080/note/all/${props.email}`, {
+        axios.get(`http://192.168.0.7:8080/note/all/${props.email}`, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
             }
@@ -280,7 +280,7 @@ const FileManager = (props) => {
         let tempCurrent = parent
         setCurrent(parent)
         if (parent) {
-            axios.get(`http://192.168.0.7:8080:8080/folder/${parent}`, {
+            axios.get(`http://192.168.0.7:8080/folder/${parent}`, {
                 headers: {
                     'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
                 }
@@ -341,7 +341,7 @@ const FileManager = (props) => {
         // No parent: root folder
         else {
             setCurrent(null);
-            axios.get(`http://192.168.0.7:8080:8080/folder/root/${props.email}`, {
+            axios.get(`http://192.168.0.7:8080/folder/root/${props.email}`, {
                 headers: {
                     'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
                 }
@@ -392,7 +392,7 @@ const FileManager = (props) => {
         }
         props.setLoading(true)
         //console.log("path", data)
-        axios.post(`http://192.168.0.7:8080:8080/folder/${props.email}`, data, {
+        axios.post(`http://192.168.0.7:8080/folder/${props.email}`, data, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
             }
@@ -419,7 +419,7 @@ const FileManager = (props) => {
 
     const deleteFolder = (folderId) => {
         props.setLoading(true)
-        axios.delete(`http://192.168.0.7:8080:8080/folder/${props.email}/${folderId}`, {
+        axios.delete(`http://192.168.0.7:8080/folder/${props.email}/${folderId}`, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
             }
@@ -456,7 +456,7 @@ const FileManager = (props) => {
             }
         }
         props.setLoading(true)
-        axios.put(`http://192.168.0.7:8080:8080/folder/rename/${props.email}/${folderId}/${newName}`, {},{
+        axios.put(`http://192.168.0.7:8080/folder/rename/${props.email}/${folderId}/${newName}`, {},{
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
             }
@@ -532,7 +532,7 @@ const FileManager = (props) => {
     const copyNote = () => {
         props.setLoading(true)
         message.destroy();
-        axios.put(`http://192.168.0.7:8080:8080/note/save/${copy}/${current}`, {},{
+        axios.put(`http://192.168.0.7:8080/note/save/${copy}/${current}`, {},{
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
             }
@@ -567,7 +567,7 @@ const FileManager = (props) => {
             parent: current,
         }
 
-        axios.put(`http://192.168.0.7:8080:8080/folder/save/${props.email}/${move.folderId}`, data, {
+        axios.put(`http://192.168.0.7:8080/folder/save/${props.email}/${move.folderId}`, data, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
             }

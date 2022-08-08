@@ -12,7 +12,7 @@ function QnADetailPage(props) {
 
     useEffect(() => {
         async function getQnAById() {
-            axios.get(`http://192.168.0.7:8080:8080/post/${props.postId}`)
+            axios.get(`http://192.168.0.7:8080/post/${props.postId}`)
             .then(res => {
                 setPost(res.data.res)
                 

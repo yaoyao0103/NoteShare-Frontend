@@ -91,7 +91,7 @@ function LoginPage(props) {
             document.cookie = "rPassword=" + str;
             //console.log('1111111')
         }
-        axios.post("http://192.168.0.7:8080:8080/verification/login", {
+        axios.post("http://192.168.0.7:8080/verification/login", {
             email: email,
             password: password
         }).then(res => {
@@ -103,7 +103,7 @@ function LoginPage(props) {
             }
             else {
                 message.warn("You have not activate your account!")
-                axios.post("http://192.168.0.7:8080:8080/verification/resendCode/" + email).then(res => {
+                axios.post("http://192.168.0.7:8080/verification/resendCode/" + email).then(res => {
                     //console.log(res.data.msg);
                 }).catch((error) => {
                     console.log(error.response.status);

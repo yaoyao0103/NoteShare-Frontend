@@ -67,7 +67,7 @@ function AvatarButton(props) {
         if(tempEmail)
             tempEmail = Base64.decode(tempEmail);
         setEmail(tempEmail);
-        axios.get("http://192.168.0.7:8080:8080/user/name/" + tempEmail,{
+        axios.get("http://192.168.0.7:8080/user/name/" + tempEmail,{
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
               }
@@ -90,7 +90,7 @@ function AvatarButton(props) {
         //console.log(props.changeAvatar);
         //console.log(avatarNum);
         if (props.changeAvatar > avatarNum) {
-            axios.get("http://192.168.0.7:8080:8080/user/head/" + tempEmail,{
+            axios.get("http://192.168.0.7:8080/user/head/" + tempEmail,{
                 headers: {
                     'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
                   }

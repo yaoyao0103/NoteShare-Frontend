@@ -22,7 +22,7 @@ function CollabOutlinePage(props) {
                 const haveCollaboration = true;
                 const sortBy = props.sortMode;
 
-                await axios.get('http://192.168.0.7:8080:8080/search/post/' + String(props.pageNumber - 1) + '/20?keyword=' + (props.keyword ? props.keyword : '') + '&department=' + (props.department ? props.department : '') + '&subject=' + (props.subject ? props.subject : '') + '&haveCollaboration=' + true + '&sortBy=' + sortBy).then((res) => {
+                await axios.get('http://192.168.0.7:8080/search/post/' + String(props.pageNumber - 1) + '/20?keyword=' + (props.keyword ? props.keyword : '') + '&department=' + (props.department ? props.department : '') + '&subject=' + (props.subject ? props.subject : '') + '&haveCollaboration=' + true + '&sortBy=' + sortBy).then((res) => {
                     //console.log(res.data.search);
                     setCollab(oldArray => [...oldArray, res.data.search]);
                     props.setLoading(false);

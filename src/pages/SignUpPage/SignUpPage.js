@@ -42,7 +42,7 @@ function SignUpPage(props) {
     };
 
     const SignUp = () => {
-        axios.post("http://192.168.0.7:8080:8080/verification/signup", {
+        axios.post("http://192.168.0.7:8080/verification/signup", {
             email: email,
             password: password,
             name: name,
@@ -69,7 +69,7 @@ function SignUpPage(props) {
     };
     useEffect(() => {
         if (openSuccess) {
-            axios.post("http://192.168.0.7:8080:8080/verification/resendCode/" + email).then(res => {
+            axios.post("http://192.168.0.7:8080/verification/resendCode/" + email).then(res => {
                 console.log(res.data.msg);
             }).catch((error) => {
                 console.log(error.response.status);
