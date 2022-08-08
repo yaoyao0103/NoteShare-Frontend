@@ -16,7 +16,7 @@ function QnARecommendPage(props) {
                 props.setLoading(true)
                 //const sortBy = props.sortMode;
                 console.log(props.pageNumber)
-                await axios.get('192.168.0.7:8080/post/hotPosts/' + String(props.pageNumber - 1) + '/20/QA').then((res) => {
+                await axios.get('http://192.168.0.7:8080/post/hotPosts/' + String(props.pageNumber - 1) + '/20/QA').then((res) => {
                     setQnA(oldArray => [...oldArray, res.data.res]);
                     console.log(res.data.res)
                     props.setLoading(false)

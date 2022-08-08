@@ -13,7 +13,7 @@ function NoteDetailPage(props) {
     useEffect(() => {
         //console.log('1234')
         async function getNoteById() {
-            axios.get(`192.168.0.7:8080/note/${props.noteId}`)
+            axios.get(`http://192.168.0.7:8080/note/${props.noteId}`)
                 .then(res => {
                     setNote(res.data.res)
                     console.log("Note Response:", res.data.res)

@@ -47,7 +47,7 @@ function ResetPasswordPage(props) {
     const ResetPassword = () => {
         console.log(oldPassword);
         console.log(newPassword);
-        axios.post("192.168.0.7:8080/verification/resetPassword" , {password:oldPassword,newPassword:newPassword,email:props.email,},{
+        axios.post("http://192.168.0.7:8080/verification/resetPassword" , {password:oldPassword,newPassword:newPassword,email:props.email,},{
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
               }
