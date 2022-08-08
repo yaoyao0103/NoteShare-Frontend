@@ -58,7 +58,7 @@ function CommentArea(props) {
         }
         setEmail(tempEmail)
         const type = props.page == 'NoteDetailPage' ? 'note' : 'post'
-        axios.get(`http://localhost:8080/${type}/${props.id}`)
+        axios.get(`192.168.0.7:8080/${type}/${props.id}`)
             .then(res => {
                 //console.log(res.data.res)
                 const tempComment = res.data.res.commentsUserObj
@@ -113,7 +113,7 @@ function CommentArea(props) {
 
     const like = (commentId) => {
         if (cookieParser.getCookieByName("email")) {
-            axios.put(`http://localhost:8080/favorite/${props.type}/${props.id}/${commentId}/${email}`, {}, {
+            axios.put(`192.168.0.7:8080/favorite/${props.type}/${props.id}/${commentId}/${email}`, {}, {
                 headers: {
                     'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
                 }
@@ -147,7 +147,7 @@ function CommentArea(props) {
 
     const unlike = (commentId) => {
         if (cookieParser.getCookieByName("email")) {
-            axios.put(`http://localhost:8080/unFavorite/${props.type}/${props.id}/${commentId}/${email}`, {}, {
+            axios.put(`192.168.0.7:8080/unFavorite/${props.type}/${props.id}/${commentId}/${email}`, {}, {
                 headers: {
                     'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
                 }
@@ -194,7 +194,7 @@ function CommentArea(props) {
             }
             const type = props.page == 'NoteDetailPage' ? 'note' : 'post'
             if (comment.length > 0) {
-                axios.post(`http://localhost:8080/comment/${props.id}`, tempComment, {
+                axios.post(`192.168.0.7:8080/comment/${props.id}`, tempComment, {
                     headers: {
                         'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
                     }
@@ -245,7 +245,7 @@ function CommentArea(props) {
 
     const setTheBest = (commentIds) => {
         //message.info(`Set ${commentIds} as the best answer`);
-        axios.put(`http://localhost:8080/post/qa/best/${props.id}/${commentIds}`, {}, {
+        axios.put(`192.168.0.7:8080/post/qa/best/${props.id}/${commentIds}`, {}, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
             }
@@ -277,7 +277,7 @@ function CommentArea(props) {
             content: editingComment,
             picURL: []
         }
-        axios.put(`http://localhost:8080/comment/${props.id}/${floor}`, data, {
+        axios.put(`192.168.0.7:8080/comment/${props.id}/${floor}`, data, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
             }
@@ -302,7 +302,7 @@ function CommentArea(props) {
     }
 
     const commentDelete = (floor) => {
-        axios.delete(`http://localhost:8080/comment/${props.id}/${floor}`, {
+        axios.delete(`192.168.0.7:8080/comment/${props.id}/${floor}`, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
             }

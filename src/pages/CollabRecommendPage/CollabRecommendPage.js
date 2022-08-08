@@ -17,7 +17,7 @@ function CollabRecommendPage(props) {
         props.setLoading(true);
         async function getCollabById() {
             try {
-                await axios.get('http://localhost:8080/post/hotPosts/' + String(props.pageNumber - 1) + '/20/collaboration').then((res) => {
+                await axios.get('192.168.0.7:8080/post/hotPosts/' + String(props.pageNumber - 1) + '/20/collaboration').then((res) => {
                     //console.log(res.data.res)
                     setCollab(oldArray => [...oldArray, res.data.res]);
                     props.setLoading(false);

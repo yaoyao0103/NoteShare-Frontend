@@ -10,7 +10,7 @@ function RewardDetailPage(props) {
     //const postId = '62b0891f0997e642d1402113'
     useEffect(() => {
         async function getRewardById() {
-            axios.get(`http://localhost:8080/post/${props.postId}`)
+            axios.get(`192.168.0.7:8080/post/${props.postId}`)
             .then(res => {
                 console.log(res.data.res)
                 setPost(res.data.res)

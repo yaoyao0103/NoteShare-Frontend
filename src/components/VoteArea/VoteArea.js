@@ -22,7 +22,7 @@ const VoteArea = (props) => {
     },[props]);
     const agree = () => {
         // Todo: check agree list
-        axios.put(`http://localhost:8080/post/vote/${props.postId}/${props.vote.id}/${props.email}`, {option: 'agree'},{
+        axios.put(`192.168.0.7:8080/post/vote/${props.postId}/${props.vote.id}/${props.email}`, {option: 'agree'},{
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
               }
@@ -54,7 +54,7 @@ const VoteArea = (props) => {
     }
     const disagree = () => {
         // Todo: check agree list
-        axios.put(`http://localhost:8080/post/vote/${props.postId}/${props.vote.id}/${props.email}`, {option: 'disagree'},{
+        axios.put(`192.168.0.7:8080/post/vote/${props.postId}/${props.vote.id}/${props.email}`, {option: 'disagree'},{
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
               }

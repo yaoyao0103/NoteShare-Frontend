@@ -130,7 +130,7 @@ const PostEditTemplate = (props) => {
             page = 'CollabDetailPage'
         }
         console.log(post)
-        axios.put(`http://localhost:8080/post/${props.postId}`, post, {
+        axios.put(`192.168.0.7:8080/post/${props.postId}`, post, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
             }
@@ -204,7 +204,7 @@ const PostEditTemplate = (props) => {
         let cookieParser = new Cookie(document.cookie);
         let name = cookieParser.getCookieByName('name');
         let avatar = cookieParser.getCookieByName('avatar');
-        axios.post(`http://localhost:8080/post/${email}`, data, {
+        axios.post(`192.168.0.7:8080/post/${email}`, data, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
             }
@@ -226,7 +226,7 @@ const PostEditTemplate = (props) => {
                     VersionFormat.name = "default"
                     VersionFormat.slug = "default"
                     VersionFormat.content = [ContentFormat]
-                    axios.put(`http://localhost:8080/note/${tempId}/0`, VersionFormat, {
+                    axios.put(`192.168.0.7:8080/note/${tempId}/0`, VersionFormat, {
                         headers: {
                             'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
                         }

@@ -17,7 +17,7 @@ function RewardRecommendPage(props) {
             try {
                 const sortBy = props.sortMode;
 
-                await axios.get('http://localhost:8080/post/hotPosts/' + String(props.pageNumber - 1) + '/20/reward').then((res) => {
+                await axios.get('192.168.0.7:8080/post/hotPosts/' + String(props.pageNumber - 1) + '/20/reward').then((res) => {
 
                     setReward(oldArray => [...oldArray, res.data.res]);
                     props.setLoading(false)
