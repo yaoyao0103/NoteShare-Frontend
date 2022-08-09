@@ -717,8 +717,7 @@ const FileManager = (props) => {
                     <Content className='fileManager_Content'>
                         {notes}
                     </Content>
-                    <QuestionCircleOutlined  style={{fontSize:'28px' ,padding:'0.5em'}}/>
-                </Layout>
+=                </Layout>
 
             </div>
         </>

@@ -55,6 +55,8 @@ const PageDetailContentTemplate = (props) => {
     const [publishDate, setPublishDate] = useState('')
     const [rewardIsEnd, setRewardIsEnd] = useState(false)
     const [collabNoteTags, setCollabNoteTags] = useState([])
+    const [plagiarismRate, setPlagiarismRate] = useState(null)
+    const [quoteRate, setQuoteRate] = useState(null)
 
     useEffect(() => {
 
@@ -70,6 +72,8 @@ const PageDetailContentTemplate = (props) => {
             setNoteType(props.data?.type)
             setIsNotePublic(props.data?.public)
             setAuthorEmail(props.data?.headerUserObj.userObjEmail)
+            setPlagiarismRate(props.data?.plagiarismPoint)
+            setQuoteRate(props.data?.quotePoint)
             if (props.data?.type == 'reward') {
                 console.log("props.data?.submit", props.data)
                 if (props.data?.submit) setIsSubmit(true)
@@ -582,6 +586,8 @@ const PageDetailContentTemplate = (props) => {
                                     public={isPublic}
                                     notePublic={isNotePublic}
                                     type={type}
+                                    plagiarismRate={plagiarismRate}
+                                    quoteRate={quoteRate}
                                 />
                             </Col>
                         </Row>
@@ -744,7 +750,6 @@ const PageDetailContentTemplate = (props) => {
             <Drawer title={"Comment"} placement="right" onClose={onClose} visible={visible}>
                 <CommentArea setPageProps={props.setPageProps} page={props.page} type="note" comments={props.data?.commentsUserObj ? props.data.commentsUserObj : []} id={props.postId ? props.postId : props.noteId} />
             </Drawer>
-            <QuestionCircleOutlined  style={{position:'absolute',fontSize:'28px' ,padding:'0.5em',top:'0.5em',right:'1em'}}/>
         </div>
     );
 }
