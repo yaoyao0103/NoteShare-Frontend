@@ -71,7 +71,7 @@ const CollabNoteEditPage = (props) => {
         setAvatar(tempAvatar)
         console.log("tempEmail", tempEmail)
         //const note = props.note;
-        axios.get(`http://localhost:8080/note/${props.noteId}`)
+        axios.get(`http://192.168.0.7:8080/note/${props.noteId}`)
             .then(res => {
                 console.log(res.data.res)
                 const tempNote = res.data.res
@@ -145,7 +145,7 @@ const CollabNoteEditPage = (props) => {
         }
         if (newcomer.length != 0) {
             newcomer.map(userEmail => {
-                axios.get(`http://localhost:8080/user/${userEmail}`, {
+                axios.get(`http://192.168.0.7:8080/user/${userEmail}`, {
                     headers: {
                         'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
                     }
@@ -227,7 +227,7 @@ const CollabNoteEditPage = (props) => {
         console.log("tempNote:", tempNote);
 
 
-        axios.put(`http://localhost:8080/note/${props.noteId}`, tempNote, {
+        axios.put(`http://192.168.0.7:8080/note/${props.noteId}`, tempNote, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
             }
@@ -273,12 +273,12 @@ const CollabNoteEditPage = (props) => {
 
 
     const setVersion = (index) => {
-        axios.get(`http://localhost:8080/note/${props.noteId}/${index}`)
+        axios.get(`http://192.168.0.7:8080/note/${props.noteId}/${index}`)
             .then(res => {
                 const defaultVersion = res.data.res
                 defaultVersion.name = "default"
                 defaultVersion.slug = "default"
-                axios.put(`http://localhost:8080/note/${props.noteId}/0`, defaultVersion, {
+                axios.put(`http://192.168.0.7:8080/note/${props.noteId}/0`, defaultVersion, {
                     headers: {
                         'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
                     }
@@ -318,7 +318,7 @@ const CollabNoteEditPage = (props) => {
     }
     const noteFinish = async () => {
         if (props.isManager) {
-            axios.put(`http://localhost:8080/note/tag/wordSuggestion/${note.id}`, {}, {
+            axios.put(`http://192.168.0.7:8080/note/tag/wordSuggestion/${note.id}`, {}, {
                 headers: {
                     'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
                 }
@@ -326,7 +326,7 @@ const CollabNoteEditPage = (props) => {
                 .then(res => {
                     console.log("suggestive tag: ", res)
                     setRecommendTag(res.data.generatedTags)
-                    axios.get(`http://localhost:8080/note/plagiarism/${note.id}`, {
+                    axios.get(`http://192.168.0.7:8080/note/plagiarism/${note.id}`, {
                         headers: {
                             'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
                         }
@@ -379,7 +379,7 @@ const CollabNoteEditPage = (props) => {
 
     const tagSubmit = async () => {
             
-            axios.put(`http://localhost:8080/note/tag/updateTags/${props.noteId}`, {"tags":tagSelected},  {
+            axios.put(`http://192.168.0.7:8080/note/tag/updateTags/${props.noteId}`, {"tags":tagSelected},  {
                 headers: {
                     'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
                 }
@@ -455,7 +455,7 @@ const CollabNoteEditPage = (props) => {
         VersionFormat.name = name
         VersionFormat.slug = name
         VersionFormat.content = [ContentFormat]
-        axios.put(`http://localhost:8080/note/${props.noteId}/${versionLength}`, VersionFormat, {
+        axios.put(`http://192.168.0.7:8080/note/${props.noteId}/${versionLength}`, VersionFormat, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
             }
