@@ -57,6 +57,8 @@ const PageDetailContentTemplate = (props) => {
     const [collabNoteTags, setCollabNoteTags] = useState([])
     const [plagiarismRate, setPlagiarismRate] = useState(null)
     const [quoteRate, setQuoteRate] = useState(null)
+    const [plagiarismRateResult, setPlagiarismRateResult] = useState(null)
+    const [quoteRateResult, setQuoteRateResult] = useState(null)
 
     useEffect(() => {
 
@@ -74,6 +76,8 @@ const PageDetailContentTemplate = (props) => {
             setAuthorEmail(props.data?.headerUserObj.userObjEmail)
             setPlagiarismRate(props.data?.plagiarismPoint)
             setQuoteRate(props.data?.quotePoint)
+            setPlagiarismRateResult(props.data?.plagiarismPointResult)
+            setQuoteRateResult(props.data?.quotePointResult)
             if (props.data?.type == 'reward') {
                 console.log("props.data?.submit", props.data)
                 if (props.data?.submit) setIsSubmit(true)
@@ -108,6 +112,10 @@ const PageDetailContentTemplate = (props) => {
                     setIsNotePublic(tempNote.public)
                     setPublishDate(tempNote.publishDate)
                     setCollabNoteTags(tempNote.tag)
+                    setPlagiarismRate(tempNote.plagiarismPoint)
+                    setQuoteRate(tempNote.quotePoint)
+                    setPlagiarismRateResult(tempNote.plagiarismPointResult)
+                    setQuoteRateResult(tempNote.quotePointResult)
                     /*for(let i = 0; i < props.data?.authorUserObj.length; i++){
                         if(props.data?.emailUserObj[i].userObjEmail == tempEmail){
                             setEditor(<MyEditor noteId = {noteId} version={'0'} page={props.page} email={email}/>)
@@ -588,6 +596,8 @@ const PageDetailContentTemplate = (props) => {
                                     type={type}
                                     plagiarismRate={plagiarismRate}
                                     quoteRate={quoteRate}
+                                    plagiarismRateResult={plagiarismRateResult}
+                                    quoteRateResult={quoteRateResult}
                                 />
                             </Col>
                         </Row>

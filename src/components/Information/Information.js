@@ -131,7 +131,7 @@ function Information(props) {
             <Row id='information__bottom' className='information__bottom'>
                 {props.plagiarismRate!=null &&(
                     <Col className='information__Likes'>
-                        <Tooltip title={"Suspicious Plagiarism Rate. The rate is an index of plagiarising from other notes"}>
+                        <Tooltip title={<><div>{props.plagiarismRateResult}</div><div>*Suspected Plagiarism Rate. The rate is an index of plagiarising from other notes</div></>}>
                             <div>
                                 <Text color='black' cls='Small' content={"SPR"} fontSize='20' display="inline-block" />
                                 <span style={{color: "#842B00", fontSize:"1.2em"}}>: {props.plagiarismRate}%</span>
@@ -143,7 +143,7 @@ function Information(props) {
                 )}
                 {props.quoteRate!=null &&(
                     <Col className='information__Favorite'>
-                        <Tooltip title={"Citation Rate. The rate is an index of citing other notes"}>
+                        <Tooltip title={<><div>{props.quoteRateResult}</div><div>*Citation Rate. The rate is an index of citing other notes</div></>}>
                             <div>
                                 <Text color='black' cls='Small' content={"CR" } fontSize='20' display="inline-block" />
                                 <span style={{color: "#01814A", fontSize:"1.2em"}}>: {props.quoteRate}%</span>

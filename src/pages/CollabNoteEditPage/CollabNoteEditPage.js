@@ -378,46 +378,30 @@ const CollabNoteEditPage = (props) => {
     }
 
     const tagSubmit = async () => {
-        axios.get(`http://localhost:8080/note/${props.noteId}`)
-            .then(res => {
-                const tempNote = res.data.res
-                tempNote.tag = tagSelected
-                axios.put(`http://localhost:8080/note/${props.noteId}`, tempNote, {
-                    headers: {
-                        'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+            
+            axios.put(`http://localhost:8080/note/tag/updateTags/${props.noteId}`, {"tags":tagSelected},  {
+                headers: {
+                    'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+                }
+            })
+                .then(res => {
+                    message.success("You submitted the tags!");
+                    props.setPageProps({ page: 'CollabDetailPage', postId: props.postId })
+                
+                })
+                .catch(err => {
+                    //console.log(err)
+                    if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
+                        if(err.response.data.message.slice(0,13)==='Malformed JWT')
+                        document.cookie = 'error=Jwt'
+                        else
+                        document.cookie = 'error=true'
+                        message.error('Server Error! Please refresh again!')
+                    }
+                    else{
+                        message.error('Server Error! Please try again later.')
                     }
                 })
-                    .then(res => {
-                        console.log(res);
-                        message.success("You submitted the tags!");
-                        props.setPageProps({ page: 'CollabDetailPage', postId: props.postId })
-                    })
-                    .catch(err => {
-                        if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
-                            if(err.response.data.message.slice(0,13)==='Malformed JWT')
-                            document.cookie = 'error=Jwt'
-                            else
-                            document.cookie = 'error=true'
-                            message.error('Server Error! Please refresh again! (Submit Tag Error)')
-                        }
-                        else{
-                            message.error("Server Error! Please try again later. (Submit Tag Error)")
-                        }
-                    })
-            })
-            .catch(err => {
-                if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
-                    if(err.response.data.message.slice(0,13)==='Malformed JWT')
-                    document.cookie = 'error=Jwt'
-                    else
-                    document.cookie = 'error=true'
-                    message.error('Server Error! Please refresh again! (Get Tag Error)')
-                }
-                else{
-                    message.error("Server Error! Please try again later. (Get Tag Error)")
-                }
-            })
-
     }
 
     const recommendTagRender = (props) => {
