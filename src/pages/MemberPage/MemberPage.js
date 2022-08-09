@@ -54,7 +54,7 @@ function MemberPage(props) {
     }
     async function getFollowingNoteById(email) {
         try {
-            await axios.get('http://localhost:8080/note/following/' + email + '/' + String(props.pageNumber - 1) + '/10', {
+            await axios.get('http://192.168.0.7:8080/note/following/' + email + '/' + String(props.pageNumber - 1) + '/10', {
                 headers: {
                     'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
                 }
@@ -83,7 +83,7 @@ function MemberPage(props) {
         try {
 
             //console.log(props.department);
-            await axios.get('http://localhost:8080/note/hotNotes/' + String(props.pageNumber - 1) + '/10').then((res) => {
+            await axios.get('http://192.168.0.7:8080/note/hotNotes/' + String(props.pageNumber - 1) + '/10').then((res) => {
                 setNote(oldArray => [...oldArray, res.data.res]);
                 props.setLoading(false)
             });
