@@ -145,3 +145,15 @@
       transform: rotateZ(0);
     }
   }
+
+.fileManager_Content__Search{
+    position: relative;
+    width: 30%;
+    border: none;
+    border-bottom: #ccc solid .1em;
+    margin-bottom: .5em;
+}
+
+.fileManager_Content__Search:hover{
+    border-bottom: #888 solid .1em;
+}

@@ -9,6 +9,7 @@ import './FileManager.css';
 import { Note } from '../PostEditTemplate/InfoCategories';
 import OptionMenu from '../OptionMenu/OptionMenu';
 import Cookie from '../Cookies/Cookies';
+import Search from 'antd/lib/transfer/search';
 const cookieParser = new Cookie(document.cookie)
 const { Content, Sider } = Layout;
 //const email = "00857028@email.ntou.edu.tw"
@@ -26,6 +27,7 @@ const FileManager = (props) => {
     const [path, setPath] = useState('/')
     const [copy, setCopy] = useState(null)
     const [move, setMove] = useState(null)
+    const [originNotes, setOriginNotes] = useState([])
 
     useEffect(() => {
         async function getRootFile() {
@@ -87,6 +89,7 @@ const FileManager = (props) => {
                 setPostShow(false)
                 const parentId = res.data.res.parent
                 const tempNotes = res.data.res.notes;
+                setOriginNotes(tempNotes)
                 const tempPath = res.data.res.path;
                 setPath(tempPath)
                 tempPath.split('/')[1] == 'Folder' ? setInFolder(true) : setInFolder(false)
@@ -125,6 +128,7 @@ const FileManager = (props) => {
                     )
                 }
                 else {
+                    setOriginNotes([])
                     setNotes([])
                 }
                 props.setLoading(false)
@@ -164,6 +168,7 @@ const FileManager = (props) => {
                 setPostShow(false)
                 setBackBtnShow(true);
                 const tempPosts = res.data.res;
+                setOriginNotes(tempPosts)
                 if (tempPosts.length > 0) {
                     setNotes(
                         <List
@@ -193,6 +198,7 @@ const FileManager = (props) => {
                     )
                 }
                 else {
+                    setOriginNotes([])
                     setNotes([])
                 }
                 props.setLoading(false)
@@ -229,11 +235,13 @@ const FileManager = (props) => {
                 setFiles([])
                 setPostShow(false)
                 setBackBtnShow(true);
+                const tempNotes = res.data.res.reverse()
+                setOriginNotes(tempNotes)
                 setNotes(
                     <List
                         className="fileManage_Note fileManage_List"
                         itemLayout="horizontal"
-                        dataSource={res.data.res.reverse()}
+                        dataSource={tempNotes}
                         renderItem={(item, index) => (
                             <List.Item
                                 className="fileManage_Note_Item fileManage_List_Item"
@@ -319,6 +327,7 @@ const FileManager = (props) => {
                     setPath(path);
                     path.split('/')[1] == 'Folder' ? setInFolder(true) : setInFolder(false)
                     const tempNotes = res.data.res.notes;
+                    setOriginNotes(tempNotes)
                     if (tempNotes.length > 0) {
                         setNotes(
                             <List
@@ -381,6 +390,7 @@ const FileManager = (props) => {
                     setFiles(res.data.res);
                     setPostShow(true)
                     setBackBtnShow(false);
+                    setOriginNotes([])
                     setNotes([])
                     setInFolder(false)
                     props.setLoading(false)
@@ -656,6 +666,43 @@ const FileManager = (props) => {
                 }
             })
     }
+
+    const SearchOnChange = (ev) => {
+        const keyword = ev.target.value;
+        const tempNote = [];
+        for(let i = 0; i < originNotes.length; i++){
+            if(originNotes[i].title.toLowerCase().includes(keyword.toLowerCase())){
+                tempNote.push(originNotes[i])
+            }
+        }
+        setNotes(
+            <List
+                                className="fileManage_Note fileManage_List"
+                                itemLayout="horizontal"
+                                dataSource={tempNote}
+                                renderItem={(item, index) => (
+                                    <List.Item
+                                        className="fileManage_Note_Item fileManage_List_Item"
+                                        actions={
+                                            path.split('/')[1] == 'Folder' &&
+                                            [<OptionMenu setLoggedIn={props.setLoggedIn} page={props.page} id={item.id} setPageProps={props.setPageProps} setCopy={setCopy} type={"note"} folderId={current} rerenderNotes={() => onClickFolderZone(current)} />]
+                                        }
+                                    >
+                                        <List.Item.Meta
+                                            avatar={
+                                                <Tooltip title={item.headerUserObj.userObjName}>
+                                                    <Avatar src={item.headerUserObj.userObjAvatar} />
+                                                </Tooltip>}
+                                            title={item.title}
+                                            description={item.description ? item.description.substring(0, 120) + "..." : "..."}
+                                            onClick={() => onClickNote(item.id)}
+                                        />
+                                    </List.Item>
+                                )}
+                            />
+        )
+    }
+
     return (
         <>
             <div className='fileManager'>
@@ -781,6 +828,9 @@ const FileManager = (props) => {
                         }
                     </Sider>
                     <Content className='fileManager_Content'>
+                        {notes.length!=0 &&
+                            <Input className='fileManager_Content__Search' placeholder="Keyword" onChange={SearchOnChange}/>
+                        }
                         {notes}
                     </Content>
                     <QuestionCircleOutlined style={{ fontSize: '28px', padding: '0.5em' }} />
