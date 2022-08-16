@@ -630,7 +630,7 @@ const PageDetailContentTemplate = (props) => {
                                     unlockCount={props.data?.unlockCount}
                                     bestPrice={props.data?.bestPrice ? props.data?.bestPrice : props.data?.price}
                                     referencePrice={props.data?.referencePrice}
-                                    remainBest={1 - bestNum}
+                                    remainBest={props.page=="RewardDetailPage"?1 - bestNum:null}
                                     remainRef={props.data?.referenceNumber}
                                     downloadable={props.data?.downloadable}
                                     public={isPublic}

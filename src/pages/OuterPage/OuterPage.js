@@ -47,7 +47,8 @@ var stompClient;
 var cookieParser = new Cookie(document.cookie);
 // var hasBack = false
 // var hasChange = true
-// var isDone = false
+// var isDone = fals
+
 const OuterPage = () => {
     const [isConnect, setIsConnect] = useState(false)
     //const [pageBeforeProps, setPageBeforeProps] = useState({ page: 'LoginPage' });
@@ -66,6 +67,7 @@ const OuterPage = () => {
     //const [pageNumber, setPageNumber] = useState(1);
     const [ringNumber, setRingNumber] = useState(0);
     const [ringList, setRingList] = useState([]);
+    const [introduction, setIntroduction] = useState("No introductions")
     const [isChanging, setIsChanging] = useState(false);
     const [api, contextHolder] = notification.useNotification();
     const [pageLabel, setPageLabel] = useState(null)
@@ -360,36 +362,223 @@ const OuterPage = () => {
                     setFloatButtonVisable(false)
 
                 switch (pageProps.page) {
-                    case 'NoteDetailPage': setPageLabel("Note Detail"); setPageComponent(<NoteDetailPage page='NoteDetailPage' setLoggedIn={setLoggedIn} coinNum={coinNum} setCoinNum={setCoinNum} sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
-                    case 'NoteEditPage': setPageLabel("Edit a Note"); setPageComponent(<NoteEditPage page='NoteEditPage' setLoggedIn={setLoggedIn} sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
-                    case 'NoteNewPage': setPageLabel("Create a Note"); setPageComponent(<NoteEditPage page='NoteNewPage' setLoggedIn={setLoggedIn} sendBellMessage={sendBellMessage} sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
-                    case 'NoteOutlinePage': setPageLabel("Results"); setPageComponent(<NoteOutlinePage page='NoteOutlinePage' setLoggedIn={setLoggedIn} changeSortMode={setSortMode} setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
-                    case 'MemberPage': setPageLabel("Recommended Notes"); setPageComponent(<MemberPage page='MemberPage' setLoggedIn={setLoggedIn} setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
-                    case 'RewardDetailPage': setPageLabel("Reward Post Detail"); setPageComponent(<RewardDetailPage page='RewardDetailPage' setLoggedIn={setLoggedIn} pageLabel='Reward Detail' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
-                    case 'RewardEditPage': setPageLabel("Edit a Reward Post"); setPageComponent(<RewardEditPage page='RewardEditPage' setLoggedIn={setLoggedIn} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
-                    case 'RewardNewPage': setPageLabel("Create a Reward Post"); setPageComponent(<RewardEditPage page='RewardNewPage' setLoggedIn={setLoggedIn} sendBellMessage={sendBellMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
-                    case 'RewardOutlinePage': setPageLabel("Results"); setPageComponent(<RewardOutlinePage page='RewardOutlinePage' setLoggedIn={setLoggedIn} changeSortMode={setSortMode} setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
-                    case 'RewardRecommendPage': setPageLabel("Recommended Reward Posts"); setPageComponent(<RewardRecommendPage page='RewardRecommendPage' setLoggedIn={setLoggedIn} changeSortMode={setSortMode} setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
-                    case 'QnADetailPage': setPageLabel("QA Post Detail"); setPageComponent(<QnADetailPage page='QnADetailPage' setLoggedIn={setLoggedIn} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
-                    case 'QnAOutlinePage': setPageLabel("Results"); setPageComponent(<QnAOutlinePage page='QnAOutlinePage' setLoggedIn={setLoggedIn} changeSortMode={setSortMode} setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
-                    case 'QnAEditPage': setPageLabel("Edit a QA Post"); setPageComponent(<QnAEditPage page='QnAEditPage' setLoggedIn={setLoggedIn} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
-                    case 'QnANewPage': setPageLabel("Create a QA Post"); setPageComponent(<QnAEditPage page='QnANewPage' setLoggedIn={setLoggedIn} sendBellMessage={sendBellMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
-                    case 'QnARecommendPage': setPageLabel("Recommended Reward Posts"); setPageComponent(<QnARecommendPage page='QnARecommendPage' setLoggedIn={setLoggedIn} changeSortMode={setSortMode} setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
-                    case 'CollabDetailPage': setPageLabel("Collaborative Note Detail"); setPageComponent(<CollabDetailPage page='CollabDetailPage' setLoggedIn={setLoggedIn} sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
-                    case 'CollabEditPage': setPageLabel("Edit a Collaborative Note Post"); setPageComponent(<CollabEditPage page='CollabEditPage' setLoggedIn={setLoggedIn} sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
-                    case 'CollabNoteEditPage': setPageLabel("Edit a Collaborative Note"); setPageComponent(<CollabNoteEditPage page='CollabNoteEditPage' setLoggedIn={setLoggedIn} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
-                    case 'CollabNewPage': setPageLabel("Create a Collaborative Note Post"); setPageComponent(<CollabEditPage page='CollabNewPage' setLoggedIn={setLoggedIn} sendBellMessage={sendBellMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
-                    case 'CollabOutlinePage': setPageLabel("Results"); setPageComponent(<CollabOutlinePage page='CollabOutlinePage' changeSortMode={setSortMode} setLoggedIn={setLoggedIn} setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
-                    case 'CollabRecommendPage': setPageLabel("Recommended Collaborative Note Posts"); setPageComponent(<CollabRecommendPage page='CollabRecommendPage' setLoggedIn={setLoggedIn} changeSortMode={setSortMode} setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
-                    case 'FolderOutlinePage': setPageLabel("Recommended Folder"); setPageComponent(<FolderOutlinePage page='FolderOutlinePage' setLoggedIn={setLoggedIn} setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
-                    case 'TagOutlinePage': setPageLabel("Results"); setPageComponent(<TagOutlinePage page='TagOutlinePage' setLoggedIn={setLoggedIn} changeSortMode={setSortMode} setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
-                    case 'PersonalPage': setPageLabel("Personal Area"); setPageComponent(<PersonalPage page='PersonalPage' setLoggedIn={setLoggedIn} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
-                    case 'ProfilePage': setPageLabel("Profile"); setPageComponent(<ProfilePage page='ProfilePage' setLoggedIn={setLoggedIn} sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} Avatar={changeAvatar} setAvatar={setChangeAvatar} setPageProps={setPageProps} {...pageProps} />); break;
-                    case 'LoginPage': setPageComponent(<LoginPage page='LoginPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} setLoggedIn={setLoggedIn} {...pageProps} />); break;
-                    case 'SignUpPage': setPageComponent(<SignUpPage page='SignUpPage' setLoggedIn={setLoggedIn} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
-                    case 'VerificationPage': setPageComponent(<VerificationPage page='VerificationPage' setLoggedIn={setLoggedIn} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
-                    case 'ForgetPasswordPage': setPageComponent(<ForgetPasswordPage page='ForgetPasswordPage' setLoggedIn={setLoggedIn} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
-                    case 'ResetPasswordPage': setPageComponent(<ResetPasswordPage setLoggedIn={setLoggedIn} page='ResetPasswordPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                    case 'NoteDetailPage': 
+                        setPageLabel("Note Detail"); 
+                        setIntroduction(<ul>
+                            <li>In this page, you can see all the details of the note.</li>
+                            <li>You can check your SPR and CR in this page.</li>
+                            <li>When the note is set downloadable, you can download the pdf file.</li>
+                        </ul>
+                        )
+                        setPageComponent(<NoteDetailPage page='NoteDetailPage' setLoggedIn={setLoggedIn} coinNum={coinNum} setCoinNum={setCoinNum} sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                    case 'NoteEditPage': 
+                        setPageLabel("Edit a Note");
+                        setIntroduction(<ul>
+                            <li>In this page, you can edit the information, content and the hashtags of the note.</li>
+                            <li>In information editing phase, you can edit the title, price, school, department, .etc of your note, and the title and price can't be empty.</li>
+                            <li>In information editing phase, if you choose set the note public, it will be shown in public. And if you set the note private, it can only be saw by yourself.</li>
+                            <li>In content editing phase, you can easily drag and drop block to edit your note.</li>
+                            <li>In content editing phase, the leftmost tool in the sidebar is "Block", which you can create block by dragging them to the note. </li>
+                            <li>In content editing phase, the middle tool in the sidebar is "Style", which you can change some styles like color, size, position, font-size, etc. of a block </li>
+                            <li>In content editing phase, the rightmost tool in the sidebar is "Trait", which you can change some attribute like link, source, title, etc. of a block </li>
+                            <li>In hashtag editing phase, on the left port, you can choose recommended hashtags and then they will add to your current hashtags on the right part. Or, you can enter some words and then press enter to add some hashtags</li>
+                        </ul>
+                        ) 
+                        setPageComponent(<NoteEditPage page='NoteEditPage' setLoggedIn={setLoggedIn} sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
+                    case 'NoteNewPage': 
+                        setPageLabel("Create a Note"); 
+                        setIntroduction(<ul>
+                            <li>In this page, you have to the information, content and the hashtags of the note.</li>
+                            <li>In information editing phase, you have to enter the title, price, school, department, .etc of your note, and the title and price can't be empty.</li>
+                            <li>In information editing phase, if you choose set the note public, it will be shown in public. And if you set the note private, it can only be saw by yourself.</li>
+                            <li>In content editing phase, you can easily drag and drop block to edit your note.</li>
+                            <li>In content editing phase, the leftmost tool in the sidebar is "Block", which you can create block by dragging them to the note. </li>
+                            <li>In content editing phase, the middle tool in the sidebar is "Style", which you can change some styles like color, size, position, font-size, etc. of a block </li>
+                            <li>In content editing phase, the rightmost tool in the sidebar is "Trait", which you can change some attribute like link, source, title, etc. of a block </li>
+                            <li>In hashtag editing phase, on the left port, you can choose recommended hashtags and then they will add to your current hashtags on the right part. Or, you can enter some words and then press enter to add some hashtags</li>
+                        </ul>
+                        ) 
+                        setPageComponent(<NoteEditPage page='NoteNewPage' setLoggedIn={setLoggedIn} sendBellMessage={sendBellMessage} sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                    case 'NoteOutlinePage': 
+                        setPageLabel("Results"); 
+                        setIntroduction(<ul>
+                            <li>You can sort the notes by dropdown list</li>
+                            <li>The page only show a part of note. If you want to see all the details or buy the note, please click the note.</li>
+                        </ul>
+                        ) 
+                        setPageComponent(<NoteOutlinePage page='NoteOutlinePage' setLoggedIn={setLoggedIn} changeSortMode={setSortMode} setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
+                    case 'MemberPage': 
+                        setPageLabel("Recommended Notes"); 
+                        setPageComponent(<MemberPage page='MemberPage' setLoggedIn={setLoggedIn} setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
+                    case 'RewardDetailPage': 
+                        setPageLabel("Reward Post Detail"); 
+                        setIntroduction(<ul>
+                            <li>In this page, you can see all the details of the reward post.</li>
+                            <li>If you are origin poster, you can click the button to manage all the contributed notes.</li>
+                            <li>If you are not origin poster, you can click the button to write the note and contribute it.</li>
+                            <li>Once you choose the best and all the reference note, you can't receive any note</li>
+                            <li>The note chosen as a best note will be stored to your Owned Folder</li>
+                        </ul>)
+                        setPageComponent(<RewardDetailPage page='RewardDetailPage' setLoggedIn={setLoggedIn} pageLabel='Reward Detail' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                    case 'RewardEditPage': 
+                        setPageLabel("Edit a Reward Post"); 
+                        setIntroduction(<ul>
+                            <li>In this page, you can edit the information of the reward post.</li>
+                        </ul>)
+                        setPageComponent(<RewardEditPage page='RewardEditPage' setLoggedIn={setLoggedIn} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                    case 'RewardNewPage': 
+                        setPageLabel("Create a Reward Post"); 
+                        setIntroduction(<ul>
+                            <li>You have to enter the information of the reward post.</li>
+                            <li>After you submit the post, the reward post will be shown in public</li>
+                        </ul>)
+                        setPageComponent(<RewardEditPage page='RewardNewPage' setLoggedIn={setLoggedIn} sendBellMessage={sendBellMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
+                    case 'RewardOutlinePage': 
+                        setPageLabel("Results"); 
+                        setIntroduction(<ul>
+                            <li>You can sort the reward posts by dropdown list</li>
+                            <li>The post only show a part of detail. If you want to see all the details or contribute note, please click the post.</li>
+                        </ul>
+                        ) 
+                        setPageComponent(<RewardOutlinePage page='RewardOutlinePage' setLoggedIn={setLoggedIn} changeSortMode={setSortMode} setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
+                    case 'RewardRecommendPage': 
+                        setPageLabel("Recommended Reward Posts"); 
+                        setIntroduction(<ul>
+                            <li>You can sort the reward posts by dropdown list</li>
+                            <li>The post only show a part of detail. If you want to see all the details or contribute note, please click the post.</li>
+                        </ul>
+                        ) 
+                        setPageComponent(<RewardRecommendPage page='RewardRecommendPage' setLoggedIn={setLoggedIn} changeSortMode={setSortMode} setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
+                    case 'QnADetailPage': 
+                        setPageLabel("QA Post Detail"); 
+                        setIntroduction(<ul>
+                            <li>In this page, you can see all the details of the QA post.</li>
+                            <li>If you are origin poster, you can choose a best answer to reward it some point.</li>
+                            <li>If you are not origin poster, you can click the button to write the note and contribute it.</li>
+                            <li>You can edit and delete your answer in comment area while the best answer haven't be chose.</li>
+                            <li>You can tag other commenter by using '@'</li>
+                            <li>If you are origin poster and the best answer have be chose, you can archive the post then the post can only saw by yourself.</li>
+                        </ul>)
+                        setPageComponent(<QnADetailPage page='QnADetailPage' setLoggedIn={setLoggedIn} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
+                    case 'QnAOutlinePage': 
+                        setPageLabel("Results"); 
+                        setIntroduction(<ul>
+                            <li>You can sort the QA posts by dropdown list</li>
+                            <li>The post only show a part of detail. If you want to see all the details or answer the question, please click the post.</li>
+                        </ul>
+                        ) 
+                        setPageComponent(<QnAOutlinePage page='QnAOutlinePage' setLoggedIn={setLoggedIn} changeSortMode={setSortMode} setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                    case 'QnAEditPage': 
+                        setPageLabel("Edit a QA Post");
+                        setIntroduction(<ul>
+                            <li>In this page, you can edit the information of the QA post.</li>
+                        </ul>)
+                        setPageComponent(<QnAEditPage page='QnAEditPage' setLoggedIn={setLoggedIn} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
+                    case 'QnANewPage': 
+                        setPageLabel("Create a QA Post"); 
+                        setIntroduction(<ul>
+                            <li>You have to enter the information of the QA post.</li>
+                            <li>After you submit the post, the QA post will be shown in public</li>
+                        </ul>)
+                        setPageComponent(<QnAEditPage page='QnANewPage' setLoggedIn={setLoggedIn} sendBellMessage={sendBellMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                    case 'QnARecommendPage': 
+                        setPageLabel("Recommended Reward Posts"); 
+                        setIntroduction(<ul>
+                            <li>You can sort the QA posts by dropdown list</li>
+                            <li>The post only show a part of detail. If you want to see all the details or answer the question, please click the post.</li>
+                        </ul>
+                        ) 
+                        setPageComponent(<QnARecommendPage page='QnARecommendPage' setLoggedIn={setLoggedIn} changeSortMode={setSortMode} setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                    case 'CollabDetailPage': 
+                        setPageLabel("Collaborative Note Detail"); 
+                        setIntroduction(<ul>
+                            <li>If you are a member of this collaborative note, you can see all the details of the collaborative note.</li>
+                            <li>If you are not a member of this collaborative note, you can see all the details of the collaborative note post.</li>
+                            <li>If you are not a member of this collaborative note, you can apply it and leave some message for application</li>
+                        </ul>
+                        )
+                        setPageComponent(<CollabDetailPage page='CollabDetailPage' setLoggedIn={setLoggedIn} sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                    case 'CollabEditPage': 
+                        setPageLabel("Edit a Collaborative Note Post"); 
+                        setIntroduction(<ul>
+                            <li>In this page, you can edit the information of the collaborative note post.</li>
+                        </ul>)
+                        setPageComponent(<CollabEditPage page='CollabEditPage' setLoggedIn={setLoggedIn} sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                    case 'CollabNoteEditPage': 
+                        setPageLabel("Edit a Collaborative Note"); 
+                        setIntroduction(<ul>
+                            <li>In this page, if your are not origin poster or manager, you can only edit the content of the note.</li>
+                            <li>In this page, if your are origin poster or manager, you can edit the information, content and the hashtags of the note.</li>
+                            <li>In information editing phase, you have to enter the title, price, school, department, .etc of your note, and the title and price can't be empty.</li>
+                            <li>In information editing phase, if you choose set the note public, it will be shown in public. And if you set the note private, it can only be saw by yourself.</li>
+                            <li>In content editing phase, you can easily drag and drop block to edit your note.</li>
+                            <li>In content editing phase, the leftmost tool in the sidebar is "Block", which you can create block by dragging them to the note. </li>
+                            <li>In content editing phase, the middle tool in the sidebar is "Style", which you can change some styles like color, size, position, font-size, etc. of a block </li>
+                            <li>In content editing phase, the rightmost tool in the sidebar is "Trait", which you can change some attribute like link, source, title, etc. of a block </li>
+                            <li>In hashtag editing phase, on the left port, you can choose recommended hashtags and then they will add to your current hashtags on the right part. Or, you can enter some words and then press enter to add some hashtags</li>
+                        </ul>
+                        )
+                        setPageComponent(<CollabNoteEditPage page='CollabNoteEditPage' setLoggedIn={setLoggedIn} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                    case 'CollabNewPage': 
+                        setPageLabel("Create a Collaborative Note Post"); 
+                        setIntroduction(<ul>
+                            <li>You have to enter the information of the collaborative note post.</li>
+                            <li>After you submit the post, the collaborative note post will be shown in public</li>
+                        </ul>)
+                        setPageComponent(<CollabEditPage page='CollabNewPage' setLoggedIn={setLoggedIn} sendBellMessage={sendBellMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                    case 'CollabOutlinePage': 
+                        setPageLabel("Results"); 
+                        setIntroduction(<ul>
+                            <li>You can sort the collaborative note posts by dropdown list</li>
+                            <li>The post only show a part of detail. If you want to see all the details or apply, please click the post.</li>
+                        </ul>
+                        ) 
+                        setPageComponent(<CollabOutlinePage page='CollabOutlinePage' changeSortMode={setSortMode} setLoggedIn={setLoggedIn} setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                    case 'CollabRecommendPage': 
+                        setPageLabel("Recommended Collaborative Note Posts"); 
+                        setIntroduction(<ul>
+                            <li>You can sort the collaborative note posts by dropdown list</li>
+                            <li>The post only show a part of detail. If you want to see all the details or apply, please click the post.</li>
+                        </ul>
+                        ) 
+                        setPageComponent(<CollabRecommendPage page='CollabRecommendPage' setLoggedIn={setLoggedIn} changeSortMode={setSortMode} setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                    case 'FolderOutlinePage': 
+                        setPageLabel("Recommended Folder"); 
+                        setIntroduction(<ul>
+                            <li>You can sort the folder by dropdown list</li>
+                            <li>You can click the folder to see all the notes.</li>
+                        </ul>
+                        ) 
+                        setPageComponent(<FolderOutlinePage page='FolderOutlinePage' setLoggedIn={setLoggedIn} setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                    case 'TagOutlinePage': 
+                        setPageLabel("Results");
+                        setIntroduction(<ul>
+                            <li>The note only show a part of detail. If you want to see all the details or buy the note, please click the note.</li>
+                        </ul>
+                        )  
+                        setPageComponent(<TagOutlinePage page='TagOutlinePage' setLoggedIn={setLoggedIn} changeSortMode={setSortMode} setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
+                    case 'PersonalPage': 
+                        setPageLabel("Personal Area"); 
+                        
+                        setPageComponent(<PersonalPage page='PersonalPage' setLoggedIn={setLoggedIn} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                    case 'ProfilePage': 
+                        setPageLabel("Profile"); 
+                        setIntroduction(<ul>
+                            <li>If it is your profile, you can edit your personal information and manage following user or fans in this page.</li>
+                            <li>If it is not your profile, you can see all the public notes and folders of the user.</li>
+                        </ul>
+                        ) 
+                        setPageComponent(<ProfilePage page='ProfilePage' setLoggedIn={setLoggedIn} sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} Avatar={changeAvatar} setAvatar={setChangeAvatar} setPageProps={setPageProps} {...pageProps} />); break;
+                    case 'LoginPage': 
+                        setPageComponent(<LoginPage page='LoginPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} setLoggedIn={setLoggedIn} {...pageProps} />); break;
+                    case 'SignUpPage': 
+                        setPageComponent(<SignUpPage page='SignUpPage' setLoggedIn={setLoggedIn} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                    case 'VerificationPage': 
+                        setPageComponent(<VerificationPage page='VerificationPage' setLoggedIn={setLoggedIn} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                    case 'ForgetPasswordPage': 
+                        setPageComponent(<ForgetPasswordPage page='ForgetPasswordPage' setLoggedIn={setLoggedIn} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                    case 'ResetPasswordPage': 
+                        setPageComponent(<ResetPasswordPage setLoggedIn={setLoggedIn} page='ResetPasswordPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
                     default: setPageComponent(<></>); break;
                 }
             }
@@ -482,7 +671,11 @@ const OuterPage = () => {
                         {pageLabel &&
                             <div className='outerPage__PageLabel'>
                                 <Text color='gray' cls='Default' content={pageLabel} fontSize='30' display="inline-block" />
-                                <QuestionCircleOutlined  />
+                                <QuestionCircleOutlined  onClick={()=>{notification.open({
+                                    message: "Introduction",
+                                    description: introduction,
+                                    placement: 'topRight'
+                                });}}/>
                             </div>
                         }
                         <div className={pageLabel ? 'outerPage__Layout__PageLabel' : 'outerPage__Layout'} >

@@ -76,12 +76,23 @@ function Information(props) {
 
                 {props.bestPrice!=null &&(
                     <Col className='information__Price'>
-                        <Tooltip title={"Remainder: " + props.remainBest + " people" }>
-                            <div className='information__Price'>
-                                <Text color='black' cls='Small' content={(props.type=="note" || props.type=="collaboration")?"Price":"Best Solution"} fontSize='5' display="inline-block" />
-                            </div>
-                            {props.bestPrice}
-                        </Tooltip>
+                        {props.remainBest!=null?
+                            <Tooltip title={"Remainder: " + props.remainBest + " people" }>
+                                <div className='information__Price'>
+                                    <Text color='black' cls='Small' content={(props.type=="note" || props.type=="collaboration")?"Price":"Best Solution"} fontSize='5' display="inline-block" />
+                                </div>
+                                {props.bestPrice}
+                            </Tooltip>
+                            :
+                            <>
+                                <div className='information__Price'>
+                                    <Text color='black' cls='Small' content={(props.type=="note" || props.type=="collaboration")?"Price":"Best Solution"} fontSize='5' display="inline-block" />
+                                </div>
+                                {props.bestPrice}
+                            </>
+                        }
+                        
+                        
                     </Col>
                 )}
                 

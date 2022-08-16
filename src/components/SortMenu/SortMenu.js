@@ -49,7 +49,7 @@ const SortMeun = (props) => {
                         {() => {
                             SortByDate();
                         }}
-                    >日期</a>),
+                    >Date</a>),
                     key: "1",
                     icon: <CalendarOutlined />
                 },
@@ -58,7 +58,7 @@ const SortMeun = (props) => {
                         {() => {
                             SortByBestPrice();
                         }}
-                    >賞金</a>),
+                    >Price</a>),
                     key: "2",
                     icon: <DollarCircleOutlined />
                 },
@@ -67,7 +67,7 @@ const SortMeun = (props) => {
                         {() => {
                             SortByAns();
                         }}
-                    >留言數</a>),
+                    >Comments</a>),
                     key: "3",
                     icon: <CommentOutlined />
                 },
@@ -82,7 +82,7 @@ const SortMeun = (props) => {
                         {() => {
                             SortByDate();
                         }}
-                    >日期</a>),
+                    >Date</a>),
                     key: "1",
                     icon: <CalendarOutlined />
                 },
@@ -91,7 +91,7 @@ const SortMeun = (props) => {
                         {() => {
                             SortByPrice();
                         }}
-                    >價格</a>),
+                    >Price</a>),
                     key: "2",
                     icon: <DollarCircleOutlined />
                 },
@@ -100,7 +100,7 @@ const SortMeun = (props) => {
                         {() => {
                             SortByLikeCount();
                         }}
-                    >喜歡數</a>),
+                    >Likes</a>),
                     key: "3",
                     icon: <LikeOutlined />
                 },
@@ -109,7 +109,7 @@ const SortMeun = (props) => {
                         {() => {
                             SortByUnlockCountCount();
                         }}
-                    >購買數</a>),
+                    >Quantity Sold</a>),
                     key: "4",
                     icon: <UnlockOutlined />
                 },
@@ -118,7 +118,7 @@ const SortMeun = (props) => {
                         {() => {
                             SortByFavoriteCount();
                         }}
-                    >收藏數</a>),
+                    >Favorites</a>),
                     key: "5",
                     icon: <StarOutlined />
                 },
@@ -135,7 +135,7 @@ const SortMeun = (props) => {
                         {() => {
                             SortByDate();
                         }}
-                    >日期</a>),
+                    >Date</a>),
                     key: "1",
                     icon: <CalendarOutlined />
                 },
@@ -144,7 +144,7 @@ const SortMeun = (props) => {
                         {() => {
                             SortByBestPrice();
                         }}
-                    >賞金</a>),
+                    >Price</a>),
                     key: "2",
                     icon: <DollarCircleOutlined />
                 },
@@ -153,7 +153,7 @@ const SortMeun = (props) => {
                         {() => {
                             SortByAns();
                         }}
-                    >留言數</a>),
+                    >Comments</a>),
                     key: "3",
                     icon: <CommentOutlined />
                 },
@@ -168,7 +168,7 @@ const SortMeun = (props) => {
                         {() => {
                             SortByDate();
                         }}
-                    >日期</a>),
+                    >Date</a>),
                     key: "1",
                     icon: <CalendarOutlined />
                 },
@@ -177,7 +177,7 @@ const SortMeun = (props) => {
                         {() => {
                             SortByBestPrice();
                         }}
-                    >賞金</a>),
+                    >Price</a>),
                     key: "2",
                     icon: <DollarCircleOutlined />
                 },
@@ -186,7 +186,7 @@ const SortMeun = (props) => {
                         {() => {
                             SortByAns();
                         }}
-                    >留言數</a>),
+                    >Comments</a>),
                     key: "3",
                     icon: <CommentOutlined />
                 },
