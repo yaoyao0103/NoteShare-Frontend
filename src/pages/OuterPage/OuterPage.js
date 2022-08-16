@@ -28,7 +28,7 @@ import SignUpPage from "../SignUpPage/SignUpPage";
 import VerificationPage from "../VerificationPage/VerificationPage";
 import ForgetPasswordPage from '../ForgetPasswordPage/ForgetPasswordPage';
 import Navbar from '../../components/Navbar/Navbar';
-import { PlusOutlined, ArrowLeftOutlined, EllipsisOutlined, UpOutlined, DownOutlined, FileTextOutlined, MessageOutlined, TeamOutlined, FileSearchOutlined } from "@ant-design/icons";
+import { QuestionCircleOutlined, PlusOutlined, ArrowLeftOutlined, EllipsisOutlined, UpOutlined, DownOutlined, FileTextOutlined, MessageOutlined, TeamOutlined, FileSearchOutlined } from "@ant-design/icons";
 import CollabNoteEditPage from "../CollabNoteEditPage/CollabNoteEditPage";
 import CollabRecommendPage from '../CollabRecommendPage/CollabRecommendPage';
 import ResetPasswordPage from '../ResetPasswordPage/ResetPasswordPage';
@@ -482,6 +482,7 @@ const OuterPage = () => {
                         {pageLabel &&
                             <div className='outerPage__PageLabel'>
                                 <Text color='gray' cls='Default' content={pageLabel} fontSize='30' display="inline-block" />
+                                <QuestionCircleOutlined  />
                             </div>
                         }
                         <div className={pageLabel ? 'outerPage__Layout__PageLabel' : 'outerPage__Layout'} >

@@ -68,6 +68,7 @@ function AvatarButton(props) {
             tempEmail = Base64.decode(tempEmail);
         setEmail(tempEmail);
         axios.get("http://192.168.0.7:8080/user/name/" + tempEmail, {
+
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
             }

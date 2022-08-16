@@ -55,6 +55,10 @@ const PageDetailContentTemplate = (props) => {
     const [publishDate, setPublishDate] = useState('')
     const [rewardIsEnd, setRewardIsEnd] = useState(false)
     const [collabNoteTags, setCollabNoteTags] = useState([])
+    const [plagiarismRate, setPlagiarismRate] = useState(null)
+    const [quoteRate, setQuoteRate] = useState(null)
+    const [plagiarismRateResult, setPlagiarismRateResult] = useState(null)
+    const [quoteRateResult, setQuoteRateResult] = useState(null)
 
     useEffect(() => {
 
@@ -70,6 +74,10 @@ const PageDetailContentTemplate = (props) => {
             setNoteType(props.data?.type)
             setIsNotePublic(props.data?.public)
             setAuthorEmail(props.data?.headerUserObj.userObjEmail)
+            setPlagiarismRate(props.data?.plagiarismPoint)
+            setQuoteRate(props.data?.quotePoint)
+            setPlagiarismRateResult(props.data?.plagiarismPointResult)
+            setQuoteRateResult(props.data?.quotePointResult)
             if (props.data?.type == 'reward') {
                 console.log("props.data?.submit", props.data)
                 if (props.data?.submit) setIsSubmit(true)
@@ -104,6 +112,10 @@ const PageDetailContentTemplate = (props) => {
                     setIsNotePublic(tempNote.public)
                     setPublishDate(tempNote.publishDate)
                     setCollabNoteTags(tempNote.tag)
+                    setPlagiarismRate(tempNote.plagiarismPoint)
+                    setQuoteRate(tempNote.quotePoint)
+                    setPlagiarismRateResult(tempNote.plagiarismPointResult)
+                    setQuoteRateResult(tempNote.quotePointResult)
                     /*for(let i = 0; i < props.data?.authorUserObj.length; i++){
                         if(props.data?.emailUserObj[i].userObjEmail == tempEmail){
                             setEditor(<MyEditor noteId = {noteId} version={'0'} page={props.page} email={email}/>)
@@ -292,7 +304,6 @@ const PageDetailContentTemplate = (props) => {
     }
 
     const apply = (content) => {
-
         if (cookieParser.getCookieByName('email')) {
             //message.success("apply")
             const data = {
@@ -625,6 +636,10 @@ const PageDetailContentTemplate = (props) => {
                                     public={isPublic}
                                     notePublic={isNotePublic}
                                     type={type}
+                                    plagiarismRate={plagiarismRate}
+                                    quoteRate={quoteRate}
+                                    plagiarismRateResult={plagiarismRateResult}
+                                    quoteRateResult={quoteRateResult}
                                 />
                             </Col>
                         </Row>
@@ -787,7 +802,6 @@ const PageDetailContentTemplate = (props) => {
             <Drawer title={"Comment"} placement="right" onClose={onClose} visible={visible}>
                 <CommentArea setLoggedIn={props.setLoggedIn} setPageProps={props.setPageProps} page={props.page} type="note" comments={props.data?.commentsUserObj ? props.data.commentsUserObj : []} id={props.postId ? props.postId : props.noteId} />
             </Drawer>
-            <QuestionCircleOutlined style={{ position: 'absolute', fontSize: '28px', padding: '0.5em', top: '0.5em', right: '1em' }} />
         </div>
     );
 }

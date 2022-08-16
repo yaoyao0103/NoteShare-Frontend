@@ -139,7 +139,6 @@ function PageOutlineContentTemplate(props) {
                 </div>
 
             }
-            <QuestionCircleOutlined  style={{position:'absolute',fontSize:'28px' ,padding:'0.5em',top:'0.5em',right:'1em'}}/>
         </>
 
     );

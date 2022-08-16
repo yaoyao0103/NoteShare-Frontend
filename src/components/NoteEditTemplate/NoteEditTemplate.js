@@ -626,9 +626,9 @@ const NoteEditTemplate = (props) => {
     }
 
     const tagSubmit = async () => {
-        console.log("tagSelected", tagSelected)
-        console.log("tagSelected", { tagSelected })
-        axios.put(`http://192.168.0.7:8080/note/tag/updateTags/${noteId}`, { "tags": tagSelected }, {
+
+
+        axios.put(`http://192.168.0.7:8080/note/tag/updateTags/${noteId}`, {"tags":tagSelected},  {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
             }

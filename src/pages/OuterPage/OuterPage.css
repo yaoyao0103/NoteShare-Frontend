@@ -26,6 +26,19 @@
     left: 12%
 }
 
+.outerPage__PageLabel .anticon{
+    position: absolute;
+    font-size: 1.8em;
+    bottom: 0;
+    right: 12%;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.outerPage__PageLabel .anticon:hover{
+    transform: scale(1.1);
+}
+
 .outerPage__Layout__PageLabel{
     position: absolute;
     background-color: #FFFFFF;

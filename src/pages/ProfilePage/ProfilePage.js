@@ -796,7 +796,6 @@ function ProfilePage(props) {
                         {AvatarsList}
 
                     </Modal>
-                    <QuestionCircleOutlined style={{ position: 'absolute', fontSize: '28px', padding: '0.5em', top: '3.3em', right: '3.3em' }} />
                 </Layout >
             }
 
