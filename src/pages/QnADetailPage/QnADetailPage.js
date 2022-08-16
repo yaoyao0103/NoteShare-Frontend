@@ -4,7 +4,7 @@ import PageDetailTemplate from "../../components/PageDetailTemplate/PageDetailTe
 import PageDetailContentTemplate from '../../components/PageDetailContentTemplate/PageDetailContentTemplate';
 import { message } from "antd";
 import Cookie from '../../components/Cookies/Cookies';
-const cookieParser=new Cookie(document.cookie)
+const cookieParser = new Cookie(document.cookie)
 function QnADetailPage(props) {
     const [post, setPost] = useState([]);
     const page = "QnADetailPage";
@@ -13,23 +13,29 @@ function QnADetailPage(props) {
     useEffect(() => {
         async function getQnAById() {
             axios.get(`http://localhost:8080/post/${props.postId}`)
-            .then(res => {
-                setPost(res.data.res)
-                
-                props.setLoading(false);
-            })
-            .catch(err =>{
-                if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
-                    if(err.response.data.message.slice(0,13)==='Malformed JWT')
-                    document.cookie = 'error=Jwt'
-                    else
-                    document.cookie = 'error=true'
-                    message.error('Server Error! Please refresh again! (Get Reward Post Error)')
-                }
-                else{
-                    message.error("Server Error! Please try again later. (Get Reward Post Error)")
-                }
-            })
+                .then(res => {
+                    setPost(res.data.res)
+
+                    props.setLoading(false);
+                })
+                .catch(err => {
+                    if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
+                        if (err.response.data.message.slice(0, 13) === 'Malformed JWT') {
+                            document.cookie = 'error=Jwt'
+                            message.destroy()
+                            message.warning('The connection timed out, please login again !')
+                            document.cookie = 'email=;'
+                            props.setLoggedIn(false)
+                            props.setPageProps({ page: 'LoginPage' })
+                        }
+                        else
+                            document.cookie = 'error=true'
+                        message.error('Server Error! Please refresh again! (Get Reward Post Error)')
+                    }
+                    else {
+                        message.error("Server Error! Please try again later. (Get Reward Post Error)")
+                    }
+                })
         }
         getQnAById();
     }, [props]);
@@ -39,7 +45,7 @@ function QnADetailPage(props) {
             {/* <PageDetailTemplate page={page}>
                 <PageDetailContentTemplate page={page} data={QnA} postId={postId}/>  
             </PageDetailTemplate> */}
-            <PageDetailContentTemplate page={props.page} data={post} postId={props.postId} setPageProps={props.setPageProps} />  
+            <PageDetailContentTemplate setLoggedIn={props.setLoggedIn} page={props.page} data={post} postId={props.postId} setPageProps={props.setPageProps} />
         </>
     );
 }

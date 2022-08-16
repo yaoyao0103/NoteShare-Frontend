@@ -25,13 +25,19 @@ function FolderOutlinePage(props) {
             } catch (error) {
                 setFolder(error.message);
                 if (error.response.status === 500 || error.response.status === 404 || error.response.status === 403) {
-                    if (error.response.data.message.slice(0, 13) === 'Malformed JWT')
+                    if (error.response.data.message.slice(0, 13) === 'Malformed JWT') {
                         document.cookie = 'error=Jwt'
+                        message.destroy()
+                        message.warning('The connection timed out, please login again !')
+                        document.cookie = 'email=;'
+                        props.setLoggedIn(false)
+                        props.setPageProps({ page: 'LoginPage' })
+                    }
                     else
                         document.cookie = 'error=true'
                     message.error('Server Error! Please refresh again! (Get Folder Outline Error)')
                 }
-                else{
+                else {
                     message.error("Server Error! Please try again later. (Get Folder Outline Error)")
                 }
             }
@@ -53,14 +59,20 @@ function FolderOutlinePage(props) {
                 });
 
             } catch (error) {
-                if (error.response.status === 500 || error.response.status === 404||error.response.status === 403){
-                    if(error.response.data.message.slice(0,13)==='Malformed JWT')
-                    document.cookie = 'error=Jwt'
+                if (error.response.status === 500 || error.response.status === 404 || error.response.status === 403) {
+                    if (error.response.data.message.slice(0, 13) === 'Malformed JWT') {
+                        document.cookie = 'error=Jwt'
+                        message.destroy()
+                        message.warning('The connection timed out, please login again !')
+                        document.cookie = 'email=;'
+                        props.setLoggedIn(false)
+                        props.setPageProps({ page: 'LoginPage' })
+                    }
                     else
-                    document.cookie = 'error=true'
+                        document.cookie = 'error=true'
                     message.error('Server Error! Please refresh again! (Get Folder Outline Error)')
                 }
-                else{
+                else {
                     message.error("Server Error! Please try again later. (Get Folder Outline Error)")
                 }
 
@@ -77,7 +89,7 @@ function FolderOutlinePage(props) {
     return (
         <>
             {Folder.length > 0 &&
-                <PageOutlineContentTemplate setPageProps={props.setPageProps} pageNumber={props.pageNumber} page={page} hasSwitch={false} mode='Folder' Post={Folder} changePageNumber={props.setPageNumber} changeSortMode={(sortMode) => { setSortMode(sortMode); }} />
+                <PageOutlineContentTemplate setLoggedIn={props.setLoggedIn} setPageProps={props.setPageProps} pageNumber={props.pageNumber} page={page} hasSwitch={false} mode='Folder' Post={Folder} changePageNumber={props.setPageNumber} changeSortMode={(sortMode) => { setSortMode(sortMode); }} />
             }
         </>
     );

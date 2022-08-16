@@ -20,17 +20,23 @@ function NoteDetailPage(props) {
                     props.setLoading(false)
                 })
                 .catch(err => {
-                    if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
-                        if(err.response.data.message.slice(0,13)==='Malformed JWT')
-                        document.cookie = 'error=Jwt'
+                    if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
+                        if (err.response.data.message.slice(0, 13) === 'Malformed JWT') {
+                            document.cookie = 'error=Jwt'
+                            message.destroy()
+                            message.warning('The connection timed out, please login again !')
+                            document.cookie = 'email=;'
+                            props.setLoggedIn(false)
+                            props.setPageProps({ page: 'LoginPage' })
+                        }
                         else
-                        document.cookie = 'error=true'
+                            document.cookie = 'error=true'
                         message.error('Server Error! Please refresh again! (Get Note Error)')
                     }
-                    else{
+                    else {
                         message.error("Server Error! Please try again later. (Get Note Error)")
                     }
-                       
+
                 })
         }
         //console.log("--------------------")
@@ -41,7 +47,7 @@ function NoteDetailPage(props) {
             {/* <PageDetailTemplate page={page}>
                 <PageDetailContentTemplate page={page} data={note} noteId={props.noteId}/>
             </PageDetailTemplate> */}
-            <PageDetailContentTemplate setLoading={props.setLoading} coinNum={props.coinNum} setCoinNum={props.setCoinNum} sendPrivateMessage={props.sendPrivateMessage} page={page} data={note} noteId={props.noteId} setPageProps={props.setPageProps} />
+            <PageDetailContentTemplate setLoggedIn={props.setLoggedIn} setLoading={props.setLoading} coinNum={props.coinNum} setCoinNum={props.setCoinNum} sendPrivateMessage={props.sendPrivateMessage} page={page} data={note} noteId={props.noteId} setPageProps={props.setPageProps} />
         </>
 
     );

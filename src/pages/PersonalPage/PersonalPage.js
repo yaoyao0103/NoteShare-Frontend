@@ -24,7 +24,7 @@ const PersonalPage = (props) => {
         //         <FileManager page={page}/>
         //     </div>
         // </div>
-        <FileManager page={props.page} email={email} setPageProps={props.setPageProps} setLoading={props.setLoading} />
+        <FileManager setLoggedIn={props.setLoggedIn} page={props.page} email={email} setPageProps={props.setPageProps} setLoading={props.setLoading} />
     );
 
 }

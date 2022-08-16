@@ -4,51 +4,57 @@ import NoteEditTemplate from '../../components/NoteEditTemplate/NoteEditTemplate
 import axios from '../../components/axios/axios';
 import { message } from "antd";
 import Cookie from '../../components/Cookies/Cookies';
-const cookieParser=new Cookie(document.cookie)
-function NoteEditPage(props){
+const cookieParser = new Cookie(document.cookie)
+function NoteEditPage(props) {
     const [note, setNote] = useState(null);
 
     useEffect(() => {
         async function getNoteById() {
             axios.get(`http://localhost:8080/note/${props.noteId}`)
-            .then(res => {
-                setNote(res.data.res)
-                console.log(res.data.res)
-            })
-            .catch (err => {
-                if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
-                    if(err.response.data.message.slice(0,13)==='Malformed JWT')
-                    document.cookie = 'error=Jwt'
-                    else
-                    document.cookie = 'error=true'
-                    message.error('Server Error! Please refresh again! (Get Note Error)')
-                }
-                else{
-                    message.error("Server Error! Please try again later. (Get Note Error)")
-                }
-            })
+                .then(res => {
+                    setNote(res.data.res)
+                    console.log(res.data.res)
+                })
+                .catch(err => {
+                    if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
+                        if (err.response.data.message.slice(0, 13) === 'Malformed JWT') {
+                            document.cookie = 'error=Jwt'
+                            message.destroy()
+                            message.warning('The connection timed out, please login again !')
+                            document.cookie = 'email=;'
+                            props.setLoggedIn(false)
+                            props.setPageProps({ page: 'LoginPage' })
+                        }
+                        else
+                            document.cookie = 'error=true'
+                        message.error('Server Error! Please refresh again! (Get Note Error)')
+                    }
+                    else {
+                        message.error("Server Error! Please try again later. (Get Note Error)")
+                    }
+                })
         }
-        if(props.action=='edit'){
+        if (props.action == 'edit') {
             getNoteById();
             console.log("edit")
         }
-        else if(props.action=='new'){
+        else if (props.action == 'new') {
             console.log("new")
         }
-        else{
+        else {
             console.log("newReward")
         }
-        
-        }, []);
 
-    return(
+    }, []);
+
+    return (
         <>
             {/* <PageDetailTemplate page={page}>
                 <NoteEditTemplate page={page} note={note} mode={props.action}/>
             </PageDetailTemplate> */}
-            <NoteEditTemplate sendBellMessage={props.sendBellMessage} page={props.page} sendPrivateMessage={props.sendPrivateMessage}rewardAuthorEmail={props.rewardAuthorEmail}note={note} mode={props.action} setPageProps={props.setPageProps} folderId={props.folderId} postId={props.postId} setLoading={props.setLoading}/>
+            <NoteEditTemplate setLoggedIn={props.setLoggedIn} setPageProps={props.setPageProps} sendBellMessage={props.sendBellMessage} page={props.page} sendPrivateMessage={props.sendPrivateMessage} rewardAuthorEmail={props.rewardAuthorEmail} note={note} mode={props.action} folderId={props.folderId} postId={props.postId} setLoading={props.setLoading} />
         </>
-        
+
     );
 }
 export default NoteEditPage;

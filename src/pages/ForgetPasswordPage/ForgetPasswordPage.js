@@ -8,7 +8,7 @@ import axios from "axios";
 import './ForgetPasswordPage.css'
 import Cookie from '../../components/Cookies/Cookies';
 const { Sider, Content } = Layout;
-const cookieParser=new Cookie(document.cookie)
+const cookieParser = new Cookie(document.cookie)
 function ForgetPasswordPage(props) {
     const [Page, setPage] = useState('ForgetPasswordPage');
     const [render, setRender] = useState(false);
@@ -24,8 +24,8 @@ function ForgetPasswordPage(props) {
         setRender(true);
     });
     useEffect(() => {
-        if(render)
-        props.setLoading(false);
+        if (render)
+            props.setLoading(false);
 
 
     }, [props]);
@@ -36,7 +36,7 @@ function ForgetPasswordPage(props) {
         //console.log('Received values of form: ', values);
 
         resend();
-        
+
     };
 
 
@@ -50,14 +50,20 @@ function ForgetPasswordPage(props) {
                 // if(error.response.status === 403){
                 //   setRedirectActivate(true);
                 // }
-                if (error.response.status === 500 || error.response.status === 404||error.response.status === 403){
-                    if(error.response.data.message.slice(0,13)==='Malformed JWT')
-                    document.cookie = 'error=Jwt'
+                if (error.response.status === 500 || error.response.status === 404 || error.response.status === 403) {
+                    if (error.response.data.message.slice(0, 13) === 'Malformed JWT') {
+                        document.cookie = 'error=Jwt'
+                        message.destroy()
+                        message.warning('The connection timed out, please login again !')
+                        document.cookie = 'email=;'
+                        props.setLoggedIn(false)
+                        props.setPageProps({ page: 'LoginPage' })
+                    }
                     else
-                    document.cookie = 'error=true'
+                        document.cookie = 'error=true'
                     message.error('Server Error! Please refresh again! (Resend Verify Code Error)')
                 }
-                else{
+                else {
                     message.error('Server Error! Please try again later. (Resend Verify Code Error)')
                 }
                 setResendFail(true);
@@ -70,30 +76,36 @@ function ForgetPasswordPage(props) {
 
                     })
                 }, 2000)
-                
+
             }
             else {
                 message.warn('Please verify your account first!');
                 setInterval(function () {
                     props.setPageProps({ page: 'VerificationPage', email: email });
                 }, 2000)
-                
+
             }
 
-           
+
         }).catch((error) => {
             setError(error.response.status);
             // if(error.response.status === 403){
             //   setRedirectActivate(true);
             // }
-            if (error.response.status === 500 || error.response.status === 404||error.response.status === 403){
-                if(error.response.data.message.slice(0,13)==='Malformed JWT')
-                document.cookie = 'error=Jwt'
+            if (error.response.status === 500 || error.response.status === 404 || error.response.status === 403) {
+                if (error.response.data.message.slice(0, 13) === 'Malformed JWT') {
+                    document.cookie = 'error=Jwt'
+                    message.destroy()
+                    message.warning('The connection timed out, please login again !')
+                    document.cookie = 'email=;'
+                    props.setLoggedIn(false)
+                    props.setPageProps({ page: 'LoginPage' })
+                }
                 else
-                document.cookie = 'error=true'
+                    document.cookie = 'error=true'
                 message.error('Server Error! Please refresh again! (Get User Information Error)')
             }
-            else{
+            else {
                 message.error("Server Error! Please try again later. (Get User Information Error)")
             }
             setResendFail(true);
@@ -103,7 +115,7 @@ function ForgetPasswordPage(props) {
 
     }
 
-  
+
     const formItemLayout = {
         labelCol: {
             xs: {

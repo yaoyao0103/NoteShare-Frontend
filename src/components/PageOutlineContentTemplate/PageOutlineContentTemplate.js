@@ -62,7 +62,7 @@ function PageOutlineContentTemplate(props) {
                             
                     }
                 }
-                tempcardLists.push(<OutlineCard key={i}email={tempEmail}hasLike={hasLike} hasJoin={hasJoin}hasBuy={hasBuy} setPageProps={props.setPageProps} page={props.page} mode={props.mode} cardContent={props.Post[0].items[i]} />);
+                tempcardLists.push(<OutlineCard setLoggedIn={props.setLoggedIn} setPageProps={props.setPageProps} key={i}email={tempEmail}hasLike={hasLike} hasJoin={hasJoin}hasBuy={hasBuy}  page={props.page} mode={props.mode} cardContent={props.Post[0].items[i]} />);
             };
 
             setCardList(tempcardLists);

@@ -4,7 +4,7 @@ import { List, Skeleton, Layout, message, Avatar, Dropdown, Menu, Input, Modal, 
 import Button from '../Button/Button';
 import Text from '../Text/Text';
 import axios from '../axios/axios';
-import { ArrowLeftOutlined, FolderAddOutlined, PlusOutlined, MoreOutlined, CloseOutlined, CheckOutlined ,QuestionCircleOutlined} from "@ant-design/icons";
+import { ArrowLeftOutlined, FolderAddOutlined, PlusOutlined, MoreOutlined, CloseOutlined, CheckOutlined, QuestionCircleOutlined } from "@ant-design/icons";
 import './FileManager.css';
 import { Note } from '../PostEditTemplate/InfoCategories';
 import OptionMenu from '../OptionMenu/OptionMenu';
@@ -41,14 +41,20 @@ const FileManager = (props) => {
                     props.setLoading(false)
                 })
                 .catch(err => {
-                    if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
-                        if(err.response.data.message.slice(0,13)==='Malformed JWT')
-                        document.cookie = 'error=Jwt'
+                    if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
+                        if (err.response.data.message.slice(0, 13) === 'Malformed JWT') {
+                            document.cookie = 'error=Jwt'
+                            message.destroy()
+                            message.warning('The connection timed out, please login again !')
+                            document.cookie = 'email=;'
+                            props.setLoggedIn(false)
+                            props.setPageProps({ page: 'LoginPage' })
+                        }
                         else
-                        document.cookie = 'error=true'
+                            document.cookie = 'error=true'
                         message.error('Server Error! Please refresh again! (Get Root File Error)')
                     }
-                    else{
+                    else {
                         message.error("Server Error! Please try again later. (Get Root File Error)")
                     }
                 })
@@ -100,7 +106,7 @@ const FileManager = (props) => {
                                     className="fileManage_Note_Item fileManage_List_Item"
                                     actions={
                                         tempPath.split('/')[1] == 'Folder' &&
-                                        [<OptionMenu page={props.page} id={item.id} setPageProps={props.setPageProps} setCopy={setCopy} type={"note"} folderId={folderId} rerenderNotes={() => onClickFolderZone(folderId)} />]
+                                        [<OptionMenu setLoggedIn={props.setLoggedIn} page={props.page} id={item.id} setPageProps={props.setPageProps} setCopy={setCopy} type={"note"} folderId={folderId} rerenderNotes={() => onClickFolderZone(folderId)} />]
                                     }
                                 >
                                     <List.Item.Meta
@@ -109,7 +115,7 @@ const FileManager = (props) => {
                                                 <Avatar src={item.headerUserObj.userObjAvatar} />
                                             </Tooltip>}
                                         title={item.title}
-                                        description={item.description? item.description.substring(0, 120)+"...":"..."}
+                                        description={item.description ? item.description.substring(0, 120) + "..." : "..."}
                                         onClick={() => onClickNote(item.id)}
                                     />
                                 </List.Item>
@@ -126,14 +132,20 @@ const FileManager = (props) => {
             })
             .catch(err => {
                 props.setLoading(false)
-                if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
-                    if(err.response.data.message.slice(0,13)==='Malformed JWT')
-                    document.cookie = 'error=Jwt'
+                if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
+                    if (err.response.data.message.slice(0, 13) === 'Malformed JWT') {
+                        document.cookie = 'error=Jwt'
+                        message.destroy()
+                        message.warning('The connection timed out, please login again !')
+                        document.cookie = 'email=;'
+                        props.setLoggedIn(false)
+                        props.setPageProps({ page: 'LoginPage' })
+                    }
                     else
-                    document.cookie = 'error=true'
+                        document.cookie = 'error=true'
                     message.error('Server Error! Please refresh again! (Enter Folder Error)')
                 }
-                else{
+                else {
                     message.error("Server Error! Please try again later. (Enter Folder Error)")
                 }
             })
@@ -187,14 +199,20 @@ const FileManager = (props) => {
             })
             .catch(err => {
                 props.setLoading(false)
-                if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
-                    if(err.response.data.message.slice(0,13)==='Malformed JWT')
-                    document.cookie = 'error=Jwt'
+                if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
+                    if (err.response.data.message.slice(0, 13) === 'Malformed JWT') {
+                        document.cookie = 'error=Jwt'
+                        message.destroy()
+                        message.warning('The connection timed out, please login again !')
+                        document.cookie = 'email=;'
+                        props.setLoggedIn(false)
+                        props.setPageProps({ page: 'LoginPage' })
+                    }
                     else
-                    document.cookie = 'error=true'
+                        document.cookie = 'error=true'
                     message.error('Server Error! Please refresh again! (Enter Post Folder Error)')
                 }
-                else{
+                else {
                     message.error("Server Error! Please try again later. (Enter Post Folder Error)")
                 }
             })
@@ -227,7 +245,7 @@ const FileManager = (props) => {
                                         </Tooltip>
                                     }
                                     title={item.title}
-                                    description={item.description? item.description.substring(0, 120)+"...":"..."}
+                                    description={item.description ? item.description.substring(0, 120) + "..." : "..."}
                                     onClick={() => onClickNote(item.id)}
                                 />
                             </List.Item>
@@ -237,14 +255,20 @@ const FileManager = (props) => {
                 props.setLoading(false)
             })
             .catch(err => {
-                if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
-                    if(err.response.data.message.slice(0,13)==='Malformed JWT')
-                    document.cookie = 'error=Jwt'
+                if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
+                    if (err.response.data.message.slice(0, 13) === 'Malformed JWT') {
+                        document.cookie = 'error=Jwt'
+                        message.destroy()
+                        message.warning('The connection timed out, please login again !')
+                        document.cookie = 'email=;'
+                        props.setLoggedIn(false)
+                        props.setPageProps({ page: 'LoginPage' })
+                    }
                     else
-                    document.cookie = 'error=true'
+                        document.cookie = 'error=true'
                     message.error('Server Error! Please refresh again! (Get Root File Error)')
                 }
-                else{
+                else {
                     message.error("Server Error! Please try again later. (Get Root File Error)")
                 }
             })
@@ -304,7 +328,7 @@ const FileManager = (props) => {
                                 renderItem={(item, index) => (
                                     <List.Item
                                         className="fileManage_Note_Item fileManage_List_Item"
-                                        actions={[<OptionMenu page={props.page} id={item.id} setCopy={setCopy} type={"note"} folderId={tempCurrent} rerenderNotes={() => onClickFolderZone(tempCurrent)} />]}
+                                        actions={[<OptionMenu setLoggedIn={props.setLoggedIn} setPageProps={props.setPageProps} page={props.page} id={item.id} setCopy={setCopy} type={"note"} folderId={tempCurrent} rerenderNotes={() => onClickFolderZone(tempCurrent)} />]}
                                     >
                                         <List.Item.Meta
                                             avatar={
@@ -313,7 +337,7 @@ const FileManager = (props) => {
                                                 </Tooltip>
                                             }
                                             title={item.title}
-                                            description={item.description? item.description.substring(0, 120)+"...":"..."}
+                                            description={item.description ? item.description.substring(0, 120) + "..." : "..."}
                                             onClick={() => onClickNote(item.id)}
                                         />
                                     </List.Item>
@@ -325,14 +349,20 @@ const FileManager = (props) => {
                 })
                 .catch(err => {
                     props.setLoading(false)
-                    if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
-                        if(err.response.data.message.slice(0,13)==='Malformed JWT')
-                        document.cookie = 'error=Jwt'
+                    if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
+                        if (err.response.data.message.slice(0, 13) === 'Malformed JWT') {
+                            document.cookie = 'error=Jwt'
+                            message.destroy()
+                            message.warning('The connection timed out, please login again !')
+                            document.cookie = 'email=;'
+                            props.setLoggedIn(false)
+                            props.setPageProps({ page: 'LoginPage' })
+                        }
                         else
-                        document.cookie = 'error=true'
+                            document.cookie = 'error=true'
                         message.error('Server Error! Please refresh again! (Back To Last Layer Error)')
                     }
-                    else{
+                    else {
                         message.error("Server Error! Please try again later. (Back To Last Layer Error)")
                     }
                 })
@@ -357,14 +387,20 @@ const FileManager = (props) => {
                 })
                 .catch(err => {
                     props.setLoading(false)
-                    if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
-                        if(err.response.data.message.slice(0,13)==='Malformed JWT')
-                        document.cookie = 'error=Jwt'
+                    if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
+                        if (err.response.data.message.slice(0, 13) === 'Malformed JWT') {
+                            document.cookie = 'error=Jwt'
+                            message.destroy()
+                            message.warning('The connection timed out, please login again !')
+                            document.cookie = 'email=;'
+                            props.setLoggedIn(false)
+                            props.setPageProps({ page: 'LoginPage' })
+                        }
                         else
-                        document.cookie = 'error=true'
+                            document.cookie = 'error=true'
                         message.error('Server Error! Please refresh again! (Back To Last Layer Error)')
                     }
-                    else{
+                    else {
                         message.error("Server Error! Please try again later. (Back To Last Layer Error)")
                     }
                 })
@@ -384,8 +420,8 @@ const FileManager = (props) => {
             message.warn("The folder name cannot be empty!")
             return;
         }
-        for(let i = 0; i < files.length; i++){
-            if(files[i].folderName === name){
+        for (let i = 0; i < files.length; i++) {
+            if (files[i].folderName === name) {
                 message.warn("The folder name is exist!")
                 return;
             }
@@ -404,14 +440,20 @@ const FileManager = (props) => {
                 //message.success("You created a folder!")
             })
             .catch(err => {
-                if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
-                    if(err.response.data.message.slice(0,13)==='Malformed JWT')
-                    document.cookie = 'error=Jwt'
+                if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
+                    if (err.response.data.message.slice(0, 13) === 'Malformed JWT') {
+                        document.cookie = 'error=Jwt'
+                        message.destroy()
+                        message.warning('The connection timed out, please login again !')
+                        document.cookie = 'email=;'
+                        props.setLoggedIn(false)
+                        props.setPageProps({ page: 'LoginPage' })
+                    }
                     else
-                    document.cookie = 'error=true'
+                        document.cookie = 'error=true'
                     message.error('Server Error! Please refresh again! (Create Folder Error)')
                 }
-                else{
+                else {
                     message.error("Server Error! Please try again later. (Create Folder Error)")
                 }
             })
@@ -431,32 +473,38 @@ const FileManager = (props) => {
                 message.success("You deleted a folder!")
             })
             .catch(err => {
-                if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
-                    if(err.response.data.message.slice(0,13)==='Malformed JWT')
-                    document.cookie = 'error=Jwt'
+                if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
+                    if (err.response.data.message.slice(0, 13) === 'Malformed JWT') {
+                        document.cookie = 'error=Jwt'
+                        message.destroy()
+                        message.warning('The connection timed out, please login again !')
+                        document.cookie = 'email=;'
+                        props.setLoggedIn(false)
+                        props.setPageProps({ page: 'LoginPage' })
+                    }
                     else
-                    document.cookie = 'error=true'
+                        document.cookie = 'error=true'
                     message.error('Server Error! Please refresh again! (Delete Folder Error)')
                 }
-                else{
+                else {
                     message.error("Server Error! Please try again later. (Delete Folder Error)")
                 }
             })
     }
 
     const renameFolder = (folderId, newName) => {
-        if(newName == ''){
+        if (newName == '') {
             message.warn("The folder name cannot be empty!")
             return;
         }
-        for(let i = 0; i < files.length; i++){
-            if(files[i].folderName == newName){
+        for (let i = 0; i < files.length; i++) {
+            if (files[i].folderName == newName) {
                 message.warn("The folder name is exist!")
                 return;
             }
         }
         props.setLoading(true)
-        axios.put(`http://localhost:8080/folder/rename/${props.email}/${folderId}/${newName}`, {},{
+        axios.put(`http://localhost:8080/folder/rename/${props.email}/${folderId}/${newName}`, {}, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
             }
@@ -468,14 +516,20 @@ const FileManager = (props) => {
                 props.setLoading(false)
             })
             .catch(err => {
-                if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
-                    if(err.response.data.message.slice(0,13)==='Malformed JWT')
-                    document.cookie = 'error=Jwt'
+                if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
+                    if (err.response.data.message.slice(0, 13) === 'Malformed JWT') {
+                        document.cookie = 'error=Jwt'
+                        message.destroy()
+                        message.warning('The connection timed out, please login again !')
+                        document.cookie = 'email=;'
+                        props.setLoggedIn(false)
+                        props.setPageProps({ page: 'LoginPage' })
+                    }
                     else
-                    document.cookie = 'error=true'
+                        document.cookie = 'error=true'
                     message.error('Server Error! Please refresh again! (Rename Folder Error)')
                 }
-                else{
+                else {
                     message.error("Server Error! Please try again later. (Rename Folder Error)")
                 }
             })
@@ -532,7 +586,7 @@ const FileManager = (props) => {
     const copyNote = () => {
         props.setLoading(true)
         message.destroy();
-        axios.put(`http://localhost:8080/note/save/${copy}/${current}`, {},{
+        axios.put(`http://localhost:8080/note/save/${copy}/${current}`, {}, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
             }
@@ -545,14 +599,20 @@ const FileManager = (props) => {
             })
             .catch(err => {
                 setCopy(null)
-                if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
-                    if(err.response.data.message.slice(0,13)==='Malformed JWT')
-                    document.cookie = 'error=Jwt'
+                if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
+                    if (err.response.data.message.slice(0, 13) === 'Malformed JWT') {
+                        document.cookie = 'error=Jwt'
+                        message.destroy()
+                        message.warning('The connection timed out, please login again !')
+                        document.cookie = 'email=;'
+                        props.setLoggedIn(false)
+                        props.setPageProps({ page: 'LoginPage' })
+                    }
                     else
-                    document.cookie = 'error=true'
+                        document.cookie = 'error=true'
                     message.error('Server Error! Please refresh again! (Copy Note Error)')
                 }
-                else{
+                else {
                     message.error("Server Error! Please try again later. (Copy Note Error)")
                 }
             })
@@ -578,14 +638,20 @@ const FileManager = (props) => {
                 message.success("You moved a folder!")
             })
             .catch(err => {
-                if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
-                    if(err.response.data.message.slice(0,13)==='Malformed JWT')
-                    document.cookie = 'error=Jwt'
+                if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
+                    if (err.response.data.message.slice(0, 13) === 'Malformed JWT') {
+                        document.cookie = 'error=Jwt'
+                        message.destroy()
+                        message.warning('The connection timed out, please login again !')
+                        document.cookie = 'email=;'
+                        props.setLoggedIn(false)
+                        props.setPageProps({ page: 'LoginPage' })
+                    }
                     else
-                    document.cookie = 'error=true'
+                        document.cookie = 'error=true'
                     message.error('Server Error! Please refresh again! (Move Folder Error)')
                 }
-                else{
+                else {
                     message.error("Server Error! Please try again later. (Move Folder Error)")
                 }
             })
@@ -593,12 +659,12 @@ const FileManager = (props) => {
     return (
         <>
             <div className='fileManager'>
-            
+
                 <Layout className='fileManager_Layout'>
-                    
+
                     <Sider className='fileManager_Sider'>
                         <div className='fileManager_Buttons' >
-                            
+
                             {backBtnShow ?
                                 <ArrowLeftOutlined onClick={back} />
                                 :
@@ -652,7 +718,7 @@ const FileManager = (props) => {
                                     >
 
 
-                                        {renaming == item.id ? <Input placeholder='New Folder Name' bordered={false} onPressEnter={(ev) => renameFolder(item.id, ev.target.value)} className="fileManage_Folder_Item_Input" addonAfter={<CloseOutlined onClick={() => setRenaming(false)} />} /> : <div className='fileManage_Folder_Item_Name' onClick={() => onClickFolderZone(item.id)}><div>{item.folderName != "Temp Reward Note" ? item.folderName != "Buy"? item.folderName + 's': "Owned" : "Draft Reward Notes"}</div></div>}
+                                        {renaming == item.id ? <Input placeholder='New Folder Name' bordered={false} onPressEnter={(ev) => renameFolder(item.id, ev.target.value)} className="fileManage_Folder_Item_Input" addonAfter={<CloseOutlined onClick={() => setRenaming(false)} />} /> : <div className='fileManage_Folder_Item_Name' onClick={() => onClickFolderZone(item.id)}><div>{item.folderName != "Temp Reward Note" ? item.folderName != "Buy" ? item.folderName + 's' : "Owned" : "Draft Reward Notes"}</div></div>}
 
                                         {renaming != item.id && inFolder &&
                                             <Dropdown overlay={<Menu
@@ -717,7 +783,7 @@ const FileManager = (props) => {
                     <Content className='fileManager_Content'>
                         {notes}
                     </Content>
-                    <QuestionCircleOutlined  style={{fontSize:'28px' ,padding:'0.5em'}}/>
+                    <QuestionCircleOutlined style={{ fontSize: '28px', padding: '0.5em' }} />
                 </Layout>
 
             </div>

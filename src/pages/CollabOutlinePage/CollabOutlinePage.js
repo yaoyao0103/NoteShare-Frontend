@@ -32,13 +32,19 @@ function CollabOutlinePage(props) {
             } catch (error) {
                 setCollab(error.message);
                 if (error.response.status === 500 || error.response.status === 404 || error.response.status === 403) {
-                    if (error.response.data.message.slice(0, 13) === 'Malformed JWT')
+                    if (error.response.data.message.slice(0, 13) === 'Malformed JWT') {
                         document.cookie = 'error=Jwt'
+                        message.destroy()
+                        message.warning('The connection timed out, please login again !')
+                        document.cookie = 'email=;'
+                        props.setLoggedIn(false)
+                        props.setPageProps({ page: 'LoginPage' })
+                    }
                     else
                         document.cookie = 'error=true'
                     message.error('Server Error! Please refresh again! (Get Collaboration Outline Error)')
                 }
-                else{
+                else {
                     message.error("Server Error! Please try again later. (Get Collaboration Outline Error)")
                 }
 
@@ -54,7 +60,7 @@ function CollabOutlinePage(props) {
     return (
         <>
             {Collab.length > 0 &&
-                <PageOutlineContentTemplate page={page} hasSwitch={false} mode='Post' Post={Collab} pageNumber={props.pageNumber} changePageNumber={props.setPageNumber} changeSortMode={props.changeSortMode} setPageProps={props.setPageProps} />
+                <PageOutlineContentTemplate setLoggedIn={props.setLoggedIn} setPageProps={props.setPageProps} page={page} hasSwitch={false} mode='Post' Post={Collab} pageNumber={props.pageNumber} changePageNumber={props.setPageNumber} changeSortMode={props.changeSortMode} />
             }
         </>
     );

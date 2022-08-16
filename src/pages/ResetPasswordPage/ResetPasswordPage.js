@@ -9,7 +9,7 @@ import './ResetPasswordPage.css'
 import Logo from '../../components/Navbar/Logo/Logo';
 import Cookie from '../../components/Cookies/Cookies';
 const { Header, Sider, Content, Footer } = Layout;
-const cookieParser=new Cookie(document.cookie)
+const cookieParser = new Cookie(document.cookie)
 function ResetPasswordPage(props) {
     const [Page, setPage] = useState('ResetPasswordPage');
     const [render, setRender] = useState(false);
@@ -30,8 +30,8 @@ function ResetPasswordPage(props) {
         setRender(true);
     });
     useEffect(() => {
-        if(render)
-        props.setLoading(false);
+        if (render)
+            props.setLoading(false);
 
 
     }, [props]);
@@ -47,14 +47,14 @@ function ResetPasswordPage(props) {
     const ResetPassword = () => {
         console.log(oldPassword);
         console.log(newPassword);
-        axios.post("http://localhost:8080/verification/resetPassword" , {password:oldPassword,newPassword:newPassword,email:props.email,},{
+        axios.post("http://localhost:8080/verification/resetPassword", { password: oldPassword, newPassword: newPassword, email: props.email, }, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
-              }
+            }
         }).then(res => {
             console.log(res);
             message.success("Your password has reset! Please log in again!");
-            document.cookie ='email=;';
+            document.cookie = 'email=;';
             props.setLoggedIn(false);
             props.setPageProps({
                 page: 'LoginPage',
@@ -62,24 +62,30 @@ function ResetPasswordPage(props) {
             })
         }).catch((error) => {
             setOpenFail(true);
-            if (error.response.status === 500 || error.response.status === 404||error.response.status === 403){
-                if(error.response.data.message.slice(0,13)==='Malformed JWT')
-                document.cookie = 'error=Jwt'
+            if (error.response.status === 500 || error.response.status === 404 || error.response.status === 403) {
+                if (error.response.data.message.slice(0, 13) === 'Malformed JWT') {
+                    document.cookie = 'error=Jwt'
+                    message.destroy()
+                    message.warning('The connection timed out, please login again !')
+                    document.cookie = 'email=;'
+                    props.setLoggedIn(false)
+                    props.setPageProps({ page: 'LoginPage' })
+                }
                 else
-                document.cookie = 'error=true'
+                    document.cookie = 'error=true'
                 message.error('Server Error! Please refresh again! (Reset Password Error)')
             }
-            else{
+            else {
                 message.error("Server Error! Please try again later. (Reset Password Error)")
             }
         })
 
     };
-  
-   
-   
 
-  
+
+
+
+
     const formItemLayout = {
         labelCol: {
             xs: {
@@ -120,140 +126,140 @@ function ResetPasswordPage(props) {
     );
     return (
         <div className='signUpPage'>
-        {render &&
-            <div className='signUpPage__Outer'>
-                <Spin className='signUpPage__Spin'indicator={antIcon}  spinning={loading}>
-                    <Layout className='signUpPagee__Outer'>
-                        <Sider className='signUpPage__Sider' width={"60%"}>
-                            <img src="https://static.vecteezy.com/system/resources/previews/004/482/351/original/single-one-line-drawing-couple-with-laptop-sitting-at-the-park-together-freelance-distance-learning-online-courses-studying-concept-modern-continuous-line-draw-design-graphic-illustration-vector.jpg" alt="一張圖片" />
-                        </Sider>
-                        <Content className='signUpPage__Content'>
-                            <div className='signUpPage__Content__Text'>
-                                <Text color='black' cls='Large' content='Welcome to Note' fontSize='22'/>
-                                <Text color='purple' cls='Large' content='Share' fontSize='22'/>
-                            </div>
-                            <div className='signUpPage__Content__Text signUpPage__Content__Text__Bottom'>
-                                <Text color='black' cls='Default' content='Write your own note!' fontSize='10'/>
-                            </div>
-                            <div className="signUpPage__Form">
-                                <Form
-                                    {...formItemLayout}
-                                    name="register"
-                                    onFinish={onFinish}
-                                    initialValues={{
-                                        email:props.email
-                                    }}
-                                    scrollToFirstError
-                                >
-                                    <div className='signUpPage__Content__Form__Text'>
-                                        <Text color='black' cls='Small' content='Email' fontSize='13'/>
-                                    </div>
-                                    <Form.Item
-                                        name="email"
-                                        className='signUpPage__Form__Item'
-                                        rules={[
-                                            {
-                                                type: 'email',
-                                                message: 'The input is not valid E-mail!',
-                                            },
-                                            {
-                                                required: true,
-                                                message: 'Please input your E-mail!',
-                                            },
-                                        ]}
+            {render &&
+                <div className='signUpPage__Outer'>
+                    <Spin className='signUpPage__Spin' indicator={antIcon} spinning={loading}>
+                        <Layout className='signUpPagee__Outer'>
+                            <Sider className='signUpPage__Sider' width={"60%"}>
+                                <img src="https://static.vecteezy.com/system/resources/previews/004/482/351/original/single-one-line-drawing-couple-with-laptop-sitting-at-the-park-together-freelance-distance-learning-online-courses-studying-concept-modern-continuous-line-draw-design-graphic-illustration-vector.jpg" alt="一張圖片" />
+                            </Sider>
+                            <Content className='signUpPage__Content'>
+                                <div className='signUpPage__Content__Text'>
+                                    <Text color='black' cls='Large' content='Welcome to Note' fontSize='22' />
+                                    <Text color='purple' cls='Large' content='Share' fontSize='22' />
+                                </div>
+                                <div className='signUpPage__Content__Text signUpPage__Content__Text__Bottom'>
+                                    <Text color='black' cls='Default' content='Write your own note!' fontSize='10' />
+                                </div>
+                                <div className="signUpPage__Form">
+                                    <Form
+                                        {...formItemLayout}
+                                        name="register"
+                                        onFinish={onFinish}
+                                        initialValues={{
+                                            email: props.email
+                                        }}
+                                        scrollToFirstError
                                     >
-                                        <Input disabled />
-                                    </Form.Item>
-                                    <div className='signUpPage__Content__Form__Text'>
-                                        <Text color='black' cls='Small' content='Old Password' fontSize='13'/>
-                                    </div>
-                                    <Form.Item
-                                        className='signUpPage__Form__Item'
-                                        name="old password"
-                                        //label="Password"
-                                        rules={[
-                                            {
-                                                required: true,
-                                                message: 'Please input your password!',
-                                            },
-                                        ]}
-                                        hasFeedback
-                                    >
-                                        <Input.Password placeholder="Password" onChange={(e) => { setOldPassword(e.target.value) }} />
-                                    </Form.Item>
-
-                                    <div className='signUpPage__Content__Form__Text'>
-                                        <Text color='black' cls='Small' content='New Password' fontSize='13'/>
-                                    </div>
-                                    <Form.Item
-                                        className='signUpPage__Form__Item'
-                                        name="new password"
-                                        //label="Password"
-                                        rules={[
-                                            {
-                                                required: true,
-                                                message: 'Please input your password!',
-                                            },
-                                            ({ getFieldValue }) => ({
-                                                validator(_, value) {
-                                                    if (!value || getFieldValue('old password') !== value) {
-                                                        return Promise.resolve();
-                                                    }
-
-                                                    return Promise.reject(new Error('Please enter a different password from the old password!'));
-                                                },
-                                            }),
-                                        ]}
-                                        hasFeedback
-                                    >
-                                        <Input.Password placeholder="Password" onChange={(e) => { setNewPassword(e.target.value) }} />
-                                    </Form.Item>
-
-                                    <div className='signUpPage__Content__Form__Text'>
-                                        <Text color='black' cls='Small' content='Confirm Password' fontSize='13'/>
-                                    </div>
-                                    <Form.Item
-                                        className='signUpPage__Form__Item'
-                                        name="confirm"
-                                        //label="Confirm Password"
-                                        dependencies={['new password']}
-                                        hasFeedback
-                                        rules={[
-                                            {
-                                                required: true,
-                                                message: 'Please confirm your password!',
-                                            },
-                                            ({ getFieldValue }) => ({
-                                                validator(_, value) {
-                                                    if (!value || getFieldValue('new password') === value) {
-                                                        return Promise.resolve();
-                                                    }
-
-                                                    return Promise.reject(new Error('The two passwords that you entered do not match!'));
-                                                },
-                                            }),
-                                        ]}
-                                    >
-                                        <Input.Password placeholder="Confirm Password" />
-                                    </Form.Item>
-
-                              
-
-
-                                    <Form.Item {...tailFormItemLayout} className='signUpPage__Form__Item'>
-                                        <div className="signUpPage__Button">
-                                            <Button color={"green"}><Text color='white' cls='Large' content={"Reset"} fontSize='15' display="inline-block" /></Button>
+                                        <div className='signUpPage__Content__Form__Text'>
+                                            <Text color='black' cls='Small' content='Email' fontSize='13' />
                                         </div>
+                                        <Form.Item
+                                            name="email"
+                                            className='signUpPage__Form__Item'
+                                            rules={[
+                                                {
+                                                    type: 'email',
+                                                    message: 'The input is not valid E-mail!',
+                                                },
+                                                {
+                                                    required: true,
+                                                    message: 'Please input your E-mail!',
+                                                },
+                                            ]}
+                                        >
+                                            <Input disabled />
+                                        </Form.Item>
+                                        <div className='signUpPage__Content__Form__Text'>
+                                            <Text color='black' cls='Small' content='Old Password' fontSize='13' />
+                                        </div>
+                                        <Form.Item
+                                            className='signUpPage__Form__Item'
+                                            name="old password"
+                                            //label="Password"
+                                            rules={[
+                                                {
+                                                    required: true,
+                                                    message: 'Please input your password!',
+                                                },
+                                            ]}
+                                            hasFeedback
+                                        >
+                                            <Input.Password placeholder="Password" onChange={(e) => { setOldPassword(e.target.value) }} />
+                                        </Form.Item>
 
-                                    </Form.Item>
-                                </Form>
-                            </div>
-                    </Content>
-                </Layout>
-                </Spin>
-            </div>
-        }
-    </div>
+                                        <div className='signUpPage__Content__Form__Text'>
+                                            <Text color='black' cls='Small' content='New Password' fontSize='13' />
+                                        </div>
+                                        <Form.Item
+                                            className='signUpPage__Form__Item'
+                                            name="new password"
+                                            //label="Password"
+                                            rules={[
+                                                {
+                                                    required: true,
+                                                    message: 'Please input your password!',
+                                                },
+                                                ({ getFieldValue }) => ({
+                                                    validator(_, value) {
+                                                        if (!value || getFieldValue('old password') !== value) {
+                                                            return Promise.resolve();
+                                                        }
+
+                                                        return Promise.reject(new Error('Please enter a different password from the old password!'));
+                                                    },
+                                                }),
+                                            ]}
+                                            hasFeedback
+                                        >
+                                            <Input.Password placeholder="Password" onChange={(e) => { setNewPassword(e.target.value) }} />
+                                        </Form.Item>
+
+                                        <div className='signUpPage__Content__Form__Text'>
+                                            <Text color='black' cls='Small' content='Confirm Password' fontSize='13' />
+                                        </div>
+                                        <Form.Item
+                                            className='signUpPage__Form__Item'
+                                            name="confirm"
+                                            //label="Confirm Password"
+                                            dependencies={['new password']}
+                                            hasFeedback
+                                            rules={[
+                                                {
+                                                    required: true,
+                                                    message: 'Please confirm your password!',
+                                                },
+                                                ({ getFieldValue }) => ({
+                                                    validator(_, value) {
+                                                        if (!value || getFieldValue('new password') === value) {
+                                                            return Promise.resolve();
+                                                        }
+
+                                                        return Promise.reject(new Error('The two passwords that you entered do not match!'));
+                                                    },
+                                                }),
+                                            ]}
+                                        >
+                                            <Input.Password placeholder="Confirm Password" />
+                                        </Form.Item>
+
+
+
+
+                                        <Form.Item {...tailFormItemLayout} className='signUpPage__Form__Item'>
+                                            <div className="signUpPage__Button">
+                                                <Button color={"green"}><Text color='white' cls='Large' content={"Reset"} fontSize='15' display="inline-block" /></Button>
+                                            </div>
+
+                                        </Form.Item>
+                                    </Form>
+                                </div>
+                            </Content>
+                        </Layout>
+                    </Spin>
+                </div>
+            }
+        </div>
 
     );
 

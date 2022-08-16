@@ -8,7 +8,7 @@ import axios from "axios";
 import './SignUpPage.css'
 import Logo from '../../components/Navbar/Logo/Logo';
 import Cookie from '../../components/Cookies/Cookies';
-const cookieParser =new Cookie(document.cookie)
+const cookieParser = new Cookie(document.cookie)
 const { Header, Sider, Content, Footer } = Layout;
 
 
@@ -53,18 +53,18 @@ function SignUpPage(props) {
             setLoading(false);
         }).catch((error) => {
             console.log(error.response.status)
-            if(error.response.status === 406){
+            if (error.response.status === 406) {
                 message.error("This name has been registered!")
             }
-            else  if(error.response.status === 409){
+            else if (error.response.status === 409) {
                 message.error("This email has been registered!")
             }
-            else{
+            else {
                 message.error("Server Error! Please try again later. (Sign up Error)")
             }
             setLoading(false);
         })
-        
+
 
     };
     useEffect(() => {
@@ -73,14 +73,20 @@ function SignUpPage(props) {
                 console.log(res.data.msg);
             }).catch((error) => {
                 console.log(error.response.status);
-                if (error.response.status === 500 || error.response.status === 404||error.response.status === 403){
-                    if(error.response.data.message.slice(0,13)==='Malformed JWT')
-                    document.cookie = 'error=Jwt'
+                if (error.response.status === 500 || error.response.status === 404 || error.response.status === 403) {
+                    if (error.response.data.message.slice(0, 13) === 'Malformed JWT') {
+                        document.cookie = 'error=Jwt'
+                        message.destroy()
+                        message.warning('The connection timed out, please login again !')
+                        document.cookie = 'email=;'
+                        props.setLoggedIn(false)
+                        props.setPageProps({ page: 'LoginPage' })
+                    }
                     else
-                    document.cookie = 'error=true'
+                        document.cookie = 'error=true'
                     message.error('Server Error! Please refresh again! (Send verify code error)')
                 }
-                else{
+                else {
                     message.error('Server Error! Please try again later. (Send verify code error)')
                 }
             })

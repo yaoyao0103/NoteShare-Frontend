@@ -79,20 +79,26 @@ const NoteEditTemplate = (props) => {
                     })
                     .catch(err => {
                         console.log("err", err)
-                        if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
-                            if(err.response.data.message.slice(0,13)==='Malformed JWT')
-                            document.cookie = 'error=Jwt'
+                        if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
+                            if (err.response.data.message.slice(0, 13) === 'Malformed JWT') {
+                                document.cookie = 'error=Jwt'
+                                message.destroy()
+                                message.warning('The connection timed out, please login again !')
+                                document.cookie = 'email=;'
+                                props.setLoggedIn(false)
+                                props.setPageProps({ page: 'LoginPage' })
+                            }
                             else
-                            document.cookie = 'error=true'
+                                document.cookie = 'error=true'
                             message.error('Server Error! Please refresh again! (Get Reward Post Error)')
                         }
-                        else{
+                        else {
                             message.error("Server Error! Please try again later. (Get Reward Post Error)")
                         }
                     })
             }
             setTitle(note.title);
-            setMyEditor(<MyEditor noteId={note.id} version={'0'} page={props.page} email={email} />);
+            setMyEditor(<MyEditor setLoggedIn={props.setLoggedIn} setPageProps={props.setPageProps} noteId={note.id} version={'0'} page={props.page} email={email} />);
             setInformation({
                 school: note.school,
                 department: note.department,
@@ -146,14 +152,20 @@ const NoteEditTemplate = (props) => {
                     setPostInfo(res.data.res);
                 })
                 .catch(err => {
-                    if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
-                        if(err.response.data.message.slice(0,13)==='Malformed JWT')
-                        document.cookie = 'error=Jwt'
+                    if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
+                        if (err.response.data.message.slice(0, 13) === 'Malformed JWT') {
+                            document.cookie = 'error=Jwt'
+                            message.destroy()
+                            message.warning('The connection timed out, please login again !')
+                            document.cookie = 'email=;'
+                            props.setLoggedIn(false)
+                            props.setPageProps({ page: 'LoginPage' })
+                        }
                         else
-                        document.cookie = 'error=true'
+                            document.cookie = 'error=true'
                         message.error('Server Error! Please refresh again! (Get Post Information In Note Error)')
                     }
-                    else{
+                    else {
                         message.error("Server Error! Please try again later. (Get Post Information In Note Error)")
                     }
 
@@ -190,7 +202,7 @@ const NoteEditTemplate = (props) => {
                 }
             </>
         )
-        setDrawer(<VersionArea page={'NoteEditPageVersion'} id={noteId} notePublic={props.data?.public} versions={versions} setVersions={setVersions} setVersion={setVersion} isAuthor={isAuthor} />);
+        setDrawer(<VersionArea setLoggedIn={props.setLoggedIn} setPageProps={props.setPageProps} page={'NoteEditPageVersion'} id={noteId} notePublic={props.data?.public} versions={versions} setVersions={setVersions} setVersion={setVersion} isAuthor={isAuthor} />);
     }, [versions, renaming])
 
 
@@ -212,14 +224,20 @@ const NoteEditTemplate = (props) => {
                 props.setLoading(false)
             })
             .catch(err => {
-                if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
-                    if(err.response.data.message.slice(0,13)==='Malformed JWT')
-                    document.cookie = 'error=Jwt'
+                if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
+                    if (err.response.data.message.slice(0, 13) === 'Malformed JWT') {
+                        document.cookie = 'error=Jwt'
+                        message.destroy()
+                        message.warning('The connection timed out, please login again !')
+                        document.cookie = 'email=;'
+                        props.setLoggedIn(false)
+                        props.setPageProps({ page: 'LoginPage' })
+                    }
                     else
-                    document.cookie = 'error=true'
+                        document.cookie = 'error=true'
                     message.error('Server Error! Please refresh again! (Rename Folder Error)')
                 }
-                else{
+                else {
                     message.error("Server Error! Please try again later. (Rename Folder Error)")
                 }
             })
@@ -266,14 +284,20 @@ const NoteEditTemplate = (props) => {
                     message.success("You updated the information of note!")
                 })
                 .catch(err => {
-                    if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
-                        if(err.response.data.message.slice(0,13)==='Malformed JWT')
-                        document.cookie = 'error=Jwt'
+                    if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
+                        if (err.response.data.message.slice(0, 13) === 'Malformed JWT') {
+                            document.cookie = 'error=Jwt'
+                            message.destroy()
+                            message.warning('The connection timed out, please login again !')
+                            document.cookie = 'email=;'
+                            props.setLoggedIn(false)
+                            props.setPageProps({ page: 'LoginPage' })
+                        }
                         else
-                        document.cookie = 'error=true'
+                            document.cookie = 'error=true'
                         message.error('Server Error! Please refresh again! (Update Information Of Note Error)')
                     }
-                    else{
+                    else {
                         message.error("Server Error! Please try again later. (Update Information Of Note Error)")
                     }
                 })
@@ -310,35 +334,47 @@ const NoteEditTemplate = (props) => {
                         }
                     })
                         .then(versionRes => {
-                            setMyEditor(<MyEditor noteId={tempId} version={'0'} page={props.page} email={email} />)
+                            setMyEditor(<MyEditor setLoggedIn={props.setLoggedIn} setPageProps={props.setPageProps} noteId={tempId} version={'0'} page={props.page} email={email} />)
                             const version = versionRes.data.res;
                             setVersions([version])
                             setStep(1);
                             message.success("You submitted the information of note!")
                         })
                         .catch(err => {
-                            if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
-                                if(err.response.data.message.slice(0,13)==='Malformed JWT')
-                                document.cookie = 'error=Jwt'
+                            if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
+                                if (err.response.data.message.slice(0, 13) === 'Malformed JWT') {
+                                    document.cookie = 'error=Jwt'
+                                    message.destroy()
+                                    message.warning('The connection timed out, please login again !')
+                                    document.cookie = 'email=;'
+                                    props.setLoggedIn(false)
+                                    props.setPageProps({ page: 'LoginPage' })
+                                }
                                 else
-                                document.cookie = 'error=true'
+                                    document.cookie = 'error=true'
                                 message.error('Server Error! Please refresh again! (Submit Information Of Note Error)')
                             }
-                            else{
+                            else {
                                 message.error("Server Error! Please try again later. (Submit Information Of Note Error)")
                             }
                         })
                 })
                 .catch(err => {
                     //console.log(err)
-                    if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
-                        if(err.response.data.message.slice(0,13)==='Malformed JWT')
-                        document.cookie = 'error=Jwt'
+                    if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
+                        if (err.response.data.message.slice(0, 13) === 'Malformed JWT') {
+                            document.cookie = 'error=Jwt'
+                            message.destroy()
+                            message.warning('The connection timed out, please login again !')
+                            document.cookie = 'email=;'
+                            props.setLoggedIn(false)
+                            props.setPageProps({ page: 'LoginPage' })
+                        }
                         else
-                        document.cookie = 'error=true'
+                            document.cookie = 'error=true'
                         message.error('Server Error! Please refresh again!')
                     }
-                    else{
+                    else {
                         message.error('Server Error! Please try again later!')
                     }
                 })
@@ -375,7 +411,7 @@ const NoteEditTemplate = (props) => {
                         }
                     })
                         .then(versionRes => {
-                            setMyEditor(<MyEditor noteId={tempId} version={'0'} page={props.page} email={email} />)
+                            setMyEditor(<MyEditor setLoggedIn={props.setLoggedIn} setPageProps={props.setPageProps} noteId={tempId} version={'0'} page={props.page} email={email} />)
                             const version = versionRes.data.res;
                             setVersions([version])
                             setStep(1);
@@ -384,14 +420,20 @@ const NoteEditTemplate = (props) => {
                         .catch(err => {
                             //
                             //console.log(err)
-                            if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
-                                if(err.response.data.message.slice(0,13)==='Malformed JWT')
-                                document.cookie = 'error=Jwt'
+                            if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
+                                if (err.response.data.message.slice(0, 13) === 'Malformed JWT') {
+                                    document.cookie = 'error=Jwt'
+                                    message.destroy()
+                                    message.warning('The connection timed out, please login again !')
+                                    document.cookie = 'email=;'
+                                    props.setLoggedIn(false)
+                                    props.setPageProps({ page: 'LoginPage' })
+                                }
                                 else
-                                document.cookie = 'error=true'
+                                    document.cookie = 'error=true'
                                 message.error('Server Error! Please refresh again! (Submit Information Of Reward Note Error)')
                             }
-                            else{
+                            else {
                                 message.error("Server Error! Please try again later. (Submit Information Of Reward Note Error)")
                             }
                         })
@@ -407,14 +449,20 @@ const NoteEditTemplate = (props) => {
                 })
                 .catch(err => {
                     //console.log(err)
-                    if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
-                        if(err.response.data.message.slice(0,13)==='Malformed JWT')
-                        document.cookie = 'error=Jwt'
+                    if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
+                        if (err.response.data.message.slice(0, 13) === 'Malformed JWT') {
+                            document.cookie = 'error=Jwt'
+                            message.destroy()
+                            message.warning('The connection timed out, please login again !')
+                            document.cookie = 'email=;'
+                            props.setLoggedIn(false)
+                            props.setPageProps({ page: 'LoginPage' })
+                        }
                         else
-                        document.cookie = 'error=true'
+                            document.cookie = 'error=true'
                         message.error('Server Error! Please refresh again!')
                     }
-                    else{
+                    else {
                         message.error('Server Error! Please try again later.')
                     }
                 })
@@ -425,7 +473,7 @@ const NoteEditTemplate = (props) => {
     const showDrawer = (type) => {
         switch (type) {
             case 'version':
-                setDrawer(<VersionArea page={'NoteEditPageVersion'} id={noteId} notePublic={props.data?.public} versions={versions} setVersions={setVersions} setVersion={setVersion} isAuthor={isAuthor} />);
+                setDrawer(<VersionArea setLoggedIn={props.setLoggedIn} setPageProps={props.setPageProps} page={'NoteEditPageVersion'} id={noteId} notePublic={props.data?.public} versions={versions} setVersions={setVersions} setVersion={setVersion} isAuthor={isAuthor} />);
                 setDrawerPlacement('right');
                 setDrawerTitle('Version')
                 break;
@@ -468,34 +516,46 @@ const NoteEditTemplate = (props) => {
                     }
                 })
                     .then(async versionRes => {
-                        setMyEditor(<MyEditor noteId={noteId} version={'0'} page={props.page} email={email} />)
+                        setMyEditor(<MyEditor setLoggedIn={props.setLoggedIn} setPageProps={props.setPageProps} noteId={noteId} version={'0'} page={props.page} email={email} />)
                         setStep(0);
                         setStep(1);
                         message.success("You copied the version!")
                     })
                     .catch(err => {
-                        if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
-                            if(err.response.data.message.slice(0,13)==='Malformed JWT')
-                            document.cookie = 'error=Jwt'
+                        if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
+                            if (err.response.data.message.slice(0, 13) === 'Malformed JWT') {
+                                document.cookie = 'error=Jwt'
+                                message.destroy()
+                                message.warning('The connection timed out, please login again !')
+                                document.cookie = 'email=;'
+                                props.setLoggedIn(false)
+                                props.setPageProps({ page: 'LoginPage' })
+                            }
                             else
-                            document.cookie = 'error=true'
+                                document.cookie = 'error=true'
                             message.error('Server Error! Please refresh again! (Copy Version Error)')
                         }
-                        else{
+                        else {
                             message.error("Server Error! Please try again later. (Copy Version Error)")
                         }
                     })
             })
             .catch(err => {
                 //console.log(err)
-                if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
-                    if(err.response.data.message.slice(0,13)==='Malformed JWT')
-                    document.cookie = 'error=Jwt'
+                if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
+                    if (err.response.data.message.slice(0, 13) === 'Malformed JWT') {
+                        document.cookie = 'error=Jwt'
+                        message.destroy()
+                        message.warning('The connection timed out, please login again !')
+                        document.cookie = 'email=;'
+                        props.setLoggedIn(false)
+                        props.setPageProps({ page: 'LoginPage' })
+                    }
                     else
-                    document.cookie = 'error=true'
+                        document.cookie = 'error=true'
                     message.error('Server Error! Please refresh again!')
                 }
-                else{
+                else {
                     message.error('Server Error! Please try again later.')
                 }
             })
@@ -515,33 +575,45 @@ const NoteEditTemplate = (props) => {
                         'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
                     }
                 })
-                .then(plagiarismRes => {      
-                    setStep(2);
-                })
-                .catch(plagiarismRrr => {
-                    //console.log(err)
-                    if (plagiarismRrr.response.status === 500 || plagiarismRrr.response.status === 404||plagiarismRrr.response.status === 403){
-                        if(plagiarismRrr.response.data.message.slice(0,13)==='Malformed JWT')
-                        document.cookie = 'error=Jwt'
-                        else
-                        document.cookie = 'error=true'
-                        message.error('Server Error! Please refresh again!')
-                    }
-                    else{
-                        message.error('Server Error! Please try again later.')
-                    }
-                })
+                    .then(plagiarismRes => {
+                        setStep(2);
+                    })
+                    .catch(plagiarismRrr => {
+                        //console.log(err)
+                        if (plagiarismRrr.response.status === 500 || plagiarismRrr.response.status === 404 || plagiarismRrr.response.status === 403) {
+                            if (plagiarismRrr.response.data.message.slice(0, 13) === 'Malformed JWT') {
+                                document.cookie = 'error=Jwt'
+                                message.destroy()
+                                message.warning('The connection timed out, please login again !')
+                                document.cookie = 'email=;'
+                                props.setLoggedIn(false)
+                                props.setPageProps({ page: 'LoginPage' })
+                            }
+                            else
+                                document.cookie = 'error=true'
+                            message.error('Server Error! Please refresh again!')
+                        }
+                        else {
+                            message.error('Server Error! Please try again later.')
+                        }
+                    })
             })
             .catch(err => {
                 //console.log(err)
-                if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
-                    if(err.response.data.message.slice(0,13)==='Malformed JWT')
-                    document.cookie = 'error=Jwt'
+                if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
+                    if (err.response.data.message.slice(0, 13) === 'Malformed JWT') {
+                        document.cookie = 'error=Jwt'
+                        message.destroy()
+                        message.warning('The connection timed out, please login again !')
+                        document.cookie = 'email=;'
+                        props.setLoggedIn(false)
+                        props.setPageProps({ page: 'LoginPage' })
+                    }
                     else
-                    document.cookie = 'error=true'
+                        document.cookie = 'error=true'
                     message.error('Server Error! Please refresh again!')
                 }
-                else{
+                else {
                     message.error('Server Error! Please try again later.')
                 }
             })
@@ -555,27 +627,33 @@ const NoteEditTemplate = (props) => {
 
     const tagSubmit = async () => {
         console.log("tagSelected", tagSelected)
-        console.log("tagSelected", {tagSelected})
-        axios.put(`http://localhost:8080/note/tag/updateTags/${noteId}`, {"tags":tagSelected},  {
+        console.log("tagSelected", { tagSelected })
+        axios.put(`http://localhost:8080/note/tag/updateTags/${noteId}`, { "tags": tagSelected }, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
             }
         })
             .then(res => {
                 message.success("Success!")
-                props.setPageProps({page:"NoteDetailPage", noteId:noteId})
-            
+                props.setPageProps({ page: "NoteDetailPage", noteId: noteId })
+
             })
             .catch(err => {
                 //console.log(err)
-                if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
-                    if(err.response.data.message.slice(0,13)==='Malformed JWT')
-                    document.cookie = 'error=Jwt'
+                if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
+                    if (err.response.data.message.slice(0, 13) === 'Malformed JWT') {
+                        document.cookie = 'error=Jwt'
+                        message.destroy()
+                        message.warning('The connection timed out, please login again !')
+                        document.cookie = 'email=;'
+                        props.setLoggedIn(false)
+                        props.setPageProps({ page: 'LoginPage' })
+                    }
                     else
-                    document.cookie = 'error=true'
+                        document.cookie = 'error=true'
                     message.error('Server Error! Please refresh again!')
                 }
-                else{
+                else {
                     message.error('Server Error! Please try again later.')
                 }
             })
@@ -645,14 +723,20 @@ const NoteEditTemplate = (props) => {
                 //message.success("You created a new version")
             })
             .catch(err => {
-                if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
-                    if(err.response.data.message.slice(0,13)==='Malformed JWT')
-                    document.cookie = 'error=Jwt'
+                if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
+                    if (err.response.data.message.slice(0, 13) === 'Malformed JWT') {
+                        document.cookie = 'error=Jwt'
+                        message.destroy()
+                        message.warning('The connection timed out, please login again !')
+                        document.cookie = 'email=;'
+                        props.setLoggedIn(false)
+                        props.setPageProps({ page: 'LoginPage' })
+                    }
                     else
-                    document.cookie = 'error=true'
+                        document.cookie = 'error=true'
                     message.error('Server Error! Please refresh again! (New Version Error)')
                 }
-                else{
+                else {
                     message.error("Server Error! Please try again later. (New Version Error)")
                 }
             })
@@ -687,40 +771,58 @@ const NoteEditTemplate = (props) => {
                                 })
                             })
                             .catch(err => {
-                                if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
-                                    if(err.response.data.message.slice(0,13)==='Malformed JWT')
-                                    document.cookie = 'error=Jwt'
+                                if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
+                                    if (err.response.data.message.slice(0, 13) === 'Malformed JWT') {
+                                        document.cookie = 'error=Jwt'
+                                        message.destroy()
+                                        message.warning('The connection timed out, please login again !')
+                                        document.cookie = 'email=;'
+                                        props.setLoggedIn(false)
+                                        props.setPageProps({ page: 'LoginPage' })
+                                    }
                                     else
-                                    document.cookie = 'error=true'
+                                        document.cookie = 'error=true'
                                     message.error('Server Error! Please refresh again! (Publish Reward Note Error)')
                                 }
-                                else{
+                                else {
                                     message.error("Server Error! Please try again later. (Publish Reward Note Error)")
                                 }
                             })
                     })
                     .catch(err => {
-                        if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
-                            if(err.response.data.message.slice(0,13)==='Malformed JWT')
-                            document.cookie = 'error=Jwt'
+                        if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
+                            if (err.response.data.message.slice(0, 13) === 'Malformed JWT') {
+                                document.cookie = 'error=Jwt'
+                                message.destroy()
+                                message.warning('The connection timed out, please login again !')
+                                document.cookie = 'email=;'
+                                props.setLoggedIn(false)
+                                props.setPageProps({ page: 'LoginPage' })
+                            }
                             else
-                            document.cookie = 'error=true'
+                                document.cookie = 'error=true'
                             message.error('Server Error! Please refresh again! (Submit Reward Note Error)')
                         }
-                        else{
+                        else {
                             message.error("Server Error! Please try again later. (Submit Reward Note Error)")
                         }
                     })
             })
             .catch(err => {
-                if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
-                    if(err.response.data.message.slice(0,13)==='Malformed JWT')
-                    document.cookie = 'error=Jwt'
+                if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
+                    if (err.response.data.message.slice(0, 13) === 'Malformed JWT') {
+                        document.cookie = 'error=Jwt'
+                        message.destroy()
+                        message.warning('The connection timed out, please login again !')
+                        document.cookie = 'email=;'
+                        props.setLoggedIn(false)
+                        props.setPageProps({ page: 'LoginPage' })
+                    }
                     else
-                    document.cookie = 'error=true'
+                        document.cookie = 'error=true'
                     message.error('Server Error! Please refresh again! (Get Tags Error)')
                 }
-                else{
+                else {
                     message.error("Server Error! Please try again later. (Get Tags Error)")
                 }
             })

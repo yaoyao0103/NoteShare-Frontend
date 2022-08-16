@@ -30,13 +30,19 @@ function Ring(props) {
             props.setRingList(oldArray => [...res.data.notification.messageReturn, ...oldArray.slice(0, 0)])
         }).catch((error) => {
             if (error.response.status === 500 || error.response.status === 404 || error.response.status === 403) {
-                if (error.response.data.message.slice(0, 13) === 'Malformed JWT')
+                if (error.response.data.message.slice(0, 13) === 'Malformed JWT') {
                     document.cookie = 'error=Jwt'
+                    message.destroy()
+                    message.warning('The connection timed out, please login again !')
+                    document.cookie = 'email=;'
+                    props.setLoggedIn(false)
+                    props.setPageProps({ page: 'LoginPage' })
+                }
                 else
                     document.cookie = 'error=true'
                 message.error('Server Error! Please refresh again!  (Get Notification Error)')
             }
-            else{
+            else {
                 message.error("Server Error! Please try again later. (Get Notification Error)")
             }
 
@@ -108,13 +114,19 @@ function Ring(props) {
         }).catch((error) => {
             console.log(error);
             if (error.response.status === 500 || error.response.status === 404 || error.response.status === 403) {
-                if (error.response.data.message.slice(0, 13) === 'Malformed JWT')
+                if (error.response.data.message.slice(0, 13) === 'Malformed JWT') {
                     document.cookie = 'error=Jwt'
+                    message.destroy()
+                    message.warning('The connection timed out, please login again !')
+                    document.cookie = 'email=;'
+                    props.setLoggedIn(false)
+                    props.setPageProps({ page: 'LoginPage' })
+                }
                 else
                     document.cookie = 'error=true'
                 message.error('Server Error! Please refresh again!')
             }
-            else{
+            else {
                 message.error("Server Error! Please try again later.")
             }
 

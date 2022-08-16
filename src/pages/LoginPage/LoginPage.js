@@ -11,7 +11,7 @@ import './LoginPage.css'
 import Logo from '../../components/Navbar/Logo/Logo';
 
 const { Header, Sider, Content, Footer } = Layout;
-const cookieParser =new Cookie(document.cookie)
+const cookieParser = new Cookie(document.cookie)
 function LoginPage(props) {
     const [Page, setPage] = useState('LoginPage');
     const [email, setEmail] = useState("");
@@ -41,7 +41,7 @@ function LoginPage(props) {
         let rPassword = cookieParser.getCookieByName('rPassword');
         if (rEmail && rPassword) {
             setHasRemember('A');
-            
+
             startEmail = Base64.decode(rEmail);
             //console.log(startEmail);
             startPassword = Base64.decode(rPassword);
@@ -58,8 +58,8 @@ function LoginPage(props) {
         setRender(true);
     }, []);
     useEffect(() => {
-        if(render)
-        props.setLoading(false);
+        if (render)
+            props.setLoading(false);
 
 
     }, [props]);
@@ -99,7 +99,7 @@ function LoginPage(props) {
             //console.log(document.cookie);
             if (res.data.activate) {
                 props.setLoggedIn(true)
-                props.setPageProps({page:'MemberPage',pageNumber:1,sortMode:'likeCount'})
+                props.setPageProps({ page: 'MemberPage', pageNumber: 1, sortMode: 'likeCount' })
             }
             else {
                 message.warn("You have not activate your account!")
@@ -107,14 +107,20 @@ function LoginPage(props) {
                     //console.log(res.data.msg);
                 }).catch((error) => {
                     console.log(error.response.status);
-                    if (error.response.status === 500 || error.response.status === 404||error.response.status === 403){
-                        if(error.response.data.message.slice(0,13)==='Malformed JWT')
-                        document.cookie = 'error=Jwt'
+                    if (error.response.status === 500 || error.response.status === 404 || error.response.status === 403) {
+                        if (error.response.data.message.slice(0, 13) === 'Malformed JWT') {
+                            document.cookie = 'error=Jwt'
+                            message.destroy()
+                            message.warning('The connection timed out, please login again !')
+                            document.cookie = 'email=;'
+                            props.setLoggedIn(false)
+                            props.setPageProps({ page: 'LoginPage' })
+                        }
                         else
-                        document.cookie = 'error=true'
+                            document.cookie = 'error=true'
                         message.error('Server Error! Please refresh again! (Resend Verify Code Error)')
                     }
-                    else{
+                    else {
                         message.error('Server Error! Please try again laetr. (Resend Verify Code Error)')
                     }
                 })
@@ -124,13 +130,13 @@ function LoginPage(props) {
 
         }).catch((error) => {
             console.log(error.response.status)
-            if(error.response.status === 403){
+            if (error.response.status === 403) {
                 message.error("Please enter correct email or password!")
             }
-            else  if(error.response.status === 404){
+            else if (error.response.status === 404) {
                 message.error("Please sign up first!")
             }
-            else{
+            else {
                 message.error("Server Error! Please try again later. (Login Error)")
             }
         })

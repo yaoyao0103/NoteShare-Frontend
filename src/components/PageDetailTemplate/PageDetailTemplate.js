@@ -9,7 +9,7 @@ function PageDetailTemplate(props){
     }, [Page])
     return(
         <div className='detailTemplate'>
-            <Navbar changePage={ (page) => { setPage(page) }}/>
+            <Navbar setLoggedIn={props.setLoggedIn} setPageProps={props.setPageProps} changePage={ (page) => { setPage(page) }}/>
             <Layout className='detailTemplate__Layout'>
                 {props.children}
             </Layout>

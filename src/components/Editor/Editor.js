@@ -12,7 +12,7 @@ import Cookie from "../Cookies/Cookies";
 import { message } from "antd";
 //import PageSection from "../Page/PageSection";
 
-const Editor = () => {
+const Editor = (props) => {
   const [editor, setEditor] = useState(null);
   const [assets, setAssets] = useState([]);
   const { pageId } = useParams();
@@ -32,13 +32,19 @@ const Editor = () => {
       } catch (error) {
         setAssets(error.message);
         if (error.response.status === 500 || error.response.status === 404 || error.response.status === 403) {
-          if (error.response.data.message.slice(0, 13) === 'Malformed JWT')
+          if (error.response.data.message.slice(0, 13) === 'Malformed JWT') {
             document.cookie = 'error=Jwt'
+            message.destroy()
+            message.warning('The connection timed out, please login again !')
+            document.cookie = 'email=;'
+            props.setLoggedIn(false)
+            props.setPageProps({ page: 'LoginPage' })
+          }
           else
             document.cookie = 'error=true'
           message.error('Server Error! Please refresh again!')
         }
-        else{
+        else {
           message.error('Server Error! Please try again later.')
         }
       }
@@ -56,7 +62,7 @@ const Editor = () => {
   return (
 
     <div className="App">
-      <Navbar />
+      <Navbar setLoggedIn={props.setLoggedIn} setPageProps={props.setPageProps} />
       <div id="editor-area">
         <div className="sidenav d-flex flex-column overflow-scroll">
           {/* <div id="navbar" className="sidenav d-flex flex-column overflow-scroll"> */}

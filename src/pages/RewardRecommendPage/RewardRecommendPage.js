@@ -25,14 +25,20 @@ function RewardRecommendPage(props) {
 
             } catch (error) {
                 setReward(error.message);
-                if (error.response.status === 500 || error.response.status === 404||error.response.status === 403){
-                    if(error.response.data.message.slice(0,13)==='Malformed JWT')
-                    document.cookie = 'error=Jwt'
+                if (error.response.status === 500 || error.response.status === 404 || error.response.status === 403) {
+                    if (error.response.data.message.slice(0, 13) === 'Malformed JWT') {
+                        document.cookie = 'error=Jwt'
+                        message.destroy()
+                        message.warning('The connection timed out, please login again !')
+                        document.cookie = 'email=;'
+                        props.setLoggedIn(false)
+                        props.setPageProps({ page: 'LoginPage' })
+                    }
                     else
-                    document.cookie = 'error=true'
+                        document.cookie = 'error=true'
                     message.error('Server Error! Please refresh again! (Get Reward Post Error)')
                 }
-                else{
+                else {
                     message.error("Server Error! Please try again later. (Get Reward Post Error)")
                 }
 
@@ -42,12 +48,12 @@ function RewardRecommendPage(props) {
         getRewardById();
 
     }, [props]);
-    
+
 
     return (
         <>
             {Reward.length > 0 &&
-                <PageOutlineContentTemplate page={page}  isMember={true} hasSwitch={false} mode='Post' Post={Reward} pageNumber={props.pageNumber} changePageNumber={props.setPageNumber} changeSortMode={props.changeSortMode} setPageProps={props.setPageProps} />
+                <PageOutlineContentTemplate setLoggedIn={props.setLoggedIn} setPageProps={props.setPageProps} page={page} isMember={true} hasSwitch={false} mode='Post' Post={Reward} pageNumber={props.pageNumber} changePageNumber={props.setPageNumber} changeSortMode={props.changeSortMode} />
             }
         </>
     );

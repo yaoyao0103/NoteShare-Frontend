@@ -43,14 +43,14 @@ const PoppedContent = (props) => {
     };
 
     const approve = (email) => {
-        
+
         let name = cookieParser.getCookieByName('name');
         let avatar = cookieParser.getCookieByName('avatar');
-        
-        axios.put(`http://localhost:8080/post/add/${props.postId}/${email}`,{},{
+
+        axios.put(`http://localhost:8080/post/add/${props.postId}/${email}`, {}, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
-              }
+            }
         })
             .then(res => {
                 props.sendPrivateMessage(
@@ -73,24 +73,30 @@ const PoppedContent = (props) => {
                 setContent()
             })
             .catch(err => {
-                if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
-                    if(err.response.data.message.slice(0,13)==='Malformed JWT')
-                    document.cookie = 'error=Jwt'
+                if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
+                    if (err.response.data.message.slice(0, 13) === 'Malformed JWT') {
+                        document.cookie = 'error=Jwt'
+                        message.destroy()
+                        message.warning('The connection timed out, please login again !')
+                        document.cookie = 'email=;'
+                        props.setLoggedIn(false)
+                        props.setPageProps({ page: 'LoginPage' })
+                    }
                     else
-                    document.cookie = 'error=true'
+                        document.cookie = 'error=true'
                     message.error('Server Error! Please refresh again! (Approve Application Error)')
                 }
-                else{
+                else {
                     message.error("Server Error! Please try again later. (Approve Application Error)")
                 }
             })
     }
 
     const reject = (email) => {
-        axios.delete(`http://localhost:8080/post/apply/${props.postId}/${email}`,{
+        axios.delete(`http://localhost:8080/post/apply/${props.postId}/${email}`, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
-              }
+            }
         })
             .then(res => {
                 message.success("You rejected the application!")
@@ -106,14 +112,20 @@ const PoppedContent = (props) => {
                 // Todo: remove applicant from list
             })
             .catch(err => {
-                if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
-                    if(err.response.data.message.slice(0,13)==='Malformed JWT')
-                    document.cookie = 'error=Jwt'
+                if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
+                    if (err.response.data.message.slice(0, 13) === 'Malformed JWT') {
+                        document.cookie = 'error=Jwt'
+                        message.destroy()
+                        message.warning('The connection timed out, please login again !')
+                        document.cookie = 'email=;'
+                        props.setLoggedIn(false)
+                        props.setPageProps({ page: 'LoginPage' })
+                    }
                     else
-                    document.cookie = 'error=true'
+                        document.cookie = 'error=true'
                     message.error('Server Error! Please refresh again! (Reject Application Error)')
                 }
-                else{
+                else {
                     message.error('Server Error! Please try again later. (Reject Application Error)')
                 }
             })
@@ -226,39 +238,39 @@ const PoppedContent = (props) => {
                                 <List
                                     size="large"
                                     dataSource={siderList}
-                                    renderItem={(item, index) => ( 
-                                        item.best? <List.Item actions={
+                                    renderItem={(item, index) => (
+                                        item.best ? <List.Item actions={
                                             [
                                                 <p>Best</p>
                                             ]
                                         } >
                                             <div>
-                                                <Avatar style={{cursor:"pointer", marginRight:".5em"}} size={30} src={item.userObj.userObjAvatar} onClick={() => props.setPageProps({page: 'ProfilePage', email: item.userObj.userObjEmail})}></Avatar>
+                                                <Avatar style={{ cursor: "pointer", marginRight: ".5em" }} size={30} src={item.userObj.userObjAvatar} onClick={() => props.setPageProps({ page: 'ProfilePage', email: item.userObj.userObjEmail })}></Avatar>
                                                 <Text color='black' cls='Default' content={item.userObj.userObjName} fontSize='15' display="inline-block" />
-                                            </div> 
+                                            </div>
                                         </List.Item>
-                                        :
-                                        item.reference? <List.Item actions={
-                                            [
-                                                <p>Reference</p>
-                                            ]
-                                        } >
-                                            <div>
-                                                <Avatar style={{cursor:"pointer", marginRight:".5em"}} size={30} src={item.userObj.userObjAvatar} onClick={() => props.setPageProps({page: 'ProfilePage', email: item.userObj.userObjEmail})}></Avatar>
-                                                <Text color='black' cls='Default' content={item.userObj.userObjName} fontSize='15' display="inline-block" />
-                                            </div> 
-                                        </List.Item>
-                                        :
-                                        <List.Item actions={
-                                        [
-                                            <OptionMenu page="RewardDetailPageAnswer" answerId={item.id} index = {index} setContent={setContent} postId={props.postId} refreshAnswer={props.refreshAnswer}/>
-                                        ]
-                                    } >
-                                        <div>
-                                            <Avatar style={{cursor:"pointer", marginRight:".5em"}} size={30} src={item.userObj.userObjAvatar} onClick={() => props.setPageProps({page: 'ProfilePage', email: item.userObj.userObjEmail})}></Avatar>
-                                            <Text color='black' cls='Default' content={item.userObj.userObjName} fontSize='15' display="inline-block" />
-                                        </div> 
-                                    </List.Item>)}
+                                            :
+                                            item.reference ? <List.Item actions={
+                                                [
+                                                    <p>Reference</p>
+                                                ]
+                                            } >
+                                                <div>
+                                                    <Avatar style={{ cursor: "pointer", marginRight: ".5em" }} size={30} src={item.userObj.userObjAvatar} onClick={() => props.setPageProps({ page: 'ProfilePage', email: item.userObj.userObjEmail })}></Avatar>
+                                                    <Text color='black' cls='Default' content={item.userObj.userObjName} fontSize='15' display="inline-block" />
+                                                </div>
+                                            </List.Item>
+                                                :
+                                                <List.Item actions={
+                                                    [
+                                                        <OptionMenu setLoggedIn={props.setLoggedIn} setPageProps={props.setPageProps} page="RewardDetailPageAnswer" answerId={item.id} index={index} setContent={setContent} postId={props.postId} refreshAnswer={props.refreshAnswer} />
+                                                    ]
+                                                } >
+                                                    <div>
+                                                        <Avatar style={{ cursor: "pointer", marginRight: ".5em" }} size={30} src={item.userObj.userObjAvatar} onClick={() => props.setPageProps({ page: 'ProfilePage', email: item.userObj.userObjEmail })}></Avatar>
+                                                        <Text color='black' cls='Default' content={item.userObj.userObjName} fontSize='15' display="inline-block" />
+                                                    </div>
+                                                </List.Item>)}
                                 />
                             </Sider>
                         }

@@ -96,15 +96,20 @@ function CommentArea(props) {
                 });
             })
             .catch(err => {
-                if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
-                    if(err.response.data.message.slice(0,13)==='Malformed JWT'){
+                if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
+                    if (err.response.data.message.slice(0, 13) === 'Malformed JWT') {
                         document.cookie = 'error=Jwt'
+                        message.destroy()
+                        message.warning('The connection timed out, please login again !')
+                        document.cookie = 'email=;'
+                        props.setLoggedIn(false)
+                        props.setPageProps({ page: 'LoginPage' })
                     }
                     else
-                    document.cookie = 'error=true'
+                        document.cookie = 'error=true'
                     message.error('Server Error! Please refresh again! (Refresh Error)')
                 }
-                else{
+                else {
                     message.error("Server Error! Please try again later.(Refresh Error)")
                 }
 
@@ -125,14 +130,20 @@ function CommentArea(props) {
                     refresh()
                 })
                 .catch(err => {
-                    if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
-                        if(err.response.data.message.slice(0,13)==='Malformed JWT')
-                        document.cookie = 'error=Jwt'
+                    if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
+                        if (err.response.data.message.slice(0, 13) === 'Malformed JWT') {
+                            document.cookie = 'error=Jwt'
+                            message.destroy()
+                            message.warning('The connection timed out, please login again !')
+                            document.cookie = 'email=;'
+                            props.setLoggedIn(false)
+                            props.setPageProps({ page: 'LoginPage' })
+                        }
                         else
-                        document.cookie = 'error=true'
+                            document.cookie = 'error=true'
                         message.error('Server Error! Please refresh again! (Like Comment Error)')
                     }
-                    else{
+                    else {
                         message.error("Server Error! Please try again later. (Like Comment Error)")
                     }
 
@@ -159,14 +170,20 @@ function CommentArea(props) {
                     refresh()
                 })
                 .catch(err => {
-                    if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
-                        if(err.response.data.message.slice(0,13)==='Malformed JWT')
-                        document.cookie = 'error=Jwt'
+                    if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
+                        if (err.response.data.message.slice(0, 13) === 'Malformed JWT') {
+                            document.cookie = 'error=Jwt'
+                            message.destroy()
+                            message.warning('The connection timed out, please login again !')
+                            document.cookie = 'email=;'
+                            props.setLoggedIn(false)
+                            props.setPageProps({ page: 'LoginPage' })
+                        }
                         else
-                        document.cookie = 'error=true'
+                            document.cookie = 'error=true'
                         message.error('Server Error! Please refresh again! (Unlike Comment Error)')
                     }
-                    else{
+                    else {
                         message.error("Server Error! Please try again later. (Unlike Comment Error)")
                     }
 
@@ -208,14 +225,20 @@ function CommentArea(props) {
 
                     })
                     .catch(err => {
-                        if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
-                            if(err.response.data.message.slice(0,13)==='Malformed JWT')
-                            document.cookie = 'error=Jwt'
+                        if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
+                            if (err.response.data.message.slice(0, 13) === 'Malformed JWT') {
+                                document.cookie = 'error=Jwt'
+                                message.destroy()
+                                message.warning('The connection timed out, please login again !')
+                                document.cookie = 'email=;'
+                                props.setLoggedIn(false)
+                                props.setPageProps({ page: 'LoginPage' })
+                            }
                             else
-                            document.cookie = 'error=true'
+                                document.cookie = 'error=true'
                             message.error('Server Error! Please refresh again! (Submit Comment Error)')
                         }
-                        else{
+                        else {
                             message.error("Server Error! Please try again later. (Submit Comment Error)")
                         }
                     })
@@ -257,15 +280,21 @@ function CommentArea(props) {
                 refresh()
             })
             .catch(err => {
-               
-                if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
-                    if(err.response.data.message.slice(0,13)==='Malformed JWT')
-                    document.cookie = 'error=Jwt'
+
+                if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
+                    if (err.response.data.message.slice(0, 13) === 'Malformed JWT') {
+                        document.cookie = 'error=Jwt'
+                        message.destroy()
+                        message.warning('The connection timed out, please login again !')
+                        document.cookie = 'email=;'
+                        props.setLoggedIn(false)
+                        props.setPageProps({ page: 'LoginPage' })
+                    }
                     else
-                    document.cookie = 'error=true'
+                        document.cookie = 'error=true'
                     message.error('Server Error! Please refresh again! (Select Best Answer Error)')
                 }
-                else{
+                else {
                     message.error("Server Error! Please try again later. (Select Best Answer Error)")
                 }
             })
@@ -289,14 +318,20 @@ function CommentArea(props) {
                 setEditingComment('')
             })
             .catch(err => {
-                if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
-                    if(err.response.data.message.slice(0,13)==='Malformed JWT')
-                    document.cookie = 'error=Jwt'
+                if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
+                    if (err.response.data.message.slice(0, 13) === 'Malformed JWT') {
+                        document.cookie = 'error=Jwt'
+                        message.destroy()
+                        message.warning('The connection timed out, please login again !')
+                        document.cookie = 'email=;'
+                        props.setLoggedIn(false)
+                        props.setPageProps({ page: 'LoginPage' })
+                    }
                     else
-                    document.cookie = 'error=true'
+                        document.cookie = 'error=true'
                     message.error('Server Error! Please refresh again! (Update Comment Error)')
                 }
-                else{
+                else {
                     message.error("Server Error! Please try again later. (Update Comment Error)")
                 }
             })
@@ -314,14 +349,20 @@ function CommentArea(props) {
                 refresh()
             })
             .catch(err => {
-                if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
-                    if(err.response.data.message.slice(0,13)==='Malformed JWT')
-                    document.cookie = 'error=Jwt'
+                if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
+                    if (err.response.data.message.slice(0, 13) === 'Malformed JWT') {
+                        document.cookie = 'error=Jwt'
+                        message.destroy()
+                        message.warning('The connection timed out, please login again !')
+                        document.cookie = 'email=;'
+                        props.setLoggedIn(false)
+                        props.setPageProps({ page: 'LoginPage' })
+                    }
                     else
-                    document.cookie = 'error=true'
+                        document.cookie = 'error=true'
                     message.error('Server Error! Please refresh again! (Delete Comment Error)')
                 }
-                else{
+                else {
                     message.error("Server Error! Please try again later. (Delete Comment Error)")
                 }
             })
@@ -441,7 +482,7 @@ function CommentArea(props) {
                                 />
                             </Col>
                             <Col className="comment_MoreOption" span={3}>
-                                {(item.userObj?.userObjEmail == email && !props.isArchive&&cookieParser.getCookieByName('email')) &&
+                                {(item.userObj?.userObjEmail == email && !props.isArchive && cookieParser.getCookieByName('email')) &&
                                     <Dropdown
                                         overlay={<Menu
                                             items={[

@@ -25,7 +25,14 @@ const MyEditor = (props) => {
         setAssets(error.message);
              if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
                     if(err.response.data.message.slice(0,13)==='Malformed JWT')
-                    document.cookie = 'error=Jwt'
+                    {
+                            document.cookie = 'error=Jwt'
+                            message.destroy()
+                            message.warning('The connection timed out, please login again !')
+                            document.cookie = 'email=;'
+                            props.setLoggedIn(false)
+                            props.setPageProps({page:'LoginPage'})
+                        }
                     else
                     document.cookie = 'error=true'
                     message.error('There are no notes in this folder Please refresh again!')

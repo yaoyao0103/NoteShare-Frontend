@@ -26,13 +26,13 @@ function Navbar(props) {
       {props.loggedIn ?
         <Row className="navbar__Button__Login">
           <Col span={6}>
-            <Ring ringList={props.ringList} setRingList={props.setRingList} ringNumber={props.ringNumber} setRingNumber={props.setRingNumber} setPageProps={props.setPageProps} className="navbar__Ring" />
+            <Ring setLoggedIn={props.setLoggedIn} setPageProps={props.setPageProps} ringList={props.ringList} setRingList={props.setRingList} ringNumber={props.ringNumber} setRingNumber={props.setRingNumber} className="navbar__Ring" />
           </Col>
           <Col span={7}>
-            <Coin setCoinNum={props.setCoinNum} coinNum={props.coinNum} />
+            <Coin setLoggedIn={props.setLoggedIn} setPageProps={props.setPageProps} setCoinNum={props.setCoinNum} coinNum={props.coinNum} />
           </Col>
           <Col span={7}>
-            <AvatarButton className="navbar__AvatarButton" changeAvatar={props.changeAvatar} setPageProps={props.setPageProps} setLoggedIn={props.setLoggedIn} />
+            <AvatarButton className="navbar__AvatarButton" setLoggedIn={props.setLoggedIn} setPageProps={props.setPageProps} changeAvatar={props.changeAvatar}  />
           </Col>
 
         </Row>

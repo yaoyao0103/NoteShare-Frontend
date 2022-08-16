@@ -9,7 +9,7 @@ import axios from "axios";
 import './AvatarButton.css';
 import Text from "../../Text/Text";
 import Cookie from "../../Cookies/Cookies";
-const cookieParser=new Cookie(document.cookie)
+const cookieParser = new Cookie(document.cookie)
 function AvatarButton(props) {
     const [email, setEmail] = useState('');
     const [avatar, setAvatar] = useState('');
@@ -36,7 +36,7 @@ function AvatarButton(props) {
                     label: (
                         <>
                             <SettingOutlined style={{ color: "#555" }} />
-                            <a className='AvatarButton__item__text' onClick={() => props.setPageProps({ page: 'ResetPasswordPage', email: email  })}>
+                            <a className='AvatarButton__item__text' onClick={() => props.setPageProps({ page: 'ResetPasswordPage', email: email })}>
                                 <Text cls='Gerneral' fontSize='16' content={'ResetPassword'} />
                             </a>
                         </>
@@ -64,51 +64,63 @@ function AvatarButton(props) {
     useEffect(() => {
         let cookieParser = new Cookie(document.cookie);
         let tempEmail = cookieParser.getCookieByName('email');
-        if(tempEmail)
+        if (tempEmail)
             tempEmail = Base64.decode(tempEmail);
         setEmail(tempEmail);
-        axios.get("http://localhost:8080/user/name/" + tempEmail,{
+        axios.get("http://localhost:8080/user/name/" + tempEmail, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
-              }
+            }
         }).then(res => {
             document.cookie = "name=" + res.data.res;
         }).catch((error) => {
             //console.log(error.response.data.message);
-            if (error.response.status === 500 || error.response.status === 404||error.response.status === 403){
-                if(error.response.data.message.slice(0,13)==='Malformed JWT')
-                document.cookie = 'error=Jwt'
+            if (error.response.status === 500 || error.response.status === 404 || error.response.status === 403) {
+                if (error.response.data.message.slice(0, 13) === 'Malformed JWT') {
+                    document.cookie = 'error=Jwt'
+                    message.destroy()
+                    message.warning('The connection timed out, please login again !')
+                    document.cookie = 'email=;'
+                    props.setLoggedIn(false)
+                    props.setPageProps({ page: 'LoginPage' })
+                }
                 else
-                document.cookie = 'error=true'
+                    document.cookie = 'error=true'
                 message.error('Server Error! Please refresh again! (Get user name error)')
             }
-            else{
+            else {
                 message.error('Server Error! Please try again later! (Get user name error)')
             }
-           
+
         });
         //console.log(props.changeAvatar);
         //console.log(avatarNum);
         if (props.changeAvatar > avatarNum) {
-            axios.get("http://localhost:8080/user/head/" + tempEmail,{
+            axios.get("http://localhost:8080/user/head/" + tempEmail, {
                 headers: {
                     'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
-                  }
+                }
             }).then(res => {
                 setAvatar(res.data.res);
                 setAvatarNum(props.changeAvatar);
                 document.cookie = "avatar=" + res.data.res;
                 //message.info('Change avatar');
-                
+
             }).catch((error) => {
-                if (error.response.status === 500 || error.response.status === 404||error.response.status === 403){
-                    if(error.response.data.message.slice(0,13)==='Malformed JWT')
-                    document.cookie = 'error=Jwt'
+                if (error.response.status === 500 || error.response.status === 404 || error.response.status === 403) {
+                    if (error.response.data.message.slice(0, 13) === 'Malformed JWT') {
+                        document.cookie = 'error=Jwt'
+                        message.destroy()
+                        message.warning('The connection timed out, please login again !')
+                        document.cookie = 'email=;'
+                        props.setLoggedIn(false)
+                        props.setPageProps({ page: 'LoginPage' })
+                    }
                     else
-                    document.cookie = 'error=true'
+                        document.cookie = 'error=true'
                     message.error('Server Error! Please refresh again! (Get user avatar error)')
                 }
-                else{
+                else {
                     message.error('Server Error! Please try again later! (Get user avatar error)')
                 }
             })

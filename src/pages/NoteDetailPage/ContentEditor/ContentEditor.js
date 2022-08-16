@@ -8,7 +8,7 @@ import TopNav from "../../../components/Page/TopNav";
 //import "./ContentEditor.css";
 //import PageSection from "../Page/PageSection";
 
-const ContentEditor = ( { versionId } ) => {
+const ContentEditor = ({ versionId }) => {
   const [editor, setEditor] = useState(null);
   const [assets, setAssets] = useState([]);
   const { pageStore } = useSelector((state) => state);
@@ -29,7 +29,14 @@ const ContentEditor = ( { versionId } ) => {
                     document.cookie = 'error=true'
                 }
                 else if (error.response.status === 403){
-                    document.cookie = 'error=Jwt'                       
+                    {
+                            document.cookie = 'error=Jwt'
+message.destroy()
+message.warning('The connection timed out, please login again !')
+                            document.cookie = 'email=;'
+                            props.setLoggedIn(false)
+                            props.setPageProps({page:'LoginPage'})
+                        }                       
                 }
       }
     }
@@ -46,9 +53,9 @@ const ContentEditor = ( { versionId } ) => {
 
 
   return (
-    
+
     <div className="App">
-      <div className = "content__Editor" >
+      <div className="content__Editor" >
         <div id="editor"></div>
       </div>
     </div>

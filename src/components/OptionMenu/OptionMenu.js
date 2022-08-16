@@ -51,8 +51,14 @@ const OptionMenu = (props) => {
         })
         .catch(err => {
           if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
-            if (err.response.data.message.slice(0, 13) === 'Malformed JWT')
+            if (err.response.data.message.slice(0, 13) === 'Malformed JWT') {
               document.cookie = 'error=Jwt'
+              message.destroy()
+              message.warning('The connection timed out, please login again !')
+              document.cookie = 'email=;'
+              props.setLoggedIn(false)
+              props.setPageProps({ page: 'LoginPage' })
+            }
             else
               document.cookie = 'error=true'
             message.error('Server Error! Please refresh again! (Archive Post Error)')
@@ -83,8 +89,14 @@ const OptionMenu = (props) => {
       })
       .catch(err => {
         if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
-          if (err.response.data.message.slice(0, 13) === 'Malformed JWT')
+          if (err.response.data.message.slice(0, 13) === 'Malformed JWT') {
             document.cookie = 'error=Jwt'
+            message.destroy()
+            message.warning('The connection timed out, please login again !')
+            document.cookie = 'email=;'
+            props.setLoggedIn(false)
+            props.setPageProps({ page: 'LoginPage' })
+          }
           else
             document.cookie = 'error=true'
           message.error('Server Error! Please refresh again!  (Set Post Public/Private Error)')
@@ -116,8 +128,14 @@ const OptionMenu = (props) => {
       })
       .catch(err => {
         if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
-          if (err.response.data.message.slice(0, 13) === 'Malformed JWT')
+          if (err.response.data.message.slice(0, 13) === 'Malformed JWT') {
             document.cookie = 'error=Jwt'
+            message.destroy()
+            message.warning('The connection timed out, please login again !')
+            document.cookie = 'email=;'
+            props.setLoggedIn(false)
+            props.setPageProps({ page: 'LoginPage' })
+          }
           else
             document.cookie = 'error=true'
           message.error('Server Error! Please refresh again!  (Set Note Public/Private Error)')
@@ -161,20 +179,26 @@ const OptionMenu = (props) => {
       })
       .catch(err => {
         if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
-          if (err.response.data.message.slice(0, 13) === 'Malformed JWT')
+          if (err.response.data.message.slice(0, 13) === 'Malformed JWT') {
             document.cookie = 'error=Jwt'
+            message.destroy()
+            message.warning('The connection timed out, please login again !')
+            document.cookie = 'email=;'
+            props.setLoggedIn(false)
+            props.setPageProps({ page: 'LoginPage' })
+          }
           else
             document.cookie = 'error=true'
           message.error('Server Error! Please refresh again! (Set Version Public/Private Error)')
         }
-        else{
+        else {
           message.error("Server Error! Please try again later. (Set Version Public/Private Error)")
         }
       })
   }
   const contentBrowse = (noteId) => {
     //message.info("browse: "+ noteId);
-    setContent(<MyEditor noteId={noteId} version={'0'} page={props.page} />)
+    setContent(<MyEditor setLoggedIn={props.setLoggedIn} setPageProps={props.setPageProps} noteId={noteId} version={'0'} page={props.page} />)
   }
 
   const commentBrowse = (comment, index) => {
@@ -210,18 +234,24 @@ const OptionMenu = (props) => {
         notification.open({
           message: 'The Note has been saved to Owned Folder.',
           placement: 'bottomLeft'
-      });
+        });
         // Todo: remove applicant from list
       })
       .catch(err => {
         if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
-          if (err.response.data.message.slice(0, 13) === 'Malformed JWT')
+          if (err.response.data.message.slice(0, 13) === 'Malformed JWT') {
             document.cookie = 'error=Jwt'
+            message.destroy()
+            message.warning('The connection timed out, please login again !')
+            document.cookie = 'email=;'
+            props.setLoggedIn(false)
+            props.setPageProps({ page: 'LoginPage' })
+          }
           else
             document.cookie = 'error=true'
           message.error('Server Error! Please refresh again! (Select Reward Best Error)')
         }
-        else{
+        else {
           message.error("Server Error! Please try again later. (Select Reward Best Error)")
         }
       })
@@ -241,13 +271,19 @@ const OptionMenu = (props) => {
       })
       .catch(err => {
         if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
-          if (err.response.data.message.slice(0, 13) === 'Malformed JWT')
+          if (err.response.data.message.slice(0, 13) === 'Malformed JWT') {
             document.cookie = 'error=Jwt'
+            message.destroy()
+            message.warning('The connection timed out, please login again !')
+            document.cookie = 'email=;'
+            props.setLoggedIn(false)
+            props.setPageProps({ page: 'LoginPage' })
+          }
           else
             document.cookie = 'error=true'
           message.error('Server Error! Please refresh again! (Select Reward For Reference Error)')
         }
-        else{
+        else {
           message.error("Server Error! Please try again later. (Select Reward For Reference Error)")
         }
       })
@@ -269,13 +305,19 @@ const OptionMenu = (props) => {
       })
       .catch(err => {
         if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
-          if (err.response.data.message.slice(0, 13) === 'Malformed JWT')
+          if (err.response.data.message.slice(0, 13) === 'Malformed JWT') {
             document.cookie = 'error=Jwt'
+            message.destroy()
+            message.warning('The connection timed out, please login again !')
+            document.cookie = 'email=;'
+            props.setLoggedIn(false)
+            props.setPageProps({ page: 'LoginPage' })
+          }
           else
             document.cookie = 'error=true'
           message.error('Server Error! Please refresh again! (Agree Applier Error)')
         }
-        else{
+        else {
           message.error("Server Error! Please try again later. (Agree Applier Error)")
         }
       })
@@ -294,13 +336,19 @@ const OptionMenu = (props) => {
       })
       .catch(err => {
         if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
-          if (err.response.data.message.slice(0, 13) === 'Malformed JWT')
+          if (err.response.data.message.slice(0, 13) === 'Malformed JWT') {
             document.cookie = 'error=Jwt'
+            message.destroy()
+            message.warning('The connection timed out, please login again !')
+            document.cookie = 'email=;'
+            props.setLoggedIn(false)
+            props.setPageProps({ page: 'LoginPage' })
+          }
           else
             document.cookie = 'error=true'
           message.error('Server Error! Please refresh again! (Reject Applier Error)')
         }
-        else{
+        else {
           message.error("Server Error! Please try again later. (Reject Applier Error)")
         }
       })
@@ -331,13 +379,19 @@ const OptionMenu = (props) => {
             message.warn("You cannot delete the last note!")
           }
           else if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
-            if (err.response.data.message.slice(0, 13) === 'Malformed JWT')
+            if (err.response.data.message.slice(0, 13) === 'Malformed JWT') {
               document.cookie = 'error=Jwt'
+              message.destroy()
+              message.warning('The connection timed out, please login again !')
+              document.cookie = 'email=;'
+              props.setLoggedIn(false)
+              props.setPageProps({ page: 'LoginPage' })
+            }
             else
               document.cookie = 'error=true'
             message.error('Server Error! Please refresh again!')
           }
-          else{
+          else {
             message.error('Server Error! Please try again later.')
           }
         })
@@ -361,13 +415,19 @@ const OptionMenu = (props) => {
         })
         .catch(err => {
           if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
-            if (err.response.data.message.slice(0, 13) === 'Malformed JWT')
+            if (err.response.data.message.slice(0, 13) === 'Malformed JWT') {
               document.cookie = 'error=Jwt'
+              message.destroy()
+              message.warning('The connection timed out, please login again !')
+              document.cookie = 'email=;'
+              props.setLoggedIn(false)
+              props.setPageProps({ page: 'LoginPage' })
+            }
             else
               document.cookie = 'error=true'
             message.error('Server Error! Please refresh again! (Delete Post Error)')
           }
-          else{
+          else {
             message.error("Server Error! Please try again later. (Delete Post Error)")
           }
         })
@@ -389,13 +449,19 @@ const OptionMenu = (props) => {
         })
         .catch(err => {
           if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
-            if (err.response.data.message.slice(0, 13) === 'Malformed JWT')
+            if (err.response.data.message.slice(0, 13) === 'Malformed JWT') {
               document.cookie = 'error=Jwt'
+              message.destroy()
+              message.warning('The connection timed out, please login again !')
+              document.cookie = 'email=;'
+              props.setLoggedIn(false)
+              props.setPageProps({ page: 'LoginPage' })
+            }
             else
               document.cookie = 'error=true'
             message.error('Server Error! Please refresh again! (Set As Favorite Error)')
           }
-          else{
+          else {
             message.error("Server Error! Please try again later. (Set As Favorite Error)")
           }
         })
@@ -421,13 +487,19 @@ const OptionMenu = (props) => {
       })
       .catch(err => {
         if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
-          if (err.response.data.message.slice(0, 13) === 'Malformed JWT')
+          if (err.response.data.message.slice(0, 13) === 'Malformed JWT') {
             document.cookie = 'error=Jwt'
+            message.destroy()
+            message.warning('The connection timed out, please login again !')
+            document.cookie = 'email=;'
+            props.setLoggedIn(false)
+            props.setPageProps({ page: 'LoginPage' })
+          }
           else
             document.cookie = 'error=true'
           message.error('Server Error! Please refresh again! (Set As Unfavorite Error)')
         }
-        else{
+        else {
           message.error("Server Error! Please try again later. (Set As Unfavorite Error)")
         }
       })
@@ -463,13 +535,19 @@ const OptionMenu = (props) => {
       })
       .catch(err => {
         if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
-          if (err.response.data.message.slice(0, 13) === 'Malformed JWT')
+          if (err.response.data.message.slice(0, 13) === 'Malformed JWT') {
             document.cookie = 'error=Jwt'
+            message.destroy()
+            message.warning('The connection timed out, please login again !')
+            document.cookie = 'email=;'
+            props.setLoggedIn(false)
+            props.setPageProps({ page: 'LoginPage' })
+          }
           else
             document.cookie = 'error=true'
           message.error('Server Error! Please refresh again! (Choose Manager Error)')
         }
-        else{
+        else {
           message.error("Server Error! Please try again later. (Choose Manager Error)")
         }
       })
@@ -516,13 +594,19 @@ const OptionMenu = (props) => {
       })
       .catch(err => {
         if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
-          if (err.response.data.message.slice(0, 13) === 'Malformed JWT')
+          if (err.response.data.message.slice(0, 13) === 'Malformed JWT') {
             document.cookie = 'error=Jwt'
+            message.destroy()
+            message.warning('The connection timed out, please login again !')
+            document.cookie = 'email=;'
+            props.setLoggedIn(false)
+            props.setPageProps({ page: 'LoginPage' })
+          }
           else
             document.cookie = 'error=true'
           message.error('Server Error! Please refresh again! (Delete Post Error)')
         }
-        else{
+        else {
           message.error("Server Error! Please try again later. (Delete Post Error)")
         }
       })
@@ -1299,7 +1383,7 @@ const OptionMenu = (props) => {
         ></Dropdown.Button>
       </Space>
       <Drawer title={"Version"} placement="right" onClose={onClose} visible={visible}>
-        <VersionArea page={'NoteDetailPageVersion'} notePublic={props.notePublic} id={props.id} versions={props.versions} setVersions={props.setVersions} setVersion={props.setVersion} isAuthor={props.isAuthor} />
+        <VersionArea setLoggedIn={props.setLoggedIn} setPageProps={props.setPageProps} page={'NoteDetailPageVersion'} notePublic={props.notePublic} id={props.id} versions={props.versions} setVersions={props.setVersions} setVersion={props.setVersion} isAuthor={props.isAuthor} />
       </Drawer>
       {(props.page == "RewardDetailPage" && props.isAuthor) &&
         <Modal title="Notification" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>

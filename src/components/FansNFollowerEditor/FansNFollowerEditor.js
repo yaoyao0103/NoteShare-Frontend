@@ -7,7 +7,7 @@ import { message } from 'antd';
 import './FansNFollowerEditor.css'
 import axios from "axios";
 import Cookie from '../Cookies/Cookies';
-const cookieParser =new Cookie(document.cookie)
+const cookieParser = new Cookie(document.cookie)
 function FansNFollowerEditor(props) {
     const [isFollow, setIsFollow] = useState(true);
     const [isFans, setIsFans] = useState(true);
@@ -16,10 +16,10 @@ function FansNFollowerEditor(props) {
     const [visible, setVisible] = useState(false);
     const removeFans = () => {
         if (!isFans) {
-            axios.put("http://localhost:8080/follow/" + props.targetEmail + '/' + props.email,{},{
+            axios.put("http://localhost:8080/follow/" + props.targetEmail + '/' + props.email, {}, {
                 headers: {
                     'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
-                  }
+                }
             }).then(res => {
                 //setProfile(content);
                 setIsFans(true);
@@ -29,14 +29,20 @@ function FansNFollowerEditor(props) {
 
                 //message.info('Follow ' + user.name);
             }).catch((error) => {
-                if (error.response.status === 500 || error.response.status === 404||error.response.status === 403){
-                    if(error.response.data.message.slice(0,13)==='Malformed JWT')
-                    document.cookie = 'error=Jwt'
+                if (error.response.status === 500 || error.response.status === 404 || error.response.status === 403) {
+                    if (error.response.data.message.slice(0, 13) === 'Malformed JWT') {
+                        document.cookie = 'error=Jwt'
+                        message.destroy()
+                        message.warning('The connection timed out, please login again !')
+                        document.cookie = 'email=;'
+                        props.setLoggedIn(false)
+                        props.setPageProps({ page: 'LoginPage' })
+                    }
                     else
-                    document.cookie = 'error=true'
+                        document.cookie = 'error=true'
                     message.error('Server Error! Please refresh again! (Follow User Error)')
                 }
-                else{
+                else {
                     message.error("Server Error! Please try again later. (Follow User Error)")
                 }
 
@@ -45,10 +51,10 @@ function FansNFollowerEditor(props) {
         else {
             //console.log('props.targetEmail ', props.targetEmail)
             //console.log('props.email', props.email)
-            axios.put("http://localhost:8080/unfollow/" + props.targetEmail + '/' + props.email,{},{
+            axios.put("http://localhost:8080/unfollow/" + props.targetEmail + '/' + props.email, {}, {
                 headers: {
                     'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
-                  }
+                }
             }).then(res => {
                 //setProfile(content);
                 setIsFans(false);
@@ -57,14 +63,20 @@ function FansNFollowerEditor(props) {
                 setFansNum(fansNum - 1);
                 //message.success('You unfollowed this user!');
             }).catch((error) => {
-                if (error.response.status === 500 || error.response.status === 404||error.response.status === 403){
-                    if(error.response.data.message.slice(0,13)==='Malformed JWT')
-                    document.cookie = 'error=Jwt'
+                if (error.response.status === 500 || error.response.status === 404 || error.response.status === 403) {
+                    if (error.response.data.message.slice(0, 13) === 'Malformed JWT') {
+                        document.cookie = 'error=Jwt'
+                        message.destroy()
+                        message.warning('The connection timed out, please login again !')
+                        document.cookie = 'email=;'
+                        props.setLoggedIn(false)
+                        props.setPageProps({ page: 'LoginPage' })
+                    }
                     else
-                    document.cookie = 'error=true'
+                        document.cookie = 'error=true'
                     message.error('Server Error! Please refresh again! (Unfollow User Error)')
                 }
-                else{
+                else {
                     message.error("Server Error! Please try again later. (Unfollow User Error)")
                 }
             })
@@ -72,10 +84,10 @@ function FansNFollowerEditor(props) {
     }
     const cancelFollowing = () => {
         if (!isFollow) {
-            axios.put("http://localhost:8080/follow/" + props.email + '/' + props.targetEmail,{},{
+            axios.put("http://localhost:8080/follow/" + props.email + '/' + props.targetEmail, {}, {
                 headers: {
                     'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
-                  }
+                }
             }).then(res => {
                 //setProfile(content);
 
@@ -86,24 +98,30 @@ function FansNFollowerEditor(props) {
                 setFollowingNum(followingNum + 1);
                 //message.success('You followed this user!');
             }).catch((error) => {
-                if (error.response.status === 500 || error.response.status === 404||error.response.status === 403){
-                    if(error.response.data.message.slice(0,13)==='Malformed JWT')
-                    document.cookie = 'error=Jwt'
+                if (error.response.status === 500 || error.response.status === 404 || error.response.status === 403) {
+                    if (error.response.data.message.slice(0, 13) === 'Malformed JWT') {
+                        document.cookie = 'error=Jwt'
+                        message.destroy()
+                        message.warning('The connection timed out, please login again !')
+                        document.cookie = 'email=;'
+                        props.setLoggedIn(false)
+                        props.setPageProps({ page: 'LoginPage' })
+                    }
                     else
-                    document.cookie = 'error=true'
+                        document.cookie = 'error=true'
                     message.error('Server Error! Please refresh again! (Follow User Error)')
                 }
-                else{
+                else {
                     message.error("Server Error! Please try again later. (Follow User Error)")
                 }
 
             })
         }
         else {
-            axios.put("http://localhost:8080/unfollow/" + props.email + '/' + props.targetEmail,{},{
+            axios.put("http://localhost:8080/unfollow/" + props.email + '/' + props.targetEmail, {}, {
                 headers: {
                     'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
-                  }
+                }
             }).then(res => {
                 //setProfile(content);
 
@@ -115,14 +133,20 @@ function FansNFollowerEditor(props) {
                 //message.info('Unfollow ' + user.name);
             }).catch((error) => {
                 //console.log(error.response.res);
-                if (error.response.status === 500 || error.response.status === 404||error.response.status === 403){
-                    if(error.response.data.message.slice(0,13)==='Malformed JWT')
-                    document.cookie = 'error=Jwt'
+                if (error.response.status === 500 || error.response.status === 404 || error.response.status === 403) {
+                    if (error.response.data.message.slice(0, 13) === 'Malformed JWT') {
+                        document.cookie = 'error=Jwt'
+                        message.destroy()
+                        message.warning('The connection timed out, please login again !')
+                        document.cookie = 'email=;'
+                        props.setLoggedIn(false)
+                        props.setPageProps({ page: 'LoginPage' })
+                    }
                     else
-                    document.cookie = 'error=true'
+                        document.cookie = 'error=true'
                     message.error('Server Error! Please refresh again! (Unfollow User Error)')
                 }
-                else{
+                else {
                     message.error('Server Error! Please try again later! (Unfollow User Error)')
                 }
             })
@@ -132,15 +156,15 @@ function FansNFollowerEditor(props) {
 
     const handleOk = () => {
         removeFans();
-        
-          setVisible(false);
-       
-      };
-    
-      const handleCancel = () => {
+
+        setVisible(false);
+
+    };
+
+    const handleCancel = () => {
         //message.info('Clicked cancel button');
         setVisible(false);
-      };
+    };
     return (
         <div className='FansNFollowerEditor'>
             <Row className='FansNFollowerEditor__Row'>
@@ -155,13 +179,13 @@ function FansNFollowerEditor(props) {
                         title="Are you sure ?"
                         visible={visible}
                         onConfirm={handleOk}
-                        onCancel={ handleCancel}
+                        onCancel={handleCancel}
                         okText="Yes"
                         cancelText="Cancel"
                     >
-                       
 
-                        <Col className='FansNFollowerEditor__Fans' span={5} onClick={() => {  setVisible(true); }}>
+
+                        <Col className='FansNFollowerEditor__Fans' span={5} onClick={() => { setVisible(true); }}>
                             {/* <UserAddOutlined className='Profile__Follow__Icon' style={{ fontSize: '22px' }} /> */}
                             <Text className='FansNFollowerEditor__unFans' cls='Small' fontSize={'16'} content='移除'></Text>
                         </Col >

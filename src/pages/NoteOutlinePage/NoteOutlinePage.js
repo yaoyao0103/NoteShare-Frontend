@@ -4,7 +4,7 @@ import PageOutlineContentTemplate from '../../components/PageOutlineContentTempl
 import axios from "axios";
 import { message } from "antd";
 import Cookie from '../../components/Cookies/Cookies';
-const cookieParser=new Cookie(document.cookie)
+const cookieParser = new Cookie(document.cookie)
 function NoteOutlinePage(props) {
     const page = 'NoteOutlinePage';
     const [Note, setNote] = useState([]);
@@ -14,11 +14,11 @@ function NoteOutlinePage(props) {
         props.setLoading(true)
         async function getNoteById() {
             try {
-                const haveNormal= true;
-                const sortBy=props.sortMode;
+                const haveNormal = true;
+                const sortBy = props.sortMode;
                 console.log(sortBy)
                 //console.log(props.department);
-                await axios.get('http://localhost:8080/search/note/'+ String(props.pageNumber-1) + '/10?keyword='+(props.keyword?props.keyword:'')+'&department='+(props.department?props.department:'')+'&subject='+(props.subject?props.subject:'')+'&haveNormal=true&haveCollaboration=true&sortBy='+sortBy).then((res) => {
+                await axios.get('http://localhost:8080/search/note/' + String(props.pageNumber - 1) + '/10?keyword=' + (props.keyword ? props.keyword : '') + '&department=' + (props.department ? props.department : '') + '&subject=' + (props.subject ? props.subject : '') + '&haveNormal=true&haveCollaboration=true&sortBy=' + sortBy).then((res) => {
                     console.log(res.data.search)
                     setNote(oldArray => [...oldArray, res.data.search]);
                     props.setLoading(false)
@@ -26,14 +26,20 @@ function NoteOutlinePage(props) {
 
             } catch (error) {
                 setNote(error.message);
-                if (error.response.status === 500 || error.response.status === 404||error.response.status === 403){
-                    if(error.response.data.message.slice(0,13)==='Malformed JWT')
-                    document.cookie = 'error=Jwt'
+                if (error.response.status === 500 || error.response.status === 404 || error.response.status === 403) {
+                    if (error.response.data.message.slice(0, 13) === 'Malformed JWT') {
+                        document.cookie = 'error=Jwt'
+                        message.destroy()
+                        message.warning('The connection timed out, please login again !')
+                        document.cookie = 'email=;'
+                        props.setLoggedIn(false)
+                        props.setPageProps({ page: 'LoginPage' })
+                    }
                     else
-                    document.cookie = 'error=true'
+                        document.cookie = 'error=true'
                     message.error('Server Error! Please refresh again! (Get Note Error)')
                 }
-                else{
+                else {
                     message.error("Server Error! Please try again later. (Get Note Error)")
                 }
 
@@ -46,9 +52,9 @@ function NoteOutlinePage(props) {
 
     return (
         <>
-            {Note.length > 0 && 
-                <PageOutlineContentTemplate page={page}  hasSwitch={false} mode='Note' Post={Note} pageNumber={props.pageNumber} changePageNumber={props.setPageNumber} changeSortMode={props.changeSortMode} setPageProps={props.setPageProps}/>
-       
+            {Note.length > 0 &&
+                <PageOutlineContentTemplate setLoggedIn={props.setLoggedIn} setPageProps={props.setPageProps} page={page} hasSwitch={false} mode='Note' Post={Note} pageNumber={props.pageNumber} changePageNumber={props.setPageNumber} changeSortMode={props.changeSortMode} />
+
             }
         </>
     );

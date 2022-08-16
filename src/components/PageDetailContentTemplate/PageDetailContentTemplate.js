@@ -66,7 +66,7 @@ const PageDetailContentTemplate = (props) => {
         if (props.page == "NoteDetailPage") {
             setNoteId(props.data?.id);
             setType("note")
-            setEditor(<MyEditor noteId={props.data?.id} version={'0'} page={props.page} email={email} />)
+            setEditor(<MyEditor setLoggedIn={props.setLoggedIn} setPageProps={props.setPageProps} noteId={props.data?.id} version={'0'} page={props.page} email={email} />)
             setNoteType(props.data?.type)
             setIsNotePublic(props.data?.public)
             setAuthorEmail(props.data?.headerUserObj.userObjEmail)
@@ -115,7 +115,7 @@ const PageDetailContentTemplate = (props) => {
 
 
                     if (((tempNote.managerUserObj?.userObjEmail == tempEmail) || tempNote.headerUserObj.userObjEmail == tempEmail) && tempEmail) {
-                        setEditor(<MyEditor noteId={noteId} version={'0'} page={props.page} email={email} />)
+                        setEditor(<MyEditor setLoggedIn={props.setLoggedIn} setPageProps={props.setPageProps} noteId={noteId} version={'0'} page={props.page} email={email} />)
                         setIsManager(true)
                         setIsAuthor(true)
                         console.log("is a manager")
@@ -123,7 +123,7 @@ const PageDetailContentTemplate = (props) => {
                         console.log("props.data.collabApplyUserObj", props.data.collabApplyUserObj)
                     }
                     else if (tempNote.authorEmail.includes(tempEmail) && tempEmail) {
-                        setEditor(<MyEditor noteId={noteId} version={'0'} page={props.page} email={email} />)
+                        setEditor(<MyEditor setLoggedIn={props.setLoggedIn} setPageProps={props.setPageProps} noteId={noteId} version={'0'} page={props.page} email={email} />)
                         setIsAuthor(true)
                     }
                     else {
@@ -155,8 +155,14 @@ const PageDetailContentTemplate = (props) => {
                 })
                 .catch(err => {
                     if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
-                        if (err.response.data.message.slice(0, 13) === 'Malformed JWT')
+                        if (err.response.data.message.slice(0, 13) === 'Malformed JWT') {
                             document.cookie = 'error=Jwt'
+                            message.destroy()
+                            message.warning('The connection timed out, please login again !')
+                            document.cookie = 'email=;'
+                            props.setLoggedIn(false)
+                            props.setPageProps({ page: 'LoginPage' })
+                        }
                         else
                             document.cookie = 'error=true'
                         message.error('Server Error! Please refresh again! (Get Collaboration Note Error)')
@@ -240,7 +246,7 @@ const PageDetailContentTemplate = (props) => {
                                 <a>out of group!</a>
                             </>),
                         description: (
-                            <VoteArea vote={props.data?.voteUserObj[i]} total={props.data?.emailUserObj.length} postId={props.postId} email={email} />
+                            <VoteArea setLoggedIn={props.setLoggedIn} setPageProps={props.setPageProps} vote={props.data?.voteUserObj[i]} total={props.data?.emailUserObj.length} postId={props.postId} email={email} />
                         ),
                         placement: 'topLeft',
                         style: {
@@ -280,9 +286,9 @@ const PageDetailContentTemplate = (props) => {
 
     const setVersion = (index) => {
         if (props.page == "NoteDetailPage")
-            setEditor(<MyEditor noteId={props.data?.id} version={index.toString()} page={props.page} email={email} />)
+            setEditor(<MyEditor setLoggedIn={props.setLoggedIn} setPageProps={props.setPageProps} noteId={props.data?.id} version={index.toString()} page={props.page} email={email} />)
         else if (props.page == "CollabDetailPage" && props.data)
-            setEditor(<MyEditor noteId={noteId} version={index.toString()} page={props.page} email={email} />)
+            setEditor(<MyEditor setLoggedIn={props.setLoggedIn} setPageProps={props.setPageProps} noteId={noteId} version={index.toString()} page={props.page} email={email} />)
     }
 
     const apply = (content) => {
@@ -305,8 +311,14 @@ const PageDetailContentTemplate = (props) => {
                 })
                 .catch(err => {
                     if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
-                        if (err.response.data.message.slice(0, 13) === 'Malformed JWT')
+                        if (err.response.data.message.slice(0, 13) === 'Malformed JWT') {
                             document.cookie = 'error=Jwt'
+                            message.destroy()
+                            message.warning('The connection timed out, please login again !')
+                            document.cookie = 'email=;'
+                            props.setLoggedIn(false)
+                            props.setPageProps({ page: 'LoginPage' })
+                        }
                         else
                             document.cookie = 'error=true'
                         message.error('Server Error! Please refresh again! (Submit Application Error)')
@@ -351,8 +363,14 @@ const PageDetailContentTemplate = (props) => {
                 })
                 .catch(err => {
                     if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
-                        if (err.response.data.message.slice(0, 13) === 'Malformed JWT')
+                        if (err.response.data.message.slice(0, 13) === 'Malformed JWT') {
                             document.cookie = 'error=Jwt'
+                            message.destroy()
+                            message.warning('The connection timed out, please login again !')
+                            document.cookie = 'email=;'
+                            props.setLoggedIn(false)
+                            props.setPageProps({ page: 'LoginPage' })
+                        }
                         else
                             document.cookie = 'error=true'
                         message.error('Server Error! Please refresh again! (Buy Note Error)')
@@ -383,8 +401,14 @@ const PageDetailContentTemplate = (props) => {
             })
             .catch(err => {
                 if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
-                    if (err.response.data.message.slice(0, 13) === 'Malformed JWT')
+                    if (err.response.data.message.slice(0, 13) === 'Malformed JWT') {
                         document.cookie = 'error=Jwt'
+                        message.destroy()
+                        message.warning('The connection timed out, please login again !')
+                        document.cookie = 'email=;'
+                        props.setLoggedIn(false)
+                        props.setPageProps({ page: 'LoginPage' })
+                    }
                     else
                         document.cookie = 'error=true'
                     message.error('Server Error! Please refresh again! (Submit Reward Note Error)')
@@ -407,8 +431,14 @@ const PageDetailContentTemplate = (props) => {
             })
             .catch(err => {
                 if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
-                    if (err.response.data.message.slice(0, 13) === 'Malformed JWT')
+                    if (err.response.data.message.slice(0, 13) === 'Malformed JWT') {
                         document.cookie = 'error=Jwt'
+                        message.destroy()
+                        message.warning('The connection timed out, please login again !')
+                        document.cookie = 'email=;'
+                        props.setLoggedIn(false)
+                        props.setPageProps({ page: 'LoginPage' })
+                    }
                     else
                         document.cookie = 'error=true'
                     message.error('Server Error! Please refresh again! (Withdraw Reward Note Error)')
@@ -444,8 +474,14 @@ const PageDetailContentTemplate = (props) => {
             })
             .catch(err => {
                 if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
-                    if (err.response.data.message.slice(0, 13) === 'Malformed JWT')
+                    if (err.response.data.message.slice(0, 13) === 'Malformed JWT') {
                         document.cookie = 'error=Jwt'
+                        message.destroy()
+                        message.warning('The connection timed out, please login again !')
+                        document.cookie = 'email=;'
+                        props.setLoggedIn(false)
+                        props.setPageProps({ page: 'LoginPage' })
+                    }
                     else
                         document.cookie = 'error=true'
                     message.error('Server Error! Please refresh again! (Create Vote Error)')
@@ -476,8 +512,14 @@ const PageDetailContentTemplate = (props) => {
             })
             .catch(err => {
                 if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
-                    if (err.response.data.message.slice(0, 13) === 'Malformed JWT')
+                    if (err.response.data.message.slice(0, 13) === 'Malformed JWT') {
                         document.cookie = 'error=Jwt'
+                        message.destroy()
+                        message.warning('The connection timed out, please login again !')
+                        document.cookie = 'email=;'
+                        props.setLoggedIn(false)
+                        props.setPageProps({ page: 'LoginPage' })
+                    }
                     else
                         document.cookie = 'error=true'
                     message.error('Server Error! Please refresh again! (Refresh Answer Error)')
@@ -526,6 +568,7 @@ const PageDetailContentTemplate = (props) => {
                             <Col className="contentTemplate__Header__right contentTemplate__Dropdown" span={props.page != 'NoteDetailPage' ? 1 : 2}>
                                 <div className="contentTemplate__Dropdown">
                                     <OptionMenu
+                                        setLoggedIn={props.setLoggedIn}
                                         page={props.page}
                                         comments={props.data?.commentsUserObj ? props.data.commentsUserObj : []}
                                         versions={versions ? versions : props.data?.version ? props.data.version : []}
@@ -612,7 +655,7 @@ const PageDetailContentTemplate = (props) => {
                                     <>
                                         {/* 
                                         <Text color='black' cls='Default' content={tag} fontSize='18' display="inline-block" /> */}
-                                        <Tag style={{ fontSize: "15px" }}><p style={{ cursor:'pointer'}}onClick={() => (props.setPageProps({ page: 'TagOutlinePage', tag: tag, pageNumber: 1 }))}>{tag}</p></Tag>
+                                        <Tag style={{ fontSize: "15px" }}><p style={{ cursor: 'pointer' }} onClick={() => (props.setPageProps({ page: 'TagOutlinePage', tag: tag, pageNumber: 1 }))}>{tag}</p></Tag>
                                     </>
                                 )}
                                 {(noteType != 'reward' && !(isAuthor || isBuyer)) &&
@@ -706,7 +749,7 @@ const PageDetailContentTemplate = (props) => {
                 {(props.page != 'NoteDetailPage' && props.page != 'CollabDetailPage') &&
                     <>
                         <Sider id="contentTemplate__Comment" className="contentTemplate__Comment" width={props.page == "QnADetailPage" ? '50%' : '40%'}>
-                            <CommentArea type="post" setPageProps={props.setPageProps} page={props.page} comments={props.data?.commentsUserObj ? props.data.commentsUserObj : []} id={props.postId} isArchive={isArchive} isAuthor={isAuthor} authorEmail={authorEmail} />
+                            <CommentArea type="post" setLoggedIn={props.setLoggedIn} setPageProps={props.setPageProps} page={props.page} comments={props.data?.commentsUserObj ? props.data.commentsUserObj : []} id={props.postId} isArchive={isArchive} isAuthor={isAuthor} authorEmail={authorEmail} />
                         </Sider>
                     </>
                 }
@@ -714,7 +757,7 @@ const PageDetailContentTemplate = (props) => {
             {/* Popped up Part */}
             <div className={poppedContentShow && 'popped__blur'}></div>
             <div className={`${props.page != 'CollabDetailPage' ? 'popped__Answer' : 'popped__Apply'} ${poppedContentShow && 'popped--show'}`} >
-                <PoppedContent email={email} sendPrivateMessage={props.sendPrivateMessage} page={props.page} content={poppedContent} apply={apply} setPoppedContentShow={setPoppedContentShow} isAuthor={isAuthor} isManager={isManager} postId={props.postId} haveApplied={haveApplied} setHaveApplied={setHaveApplied} refreshAnswer={refreshAnswer} setPageProps={props.setPageProps} />
+                <PoppedContent setLoggedIn={props.setLoggedIn} setPageProps={props.setPageProps} email={email} sendPrivateMessage={props.sendPrivateMessage} page={props.page} content={poppedContent} apply={apply} setPoppedContentShow={setPoppedContentShow} isAuthor={isAuthor} isManager={isManager} postId={props.postId} haveApplied={haveApplied} setHaveApplied={setHaveApplied} refreshAnswer={refreshAnswer} />
             </div>
 
             <Modal title="Kick User Vote" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
@@ -742,7 +785,7 @@ const PageDetailContentTemplate = (props) => {
             }
 
             <Drawer title={"Comment"} placement="right" onClose={onClose} visible={visible}>
-                <CommentArea setPageProps={props.setPageProps} page={props.page} type="note" comments={props.data?.commentsUserObj ? props.data.commentsUserObj : []} id={props.postId ? props.postId : props.noteId} />
+                <CommentArea setLoggedIn={props.setLoggedIn} setPageProps={props.setPageProps} page={props.page} type="note" comments={props.data?.commentsUserObj ? props.data.commentsUserObj : []} id={props.postId ? props.postId : props.noteId} />
             </Drawer>
             <QuestionCircleOutlined style={{ position: 'absolute', fontSize: '28px', padding: '0.5em', top: '0.5em', right: '1em' }} />
         </div>

@@ -79,14 +79,20 @@ function OutlineCard(props) {
                 else
                     setLikeNum(props.cardContent.likeCount + 1)
             }).catch(err => {
-                if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
-                    if(err.response.data.message.slice(0,13)==='Malformed JWT')
-                    document.cookie = 'error=Jwt'
+                if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
+                    if (err.response.data.message.slice(0, 13) === 'Malformed JWT') {
+                        document.cookie = 'error=Jwt'
+                        message.destroy()
+                        message.warning('The connection timed out, please login again !')
+                        document.cookie = 'email=;'
+                        props.setLoggedIn(false)
+                        props.setPageProps({ page: 'LoginPage' })
+                    }
                     else
-                    document.cookie = 'error=true'
+                        document.cookie = 'error=true'
                     message.error('Server Error! Please refresh again! (like Note Error)')
                 }
-                else{
+                else {
                     message.error("Server Error! Please try again later. (like Note Error)")
                 }
             });
@@ -110,14 +116,20 @@ function OutlineCard(props) {
                 else
                     setLikeNum(props.cardContent.likeCount)
             }).catch(err => {
-                if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
-                    if(err.response.data.message.slice(0,13)==='Malformed JWT')
-                    document.cookie = 'error=Jwt'
+                if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
+                    if (err.response.data.message.slice(0, 13) === 'Malformed JWT') {
+                        document.cookie = 'error=Jwt'
+                        message.destroy()
+                        message.warning('The connection timed out, please login again !')
+                        document.cookie = 'email=;'
+                        props.setLoggedIn(false)
+                        props.setPageProps({ page: 'LoginPage' })
+                    }
                     else
-                    document.cookie = 'error=true'
+                        document.cookie = 'error=true'
                     message.error('Server Error! Please refresh again! (Cancel like Error)')
                 }
-                else{
+                else {
                     message.error("Server Error! Please try again later. (Cancel like Error)")
                 }
             });
@@ -223,7 +235,7 @@ function OutlineCard(props) {
                 </Row>
                 <Row className={"OutlineCard__Sider__Fourth__Row" + '__' + props.mode}></Row>
                 <Row className={"OutlineCard__Sider__Fourth__Row" + '__' + props.mode}></Row>
-                
+
                 <Row className={"OutlineCard__Sider__Fourth__Row" + '__' + props.mode}>
                     <Col className={"OutlineCard__Sider__BestPrice" + '__' + props.mode} span={20}>
                         <Text cls='Default' fontSize="16" content={'Best Reward : ' + props.cardContent.bestPrice} color="red" />
@@ -232,7 +244,7 @@ function OutlineCard(props) {
                 </Row>
                 <Row className={"OutlineCard__Sider__Fifth__Row" + '__' + props.mode}>
                     <Col className={"OutlineCard__Sider__RefPrice" + '__' + props.mode} span={20}>
-                        <Text cls='Default' fontSize="16" content={'Ref Reward : ' + props.cardContent.referencePrice} color="dark-green"/>
+                        <Text cls='Default' fontSize="16" content={'Ref Reward : ' + props.cardContent.referencePrice} color="dark-green" />
                     </Col>
                 </Row>
 
@@ -302,7 +314,7 @@ function OutlineCard(props) {
         }</>
     );
     const NoteSider = (
-        <>{(props.mode === 'Note'||props.mode === 'Tag') &&
+        <>{(props.mode === 'Note' || props.mode === 'Tag') &&
             < Sider onClick={props.onClick} className={"OutlineCard__Sider__Outer" + '__' + props.mode} width='30%' >
                 <Layout className={"OutlineCard__Sider__Inner__Layout" + '__' + props.mode}>
 
@@ -336,7 +348,7 @@ function OutlineCard(props) {
                                 {props.cardContent.professor}
                             </Col>
                         </Row>
-                        
+
                         <Row className={"OutlineCard__Sider__Row" + '__' + props.mode}>
                             <Col className={"OutlineCard__Sider__Downloadable" + '__' + props.mode} span={12}>
                                 <div>
@@ -349,24 +361,24 @@ function OutlineCard(props) {
                         </Row>
                         <Row className={"OutlineCard__Sider__Row" + '__' + props.mode}>
                             <Col className={"OutlineCard__Sider__LikeCount" + '__' + props.mode}>
-                                <div style={{marginRight:"1em"}}>
+                                <div style={{ marginRight: "1em" }}>
                                     <Text cls='Small' fontSize="8" content={"Likes"} />
                                 </div>
                                 {likeNum}
                             </Col>
                             <Col className={"OutlineCard__Sider__FavoriteCount" + '__' + props.mode}>
-                                <div style={{marginRight:"1em"}}>
+                                <div style={{ marginRight: "1em" }}>
                                     <Text cls='Small' fontSize="5" content={"Favorites"} />
                                 </div>
                                 {props.cardContent.favoriteCount}
                             </Col>
                             <Col className={"OutlineCard__Sider__UnlockCount" + '__' + props.mode}>
-                                <div style={{marginRight:"1em"}}>
+                                <div style={{ marginRight: "1em" }}>
                                     <Text cls='Small' fontSize="5" content={"Quantity Sold"} />
                                 </div>
                                 {props.cardContent.unlockCount}
                             </Col>
-                            
+
                         </Row>
 
                     </Content>
@@ -380,10 +392,10 @@ function OutlineCard(props) {
                                 {!props.hasBuy &&
                                     <>
                                         <div>
-                                        <Text cls='Small' fontSize="5" content={"Price"} />
-                                        <span style={{marginLeft:".5em", color:"#AE0000"}}>{props.cardContent.price}</span>
+                                            <Text cls='Small' fontSize="5" content={"Price"} />
+                                            <span style={{ marginLeft: ".5em", color: "#AE0000" }}>{props.cardContent.price}</span>
                                         </div>
-                                        
+
                                     </>
                                     // <Text cls='Default' fontSize="14" color='red' content={'未購買'} />
                                 }
@@ -534,7 +546,7 @@ function OutlineCard(props) {
                 <Layout className={"OutlineCard__Layout__Inner" + '__' + props.mode}>
                     <Header className={"OutlineCard__Header" + '__' + props.mode} >
                         <Row className={"OutlineCard__Header__Row" + '__' + props.mode}>
-                            <Col onClick={null} className={"OutlineCard__Header__Left" + '__' + props.mode} span={props.mode=='Note'?6:10}>
+                            <Col onClick={null} className={"OutlineCard__Header__Left" + '__' + props.mode} span={props.mode == 'Note' ? 6 : 10}>
                                 <OPInfo
                                     className="OutlineCard__OPInfo"
                                     mode="Outline"
@@ -547,8 +559,8 @@ function OutlineCard(props) {
                                     setPageProps={props.setPageProps}
                                 />
                             </Col>
-                            <Col onClick={props.onClick} className={"OutlineCard__Header__Right" + '__' + props.mode} span={props.mode=='Note'?15:12}>
-                                <p style={{fontSize:'26px',textAlign:'center', paddingTop: '.5em'}}>{props.cardContent.title}</p>
+                            <Col onClick={props.onClick} className={"OutlineCard__Header__Right" + '__' + props.mode} span={props.mode == 'Note' ? 15 : 12}>
+                                <p style={{ fontSize: '26px', textAlign: 'center', paddingTop: '.5em' }}>{props.cardContent.title}</p>
                             </Col>
                             <Col span={2}></Col>
                         </Row>
@@ -568,12 +580,12 @@ function OutlineCard(props) {
                             {props.cardContent.content}
                         </Paragraph>
                     </Content>
-                    {props.mode == 'Note' && 
+                    {props.mode == 'Note' &&
                         <Footer className="OutlineCard__Footer">
                             <div>
                                 <Text cls='Small' fontSize="18" content={"Tags"} />
-                                {props.cardContent.tag.length > 0 && 
-                                <span style={{marginLeft:"1em"}}>{tags}</span>
+                                {props.cardContent.tag.length > 0 &&
+                                    <span style={{ marginLeft: "1em" }}>{tags}</span>
                                 }
                             </div>
                         </Footer>

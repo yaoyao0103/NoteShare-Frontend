@@ -51,14 +51,20 @@ function VerificationPage(props) {
             // if(error.response.status === 403){
             //   setRedirectActivate(true);
             // }
-            if (error.response.status === 500 || error.response.status === 404||error.response.status === 403){
-                if(error.response.data.message.slice(0,13)==='Malformed JWT')
-                document.cookie = 'error=Jwt'
+            if (error.response.status === 500 || error.response.status === 404 || error.response.status === 403) {
+                if (error.response.data.message.slice(0, 13) === 'Malformed JWT') {
+                    document.cookie = 'error=Jwt'
+                    message.destroy()
+                    message.warning('The connection timed out, please login again !')
+                    document.cookie = 'email=;'
+                    props.setLoggedIn(false)
+                    props.setPageProps({ page: 'LoginPage' })
+                }
                 else
-                document.cookie = 'error=true'
+                    document.cookie = 'error=true'
                 message.error('Server Error! Please refresh again! (Verify Error')
             }
-            else{
+            else {
                 message.error('Server Error! Please try again later. (Verify Error)')
             }
             setOpenFail(true);
@@ -74,14 +80,20 @@ function VerificationPage(props) {
             // if(error.response.status === 403){
             //   setRedirectActivate(true);
             // }
-            if (error.response.status === 500 || error.response.status === 404||error.response.status === 403){
-                if(error.response.data.message.slice(0,13)==='Malformed JWT')
-                document.cookie = 'error=Jwt'
+            if (error.response.status === 500 || error.response.status === 404 || error.response.status === 403) {
+                if (error.response.data.message.slice(0, 13) === 'Malformed JWT') {
+                    document.cookie = 'error=Jwt'
+                    message.destroy()
+                    message.warning('The connection timed out, please login again !')
+                    document.cookie = 'email=;'
+                    props.setLoggedIn(false)
+                    props.setPageProps({ page: 'LoginPage' })
+                }
                 else
-                document.cookie = 'error=true'
+                    document.cookie = 'error=true'
                 message.error('Server Error! Please refresh again! (Resend Verify Code Error)')
             }
-            else{
+            else {
                 message.error('Server Error! Please try again later. (Resend Verify Code Error)')
             }
             setResendFail(true);
@@ -99,7 +111,7 @@ function VerificationPage(props) {
     useEffect(() => {
         if (resendFail) {
             setLoading(false);
-           
+
         }
     }, [resendFail]);
     useEffect(() => {
@@ -112,7 +124,7 @@ function VerificationPage(props) {
         }
 
     }, [openSuccess]);
-   
+
     const formItemLayout = {
         labelCol: {
             xs: {

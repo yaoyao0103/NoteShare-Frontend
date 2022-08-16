@@ -66,14 +66,20 @@ function MemberPage(props) {
 
         } catch (error) {
             setNote(error.message);
-            if (error.response.status === 500 || error.response.status === 404||error.response.status === 403){
-                if(error.response.data.message.slice(0,13)==='Malformed JWT')
-                document.cookie = 'error=Jwt'
+            if (error.response.status === 500 || error.response.status === 404 || error.response.status === 403) {
+                if (error.response.data.message.slice(0, 13) === 'Malformed JWT') {
+                    document.cookie = 'error=Jwt'
+                    message.destroy()
+                    message.warning('The connection timed out, please login again !')
+                    document.cookie = 'email=;'
+                    props.setLoggedIn(false)
+                    props.setPageProps({ page: 'LoginPage' })
+                }
                 else
-                document.cookie = 'error=true'
+                    document.cookie = 'error=true'
                 message.error('Server Error! Please refresh again! (Get Notes Error)')
             }
-            else{
+            else {
                 message.error("Server Error! Please try again later. (Get Notes Error)")
             }
 
@@ -90,14 +96,20 @@ function MemberPage(props) {
 
         } catch (error) {
             setNote(error.message);
-            if (error.response.status === 500 || error.response.status === 404||error.response.status === 403){
-                if(error.response.data.message.slice(0,13)==='Malformed JWT')
-                document.cookie = 'error=Jwt'
+            if (error.response.status === 500 || error.response.status === 404 || error.response.status === 403) {
+                if (error.response.data.message.slice(0, 13) === 'Malformed JWT') {
+                    document.cookie = 'error=Jwt'
+                    message.destroy()
+                    message.warning('The connection timed out, please login again !')
+                    document.cookie = 'email=;'
+                    props.setLoggedIn(false)
+                    props.setPageProps({ page: 'LoginPage' })
+                }
                 else
-                document.cookie = 'error=true'
+                    document.cookie = 'error=true'
                 message.error('Server Error! Please refresh again! (Get Notes Error)')
             }
-            else{
+            else {
                 message.error("Server Error! Please try again later. (Get Notes Error)")
             }
 
@@ -122,7 +134,7 @@ function MemberPage(props) {
     return (
         <>
             {Note.length > 0 &&
-                <PageOutlineContentTemplate pageLabel={props.pageLabel} isMember={true} loading={loading} setLoading={setLoading} isFollowingSwitch={isFollowingSwitch} isNoteSwitch={isNoteSwitch} changeFollowingSwitch={changeFollowingSwitch} changeNoteSwitch={changeNoteSwitch} page={page} hasSwitch={true} mode='Note' Post={Note} pageNumber={props.pageNumber} changePageNumber={props.setPageNumber} changeSortMode={props.changeSortMode} setPageProps={props.setPageProps} />
+                <PageOutlineContentTemplate setLoggedIn={props.setLoggedIn} setPageProps={props.setPageProps} pageLabel={props.pageLabel} isMember={true} loading={loading} setLoading={setLoading} isFollowingSwitch={isFollowingSwitch} isNoteSwitch={isNoteSwitch} changeFollowingSwitch={changeFollowingSwitch} changeNoteSwitch={changeNoteSwitch} page={page} hasSwitch={true} mode='Note' Post={Note} pageNumber={props.pageNumber} changePageNumber={props.setPageNumber} changeSortMode={props.changeSortMode} />
 
             }
         </>

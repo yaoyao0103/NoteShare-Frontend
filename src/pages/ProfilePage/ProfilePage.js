@@ -104,15 +104,21 @@ function ProfilePage(props) {
             for (let i = 0; i < res.data.followers.length; i++) {
 
 
-                tempFansList.push(<FansNFollowerEditor setPageProps={props.setPageProps} setFansNum={setFansNum} fansNum={res.data.followers.length} email={email} targetEmail={res.data.followers[i].userObjEmail} Name={res.data.followers[i].userObjName} Avatar={res.data.followers[i].userObjAvatar} isSwitch={true} />)
+                tempFansList.push(<FansNFollowerEditor setLoggedIn={props.setLoggedIn} setPageProps={props.setPageProps} setFansNum={setFansNum} fansNum={res.data.followers.length} email={email} targetEmail={res.data.followers[i].userObjEmail} Name={res.data.followers[i].userObjName} Avatar={res.data.followers[i].userObjAvatar} isSwitch={true} />)
             }
             setFansList(oldArray => [...oldArray.slice(0, 0), tempFansList]);
             props.setLoading(false)
 
         }).catch((error) => {
             if (error.response.status === 500 || error.response.status === 404 || error.response.status === 403) {
-                if (error.response.data.message.slice(0, 13) === 'Malformed JWT')
+                if (error.response.data.message.slice(0, 13) === 'Malformed JWT') {
                     document.cookie = 'error=Jwt'
+                    message.destroy()
+                    message.warning('The connection timed out, please login again !')
+                    document.cookie = 'email=;'
+                    props.setLoggedIn(false)
+                    props.setPageProps({ page: 'LoginPage' })
+                }
                 else
                     document.cookie = 'error=true'
                 message.error('Server Error! Please refresh again! (Get Fans Error)')
@@ -132,15 +138,21 @@ function ProfilePage(props) {
             let tempFollowingList = [];
             for (let i = 0; i < res.data.following.length; i++) {
 
-                tempFollowingList.push(<FansNFollowerEditor setPageProps={props.setPageProps} setFollowingNum={setFollowingNum} followingNum={res.data.following.length} email={email} targetEmail={res.data.following[i].userObjEmail} Name={res.data.following[i].userObjName} Avatar={res.data.following[i].userObjAvatar} isSwitch={false} />)
+                tempFollowingList.push(<FansNFollowerEditor setLoggedIn={props.setLoggedIn} setPageProps={props.setPageProps} setFollowingNum={setFollowingNum} followingNum={res.data.following.length} email={email} targetEmail={res.data.following[i].userObjEmail} Name={res.data.following[i].userObjName} Avatar={res.data.following[i].userObjAvatar} isSwitch={false} />)
             }
 
             setFollowingList(oldArray => [...oldArray.slice(0, 0), tempFollowingList]);
             props.setLoading(false)
         }).catch((error) => {
             if (error.response.status === 500 || error.response.status === 404 || error.response.status === 403) {
-                if (error.response.data.message.slice(0, 13) === 'Malformed JWT')
+                if (error.response.data.message.slice(0, 13) === 'Malformed JWT') {
                     document.cookie = 'error=Jwt'
+                    message.destroy()
+                    message.warning('The connection timed out, please login again !')
+                    document.cookie = 'email=;'
+                    props.setLoggedIn(false)
+                    props.setPageProps({ page: 'LoginPage' })
+                }
                 else
                     document.cookie = 'error=true'
                 message.error('Server Error! Please refresh again! (Get Following Error)')
@@ -166,8 +178,14 @@ function ProfilePage(props) {
 
             }).catch((error) => {
                 if (error.response.status === 500 || error.response.status === 404 || error.response.status === 403) {
-                    if (error.response.data.message.slice(0, 13) === 'Malformed JWT')
+                    if (error.response.data.message.slice(0, 13) === 'Malformed JWT') {
                         document.cookie = 'error=Jwt'
+                        message.destroy()
+                        message.warning('The connection timed out, please login again !')
+                        document.cookie = 'email=;'
+                        props.setLoggedIn(false)
+                        props.setPageProps({ page: 'LoginPage' })
+                    }
                     else
                         document.cookie = 'error=true'
                     message.error('Server Error! Please refresh again! (Change Avatar Error)')
@@ -208,8 +226,14 @@ function ProfilePage(props) {
                 //message.success('You followed ' + user.name + " !");
             }).catch((error) => {
                 if (error.response.status === 500 || error.response.status === 404 || error.response.status === 403) {
-                    if (error.response.data.message.slice(0, 13) === 'Malformed JWT')
+                    if (error.response.data.message.slice(0, 13) === 'Malformed JWT') {
                         document.cookie = 'error=Jwt'
+                        message.destroy()
+                        message.warning('The connection timed out, please login again !')
+                        document.cookie = 'email=;'
+                        props.setLoggedIn(false)
+                        props.setPageProps({ page: 'LoginPage' })
+                    }
                     else
                         document.cookie = 'error=true'
                     message.error('Server Error! Please refresh again! (Follow User Error)')
@@ -233,8 +257,14 @@ function ProfilePage(props) {
                 //message.success('You unfollowed ' + user.name + " !");
             }).catch((error) => {
                 if (error.response.status === 500 || error.response.status === 404 || error.response.status === 403) {
-                    if (error.response.data.message.slice(0, 13) === 'Malformed JWT')
+                    if (error.response.data.message.slice(0, 13) === 'Malformed JWT') {
                         document.cookie = 'error=Jwt'
+                        message.destroy()
+                        message.warning('The connection timed out, please login again !')
+                        document.cookie = 'email=;'
+                        props.setLoggedIn(false)
+                        props.setPageProps({ page: 'LoginPage' })
+                    }
                     else
                         document.cookie = 'error=true'
                     message.error('Server Error! Please refresh again! (Unfollow User Error)')
@@ -258,8 +288,14 @@ function ProfilePage(props) {
                 message.success('You turned off the bell of ' + user.name + " !");
             }).catch((error) => {
                 if (error.response.status === 500 || error.response.status === 404 || error.response.status === 403) {
-                    if (error.response.data.message.slice(0, 13) === 'Malformed JWT')
+                    if (error.response.data.message.slice(0, 13) === 'Malformed JWT') {
                         document.cookie = 'error=Jwt'
+                        message.destroy()
+                        message.warning('The connection timed out, please login again !')
+                        document.cookie = 'email=;'
+                        props.setLoggedIn(false)
+                        props.setPageProps({ page: 'LoginPage' })
+                    }
                     else
                         document.cookie = 'error=true'
                     message.error('Server Error! Please refresh again! (Turn Off The Bell Error)')
@@ -280,8 +316,14 @@ function ProfilePage(props) {
                 message.success('You turned on the bell of ' + user.name + " !");
             }).catch((error) => {
                 if (error.response.status === 500 || error.response.status === 404 || error.response.status === 403) {
-                    if (error.response.data.message.slice(0, 13) === 'Malformed JWT')
+                    if (error.response.data.message.slice(0, 13) === 'Malformed JWT') {
                         document.cookie = 'error=Jwt'
+                        message.destroy()
+                        message.warning('The connection timed out, please login again !')
+                        document.cookie = 'email=;'
+                        props.setLoggedIn(false)
+                        props.setPageProps({ page: 'LoginPage' })
+                    }
                     else
                         document.cookie = 'error=true'
                     message.error('Server Error! Please refresh again! (Turn On The Bell Error)')
@@ -304,8 +346,14 @@ function ProfilePage(props) {
             message.success("You updated your profile!")
         }).catch((error) => {
             if (error.response.status === 500 || error.response.status === 404 || error.response.status === 403) {
-                if (error.response.data.message.slice(0, 13) === 'Malformed JWT')
+                if (error.response.data.message.slice(0, 13) === 'Malformed JWT') {
                     document.cookie = 'error=Jwt'
+                    message.destroy()
+                    message.warning('The connection timed out, please login again !')
+                    document.cookie = 'email=;'
+                    props.setLoggedIn(false)
+                    props.setPageProps({ page: 'LoginPage' })
+                }
                 else
                     document.cookie = 'error=true'
                 message.error('Server Error! Please refresh again! (Update Profile Error)')
@@ -329,8 +377,14 @@ function ProfilePage(props) {
             //message.success("You added a strength!")
         }).catch((error) => {
             if (error.response.status === 500 || error.response.status === 404 || error.response.status === 403) {
-                if (error.response.data.message.slice(0, 13) === 'Malformed JWT')
+                if (error.response.data.message.slice(0, 13) === 'Malformed JWT') {
                     document.cookie = 'error=Jwt'
+                    message.destroy()
+                    message.warning('The connection timed out, please login again !')
+                    document.cookie = 'email=;'
+                    props.setLoggedIn(false)
+                    props.setPageProps({ page: 'LoginPage' })
+                }
                 else
                     document.cookie = 'error=true'
                 message.error('Server Error! Please refresh again! (Add Strength Error)')
@@ -351,8 +405,14 @@ function ProfilePage(props) {
             //message.success("You deleted a strength!")
         }).catch((error) => {
             if (error.response.status === 500 || error.response.status === 404 || error.response.status === 403) {
-                if (error.response.data.message.slice(0, 13) === 'Malformed JWT')
+                if (error.response.data.message.slice(0, 13) === 'Malformed JWT') {
                     document.cookie = 'error=Jwt'
+                    message.destroy()
+                    message.warning('The connection timed out, please login again !')
+                    document.cookie = 'email=;'
+                    props.setLoggedIn(false)
+                    props.setPageProps({ page: 'LoginPage' })
+                }
                 else
                     document.cookie = 'error=true'
                 message.error('Server Error! Please refresh again! (Delete Strength Error)')
@@ -374,8 +434,14 @@ function ProfilePage(props) {
 
         }).catch((error) => {
             if (error.response.status === 500 || error.response.status === 404 || error.response.status === 403) {
-                if (error.response.data.message.slice(0, 13) === 'Malformed JWT')
+                if (error.response.data.message.slice(0, 13) === 'Malformed JWT') {
                     document.cookie = 'error=Jwt'
+                    message.destroy()
+                    message.warning('The connection timed out, please login again !')
+                    document.cookie = 'email=;'
+                    props.setLoggedIn(false)
+                    props.setPageProps({ page: 'LoginPage' })
+                }
                 else
                     document.cookie = 'error=true'
                 message.error('Server Error! Please refresh again! (Back To The Last Layer Error)')
@@ -414,8 +480,14 @@ function ProfilePage(props) {
 
         }).catch((error) => {
             if (error.response.status === 500 || error.response.status === 404 || error.response.status === 403) {
-                if (error.response.data.message.slice(0, 13) === 'Malformed JWT')
+                if (error.response.data.message.slice(0, 13) === 'Malformed JWT') {
                     document.cookie = 'error=Jwt'
+                    message.destroy()
+                    message.warning('The connection timed out, please login again !')
+                    document.cookie = 'email=;'
+                    props.setLoggedIn(false)
+                    props.setPageProps({ page: 'LoginPage' })
+                }
                 else
                     document.cookie = 'error=true'
                 message.error('Server Error! Please refresh again! (Get Folder Error)')
@@ -437,8 +509,14 @@ function ProfilePage(props) {
             setIsRoot(true);
         }).catch((error) => {
             if (error.response.status === 500 || error.response.status === 404 || error.response.status === 403) {
-                if (error.response.data.message.slice(0, 13) === 'Malformed JWT')
+                if (error.response.data.message.slice(0, 13) === 'Malformed JWT') {
                     document.cookie = 'error=Jwt'
+                    message.destroy()
+                    message.warning('The connection timed out, please login again !')
+                    document.cookie = 'email=;'
+                    props.setLoggedIn(false)
+                    props.setPageProps({ page: 'LoginPage' })
+                }
                 else
                     document.cookie = 'error=true'
                 message.error('Server Error! Please refresh again! (Get All Folders Error)')
@@ -463,8 +541,14 @@ function ProfilePage(props) {
         }).catch((error) => {
             //setGetFolderFail(true);
             if (error.response.status === 500 || error.response.status === 404 || error.response.status === 403) {
-                if (error.response.data.message.slice(0, 13) === 'Malformed JWT')
+                if (error.response.data.message.slice(0, 13) === 'Malformed JWT') {
                     document.cookie = 'error=Jwt'
+                    message.destroy()
+                    message.warning('The connection timed out, please login again !')
+                    document.cookie = 'email=;'
+                    props.setLoggedIn(false)
+                    props.setPageProps({ page: 'LoginPage' })
+                }
                 else
                     document.cookie = 'error=true'
                 message.error('Server Error! Please refresh again! (Get All Notes Error)')
@@ -507,12 +591,12 @@ function ProfilePage(props) {
                 if (res.data.res.fansUserObj[i].userObjEmail === Email)
                     setIsFollow(true);
 
-                tempFansList.push(<FansNFollowerEditor setPageProps={props.setPageProps} setFansNum={setFansNum} fansNum={res.data.res.fansUserObj.length} email={Email} targetEmail={res.data.res.fansUserObj[i].userObjEmail} Name={res.data.res.fansUserObj[i].userObjName} Avatar={res.data.res.fansUserObj[i].userObjAvatar} isSwitch={true} />)
+                tempFansList.push(<FansNFollowerEditor setLoggedIn={props.setLoggedIn} setPageProps={props.setPageProps} setFansNum={setFansNum} fansNum={res.data.res.fansUserObj.length} email={Email} targetEmail={res.data.res.fansUserObj[i].userObjEmail} Name={res.data.res.fansUserObj[i].userObjName} Avatar={res.data.res.fansUserObj[i].userObjAvatar} isSwitch={true} />)
             }
 
             for (let i = 0; i < res.data.res.subscribeUserObj.length; i++) {
 
-                tempFollowingList.push(<FansNFollowerEditor setPageProps={props.setPageProps} setFollowingNum={setFollowingNum} followingNum={res.data.res.subscribeUserObj.length} email={Email} targetEmail={res.data.res.subscribeUserObj[i].userObjEmail} Name={res.data.res.subscribeUserObj[i].userObjName} Avatar={res.data.res.subscribeUserObj[i].userObjAvatar} isSwitch={false} />)
+                tempFollowingList.push(<FansNFollowerEditor setLoggedIn={props.setLoggedIn} setPageProps={props.setPageProps} setFollowingNum={setFollowingNum} followingNum={res.data.res.subscribeUserObj.length} email={Email} targetEmail={res.data.res.subscribeUserObj[i].userObjEmail} Name={res.data.res.subscribeUserObj[i].userObjName} Avatar={res.data.res.subscribeUserObj[i].userObjAvatar} isSwitch={false} />)
             }
 
 
@@ -529,8 +613,14 @@ function ProfilePage(props) {
 
         }).catch((error) => {
             if (error.response.status === 500 || error.response.status === 404 || error.response.status === 403) {
-                if (error.response.data.message.slice(0, 13) === 'Malformed JWT')
+                if (error.response.data.message.slice(0, 13) === 'Malformed JWT') {
                     document.cookie = 'error=Jwt'
+                    message.destroy()
+                    message.warning('The connection timed out, please login again !')
+                    document.cookie = 'email=;'
+                    props.setLoggedIn(false)
+                    props.setPageProps({ page: 'LoginPage' })
+                }
                 else
                     document.cookie = 'error=true'
                 message.error('Server Error! Please refresh again! (Get User Error)')
@@ -709,7 +799,7 @@ function ProfilePage(props) {
                     <QuestionCircleOutlined style={{ position: 'absolute', fontSize: '28px', padding: '0.5em', top: '3.3em', right: '3.3em' }} />
                 </Layout >
             }
-           
+
         </>
     );
 

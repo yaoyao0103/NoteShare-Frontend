@@ -12,7 +12,7 @@ const VersionArea = (props) => {
 
           [
             <div style={props.versions[index].temp?{color: "red" , margin:".5em 0 .5em 0"}:{color: "green", margin:".5em 0 .5em 0"}}>{props.notePublic? (props.versions[index].temp? "Private":"Public"):""}</div>,
-            <OptionMenu page={props.page} index = {index} versions={props.versions} setVersions={props.setVersions} setVersion={props.setVersion} isAuthor={props.isAuthor} id={props.id}/>
+            <OptionMenu setLoggedIn={props.setLoggedIn} setPageProps={props.setPageProps}page={props.page} index = {index} versions={props.versions} setVersions={props.setVersions} setVersion={props.setVersion} isAuthor={props.isAuthor} id={props.id}/>
           ]
     } >{item.name}</List.Item>)}
     />
