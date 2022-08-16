@@ -302,7 +302,7 @@ function OutlineCard(props) {
         }</>
     );
     const NoteSider = (
-        <>{props.mode === 'Note' &&
+        <>{(props.mode === 'Note'||props.mode === 'Tag') &&
             < Sider onClick={props.onClick} className={"OutlineCard__Sider__Outer" + '__' + props.mode} width='30%' >
                 <Layout className={"OutlineCard__Sider__Inner__Layout" + '__' + props.mode}>
 
@@ -523,6 +523,7 @@ function OutlineCard(props) {
             case 'CollabOutlinePage': setSider(CollabSider); break;
             case 'CollabRecommendPage': setSider(CollabSider); break;
             case 'NoteOutlinePage': setSider(NoteSider); break;
+            case 'TagOutlinePage': setSider(NoteSider); break;
             case 'MemberPage': setSider(NoteSider); break;
         }
         //console.log(props.page);

@@ -7,6 +7,7 @@ import MemberPage from "../MemberPage/MemberPage";
 import QnADetailPage from "../QnADetailPage/QnADetailPage";
 import NoteDetailPage from "../NoteDetailPage/NoteDetailPage";
 import NoteOutlinePage from "../NoteOutlinePage/NoteOutlinePage";
+import TagOutlinePage from '../TagOutlinePage/TagOutlinePage';
 import RewardDetailPage from "../RewardDetailPage/RewardDetailPage";
 import RewardOutlinePage from "../RewardOutlinePage/RewardOutlinePage";
 import RewardRecommendPage from '../RewardRecommendPage/RewardRecommendPage';
@@ -330,7 +331,7 @@ const OuterPage = () => {
                     pageProps.page === 'QnAOutlinePage' || pageProps.page === 'QnARecommendPage' || pageProps.page === 'QnAOutlinePage' || pageProps.page === 'QnADetailPage' ||
                     pageProps.page === 'NoteOutlinePage' || pageProps.page === 'MemberPage' || pageProps.page === 'NoteDetailPage' ||
                     pageProps.page === 'RewardOutlinePage' || pageProps.page === 'RewardRecommendPage' || pageProps.page === 'RewardDetailPage' ||
-                    pageProps.page === 'FolderOutlinePage' || pageProps.page === 'PersonalPage'
+                    pageProps.page === 'FolderOutlinePage' || pageProps.page === 'PersonalPage'||pageProps.page === 'TagOutlinePage'
                 )
                     setLoading(true)
                 else
@@ -346,7 +347,7 @@ const OuterPage = () => {
                     pageProps.page === 'RewardDetailPage' || pageProps.page === 'RewardOutlinePage' || pageProps.page === 'RewardRecommendPage' ||
                     pageProps.page === 'QnADetailPage' || pageProps.page === 'QnAOutlinePage' || pageProps.page === 'QnARecommendPage' ||
                     pageProps.page === 'CollabDetailPage' || pageProps.page === 'CollabOutlinePage' || pageProps.page === 'CollabRecommendPage' || pageProps.page === 'PersonalPage'||
-                    pageProps.page==='ProfilePage'||pageProps.page==='FolderOutlinePage'
+                    pageProps.page==='ProfilePage'||pageProps.page==='FolderOutlinePage'||pageProps.page === 'TagOutlinePage'
                 )
                     setFloatButtonVisable(true)
                 else
@@ -375,6 +376,7 @@ const OuterPage = () => {
                     case 'CollabOutlinePage': setPageLabel("Results"); setPageComponent(<CollabOutlinePage page='CollabOutlinePage' changeSortMode={setSortMode} setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
                     case 'CollabRecommendPage': setPageLabel("Recommended Collaborative Note Posts"); setPageComponent(<CollabRecommendPage page='CollabRecommendPage' changeSortMode={setSortMode} setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
                     case 'FolderOutlinePage': setPageLabel("Recommended Folder"); setPageComponent(<FolderOutlinePage page='FolderOutlinePage' setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                    case 'TagOutlinePage': setPageLabel("Results"); setPageComponent(<TagOutlinePage page='TagOutlinePage' changeSortMode={setSortMode} setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
                     case 'PersonalPage': setPageLabel("Personal Area"); setPageComponent(<PersonalPage page='PersonalPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
                     case 'ProfilePage': setPageLabel("Profile"); setPageComponent(<ProfilePage page='ProfilePage' sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} Avatar={changeAvatar} setAvatar={setChangeAvatar} setPageProps={setPageProps} {...pageProps} />); break;
                     case 'LoginPage': setPageComponent(<LoginPage page='LoginPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} setLoggedIn={setLoggedIn} {...pageProps} />); break;

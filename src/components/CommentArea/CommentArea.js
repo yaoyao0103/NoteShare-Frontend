@@ -97,8 +97,9 @@ function CommentArea(props) {
             })
             .catch(err => {
                 if (err.response.status === 500 || err.response.status === 404||err.response.status === 403){
-                    if(err.response.data.message.slice(0,13)==='Malformed JWT')
-                    document.cookie = 'error=Jwt'
+                    if(err.response.data.message.slice(0,13)==='Malformed JWT'){
+                        document.cookie = 'error=Jwt'
+                    }
                     else
                     document.cookie = 'error=true'
                     message.error('Server Error! Please refresh again! (Refresh Error)')

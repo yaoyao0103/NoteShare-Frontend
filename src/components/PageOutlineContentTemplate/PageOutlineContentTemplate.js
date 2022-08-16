@@ -103,7 +103,7 @@ function PageOutlineContentTemplate(props) {
         />
     );
     var isFolder = false;
-    if (props.mode === 'Folder')
+    if (props.mode === 'Folder'||props.isTag)
         isFolder = true;
     return (
         <>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Checkbox, message } from 'antd';
-import { Note, Reward, QnA, Collab, Folder } from './AdvancedItem/AdvancedItem';
+import { Note, Reward, QnA, Collab, Folder, Tag } from './AdvancedItem/AdvancedItem';
 import Button from '../../../Button/Button';
 import Text from '../../../Text/Text';
 import "./AdvancedSearch.css";
@@ -40,6 +40,7 @@ const AdvancedSearch = (props) => {
             case 'reward': setType(<Reward setCondition={setCondition}/>); break;
             case 'QnA': setType(<QnA setCondition={setCondition}/>); break;
             case 'folder': setType(<Folder setCondition={setCondition}/>); break;
+            case 'tag': setType(<Tag setCondition={setCondition}/>); break;
             default : break;
         }
     },[]);

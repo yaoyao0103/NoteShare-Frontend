@@ -91,3 +91,16 @@ export const Folder = ({ setCondition }) => {
         </>
     )
 };
+export const Tag = ({ setCondition }) => {
+
+    const [tempCondition, setTempCondition] = useState({page:'Tag'});
+    useEffect(() => {
+        setCondition(tempCondition);
+    }, [tempCondition])
+
+    return(
+        <>
+            <Input type="text" placeholder='tag' className="advanced__Item" onChange={(ev) => setTempCondition({...tempCondition, tag: ev.target.value})} value={tempCondition.tag}/>
+        </>
+    )
+};
