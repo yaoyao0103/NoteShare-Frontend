@@ -18,7 +18,7 @@ function TagOutlinePage(props) {
                 const sortBy = props.sortMode;
                 console.log(sortBy)
                 //console.log(props.department);
-                await axios.get('http://192.168.0.7:8080/search/tag/' + String(props.pageNumber - 1) + '/10/' + (props.tag ? props.tag : '')).then((res) => {
+                await axios.get('http://localhost:8080/search/tag/' + String(props.pageNumber - 1) + '/10/' + (props.tag ? props.tag : '')).then((res) => {
                     console.log(res.data.search)
                     setNote(oldArray => [...oldArray, res.data.search]);
                     props.setLoading(false)

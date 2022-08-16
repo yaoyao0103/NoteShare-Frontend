@@ -46,7 +46,7 @@ const PoppedContent = (props) => {
 
         let name = cookieParser.getCookieByName('name');
         let avatar = cookieParser.getCookieByName('avatar');
-        axios.put(`http://192.168.0.7:8080/post/add/${props.postId}/${email}`, {}, {
+        axios.put(`http://localhost:8080/post/add/${props.postId}/${email}`, {}, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
             }
@@ -92,7 +92,7 @@ const PoppedContent = (props) => {
     }
 
     const reject = (email) => {
-        axios.delete(`http://192.168.0.7:8080/post/apply/${props.postId}/${email}`, {
+        axios.delete(`http://localhost:8080/post/apply/${props.postId}/${email}`, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
             }

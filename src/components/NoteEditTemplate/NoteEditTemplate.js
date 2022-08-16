@@ -73,7 +73,7 @@ const NoteEditTemplate = (props) => {
         if (note && props.mode == 'edit') {
             if (note?.type == 'reward') {
                 setPostId(note?.postId);
-                axios.get(`http://192.168.0.7:8080/post/${note?.postId}`)
+                axios.get(`http://localhost:8080/post/${note?.postId}`)
                     .then(res => {
                         setPostInfo(res.data.res);
                     })
@@ -147,7 +147,7 @@ const NoteEditTemplate = (props) => {
             });
             setContent('')
             // get post info
-            axios.get(`http://192.168.0.7:8080/post/${props.postId}`)
+            axios.get(`http://localhost:8080/post/${props.postId}`)
                 .then(res => {
                     setPostInfo(res.data.res);
                 })
@@ -208,7 +208,7 @@ const NoteEditTemplate = (props) => {
 
     const renameVersion = (index, name) => {
         props.setLoading(true)
-        axios.put(`http://192.168.0.7:8080/note/${noteId}/${index}/${name}`, {}, {
+        axios.put(`http://localhost:8080/note/${noteId}/${index}/${name}`, {}, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
             }
@@ -273,7 +273,7 @@ const NoteEditTemplate = (props) => {
             note.description = content
             note.public = information.public
 
-            axios.put(`http://192.168.0.7:8080/note/${note.id}`, note, {
+            axios.put(`http://localhost:8080/note/${note.id}`, note, {
                 headers: {
                     'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
                 }
@@ -314,7 +314,7 @@ const NoteEditTemplate = (props) => {
             NoteFormat.description = content
             NoteFormat.public = information.public
 
-            let path = props.folderId ? `http://192.168.0.7:8080/note/${email}/${props.folderId}` : `http://192.168.0.7:8080/note/${email}`
+            let path = props.folderId ? `http://localhost:8080/note/${email}/${props.folderId}` : `http://localhost:8080/note/${email}`
             axios.post(path, NoteFormat, {
                 headers: {
                     'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
@@ -328,7 +328,7 @@ const NoteEditTemplate = (props) => {
                     VersionFormat.name = "default"
                     VersionFormat.slug = "default"
                     VersionFormat.content = [ContentFormat]
-                    axios.put(`http://192.168.0.7:8080/note/${tempId}/0`, VersionFormat, {
+                    axios.put(`http://localhost:8080/note/${tempId}/0`, VersionFormat, {
                         headers: {
                             'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
                         }
@@ -392,7 +392,7 @@ const NoteEditTemplate = (props) => {
             // let name = cookieParser.getCookieByName('name');
             // let avatar = cookieParser.getCookieByName('avatar');
 
-            axios.post(`http://192.168.0.7:8080/post/reward/${props.postId}/${email}`, NoteFormat, {
+            axios.post(`http://localhost:8080/post/reward/${props.postId}/${email}`, NoteFormat, {
                 headers: {
                     'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
                 }
@@ -405,7 +405,7 @@ const NoteEditTemplate = (props) => {
                     VersionFormat.name = "default"
                     VersionFormat.slug = "default"
                     VersionFormat.content = [ContentFormat]
-                    axios.put(`http://192.168.0.7:8080/note/${tempId}/0`, VersionFormat, {
+                    axios.put(`http://localhost:8080/note/${tempId}/0`, VersionFormat, {
                         headers: {
                             'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
                         }
@@ -505,12 +505,12 @@ const NoteEditTemplate = (props) => {
 
 
     const setVersion = (index) => {
-        axios.get(`http://192.168.0.7:8080/note/${noteId}/${index}`)
+        axios.get(`http://localhost:8080/note/${noteId}/${index}`)
             .then(res => {
                 const defaultVersion = res.data.res
                 defaultVersion.name = "default"
                 defaultVersion.slug = "default"
-                axios.put(`http://192.168.0.7:8080/note/${noteId}/0`, defaultVersion, {
+                axios.put(`http://localhost:8080/note/${noteId}/0`, defaultVersion, {
                     headers: {
                         'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
                     }
@@ -562,7 +562,7 @@ const NoteEditTemplate = (props) => {
     }
     const noteFinish = async () => {
 
-        axios.put(`http://192.168.0.7:8080/note/tag/wordSuggestion/${noteId}`, {}, {
+        axios.put(`http://localhost:8080/note/tag/wordSuggestion/${noteId}`, {}, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
             }
@@ -570,7 +570,7 @@ const NoteEditTemplate = (props) => {
             .then(res => {
                 console.log("suggestive tag: ", res)
                 setRecommendTag(res.data.generatedTags)
-                axios.get(`http://192.168.0.7:8080/note/plagiarism/${noteId}`, {
+                axios.get(`http://localhost:8080/note/plagiarism/${noteId}`, {
                     headers: {
                         'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
                     }
@@ -628,7 +628,7 @@ const NoteEditTemplate = (props) => {
     const tagSubmit = async () => {
 
 
-        axios.put(`http://192.168.0.7:8080/note/tag/updateTags/${noteId}`, {"tags":tagSelected},  {
+        axios.put(`http://localhost:8080/note/tag/updateTags/${noteId}`, {"tags":tagSelected},  {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
             }
@@ -711,7 +711,7 @@ const NoteEditTemplate = (props) => {
         VersionFormat.name = name
         VersionFormat.slug = name
         VersionFormat.content = [ContentFormat]
-        axios.put(`http://192.168.0.7:8080/note/${noteId}/${versionLength}`, VersionFormat, {
+        axios.put(`http://localhost:8080/note/${noteId}/${versionLength}`, VersionFormat, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
             }
@@ -748,17 +748,17 @@ const NoteEditTemplate = (props) => {
     }
 
     const submitRewardNote = () => {
-        axios.get(`http://192.168.0.7:8080/note/${noteId}`)
+        axios.get(`http://localhost:8080/note/${noteId}`)
             .then(res => {
                 const tempNote = res.data.res
                 tempNote.tag = tagSelected
-                axios.put(`http://192.168.0.7:8080/note/${noteId}`, tempNote, {
+                axios.put(`http://localhost:8080/note/${noteId}`, tempNote, {
                     headers: {
                         'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
                     }
                 })
                     .then(res => {
-                        axios.put(`http://192.168.0.7:8080/note/submit/${noteId}`, {}, {
+                        axios.put(`http://localhost:8080/note/submit/${noteId}`, {}, {
                             headers: {
                                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
                             }

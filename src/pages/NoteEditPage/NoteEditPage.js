@@ -10,7 +10,7 @@ function NoteEditPage(props) {
 
     useEffect(() => {
         async function getNoteById() {
-            axios.get(`http://192.168.0.7:8080/note/${props.noteId}`)
+            axios.get(`http://localhost:8080/note/${props.noteId}`)
                 .then(res => {
                     setNote(res.data.res)
                     console.log(res.data.res)

@@ -43,7 +43,7 @@ function VerificationPage(props) {
     };
 
     const Verification = () => {
-        axios.put("http://192.168.0.7:8080/verification/verify/" + newEmail + "/" + code).then(res => {
+        axios.put("http://localhost:8080/verification/verify/" + newEmail + "/" + code).then(res => {
             console.log(res.data.msg);
             setOpenSuccess(true);
         }).catch((error) => {
@@ -72,7 +72,7 @@ function VerificationPage(props) {
 
     };
     const resend = () => {
-        axios.post("http://192.168.0.7:8080/verification/resendCode/" + newEmail).then(res => {
+        axios.post("http://localhost:8080/verification/resendCode/" + newEmail).then(res => {
             console.log(res.data.msg);
             setResendSuccess(true);
         }).catch((error) => {

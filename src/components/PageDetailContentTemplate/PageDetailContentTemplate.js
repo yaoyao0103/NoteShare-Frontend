@@ -103,7 +103,7 @@ const PageDetailContentTemplate = (props) => {
             setNoteId(noteId);
             setType("collaboration")
             setIsPublic(props.data?.public)
-            axios.get(`http://192.168.0.7:8080/note/${noteId}`)
+            axios.get(`http://localhost:8080/note/${noteId}`)
                 .then(res => {
                     console.log(res.data.res)
                     const tempNote = res.data.res
@@ -311,7 +311,7 @@ const PageDetailContentTemplate = (props) => {
                 commentFromApplicant: content
             }
             console.log("data", data)
-            axios.put(`http://192.168.0.7:8080/post/apply/${props.postId}`, data, {
+            axios.put(`http://localhost:8080/post/apply/${props.postId}`, data, {
                 headers: {
                     'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
                 }
@@ -351,7 +351,7 @@ const PageDetailContentTemplate = (props) => {
         let avatar = cookieParser.getCookieByName('avatar');
         let success = false;
         if (email) {
-            axios.put(`http://192.168.0.7:8080/coin/note/${email}/${props.noteId}`, {}, {
+            axios.put(`http://localhost:8080/coin/note/${email}/${props.noteId}`, {}, {
                 headers: {
                     'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
                 }
@@ -401,7 +401,7 @@ const PageDetailContentTemplate = (props) => {
     }
 
     const submitRewardNote = () => {
-        axios.put(`http://192.168.0.7:8080/note/submit/${props.noteId}`, {}, {
+        axios.put(`http://localhost:8080/note/submit/${props.noteId}`, {}, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
             }
@@ -431,7 +431,7 @@ const PageDetailContentTemplate = (props) => {
     }
 
     const withdrawRewardNote = () => {
-        axios.put(`http://192.168.0.7:8080/note/withdraw/${props.noteId}`, {}, {
+        axios.put(`http://localhost:8080/note/withdraw/${props.noteId}`, {}, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
             }
@@ -474,7 +474,7 @@ const PageDetailContentTemplate = (props) => {
             kickTargetEmail: kickTarget,
         }
         console.log("data", data)
-        axios.post(`http://192.168.0.7:8080/schedule/vote/${props.postId}`, data, {
+        axios.post(`http://localhost:8080/schedule/vote/${props.postId}`, data, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
             }
@@ -517,7 +517,7 @@ const PageDetailContentTemplate = (props) => {
     //////////////////////////
 
     const refreshAnswer = () => {
-        axios.get(`http://192.168.0.7:8080/post/${props.postId}`)
+        axios.get(`http://localhost:8080/post/${props.postId}`)
             .then(res => {
                 setPoppedContent(res.data.res.answersUserObj);
             })
