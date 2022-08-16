@@ -95,7 +95,7 @@ function ProfilePage(props) {
     };
 
     const getFans = () => {
-        axios.get("http://localhost:8080/followers/" + email, {
+        axios.get("http://192.168.0.7:8080/followers/" + email, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
             }
@@ -130,7 +130,7 @@ function ProfilePage(props) {
     }
 
     const getFollowing = () => {
-        axios.get("http://localhost:8080/following/" + email, {
+        axios.get("http://192.168.0.7:8080/following/" + email, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
             }
@@ -165,7 +165,7 @@ function ProfilePage(props) {
 
     const SaveAvatar = () => {
         if (avatar) {
-            axios.put("http://localhost:8080/user/head/" + email, { headshotPhoto: Avatars[avatar] }, {
+            axios.put("http://192.168.0.7:8080/user/head/" + email, { headshotPhoto: Avatars[avatar] }, {
                 headers: {
                     'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
                 }
@@ -205,7 +205,7 @@ function ProfilePage(props) {
         let name = cookieParser.getCookieByName('name');
         let avatar = cookieParser.getCookieByName('avatar');
         if (!isFollow) {
-            axios.put("http://localhost:8080/follow/" + email + '/' + props.email, {}, {
+            axios.put("http://192.168.0.7:8080/follow/" + email + '/' + props.email, {}, {
                 headers: {
                     'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
                 }
@@ -246,7 +246,7 @@ function ProfilePage(props) {
 
         }
         else {
-            axios.put("http://localhost:8080/unfollow/" + email + '/' + props.email, {}, {
+            axios.put("http://192.168.0.7:8080/unfollow/" + email + '/' + props.email, {}, {
                 headers: {
                     'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
                 }
@@ -278,7 +278,7 @@ function ProfilePage(props) {
 
     const changeBell = () => {
         if (isBell) {
-            axios.put('http://localhost:8080/cancelBell/' + email + '/' + props.email, {}, {
+            axios.put('http://192.168.0.7:8080/cancelBell/' + email + '/' + props.email, {}, {
                 headers: {
                     'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
                 }
@@ -306,7 +306,7 @@ function ProfilePage(props) {
             })
         }
         else {
-            axios.put("http://localhost:8080/bell/" + email + '/' + props.email, {}, {
+            axios.put("http://192.168.0.7:8080/bell/" + email + '/' + props.email, {}, {
                 headers: {
                     'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
                 }
@@ -337,7 +337,7 @@ function ProfilePage(props) {
     }
 
     const SaveProfile = (content) => {
-        axios.put("http://localhost:8080/user/profile/" + email, { profile: content }, {
+        axios.put("http://192.168.0.7:8080/user/profile/" + email, { profile: content }, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
             }
@@ -367,7 +367,7 @@ function ProfilePage(props) {
     const AddStrength = (tag) => {
         //console.log(tag);
         const tags = [...strength, tag];
-        axios.put("http://localhost:8080/user/strength/" + email, { strength: tags }, {
+        axios.put("http://192.168.0.7:8080/user/strength/" + email, { strength: tags }, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
             }
@@ -396,7 +396,7 @@ function ProfilePage(props) {
     }
     const DeleteStrength = (key) => {
         const tags = [...strength.slice(0, key), ...strength.slice(key + 1, strength.length)]
-        axios.put("http://localhost:8080/user/strength/" + email, { strength: tags }, {
+        axios.put("http://192.168.0.7:8080/user/strength/" + email, { strength: tags }, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
             }
@@ -425,7 +425,7 @@ function ProfilePage(props) {
 
     const ClickBack = (id) => {
         props.setLoading(true)
-        axios.get("http://localhost:8080/folder/" + id, {
+        axios.get("http://192.168.0.7:8080/folder/" + id, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
             }
@@ -463,7 +463,7 @@ function ProfilePage(props) {
         />
     );
     const getFolderById = (id) => {
-        axios.get("http://localhost:8080/folder/" + id, {
+        axios.get("http://192.168.0.7:8080/folder/" + id, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
             }
@@ -499,7 +499,7 @@ function ProfilePage(props) {
     };
 
     function getAllFolder(Email) {
-        axios.get("http://localhost:8080/folder/root/" + Email, {
+        axios.get("http://192.168.0.7:8080/folder/root/" + Email, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
             }
@@ -529,7 +529,7 @@ function ProfilePage(props) {
 
     function getAllNote(Email) {
         //console.log('123')
-        axios.get("http://localhost:8080/note/all/" + Email, {
+        axios.get("http://192.168.0.7:8080/note/all/" + Email, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
             }
@@ -561,7 +561,7 @@ function ProfilePage(props) {
 
     function getUserByEmail(Email) {
 
-        axios.get("http://localhost:8080/user/" + props.email, {
+        axios.get("http://192.168.0.7:8080/user/" + props.email, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
             }

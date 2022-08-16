@@ -35,7 +35,7 @@ const OptionMenu = (props) => {
 
   const archive = () => {
     if (props.isAnswered) {
-      axios.put(`http://localhost:8080/post/archive/${props.id}`, {}, {
+      axios.put(`http://192.168.0.7:8080/post/archive/${props.id}`, {}, {
         headers: {
           'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
         }
@@ -75,7 +75,7 @@ const OptionMenu = (props) => {
 
   // set private or public
   const setStatus = () => {
-    axios.put(`http://localhost:8080/post/publish/${props.id}`, {}, {
+    axios.put(`http://192.168.0.7:8080/post/publish/${props.id}`, {}, {
       headers: {
         'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
       }
@@ -117,7 +117,7 @@ const OptionMenu = (props) => {
         return;
       }
     }
-    axios.put(`http://localhost:8080/note/publish/${props.noteId}`, {}, {
+    axios.put(`http://192.168.0.7:8080/note/publish/${props.noteId}`, {}, {
       headers: {
         'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
       }
@@ -154,7 +154,7 @@ const OptionMenu = (props) => {
   }
 
   const versionPublish = (index) => {
-    axios.put(`http://localhost:8080/note/publish/${props.id}/${index}`, {}, {
+    axios.put(`http://192.168.0.7:8080/note/publish/${props.id}/${index}`, {}, {
       headers: {
         'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
       }
@@ -223,7 +223,7 @@ const OptionMenu = (props) => {
 
   const chooseBest = (id) => {
     //message.info("choose: "+ id + " best");
-    axios.put(`http://localhost:8080/post/reward/best/${props.postId}/${id}`, {}, {
+    axios.put(`http://192.168.0.7:8080/post/reward/best/${props.postId}/${id}`, {}, {
       headers: {
         'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
       }
@@ -259,7 +259,7 @@ const OptionMenu = (props) => {
 
   const chooseRef = (id) => {
     //message.info("choose: "+ id + " ref");
-    axios.put(`http://localhost:8080/post/reward/reference/${props.postId}/${id}`, {}, {
+    axios.put(`http://192.168.0.7:8080/post/reward/reference/${props.postId}/${id}`, {}, {
       headers: {
         'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
       }
@@ -294,7 +294,7 @@ const OptionMenu = (props) => {
 
 
     message.success("Agree applier: " + email);
-    axios.put(`http://localhost:8080/post/add/${props.postId}/${email}`, {}, {
+    axios.put(`http://192.168.0.7:8080/post/add/${props.postId}/${email}`, {}, {
       headers: {
         'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
       }
@@ -325,7 +325,7 @@ const OptionMenu = (props) => {
 
   const reject = (email) => {
     message.success("Reject applier: " + email);
-    axios.delete(`http://localhost:8080/post/apply/${props.postId}/${email}`, {
+    axios.delete(`http://192.168.0.7:8080/post/apply/${props.postId}/${email}`, {
       headers: {
         'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
       }
@@ -358,7 +358,7 @@ const OptionMenu = (props) => {
     //message.info("delete post: " + props.id);
     console.log("type:", props)
     if (props.type == "note") {
-      axios.put(`http://localhost:8080/note/delete/${props.id}/${props.folderId}`, {}, {
+      axios.put(`http://192.168.0.7:8080/note/delete/${props.id}/${props.folderId}`, {}, {
         headers: {
           'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
         }
@@ -397,7 +397,7 @@ const OptionMenu = (props) => {
         })
     }
     else {
-      axios.delete(`http://localhost:8080/post/${props.id}`, {
+      axios.delete(`http://192.168.0.7:8080/post/${props.id}`, {
         headers: {
           'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
         }
@@ -437,7 +437,7 @@ const OptionMenu = (props) => {
 
   const favorite = () => {
     if (props.email) {
-      axios.put(`http://localhost:8080/favorite/note/${props.id}/${props.email}`, {}, {
+      axios.put(`http://192.168.0.7:8080/favorite/note/${props.id}/${props.email}`, {}, {
         headers: {
           'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
         }
@@ -475,7 +475,7 @@ const OptionMenu = (props) => {
   }
 
   const unfavorite = () => {
-    axios.put(`http://localhost:8080/favorite/note/${props.id}/${props.email}`, {}, {
+    axios.put(`http://192.168.0.7:8080/favorite/note/${props.id}/${props.email}`, {}, {
       headers: {
         'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
       }
@@ -506,7 +506,7 @@ const OptionMenu = (props) => {
   }
 
   const chooseManager = (userObj) => {
-    axios.put(`http://localhost:8080/note/admin/${props.noteId}/${userObj.email}`, {}, {
+    axios.put(`http://192.168.0.7:8080/note/admin/${props.noteId}/${userObj.email}`, {}, {
       headers: {
         'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
       }
@@ -560,7 +560,7 @@ const OptionMenu = (props) => {
       day: 10,
       kickTargetEmail: email,
     }
-    axios.post(`http://localhost:8080/schedule/vote/${props.id}`, data,{
+    axios.post(`http://192.168.0.7:8080/schedule/vote/${props.id}`, data,{
                     headers: {
                         'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
                       }
@@ -580,7 +580,7 @@ const OptionMenu = (props) => {
   };
 
   const handleOk = () => {
-    axios.delete(`http://localhost:8080/post/${props.id}`, {
+    axios.delete(`http://192.168.0.7:8080/post/${props.id}`, {
       headers: {
         'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
       }

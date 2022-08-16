@@ -10,7 +10,7 @@ function RewardEditPage(props) {
 
     useEffect(() => {
         async function getRewardById() {
-            axios.get(`http://localhost:8080/post/${props.postId}`)
+            axios.get(`http://192.168.0.7:8080/post/${props.postId}`)
                 .then(res => {
                     //console.log(res.data.res)
                     setPost(res.data.res)

@@ -116,7 +116,7 @@ const OuterPage = () => {
         // postID = (location.state === 'genewang7@gmail.com') ? 12345 : 67890
         if (!isConnect) {
             setIsConnect(true)
-            sock = new SockJS('http://localhost:8080/websocket')
+            sock = new SockJS('http://192.168.0.7:8080/websocket')
             stompClient = over(sock)
             stompClient.connect({}, onConnected, (err) => {
                 setIsConnect(false)
@@ -137,7 +137,7 @@ const OuterPage = () => {
         if (tempEmail)
             tempEmail = Base64.decode(tempEmail);
         let tempRing = ringNumber
-        axios.get("http://localhost:8080/bell/" + tempEmail, {
+        axios.get("http://192.168.0.7:8080/bell/" + tempEmail, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
             }
