@@ -87,7 +87,7 @@ export const Folder = ({ setCondition }) => {
     return(
         <>
             <Input type="text" placeholder='keyword' className="advanced__Item" onChange={(ev) => setTempCondition({...tempCondition, keyword: ev.target.value})} value={tempCondition.keyword}/>
-            <Input type="text" placeholder='headerName' className="advanced__Item" onChange={(ev) => setTempCondition({...tempCondition, headerName: ev.target.value})} value={tempCondition.headerName}/>
+            <Input type="text" placeholder='author' className="advanced__Item" onChange={(ev) => setTempCondition({...tempCondition, headerName: ev.target.value})} value={tempCondition.headerName}/>
         </>
     )
 };

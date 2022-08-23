@@ -755,7 +755,7 @@ function ProfilePage(props) {
                         </div>
                     </Content>
 
-                    <Sider className='Profile__Sider' width='60%'>
+                    <Sider className='Profile__Sider' width='0%'>
                         {/* <Spin className='signUpPage__Spin' indicator={antIcon} spinning={!getFolderByIdSuccess}> */}
                         {isAuthor && <Row className='Profile__Sider__Fir__Row'>
                             <ToggleSwitch isSwitch={fansOrFollower} SwitchLeft='Following' SwitchRight="Fans" ChangeSwitch={() => changeFansSwitch()} />
