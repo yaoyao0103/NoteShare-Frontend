@@ -81,8 +81,8 @@
 }
 .floatButton {
     position: fixed;
-    right: 2.2em;
-    bottom: 2.2em;
+    right: 6vh;
+    bottom: 6vh;
     border-radius: 50%;
     background-color: #FFAF60;
     font-size: 2em;
@@ -97,8 +97,8 @@
 }
 .floatButton__Hide {
     position: fixed;
-    right: 2.2em;
-    bottom: 2.2em;
+    right: 6vh;
+    bottom: 6vh;
     border-radius: 50%;
     background-color: #FFAF60;
     font-size: 2em;
@@ -113,7 +113,7 @@
 }
 .floatButton__Note {
     position: fixed;
-    right: 2.2em;
+    right: 6vh;
     bottom: 5em;
     border-radius: 50%;
     background-color: #FFAF60;
@@ -129,7 +129,7 @@
 }
 .floatButton__QA {
     position: fixed;
-    right: 2.2em;
+    right: 6vh;
     bottom: 7.8em;
     border-radius: 50%;
     background-color: #FFAF60;
@@ -145,7 +145,7 @@
 }
 .floatButton__Collab {
     position: fixed;
-    right: 2.2em;
+    right: 6vh;
     bottom: 10.6em;
     border-radius: 50%;
     background-color: #FFAF60;
@@ -161,7 +161,7 @@
 }
 .floatButton__Reward {
     position: fixed;
-    right: 2.2em;
+    right: 6vh;
     bottom: 13.4em;
     border-radius: 50%;
     background-color: #FFAF60;

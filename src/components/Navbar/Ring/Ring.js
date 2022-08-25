@@ -143,7 +143,7 @@ function Ring(props) {
                                 <Menu
                                     items={ringList} />
                             )}
-                            overlayStyle={{ width: '300px', maxHeight: '230px', overflowY: 'scroll', overflowX: 'hidden' }}
+                            overlayStyle={{ width: '300px', maxHeight: '230px', overflowY: 'scroll', overflowX: 'hidden', boxShadow: "rgba(0, 0, 0, 0.1) 0px 1px 10px 0px" }}
                             trigger='click'
                             placement="bottom"
                             onClick={setUnReadNumZero}
