@@ -9,8 +9,16 @@ import axios from "axios";
 import { Avatar } from 'antd';
 import './OutlineCard.css'
 import Cookie from "../Cookies/Cookies";
-import { Base64 } from "js-base64";
-import { set } from "react-hook-form";
+import { createMedia } from "@artsy/fresnel"
+const { MediaContextProvider, Media } = createMedia({
+    breakpoints: {
+        sm: 0,
+        lm: 391,
+        md: 768,
+        lg: 1024,
+        xl: 1192,
+    },
+})
 const { Paragraph } = Typography;
 const { Header, Content, Sider, Footer } = Layout;
 const cookieParser = new Cookie(document.cookie)
@@ -541,60 +549,269 @@ function OutlineCard(props) {
         //console.log(props.page);
     }, [hasLike, likeNum])
     return (
+
         <Layout className={"OutlineCard__Layout__Outer" + '__' + props.mode}>
             <Content className={"OutlineCard__Content__Outer" + '__' + props.mode} onClick={() => onClickCard(props.cardContent.type, props.cardContent.id)}>
-                <Layout className={"OutlineCard__Layout__Inner" + '__' + props.mode}>
-                    <Header className={"OutlineCard__Header" + '__' + props.mode} >
-                        <Row className={"OutlineCard__Header__Row" + '__' + props.mode}>
-                            <Col onClick={null} className={"OutlineCard__Header__Left" + '__' + props.mode} span={props.mode == 'Note' ? 6 : 10}>
-                                <OPInfo
-                                    className="OutlineCard__OPInfo"
-                                    mode="Outline"
-                                    size={opSize}
-                                    author={{ email: email, name: author, avatar: avatar }}
-                                    date={date}
-                                    authorFontSize={authorFontSize}
-                                    dateFontSize={dateFontSize}
+                <MediaContextProvider className='OutlineCard__MediaContextProvider'>
+                    <Media at="xl" className='OutlineCard__Media'>
+                        <Layout className={"OutlineCard__Layout__Inner" + '__' + props.mode}>
+                            <Header className={"OutlineCard__Header" + '__' + props.mode} >
+                                <Row className={"OutlineCard__Header__Row" + '__' + props.mode}>
+                                    <Col onClick={null} className={"OutlineCard__Header__Left" + '__' + props.mode} span={props.mode == 'Note' ? 9 : 12}>
+                                        <OPInfo
+                                            className="OutlineCard__OPInfo"
+                                            mode="Outline"
+                                            size={opSize}
+                                            author={{ email: email, name: author, avatar: avatar }}
+                                            date={date}
+                                            authorFontSize={authorFontSize}
+                                            dateFontSize={dateFontSize}
 
-                                    setPageProps={props.setPageProps}
-                                />
-                            </Col>
-                            <Col onClick={props.onClick} className={"OutlineCard__Header__Right" + '__' + props.mode} span={props.mode == 'Note' ? 15 : 12}>
-                                <p style={{ fontSize: '26px', textAlign: 'center', paddingTop: '.5em' }}>{props.cardContent.title}</p>
-                            </Col>
-                            <Col span={2}></Col>
-                        </Row>
-                    </Header>
-                    <Content onClick={props.onClick} className={"OutlineCard__Content__Inner" + '__' + props.mode} >
-                        <Paragraph
-                            className={"OutlineCard__Paragraph" + '__' + props.mode}
-                            ellipsis={
-                                ellipsis
-                                    ? {
-                                        rows: 7,
-                                        expandable: false,
+                                            setPageProps={props.setPageProps}
+                                        />
+                                    </Col>
+                                    <Col onClick={props.onClick} className={"OutlineCard__Header__Right" + '__' + props.mode} span={props.mode == 'Note' ? 15 : 12}>
+                                        <p style={{ fontSize: '26px', textAlign: 'center', paddingTop: '.5em' }}>{props.cardContent.title}</p>
+                                    </Col>
+                                    <Col span={0}></Col>
+                                </Row>
+                            </Header>
+                            <Content onClick={props.onClick} className={"OutlineCard__Content__Inner" + '__' + props.mode} >
+                                <Paragraph
+                                    className={"OutlineCard__Paragraph" + '__' + props.mode}
+                                    ellipsis={
+                                        ellipsis
+                                            ? {
+                                                rows: 7,
+                                                expandable: false,
+                                            }
+                                            : false
                                     }
-                                    : false
+                                >
+                                    {props.cardContent.content}
+                                </Paragraph>
+                            </Content>
+                            {props.mode == 'Note' &&
+                                <Footer className="OutlineCard__Footer">
+                                    <div>
+                                        <Text cls='Small' fontSize="18" content={"Tags"} />
+                                        {props.cardContent.tag.length > 0 &&
+                                            <span style={{ marginLeft: "1em" }}>{tags}</span>
+                                        }
+                                    </div>
+                                </Footer>
                             }
-                        >
-                            {props.cardContent.content}
-                        </Paragraph>
-                    </Content>
-                    {props.mode == 'Note' &&
-                        <Footer className="OutlineCard__Footer">
-                            <div>
-                                <Text cls='Small' fontSize="18" content={"Tags"} />
-                                {props.cardContent.tag.length > 0 &&
-                                    <span style={{ marginLeft: "1em" }}>{tags}</span>
-                                }
-                            </div>
-                        </Footer>
-                    }
-                </Layout>
+                        </Layout>
+                    </Media>
+                    <Media at="lg" className='OutlineCard__Media'>
+                        <Layout className={"OutlineCard__Layout__Inner" + '__' + props.mode}>
+                            <Header className={"OutlineCard__Header" + '__' + props.mode} >
+                                <Row className={"OutlineCard__Header__Row" + '__' + props.mode}>
+                                    <Col onClick={null} className={"OutlineCard__Header__Left" + '__' + props.mode} span={props.mode == 'Note' ? 9 : 14}>
+                                        <OPInfo
+                                            className="OutlineCard__OPInfo"
+                                            mode="Outline"
+                                            size={opSize}
+                                            author={{ email: email, name: author, avatar: avatar }}
+                                            date={date}
+                                            authorFontSize={authorFontSize}
+                                            dateFontSize={dateFontSize}
+
+                                            setPageProps={props.setPageProps}
+                                        />
+                                    </Col>
+                                    <Col onClick={props.onClick} className={"OutlineCard__Header__Right" + '__' + props.mode} span={props.mode == 'Note' ? 15 : 10}>
+                                        <p style={{ fontSize: '26px', textAlign: 'center', paddingTop: '.5em' }}>{props.cardContent.title}</p>
+                                    </Col>
+                                    <Col span={0}></Col>
+                                </Row>
+                            </Header>
+                            <Content onClick={props.onClick} className={"OutlineCard__Content__Inner" + '__' + props.mode} >
+                                <Paragraph
+                                    className={"OutlineCard__Paragraph" + '__' + props.mode}
+                                    ellipsis={
+                                        ellipsis
+                                            ? {
+                                                rows: 7,
+                                                expandable: false,
+                                            }
+                                            : false
+                                    }
+                                >
+                                    {props.cardContent.content}
+                                </Paragraph>
+                            </Content>
+                            {props.mode == 'Note' &&
+                                <Footer className="OutlineCard__Footer">
+                                    <div>
+                                        <Text cls='Small' fontSize="18" content={"Tags"} />
+                                        {props.cardContent.tag.length > 0 &&
+                                            <span style={{ marginLeft: "1em" }}>{tags}</span>
+                                        }
+                                    </div>
+                                </Footer>
+                            }
+                        </Layout>
+                    </Media>
+                    <Media at="md" className='OutlineCard__Media'>
+                        <Layout className={"OutlineCard__Layout__Inner" + '__' + props.mode}>
+                            <Header className={"OutlineCard__Header" + '__' + props.mode} >
+                                <Row className={"OutlineCard__Header__Row" + '__' + props.mode}>
+                                    <Col onClick={null} className={"OutlineCard__Header__Left" + '__' + props.mode} span={props.mode == 'Note' ? 11 : 14}>
+                                        <OPInfo
+                                            className="OutlineCard__OPInfo"
+                                            mode="Outline"
+                                            size={opSize}
+                                            author={{ email: email, name: author, avatar: avatar }}
+                                            date={date}
+                                            authorFontSize={authorFontSize}
+                                            dateFontSize={dateFontSize}
+
+                                            setPageProps={props.setPageProps}
+                                        />
+                                    </Col>
+                                    <Col onClick={props.onClick} className={"OutlineCard__Header__Right" + '__' + props.mode} span={props.mode == 'Note' ? 13 : 10}>
+                                        <p style={{ fontSize: '26px', textAlign: 'center', paddingTop: '.5em' }}>{props.cardContent.title}</p>
+                                    </Col>
+                                    <Col span={0}></Col>
+                                </Row>
+                            </Header>
+                            <Content onClick={props.onClick} className={"OutlineCard__Content__Inner" + '__' + props.mode} >
+                                <Paragraph
+                                    className={"OutlineCard__Paragraph" + '__' + props.mode}
+                                    ellipsis={
+                                        ellipsis
+                                            ? {
+                                                rows: 7,
+                                                expandable: false,
+                                            }
+                                            : false
+                                    }
+                                >
+                                    {props.cardContent.content}
+                                </Paragraph>
+                            </Content>
+                            {props.mode == 'Note' &&
+                                <Footer className="OutlineCard__Footer">
+                                    <div>
+                                        <Text cls='Small' fontSize="18" content={"Tags"} />
+                                        {props.cardContent.tag.length > 0 &&
+                                            <span style={{ marginLeft: "1em" }}>{tags}</span>
+                                        }
+                                    </div>
+                                </Footer>
+                            }
+                        </Layout>
+                    </Media>
+                    <Media at="lm" className='OutlineCard__Media'>
+                        <Layout className={"OutlineCard__Layout__Inner" + '__' + props.mode}>
+                            <Header className={"OutlineCard__Header" + '__' + props.mode} >
+                                <Row className={"OutlineCard__Header__Row" + '__' + props.mode}>
+                                <Col onClick={props.onClick} className={"OutlineCard__Header__Right" + '__' + props.mode} span={props.mode == 'Note' ? 24 : 24}>
+                                        <p style={{ fontSize: '26px', textAlign: 'center', paddingTop: '.5em' }}>{props.cardContent.title}</p>
+                                    </Col>
+                                    <Col onClick={null} className={"OutlineCard__Header__Left" + '__' + props.mode} span={props.mode == 'Note' ? 24 : 24}>
+                                        <OPInfo
+                                            className="OutlineCard__OPInfo"
+                                            mode="Outline"
+                                            size={opSize}
+                                            author={{ email: email, name: author, avatar: avatar }}
+                                            date={date}
+                                            authorFontSize={authorFontSize}
+                                            dateFontSize={dateFontSize}
+
+                                            setPageProps={props.setPageProps}
+                                        />
+                                    </Col>
+                                  
+                                    <Col span={0}></Col>
+                                </Row>
+                            </Header>
+                            <Content onClick={props.onClick} className={"OutlineCard__Content__Inner" + '__' + props.mode} >
+                                <Paragraph
+                                    className={"OutlineCard__Paragraph" + '__' + props.mode}
+                                    ellipsis={
+                                        ellipsis
+                                            ? {
+                                                rows: 7,
+                                                expandable: false,
+                                            }
+                                            : false
+                                    }
+                                >
+                                    {props.cardContent.content}
+                                </Paragraph>
+                            </Content>
+                            {props.mode == 'Note' &&
+                                <Footer className="OutlineCard__Footer">
+                                    <div>
+                                        <Text cls='Small' fontSize="18" content={"Tags"} />
+                                        {props.cardContent.tag.length > 0 &&
+                                            <span style={{ marginLeft: "1em" }}>{tags}</span>
+                                        }
+                                    </div>
+                                </Footer>
+                            }
+                        </Layout>
+                    </Media>
+                    <Media at="sm" className='OutlineCard__Media'>
+                    <Layout className={"OutlineCard__Layout__Inner" + '__' + props.mode}>
+                            <Header className={"OutlineCard__Header" + '__' + props.mode} >
+                                <Row className={"OutlineCard__Header__Row" + '__' + props.mode}>
+                                <Col onClick={props.onClick} className={"OutlineCard__Header__Right" + '__' + props.mode} span={props.mode == 'Note' ? 24 : 24}>
+                                        <p style={{ fontSize: '26px', textAlign: 'center', paddingTop: '.5em' }}>{props.cardContent.title}</p>
+                                    </Col>
+                                    <Col onClick={null} className={"OutlineCard__Header__Left" + '__' + props.mode} span={props.mode == 'Note' ? 24 : 24}>
+                                        <OPInfo
+                                            className="OutlineCard__OPInfo"
+                                            mode="Outline"
+                                            size={opSize}
+                                            author={{ email: email, name: author, avatar: avatar }}
+                                            date={date}
+                                            authorFontSize={authorFontSize}
+                                            dateFontSize={dateFontSize}
+
+                                            setPageProps={props.setPageProps}
+                                        />
+                                    </Col>
+                                  
+                                    <Col span={0}></Col>
+                                </Row>
+                            </Header>
+                            <Content onClick={props.onClick} className={"OutlineCard__Content__Inner" + '__' + props.mode} >
+                                <Paragraph
+                                    className={"OutlineCard__Paragraph" + '__' + props.mode}
+                                    ellipsis={
+                                        ellipsis
+                                            ? {
+                                                rows: 7,
+                                                expandable: false,
+                                            }
+                                            : false
+                                    }
+                                >
+                                    {props.cardContent.content}
+                                </Paragraph>
+                            </Content>
+                            {props.mode == 'Note' &&
+                                <Footer className="OutlineCard__Footer">
+                                    <div>
+                                        <Text cls='Small' fontSize="18" content={"Tags"} />
+                                        {props.cardContent.tag.length > 0 &&
+                                            <span style={{ marginLeft: "1em" }}>{tags}</span>
+                                        }
+                                    </div>
+                                </Footer>
+                            }
+                        </Layout>
+                    </Media>
+                </MediaContextProvider>
             </Content>
             {sider}
 
         </Layout>
+
+
     );
 }
 export default OutlineCard;

@@ -7,7 +7,17 @@ import { message } from 'antd';
 import './FansNFollowerEditor.css'
 import axios from "axios";
 import Cookie from '../Cookies/Cookies';
+import { createMedia } from "@artsy/fresnel"
 const cookieParser = new Cookie(document.cookie)
+const { MediaContextProvider, Media } = createMedia({
+    breakpoints: {
+        sm: 0,
+        lm: 391,
+        md: 768,
+        lg: 1024,
+        xl: 1192,
+    },
+})
 function FansNFollowerEditor(props) {
     const [isFollow, setIsFollow] = useState(true);
     const [isFans, setIsFans] = useState(true);
@@ -168,43 +178,214 @@ function FansNFollowerEditor(props) {
         setVisible(false);
     };
     return (
-        <div className='FansNFollowerEditor'>
-            <Row className='FansNFollowerEditor__Row'>
-                <Col className='FansNFollowerEditor__Avatar' span={4}>
-                    <Avatar className={"FansNFollowerEditor__Avatar__Inner"} size={48} src={props.Avatar} onClick={() => { props.setPageProps({ page: 'ProfilePage', email: props.targetEmail }) }}></Avatar>
-                </Col>
-                <Col className='FansNFollowerEditor__Name' span={15}>
-                    <Text cls='Small' fontSize={'22'} content={props.Name} />
-                </Col>
-                {props.isSwitch && isFans &&
-                    <Popconfirm
-                        title="Are you sure ?"
-                        visible={visible}
-                        onConfirm={handleOk}
-                        onCancel={handleCancel}
-                        okText="Yes"
-                        cancelText="Cancel"
-                    >
+        <MediaContextProvider >
+            <Media at="xl" className='FansNFollowerEditor__Media'>
+                <div className='FansNFollowerEditor'>
+
+                    <Row className='FansNFollowerEditor__Row'>
+                        <Col className='FansNFollowerEditor__Avatar' span={4}>
+                            <Avatar className={"FansNFollowerEditor__Avatar__Inner"} size={48} src={props.Avatar} onClick={() => { props.setPageProps({ page: 'ProfilePage', email: props.targetEmail }) }}></Avatar>
+                        </Col>
+                        <Col className='FansNFollowerEditor__Name' span={14}>
+                            <Text cls='Small' fontSize={'22'} content={props.Name} />
+                        </Col>
+                        {props.isSwitch && isFans &&
+                            <Popconfirm
+                                title="Are you sure ?"
+                                visible={visible}
+                                onConfirm={handleOk}
+                                onCancel={handleCancel}
+                                okText="Yes"
+                                cancelText="Cancel"
+                            >
 
 
-                        <Col className='FansNFollowerEditor__Fans' span={5} onClick={() => { setVisible(true); }}>
-                            {/* <UserAddOutlined className='Profile__Follow__Icon' style={{ fontSize: '22px' }} /> */}
-                            <Text className='FansNFollowerEditor__unFans' cls='Small' fontSize={'16'} content='移除'></Text>
-                        </Col >
-                    </Popconfirm>}
+                                <Col className='FansNFollowerEditor__Fans' span={6} onClick={() => { setVisible(true); }}>
+                                    {/* <UserAddOutlined className='Profile__Follow__Icon' style={{ fontSize: '22px' }} /> */}
+                                    <Text className='FansNFollowerEditor__unFans' cls='Small' fontSize={'16'} content='Remove'></Text>
+                                </Col >
+                            </Popconfirm>}
 
-                {!props.isSwitch && isFollow &&
-                    <Col className='FansNFollowerEditor__Fans' span={5} onClick={() => { cancelFollowing() }}>
-                        {/* <UserAddOutlined className='Profile__Follow__Icon' style={{ fontSize: '22px' }} /> */}
-                        <Text className='FansNFollowerEditor__unFans' cls='Small' fontSize={'16'} content='追蹤中'></Text>
-                    </Col >}
-                {!props.isSwitch && !isFollow &&
-                    <Col className='FansNFollowerEditor__Fans__UnFollow' span={5} onClick={() => { cancelFollowing() }}>
-                        {/* <UserAddOutlined className='Profile__Follow__Icon' style={{ fontSize: '22px' }} /> */}
-                        <Text className='FansNFollowerEditor__unFans' cls='Small' fontSize={'16'} content='追蹤' color={'white'}></Text>
-                    </Col >}
-            </Row>
-        </div>
+                        {!props.isSwitch && isFollow &&
+                            <Col className='FansNFollowerEditor__Fans' span={6} onClick={() => { cancelFollowing() }}>
+                                {/* <UserAddOutlined className='Profile__Follow__Icon' style={{ fontSize: '22px' }} /> */}
+                                <Text className='FansNFollowerEditor__unFans' cls='Small' fontSize={'16'} content='Following'></Text>
+                            </Col >}
+                        {!props.isSwitch && !isFollow &&
+                            <Col className='FansNFollowerEditor__Fans__UnFollow' span={6} onClick={() => { cancelFollowing() }}>
+                                {/* <UserAddOutlined className='Profile__Follow__Icon' style={{ fontSize: '22px' }} /> */}
+                                <Text className='FansNFollowerEditor__unFans' cls='Small' fontSize={'16'} content='Follow' color={'white'}></Text>
+                            </Col >}
+                    </Row>
+
+                </div>
+            </Media>
+            <Media at="lg" className='FansNFollowerEditor__Media'>
+                <div className='FansNFollowerEditor'>
+
+                    <Row className='FansNFollowerEditor__Row'>
+                        <Col className='FansNFollowerEditor__Avatar' span={4}>
+                            <Avatar className={"FansNFollowerEditor__Avatar__Inner"} size={48} src={props.Avatar} onClick={() => { props.setPageProps({ page: 'ProfilePage', email: props.targetEmail }) }}></Avatar>
+                        </Col>
+                        <Col className='FansNFollowerEditor__Name' span={14}>
+                            <Text cls='Small' fontSize={'22'} content={props.Name} />
+                        </Col>
+                        {props.isSwitch && isFans &&
+                            <Popconfirm
+                                title="Are you sure ?"
+                                visible={visible}
+                                onConfirm={handleOk}
+                                onCancel={handleCancel}
+                                okText="Yes"
+                                cancelText="Cancel"
+                            >
+
+
+                                <Col className='FansNFollowerEditor__Fans' span={6} onClick={() => { setVisible(true); }}>
+                                    {/* <UserAddOutlined className='Profile__Follow__Icon' style={{ fontSize: '22px' }} /> */}
+                                    <Text className='FansNFollowerEditor__unFans' cls='Small' fontSize={'16'} content='Remove'></Text>
+                                </Col >
+                            </Popconfirm>}
+
+                        {!props.isSwitch && isFollow &&
+                            <Col className='FansNFollowerEditor__Fans' span={6} onClick={() => { cancelFollowing() }}>
+                                {/* <UserAddOutlined className='Profile__Follow__Icon' style={{ fontSize: '22px' }} /> */}
+                                <Text className='FansNFollowerEditor__unFans' cls='Small' fontSize={'16'} content='Following'></Text>
+                            </Col >}
+                        {!props.isSwitch && !isFollow &&
+                            <Col className='FansNFollowerEditor__Fans__UnFollow' span={6} onClick={() => { cancelFollowing() }}>
+                                {/* <UserAddOutlined className='Profile__Follow__Icon' style={{ fontSize: '22px' }} /> */}
+                                <Text className='FansNFollowerEditor__unFans' cls='Small' fontSize={'16'} content='Follow' color={'white'}></Text>
+                            </Col >}
+                    </Row>
+
+                </div>
+            </Media>
+            <Media at="md" className='FansNFollowerEditor__Media'>
+                <div className='FansNFollowerEditor'>
+
+                    <Row className='FansNFollowerEditor__Row'>
+                        <Col className='FansNFollowerEditor__Avatar' span={4}>
+                            <Avatar className={"FansNFollowerEditor__Avatar__Inner"} size={48} src={props.Avatar} onClick={() => { props.setPageProps({ page: 'ProfilePage', email: props.targetEmail }) }}></Avatar>
+                        </Col>
+                        <Col className='FansNFollowerEditor__Name' span={14}>
+                            <Text cls='Small' fontSize={'22'} content={props.Name} />
+                        </Col>
+                        {props.isSwitch && isFans &&
+                            <Popconfirm
+                                title="Are you sure ?"
+                                visible={visible}
+                                onConfirm={handleOk}
+                                onCancel={handleCancel}
+                                okText="Yes"
+                                cancelText="Cancel"
+                            >
+
+
+                                <Col className='FansNFollowerEditor__Fans' span={6} onClick={() => { setVisible(true); }}>
+                                    {/* <UserAddOutlined className='Profile__Follow__Icon' style={{ fontSize: '22px' }} /> */}
+                                    <Text className='FansNFollowerEditor__unFans' cls='Small' fontSize={'16'} content='Remove'></Text>
+                                </Col >
+                            </Popconfirm>}
+
+                        {!props.isSwitch && isFollow &&
+                            <Col className='FansNFollowerEditor__Fans' span={6} onClick={() => { cancelFollowing() }}>
+                                {/* <UserAddOutlined className='Profile__Follow__Icon' style={{ fontSize: '22px' }} /> */}
+                                <Text className='FansNFollowerEditor__unFans' cls='Small' fontSize={'16'} content='Following'></Text>
+                            </Col >}
+                        {!props.isSwitch && !isFollow &&
+                            <Col className='FansNFollowerEditor__Fans__UnFollow' span={6} onClick={() => { cancelFollowing() }}>
+                                {/* <UserAddOutlined className='Profile__Follow__Icon' style={{ fontSize: '22px' }} /> */}
+                                <Text className='FansNFollowerEditor__unFans' cls='Small' fontSize={'16'} content='Follow' color={'white'}></Text>
+                            </Col >}
+                    </Row>
+
+                </div>
+            </Media>
+            <Media at="lm" className='FansNFollowerEditor__Media'>
+                <div className='FansNFollowerEditor'>
+
+                    <Row className='FansNFollowerEditor__Row'>
+                        <Col className='FansNFollowerEditor__Avatar' span={4}>
+                            <Avatar className={"FansNFollowerEditor__Avatar__Inner"} size={48} src={props.Avatar} onClick={() => { props.setPageProps({ page: 'ProfilePage', email: props.targetEmail }) }}></Avatar>
+                        </Col>
+                        <Col className='FansNFollowerEditor__Name' span={14}>
+                            <Text cls='Small' fontSize={'22'} content={props.Name} />
+                        </Col>
+                        {props.isSwitch && isFans &&
+                            <Popconfirm
+                                title="Are you sure ?"
+                                visible={visible}
+                                onConfirm={handleOk}
+                                onCancel={handleCancel}
+                                okText="Yes"
+                                cancelText="Cancel"
+                            >
+
+
+                                <Col className='FansNFollowerEditor__Fans' span={6} onClick={() => { setVisible(true); }}>
+                                    {/* <UserAddOutlined className='Profile__Follow__Icon' style={{ fontSize: '22px' }} /> */}
+                                    <Text className='FansNFollowerEditor__unFans' cls='Small' fontSize={'16'} content='Remove'></Text>
+                                </Col >
+                            </Popconfirm>}
+
+                        {!props.isSwitch && isFollow &&
+                            <Col className='FansNFollowerEditor__Fans' span={6} onClick={() => { cancelFollowing() }}>
+                                {/* <UserAddOutlined className='Profile__Follow__Icon' style={{ fontSize: '22px' }} /> */}
+                                <Text className='FansNFollowerEditor__unFans' cls='Small' fontSize={'16'} content='Following'></Text>
+                            </Col >}
+                        {!props.isSwitch && !isFollow &&
+                            <Col className='FansNFollowerEditor__Fans__UnFollow' span={6} onClick={() => { cancelFollowing() }}>
+                                {/* <UserAddOutlined className='Profile__Follow__Icon' style={{ fontSize: '22px' }} /> */}
+                                <Text className='FansNFollowerEditor__unFans' cls='Small' fontSize={'16'} content='Follow' color={'white'}></Text>
+                            </Col >}
+                    </Row>
+
+                </div>
+            </Media>
+            <Media at="sm" className='FansNFollowerEditor__Media'>
+                <div className='FansNFollowerEditor'>
+
+                    <Row className='FansNFollowerEditor__Row'>
+                        <Col className='FansNFollowerEditor__Avatar' span={4}>
+                            <Avatar className={"FansNFollowerEditor__Avatar__Inner"} size={48} src={props.Avatar} onClick={() => { props.setPageProps({ page: 'ProfilePage', email: props.targetEmail }) }}></Avatar>
+                        </Col>
+                        <Col className='FansNFollowerEditor__Name' span={13}>
+                            <Text cls='Small' fontSize={'22'} content={props.Name} />
+                        </Col>
+                        {props.isSwitch && isFans &&
+                            <Popconfirm
+                                title="Are you sure ?"
+                                visible={visible}
+                                onConfirm={handleOk}
+                                onCancel={handleCancel}
+                                okText="Yes"
+                                cancelText="Cancel"
+                            >
+
+
+                                <Col className='FansNFollowerEditor__Fans' span={7} onClick={() => { setVisible(true); }}>
+                                    {/* <UserAddOutlined className='Profile__Follow__Icon' style={{ fontSize: '22px' }} /> */}
+                                    <Text className='FansNFollowerEditor__unFans' cls='Small' fontSize={'16'} content='Remove'></Text>
+                                </Col >
+                            </Popconfirm>}
+
+                        {!props.isSwitch && isFollow &&
+                            <Col className='FansNFollowerEditor__Fans' span={7} onClick={() => { cancelFollowing() }}>
+                                {/* <UserAddOutlined className='Profile__Follow__Icon' style={{ fontSize: '22px' }} /> */}
+                                <Text className='FansNFollowerEditor__unFans' cls='Small' fontSize={'16'} content='Following'></Text>
+                            </Col >}
+                        {!props.isSwitch && !isFollow &&
+                            <Col className='FansNFollowerEditor__Fans__UnFollow' span={7} onClick={() => { cancelFollowing() }}>
+                                {/* <UserAddOutlined className='Profile__Follow__Icon' style={{ fontSize: '22px' }} /> */}
+                                <Text className='FansNFollowerEditor__unFans' cls='Small' fontSize={'16'} content='Follow' color={'white'}></Text>
+                            </Col >}
+                    </Row>
+
+                </div>
+            </Media>
+
+        </MediaContextProvider>
     );
 }
 FansNFollowerEditor.propTypes = {

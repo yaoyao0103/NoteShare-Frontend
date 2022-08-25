@@ -7,19 +7,20 @@ function FansNFollower(props) {
     return (
         <div className="FansNFollower">
             <Row gutter={0} className="FansNFollower__Row">
-                <Col span={8} className="FansNFollower__Follower">
+                <Col span={9} className="FansNFollower__Follower">
                     <Card className="FansNFollower__Follower__Card">
                     <Statistic
                             title="Fans"
                             value={props.fans}
                             valueStyle={{
                                 color: '#3f8600',
+                                
                             }}
 
                         />
                     </Card>
                 </Col>
-                <Col span={8} className="FansNFollower__Fans">
+                <Col span={9} className="FansNFollower__Fans">
                     <Card className="FansNFollower__Fans__Card">
                        
                          <Statistic

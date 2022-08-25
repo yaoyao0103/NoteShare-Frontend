@@ -1,271 +1,1371 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;600&display=swap');
-.OutlineCard__Layout__Outer__Post{
-    position:relative;
-    height: 20em;
-    width: 45%;
-    max-width: 45%;
-    background-color: #fff;
-    margin:2.5%;
-    box-shadow: rgba(60, 60, 60, 0.25) 0px 5px 10px 0px;   
-    
-}
-.OutlineCard__Layout__Outer__Post:hover{
-    position:relative;
-    height: 20em;
-    width:45%;
-    background-color: #fff;
-    transform: scale(1.005);
-    transition: .3s;
-    
-    box-shadow: rgba(60, 60, 60, 0.25) 0px 5px 10px 0px; 
-    
-}
-.OutlineCard__Content__Outer__Post{
-    cursor: pointer;
-    position: relative;
-    height: 100%;
-    width: 100%;
+@media screen and (min-width: 1192px) {
    
-    background-color: #FFF;
-  
-}
-.OutlineCard__Layout__Inner__Post{
-    position:relative;
-    height:100%;
-    width: 100%;
-    background-color: #FFF;
-    /* display: inline-block; */
-}
-.OutlineCard__Header__Post{
-    position:relative;
-    height: 25%;
-    width: 100%;
-    background-color: #FFF;
-    margin: 0;
-    margin-top: 1.5%;
-    padding: 0;
-  
-}
-.OutlineCard__Header__Row__Post{
-    position:relative;
-    height:100%;
-    width: 100%;
-    background-color: #FFF;
+    .OutlineCard__Layout__Outer__Post{
+        position:relative;
+        height: 20em;
+        width: 45%;
+        max-width: 45%;
+        background-color: #fff;
+        margin:2.5%;
+        box-shadow: rgba(60, 60, 60, 0.25) 0px 5px 10px 0px;   
+        
+    }
+    .OutlineCard__Layout__Outer__Post:hover{
+        position:relative;
+        height: 20em;
+        width:45%;
+        background-color: #fff;
+        transform: scale(1.005);
+        transition: .3s;
+        
+        box-shadow: rgba(60, 60, 60, 0.25) 0px 5px 10px 0px; 
+        
+    }
+    .OutlineCard__Content__Outer__Post{
+        cursor: pointer;
+        position: relative;
+        height: 100%;
+        width: 100%;
+       
+        background-color: #FFF;
+      
+    }
+    .OutlineCard__Layout__Inner__Post{
+        position:relative;
+        height:100%;
+        width: 100%;
+        background-color: #FFF;
+        /* display: inline-block; */
+    }
+    .OutlineCard__Header__Post{
+        position:relative;
+        height: 25%;
+        width: 100%;
+        background-color: #FFF;
+        margin: 0;
+        margin-top: 1.5%;
+        padding: 0;
+      
+    }
+    .OutlineCard__Header__Row__Post{
+        position:relative;
+        height:100%;
+        width: 100%;
+        background-color: #FFF;
+       
+      
+    }
+    .OutlineCard__OPInfo{
+        position:relative;
+        width: 100%;
+        
+    }
+    .OutlineCard__Header__Left__Post{
+        
+    }
+    .OutlineCard__Header__Right__Post{
+        position: relative;
+        padding: 0;
+    }
+    .OutlineCard__Content__Inner__Post{
+        position: relative;
+     
+        margin-left:10%;
+        margin-right:3%;
+    }
+    
+    .OutlineCard__Paragraph__Post{
+        position: relative;
+        font-size: 18px;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 200;
+    }
+    .OutlineCard__Sider__Outer__Post{
+        position: relative;
+        height: 100%;
+        width: 100%;
+        background-color: #FFF; 
+    }
+    .OutlineCard__Sider__First__Row__Post,.OutlineCard__Sider__Sec__Row__Post,.OutlineCard__Sider__Third__Row__Post,.OutlineCard__Sider__Fourth__Row__Post,.OutlineCard__Sider__Fifth__Row__Post{
+        position: relative;
+        padding-top:4%;
+        padding-left: 5%;
+    }
+    .OutlineCard__Sider__Inner__Layout__Post{
+        position: relative;
+        height: inherit;
+        width: inherit;
+        background-color: #FFF; 
+    }
+    .OutlineCard__Sider__Inner__Content__Post{
+        position: relative;
+        height: inherit;
+        width: inherit;
+        background-color: #FFF; 
+    }
+    
+    .OutlineCard__Footer{
+        background-color: #FFF; 
+    }
+    
+    .OutlineCard__Sider__Footer__Post{
+        position: relative;
+        width: inherit;
+        background-color: #FFF; 
+        padding-bottom:24px;
+        padding-right:0;
+        padding-top:0;
+        padding-left:13px
+       
+    }
+    .OutlineCard__Sider__Footer__Fir__Post{
+        position: relative;
+        width:100%
+    }
+    .OutlineCard__Sider__Footer__Buy__Post{
+        align-content: left;      
+        
+    }
+    
+    .OutlineCard__Layout__Outer__Note{
+        position:relative;
+        height: 20em;
+        width: 90%;
+        max-width: 90%;
+        background-color: #fff;
+        margin-left:5%;
+        margin-right:5%;
+        margin-top:1.5em;
+        margin-bottom:1.5em;
+    box-shadow: rgba(60, 60, 60, 0.25) 0px 5px 10px 0px;    
+    }
+    .OutlineCard__Layout__Outer__Note:hover{
+        position:relative;
+        height: 20em;
+        width: 90%;
+        max-width: 90%;
+        background-color: #fff;
+        margin-left:5%;
+        margin-right:5%;
+        margin-top:1.5em;
+        margin-bottom:1.5em;
+        transform: scale(1.005);
+        transition: .3s;
+        box-shadow: rgba(60, 60, 60, 0.5) 0px 5px 20px 0px;
+    
+    }
+    .OutlineCard__Content__Outer__Note{
+        cursor: pointer;
+        position: relative;
+        height: 100%;
+        width: 100%;
+       
+        background-color: #FFF;
+      
+    }
+    .OutlineCard__Layout__Inner__Note{
+        position:relative;
+        height:100%;
+        width: 100%;
+        background-color: #FFF;
+        /* display: inline-block; */
+    }
+    .OutlineCard__Header__Note{
+        position:relative;
+        height: 25%;
+        width: 100%;
+        background-color: #FFF;
+        margin-top: 1%;
+        padding: 0;
+      
+    }
+    .OutlineCard__Header__Row__Note{
+        position:relative;
+        height:100%;
+        width: 100%;
+        background-color: #FFF;
+       
+      
+    }
+    .OutlineCard__Header__Left__Note{
+        
+    }
+    .OutlineCard__Header__Right__Note{
+        position: relative;
+        padding: 0;
+    }
+    .OutlineCard__Content__Inner__Note{
+        position: relative;
+     
+        margin-left:10%;
+        margin-right:3%;
+    }
+    .OutlineCard__Paragraph__Note{
+        margin-left:1.5%;
+        position: relative;
+        font-size: 22px;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 200;
+    }
+    .OutlineCard__Sider__Outer__Note{
+        position: relative;
+        padding-top:1%;
+        height: 100%;
+        
+        background-color: #FFF; 
+    }
+    
+    /* .OutlineCard__Sider__First__Row__Note,.OutlineCard__Sider__Sec__Row__Note,.OutlineCard__Sider__Third__Row__Note,.OutlineCard__Sider__Fourth__Row__Note,.OutlineCard__Sider__Fifth__Row__Note,.OutlineCard__Sider__Sixth__Row__Note,.OutlineCard__Sider__Seventh__Row__Note{
+        position: relative;
+        padding-top:3%;
+        padding-left: 5%;
+    } */
+    .OutlineCard__Sider__Row__Note{
+        position: relative;
+        padding-top:2%;
+        padding-left: 5%;
+    }
+    .OutlineCard__Sider__Row__Like__Note{
+        position: relative;
+        padding-top:0%;
+        padding-left: 5%;
+    }
+    .OutlineCard__Sider__Paragraph__Note{
+        position: relative;
+        padding: 0;
+        font-size: 14px;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 200;
+    }
+    .OutlineCard__Sider__Inner__Layout__Note{
+        position: relative;
+        height: inherit;
+        width: inherit;
+        background-color: #FFF; 
+    }
+    .OutlineCard__Sider__Inner__Content__Note{
+        position: relative;
+        height: inherit;
+        background-color: #FFF; 
+        width: inherit;
+    }
+    .OutlineCard__Sider__Footer__Note{
+        position: relative;
+        width: inherit;
+        background-color: #FFF; 
+        padding-bottom:24px;
+        padding-right:0;
+        padding-top:0;
+        padding-left:20px
+    }
+    .OutlineCard__Sider__Footer__Fir__Note{
+        position: relative;
+        width:100%
+    }
+    .OutlineCard__Sider__Footer__Buy__Note{
+        align-content: left;      
+        
+    }
+    .OutlineCard__Sider__Footer__Icon__Note{
+        
+       cursor: pointer;
+    }
+    
+  }
+  @media screen and (min-width: 1024px)and (max-width: 1192px) {
    
-  
-}
-.OutlineCard__OPInfo{
-    position:relative;
-    width: 100%;
+    .OutlineCard__Layout__Outer__Post{
+        position:relative;
+        height: 20em;
+        width: 45%;
+        max-width: 45%;
+        background-color: #fff;
+        margin:2.5%;
+        box-shadow: rgba(60, 60, 60, 0.25) 0px 5px 10px 0px;   
+        
+    }
+    .OutlineCard__Layout__Outer__Post:hover{
+        position:relative;
+        height: 20em;
+        width:45%;
+        background-color: #fff;
+        transform: scale(1.005);
+        transition: .3s;
+        
+        box-shadow: rgba(60, 60, 60, 0.25) 0px 5px 10px 0px; 
+        
+    }
+    .OutlineCard__Content__Outer__Post{
+        cursor: pointer;
+        position: relative;
+        height: 100%;
+        width: 100%;
+       
+        background-color: #FFF;
+      
+    }
+    .OutlineCard__Layout__Inner__Post{
+        position:relative;
+        height:100%;
+        width: 100%;
+        background-color: #FFF;
+        /* display: inline-block; */
+    }
+    .OutlineCard__Header__Post{
+        position:relative;
+        height: 25%;
+        width: 100%;
+        background-color: #FFF;
+        margin: 0;
+        margin-top: 1.5%;
+        padding: 0;
+      
+    }
+    .OutlineCard__Header__Row__Post{
+        position:relative;
+        height:100%;
+        width: 100%;
+        background-color: #FFF;
+       
+      
+    }
+    .OutlineCard__OPInfo{
+        position:relative;
+        width: 100%;
+        
+    }
+    .OutlineCard__Header__Left__Post{
+        
+    }
+    .OutlineCard__Header__Right__Post{
+        position: relative;
+        padding: 0;
+    }
+    .OutlineCard__Content__Inner__Post{
+        position: relative;
+     
+        margin-left:10%;
+        margin-right:3%;
+    }
     
-}
-.OutlineCard__Header__Left__Post{
+    .OutlineCard__Paragraph__Post{
+        position: relative;
+        font-size: 18px;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 200;
+    }
+    .OutlineCard__Sider__Outer__Post{
+        position: relative;
+        height: 100%;
+        width: 100%;
+        background-color: #FFF; 
+    }
+    .OutlineCard__Sider__First__Row__Post,.OutlineCard__Sider__Sec__Row__Post,.OutlineCard__Sider__Third__Row__Post,.OutlineCard__Sider__Fourth__Row__Post,.OutlineCard__Sider__Fifth__Row__Post{
+        position: relative;
+        padding-top:4%;
+        padding-left: 5%;
+    }
+    .OutlineCard__Sider__Inner__Layout__Post{
+        position: relative;
+        height: inherit;
+        width: inherit;
+        background-color: #FFF; 
+    }
+    .OutlineCard__Sider__Inner__Content__Post{
+        position: relative;
+        height: inherit;
+        width: inherit;
+        background-color: #FFF; 
+    }
     
-}
-.OutlineCard__Header__Right__Post{
-    position: relative;
-    padding: 0;
-}
-.OutlineCard__Content__Inner__Post{
-    position: relative;
- 
-    margin-left:10%;
-    margin-right:3%;
-}
-
-.OutlineCard__Paragraph__Post{
-    position: relative;
-    font-size: 18px;
-    font-family: 'Poppins', sans-serif;
-    font-weight: 200;
-}
-.OutlineCard__Sider__Outer__Post{
-    position: relative;
-    height: 100%;
-    width: 100%;
-    background-color: #FFF; 
-}
-.OutlineCard__Sider__First__Row__Post,.OutlineCard__Sider__Sec__Row__Post,.OutlineCard__Sider__Third__Row__Post,.OutlineCard__Sider__Fourth__Row__Post,.OutlineCard__Sider__Fifth__Row__Post{
-    position: relative;
-    padding-top:4%;
-    padding-left: 5%;
-}
-.OutlineCard__Sider__Inner__Layout__Post{
-    position: relative;
-    height: inherit;
-    width: inherit;
-    background-color: #FFF; 
-}
-.OutlineCard__Sider__Inner__Content__Post{
-    position: relative;
-    height: inherit;
-    width: inherit;
-    background-color: #FFF; 
-}
-
-.OutlineCard__Footer{
-    background-color: #FFF; 
-}
-
-.OutlineCard__Sider__Footer__Post{
-    position: relative;
-    width: inherit;
-    background-color: #FFF; 
-    padding-bottom:24px;
-    padding-right:0;
-    padding-top:0;
-    padding-left:13px
+    .OutlineCard__Footer{
+        background-color: #FFF; 
+    }
+    
+    .OutlineCard__Sider__Footer__Post{
+        position: relative;
+        width: inherit;
+        background-color: #FFF; 
+        padding-bottom:24px;
+        padding-right:0;
+        padding-top:0;
+        padding-left:13px
+       
+    }
+    .OutlineCard__Sider__Footer__Fir__Post{
+        position: relative;
+        width:100%
+    }
+    .OutlineCard__Sider__Footer__Buy__Post{
+        align-content: left;      
+        
+    }
+    
+    .OutlineCard__Layout__Outer__Note{
+        position:relative;
+        height: 20em;
+        width: 90%;
+        max-width: 90%;
+        background-color: #fff;
+        margin-left:5%;
+        margin-right:5%;
+        margin-top:1.5em;
+        margin-bottom:1.5em;
+    box-shadow: rgba(60, 60, 60, 0.25) 0px 5px 10px 0px;    
+    }
+    .OutlineCard__Layout__Outer__Note:hover{
+        position:relative;
+        height: 20em;
+        width: 90%;
+        max-width: 90%;
+        background-color: #fff;
+        margin-left:5%;
+        margin-right:5%;
+        margin-top:1.5em;
+        margin-bottom:1.5em;
+        transform: scale(1.005);
+        transition: .3s;
+        box-shadow: rgba(60, 60, 60, 0.5) 0px 5px 20px 0px;
+    
+    }
+    .OutlineCard__Content__Outer__Note{
+        cursor: pointer;
+        position: relative;
+        height: 100%;
+        width: 100%;
+       
+        background-color: #FFF;
+      
+    }
+    .OutlineCard__Layout__Inner__Note{
+        position:relative;
+        height:100%;
+        width: 100%;
+        background-color: #FFF;
+        /* display: inline-block; */
+    }
+    .OutlineCard__Header__Note{
+        position:relative;
+        height: 25%;
+        width: 100%;
+        background-color: #FFF;
+        margin-top: 1%;
+        padding: 0;
+      
+    }
+    .OutlineCard__Header__Row__Note{
+        position:relative;
+        height:100%;
+        width: 100%;
+        background-color: #FFF;
+       
+      
+    }
+    .OutlineCard__Header__Left__Note{
+        
+    }
+    .OutlineCard__Header__Right__Note{
+        position: relative;
+        padding: 0;
+    }
+    .OutlineCard__Content__Inner__Note{
+        position: relative;
+     
+        margin-left:10%;
+        margin-right:3%;
+    }
+    .OutlineCard__Paragraph__Note{
+        margin-left:1.5%;
+        position: relative;
+        font-size: 22px;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 200;
+    }
+    .OutlineCard__Sider__Outer__Note{
+        position: relative;
+        padding-top:1%;
+        height: 100%;
+        
+        background-color: #FFF; 
+    }
+    
+    /* .OutlineCard__Sider__First__Row__Note,.OutlineCard__Sider__Sec__Row__Note,.OutlineCard__Sider__Third__Row__Note,.OutlineCard__Sider__Fourth__Row__Note,.OutlineCard__Sider__Fifth__Row__Note,.OutlineCard__Sider__Sixth__Row__Note,.OutlineCard__Sider__Seventh__Row__Note{
+        position: relative;
+        padding-top:3%;
+        padding-left: 5%;
+    } */
+    .OutlineCard__Sider__Row__Note{
+        position: relative;
+        padding-top:2%;
+        padding-left: 5%;
+    }
+    .OutlineCard__Sider__Row__Like__Note{
+        position: relative;
+        padding-top:0%;
+        padding-left: 5%;
+    }
+    .OutlineCard__Sider__Paragraph__Note{
+        position: relative;
+        padding: 0;
+        font-size: 14px;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 200;
+    }
+    .OutlineCard__Sider__Inner__Layout__Note{
+        position: relative;
+        height: inherit;
+        width: inherit;
+        background-color: #FFF; 
+    }
+    .OutlineCard__Sider__Inner__Content__Note{
+        position: relative;
+        height: inherit;
+        background-color: #FFF; 
+        width: inherit;
+    }
+    .OutlineCard__Sider__Footer__Note{
+        position: relative;
+        width: inherit;
+        background-color: #FFF; 
+        padding-bottom:24px;
+        padding-right:0;
+        padding-top:0;
+        padding-left:20px
+    }
+    .OutlineCard__Sider__Footer__Fir__Note{
+        position: relative;
+        width:100%
+    }
+    .OutlineCard__Sider__Footer__Buy__Note{
+        align-content: left;      
+        
+    }
+    .OutlineCard__Sider__Footer__Icon__Note{
+        
+       cursor: pointer;
+    }
+    
+  }
+  @media screen and (min-width: 768px)and (max-width: 1024px){
    
-}
-.OutlineCard__Sider__Footer__Fir__Post{
-    position: relative;
-    width:100%
-}
-.OutlineCard__Sider__Footer__Buy__Post{
-    align-content: left;      
+    .OutlineCard__Layout__Outer__Post{
+        position:relative;
+        height: 20em;
+        width: 90%;
+        max-width: 90%;
+        background-color: #fff;
+        margin:2.5%;
+        box-shadow: rgba(60, 60, 60, 0.25) 0px 5px 10px 0px;   
+        
+    }
+    .OutlineCard__Layout__Outer__Post:hover{
+        position:relative;
+        height: 20em;
+        width:90%;
+        background-color: #fff;
+        transform: scale(1.005);
+        transition: .3s;
+        
+        box-shadow: rgba(60, 60, 60, 0.25) 0px 5px 10px 0px; 
+        
+    }
+    .OutlineCard__Content__Outer__Post{
+        cursor: pointer;
+        position: relative;
+        height: 100%;
+        width: 100%;
+       
+        background-color: #FFF;
+      
+    }
+    .OutlineCard__Layout__Inner__Post{
+        position:relative;
+        height:100%;
+        width: 100%;
+        background-color: #FFF;
+        /* display: inline-block; */
+    }
+    .OutlineCard__Header__Post{
+        position:relative;
+        height: 25%;
+        width: 100%;
+        background-color: #FFF;
+        margin: 0;
+        margin-top: 1.5%;
+        padding: 0;
+      
+    }
+    .OutlineCard__Header__Row__Post{
+        position:relative;
+        height:100%;
+        width: 100%;
+        background-color: #FFF;
+       
+      
+    }
+    .OutlineCard__OPInfo{
+        position:relative;
+        width: 100%;
+        
+    }
+    .OutlineCard__Header__Left__Post{
+        
+    }
+    .OutlineCard__Header__Right__Post{
+        position: relative;
+        padding: 0;
+    }
+    .OutlineCard__Content__Inner__Post{
+        position: relative;
+     
+        margin-left:10%;
+        margin-right:3%;
+    }
     
-}
-
-.OutlineCard__Layout__Outer__Note{
-    position:relative;
-    height: 20em;
-    width: 90%;
-    max-width: 90%;
-    background-color: #fff;
-    margin-left:5%;
-    margin-right:5%;
-    margin-top:1.5em;
-    margin-bottom:1.5em;
-box-shadow: rgba(60, 60, 60, 0.25) 0px 5px 10px 0px;    
-}
-.OutlineCard__Layout__Outer__Note:hover{
-    position:relative;
-    height: 20em;
-    width: 90%;
-    max-width: 90%;
-    background-color: #fff;
-    margin-left:5%;
-    margin-right:5%;
-    margin-top:1.5em;
-    margin-bottom:1.5em;
-    transform: scale(1.005);
-    transition: .3s;
-    box-shadow: rgba(60, 60, 60, 0.5) 0px 5px 20px 0px;
-
-}
-.OutlineCard__Content__Outer__Note{
-    cursor: pointer;
-    position: relative;
-    height: 100%;
-    width: 100%;
+    .OutlineCard__Paragraph__Post{
+        position: relative;
+        font-size: 18px;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 200;
+    }
+    .OutlineCard__Sider__Outer__Post{
+        position: relative;
+        height: 100%;
+        width: 100%;
+        background-color: #FFF; 
+    }
+    .OutlineCard__Sider__First__Row__Post,.OutlineCard__Sider__Sec__Row__Post,.OutlineCard__Sider__Third__Row__Post,.OutlineCard__Sider__Fourth__Row__Post,.OutlineCard__Sider__Fifth__Row__Post{
+        position: relative;
+        padding-top:4%;
+        padding-left: 5%;
+    }
+    .OutlineCard__Sider__Inner__Layout__Post{
+        position: relative;
+        height: inherit;
+        width: inherit;
+        background-color: #FFF; 
+    }
+    .OutlineCard__Sider__Inner__Content__Post{
+        position: relative;
+        height: inherit;
+        width: inherit;
+        background-color: #FFF; 
+    }
+    
+    .OutlineCard__Footer{
+        background-color: #FFF; 
+    }
+    
+    .OutlineCard__Sider__Footer__Post{
+        position: relative;
+        width: inherit;
+        background-color: #FFF; 
+        padding-bottom:24px;
+        padding-right:0;
+        padding-top:0;
+        padding-left:13px
+       
+    }
+    .OutlineCard__Sider__Footer__Fir__Post{
+        position: relative;
+        width:100%
+    }
+    .OutlineCard__Sider__Footer__Buy__Post{
+        align-content: left;      
+        
+    }
+    
+    .OutlineCard__Layout__Outer__Note{
+        position:relative;
+        height: 20em;
+        width: 90%;
+        max-width: 90%;
+        background-color: #fff;
+        margin-left:5%;
+        margin-right:5%;
+        margin-top:1.5em;
+        margin-bottom:1.5em;
+    box-shadow: rgba(60, 60, 60, 0.25) 0px 5px 10px 0px;    
+    }
+    .OutlineCard__Layout__Outer__Note:hover{
+        position:relative;
+        height: 20em;
+        width: 90%;
+        max-width: 90%;
+        background-color: #fff;
+        margin-left:5%;
+        margin-right:5%;
+        margin-top:1.5em;
+        margin-bottom:1.5em;
+        transform: scale(1.005);
+        transition: .3s;
+        box-shadow: rgba(60, 60, 60, 0.5) 0px 5px 20px 0px;
+    
+    }
+    .OutlineCard__Content__Outer__Note{
+        cursor: pointer;
+        position: relative;
+        height: 100%;
+        width: 100%;
+       
+        background-color: #FFF;
+      
+    }
+    .OutlineCard__Layout__Inner__Note{
+        position:relative;
+        height:100%;
+        width: 100%;
+        background-color: #FFF;
+        /* display: inline-block; */
+    }
+    .OutlineCard__Header__Note{
+        position:relative;
+        height: 25%;
+        width: 100%;
+        background-color: #FFF;
+        margin-top: 1%;
+        padding: 0;
+      
+    }
+    .OutlineCard__Header__Row__Note{
+        position:relative;
+        height:100%;
+        width: 100%;
+        background-color: #FFF;
+       
+      
+    }
+    .OutlineCard__Header__Left__Note{
+        
+    }
+    .OutlineCard__Header__Right__Note{
+        position: relative;
+        padding: 0;
+    }
+    .OutlineCard__Content__Inner__Note{
+        position: relative;
+     
+        margin-left:10%;
+        margin-right:3%;
+    }
+    .OutlineCard__Paragraph__Note{
+        margin-left:1.5%;
+        position: relative;
+        font-size: 22px;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 200;
+    }
+    .OutlineCard__Sider__Outer__Note{
+        position: relative;
+        padding-top:1%;
+        height: 100%;
+        
+        background-color: #FFF; 
+    }
+    
+    /* .OutlineCard__Sider__First__Row__Note,.OutlineCard__Sider__Sec__Row__Note,.OutlineCard__Sider__Third__Row__Note,.OutlineCard__Sider__Fourth__Row__Note,.OutlineCard__Sider__Fifth__Row__Note,.OutlineCard__Sider__Sixth__Row__Note,.OutlineCard__Sider__Seventh__Row__Note{
+        position: relative;
+        padding-top:3%;
+        padding-left: 5%;
+    } */
+    .OutlineCard__Sider__Row__Note{
+        position: relative;
+        padding-top:2%;
+        padding-left: 5%;
+    }
+    .OutlineCard__Sider__Row__Like__Note{
+        position: relative;
+        padding-top:0%;
+        padding-left: 5%;
+    }
+    .OutlineCard__Sider__Paragraph__Note{
+        position: relative;
+        padding: 0;
+        font-size: 14px;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 200;
+    }
+    .OutlineCard__Sider__Inner__Layout__Note{
+        position: relative;
+        height: inherit;
+        width: inherit;
+        background-color: #FFF; 
+    }
+    .OutlineCard__Sider__Inner__Content__Note{
+        position: relative;
+        height: inherit;
+        background-color: #FFF; 
+        width: inherit;
+    }
+    .OutlineCard__Sider__Footer__Note{
+        position: relative;
+        width: inherit;
+        background-color: #FFF; 
+        padding-bottom:24px;
+        padding-right:0;
+        padding-top:0;
+        padding-left:20px
+    }
+    .OutlineCard__Sider__Footer__Fir__Note{
+        position: relative;
+        width:100%
+    }
+    .OutlineCard__Sider__Footer__Buy__Note{
+        align-content: left;      
+        
+    }
+    .OutlineCard__Sider__Footer__Icon__Note{
+        
+       cursor: pointer;
+    }
+    
+  }
+  @media screen and (min-width: 391px)and (max-width: 768px) {
    
-    background-color: #FFF;
-  
-}
-.OutlineCard__Layout__Inner__Note{
-    position:relative;
-    height:100%;
-    width: 100%;
-    background-color: #FFF;
-    /* display: inline-block; */
-}
-.OutlineCard__Header__Note{
-    position:relative;
-    height: 25%;
-    width: 100%;
-    background-color: #FFF;
-    margin-top: 1%;
-    padding: 0;
-  
-}
-.OutlineCard__Header__Row__Note{
-    position:relative;
-    height:100%;
-    width: 100%;
-    background-color: #FFF;
+    .OutlineCard__Layout__Outer__Post{
+        position:relative;
+        height: 20em;
+        width: 90%;
+        max-width: 90%;
+        background-color: #fff;
+        margin:2.5%;
+        box-shadow: rgba(60, 60, 60, 0.25) 0px 5px 10px 0px;   
+        
+    }
+    .OutlineCard__Layout__Outer__Post:hover{
+        position:relative;
+        height: 20em;
+        width:90%;
+        background-color: #fff;
+        transform: scale(1.005);
+        transition: .3s;
+        
+        box-shadow: rgba(60, 60, 60, 0.25) 0px 5px 10px 0px; 
+        
+    }
+    .OutlineCard__Content__Outer__Post{
+        cursor: pointer;
+        position: relative;
+        height: 100%;
+        width: 100%;
+       
+        background-color: #FFF;
+      
+    }
+    .OutlineCard__Layout__Inner__Post{
+        position:relative;
+        height:100%;
+        width: 100%;
+        background-color: #FFF;
+        /* display: inline-block; */
+    }
+    .OutlineCard__Header__Post{
+        position:relative;
+        height: 25%;
+        width: 100%;
+        background-color: #FFF;
+        margin: 0;
+        margin-top: 1.5%;
+        padding: 0;
+      
+    }
+    .OutlineCard__Header__Row__Post{
+        position:relative;
+        height:100%;
+        width: 100%;
+        background-color: #FFF;
+       
+      
+    }
+    .OutlineCard__OPInfo{
+        position:relative;
+        width: 100%;
+        
+    }
+    .OutlineCard__Header__Left__Post{
+        
+    }
+    .OutlineCard__Header__Right__Post{
+        position: relative;
+        padding: 0;
+    }
+    .OutlineCard__Content__Inner__Post{
+        position: relative;
+     
+        margin-left:10%;
+        margin-right:3%;
+    }
+    
+    .OutlineCard__Paragraph__Post{
+        position: relative;
+        font-size: 18px;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 200;
+    }
+    .OutlineCard__Sider__Outer__Post{
+        position: relative;
+        height: 100%;
+        width: 100%;
+        background-color: #FFF; 
+    }
+    .OutlineCard__Sider__First__Row__Post,.OutlineCard__Sider__Sec__Row__Post,.OutlineCard__Sider__Third__Row__Post,.OutlineCard__Sider__Fourth__Row__Post,.OutlineCard__Sider__Fifth__Row__Post{
+        position: relative;
+        padding-top:4%;
+        padding-left: 5%;
+    }
+    .OutlineCard__Sider__Inner__Layout__Post{
+        position: relative;
+        height: inherit;
+        width: inherit;
+        background-color: #FFF; 
+    }
+    .OutlineCard__Sider__Inner__Content__Post{
+        position: relative;
+        height: inherit;
+        width: inherit;
+        background-color: #FFF; 
+    }
+    
+    .OutlineCard__Footer{
+        background-color: #FFF; 
+    }
+    
+    .OutlineCard__Sider__Footer__Post{
+        position: relative;
+        width: inherit;
+        background-color: #FFF; 
+        padding-bottom:24px;
+        padding-right:0;
+        padding-top:0;
+        padding-left:13px
+       
+    }
+    .OutlineCard__Sider__Footer__Fir__Post{
+        position: relative;
+        width:100%
+    }
+    .OutlineCard__Sider__Footer__Buy__Post{
+        align-content: left;      
+        
+    }
+    
+    .OutlineCard__Layout__Outer__Note{
+        position:relative;
+        height: 20em;
+        width: 90%;
+        max-width: 90%;
+        background-color: #fff;
+        margin-left:5%;
+        margin-right:5%;
+        margin-top:1.5em;
+        margin-bottom:1.5em;
+    box-shadow: rgba(60, 60, 60, 0.25) 0px 5px 10px 0px;    
+    }
+    .OutlineCard__Layout__Outer__Note:hover{
+        position:relative;
+        height: 20em;
+        width: 90%;
+        max-width: 90%;
+        background-color: #fff;
+        margin-left:5%;
+        margin-right:5%;
+        margin-top:1.5em;
+        margin-bottom:1.5em;
+        transform: scale(1.005);
+        transition: .3s;
+        box-shadow: rgba(60, 60, 60, 0.5) 0px 5px 20px 0px;
+    
+    }
+    .OutlineCard__Content__Outer__Note{
+        cursor: pointer;
+        position: relative;
+        height: 100%;
+        width: 100%;
+       
+        background-color: #FFF;
+      
+    }
+    .OutlineCard__Layout__Inner__Note{
+        position:relative;
+        height:100%;
+        width: 100%;
+        background-color: #FFF;
+        /* display: inline-block; */
+    }
+    .OutlineCard__Header__Note{
+        position:relative;
+        height: 25%;
+        width: 100%;
+        background-color: #FFF;
+        margin-top: 1%;
+        padding: 0;
+      
+    }
+    .OutlineCard__Header__Row__Note{
+        position:relative;
+        height:100%;
+        width: 100%;
+        background-color: #FFF;
+       
+      
+    }
+    .OutlineCard__Header__Left__Note{
+        
+    }
+    .OutlineCard__Header__Right__Note{
+        position: relative;
+        padding: 0;
+    }
+    .OutlineCard__Content__Inner__Note{
+        position: relative;
+     
+        margin-left:10%;
+        margin-right:3%;
+    }
+    .OutlineCard__Paragraph__Note{
+        margin-left:1.5%;
+        position: relative;
+        font-size: 22px;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 200;
+    }
+    .OutlineCard__Sider__Outer__Note{
+        position: relative;
+        padding-top:1%;
+        height: 100%;
+        
+        background-color: #FFF; 
+    }
+    
+    /* .OutlineCard__Sider__First__Row__Note,.OutlineCard__Sider__Sec__Row__Note,.OutlineCard__Sider__Third__Row__Note,.OutlineCard__Sider__Fourth__Row__Note,.OutlineCard__Sider__Fifth__Row__Note,.OutlineCard__Sider__Sixth__Row__Note,.OutlineCard__Sider__Seventh__Row__Note{
+        position: relative;
+        padding-top:3%;
+        padding-left: 5%;
+    } */
+    .OutlineCard__Sider__Row__Note{
+        position: relative;
+        padding-top:2%;
+        padding-left: 5%;
+    }
+    .OutlineCard__Sider__Row__Like__Note{
+        position: relative;
+        padding-top:0%;
+        padding-left: 5%;
+    }
+    .OutlineCard__Sider__Paragraph__Note{
+        position: relative;
+        padding: 0;
+        font-size: 14px;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 200;
+    }
+    .OutlineCard__Sider__Inner__Layout__Note{
+        position: relative;
+        height: inherit;
+        width: inherit;
+        background-color: #FFF; 
+    }
+    .OutlineCard__Sider__Inner__Content__Note{
+        position: relative;
+        height: inherit;
+        background-color: #FFF; 
+        width: inherit;
+    }
+    .OutlineCard__Sider__Footer__Note{
+        position: relative;
+        width: inherit;
+        background-color: #FFF; 
+        padding-bottom:24px;
+        padding-right:0;
+        padding-top:0;
+        padding-left:20px
+    }
+    .OutlineCard__Sider__Footer__Fir__Note{
+        position: relative;
+        width:100%
+    }
+    .OutlineCard__Sider__Footer__Buy__Note{
+        align-content: left;      
+        
+    }
+    .OutlineCard__Sider__Footer__Icon__Note{
+        
+       cursor: pointer;
+    }
+    
+  }
+  @media screen and (min-width: 0px)and (max-width: 391px)  {
    
-  
-}
-.OutlineCard__Header__Left__Note{
+    .OutlineCard__Layout__Outer__Post{
+        position:relative;
+        height: 20em;
+        width: 90%;
+        max-width: 90%;
+        background-color: #fff;
+        margin:2.5%;
+        box-shadow: rgba(60, 60, 60, 0.25) 0px 5px 10px 0px;   
+        
+    }
+    .OutlineCard__Layout__Outer__Post:hover{
+        position:relative;
+        height: 20em;
+        width:90%;
+        background-color: #fff;
+        transform: scale(1.005);
+        transition: .3s;
+        
+        box-shadow: rgba(60, 60, 60, 0.25) 0px 5px 10px 0px; 
+        
+    }
+    .OutlineCard__Content__Outer__Post{
+        cursor: pointer;
+        position: relative;
+        height: 100%;
+        width: 100%;
+       
+        background-color: #FFF;
+      
+    }
+    .OutlineCard__Layout__Inner__Post{
+        position:relative;
+        height:100%;
+        width: 100%;
+        background-color: #FFF;
+        /* display: inline-block; */
+    }
+    .OutlineCard__Header__Post{
+        position:relative;
+        height: 25%;
+        width: 100%;
+        background-color: #FFF;
+        margin: 0;
+        margin-top: 1.5%;
+        padding: 0;
+      
+    }
+    .OutlineCard__Header__Row__Post{
+        position:relative;
+        height:100%;
+        width: 100%;
+        background-color: #FFF;
+       
+      
+    }
+    .OutlineCard__OPInfo{
+        position:relative;
+        width: 100%;
+        
+    }
+    .OutlineCard__Header__Left__Post{
+        
+    }
+    .OutlineCard__Header__Right__Post{
+        position: relative;
+        padding: 0;
+    }
+    .OutlineCard__Content__Inner__Post{
+        position: relative;
+     
+        margin-left:10%;
+        margin-right:3%;
+    }
     
-}
-.OutlineCard__Header__Right__Note{
-    position: relative;
-    padding: 0;
-}
-.OutlineCard__Content__Inner__Note{
-    position: relative;
- 
-    margin-left:10%;
-    margin-right:3%;
-}
-.OutlineCard__Paragraph__Note{
-    margin-left:1.5%;
-    position: relative;
-    font-size: 22px;
-    font-family: 'Poppins', sans-serif;
-    font-weight: 200;
-}
-.OutlineCard__Sider__Outer__Note{
-    position: relative;
-    padding-top:1%;
-    height: 100%;
+    .OutlineCard__Paragraph__Post{
+        position: relative;
+        font-size: 18px;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 200;
+    }
+    .OutlineCard__Sider__Outer__Post{
+        position: relative;
+        height: 100%;
+        width: 100%;
+        background-color: #FFF; 
+    }
+    .OutlineCard__Sider__First__Row__Post,.OutlineCard__Sider__Sec__Row__Post,.OutlineCard__Sider__Third__Row__Post,.OutlineCard__Sider__Fourth__Row__Post,.OutlineCard__Sider__Fifth__Row__Post{
+        position: relative;
+        padding-top:4%;
+        padding-left: 5%;
+    }
+    .OutlineCard__Sider__Inner__Layout__Post{
+        position: relative;
+        height: inherit;
+        width: inherit;
+        background-color: #FFF; 
+    }
+    .OutlineCard__Sider__Inner__Content__Post{
+        position: relative;
+        height: inherit;
+        width: inherit;
+        background-color: #FFF; 
+    }
     
-    background-color: #FFF; 
-}
-
-/* .OutlineCard__Sider__First__Row__Note,.OutlineCard__Sider__Sec__Row__Note,.OutlineCard__Sider__Third__Row__Note,.OutlineCard__Sider__Fourth__Row__Note,.OutlineCard__Sider__Fifth__Row__Note,.OutlineCard__Sider__Sixth__Row__Note,.OutlineCard__Sider__Seventh__Row__Note{
-    position: relative;
-    padding-top:3%;
-    padding-left: 5%;
-} */
-.OutlineCard__Sider__Row__Note{
-    position: relative;
-    padding-top:2%;
-    padding-left: 5%;
-}
-.OutlineCard__Sider__Row__Like__Note{
-    position: relative;
-    padding-top:0%;
-    padding-left: 5%;
-}
-.OutlineCard__Sider__Paragraph__Note{
-    position: relative;
-    padding: 0;
-    font-size: 14px;
-    font-family: 'Poppins', sans-serif;
-    font-weight: 200;
-}
-.OutlineCard__Sider__Inner__Layout__Note{
-    position: relative;
-    height: inherit;
-    width: inherit;
-    background-color: #FFF; 
-}
-.OutlineCard__Sider__Inner__Content__Note{
-    position: relative;
-    height: inherit;
-    background-color: #FFF; 
-    width: inherit;
-}
-.OutlineCard__Sider__Footer__Note{
-    position: relative;
-    width: inherit;
-    background-color: #FFF; 
-    padding-bottom:24px;
-    padding-right:0;
-    padding-top:0;
-    padding-left:20px
-}
-.OutlineCard__Sider__Footer__Fir__Note{
-    position: relative;
-    width:100%
-}
-.OutlineCard__Sider__Footer__Buy__Note{
-    align-content: left;      
+    .OutlineCard__Footer{
+        background-color: #FFF; 
+    }
     
-}
-.OutlineCard__Sider__Footer__Icon__Note{
+    .OutlineCard__Sider__Footer__Post{
+        position: relative;
+        width: inherit;
+        background-color: #FFF; 
+        padding-bottom:24px;
+        padding-right:0;
+        padding-top:0;
+        padding-left:13px
+       
+    }
+    .OutlineCard__Sider__Footer__Fir__Post{
+        position: relative;
+        width:100%
+    }
+    .OutlineCard__Sider__Footer__Buy__Post{
+        align-content: left;      
+        
+    }
     
-   cursor: pointer;
-}
+    .OutlineCard__Layout__Outer__Note{
+        position:relative;
+        height: 20em;
+        width: 90%;
+        max-width: 90%;
+        background-color: #fff;
+        margin-left:5%;
+        margin-right:5%;
+        margin-top:1.5em;
+        margin-bottom:1.5em;
+    box-shadow: rgba(60, 60, 60, 0.25) 0px 5px 10px 0px;    
+    }
+    .OutlineCard__Layout__Outer__Note:hover{
+        position:relative;
+        height: 20em;
+        width: 90%;
+        max-width: 90%;
+        background-color: #fff;
+        margin-left:5%;
+        margin-right:5%;
+        margin-top:1.5em;
+        margin-bottom:1.5em;
+        transform: scale(1.005);
+        transition: .3s;
+        box-shadow: rgba(60, 60, 60, 0.5) 0px 5px 20px 0px;
+    
+    }
+    .OutlineCard__Content__Outer__Note{
+        cursor: pointer;
+        position: relative;
+        height: 100%;
+        width: 100%;
+       
+        background-color: #FFF;
+      
+    }
+    .OutlineCard__Layout__Inner__Note{
+        position:relative;
+        height:100%;
+        width: 100%;
+        background-color: #FFF;
+        /* display: inline-block; */
+    }
+    .OutlineCard__Header__Note{
+        position:relative;
+        height: 25%;
+        width: 100%;
+        background-color: #FFF;
+        margin-top: 1%;
+        padding: 0;
+      
+    }
+    .OutlineCard__Header__Row__Note{
+        position:relative;
+        height:100%;
+        width: 100%;
+        background-color: #FFF;
+       
+      
+    }
+    .OutlineCard__Header__Left__Note{
+        
+    }
+    .OutlineCard__Header__Right__Note{
+        position: relative;
+        padding: 0;
+    }
+    .OutlineCard__Content__Inner__Note{
+        position: relative;
+     
+        margin-left:10%;
+        margin-right:3%;
+    }
+    .OutlineCard__Paragraph__Note{
+        margin-left:1.5%;
+        position: relative;
+        font-size: 22px;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 200;
+    }
+    .OutlineCard__Sider__Outer__Note{
+        position: relative;
+        padding-top:1%;
+        height: 100%;
+        
+        background-color: #FFF; 
+    }
+    
+    /* .OutlineCard__Sider__First__Row__Note,.OutlineCard__Sider__Sec__Row__Note,.OutlineCard__Sider__Third__Row__Note,.OutlineCard__Sider__Fourth__Row__Note,.OutlineCard__Sider__Fifth__Row__Note,.OutlineCard__Sider__Sixth__Row__Note,.OutlineCard__Sider__Seventh__Row__Note{
+        position: relative;
+        padding-top:3%;
+        padding-left: 5%;
+    } */
+    .OutlineCard__Sider__Row__Note{
+        position: relative;
+        padding-top:2%;
+        padding-left: 5%;
+    }
+    .OutlineCard__Sider__Row__Like__Note{
+        position: relative;
+        padding-top:0%;
+        padding-left: 5%;
+    }
+    .OutlineCard__Sider__Paragraph__Note{
+        position: relative;
+        padding: 0;
+        font-size: 14px;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 200;
+    }
+    .OutlineCard__Sider__Inner__Layout__Note{
+        position: relative;
+        height: inherit;
+        width: inherit;
+        background-color: #FFF; 
+    }
+    .OutlineCard__Sider__Inner__Content__Note{
+        position: relative;
+        height: inherit;
+        background-color: #FFF; 
+        width: inherit;
+    }
+    .OutlineCard__Sider__Footer__Note{
+        position: relative;
+        width: inherit;
+        background-color: #FFF; 
+        padding-bottom:24px;
+        padding-right:0;
+        padding-top:0;
+        padding-left:20px
+    }
+    .OutlineCard__Sider__Footer__Fir__Note{
+        position: relative;
+        width:100%
+    }
+    .OutlineCard__Sider__Footer__Buy__Note{
+        align-content: left;      
+        
+    }
+    .OutlineCard__Sider__Footer__Icon__Note{
+        
+       cursor: pointer;
+    }
+    
+  }

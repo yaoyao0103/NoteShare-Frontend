@@ -13,6 +13,16 @@ import FolderCard from '../../components/FolderCard/FolderCard';
 import Cookie from '../../components/Cookies/Cookies';
 import { Base64 } from 'js-base64';
 import axios from "axios";
+import { createMedia } from "@artsy/fresnel"
+const { MediaContextProvider, Media } = createMedia({
+    breakpoints: {
+        sm: 0,
+        lm: 391,
+        md: 768,
+        lg: 1024,
+        xl: 1192,
+    },
+})
 const { Header, Sider, Content, Footer } = Layout;
 const cookieParser = new Cookie(document.cookie)
 function ProfilePage(props) {
@@ -692,111 +702,537 @@ function ProfilePage(props) {
     return (
         <>
             {getUserSuccess &&
+                <MediaContextProvider >
+                    <Media at="xl" className='Profile__Media'>
+                        <Layout className='Profile__Layout__Inner'>
+                            <Content className='Profile__Content'>
+                                <Row className='Profile__Content__First__Row'>
+                                    <Col span={6}>
+                                        <div className={"Profile__Avatar__Outer"}>
+                                            <Avatar className={"Profile__Avatar__Inner"} size={84} src={avatarCurrent}></Avatar>
+                                            {isAuthor && <div className={"Profile__Avatar__Editor"} onClick={() => { setAvatarSelector(true) }}>
+                                                <EditFilled />
 
-                <Layout className='Profile__Layout__Inner'>
-                    <Content className='Profile__Content'>
-                        <Row className='Profile__Content__First__Row'>
-                            <Col span={6}>
-                                <div className={"Profile__Avatar__Outer"}>
-                                    <Avatar className={"Profile__Avatar__Inner"} size={84} src={avatarCurrent}></Avatar>
-                                    {isAuthor && <div className={"Profile__Avatar__Editor"} onClick={() => { setAvatarSelector(true) }}>
-                                        <EditFilled />
+                                            </div>
+                                            }
+                                        </div>
+                                    </Col>
+                                    <Col className='Profile__NameNEmail' span={18}>
+                                        <div className='Profile__TextEditor'>
+                                            <Text className='TextEditor__Title' cls='Gerneral' fontSize='22' content={'Name :'} />
 
-                                    </div>
-                                    }
-                                </div>
-                            </Col>
-                            <Col className='Profile__NameNEmail' span={18}>
-                                <div className='Profile__TextEditor'>
-                                    <TextEditor name={user.name}></TextEditor>
-                                </div>
-                                <div className='Profile__Email'>
-                                    <Text className='TextEditor__Name' cls='Gerneral' fontSize='20' content={'Email : ' + props.email} />
-                                </div>
-                                {!isAuthor &&
-                                    <Row className='Profile__FollowNBell'>
-                                        {!isFollow &&
-                                            <Col className='Profile__Follow' span={6} onClick={() => { Follow() }}>
-                                                <Tooltip arrowPointAtCenter={true} placement="top" title={"Follow " + user.name} color={'#000'}>
-                                                    <UserAddOutlined className='Profile__Follow__Icon' style={{ fontSize: '20px' }} />
-                                                    <Text cls='Small' fontSize={'14'} content='追蹤'></Text>
-                                                </Tooltip>
-                                            </Col>
+                                            <div className='TextEditor__Name'>
+                                                <Text cls='Gerneral' fontSize='22' content={user.name} />
+                                            </div>
+                                        </div>
+                                        <div className='Profile__Email'>
+                                            <Text className='Profile__Email__Text' cls='Gerneral' fontSize='20' content={'Email : ' + props.email} />
+                                        </div>
+                                        {!isAuthor &&
+                                            <Row className='Profile__FollowNBell'>
+                                                {!isFollow &&
+                                                    <Col className='Profile__Follow' span={6} onClick={() => { Follow() }}>
+                                                        <Tooltip arrowPointAtCenter={true} placement="top" title={"Follow " + user.name} color={'#000'}>
+                                                            <UserAddOutlined className='Profile__Follow__Icon' style={{ fontSize: '20px' }} />
+                                                            <Text cls='Small' fontSize={'14'} content='Follow'></Text>
+                                                        </Tooltip>
+                                                    </Col>
+                                                }
+                                                {isFollow &&
+                                                    <Col className='Profile__Follow' span={6} onClick={() => { Follow() }}>
+                                                        <Tooltip arrowPointAtCenter={true} placement="top" title={"Follow " + user.name} color={'#000'}>
+                                                            <UserDeleteOutlined className='Profile__Follow__Icon' style={{ fontSize: '20px' }} />
+                                                            <Text cls='Small' fontSize={'14'} content='Cancel'></Text>
+                                                        </Tooltip>
+                                                    </Col>
+                                                }
+                                                <Col className='Profile__Bell' span={8}>
+                                                    {!isBell && <Tooltip arrowPointAtCenter={true} placement="top" title={"Turn on the notification of " + user.name} color={'#000'}>
+                                                        <BellOutlined className='Profile__Bell__Icon' style={{ fontSize: '22px' }} onClick={() => { changeBell() }} />
+                                                    </Tooltip>}
+                                                    {isBell && <Tooltip arrowPointAtCenter={true} placement="top" title={"Turn off the notification of " + user.name} color={'#000'}>
+                                                        <BellFilled className='Profile__Bell__Icon' style={{ fontSize: '22px' }} onClick={() => { changeBell() }} />
+                                                    </Tooltip>}
+
+                                                </Col>
+                                            </Row>
                                         }
-                                        {isFollow &&
-                                            <Col className='Profile__Follow' span={6} onClick={() => { Follow() }}>
-                                                <Tooltip arrowPointAtCenter={true} placement="top" title={"Follow " + user.name} color={'#000'}>
-                                                    <UserDeleteOutlined className='Profile__Follow__Icon' style={{ fontSize: '20px' }} />
-                                                    <Text cls='Small' fontSize={'14'} content='取消'></Text>
-                                                </Tooltip>
-                                            </Col>
+                                    </Col>
+                                </Row>
+                                <div className="Profile__Fans">
+                                    <FansNFollower fans={fansNum} following={followingNum}></FansNFollower>
+                                </div>
+                                <div className='Profile__Strength'>
+                                    <StrengthEditor strength={strength} delete={(key) => { DeleteStrength(key) }} add={(tag) => (AddStrength(tag))} isAuthor={isAuthor}></StrengthEditor>
+                                </div>
+                                <div className='Profile__Introduction'>
+                                    <IntroductionEditor edit={(content) => { SaveProfile(content) }} content={profile} isAuthor={isAuthor}></IntroductionEditor>
+                                </div>
+                            </Content>
+
+                            <Sider className='Profile__Sider' width='60%'>
+                                {/* <Spin className='signUpPage__Spin' indicator={antIcon} spinning={!getFolderByIdSuccess}> */}
+                                {isAuthor && <Row className='Profile__Sider__Fir__Row'>
+                                    <ToggleSwitch isSwitch={fansOrFollower} SwitchLeft='Following' SwitchRight="Fans" ChangeSwitch={() => changeFansSwitch()} />
+                                </Row>}
+                                {!isAuthor && <Row className='Profile__Sider__Fir__Row'>
+                                    <ToggleSwitch isSwitch={fansOrFollower} SwitchLeft='Note' SwitchRight="Folder" ChangeSwitch={() => changeFansSwitch()} />
+                                </Row>}
+                                <Divider />
+                                {isAuthor && !fansOrFollower && <div className='Profile_Sider__Main_Content'>
+                                    {fansList}
+
+                                </div>}
+                                {isAuthor && fansOrFollower && <div className='Profile_Sider__Main_Content'>
+                                    {followingList}
+                                </div>}
+                                {!isAuthor && getFolderByIdSuccess && !fansOrFollower && <div className='Profile_Sider__Main_Content'>
+                                    <FolderCard setLoading={props.setLoading} folderList={folderList} isFolder={true} setPageProps={props.setPageProps} isRoot={isRoot} clickBack={(id) => { ClickBack(id) }} clickFolder={(id) => { setCurrentFolderId(id); }} />
+
+                                </div>}
+
+                                {!isAuthor && fansOrFollower && getFolderByIdSuccess && <div className='Profile_Sider__Main_Content'>
+                                    <FolderCard setLoading={props.setLoading} folderList={noteList} isFolder={true} setPageProps={props.setPageProps} isRoot={isRoot} clickBack={(id) => { ClickBack(id) }} clickFolder={(id) => { setCurrentFolderId(id); }} />
+
+                                </div>}
+                                {/* </Spin> */}
+                            </Sider>
+
+                            <Modal
+                                title="Choose your avatar"
+                                centered
+                                visible={avatarSelector}
+                                onOk={() => { SaveAvatar(); props.setAvatar(props.Avatar + 1); setAvatarSelector(false) }}
+                                onCancel={() => setAvatarSelector(false)}
+                                okText="Save"
+                                cancelText="Cancel"
+                                width={590}
+                            >
+                                {AvatarsList}
+
+                            </Modal>
+                        </Layout >
+                    </Media>
+                    <Media at="lg" className='Profile__Media'>
+                        <Layout className='Profile__Layout__Inner'>
+
+                            <Content className='Profile__Content'>
+                                <Row className='Profile__Content__First__Row'>
+                                    <Col span={6}>
+                                        <div className={"Profile__Avatar__Outer"}>
+                                            <Avatar className={"Profile__Avatar__Inner"} size={84} src={avatarCurrent}></Avatar>
+                                            {isAuthor && <div className={"Profile__Avatar__Editor"} onClick={() => { setAvatarSelector(true) }}>
+                                                <EditFilled />
+
+                                            </div>
+                                            }
+                                        </div>
+                                    </Col>
+                                    <Col className='Profile__NameNEmail' span={18}>
+                                        <div className='Profile__TextEditor'>
+                                            <TextEditor name={user.name}></TextEditor>
+                                        </div>
+                                        <div className='Profile__Email'>
+                                            <Text className='TextEditor__Name' cls='Gerneral' fontSize='20' content={'Email : ' + props.email} />
+                                        </div>
+                                        {!isAuthor &&
+                                            <Row className='Profile__FollowNBell'>
+                                                {!isFollow &&
+                                                    <Col className='Profile__Follow' span={6} onClick={() => { Follow() }}>
+                                                        <Tooltip arrowPointAtCenter={true} placement="top" title={"Follow " + user.name} color={'#000'}>
+                                                            <UserAddOutlined className='Profile__Follow__Icon' style={{ fontSize: '20px' }} />
+                                                            <Text cls='Small' fontSize={'14'} content='Follow'></Text>
+                                                        </Tooltip>
+                                                    </Col>
+                                                }
+                                                {isFollow &&
+                                                    <Col className='Profile__Follow' span={6} onClick={() => { Follow() }}>
+                                                        <Tooltip arrowPointAtCenter={true} placement="top" title={"Follow " + user.name} color={'#000'}>
+                                                            <UserDeleteOutlined className='Profile__Follow__Icon' style={{ fontSize: '20px' }} />
+                                                            <Text cls='Small' fontSize={'14'} content='Cancel'></Text>
+                                                        </Tooltip>
+                                                    </Col>
+                                                }
+                                                <Col className='Profile__Bell' span={8}>
+                                                    {!isBell && <Tooltip arrowPointAtCenter={true} placement="top" title={"Turn on the notification of " + user.name} color={'#000'}>
+                                                        <BellOutlined className='Profile__Bell__Icon' style={{ fontSize: '22px' }} onClick={() => { changeBell() }} />
+                                                    </Tooltip>}
+                                                    {isBell && <Tooltip arrowPointAtCenter={true} placement="top" title={"Turn off the notification of " + user.name} color={'#000'}>
+                                                        <BellFilled className='Profile__Bell__Icon' style={{ fontSize: '22px' }} onClick={() => { changeBell() }} />
+                                                    </Tooltip>}
+
+                                                </Col>
+                                            </Row>
                                         }
-                                        <Col className='Profile__Bell' span={8}>
-                                            {!isBell && <Tooltip arrowPointAtCenter={true} placement="top" title={"Turn on the notification of " + user.name} color={'#000'}>
-                                                <BellOutlined className='Profile__Bell__Icon' style={{ fontSize: '22px' }} onClick={() => { changeBell() }} />
-                                            </Tooltip>}
-                                            {isBell && <Tooltip arrowPointAtCenter={true} placement="top" title={"Turn off the notification of " + user.name} color={'#000'}>
-                                                <BellFilled className='Profile__Bell__Icon' style={{ fontSize: '22px' }} onClick={() => { changeBell() }} />
-                                            </Tooltip>}
+                                    </Col>
+                                </Row>
+                                <div className="Profile__Fans">
+                                    <FansNFollower fans={fansNum} following={followingNum}></FansNFollower>
+                                </div>
+                                <div className='Profile__Strength'>
+                                    <StrengthEditor strength={strength} delete={(key) => { DeleteStrength(key) }} add={(tag) => (AddStrength(tag))} isAuthor={isAuthor}></StrengthEditor>
+                                </div>
+                                <div className='Profile__Introduction'>
+                                    <IntroductionEditor edit={(content) => { SaveProfile(content) }} content={profile} isAuthor={isAuthor}></IntroductionEditor>
+                                </div>
+                            </Content>
 
-                                        </Col>
-                                    </Row>
-                                }
-                            </Col>
-                        </Row>
-                        <div className="Profile__Fans">
-                            <FansNFollower fans={fansNum} following={followingNum}></FansNFollower>
-                        </div>
-                        <div className='Profile__Strength'>
-                            <StrengthEditor strength={strength} delete={(key) => { DeleteStrength(key) }} add={(tag) => (AddStrength(tag))} isAuthor={isAuthor}></StrengthEditor>
-                        </div>
-                        <div className='Profile__Introduction'>
-                            <IntroductionEditor edit={(content) => { SaveProfile(content) }} content={profile} isAuthor={isAuthor}></IntroductionEditor>
-                        </div>
-                    </Content>
+                            <Sider className='Profile__Sider' width='60%'>
+                                {/* <Spin className='signUpPage__Spin' indicator={antIcon} spinning={!getFolderByIdSuccess}> */}
+                                {isAuthor && <Row className='Profile__Sider__Fir__Row'>
+                                    <ToggleSwitch isSwitch={fansOrFollower} SwitchLeft='Following' SwitchRight="Fans" ChangeSwitch={() => changeFansSwitch()} />
+                                </Row>}
+                                {!isAuthor && <Row className='Profile__Sider__Fir__Row'>
+                                    <ToggleSwitch isSwitch={fansOrFollower} SwitchLeft='Note' SwitchRight="Folder" ChangeSwitch={() => changeFansSwitch()} />
+                                </Row>}
+                                <Divider />
+                                {isAuthor && !fansOrFollower && <div className='Profile_Sider__Main_Content'>
+                                    {fansList}
 
-                    <Sider className='Profile__Sider' width='60%'>
-                        {/* <Spin className='signUpPage__Spin' indicator={antIcon} spinning={!getFolderByIdSuccess}> */}
-                        {isAuthor && <Row className='Profile__Sider__Fir__Row'>
-                            <ToggleSwitch isSwitch={fansOrFollower} SwitchLeft='Following' SwitchRight="Fans" ChangeSwitch={() => changeFansSwitch()} />
-                        </Row>}
-                        {!isAuthor && <Row className='Profile__Sider__Fir__Row'>
-                            <ToggleSwitch isSwitch={fansOrFollower} SwitchLeft='Note' SwitchRight="Folder" ChangeSwitch={() => changeFansSwitch()} />
-                        </Row>}
-                        <Divider />
-                        {isAuthor && !fansOrFollower && <div className='Profile_Sider__Main_Content'>
-                            {fansList}
+                                </div>}
+                                {isAuthor && fansOrFollower && <div className='Profile_Sider__Main_Content'>
+                                    {followingList}
+                                </div>}
+                                {!isAuthor && getFolderByIdSuccess && !fansOrFollower && <div className='Profile_Sider__Main_Content'>
+                                    <FolderCard setLoading={props.setLoading} folderList={folderList} isFolder={true} setPageProps={props.setPageProps} isRoot={isRoot} clickBack={(id) => { ClickBack(id) }} clickFolder={(id) => { setCurrentFolderId(id); }} />
 
-                        </div>}
-                        {isAuthor && fansOrFollower && <div className='Profile_Sider__Main_Content'>
-                            {followingList}
-                        </div>}
-                        {!isAuthor && getFolderByIdSuccess && !fansOrFollower && <div className='Profile_Sider__Main_Content'>
-                            <FolderCard setLoading={props.setLoading} folderList={folderList} isFolder={true} setPageProps={props.setPageProps} isRoot={isRoot} clickBack={(id) => { ClickBack(id) }} clickFolder={(id) => { setCurrentFolderId(id); }} />
+                                </div>}
 
-                        </div>}
+                                {!isAuthor && fansOrFollower && getFolderByIdSuccess && <div className='Profile_Sider__Main_Content'>
+                                    <FolderCard setLoading={props.setLoading} folderList={noteList} isFolder={true} setPageProps={props.setPageProps} isRoot={isRoot} clickBack={(id) => { ClickBack(id) }} clickFolder={(id) => { setCurrentFolderId(id); }} />
 
-                        {!isAuthor && fansOrFollower && getFolderByIdSuccess && <div className='Profile_Sider__Main_Content'>
-                            <FolderCard setLoading={props.setLoading} folderList={noteList} isFolder={true} setPageProps={props.setPageProps} isRoot={isRoot} clickBack={(id) => { ClickBack(id) }} clickFolder={(id) => { setCurrentFolderId(id); }} />
+                                </div>}
+                                {/* </Spin> */}
+                            </Sider>
 
-                        </div>}
-                        {/* </Spin> */}
-                    </Sider>
+                            <Modal
+                                title="Choose your avatar"
+                                centered
+                                visible={avatarSelector}
+                                onOk={() => { SaveAvatar(); props.setAvatar(props.Avatar + 1); setAvatarSelector(false) }}
+                                onCancel={() => setAvatarSelector(false)}
+                                okText="Save"
+                                cancelText="Cancel"
+                                width={590}
+                            >
+                                {AvatarsList}
 
-                    <Modal
-                        title="Choose your avatar"
-                        centered
-                        visible={avatarSelector}
-                        onOk={() => { SaveAvatar(); props.setAvatar(props.Avatar + 1); setAvatarSelector(false) }}
-                        onCancel={() => setAvatarSelector(false)}
-                        okText="Save"
-                        cancelText="Cancel"
-                        width={590}
-                    >
-                        {AvatarsList}
+                            </Modal>
+                        </Layout >
+                    </Media>
+                    <Media at="md" className='Profile__Media'>
+                        <Layout className='Profile__Layout__Inner'>
 
-                    </Modal>
-                </Layout >
+                            <Content className='Profile__Content'>
+                                <Row className='Profile__Content__First__Row'>
+                                    <Col span={6}>
+                                        <div className={"Profile__Avatar__Outer"}>
+                                            <Avatar className={"Profile__Avatar__Inner"} size={84} src={avatarCurrent}></Avatar>
+                                            {isAuthor && <div className={"Profile__Avatar__Editor"} onClick={() => { setAvatarSelector(true) }}>
+                                                <EditFilled />
+
+                                            </div>
+                                            }
+                                        </div>
+                                    </Col>
+                                    <Col className='Profile__NameNEmail' span={18}>
+                                        <div className='Profile__TextEditor'>
+                                            <TextEditor name={user.name}></TextEditor>
+                                        </div>
+                                        <div className='Profile__Email'>
+                                            <Text className='TextEditor__Name' cls='Gerneral' fontSize='20' content={'Email : ' + props.email} />
+                                        </div>
+                                        {!isAuthor &&
+                                            <Row className='Profile__FollowNBell'>
+                                                {!isFollow &&
+                                                    <Col className='Profile__Follow' span={6} onClick={() => { Follow() }}>
+                                                        <Tooltip arrowPointAtCenter={true} placement="top" title={"Follow " + user.name} color={'#000'}>
+                                                            <UserAddOutlined className='Profile__Follow__Icon' style={{ fontSize: '20px' }} />
+                                                            <Text cls='Small' fontSize={'14'} content='Follow'></Text>
+                                                        </Tooltip>
+                                                    </Col>
+                                                }
+                                                {isFollow &&
+                                                    <Col className='Profile__Follow' span={6} onClick={() => { Follow() }}>
+                                                        <Tooltip arrowPointAtCenter={true} placement="top" title={"Follow " + user.name} color={'#000'}>
+                                                            <UserDeleteOutlined className='Profile__Follow__Icon' style={{ fontSize: '20px' }} />
+                                                            <Text cls='Small' fontSize={'14'} content='Cancel'></Text>
+                                                        </Tooltip>
+                                                    </Col>
+                                                }
+                                                <Col className='Profile__Bell' span={8}>
+                                                    {!isBell && <Tooltip arrowPointAtCenter={true} placement="top" title={"Turn on the notification of " + user.name} color={'#000'}>
+                                                        <BellOutlined className='Profile__Bell__Icon' style={{ fontSize: '22px' }} onClick={() => { changeBell() }} />
+                                                    </Tooltip>}
+                                                    {isBell && <Tooltip arrowPointAtCenter={true} placement="top" title={"Turn off the notification of " + user.name} color={'#000'}>
+                                                        <BellFilled className='Profile__Bell__Icon' style={{ fontSize: '22px' }} onClick={() => { changeBell() }} />
+                                                    </Tooltip>}
+
+                                                </Col>
+                                            </Row>
+                                        }
+                                    </Col>
+                                </Row>
+                                <div className="Profile__Fans">
+                                    <FansNFollower fans={fansNum} following={followingNum}></FansNFollower>
+                                </div>
+                                <div className='Profile__Strength'>
+                                    <StrengthEditor strength={strength} delete={(key) => { DeleteStrength(key) }} add={(tag) => (AddStrength(tag))} isAuthor={isAuthor}></StrengthEditor>
+                                </div>
+                                <div className='Profile__Introduction'>
+                                    <IntroductionEditor edit={(content) => { SaveProfile(content) }} content={profile} isAuthor={isAuthor}></IntroductionEditor>
+                                </div>
+                            </Content>
+
+                            <Sider className='Profile__Sider' width='60%'>
+                                {/* <Spin className='signUpPage__Spin' indicator={antIcon} spinning={!getFolderByIdSuccess}> */}
+                                {isAuthor && <Row className='Profile__Sider__Fir__Row__md'>
+                                    <ToggleSwitch isSwitch={fansOrFollower} SwitchLeft='Following' SwitchRight="Fans" ChangeSwitch={() => changeFansSwitch()} />
+                                </Row>}
+                                {!isAuthor && <Row className='Profile__Sider__Fir__Row__md'>
+                                    <ToggleSwitch isSwitch={fansOrFollower} SwitchLeft='Note' SwitchRight="Folder" ChangeSwitch={() => changeFansSwitch()} />
+                                </Row>}
+                                <Divider />
+                                {isAuthor && !fansOrFollower && <div className='Profile_Sider__Main_Content'>
+                                    {fansList}
+
+                                </div>}
+                                {isAuthor && fansOrFollower && <div className='Profile_Sider__Main_Content'>
+                                    {followingList}
+                                </div>}
+                                {!isAuthor && getFolderByIdSuccess && !fansOrFollower && <div className='Profile_Sider__Main_Content'>
+                                    <FolderCard setLoading={props.setLoading} folderList={folderList} isFolder={true} setPageProps={props.setPageProps} isRoot={isRoot} clickBack={(id) => { ClickBack(id) }} clickFolder={(id) => { setCurrentFolderId(id); }} />
+
+                                </div>}
+
+                                {!isAuthor && fansOrFollower && getFolderByIdSuccess && <div className='Profile_Sider__Main_Content'>
+                                    <FolderCard setLoading={props.setLoading} folderList={noteList} isFolder={true} setPageProps={props.setPageProps} isRoot={isRoot} clickBack={(id) => { ClickBack(id) }} clickFolder={(id) => { setCurrentFolderId(id); }} />
+
+                                </div>}
+                                {/* </Spin> */}
+                            </Sider>
+
+                            <Modal
+                                title="Choose your avatar"
+                                centered
+                                visible={avatarSelector}
+                                onOk={() => { SaveAvatar(); props.setAvatar(props.Avatar + 1); setAvatarSelector(false) }}
+                                onCancel={() => setAvatarSelector(false)}
+                                okText="Save"
+                                cancelText="Cancel"
+                                width={590}
+                            >
+                                {AvatarsList}
+
+                            </Modal>
+                        </Layout >
+                    </Media>
+                    <Media at="lm" className='Profile__Media'>
+                        <Layout className='Profile__Layout__Inner__lm'>
+
+                            <Content className='Profile__Content'>
+                                <Row className='Profile__Content__First__Row'>
+                                    <Col span={6}>
+                                        <div className={"Profile__Avatar__Outer"}>
+                                            <Avatar className={"Profile__Avatar__Inner"} size={84} src={avatarCurrent}></Avatar>
+                                            {isAuthor && <div className={"Profile__Avatar__Editor"} onClick={() => { setAvatarSelector(true) }}>
+                                                <EditFilled />
+
+                                            </div>
+                                            }
+                                        </div>
+                                    </Col>
+                                    <Col className='Profile__NameNEmail' span={18}>
+                                        <div className='Profile__TextEditor'>
+                                            <TextEditor name={user.name}></TextEditor>
+                                        </div>
+                                        <div className='Profile__Email'>
+                                            <Text className='TextEditor__Name' cls='Gerneral' fontSize='20' content={'Email : ' + props.email} />
+                                        </div>
+                                        {!isAuthor &&
+                                            <Row className='Profile__FollowNBell'>
+                                                {!isFollow &&
+                                                    <Col className='Profile__Follow' span={6} onClick={() => { Follow() }}>
+                                                        <Tooltip arrowPointAtCenter={true} placement="top" title={"Follow " + user.name} color={'#000'}>
+                                                            <UserAddOutlined className='Profile__Follow__Icon' style={{ fontSize: '20px' }} />
+                                                            <Text cls='Small' fontSize={'14'} content='Follow'></Text>
+                                                        </Tooltip>
+                                                    </Col>
+                                                }
+                                                {isFollow &&
+                                                    <Col className='Profile__Follow' span={6} onClick={() => { Follow() }}>
+                                                        <Tooltip arrowPointAtCenter={true} placement="top" title={"Follow " + user.name} color={'#000'}>
+                                                            <UserDeleteOutlined className='Profile__Follow__Icon' style={{ fontSize: '20px' }} />
+                                                            <Text cls='Small' fontSize={'14'} content='Cancel'></Text>
+                                                        </Tooltip>
+                                                    </Col>
+                                                }
+                                                <Col className='Profile__Bell' span={8}>
+                                                    {!isBell && <Tooltip arrowPointAtCenter={true} placement="top" title={"Turn on the notification of " + user.name} color={'#000'}>
+                                                        <BellOutlined className='Profile__Bell__Icon' style={{ fontSize: '22px' }} onClick={() => { changeBell() }} />
+                                                    </Tooltip>}
+                                                    {isBell && <Tooltip arrowPointAtCenter={true} placement="top" title={"Turn off the notification of " + user.name} color={'#000'}>
+                                                        <BellFilled className='Profile__Bell__Icon' style={{ fontSize: '22px' }} onClick={() => { changeBell() }} />
+                                                    </Tooltip>}
+
+                                                </Col>
+                                            </Row>
+                                        }
+                                    </Col>
+                                </Row>
+                                <div className="Profile__Fans">
+                                    <FansNFollower fans={fansNum} following={followingNum}></FansNFollower>
+                                </div>
+                                <div className='Profile__Strength'>
+                                    <StrengthEditor strength={strength} delete={(key) => { DeleteStrength(key) }} add={(tag) => (AddStrength(tag))} isAuthor={isAuthor}></StrengthEditor>
+                                </div>
+                                <div className='Profile__Introduction'>
+                                    <IntroductionEditor edit={(content) => { SaveProfile(content) }} content={profile} isAuthor={isAuthor}></IntroductionEditor>
+                                </div>
+                                {isAuthor && <Row className='Profile__Sider__Fir__Row__lm'>
+                                    <ToggleSwitch isSwitch={fansOrFollower} SwitchLeft='Following' SwitchRight="Fans" ChangeSwitch={() => changeFansSwitch()} />
+                                </Row>}
+                                {!isAuthor && <Row className='Profile__Sider__Fir__Row__lm'>
+                                    <ToggleSwitch isSwitch={fansOrFollower} SwitchLeft='Note' SwitchRight="Folder" ChangeSwitch={() => changeFansSwitch()} />
+                                </Row>}
+                                <Divider />
+                                {isAuthor && !fansOrFollower && <div className='Profile_Sider__Main_Content'>
+                                    {fansList}
+
+                                </div>}
+                                {isAuthor && fansOrFollower && <div className='Profile_Sider__Main_Content'>
+                                    {followingList}
+                                </div>}
+                                {!isAuthor && getFolderByIdSuccess && !fansOrFollower && <div className='Profile_Sider__Main_Content'>
+                                    <FolderCard setLoading={props.setLoading} folderList={folderList} isFolder={true} setPageProps={props.setPageProps} isRoot={isRoot} clickBack={(id) => { ClickBack(id) }} clickFolder={(id) => { setCurrentFolderId(id); }} />
+
+                                </div>}
+
+                                {!isAuthor && fansOrFollower && getFolderByIdSuccess && <div className='Profile_Sider__Main_Content'>
+                                    <FolderCard setLoading={props.setLoading} folderList={noteList} isFolder={true} setPageProps={props.setPageProps} isRoot={isRoot} clickBack={(id) => { ClickBack(id) }} clickFolder={(id) => { setCurrentFolderId(id); }} />
+
+                                </div>}
+                            </Content>
+
+                            <Modal
+                                title="Choose your avatar"
+                                centered
+                                visible={avatarSelector}
+                                onOk={() => { SaveAvatar(); props.setAvatar(props.Avatar + 1); setAvatarSelector(false) }}
+                                onCancel={() => setAvatarSelector(false)}
+                                okText="Save"
+                                cancelText="Cancel"
+                                width={590}
+                            >
+                                {AvatarsList}
+
+                            </Modal>
+                        </Layout >
+                    </Media>
+                    <Media at="sm" className='Profile__Media'>
+                        <Layout className='Profile__Layout__Inner__sm'>
+
+                            <Content className='Profile__Content'>
+                                <Row className='Profile__Content__First__Row'>
+                                    <Col span={6}>
+                                        <div className={"Profile__Avatar__Outer"}>
+                                            <Avatar className={"Profile__Avatar__Inner"} size={84} src={avatarCurrent}></Avatar>
+                                            {isAuthor && <div className={"Profile__Avatar__Editor"} onClick={() => { setAvatarSelector(true) }}>
+                                                <EditFilled />
+
+                                            </div>
+                                            }
+                                        </div>
+                                    </Col>
+                                    <Col className='Profile__NameNEmail' span={18}>
+                                        <div className='Profile__TextEditor'>
+                                            <TextEditor name={user.name}></TextEditor>
+                                        </div>
+                                        <div className='Profile__Email'>
+                                            <Text className='TextEditor__Name' cls='Gerneral' fontSize='20' content={'Email : ' + props.email} />
+                                        </div>
+                                        {!isAuthor &&
+                                            <Row className='Profile__FollowNBell'>
+                                                {!isFollow &&
+                                                    <Col className='Profile__Follow' span={6} onClick={() => { Follow() }}>
+                                                        <Tooltip arrowPointAtCenter={true} placement="top" title={"Follow " + user.name} color={'#000'}>
+                                                            <UserAddOutlined className='Profile__Follow__Icon' style={{ fontSize: '20px' }} />
+                                                            <Text cls='Small' fontSize={'14'} content='Follow'></Text>
+                                                        </Tooltip>
+                                                    </Col>
+                                                }
+                                                {isFollow &&
+                                                    <Col className='Profile__Follow' span={6} onClick={() => { Follow() }}>
+                                                        <Tooltip arrowPointAtCenter={true} placement="top" title={"Follow " + user.name} color={'#000'}>
+                                                            <UserDeleteOutlined className='Profile__Follow__Icon' style={{ fontSize: '20px' }} />
+                                                            <Text cls='Small' fontSize={'14'} content='Cancel'></Text>
+                                                        </Tooltip>
+                                                    </Col>
+                                                }
+                                                <Col className='Profile__Bell' span={8}>
+                                                    {!isBell && <Tooltip arrowPointAtCenter={true} placement="top" title={"Turn on the notification of " + user.name} color={'#000'}>
+                                                        <BellOutlined className='Profile__Bell__Icon' style={{ fontSize: '22px' }} onClick={() => { changeBell() }} />
+                                                    </Tooltip>}
+                                                    {isBell && <Tooltip arrowPointAtCenter={true} placement="top" title={"Turn off the notification of " + user.name} color={'#000'}>
+                                                        <BellFilled className='Profile__Bell__Icon' style={{ fontSize: '22px' }} onClick={() => { changeBell() }} />
+                                                    </Tooltip>}
+
+                                                </Col>
+                                            </Row>
+                                        }
+                                    </Col>
+                                </Row>
+                                <div className="Profile__Fans">
+                                    <FansNFollower fans={fansNum} following={followingNum}></FansNFollower>
+                                </div>
+                                <div className='Profile__Strength'>
+                                    <StrengthEditor strength={strength} delete={(key) => { DeleteStrength(key) }} add={(tag) => (AddStrength(tag))} isAuthor={isAuthor}></StrengthEditor>
+                                </div>
+                                <div className='Profile__Introduction'>
+                                    <IntroductionEditor edit={(content) => { SaveProfile(content) }} content={profile} isAuthor={isAuthor}></IntroductionEditor>
+                                </div>
+                                {isAuthor && <Row className='Profile__Sider__Fir__Row__sm'>
+                                    <ToggleSwitch isSwitch={fansOrFollower} SwitchLeft='Following' SwitchRight="Fans" ChangeSwitch={() => changeFansSwitch()} />
+                                </Row>}
+                                {!isAuthor && <Row className='Profile__Sider__Fir__Row__sm'>
+                                    <ToggleSwitch isSwitch={fansOrFollower} SwitchLeft='Note' SwitchRight="Folder" ChangeSwitch={() => changeFansSwitch()} />
+                                </Row>}
+                                <Divider />
+                                {isAuthor && !fansOrFollower && <div className='Profile_Sider__Main_Content'>
+                                    {fansList}
+
+                                </div>}
+                                {isAuthor && fansOrFollower && <div className='Profile_Sider__Main_Content'>
+                                    {followingList}
+                                </div>}
+                                {!isAuthor && getFolderByIdSuccess && !fansOrFollower && <div className='Profile_Sider__Main_Content'>
+                                    <FolderCard setLoading={props.setLoading} folderList={folderList} isFolder={true} setPageProps={props.setPageProps} isRoot={isRoot} clickBack={(id) => { ClickBack(id) }} clickFolder={(id) => { setCurrentFolderId(id); }} />
+
+                                </div>}
+
+                                {!isAuthor && fansOrFollower && getFolderByIdSuccess && <div className='Profile_Sider__Main_Content'>
+                                    <FolderCard setLoading={props.setLoading} folderList={noteList} isFolder={true} setPageProps={props.setPageProps} isRoot={isRoot} clickBack={(id) => { ClickBack(id) }} clickFolder={(id) => { setCurrentFolderId(id); }} />
+
+                                </div>}
+                            </Content>
+
+                            <Modal
+                                title="Choose your avatar"
+                                centered
+                                visible={avatarSelector}
+                                onOk={() => { SaveAvatar(); props.setAvatar(props.Avatar + 1); setAvatarSelector(false) }}
+                                onCancel={() => setAvatarSelector(false)}
+                                okText="Save"
+                                cancelText="Cancel"
+                                width={590}
+                            >
+                                {AvatarsList}
+
+                            </Modal>
+                        </Layout >
+                    </Media>
+                </MediaContextProvider>
+
             }
 
         </>

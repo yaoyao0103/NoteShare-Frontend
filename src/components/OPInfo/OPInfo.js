@@ -4,7 +4,16 @@ import { Avatar, Row, Col, Tooltip } from 'antd';
 import { UserOutlined, AntDesignOutlined } from '@ant-design/icons';
 import Text from '../Text/Text';
 import "./OPInfo.css";
-
+import { createMedia } from "@artsy/fresnel"
+const { MediaContextProvider, Media } = createMedia({
+    breakpoints: {
+        sm: 0,
+        lm: 391,
+        md: 768,
+        lg: 1024,
+        xl: 1192,
+    },
+})
 const OPInfo = (props) => {
 
     useEffect(()=>{

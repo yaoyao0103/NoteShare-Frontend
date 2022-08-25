@@ -14,7 +14,7 @@ const Text = (props) => {
     }
   
     return (
-        <p className={`text${props.cls ? '__' + props.cls : ''}`} style={{ fontSize: props.fontSize + 'px', color: fontColor[props.color], display: props.display, textDecoration: props.decoration }}><Markup content= {props.content}/></p>
+        <p className={`text${props.cls ? '__' + props.cls : ''}`} style={{ fontSize: props.fontSize + 'px', color: fontColor[props.color], display: props.display, textDecoration: props.decoration}}><Markup content= {props.content}/></p>
     )
 }
 //string to dom(content)

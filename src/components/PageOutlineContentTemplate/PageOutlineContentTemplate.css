@@ -13,6 +13,7 @@
     background-color: #FFFFFF;
     position: relative;
     height: 100%;
+    width: 100%;
 }
 .outlineContentTemplate__Header{
     position: relative;
@@ -58,7 +59,7 @@
     height:auto;
     background-color: #FFFFFF;
     margin-bottom: 5%;
-    display: inline-flex;
+    display: flex;
     flex-wrap: wrap;
 }
 .outlineContentTemplate__Footer{

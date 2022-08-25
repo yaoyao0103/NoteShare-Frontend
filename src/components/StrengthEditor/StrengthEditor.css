@@ -11,7 +11,7 @@
 .StrengthEditor__Tags{
     display: inline-block;
     vertical-align: top;
-    width: 80%;
+    width: 100%;
     height: auto;
 }
 .StrengthEditor__Tag{
@@ -90,6 +90,6 @@
 .StrengthEditor__Save{
     margin-left:3% ;
     margin-bottom:1%;
-    vertical-align:middle;
+    vertical-align:bottom;
     
 }

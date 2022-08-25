@@ -1,21 +1,117 @@
-.FansNFollower{
-    margin:1%;
-}
-.FansNFollower__Row{
-
-}
-.FansNFollower__Follower__Card{
-    margin-left:0%;
-    width:80%;
-    height: 80%;
-    border-radius: 5%;
-
+@media screen and (min-width: 1192px) {
+    .FansNFollower{
+        margin:1%;
+    }
+    .FansNFollower__Row{
     
-}
-.FansNFollower__Fans__Card{
-    width:80%;
-    height: 80%;
-    border-radius: 5%;
+    }
+    .FansNFollower__Follower__Card{
+        margin-left:0%;
+        width:80%;
+        height: 80%;
+        border-radius: 5%;
+        word-break: break-all;
+        
+    }
+    .FansNFollower__Fans__Card{
+        width:80%;
+        height: 80%;
+        border-radius: 5%;
+        word-break: break-all;
+    }
+  }
+  @media screen and (min-width: 1024px)and (max-width: 1192px) {
+    .FansNFollower{
+        margin:1%;
+    }
+    .FansNFollower__Row{
     
-
-}
+    }
+    .FansNFollower__Follower__Card{
+        margin-left:0%;
+        width:80%;
+        height: 80%;
+        border-radius: 5%;
+        word-break: break-all;
+    
+        
+    }
+    .FansNFollower__Fans__Card{
+        width:80%;
+        height: 80%;
+        border-radius: 5%;
+        word-break: break-all;
+    }
+  }
+  @media screen and (min-width: 768px)and (max-width: 1024px) {
+    .FansNFollower{
+        margin:1%;
+        
+    }
+    .FansNFollower__Row{
+    
+    }
+    .FansNFollower__Follower__Card{
+        margin-left:10%;
+        width:100%;
+        height: 80%;
+        border-radius: 5%;
+        word-break: break-all;
+        
+    }
+    .FansNFollower__Fans__Card{
+        margin-left:10%;
+        width:100%;
+        height: 80%;
+        border-radius: 5%;
+        word-break: break-all;
+    }
+  }
+  @media screen and (min-width: 391px)and (max-width: 768px) {
+    .FansNFollower{
+        margin:1%;
+        
+    }
+    .FansNFollower__Row{
+    
+    }
+    .FansNFollower__Follower__Card{
+        margin-left:10%;
+        width:100%;
+        height: 80%;
+        border-radius: 5%;
+        word-break: break-all;
+        
+    }
+    .FansNFollower__Fans__Card{
+        margin-left:10%;
+        width:100%;
+        height: 80%;
+        border-radius: 5%;
+        word-break: break-all;
+    }
+  }
+  @media screen and (min-width: 0px)and (max-width: 391px) {
+    .FansNFollower{
+        margin:1%;
+        
+    }
+    .FansNFollower__Row{
+    
+    }
+    .FansNFollower__Follower__Card{
+        margin-left:10%;
+        width:100%;
+        height: 80%;
+        border-radius: 5%;
+        word-break: break-all;
+        
+    }
+    .FansNFollower__Fans__Card{
+        margin-left:10%;
+        width:100%;
+        height: 80%;
+        border-radius: 5%;
+        word-break: break-all;
+    }
+  }
