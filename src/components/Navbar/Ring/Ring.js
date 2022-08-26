@@ -71,12 +71,13 @@ function Ring(props) {
 
             let tempItem = {
                 label: (
-                    <>  <Row onClick={() => { if (props.ringList[i].userObj.userObjEmail !== 'noteshare@gmail.com') props.setPageProps({ page: type, noteId: props.ringList[i].id, postId: props.ringList[i].id, email: props.ringList[i].userObj.userObjEmail }) }}>
-                        <Col span={5} className={"Ring__Icon"}>
+                    <>  
+                    <div onClick={() => { if (props.ringList[i].userObj.userObjEmail !== 'noteshare@gmail.com') props.setPageProps({ page: type, noteId: props.ringList[i].id, postId: props.ringList[i].id, email: props.ringList[i].userObj.userObjEmail }) }}>
+                        <div className={"Ring__Icon"}>
                             {/* <ExclamationCircleOutlined /> */}
                             <Avatar className={"Ring__Avatar"} size={36} src={props.ringList[i].userObj.userObjAvatar} ></Avatar>
-                        </Col>
-                        <Col span={19}>
+                        </div>
+                        <div>
                             <Paragraph
                                 className={"Ring__Paragraph"}
                                 ellipsis={
@@ -91,8 +92,8 @@ function Ring(props) {
                                 {props.ringList[i].message}
                             </Paragraph>
 
-                        </Col>
-                    </Row>
+                        </div>
+                    </div>
                     </>
                 ),
             }

@@ -1,13 +1,14 @@
 .navSearchBar{
-    position: absolute;
+    position: relative;
     height: 2em;
-    width: 13%;
-    left: 63%;
+    width: 10em;
     border: 0;
     border-bottom:1px #999 solid;
     top: 50%;
     transform: translateY(-50%);
+    margin-left: 2vw;
 }
+
 
 .navSearchBar--selected{
     transition: .5s;
@@ -62,3 +63,21 @@
     width: 100%;
 }
 
+
+@media (max-width: 600px) {
+    .navSearchBar{
+        border: 0;
+        border-bottom:1px #999 solid;
+        top: 0;
+        transform: none;
+        margin-left: 0;
+    }
+    .navSearchBar__AdvancedSearch{
+        position: fixed;
+        background-color: #fff;
+        border: thin #eee solid;
+        top: 10%;
+        left: 0;
+    }
+    
+}

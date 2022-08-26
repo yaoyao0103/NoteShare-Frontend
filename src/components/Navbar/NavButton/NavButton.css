@@ -1,41 +1,57 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;600&display=swap');
-#navButton{
+
+.navButton{
     position: relative;
     height: 100%;
-    width: 28%;
-    margin-left:0.3%;
-    
+    margin-left: 2vw;
+    display: flex;
 }
-#navButton #button{
+
+.navButton .button{
     position: relative;
+    float: left;
     height: 100%;
-    width: auto;
     font-family: 'Poppins', sans-serif;
     font-weight: 600;
-    font-size: 15px;
+    font-size: .9vw;
     color:black;
     border-style: none;
     background-color: white;
-    margin-right: 3%;
+    margin-left: .5vw;
 }
 
-#navButton #button:hover{
+.navButton .button:hover{
     transform: scale(1.05);
     transition: 0.1s;
 }
 
-#navButton #button--active{
+.navButton .button__first--active, .navButton .button__second--active, .navButton .button__third--active, .navButton .button__forth--active{
     position: relative;
     font-family: 'Poppins', sans-serif;
     font-weight: 600;
-    font-size: 15px;
+    font-size: 1.1em;
     color:#66e1c1;
     background-color: white;
     border-style: none;
-    margin-right: 3%;
 }
 
-#navButton #button--active:hover{
+.navButton .button__first--active:hover, .navButton .button__second--active:hover, .navButton .button__third--active:hover, .navButton .button__forth--active:hover{
     transform: scale(1.05);
     transition: 0.1s;
+}
+
+.navDropdown{
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-left: 2vw;
+    margin-right: 2vw;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 1.8vw;
+    color:black;
+}
+
+.navDropdown .ant-space-item{
+    text-decoration: none;
 }

@@ -482,7 +482,7 @@ const OuterPage = () => {
                         </ul>)
                         setPageComponent(<QnAEditPage page='QnANewPage' setLoggedIn={setLoggedIn} sendBellMessage={sendBellMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
                     case 'QnARecommendPage': 
-                        setPageLabel("Recommended Reward Posts"); 
+                        setPageLabel("Recommended QA Posts"); 
                         setInstruction(<ul>
                             <li>You can sort the QA posts by dropdown list</li>
                             <li>The post only show a part of detail. If you want to see all the details or answer the question, please click the post.</li>

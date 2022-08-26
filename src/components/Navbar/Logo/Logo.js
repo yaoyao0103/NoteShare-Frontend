@@ -6,8 +6,11 @@ const Logo = (props) => {
 
     return (
         <div className='logo' onClick={()=>{props.setPageProps({page:'MemberPage',pageNumber:1,sortMode:'likeCount'})}}>
-                <Text color='black' cls='Large' content='Note' fontSize='28'/>
-                <Text color='purple' cls='Large' content='Share'fontSize='28'/>                
+            <div className='logo__Inner'>
+                <Text color='black' cls='Large' content='Note' fontSize='1.4em'/>
+                <Text color='purple' cls='Large' content='Share'fontSize='1.4em'/>  
+            </div>
+
         </div>
     )
 }

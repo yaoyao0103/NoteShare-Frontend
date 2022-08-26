@@ -1,29 +1,26 @@
 .Coin__Container{
-  position: absolute;
-  width: 100%;
+  position: relative;
   height: 100%;
+  font-size: .9em;
 }
 
 .Coin__Container .anticon{
   margin: 0;
-  position: absolute;
-  transform: translateY(-50%);
+  position: relative;
 }
 
 .Coin__Icon{
-    position: absolute;
+    position: relative;
     top: 50%;
     transform: translateY(-50%);
 }
 .Coin__Text{
   margin-left:1.5em;
   position: relative;
-  top: 50%;
-  transform: translateY(-50%);
 }
 
 .Coin__Text p{
-  margin: 0;
   position: relative;
   height: 100%;
+  padding-top: 25%;
 }

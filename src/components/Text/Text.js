@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import './Text.css';
 import { Markup } from 'interweave';
@@ -12,9 +12,13 @@ const Text = (props) => {
         "red": "#AE0000",
         "gray": "#444"
     }
+
+    useEffect(()=>{
+        console.log("fontsize", props.fontSize)
+    },[props.fontSize])
   
     return (
-        <p className={`text${props.cls ? '__' + props.cls : ''}`} style={{ fontSize: props.fontSize + 'px', color: fontColor[props.color], display: props.display, textDecoration: props.decoration}}><Markup content= {props.content}/></p>
+        <p className={`text${props.cls ? '__' + props.cls : ''}`} style={(props.fontSize[props.fontSize.length-1].isInteger)?{ fontSize: props.fontSize + 'px', color: fontColor[props.color], display: props.display, textDecoration: props.decoration}:{ fontSize: props.fontSize, color: fontColor[props.color], display: props.display, textDecoration: props.decoration}}><Markup content= {props.content}/></p>
     )
 }
 //string to dom(content)
