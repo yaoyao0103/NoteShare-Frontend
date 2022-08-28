@@ -16,10 +16,37 @@
     float: right;
 }
 
+.information__top__below{
+    margin-top: 1em;
+    height: 3em;
+}
+
 .information__bottom{
+    margin-top: 1em;
     margin-bottom: 2em;
 }
 
 .information__RefPrice , .information__Price, .information__Downloadable{
     text-align: right;
 }
+
+@media (max-width:768px) {
+    .information__Downloadable__below{
+        float: left;
+        height: 100%;
+        width: 30%;
+    }
+    .information__Price__below, .information__RefPrice__below{
+        float: left;
+        height: 100%;
+        width: 20%;
+    }
+
+    .information__RefPrice__below span{
+        width: 100%;
+    }
+    .information__Price__below span{
+        width: 100%;
+    }
+}
+

@@ -24,7 +24,7 @@ function NavButton(props) {
     const responsive = {
         showButtons: width >= 1024,
         showMenu: width >= 768,
-        showSearchBar: width >= 600,
+        showSearchBar: width >= 650,
     }
 
 

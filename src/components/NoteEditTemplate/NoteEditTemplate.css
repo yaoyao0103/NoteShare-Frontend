@@ -49,6 +49,10 @@
     padding-top: 1em;
 }
 
+.noteEditTemplate__Footer__Buttons{
+    margin-top: .5em;
+}
+
 .noteEditTemplate__Footer__Button{
     float: right;
     margin-left: 1em;
@@ -167,4 +171,20 @@
     border: 0;
     background-color: #fff;
     color: #777;
+}
+
+@media (max-width: 600px){
+    .noteEditTemplate__Content__Tag{
+        width: 100%;
+    }
+    .noteEditTemplate__Content__Tags .noteEditTemplate__Content__MyTag{
+        margin-left: 0%;
+    }
+    .noteEditTemplate__Footer__Button{
+        float: right;
+        margin-left: 1em;
+    }
+    .noteEditTemplate__Footer__Buttons{
+        width: 100%;
+    }
 }

@@ -973,7 +973,7 @@ const NoteEditTemplate = (props) => {
                     <Footer className="noteEditTemplate__Footer">
                         <Text color='black' cls='Large' content={"Tip: Press enter to confirm your tag"} fontSize='15' display="inline-block" />
                         {(noteType == 'reward' || props.mode == 'newReward') ?
-                            <>
+                            <div className="noteEditTemplate__Footer__Buttons">
                                 {isSubmit ?
                                     <div className="noteEditTemplate__Footer__Button" onClick={tagSubmit}>
                                         <Button color={"purple"}><Text color='white' cls='Large' content={"Save"} fontSize='17' display="inline-block" /></Button>
@@ -992,16 +992,16 @@ const NoteEditTemplate = (props) => {
                                 <div className="noteEditTemplate__Footer__Button" onClick={editNote}>
                                     <Button color={"green"}><CaretLeftOutlined /><Text color='white' cls='Large' content={"Edit Note"} fontSize='17' display="inline-block" /></Button>
                                 </div>
-                            </>
+                            </div>
                             :
-                            <>
+                            <div className="noteEditTemplate__Footer__Buttons">
                                 <div className="noteEditTemplate__Footer__Button" onClick={tagSubmit}>
                                     <Button color={"purple"}><Text color='white' cls='Large' content={"Submit"} fontSize='17' display="inline-block" /></Button>
                                 </div>
                                 <div className="noteEditTemplate__Footer__Button" onClick={editNote}>
-                                    <Button color={"purple"}><CaretLeftOutlined /><Text color='white' cls='Large' content={"Edit Note"} fontSize='17' display="inline-block" /></Button>
+                                    <Button color={"green"}><CaretLeftOutlined /><Text color='white' cls='Large' content={"Edit Note"} fontSize='17' display="inline-block" /></Button>
                                 </div>
-                            </>
+                            </div>
                         }
                     </Footer>
                 }

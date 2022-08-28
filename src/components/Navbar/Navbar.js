@@ -31,7 +31,7 @@ function Navbar(props) {
   }
   const responsive = {
     showMenu: width >= 768,
-    showSearchBar: width >= 600
+    showSearchBar: width >= 650
   }
 
   return (

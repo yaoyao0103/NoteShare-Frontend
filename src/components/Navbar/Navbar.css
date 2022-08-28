@@ -20,14 +20,14 @@
 
 .navbar__Button {
   position: relative;
-  margin-right: 10%;
   float: right;
-  top: 50%;
-  transform: translateY(-50%);
 }
 
 .navbar__Buttons{
+  position: relative;
   float: left;
+  top: 50%;
+  transform: translateY(-50%);
 }
 .navbar__Button__LoggedIn {
   position: relative;
@@ -50,6 +50,23 @@
 
 .navbar__Button__Avatar{
   margin-right: 3vw;
+}
+
+@media (max-width: 450px) {
+  .navbar__Button {
+    position: relative;
+    float: right;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-left: .5em;
+  }
+  
+  .navbar__Buttons{
+    position: relative;
+    top: 0;
+    float: none;
+    transform: none;
+  }
 }
 
 

@@ -47,59 +47,61 @@ const InformationInput = ({information, setInformation, notShowSwitch}) => {
                 <Input showCount maxLength={20} placeholder="Instructor" onChange={(ev) => setInformation({...information, professor: ev.target.value})} value={information?.professor} /> 
             </div>  
         }
-        {(information?.bestPrice!=null) &&
-            <div className="informationInput__item informationInput__InputNumber">
-                <Text color='black' cls='Small' content={"Price"} fontSize='15' display="inline-block" />
-                <NumericInput placeholder="$" onChange={(value) => setInformation({...information, bestPrice: value})} value={information?.bestPrice} /> 
-            </div>  
-        }
-        {(information?.price!=null) &&
-            <div className="informationInput__item informationInput__InputNumber">
-                <Text color='black' cls='Small' content={"Price"} fontSize='15' display="inline-block" />
-                <NumericInput placeholder="$" onChange={(value) => setInformation({...information, price: value})} value={information?.price} /> 
-            </div>  
-        }
-        {information?.referencePrice!=null &&
-            <div className="informationInput__item informationInput__InputNumber">
-                <Text color='black' cls='Small' content={"Ref Price"} fontSize='15' display="inline-block" />
-                <Input placeholder="$" onChange={(ev) => setInformation({...information, referencePrice: ev.target.value})} value={information?.referencePrice} /> 
-            </div>  
-        }
-        {information?.referenceNumber!=null &&
-            <div className="informationInput__item informationInput__InputNumber">
-                <Text color='black' cls='Small' content={"Ref Number"} fontSize='15' display="inline-block" />
-                <Input placeholder="Number" onChange={(ev) => setInformation({...information, referenceNumber: ev.target.value})} value={information?.referenceNumber} /> 
-            </div>  
-        }
-        {information?.downloadable!=null &&
-            <div className="informationInput__item informationInput__Checkbox">
-                <Checkbox.Group 
-                    options={[{
-                                label: 'Downloadable',
-                                value: 'Downloadable',
-                            }]} 
+        <div className="informationInput__InputNumbers">
+            {(information?.bestPrice!=null) &&
+                <div className="informationInput__item informationInput__InputNumber">
+                    <Text color='black' cls='Small' content={"Price"} fontSize='15' display="inline-block" />
+                    <NumericInput placeholder="$" onChange={(value) => setInformation({...information, bestPrice: value})} value={information?.bestPrice} /> 
+                </div>  
+            }
+            {(information?.price!=null) &&
+                <div className="informationInput__item informationInput__InputNumber">
+                    <Text color='black' cls='Small' content={"Price"} fontSize='15' display="inline-block" />
+                    <NumericInput placeholder="$" onChange={(value) => setInformation({...information, price: value})} value={information?.price} /> 
+                </div>  
+            }
+            {information?.referencePrice!=null &&
+                <div className="informationInput__item informationInput__InputNumber">
+                    <Text color='black' cls='Small' content={"Reference Price"} fontSize='15' display="inline-block" />
+                    <Input placeholder="$" onChange={(ev) => setInformation({...information, referencePrice: ev.target.value})} value={information?.referencePrice} /> 
+                </div>  
+            }
+            {information?.referenceNumber!=null &&
+                <div className="informationInput__item informationInput__InputNumber">
+                    <Text color='black' cls='Small' content={"Reference Number"} fontSize='15' display="inline-block" />
+                    <Input placeholder="Number" onChange={(ev) => setInformation({...information, referenceNumber: ev.target.value})} value={information?.referenceNumber} /> 
+                </div>  
+            }
+            {information?.downloadable!=null &&
+                <div className="informationInput__item informationInput__Checkbox">
+                    <Checkbox.Group 
+                        options={[{
+                                    label: 'Downloadable',
+                                    value: 'Downloadable',
+                                }]} 
 
-                    defaultValue={['Downloadable']}
-                    onChange={(value) => {
-                    if(value[0]) setInformation({...information, downloadable: true})
-                    else setInformation({...information, downloadable: false})
-                }} />
-            </div>  
-        }
-        {( information?.public!=null && !notShowSwitch) &&
-            <div className="informationInput__item informationInput__Public">
-                {information?.public?
-                <Switch checkedChildren="Public" unCheckedChildren="Private" defaultChecked onChange={(checked) => {
-                    setInformation({...information, public: checked})}}
-                />
-                :
-                <Switch checkedChildren="Public" unCheckedChildren="Private" onChange={(checked) => {
-                    setInformation({...information, public: checked})}}
-                />
-                }
-                
-            </div>  
-        }
+                        defaultValue={['Downloadable']}
+                        onChange={(value) => {
+                        if(value[0]) setInformation({...information, downloadable: true})
+                        else setInformation({...information, downloadable: false})
+                    }} />
+                </div>  
+            }
+            {( information?.public!=null && !notShowSwitch) &&
+                <div className="informationInput__item informationInput__Public">
+                    {information?.public?
+                    <Switch checkedChildren="Public" unCheckedChildren="Private" defaultChecked onChange={(checked) => {
+                        setInformation({...information, public: checked})}}
+                    />
+                    :
+                    <Switch checkedChildren="Public" unCheckedChildren="Private" onChange={(checked) => {
+                        setInformation({...information, public: checked})}}
+                    />
+                    }
+                    
+                </div>  
+            }
+        </div>
     </div>
     )
 }
