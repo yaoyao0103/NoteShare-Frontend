@@ -9,7 +9,16 @@ import axios from "axios";
 import Cookie from '../../components/Cookies/Cookies';
 import './LoginPage.css'
 import Logo from '../../components/Navbar/Logo/Logo';
-
+import { createMedia } from "@artsy/fresnel"
+const { MediaContextProvider, Media } = createMedia({
+    breakpoints: {
+        sm: 0,
+        lm: 391,
+        md: 768,
+        lg: 1024,
+        xl: 1192,
+    },
+})
 const { Header, Sider, Content, Footer } = Layout;
 const cookieParser = new Cookie(document.cookie)
 function LoginPage(props) {
@@ -164,90 +173,456 @@ function LoginPage(props) {
         <div className='loginPage'>
 
             {render &&
-                <Layout className='loginPage__Outer'>
-                    <Sider className='loginPage__Sider' width={"60%"}>
-                        <img src="https://static.vecteezy.com/system/resources/previews/004/482/308/non_2x/single-one-line-drawing-students-woman-and-man-reading-learning-and-sitting-on-big-books-study-in-library-literature-fans-or-lovers-modern-continuous-line-draw-design-graphic-illustration-vector.jpg" alt="一張圖片" />
-                    </Sider>
-                    <Content className='loginPage__Content'>
-                        <div className='loginPage__Content__Text'>
-                            <Text color='black' cls='Large' content='Welcome to Note' fontSize='22' />
-                            <Text color='purple' cls='Large' content='Share' fontSize='22' />
-                        </div>
-                        <div className='loginPage__Content__Text loginPage__Content__Text__Bottom'>
-                            <Text color='black' cls='Default' content='Write your own note!' fontSize='10' />
-                        </div>
-                        <div className="loginPage__Form">
-                            <Form
-                                name="normal_login"
-                                size='large'
+                <MediaContextProvider>
+                    <Media at="xl" className='loginPage__Media'>
 
-                                form={form}
-                                {...formItemLayout}
-                                onFinish={onFinish}
-                            >
-                                <div className='loginPage__Content__Form__Text'>
-                                    <Text color='black' cls='Small' content='Email' fontSize='13' />
+                        <Layout className='loginPage__Outer'>
+                            <Sider className='loginPage__Sider' width={"60%"}>
+                                <img src="https://static.vecteezy.com/system/resources/previews/004/482/308/non_2x/single-one-line-drawing-students-woman-and-man-reading-learning-and-sitting-on-big-books-study-in-library-literature-fans-or-lovers-modern-continuous-line-draw-design-graphic-illustration-vector.jpg" alt="一張圖片" />
+                            </Sider>
+                            <Content className='loginPage__Content'>
+                                <div className='loginPage__Content__Text'>
+                                    <Text color='black' cls='Large' content='Welcome to Note' fontSize='22' />
+                                    <Text color='purple' cls='Large' content='Share' fontSize='22' />
                                 </div>
-                                <Form.Item
-                                    className='Login__Form__Item'
-                                    name="email"
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message: 'Please enter your Email!',
-                                        },
-                                    ]}
-                                >
-                                    <Input
-
-                                        placeholder="Email"
-                                        onChange={(e) => { setEmail(e.target.value) }} />
-                                </Form.Item>
-                                <div className='loginPage__Content__Form__Text'>
-                                    <Text color='black' cls='Small' content='Password' fontSize='13' />
+                                <div className='loginPage__Content__Text loginPage__Content__Text__Bottom'>
+                                    <Text color='black' cls='Default' content='Write your own note!' fontSize='10' />
                                 </div>
+                                <div className="loginPage__Form">
+                                    <Form
+                                        name="normal_login"
+                                        size='large'
 
-                                <Form.Item
-                                    className='Login__Form__Item'
-                                    name="password"
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message: 'Please enter your Password!',
-                                        },
-                                    ]}
-                                >
-                                    <Input
+                                        form={form}
+                                        {...formItemLayout}
+                                        onFinish={onFinish}
+                                    >
+                                        <div className='loginPage__Content__Form__Text'>
+                                            <Text color='black' cls='Small' content='Email' fontSize='13' />
+                                        </div>
+                                        <Form.Item
+                                            className='Login__Form__Item'
+                                            name="email"
+                                            rules={[
+                                                {
+                                                    required: true,
+                                                    message: 'Please enter your Email!',
+                                                },
+                                            ]}
+                                        >
+                                            <Input
 
-                                        type="password"
-                                        placeholder="Password"
-                                        onChange={(e) => { setPassword(e.target.value); }}
-                                    />
-                                </Form.Item>
-                                <Form.Item className='Login__Form__Item'>
+                                                placeholder="Email"
+                                                onChange={(e) => { setEmail(e.target.value) }} />
+                                        </Form.Item>
+                                        <div className='loginPage__Content__Form__Text'>
+                                            <Text color='black' cls='Small' content='Password' fontSize='13' />
+                                        </div>
 
-                                    <Form.Item name="remember" valuePropName="checked" noStyle>
-                                        <Checkbox.Group defaultValue={hasRemember}>
-                                            <Checkbox value="A" onChange={(e) => { rememberChange(e.target.checked) }}>Remember me</Checkbox>
-                                        </Checkbox.Group>
-                                    </Form.Item>
+                                        <Form.Item
+                                            className='Login__Form__Item'
+                                            name="password"
+                                            rules={[
+                                                {
+                                                    required: true,
+                                                    message: 'Please enter your Password!',
+                                                },
+                                            ]}
+                                        >
+                                            <Input
+
+                                                type="password"
+                                                placeholder="Password"
+                                                onChange={(e) => { setPassword(e.target.value); }}
+                                            />
+                                        </Form.Item>
+                                        <Form.Item className='Login__Form__Item'>
+
+                                            <Form.Item name="remember" valuePropName="checked" noStyle>
+                                                <Checkbox.Group defaultValue={hasRemember}>
+                                                    <Checkbox value="A" onChange={(e) => { rememberChange(e.target.checked) }}>Remember me</Checkbox>
+                                                </Checkbox.Group>
+                                            </Form.Item>
 
 
-                                    <div className="loginPage__Button">
-                                        <Button color={"green"}><Text color='white' cls='Large' content={"LogIn"} fontSize='15' display="inline-block" /></Button>
-                                    </div>
-                                </Form.Item>
-                                <Form.Item className='loginPage__Form__Item'>
-                                    <a href="javascript: return false;" onClick={() => (props.setPageProps({ page: 'SignUpPage' }))}>Register now!</a>
-                                    <a className="loginPage__Content__Form__Forgot" href="javascript: return false;" onClick={() => (props.setPageProps({ page: 'ForgetPasswordPage' }))}>
-                                        Forgot password?
-                                    </a>
+                                            <div className="loginPage__Button">
+                                                <Button color={"green"}><Text color='white' cls='Large' content={"LogIn"} fontSize='15' display="inline-block" /></Button>
+                                            </div>
+                                        </Form.Item>
+                                        <Form.Item className='loginPage__Form__Item'>
+                                            <a href="javascript: return false;" onClick={() => (props.setPageProps({ page: 'SignUpPage' }))}>Register now!</a>
+                                            <a className="loginPage__Content__Form__Forgot" href="javascript: return false;" onClick={() => (props.setPageProps({ page: 'ForgetPasswordPage' }))}>
+                                                Forgot password?
+                                            </a>
 
-                                </Form.Item>
-                            </Form>
-                        </div>
-                    </Content>
-                </Layout>
+                                        </Form.Item>
+                                    </Form>
+                                </div>
+                            </Content>
+                        </Layout>
+                    </Media>
+                    <Media at="lg" className='loginPage__Media'>
+
+                        <Layout className='loginPage__Outer'>
+                            <Sider className='loginPage__Sider' width={"60%"}>
+                                <img src="https://static.vecteezy.com/system/resources/previews/004/482/308/non_2x/single-one-line-drawing-students-woman-and-man-reading-learning-and-sitting-on-big-books-study-in-library-literature-fans-or-lovers-modern-continuous-line-draw-design-graphic-illustration-vector.jpg" alt="一張圖片" />
+                            </Sider>
+                            <Content className='loginPage__Content'>
+                                <div className='loginPage__Content__Text'>
+                                    <Text color='black' cls='Large' content='Welcome to Note' fontSize='22' />
+                                    <Text color='purple' cls='Large' content='Share' fontSize='22' />
+                                </div>
+                                <div className='loginPage__Content__Text loginPage__Content__Text__Bottom'>
+                                    <Text color='black' cls='Default' content='Write your own note!' fontSize='10' />
+                                </div>
+                                <div className="loginPage__Form">
+                                    <Form
+                                        name="normal_login"
+                                        size='large'
+
+                                        form={form}
+                                        {...formItemLayout}
+                                        onFinish={onFinish}
+                                    >
+                                        <div className='loginPage__Content__Form__Text'>
+                                            <Text color='black' cls='Small' content='Email' fontSize='13' />
+                                        </div>
+                                        <Form.Item
+                                            className='Login__Form__Item'
+                                            name="email"
+                                            rules={[
+                                                {
+                                                    required: true,
+                                                    message: 'Please enter your Email!',
+                                                },
+                                            ]}
+                                        >
+                                            <Input
+
+                                                placeholder="Email"
+                                                onChange={(e) => { setEmail(e.target.value) }} />
+                                        </Form.Item>
+                                        <div className='loginPage__Content__Form__Text'>
+                                            <Text color='black' cls='Small' content='Password' fontSize='13' />
+                                        </div>
+
+                                        <Form.Item
+                                            className='Login__Form__Item'
+                                            name="password"
+                                            rules={[
+                                                {
+                                                    required: true,
+                                                    message: 'Please enter your Password!',
+                                                },
+                                            ]}
+                                        >
+                                            <Input
+
+                                                type="password"
+                                                placeholder="Password"
+                                                onChange={(e) => { setPassword(e.target.value); }}
+                                            />
+                                        </Form.Item>
+                                        <Form.Item className='Login__Form__Item'>
+
+                                            <Form.Item name="remember" valuePropName="checked" noStyle>
+                                                <Checkbox.Group defaultValue={hasRemember}>
+                                                    <Checkbox value="A" onChange={(e) => { rememberChange(e.target.checked) }}>Remember me</Checkbox>
+                                                </Checkbox.Group>
+                                            </Form.Item>
+
+
+                                            <div className="loginPage__Button">
+                                                <Button color={"green"}><Text color='white' cls='Large' content={"LogIn"} fontSize='15' display="inline-block" /></Button>
+                                            </div>
+                                        </Form.Item>
+                                        <Form.Item className='loginPage__Form__Item'>
+                                            <a href="javascript: return false;" onClick={() => (props.setPageProps({ page: 'SignUpPage' }))}>Register now!</a>
+                                            <a className="loginPage__Content__Form__Forgot" href="javascript: return false;" onClick={() => (props.setPageProps({ page: 'ForgetPasswordPage' }))}>
+                                                Forgot password?
+                                            </a>
+
+                                        </Form.Item>
+                                    </Form>
+                                </div>
+                            </Content>
+                        </Layout>
+                    </Media>
+                    <Media at="md" className='loginPage__Media'>
+
+                        <Layout className='loginPage__Outer'>
+                            <Sider className='loginPage__Sider__md' width={"50%"}>
+                                <img src="https://static.vecteezy.com/system/resources/previews/004/482/308/non_2x/single-one-line-drawing-students-woman-and-man-reading-learning-and-sitting-on-big-books-study-in-library-literature-fans-or-lovers-modern-continuous-line-draw-design-graphic-illustration-vector.jpg" alt="一張圖片" />
+                            </Sider>
+                            <Content className='loginPage__Content'>
+                                <div className='loginPage__Content__Text'>
+                                    <Text color='black' cls='Large' content='Welcome to Note' fontSize='22' />
+                                    <Text color='purple' cls='Large' content='Share' fontSize='22' />
+                                </div>
+                                <div className='loginPage__Content__Text loginPage__Content__Text__Bottom'>
+                                    <Text color='black' cls='Default' content='Write your own note!' fontSize='10' />
+                                </div>
+                                <div className="loginPage__Form">
+                                    <Form
+                                        name="normal_login"
+                                        size='large'
+
+                                        form={form}
+                                        {...formItemLayout}
+                                        onFinish={onFinish}
+                                    >
+                                        <div className='loginPage__Content__Form__Text'>
+                                            <Text color='black' cls='Small' content='Email' fontSize='13' />
+                                        </div>
+                                        <Form.Item
+                                            className='Login__Form__Item'
+                                            name="email"
+                                            rules={[
+                                                {
+                                                    required: true,
+                                                    message: 'Please enter your Email!',
+                                                },
+                                            ]}
+                                        >
+                                            <Input
+
+                                                placeholder="Email"
+                                                onChange={(e) => { setEmail(e.target.value) }} />
+                                        </Form.Item>
+                                        <div className='loginPage__Content__Form__Text'>
+                                            <Text color='black' cls='Small' content='Password' fontSize='13' />
+                                        </div>
+
+                                        <Form.Item
+                                            className='Login__Form__Item'
+                                            name="password"
+                                            rules={[
+                                                {
+                                                    required: true,
+                                                    message: 'Please enter your Password!',
+                                                },
+                                            ]}
+                                        >
+                                            <Input
+
+                                                type="password"
+                                                placeholder="Password"
+                                                onChange={(e) => { setPassword(e.target.value); }}
+                                            />
+                                        </Form.Item>
+                                        <Form.Item className='Login__Form__Item'>
+
+                                            <Form.Item name="remember" valuePropName="checked" noStyle>
+                                                <Checkbox.Group defaultValue={hasRemember}>
+                                                    <Checkbox value="A" onChange={(e) => { rememberChange(e.target.checked) }}>Remember me</Checkbox>
+                                                </Checkbox.Group>
+                                            </Form.Item>
+
+
+                                            <div className="loginPage__Button">
+                                                <Button color={"green"}><Text color='white' cls='Large' content={"LogIn"} fontSize='15' display="inline-block" /></Button>
+                                            </div>
+                                        </Form.Item>
+                                        <Form.Item className='loginPage__Form__Item'>
+                                            <a href="javascript: return false;" onClick={() => (props.setPageProps({ page: 'SignUpPage' }))}>Register now!</a>
+
+                                        </Form.Item>
+                                        <Form.Item className='loginPage__Form__Item'>
+                                            <a className="loginPage__Content__Form__Forgot__sm" href="javascript: return false;" onClick={() => (props.setPageProps({ page: 'ForgetPasswordPage' }))}>
+                                                Forgot password?
+                                            </a>
+
+                                        </Form.Item>
+                                    </Form>
+                                </div>
+                            </Content>
+                        </Layout>
+                    </Media>
+                    <Media at="lm" className='loginPage__Media'>
+
+                        <Layout className='loginPage__Outer'>
+                            {/* <Sider className='loginPage__Sider' width={"60%"}>
+                                <img src="https://static.vecteezy.com/system/resources/previews/004/482/308/non_2x/single-one-line-drawing-students-woman-and-man-reading-learning-and-sitting-on-big-books-study-in-library-literature-fans-or-lovers-modern-continuous-line-draw-design-graphic-illustration-vector.jpg" alt="一張圖片" />
+                            </Sider> */}
+                            <Content className='loginPage__Content'>
+                                <div className='loginPage__Content__Text'>
+                                    <Text color='black' cls='Large' content='Welcome to Note' fontSize='22' />
+                                    <Text color='purple' cls='Large' content='Share' fontSize='22' />
+                                </div>
+                                <div className='loginPage__Content__Text loginPage__Content__Text__Bottom'>
+                                    <Text color='black' cls='Default' content='Write your own note!' fontSize='10' />
+                                </div>
+                                <div className="loginPage__Form">
+                                    <Form
+                                        name="normal_login"
+                                        size='large'
+
+                                        form={form}
+                                        {...formItemLayout}
+                                        onFinish={onFinish}
+                                    >
+                                        <div className='loginPage__Content__Form__Text'>
+                                            <Text color='black' cls='Small' content='Email' fontSize='13' />
+                                        </div>
+                                        <Form.Item
+                                            className='Login__Form__Item'
+                                            name="email"
+                                            rules={[
+                                                {
+                                                    required: true,
+                                                    message: 'Please enter your Email!',
+                                                },
+                                            ]}
+                                        >
+                                            <Input
+
+                                                placeholder="Email"
+                                                onChange={(e) => { setEmail(e.target.value) }} />
+                                        </Form.Item>
+                                        <div className='loginPage__Content__Form__Text'>
+                                            <Text color='black' cls='Small' content='Password' fontSize='13' />
+                                        </div>
+
+                                        <Form.Item
+                                            className='Login__Form__Item'
+                                            name="password"
+                                            rules={[
+                                                {
+                                                    required: true,
+                                                    message: 'Please enter your Password!',
+                                                },
+                                            ]}
+                                        >
+                                            <Input
+
+                                                type="password"
+                                                placeholder="Password"
+                                                onChange={(e) => { setPassword(e.target.value); }}
+                                            />
+                                        </Form.Item>
+                                        <Form.Item className='Login__Form__Item'>
+
+                                            <Form.Item name="remember" valuePropName="checked" noStyle>
+                                                <Checkbox.Group defaultValue={hasRemember}>
+                                                    <Checkbox value="A" onChange={(e) => { rememberChange(e.target.checked) }}>Remember me</Checkbox>
+                                                </Checkbox.Group>
+                                            </Form.Item>
+
+
+                                            <div className="loginPage__Button">
+                                                <Button color={"green"}><Text color='white' cls='Large' content={"LogIn"} fontSize='15' display="inline-block" /></Button>
+                                            </div>
+                                        </Form.Item>
+                                        <Form.Item className='loginPage__Form__Item'>
+                                            <a href="javascript: return false;" onClick={() => (props.setPageProps({ page: 'SignUpPage' }))}>Register now!</a>
+                                           
+
+                                        </Form.Item>
+                                        <Form.Item className='loginPage__Form__Item'>
+                                           
+                                            <a className="loginPage__Content__Form__Forgot__sm" href="javascript: return false;" onClick={() => (props.setPageProps({ page: 'ForgetPasswordPage' }))}>
+                                                Forgot password?
+                                            </a>
+
+                                        </Form.Item>
+                                    </Form>
+                                </div>
+                            </Content>
+                        </Layout>
+                    </Media>
+                    <Media at="sm" className='loginPage__Media'>
+
+                        <Layout className='loginPage__Outer'>
+                            {/* <Sider className='loginPage__Sider' width={"60%"}>
+                                <img src="https://static.vecteezy.com/system/resources/previews/004/482/308/non_2x/single-one-line-drawing-students-woman-and-man-reading-learning-and-sitting-on-big-books-study-in-library-literature-fans-or-lovers-modern-continuous-line-draw-design-graphic-illustration-vector.jpg" alt="一張圖片" />
+                            </Sider> */}
+                            <Content className='loginPage__Content'>
+                                <div className='loginPage__Content__Text'>
+                                    <Text color='black' cls='Large' content='Welcome to Note' fontSize='22' />
+                                    <Text color='purple' cls='Large' content='Share' fontSize='22' />
+                                </div>
+                                <div className='loginPage__Content__Text loginPage__Content__Text__Bottom'>
+                                    <Text color='black' cls='Default' content='Write your own note!' fontSize='10' />
+                                </div>
+                                <div className="loginPage__Form">
+                                    <Form
+                                        name="normal_login"
+                                        size='large'
+
+                                        form={form}
+                                        {...formItemLayout}
+                                        onFinish={onFinish}
+                                    >
+                                        <div className='loginPage__Content__Form__Text'>
+                                            <Text color='black' cls='Small' content='Email' fontSize='13' />
+                                        </div>
+                                        <Form.Item
+                                            className='Login__Form__Item'
+                                            name="email"
+                                            rules={[
+                                                {
+                                                    required: true,
+                                                    message: 'Please enter your Email!',
+                                                },
+                                            ]}
+                                        >
+                                            <Input
+
+                                                placeholder="Email"
+                                                onChange={(e) => { setEmail(e.target.value) }} />
+                                        </Form.Item>
+                                        <div className='loginPage__Content__Form__Text'>
+                                            <Text color='black' cls='Small' content='Password' fontSize='13' />
+                                        </div>
+
+                                        <Form.Item
+                                            className='Login__Form__Item'
+                                            name="password"
+                                            rules={[
+                                                {
+                                                    required: true,
+                                                    message: 'Please enter your Password!',
+                                                },
+                                            ]}
+                                        >
+                                            <Input
+
+                                                type="password"
+                                                placeholder="Password"
+                                                onChange={(e) => { setPassword(e.target.value); }}
+                                            />
+                                        </Form.Item>
+                                        <Form.Item className='Login__Form__Item'>
+
+                                            <Form.Item name="remember" valuePropName="checked" noStyle>
+                                                <Checkbox.Group defaultValue={hasRemember}>
+                                                    <Checkbox value="A" onChange={(e) => { rememberChange(e.target.checked) }}>Remember me</Checkbox>
+                                                </Checkbox.Group>
+                                            </Form.Item>
+
+
+                                            <div className="loginPage__Button">
+                                                <Button color={"green"}><Text color='white' cls='Large' content={"LogIn"} fontSize='15' display="inline-block" /></Button>
+                                            </div>
+                                        </Form.Item>
+                                        <Form.Item className='loginPage__Form__Item'>
+                                            <a href="javascript: return false;" onClick={() => (props.setPageProps({ page: 'SignUpPage' }))}>Register now!</a>
+                                           
+
+                                        </Form.Item>
+                                        <Form.Item className='loginPage__Form__Item'>
+                                       
+                                            <a className="loginPage__Content__Form__Forgot__sm" href="javascript: return false;" onClick={() => (props.setPageProps({ page: 'ForgetPasswordPage' }))}>
+                                                Forgot password?
+                                            </a>
+
+                                        </Form.Item>
+                                    </Form>
+                                </div>
+                            </Content>
+                        </Layout>
+                    </Media>
+                </MediaContextProvider>
             }
         </div>
 

@@ -1,6 +1,7 @@
 .FolderOutlineCard__Layout__Outer{
     position:relative;
-    height: 5em;
+    height: auto;
+    min-height: 5em;
     width: 90%;
     max-width: 90%;
     background-color: #fff;
@@ -60,6 +61,18 @@
 .FolderOutlineCard__Header__Right{
     position: relative;
     padding: 0;
+}
+.FolderOutlineCard__Header__NoteNum{
+    position: relative;
+    padding-left: 6em;
+}
+.FolderOutlineCard__Header__Right__sm{
+    position: relative;
+    padding-left: 3em;
+}
+.FolderOutlineCard__Header__NoteNum__sm{
+    position: relative;
+    padding-left: 3em;
 }
 .FolderOutlineCard__Sider__Outer{
     position: relative;

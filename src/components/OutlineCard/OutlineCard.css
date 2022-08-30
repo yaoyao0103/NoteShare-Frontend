@@ -130,7 +130,8 @@
     
     .OutlineCard__Layout__Outer__Note{
         position:relative;
-        height: 20em;
+        height:auto;
+        min-height: 20em;
         width: 90%;
         max-width: 90%;
         background-color: #fff;
@@ -138,11 +139,12 @@
         margin-right:5%;
         margin-top:1.5em;
         margin-bottom:1.5em;
-    box-shadow: rgba(60, 60, 60, 0.25) 0px 5px 10px 0px;    
+        box-shadow: rgba(60, 60, 60, 0.25) 0px 5px 10px 0px;    
     }
     .OutlineCard__Layout__Outer__Note:hover{
         position:relative;
-        height: 20em;
+        height:auto;
+        min-height: 20em;
         width: 90%;
         max-width: 90%;
         background-color: #fff;
@@ -197,7 +199,8 @@
     }
     .OutlineCard__Content__Inner__Note{
         position: relative;
-     
+        height: auto;
+        min-height:10em;
         margin-left:10%;
         margin-right:3%;
     }
@@ -225,6 +228,7 @@
         position: relative;
         padding-top:2%;
         padding-left: 5%;
+        word-break: break-all;
     }
     .OutlineCard__Sider__Row__Like__Note{
         position: relative;
@@ -252,12 +256,12 @@
     }
     .OutlineCard__Sider__Footer__Note{
         position: relative;
-        width: inherit;
+        width: 100%;
         background-color: #FFF; 
         padding-bottom:24px;
         padding-right:0;
         padding-top:0;
-        padding-left:20px
+        padding-left:5%
     }
     .OutlineCard__Sider__Footer__Fir__Note{
         position: relative;
@@ -404,7 +408,8 @@
     
     .OutlineCard__Layout__Outer__Note{
         position:relative;
-        height: 20em;
+        height:auto;
+        min-height: 20em;
         width: 90%;
         max-width: 90%;
         background-color: #fff;
@@ -416,7 +421,8 @@
     }
     .OutlineCard__Layout__Outer__Note:hover{
         position:relative;
-        height: 20em;
+        height:auto;
+        min-height: 20em;
         width: 90%;
         max-width: 90%;
         background-color: #fff;
@@ -471,7 +477,8 @@
     }
     .OutlineCard__Content__Inner__Note{
         position: relative;
-     
+        height: auto;
+        min-height:10em;
         margin-left:10%;
         margin-right:3%;
     }
@@ -499,6 +506,7 @@
         position: relative;
         padding-top:2%;
         padding-left: 5%;
+        word-break: break-all;
     }
     .OutlineCard__Sider__Row__Like__Note{
         position: relative;
@@ -531,7 +539,7 @@
         padding-bottom:24px;
         padding-right:0;
         padding-top:0;
-        padding-left:20px
+        padding-left:5%
     }
     .OutlineCard__Sider__Footer__Fir__Note{
         position: relative;
@@ -678,7 +686,8 @@
     
     .OutlineCard__Layout__Outer__Note{
         position:relative;
-        height: 20em;
+        height:auto;
+        min-height: 20em;
         width: 90%;
         max-width: 90%;
         background-color: #fff;
@@ -690,7 +699,8 @@
     }
     .OutlineCard__Layout__Outer__Note:hover{
         position:relative;
-        height: 20em;
+        height:auto;
+        min-height: 20em;
         width: 90%;
         max-width: 90%;
         background-color: #fff;
@@ -745,7 +755,8 @@
     }
     .OutlineCard__Content__Inner__Note{
         position: relative;
-     
+        height: auto;
+        min-height:10em;
         margin-left:10%;
         margin-right:3%;
     }
@@ -773,6 +784,7 @@
         position: relative;
         padding-top:2%;
         padding-left: 5%;
+        word-break: break-all;
     }
     .OutlineCard__Sider__Row__Like__Note{
         position: relative;
@@ -805,7 +817,7 @@
         padding-bottom:24px;
         padding-right:0;
         padding-top:0;
-        padding-left:20px
+        padding-left:5%
     }
     .OutlineCard__Sider__Footer__Fir__Note{
         position: relative;
@@ -929,6 +941,8 @@
     
     .OutlineCard__Footer{
         background-color: #FFF; 
+        padding:0;
+        padding-left:10%;
     }
     
     .OutlineCard__Sider__Footer__Post{
@@ -952,7 +966,8 @@
     
     .OutlineCard__Layout__Outer__Note{
         position:relative;
-        height: 20em;
+        height:auto;
+        min-height: 20em;
         width: 90%;
         max-width: 90%;
         background-color: #fff;
@@ -964,7 +979,8 @@
     }
     .OutlineCard__Layout__Outer__Note:hover{
         position:relative;
-        height: 20em;
+        height:auto;
+        min-height: 20em;
         width: 90%;
         max-width: 90%;
         background-color: #fff;
@@ -1019,7 +1035,8 @@
     }
     .OutlineCard__Content__Inner__Note{
         position: relative;
-     
+        height: auto;
+        min-height:20em;
         margin-left:10%;
         margin-right:3%;
     }
@@ -1047,6 +1064,7 @@
         position: relative;
         padding-top:2%;
         padding-left: 5%;
+        word-break: break-all;
     }
     .OutlineCard__Sider__Row__Like__Note{
         position: relative;
@@ -1079,7 +1097,7 @@
         padding-bottom:24px;
         padding-right:0;
         padding-top:0;
-        padding-left:20px
+        padding-left:5%
     }
     .OutlineCard__Sider__Footer__Fir__Note{
         position: relative;
@@ -1202,6 +1220,8 @@
     }
     
     .OutlineCard__Footer{
+        padding:0;
+        padding-left:5%;
         background-color: #FFF; 
     }
     
@@ -1226,7 +1246,8 @@
     
     .OutlineCard__Layout__Outer__Note{
         position:relative;
-        height: 20em;
+        height:auto;
+        min-height: 20em;
         width: 90%;
         max-width: 90%;
         background-color: #fff;
@@ -1238,7 +1259,8 @@
     }
     .OutlineCard__Layout__Outer__Note:hover{
         position:relative;
-        height: 20em;
+        height:auto;
+        min-height: 20em;
         width: 90%;
         max-width: 90%;
         background-color: #fff;
@@ -1293,7 +1315,8 @@
     }
     .OutlineCard__Content__Inner__Note{
         position: relative;
-     
+        height: auto;
+        min-height:20em;
         margin-left:10%;
         margin-right:3%;
     }
@@ -1321,6 +1344,7 @@
         position: relative;
         padding-top:2%;
         padding-left: 5%;
+        word-break: break-all;
     }
     .OutlineCard__Sider__Row__Like__Note{
         position: relative;
@@ -1353,7 +1377,7 @@
         padding-bottom:24px;
         padding-right:0;
         padding-top:0;
-        padding-left:20px
+        padding-left:5%
     }
     .OutlineCard__Sider__Footer__Fir__Note{
         position: relative;

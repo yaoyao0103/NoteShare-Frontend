@@ -8,6 +8,16 @@ import axios from "axios";
 import './VerificationPage.css'
 import Logo from '../../components/Navbar/Logo/Logo';
 import Cookie from '../../components/Cookies/Cookies';
+import { createMedia } from "@artsy/fresnel"
+const { MediaContextProvider, Media } = createMedia({
+    breakpoints: {
+        sm: 0,
+        lm: 391,
+        md: 768,
+        lg: 1024,
+        xl: 1192,
+    },
+})
 const { Header, Sider, Content, Footer } = Layout;
 const cookieParser = new Cookie(document.cookie)
 function VerificationPage(props) {
@@ -166,91 +176,437 @@ function VerificationPage(props) {
     return (
         <div className='verificationPage'>
             {render &&
-                <Layout className='verificationPage__Outer'>
-                    <Sider className='verificationPage__Sider' width={"60%"}>
-                        <img src="https://static.vecteezy.com/system/resources/previews/003/410/006/original/continuous-one-line-drawing-of-hand-writing-with-a-pen-on-paper-vector.jpg" alt="一張圖片" />
-                    </Sider>
-                    <Content className='verificationPage__Content'>
-                        <div className='verificationPage__Content__Text'>
-                            <Text color='black' cls='Large' content='Welcome to Note' fontSize='22' />
-                            <Text color='purple' cls='Large' content='Share' fontSize='22' />
-                        </div>
-                        <div className='verificationPage__Content__Text verificationPage__Content__Text__Bottom'>
-                            <Text color='black' cls='Default' content='Write your own note!' fontSize='10' />
-                        </div>
-                        <div className="verificationPage__Form">
-                            <Form
-                                {...formItemLayout}
-                                name="register"
-                                onFinish={() => { onFinish() }}
-                                initialValues={{
-                                    email: email
-                                }}
-                                scrollToFirstError
-                            >
-                                <div className='verificationPage__Content__Form__Text'>
-                                    <Text color='black' cls='Small' content='Email' fontSize='13' />
+                <MediaContextProvider>
+                    <Media at="xl" className='VerificationPage__Media'>
+                        <Layout className='verificationPage__Outer'>
+                            <Sider className='verificationPage__Sider' width={"60%"}>
+                                <img src="https://static.vecteezy.com/system/resources/previews/003/410/006/original/continuous-one-line-drawing-of-hand-writing-with-a-pen-on-paper-vector.jpg" alt="一張圖片" />
+                            </Sider>
+                            <Content className='verificationPage__Content'>
+                                <div className='verificationPage__Content__Text'>
+                                    <Text color='black' cls='Large' content='Welcome to Note' fontSize='22' />
+                                    <Text color='purple' cls='Large' content='Share' fontSize='22' />
                                 </div>
-                                <Form.Item
-                                    name="email"
-                                    className='Verification__Form__Item'
-                                    //label="E-mail"
-                                    rules={[
-                                        {
-                                            type: 'email',
-                                            message: 'The input is not valid E-mail!',
-                                        },
-                                        {
-                                            required: true,
-                                            message: 'Please input your E-mail!',
-                                        },
-                                    ]}
-                                >
-                                    <Input placeholder='Email' defaultValue={email} disabled />
-
-                                </Form.Item>
-                                <div className='verificationPage__Content__Form__Text'>
-                                    <Text color='black' cls='Small' content='Code' fontSize='13' />
+                                <div className='verificationPage__Content__Text verificationPage__Content__Text__Bottom'>
+                                    <Text color='black' cls='Default' content='Write your own note!' fontSize='10' />
                                 </div>
-                                <Form.Item
-                                    className='Verification__Form__Item'
-                                    name="Code"
-                                    //label="Code"
-                                    tooltip="Input your verify code!"
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message: 'Please input your verify code!',
-                                            whitespace: true,
-                                        },
-                                    ]}
-                                    wrapperCol={tailFormItemLayout}
-                                >
-                                    <Row gutter={0}>
-                                        <Col span={20}>
-                                            <Input placeholder='Code' onChange={(e) => { setCode(e.target.value) }} />
-                                        </Col>
-                                        <Col className='Verification__Resend__Button' span={3}>
-                                            <Tooltip arrowPointAtCenter={true} placement="top" title={"Resend verify code"} color={'#000'}>
-                                                <div className='verificationPage__Resend__Button'><ReloadOutlined onClick={() => { resend() }} /></div>
-                                            </Tooltip>
-                                        </Col>
-                                    </Row>
+                                <div className="verificationPage__Form">
+                                    <Form
+                                        {...formItemLayout}
+                                        name="register"
+                                        onFinish={() => { onFinish() }}
+                                        initialValues={{
+                                            email: email
+                                        }}
+                                        scrollToFirstError
+                                    >
+                                        <div className='verificationPage__Content__Form__Text'>
+                                            <Text color='black' cls='Small' content='Email' fontSize='13' />
+                                        </div>
+                                        <Form.Item
+                                            name="email"
+                                            className='Verification__Form__Item'
+                                            //label="E-mail"
+                                            rules={[
+                                                {
+                                                    type: 'email',
+                                                    message: 'The input is not valid E-mail!',
+                                                },
+                                                {
+                                                    required: true,
+                                                    message: 'Please input your E-mail!',
+                                                },
+                                            ]}
+                                        >
+                                            <Input placeholder='Email' defaultValue={email} disabled />
 
-                                </Form.Item>
-                                <Form.Item {...tailFormItemLayout} className='Verification__Form__Item'>
-                                    <a className="verificationPage__Login__Button" href="javascript: return false;" onClick={() => (props.setPageProps({ page: 'LoginPage' }))}>Login now!</a>
+                                        </Form.Item>
+                                        <div className='verificationPage__Content__Form__Text'>
+                                            <Text color='black' cls='Small' content='Code' fontSize='13' />
+                                        </div>
+                                        <Form.Item
+                                            className='Verification__Form__Item'
+                                            name="Code"
+                                            //label="Code"
+                                            tooltip="Input your verify code!"
+                                            rules={[
+                                                {
+                                                    required: true,
+                                                    message: 'Please input your verify code!',
+                                                    whitespace: true,
+                                                },
+                                            ]}
+                                            wrapperCol={tailFormItemLayout}
+                                        >
+                                            <Row gutter={0}>
+                                                <Col span={20}>
+                                                    <Input placeholder='Code' onChange={(e) => { setCode(e.target.value) }} />
+                                                </Col>
+                                                <Col className='Verification__Resend__Button' span={3}>
+                                                    <Tooltip arrowPointAtCenter={true} placement="top" title={"Resend verify code"} color={'#000'}>
+                                                        <div className='verificationPage__Resend__Button'><ReloadOutlined onClick={() => { resend() }} /></div>
+                                                    </Tooltip>
+                                                </Col>
+                                            </Row>
 
-                                    <div className="verificationPage__Button">
-                                        <Button color={"green"}><Text color='white' cls='Large' content={"Verify"} fontSize='15' display="inline-block" /></Button>
-                                    </div>
+                                        </Form.Item>
+                                        <Form.Item {...tailFormItemLayout} className='Verification__Form__Item'>
+                                            <a className="verificationPage__Login__Button" href="javascript: return false;" onClick={() => (props.setPageProps({ page: 'LoginPage' }))}>Login now!</a>
 
-                                </Form.Item>
-                            </Form>
-                            {/* </Spin> */}
-                        </div>
-                    </Content>
-                </Layout>
+                                            <div className="verificationPage__Button">
+                                                <Button color={"green"}><Text color='white' cls='Large' content={"Verify"} fontSize='15' display="inline-block" /></Button>
+                                            </div>
+
+                                        </Form.Item>
+                                    </Form>
+                                    {/* </Spin> */}
+                                </div>
+                            </Content>
+                        </Layout>
+                    </Media>
+                    <Media at="lg" className='VerificationPage__Media'>
+                        <Layout className='verificationPage__Outer'>
+                            <Sider className='verificationPage__Sider' width={"60%"}>
+                                <img src="https://static.vecteezy.com/system/resources/previews/003/410/006/original/continuous-one-line-drawing-of-hand-writing-with-a-pen-on-paper-vector.jpg" alt="一張圖片" />
+                            </Sider>
+                            <Content className='verificationPage__Content'>
+                                <div className='verificationPage__Content__Text'>
+                                    <Text color='black' cls='Large' content='Welcome to Note' fontSize='22' />
+                                    <Text color='purple' cls='Large' content='Share' fontSize='22' />
+                                </div>
+                                <div className='verificationPage__Content__Text verificationPage__Content__Text__Bottom'>
+                                    <Text color='black' cls='Default' content='Write your own note!' fontSize='10' />
+                                </div>
+                                <div className="verificationPage__Form">
+                                    <Form
+                                        {...formItemLayout}
+                                        name="register"
+                                        onFinish={() => { onFinish() }}
+                                        initialValues={{
+                                            email: email
+                                        }}
+                                        scrollToFirstError
+                                    >
+                                        <div className='verificationPage__Content__Form__Text'>
+                                            <Text color='black' cls='Small' content='Email' fontSize='13' />
+                                        </div>
+                                        <Form.Item
+                                            name="email"
+                                            className='Verification__Form__Item'
+                                            //label="E-mail"
+                                            rules={[
+                                                {
+                                                    type: 'email',
+                                                    message: 'The input is not valid E-mail!',
+                                                },
+                                                {
+                                                    required: true,
+                                                    message: 'Please input your E-mail!',
+                                                },
+                                            ]}
+                                        >
+                                            <Input placeholder='Email' defaultValue={email} disabled />
+
+                                        </Form.Item>
+                                        <div className='verificationPage__Content__Form__Text'>
+                                            <Text color='black' cls='Small' content='Code' fontSize='13' />
+                                        </div>
+                                        <Form.Item
+                                            className='Verification__Form__Item'
+                                            name="Code"
+                                            //label="Code"
+                                            tooltip="Input your verify code!"
+                                            rules={[
+                                                {
+                                                    required: true,
+                                                    message: 'Please input your verify code!',
+                                                    whitespace: true,
+                                                },
+                                            ]}
+                                            wrapperCol={tailFormItemLayout}
+                                        >
+                                            <Row gutter={0}>
+                                                <Col span={20}>
+                                                    <Input placeholder='Code' onChange={(e) => { setCode(e.target.value) }} />
+                                                </Col>
+                                                <Col className='Verification__Resend__Button' span={3}>
+                                                    <Tooltip arrowPointAtCenter={true} placement="top" title={"Resend verify code"} color={'#000'}>
+                                                        <div className='verificationPage__Resend__Button'><ReloadOutlined onClick={() => { resend() }} /></div>
+                                                    </Tooltip>
+                                                </Col>
+                                            </Row>
+
+                                        </Form.Item>
+                                        <Form.Item {...tailFormItemLayout} className='Verification__Form__Item'>
+                                            <a className="verificationPage__Login__Button" href="javascript: return false;" onClick={() => (props.setPageProps({ page: 'LoginPage' }))}>Login now!</a>
+
+                                            <div className="verificationPage__Button">
+                                                <Button color={"green"}><Text color='white' cls='Large' content={"Verify"} fontSize='15' display="inline-block" /></Button>
+                                            </div>
+
+                                        </Form.Item>
+                                    </Form>
+                                    {/* </Spin> */}
+                                </div>
+                            </Content>
+                        </Layout>
+                    </Media>
+                    <Media at="md" className='VerificationPage__Media'>
+                        <Layout className='verificationPage__Outer'>
+                            <Sider className='verificationPage__Sider__md' width={"40%"}>
+                                <img src="https://static.vecteezy.com/system/resources/previews/003/410/006/original/continuous-one-line-drawing-of-hand-writing-with-a-pen-on-paper-vector.jpg" alt="一張圖片" />
+                            </Sider>
+                            <Content className='verificationPage__Content__md'>
+                                <div className='verificationPage__Content__Text'>
+                                    <Text color='black' cls='Large' content='Welcome to Note' fontSize='22' />
+                                    <Text color='purple' cls='Large' content='Share' fontSize='22' />
+                                </div>
+                                <div className='verificationPage__Content__Text verificationPage__Content__Text__Bottom'>
+                                    <Text color='black' cls='Default' content='Write your own note!' fontSize='10' />
+                                </div>
+                                <div className="verificationPage__Form">
+                                    <Form
+                                        {...formItemLayout}
+                                        name="register"
+                                        onFinish={() => { onFinish() }}
+                                        initialValues={{
+                                            email: email
+                                        }}
+                                        scrollToFirstError
+                                    >
+                                        <div className='verificationPage__Content__Form__Text'>
+                                            <Text color='black' cls='Small' content='Email' fontSize='13' />
+                                        </div>
+                                        <Form.Item
+                                            name="email"
+                                            className='Verification__Form__Item'
+                                            //label="E-mail"
+                                            rules={[
+                                                {
+                                                    type: 'email',
+                                                    message: 'The input is not valid E-mail!',
+                                                },
+                                                {
+                                                    required: true,
+                                                    message: 'Please input your E-mail!',
+                                                },
+                                            ]}
+                                        >
+                                            <Input placeholder='Email' defaultValue={email} disabled />
+
+                                        </Form.Item>
+                                        <div className='verificationPage__Content__Form__Text'>
+                                            <Text color='black' cls='Small' content='Code' fontSize='13' />
+                                        </div>
+                                        <Form.Item
+                                            className='Verification__Form__Item'
+                                            name="Code"
+                                            //label="Code"
+                                            tooltip="Input your verify code!"
+                                            rules={[
+                                                {
+                                                    required: true,
+                                                    message: 'Please input your verify code!',
+                                                    whitespace: true,
+                                                },
+                                            ]}
+                                            wrapperCol={tailFormItemLayout}
+                                        >
+                                            <Row gutter={0}>
+                                                <Col span={20}>
+                                                    <Input placeholder='Code' onChange={(e) => { setCode(e.target.value) }} />
+                                                </Col>
+                                                <Col className='Verification__Resend__Button' span={3}>
+                                                    <Tooltip arrowPointAtCenter={true} placement="top" title={"Resend verify code"} color={'#000'}>
+                                                        <div className='verificationPage__Resend__Button'><ReloadOutlined onClick={() => { resend() }} /></div>
+                                                    </Tooltip>
+                                                </Col>
+                                            </Row>
+
+                                        </Form.Item>
+                                        <Form.Item {...tailFormItemLayout} className='Verification__Form__Item'>
+                                            <a className="verificationPage__Login__Button" href="javascript: return false;" onClick={() => (props.setPageProps({ page: 'LoginPage' }))}>Login now!</a>
+
+                                            <div className="verificationPage__Button">
+                                                <Button color={"green"}><Text color='white' cls='Large' content={"Verify"} fontSize='15' display="inline-block" /></Button>
+                                            </div>
+
+                                        </Form.Item>
+                                    </Form>
+                                    {/* </Spin> */}
+                                </div>
+                            </Content>
+                        </Layout>
+                    </Media>
+                    <Media at="lm" className='VerificationPage__Media'>
+                        <Layout className='verificationPage__Outer'>
+                            <Content className='verificationPage__Content__sm'>
+                                <div className='verificationPage__Content__Text'>
+                                    <Text color='black' cls='Large' content='Welcome to Note' fontSize='22' />
+                                    <Text color='purple' cls='Large' content='Share' fontSize='22' />
+                                </div>
+                                <div className='verificationPage__Content__Text verificationPage__Content__Text__Bottom'>
+                                    <Text color='black' cls='Default' content='Write your own note!' fontSize='10' />
+                                </div>
+                                <div className="verificationPage__Form">
+                                    <Form
+                                        {...formItemLayout}
+                                        name="register"
+                                        onFinish={() => { onFinish() }}
+                                        initialValues={{
+                                            email: email
+                                        }}
+                                        scrollToFirstError
+                                    >
+                                        <div className='verificationPage__Content__Form__Text'>
+                                            <Text color='black' cls='Small' content='Email' fontSize='13' />
+                                        </div>
+                                        <Form.Item
+                                            name="email"
+                                            className='Verification__Form__Item'
+                                            //label="E-mail"
+                                            rules={[
+                                                {
+                                                    type: 'email',
+                                                    message: 'The input is not valid E-mail!',
+                                                },
+                                                {
+                                                    required: true,
+                                                    message: 'Please input your E-mail!',
+                                                },
+                                            ]}
+                                        >
+                                            <Input placeholder='Email' defaultValue={email} disabled />
+
+                                        </Form.Item>
+                                        <div className='verificationPage__Content__Form__Text'>
+                                            <Text color='black' cls='Small' content='Code' fontSize='13' />
+                                        </div>
+                                        <Form.Item
+                                            className='Verification__Form__Item'
+                                            name="Code"
+                                            //label="Code"
+                                            tooltip="Input your verify code!"
+                                            rules={[
+                                                {
+                                                    required: true,
+                                                    message: 'Please input your verify code!',
+                                                    whitespace: true,
+                                                },
+                                            ]}
+                                            wrapperCol={tailFormItemLayout}
+                                        >
+                                            <Row gutter={0}>
+                                                <Col span={20}>
+                                                    <Input placeholder='Code' onChange={(e) => { setCode(e.target.value) }} />
+                                                </Col>
+                                                <Col className='Verification__Resend__Button' span={3}>
+                                                    <Tooltip arrowPointAtCenter={true} placement="top" title={"Resend verify code"} color={'#000'}>
+                                                        <div className='verificationPage__Resend__Button'><ReloadOutlined onClick={() => { resend() }} /></div>
+                                                    </Tooltip>
+                                                </Col>
+                                            </Row>
+
+                                        </Form.Item>
+                                        <Form.Item {...tailFormItemLayout} className='Verification__Form__Item'>
+                                            <a className="verificationPage__Login__Button" href="javascript: return false;" onClick={() => (props.setPageProps({ page: 'LoginPage' }))}>Login now!</a>
+
+                                            <div className="verificationPage__Button">
+                                                <Button color={"green"}><Text color='white' cls='Large' content={"Verify"} fontSize='15' display="inline-block" /></Button>
+                                            </div>
+
+                                        </Form.Item>
+                                    </Form>
+                                    {/* </Spin> */}
+                                </div>
+                            </Content>
+                        </Layout>
+                    </Media>
+                    <Media at="sm" className='verificationPage__Media'>
+                        <Layout className='verificationPage__Outer'>
+                            <Content className='verificationPage__Content__sm'>
+                                <div className='verificationPage__Content__Text'>
+                                    <Text color='black' cls='Large' content='Welcome to Note' fontSize='22' />
+                                    <Text color='purple' cls='Large' content='Share' fontSize='22' />
+                                </div>
+                                <div className='verificationPage__Content__Text verificationPage__Content__Text__Bottom'>
+                                    <Text color='black' cls='Default' content='Write your own note!' fontSize='10' />
+                                </div>
+                                <div className="verificationPage__Form">
+                                    <Form
+                                        {...formItemLayout}
+                                        name="register"
+                                        onFinish={() => { onFinish() }}
+                                        initialValues={{
+                                            email: email
+                                        }}
+                                        scrollToFirstError
+                                    >
+                                        <div className='verificationPage__Content__Form__Text'>
+                                            <Text color='black' cls='Small' content='Email' fontSize='13' />
+                                        </div>
+                                        <Form.Item
+                                            name="email"
+                                            className='Verification__Form__Item'
+                                            //label="E-mail"
+                                            rules={[
+                                                {
+                                                    type: 'email',
+                                                    message: 'The input is not valid E-mail!',
+                                                },
+                                                {
+                                                    required: true,
+                                                    message: 'Please input your E-mail!',
+                                                },
+                                            ]}
+                                        >
+                                            <Input placeholder='Email' defaultValue={email} disabled />
+
+                                        </Form.Item>
+                                        <div className='verificationPage__Content__Form__Text'>
+                                            <Text color='black' cls='Small' content='Code' fontSize='13' />
+                                        </div>
+                                        <Form.Item
+                                            className='Verification__Form__Item'
+                                            name="Code"
+                                            //label="Code"
+                                            tooltip="Input your verify code!"
+                                            rules={[
+                                                {
+                                                    required: true,
+                                                    message: 'Please input your verify code!',
+                                                    whitespace: true,
+                                                },
+                                            ]}
+                                            wrapperCol={tailFormItemLayout}
+                                        >
+                                            <Row gutter={0}>
+                                                <Col span={20}>
+                                                    <Input placeholder='Code' onChange={(e) => { setCode(e.target.value) }} />
+                                                </Col>
+                                                <Col className='Verification__Resend__Button' span={3}>
+                                                    <Tooltip arrowPointAtCenter={true} placement="top" title={"Resend verify code"} color={'#000'}>
+                                                        <div className='verificationPage__Resend__Button'><ReloadOutlined onClick={() => { resend() }} /></div>
+                                                    </Tooltip>
+                                                </Col>
+                                            </Row>
+
+                                        </Form.Item>
+                                        <Form.Item {...tailFormItemLayout} className='Verification__Form__Item'>
+                                            <a className="verificationPage__Login__Button" href="javascript: return false;" onClick={() => (props.setPageProps({ page: 'LoginPage' }))}>Login now!</a>
+
+                                            <div className="verificationPage__Button">
+                                                <Button color={"green"}><Text color='white' cls='Large' content={"Verify"} fontSize='15' display="inline-block" /></Button>
+                                            </div>
+
+                                        </Form.Item>
+                                    </Form>
+                                    {/* </Spin> */}
+                                </div>
+                            </Content>
+                        </Layout>
+                    </Media>
+                </MediaContextProvider>
             }
         </div>
 
