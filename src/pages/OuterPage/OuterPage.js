@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import SockJS from "sockjs-client"
-import axios from 'axios';
+import axios from '../../components/axios/axios';
 import { Base64 } from 'js-base64';
 import { over } from "stompjs"
 import MemberPage from "../MemberPage/MemberPage";
@@ -119,7 +119,7 @@ const OuterPage = () => {
         // postID = (location.state === 'genewang7@gmail.com') ? 12345 : 67890
         if (!isConnect) {
             setIsConnect(true)
-            sock = new SockJS('/websocket')
+            sock = new SockJS('http://54.95.183.197:8080/websocket')
             stompClient = over(sock)
             stompClient.connect({}, onConnected, (err) => {
                 setIsConnect(false)
