@@ -4,7 +4,7 @@ import { Base64 } from 'js-base64';
 import { BellOutlined } from '@ant-design/icons';
 
 import { UserOutlined, SettingOutlined, LogoutOutlined } from '@ant-design/icons';
-import axios from "axios";
+import axios from "../../axios/axios";
 
 import './AvatarButton.css';
 import Text from "../../Text/Text";
@@ -67,7 +67,7 @@ function AvatarButton(props) {
         if (tempEmail)
             tempEmail = Base64.decode(tempEmail);
         setEmail(tempEmail);
-        axios.get("http://localhost:8080/user/name/" + tempEmail, {
+        axios.get("/user/name/" + tempEmail, {
 
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
@@ -97,7 +97,7 @@ function AvatarButton(props) {
         //console.log(props.changeAvatar);
         //console.log(avatarNum);
         if (props.changeAvatar > avatarNum) {
-            axios.get("http://localhost:8080/user/head/" + tempEmail, {
+            axios.get("/user/head/" + tempEmail, {
                 headers: {
                     'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
                 }

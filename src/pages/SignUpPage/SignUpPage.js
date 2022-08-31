@@ -4,7 +4,7 @@ import { Layout, Form, Input, Spin, message } from "antd";
 import { LoadingOutlined } from '@ant-design/icons';
 import Button from '../../components/Button/Button';
 import Text from '../../components/Text/Text';
-import axios from "axios";
+import axios from '../../components/axios/axios';
 import './SignUpPage.css'
 import Logo from '../../components/Navbar/Logo/Logo';
 import Cookie from '../../components/Cookies/Cookies';
@@ -52,7 +52,7 @@ function SignUpPage(props) {
     };
 
     const SignUp = () => {
-        axios.post("http://localhost:8080/verification/signup", {
+        axios.post("/verification/signup", {
             email: email,
             password: password,
             name: name,
@@ -79,7 +79,7 @@ function SignUpPage(props) {
     };
     useEffect(() => {
         if (openSuccess) {
-            axios.post("http://localhost:8080/verification/resendCode/" + email).then(res => {
+            axios.post("/verification/resendCode/" + email).then(res => {
                 console.log(res.data.msg);
             }).catch((error) => {
                 console.log(error.response.status);

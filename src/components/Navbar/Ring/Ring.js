@@ -4,7 +4,7 @@ import { BellOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 import './Ring.css';
 import Cookie from "../../Cookies/Cookies";
 import { Base64 } from 'js-base64';
-import axios from "axios";
+import axios from "../../axios/axios";
 const { Paragraph } = Typography;
 const cookieParser = new Cookie(document.cookie);
 function Ring(props) {
@@ -20,7 +20,7 @@ function Ring(props) {
             tempEmail = Base64.decode(tempEmail);
         setEmail(tempEmail);
         //console.log(tempEmail)
-        axios.get("http://localhost:8080/notification/" + tempEmail, {
+        axios.get("/notification/" + tempEmail, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
             }
@@ -105,7 +105,7 @@ function Ring(props) {
     const [ellipsis, setEllipsis] = useState(true);
     const setUnReadNumZero = () => {
         console.log('Authorization', 'Bearer ', cookieParser.getCookieByName("token"))
-        axios.put("http://localhost:8080/notification/unreadMessage/" + email, {}, {
+        axios.put("/notification/unreadMessage/" + email, {}, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token")
             }

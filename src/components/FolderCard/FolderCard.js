@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { List, message } from "antd";
 import PropTypes from 'prop-types';
 import { FolderOutlined, ArrowLeftOutlined, FileTextOutlined } from '@ant-design/icons';
-import axios from "axios";
+import axios from '../axios/axios';
 import Text from '../Text/Text';
 import './FolderCard.css'
 

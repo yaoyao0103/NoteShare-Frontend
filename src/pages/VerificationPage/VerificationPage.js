@@ -4,7 +4,7 @@ import { Layout, Form, Input, message, Row, Col, Tooltip, Spin } from "antd";
 import { ReloadOutlined, LoadingOutlined } from '@ant-design/icons';
 import Button from '../../components/Button/Button';
 import Text from '../../components/Text/Text';
-import axios from "axios";
+import axios from '../../components/axios/axios';
 import './VerificationPage.css'
 import Logo from '../../components/Navbar/Logo/Logo';
 import Cookie from '../../components/Cookies/Cookies';
@@ -53,7 +53,7 @@ function VerificationPage(props) {
     };
 
     const Verification = () => {
-        axios.put("http://localhost:8080/verification/verify/" + newEmail + "/" + code).then(res => {
+        axios.put("/verification/verify/" + newEmail + "/" + code).then(res => {
             console.log(res.data.msg);
             setOpenSuccess(true);
         }).catch((error) => {
@@ -82,7 +82,7 @@ function VerificationPage(props) {
 
     };
     const resend = () => {
-        axios.post("http://localhost:8080/verification/resendCode/" + newEmail).then(res => {
+        axios.post("/verification/resendCode/" + newEmail).then(res => {
             console.log(res.data.msg);
             setResendSuccess(true);
         }).catch((error) => {

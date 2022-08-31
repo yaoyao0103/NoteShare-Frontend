@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import axios from "../../../components/axios/axios";
 import { useSelector } from "react-redux";
 import { API_HOST } from "../../../api_utils";
 import geditorConfig from "../../../api_utils/geditor_config";

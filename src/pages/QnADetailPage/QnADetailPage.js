@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from "axios";
+import axios from '../../components/axios/axios';
 import PageDetailTemplate from "../../components/PageDetailTemplate/PageDetailTemplate"
 import PageDetailContentTemplate from '../../components/PageDetailContentTemplate/PageDetailContentTemplate';
 import { message } from "antd";
@@ -12,7 +12,7 @@ function QnADetailPage(props) {
 
     useEffect(() => {
         async function getQnAById() {
-            axios.get(`http://localhost:8080/post/${props.postId}`)
+            axios.get(`/post/${props.postId}`)
                 .then(res => {
                     setPost(res.data.res)
 

@@ -71,7 +71,8 @@ const OuterPage = () => {
     const [isChanging, setIsChanging] = useState(false);
     const [api, contextHolder] = notification.useNotification();
     const [pageLabel, setPageLabel] = useState(null)
-
+    const [screenCapture, setScreenCapture] = useState('');
+    
 
 
     const changePageNumber = (pageNumber) => {
@@ -118,7 +119,7 @@ const OuterPage = () => {
         // postID = (location.state === 'genewang7@gmail.com') ? 12345 : 67890
         if (!isConnect) {
             setIsConnect(true)
-            sock = new SockJS('http://localhost:8080/websocket')
+            sock = new SockJS('/websocket')
             stompClient = over(sock)
             stompClient.connect({}, onConnected, (err) => {
                 setIsConnect(false)
@@ -139,7 +140,7 @@ const OuterPage = () => {
         if (tempEmail)
             tempEmail = Base64.decode(tempEmail);
         let tempRing = ringNumber
-        axios.get("http://localhost:8080/bell/" + tempEmail, {
+        axios.get("/bell/" + tempEmail, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
             }
@@ -370,7 +371,7 @@ const OuterPage = () => {
                             <li>When the note is set downloadable, you can download the pdf file.</li>
                         </ul>
                         )
-                        setPageComponent(<NoteDetailPage page='NoteDetailPage' setLoggedIn={setLoggedIn} coinNum={coinNum} setCoinNum={setCoinNum} sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                        setPageComponent(<NoteDetailPage page='NoteDetailPage' screenCapture={screenCapture} setScreenCapture={setScreenCapture} setLoggedIn={setLoggedIn} coinNum={coinNum} setCoinNum={setCoinNum} sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
                     case 'NoteEditPage': 
                         setPageLabel("Edit a Note");
                         setInstruction(<ul>
@@ -497,7 +498,7 @@ const OuterPage = () => {
                             <li>If you are not a member of this collaborative note, you can apply it and leave some message for application</li>
                         </ul>
                         )
-                        setPageComponent(<CollabDetailPage page='CollabDetailPage' setLoggedIn={setLoggedIn} sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                        setPageComponent(<CollabDetailPage page='CollabDetailPage' screenCapture={screenCapture} setScreenCapture={setScreenCapture} setLoggedIn={setLoggedIn} sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
                     case 'CollabEditPage': 
                         setPageLabel("Edit a Collaborative Note Post"); 
                         setInstruction(<ul>

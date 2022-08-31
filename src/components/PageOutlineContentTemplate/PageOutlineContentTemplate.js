@@ -9,7 +9,7 @@ import './PageOutlineContentTemplate.css'
 import { LoadingOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 import Cookie from "../Cookies/Cookies";
 import { Base64 } from "js-base64";
-import axios from "axios";
+import axios from "../axios/axios";
 import { createMedia } from "@artsy/fresnel"
 const { MediaContextProvider, Media } = createMedia({
     breakpoints: {

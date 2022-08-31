@@ -4,7 +4,7 @@ import { Layout, Form, Input, message, Row, Col, Tooltip, Spin } from "antd";
 import { ReloadOutlined, LoadingOutlined } from '@ant-design/icons';
 import Button from '../../components/Button/Button';
 import Text from '../../components/Text/Text';
-import axios from "axios";
+import axios from '../../components/axios/axios';
 import './ResetPasswordPage.css'
 import Logo from '../../components/Navbar/Logo/Logo';
 import Cookie from '../../components/Cookies/Cookies';
@@ -57,7 +57,7 @@ function ResetPasswordPage(props) {
     const ResetPassword = () => {
         console.log(oldPassword);
         console.log(newPassword);
-        axios.post("http://localhost:8080/verification/resetPassword", { password: oldPassword, newPassword: newPassword, email: props.email, }, {
+        axios.post("/verification/resetPassword", { password: oldPassword, newPassword: newPassword, email: props.email, }, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
             }

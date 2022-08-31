@@ -8,7 +8,7 @@ import InformationInput from "../InformationInput/InformationInput";
 import { QnA, Reward, CollabNote } from "./InfoCategories"
 import { QnAFormat, RewardFormat, CollabNoteFormat } from "./PostFormat"
 import './PostEditTemplate.css';
-import axios from "axios";
+import axios from "../axios/axios";
 import { NoteFormat, VersionFormat, ContentFormat } from "../NoteEditTemplate/NoteFormat";
 import Cookie from "../Cookies/Cookies";
 import { Base64 } from 'js-base64';
@@ -130,7 +130,7 @@ const PostEditTemplate = (props) => {
             page = 'CollabDetailPage'
         }
         console.log(post)
-        axios.put(`http://localhost:8080/post/${props.postId}`, post, {
+        axios.put(`/post/${props.postId}`, post, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
             }
@@ -210,7 +210,7 @@ const PostEditTemplate = (props) => {
         let cookieParser = new Cookie(document.cookie);
         let name = cookieParser.getCookieByName('name');
         let avatar = cookieParser.getCookieByName('avatar');
-        axios.post(`http://localhost:8080/post/${email}`, data, {
+        axios.post(`/post/${email}`, data, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
             }
@@ -232,7 +232,7 @@ const PostEditTemplate = (props) => {
                     VersionFormat.name = "default"
                     VersionFormat.slug = "default"
                     VersionFormat.content = [ContentFormat]
-                    axios.put(`http://localhost:8080/note/${tempId}/0`, VersionFormat, {
+                    axios.put(`/note/${tempId}/0`, VersionFormat, {
                         headers: {
                             'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
                         }

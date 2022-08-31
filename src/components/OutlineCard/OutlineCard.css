@@ -3,7 +3,9 @@
    
     .OutlineCard__Layout__Outer__Post{
         position:relative;
-        height: 20em;
+     
+        height:auto;
+        min-height: 20em;
         width: 45%;
         max-width: 45%;
         background-color: #fff;
@@ -13,7 +15,8 @@
     }
     .OutlineCard__Layout__Outer__Post:hover{
         position:relative;
-        height: 20em;
+        height:auto;
+        min-height: 20em;
         width:45%;
         background-color: #fff;
         transform: scale(1.005);
@@ -281,7 +284,8 @@
    
     .OutlineCard__Layout__Outer__Post{
         position:relative;
-        height: 20em;
+        height:auto;
+        min-height: 20em;
         width: 45%;
         max-width: 45%;
         background-color: #fff;
@@ -291,7 +295,8 @@
     }
     .OutlineCard__Layout__Outer__Post:hover{
         position:relative;
-        height: 20em;
+        height:auto;
+        min-height: 20em;
         width:45%;
         background-color: #fff;
         transform: scale(1.005);
@@ -559,7 +564,8 @@
    
     .OutlineCard__Layout__Outer__Post{
         position:relative;
-        height: 20em;
+        height:auto;
+        min-height: 20em;
         width: 90%;
         max-width: 90%;
         background-color: #fff;
@@ -569,7 +575,8 @@
     }
     .OutlineCard__Layout__Outer__Post:hover{
         position:relative;
-        height: 20em;
+        height:auto;
+        min-height: 20em;
         width:90%;
         background-color: #fff;
         transform: scale(1.005);
@@ -837,7 +844,8 @@
    
     .OutlineCard__Layout__Outer__Post{
         position:relative;
-        height: 20em;
+        height:auto;
+        min-height: 20em;
         width: 90%;
         max-width: 90%;
         background-color: #fff;
@@ -847,7 +855,8 @@
     }
     .OutlineCard__Layout__Outer__Post:hover{
         position:relative;
-        height: 20em;
+        height:auto;
+        min-height: 20em;
         width:90%;
         background-color: #fff;
         transform: scale(1.005);
@@ -1117,7 +1126,8 @@
    
     .OutlineCard__Layout__Outer__Post{
         position:relative;
-        height: 20em;
+        height:auto;
+        min-height: 20em;
         width: 90%;
         max-width: 90%;
         background-color: #fff;
@@ -1127,7 +1137,8 @@
     }
     .OutlineCard__Layout__Outer__Post:hover{
         position:relative;
-        height: 20em;
+        height:auto;
+        min-height: 20em;
         width:90%;
         background-color: #fff;
         transform: scale(1.005);

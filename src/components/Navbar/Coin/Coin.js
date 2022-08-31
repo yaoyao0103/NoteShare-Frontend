@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { message } from 'antd';
 import { Base64 } from 'js-base64';
 import { DollarOutlined } from '@ant-design/icons';
-import axios from "axios";
+import axios from "../../axios/axios";
 
 import './Coin.css';
 import Text from "../../Text/Text";
@@ -15,7 +15,7 @@ function Coin(props) {
 
     function getCoinByEmail(Email) {
 
-        axios.get("http://localhost:8080/user/" + Email, {
+        axios.get("/user/" + Email, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
             }

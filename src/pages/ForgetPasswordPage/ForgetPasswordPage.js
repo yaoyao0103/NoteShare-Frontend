@@ -4,7 +4,7 @@ import { Layout, Form, Input, message } from "antd";
 import { LoadingOutlined } from '@ant-design/icons';
 import Button from '../../components/Button/Button';
 import Text from '../../components/Text/Text';
-import axios from "axios";
+import axios from '../../components/axios/axios';
 import './ForgetPasswordPage.css'
 import Cookie from '../../components/Cookies/Cookies';
 import { createMedia } from "@artsy/fresnel"
@@ -51,9 +51,9 @@ function ForgetPasswordPage(props) {
 
 
     const resend = () => {
-        axios.get("http://localhost:8080/user/" + email).then(res => {
+        axios.get("/user/" + email).then(res => {
             console.log(res.data.res);
-            axios.post("http://localhost:8080/verification/resendCode/" + email).then(res => {
+            axios.post("/verification/resendCode/" + email).then(res => {
                 console.log(res.data.msg);
             }).catch((error) => {
                 console.log(error.response.status)

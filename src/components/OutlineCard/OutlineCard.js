@@ -5,7 +5,7 @@ import { EllipsisOutlined, LikeOutlined, LikeTwoTone } from '@ant-design/icons';
 import OPInfo from '../OPInfo/OPInfo';
 import Title from "../Title/Title";
 import Text from "../Text/Text";
-import axios from "axios";
+import axios from "../axios/axios";
 import { Avatar } from 'antd';
 import './OutlineCard.css'
 import Cookie from "../Cookies/Cookies";
@@ -75,7 +75,7 @@ function OutlineCard(props) {
     }, [likeNum])
     const likeNote = () => {
         if (cookieParser.getCookieByName('email')) {
-            axios.put('http://localhost:8080/like/note/' + props.cardContent.id + '/' + props.email, {}, {
+            axios.put('/like/note/' + props.cardContent.id + '/' + props.email, {}, {
                 headers: {
                     'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
                 }
@@ -112,7 +112,7 @@ function OutlineCard(props) {
     }
     const unLikeNote = () => {
         if (cookieParser.getCookieByName('email')) {
-            axios.put('http://localhost:8080/unlike/note/' + props.cardContent.id + '/' + props.email, {}, {
+            axios.put('/unlike/note/' + props.cardContent.id + '/' + props.email, {}, {
                 headers: {
                     'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
                 }
@@ -989,7 +989,7 @@ function OutlineCard(props) {
                                             : false
                                     }
                                 >
-                                    {props.cardContent.description}
+                                    {props.cardContent.description?props.cardContent.description:props.cardContent.content}
                                 </Paragraph>
                             </Content>
                             {props.mode == 'Note' &&
@@ -1039,7 +1039,7 @@ function OutlineCard(props) {
                                             : false
                                     }
                                 >
-                                    {props.cardContent.description}
+                                   {props.cardContent.description?props.cardContent.description:props.cardContent.content}
                                 </Paragraph>
                             </Content>
                             {props.mode == 'Note' &&
@@ -1089,7 +1089,7 @@ function OutlineCard(props) {
                                             : false
                                     }
                                 >
-                                    {props.cardContent.description}
+                                    {props.cardContent.description?props.cardContent.description:props.cardContent.content}
                                 </Paragraph>
                             </Content>
                             {props.mode == 'Note' &&
@@ -1140,7 +1140,7 @@ function OutlineCard(props) {
                                             : false
                                     }
                                 >
-                                    {props.cardContent.description}
+                                    {props.cardContent.description?props.cardContent.description:props.cardContent.content}
                                 </Paragraph>
                             </Content>
                             {props.mode == 'Note' &&
@@ -1191,7 +1191,7 @@ function OutlineCard(props) {
                                             : false
                                     }
                                 >
-                                    {props.cardContent.description}
+                                   {props.cardContent.description?props.cardContent.description:props.cardContent.content}
                                 </Paragraph>
                             </Content>
                             {props.mode == 'Note' &&

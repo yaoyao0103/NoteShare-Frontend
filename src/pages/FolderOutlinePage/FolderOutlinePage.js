@@ -3,7 +3,7 @@ import Navbar from '../../components/Navbar/Navbar';
 import PageOutlineTemplate from '../../components/PageOutlineTemplate/PageOutlineTemplate';
 import PageOutlineContentTemplate from '../../components/PageOutlineContentTemplate/PageOutlineContentTemplate';
 import { Layout, message } from "antd";
-import axios from "axios";
+import axios from '../../components/axios/axios';
 import Cookie from '../../components/Cookies/Cookies';
 const cookieParser = new Cookie(document.cookie)
 const { Header, Content, Footer } = Layout;
@@ -17,7 +17,7 @@ function FolderOutlinePage(props) {
         //console.log(props.headerName)
         async function getFolderById() {
             try {
-                await axios.get('http://localhost:8080/search/folder/' + String(props.pageNumber - 1) + '/20?keyword=' + (props.keyword ? props.keyword : '') + '&creator=' + (props.headerName ? props.headerName : '')).then((res) => {
+                await axios.get('/search/folder/' + String(props.pageNumber - 1) + '/20?keyword=' + (props.keyword ? props.keyword : '') + '&creator=' + (props.headerName ? props.headerName : '')).then((res) => {
                     //console.log(res.data.search);
                     setFolder(oldArray => [...oldArray = [], res.data.search]);
                     props.setLoading(false)
@@ -51,7 +51,7 @@ function FolderOutlinePage(props) {
             try {
 
 
-                await axios.get('http://localhost:8080/search/folder/' + String(props.pageNumber - 1) + '/20?keyword=' + (props.keyword ? props.keyword : '') + '&creator=' + (props.headerName ? props.headerName : '')).then((res) => {
+                await axios.get('/search/folder/' + String(props.pageNumber - 1) + '/20?keyword=' + (props.keyword ? props.keyword : '') + '&creator=' + (props.headerName ? props.headerName : '')).then((res) => {
                     setFolder(oldArray => [...oldArray = [], res.data.search]);
                     //window.scrollTo(0, 0);
                     //console.log(pageNumber);

@@ -18,6 +18,7 @@ import MyEditor from "../MyEditor/MyEditor";
 import axios from "../axios/axios";
 import Cookie from '../../components/Cookies/Cookies';
 import { Base64 } from 'js-base64';
+import { ScreenCapture } from "react-screen-capture";
 const { Header, Content, Sider, Footer } = Layout;
 const { Option } = Select;
 const cookieParser = new Cookie(document.cookie)
@@ -59,6 +60,7 @@ const PageDetailContentTemplate = (props) => {
     const [quoteRate, setQuoteRate] = useState(null)
     const [plagiarismRateResult, setPlagiarismRateResult] = useState(null)
     const [quoteRateResult, setQuoteRateResult] = useState(null)
+    const [screenCapture, setScreenCapture] = useState('');
 
     useEffect(() => {
 
@@ -103,7 +105,7 @@ const PageDetailContentTemplate = (props) => {
             setNoteId(noteId);
             setType("collaboration")
             setIsPublic(props.data?.public)
-            axios.get(`http://localhost:8080/note/${noteId}`)
+            axios.get(`/note/${noteId}`)
                 .then(res => {
                     console.log(res.data.res)
                     const tempNote = res.data.res
@@ -295,6 +297,10 @@ const PageDetailContentTemplate = (props) => {
     }, [isManager, author])
 
 
+    const handleScreenCapture = (screenCapture) => {
+        console.log(screenCapture)
+        setScreenCapture(screenCapture);
+    };
 
     const setVersion = (index) => {
         if (props.page == "NoteDetailPage")
@@ -311,7 +317,7 @@ const PageDetailContentTemplate = (props) => {
                 commentFromApplicant: content
             }
             console.log("data", data)
-            axios.put(`http://localhost:8080/post/apply/${props.postId}`, data, {
+            axios.put(`/post/apply/${props.postId}`, data, {
                 headers: {
                     'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
                 }
@@ -351,7 +357,7 @@ const PageDetailContentTemplate = (props) => {
         let avatar = cookieParser.getCookieByName('avatar');
         let success = false;
         if (email) {
-            axios.put(`http://localhost:8080/coin/note/${email}/${props.noteId}`, {}, {
+            axios.put(`/coin/note/${email}/${props.noteId}`, {}, {
                 headers: {
                     'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
                 }
@@ -401,7 +407,7 @@ const PageDetailContentTemplate = (props) => {
     }
 
     const submitRewardNote = () => {
-        axios.put(`http://localhost:8080/note/submit/${props.noteId}`, {}, {
+        axios.put(`/note/submit/${props.noteId}`, {}, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
             }
@@ -431,7 +437,7 @@ const PageDetailContentTemplate = (props) => {
     }
 
     const withdrawRewardNote = () => {
-        axios.put(`http://localhost:8080/note/withdraw/${props.noteId}`, {}, {
+        axios.put(`/note/withdraw/${props.noteId}`, {}, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
             }
@@ -474,7 +480,7 @@ const PageDetailContentTemplate = (props) => {
             kickTargetEmail: kickTarget,
         }
         console.log("data", data)
-        axios.post(`http://localhost:8080/schedule/vote/${props.postId}`, data, {
+        axios.post(`/schedule/vote/${props.postId}`, data, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
             }
@@ -517,7 +523,7 @@ const PageDetailContentTemplate = (props) => {
     //////////////////////////
 
     const refreshAnswer = () => {
-        axios.get(`http://localhost:8080/post/${props.postId}`)
+        axios.get(`/post/${props.postId}`)
             .then(res => {
                 setPoppedContent(res.data.res.answersUserObj);
             })
@@ -553,6 +559,8 @@ const PageDetailContentTemplate = (props) => {
     return (
 
         <div className="contentTemplate" >
+
+            <img style={{ cursor: 'pointer' }} src={screenCapture} alt="react-screen-capture" />
             <Layout className="contentTemplate__Layout__outer">
                 <Layout className="contentTemplate__Layout">
                     {/* Header */}
@@ -630,7 +638,7 @@ const PageDetailContentTemplate = (props) => {
                                     unlockCount={props.data?.unlockCount}
                                     bestPrice={props.data?.bestPrice ? props.data?.bestPrice : props.data?.price}
                                     referencePrice={props.data?.referencePrice}
-                                    remainBest={props.page=="RewardDetailPage"?1 - bestNum:null}
+                                    remainBest={props.page == "RewardDetailPage" ? 1 - bestNum : null}
                                     remainRef={props.data?.referenceNumber}
                                     downloadable={props.data?.downloadable}
                                     public={isPublic}
@@ -649,15 +657,24 @@ const PageDetailContentTemplate = (props) => {
                                 <Text color='black' cls='Small' content={"Content:"} fontSize='22' display="inline-block" />
                             </Col>
                         </Row>
+
                         <Row className='contentTemplate__Row'>
                             <Col className='contentTemplate__Content__Main'>
+
+
+
+
                                 {(props.page == 'NoteDetailPage' || (props.page == 'CollabDetailPage' && isAuthor)) ?
                                     editor
                                     :
                                     props.data?.content
                                 }
+
                             </Col>
+
                         </Row>
+
+
                     </Content>
                     {/* Footer */}
 
@@ -802,6 +819,8 @@ const PageDetailContentTemplate = (props) => {
             <Drawer title={"Comment"} placement="right" onClose={onClose} visible={visible}>
                 <CommentArea setLoggedIn={props.setLoggedIn} setPageProps={props.setPageProps} page={props.page} type="note" comments={props.data?.commentsUserObj ? props.data.commentsUserObj : []} id={props.postId ? props.postId : props.noteId} />
             </Drawer>
+
+
         </div>
     );
 }

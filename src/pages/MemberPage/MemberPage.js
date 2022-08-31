@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Navbar from '../../components/Navbar/Navbar';
 import PageOutlineTemplate from '../../components/PageOutlineTemplate/PageOutlineTemplate';
 import PageOutlineContentTemplate from '../../components/PageOutlineContentTemplate/PageOutlineContentTemplate';
-import axios from "axios";
+import axios from '../../components/axios/axios';
 import { message } from "antd";
 import Cookie from '../../components/Cookies/Cookies';
 import { Base64 } from 'js-base64';
@@ -54,7 +54,7 @@ function MemberPage(props) {
     }
     async function getFollowingNoteById(email) {
         try {
-            await axios.get('http://localhost:8080/note/following/' + email + '/' + String(props.pageNumber - 1) + '/10', {
+            await axios.get('/note/following/' + email + '/' + String(props.pageNumber - 1) + '/10', {
                 headers: {
                     'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
                 }
@@ -89,7 +89,7 @@ function MemberPage(props) {
         try {
 
             //console.log(props.department);
-            await axios.get('http://localhost:8080/note/hotNotes/' + String(props.pageNumber - 1) + '/10').then((res) => {
+            await axios.get('/note/hotNotes/' + String(props.pageNumber - 1) + '/10').then((res) => {
                 setNote(oldArray => [...oldArray, res.data.res]);
                 props.setLoading(false)
             });

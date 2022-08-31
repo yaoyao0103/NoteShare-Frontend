@@ -3,7 +3,7 @@ import Navbar from '../../components/Navbar/Navbar';
 import PageOutlineTemplate from '../../components/PageOutlineTemplate/PageOutlineTemplate';
 import PageOutlineContentTemplate from '../../components/PageOutlineContentTemplate/PageOutlineContentTemplate';
 import { Layout, message } from "antd";
-import axios from "axios";
+import axios from '../../components/axios/axios';
 import Cookie from '../../components/Cookies/Cookies';
 const cookieParser = new Cookie(document.cookie)
 const { Header, Content, Footer } = Layout;
@@ -18,7 +18,7 @@ function RewardOutlinePage(props) {
             try {
                 const sortBy = props.sortMode;
 
-                await axios.get('http://localhost:8080/search/post/' + String(props.pageNumber - 1) + '/20?keyword=' + (props.keyword ? props.keyword : '') + '&department=' + (props.department ? props.department : '') + '&subject=' + (props.subject ? props.subject : '') + '&haveReward=' + true + '&sortBy=' + sortBy).then((res) => {
+                await axios.get('/search/post/' + String(props.pageNumber - 1) + '/20?keyword=' + (props.keyword ? props.keyword : '') + '&department=' + (props.department ? props.department : '') + '&subject=' + (props.subject ? props.subject : '') + '&haveReward=' + true + '&sortBy=' + sortBy).then((res) => {
 
                     setReward(oldArray => [...oldArray, res.data.search]);
                     props.setLoading(false)

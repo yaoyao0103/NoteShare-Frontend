@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "../../components/axios/axios";
 import { API_HOST } from "../../api_utils";
 import Cookie from "../../components/Cookies/Cookies";
 const cookieParser =new Cookie(document.cookie)

@@ -5,7 +5,7 @@ import { UserAddOutlined } from '@ant-design/icons';
 import Text from '../Text/Text';
 import { message } from 'antd';
 import './FansNFollowerEditor.css'
-import axios from "axios";
+import axios from '../axios/axios';
 import Cookie from '../Cookies/Cookies';
 import { createMedia } from "@artsy/fresnel"
 const cookieParser = new Cookie(document.cookie)
@@ -26,7 +26,7 @@ function FansNFollowerEditor(props) {
     const [visible, setVisible] = useState(false);
     const removeFans = () => {
         if (!isFans) {
-            axios.put("http://localhost:8080/follow/" + props.targetEmail + '/' + props.email, {}, {
+            axios.put("/follow/" + props.targetEmail + '/' + props.email, {}, {
                 headers: {
                     'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
                 }
@@ -61,7 +61,7 @@ function FansNFollowerEditor(props) {
         else {
             //console.log('props.targetEmail ', props.targetEmail)
             //console.log('props.email', props.email)
-            axios.put("http://localhost:8080/unfollow/" + props.targetEmail + '/' + props.email, {}, {
+            axios.put("/unfollow/" + props.targetEmail + '/' + props.email, {}, {
 
                 headers: {
                     'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
@@ -95,7 +95,7 @@ function FansNFollowerEditor(props) {
     }
     const cancelFollowing = () => {
         if (!isFollow) {
-            axios.put("http://localhost:8080/follow/" + props.email + '/' + props.targetEmail, {}, {
+            axios.put("/follow/" + props.email + '/' + props.targetEmail, {}, {
 
                 headers: {
                     'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
@@ -130,7 +130,7 @@ function FansNFollowerEditor(props) {
             })
         }
         else {
-            axios.put("http://localhost:8080/unfollow/" + props.email + '/' + props.targetEmail, {}, {
+            axios.put("/unfollow/" + props.email + '/' + props.targetEmail, {}, {
                 headers: {
                     'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
                 }

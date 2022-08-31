@@ -1,7 +1,7 @@
 //import "./Editor.css"
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
+import axios from "../axios/axios";
 import { useSelector } from "react-redux";
 import { API_HOST } from "../../api_utils";
 import Sidebar from "../Page/Sidebar";

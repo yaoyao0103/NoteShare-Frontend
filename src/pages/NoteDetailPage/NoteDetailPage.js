@@ -13,7 +13,7 @@ function NoteDetailPage(props) {
     useEffect(() => {
         //console.log('1234')
         async function getNoteById() {
-            axios.get(`http://localhost:8080/note/${props.noteId}`)
+            axios.get(`/note/${props.noteId}`)
                 .then(res => {
                     setNote(res.data.res)
                     console.log("Note Response:", res.data.res)
@@ -47,7 +47,7 @@ function NoteDetailPage(props) {
             {/* <PageDetailTemplate page={page}>
                 <PageDetailContentTemplate page={page} data={note} noteId={props.noteId}/>
             </PageDetailTemplate> */}
-            <PageDetailContentTemplate setLoggedIn={props.setLoggedIn} setLoading={props.setLoading} coinNum={props.coinNum} setCoinNum={props.setCoinNum} sendPrivateMessage={props.sendPrivateMessage} page={page} data={note} noteId={props.noteId} setPageProps={props.setPageProps} />
+            <PageDetailContentTemplate screenCapture={props.screenCapture} setScreenCapture={props.setScreenCapture}setLoggedIn={props.setLoggedIn} setLoading={props.setLoading} coinNum={props.coinNum} setCoinNum={props.setCoinNum} sendPrivateMessage={props.sendPrivateMessage} page={page} data={note} noteId={props.noteId} setPageProps={props.setPageProps} />
         </>
 
     );

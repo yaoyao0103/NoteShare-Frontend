@@ -1,6 +1,7 @@
 import grapesjs from "grapesjs";
 import gjsBlockBasic from "grapesjs-blocks-basic";
 import $ from "jquery";
+import { API_HOST } from ".";
 
 //import typed from "grapesjs-typed";
 //import tUIImageEditor from "grapesjs-tui-image-editor";
@@ -56,6 +57,7 @@ async function geditorConfig(assets, noteId, version, isCollab, email, username,
     username: username,
     avatar: avatar,
     setQueue: setQueue,
+    url:`${API_HOST}`,
     container: "#editor",
     blockManager: {
       appendTo: "#blocks",

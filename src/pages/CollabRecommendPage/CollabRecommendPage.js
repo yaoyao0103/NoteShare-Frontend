@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Navbar from '../../components/Navbar/Navbar';
 import PageOutlineTemplate from '../../components/PageOutlineTemplate/PageOutlineTemplate';
 import PageOutlineContentTemplate from '../../components/PageOutlineContentTemplate/PageOutlineContentTemplate';
-import axios from "axios";
+import axios from '../../components/axios/axios';
 import { message } from "antd";
 import Cookie from '../../components/Cookies/Cookies';
 const cookieParser = new Cookie(document.cookie)
@@ -17,7 +17,7 @@ function CollabRecommendPage(props) {
         props.setLoading(true);
         async function getCollabById() {
             try {
-                await axios.get('http://localhost:8080/post/hotPosts/' + String(props.pageNumber - 1) + '/20/collaboration').then((res) => {
+                await axios.get('/post/hotPosts/' + String(props.pageNumber - 1) + '/20/collaboration').then((res) => {
                     //console.log(res.data.res)
                     setCollab(oldArray => [...oldArray, res.data.res]);
                     props.setLoading(false);

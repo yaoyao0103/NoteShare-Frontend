@@ -5,7 +5,7 @@ import { Base64 } from 'js-base64';
 import Button from '../../components/Button/Button';
 import { LockOutlined, MailOutlined } from '@ant-design/icons';
 import Text from '../../components/Text/Text';
-import axios from "axios";
+import axios from '../../components/axios/axios';
 import Cookie from '../../components/Cookies/Cookies';
 import './LoginPage.css'
 import Logo from '../../components/Navbar/Logo/Logo';
@@ -100,7 +100,7 @@ function LoginPage(props) {
             document.cookie = "rPassword=" + str;
             //console.log('1111111')
         }
-        axios.post("http://localhost:8080/verification/login", {
+        axios.post("/verification/login", {
             email: email,
             password: password
         }).then(res => {
@@ -112,7 +112,7 @@ function LoginPage(props) {
             }
             else {
                 message.warn("You have not activate your account!")
-                axios.post("http://localhost:8080/verification/resendCode/" + email).then(res => {
+                axios.post("/verification/resendCode/" + email).then(res => {
                     //console.log(res.data.msg);
                 }).catch((error) => {
                     console.log(error.response.status);

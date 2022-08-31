@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PageOutlineTemplate from '../../components/PageOutlineTemplate/PageOutlineTemplate';
 import PageOutlineContentTemplate from '../../components/PageOutlineContentTemplate/PageOutlineContentTemplate';
-import axios from "axios";
+import axios from '../../components/axios/axios';
 import { message } from "antd";
 import Cookie from '../../components/Cookies/Cookies';
 const cookieParser = new Cookie(document.cookie)
@@ -18,7 +18,7 @@ function TagOutlinePage(props) {
                 const sortBy = props.sortMode;
                 console.log(sortBy)
                 //console.log(props.department);
-                await axios.get('http://localhost:8080/search/tag/' + String(props.pageNumber - 1) + '/10/' + (props.tag ? props.tag : '')).then((res) => {
+                await axios.get('/search/tag/' + String(props.pageNumber - 1) + '/10/' + (props.tag ? props.tag : '')).then((res) => {
                     console.log(res.data.search)
                     setNote(oldArray => [...oldArray, res.data.search]);
                     props.setLoading(false)
