@@ -119,7 +119,7 @@ const OuterPage = () => {
         // postID = (location.state === 'genewang7@gmail.com') ? 12345 : 67890
         if (!isConnect) {
             setIsConnect(true)
-            sock = new SockJS('http://54.95.183.197:8080/websocket')
+            sock = new SockJS('http://localhost8080/websocket')
             stompClient = over(sock)
             stompClient.connect({}, onConnected, (err) => {
                 setIsConnect(false)
