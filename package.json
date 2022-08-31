@@ -37,8 +37,6 @@
     "redux": "^4.1.1",
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.3.0",
-    "sass": "^1.26.5",
-    "sass-loader": "^8.0.2",
     "save": "^2.5.0",
     "sockjs-client": "^1.6.1",
     "stompjs": "^2.3.3",
