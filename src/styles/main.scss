@@ -1,4 +1,4 @@
-
+@import "../../node_modules/bootstrap/scss/bootstrap";
 
 body {
   margin: 0;
@@ -15,6 +15,9 @@ html {
   scrollbar-width: none;
 }
 
+::-webkit-scrollbar {
+  //display: none;
+}
 
 /* This rule is applied to the link <a> tag. It lets you turn off the link underline and set the link text color. */
 .nav-link {
@@ -27,4 +30,3 @@ p{
   margin-top: 0.3em;
   margin-bottom: 0.3em;
 }
-
