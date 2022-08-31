@@ -5,9 +5,11 @@ import NumericInput from '../NumericInput/NumericInput';
 import "./InformationInput.css"
 const { Option } = Select;
 
-const data = require("../../EducationSetV2.json");
+const data = require("../../EducationSet.json");
+const data2 = require("../../EducationSetV2.json");
 
-const InformationInput = ({information, setInformation, notShowSwitch}) => {
+
+const InformationInput = ({information, setInformation, notShowSwitch, page}) => {
 
     return (
     <div className="informationInput">
@@ -16,7 +18,7 @@ const InformationInput = ({information, setInformation, notShowSwitch}) => {
                 <Text color='black' cls='Small' content={"School"} fontSize='15' display="inline-block" />
                 {/* <Input showCount maxLength={20} placeholder="school" onChange={(ev) => setInformation({...information, school: ev.target.value})} value={information?.school} />  */}
                 <Select showSearch className="informationInput__item__Dropdown" onChange={(school) => setInformation({...information, school: school})} value={information?.school}>
-                    {Object.keys(data).map((school, index) => (
+                    {Object.keys(data2).map((school, index) => (
                         <Option key={school}>{school}</Option>
                     )
                     )}
@@ -28,7 +30,11 @@ const InformationInput = ({information, setInformation, notShowSwitch}) => {
                 <Text color='black' cls='Small' content={"Department"} fontSize='15' display="inline-block" />
                 {/* <Input showCount maxLength={20} placeholder="department" onChange={(ev) => setInformation({...information, department: ev.target.value})} value={information?.department} />  */}
                 <Select showSearch className="informationInput__item__Dropdown" onChange={(department) => setInformation({...information, department: department})} value={information?.department}>
-                    {information?.school&& data[information?.school].map((department, index) => (
+                    {information?.school && data2[information?.school].map((department, index) => (
+                        <Option key={department}>{department}</Option>
+                    )
+                    )}
+                    {(page == 'QnAEditPage' || page == 'QnANewPage') && data.departments.map((department, index) => (
                         <Option key={department}>{department}</Option>
                     )
                     )}

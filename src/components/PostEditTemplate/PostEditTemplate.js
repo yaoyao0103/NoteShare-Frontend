@@ -312,6 +312,7 @@ const PostEditTemplate = (props) => {
                             <InformationInput
                                 information={information}
                                 setInformation={setInformation}
+                                page={props.page}
                             />
                         </Col>
                     </Row>
