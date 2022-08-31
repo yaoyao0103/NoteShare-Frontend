@@ -7,6 +7,16 @@ import Text from '../../components/Text/Text';
 import axios from "axios";
 import './ForgetPasswordPage.css'
 import Cookie from '../../components/Cookies/Cookies';
+import { createMedia } from "@artsy/fresnel"
+const { MediaContextProvider, Media } = createMedia({
+    breakpoints: {
+        sm: 0,
+        lm: 391,
+        md: 768,
+        lg: 1024,
+        xl: 1192,
+    },
+})
 const { Sider, Content } = Layout;
 const cookieParser = new Cookie(document.cookie)
 function ForgetPasswordPage(props) {
@@ -157,63 +167,299 @@ function ForgetPasswordPage(props) {
     return (
         <div className='ForgetPasswordPage'>
             {render &&
-                <Layout className='ForgetPasswordPage__Outer'>
-                    <Sider className='ForgetPasswordPage__Sider' width={"60%"}>
-                        <img src="https://static.vecteezy.com/system/resources/previews/003/410/006/original/continuous-one-line-drawing-of-hand-writing-with-a-pen-on-paper-vector.jpg" alt="一張圖片" />
-                    </Sider>
-                    <Content className='ForgetPasswordPage__Content'>
-                        <div className='ForgetPasswordPage__Content__Text'>
-                            <Text color='black' cls='Large' content='Welcome to Note' fontSize='22' />
-                            <Text color='purple' cls='Large' content='Share' fontSize='22' />
-                        </div>
-                        <div className='ForgetPasswordPage__Content__Text ForgetPasswordPage__Content__Text__Bottom'>
-                            <Text color='black' cls='Default' content='Write your own note!' fontSize='10' />
-                        </div>
-                        <div className="ForgetPasswordPage__Form">
-                            <Form
-                                {...formItemLayout}
-                                name="register"
-                                onFinish={onFinish}
-                                initialValues={{
-
-                                }}
-                                scrollToFirstError
-                            >
-                                <div className='ForgetPasswordPage__Content__Form__Text'>
-                                    <Text color='black' cls='Small' content='Email' fontSize='13' />
+                <MediaContextProvider>
+                    <Media at="xl" className='ForgetPasswordPage__Media'>
+                        <Layout className='ForgetPasswordPage__Outer'>
+                            <Sider className='ForgetPasswordPage__Sider' width={"60%"}>
+                                <img src="https://static.vecteezy.com/system/resources/previews/003/410/006/original/continuous-one-line-drawing-of-hand-writing-with-a-pen-on-paper-vector.jpg" alt="一張圖片" />
+                            </Sider>
+                            <Content className='ForgetPasswordPage__Content'>
+                                <div className='ForgetPasswordPage__Content__Text'>
+                                    <Text color='black' cls='Large' content='Welcome to Note' fontSize='22' />
+                                    <Text color='purple' cls='Large' content='Share' fontSize='22' />
                                 </div>
-                                <Form.Item
-                                    name="email"
-                                    className='Verification__Form__Item'
+                                <div className='ForgetPasswordPage__Content__Text ForgetPasswordPage__Content__Text__Bottom'>
+                                    <Text color='black' cls='Default' content='Write your own note!' fontSize='10' />
+                                </div>
+                                <div className="ForgetPasswordPage__Form">
+                                    <Form
+                                        {...formItemLayout}
+                                        name="register"
+                                        onFinish={onFinish}
+                                        initialValues={{
 
-                                    rules={[
-                                        {
-                                            type: 'email',
-                                            message: 'The input is not valid E-mail!',
-                                        },
-                                        {
-                                            required: true,
-                                            message: 'Please input your E-mail!',
-                                        },
-                                    ]}
-                                >
-                                    <Input placeholder='Email' onChange={(e) => { setEmail(e.target.value) }} />
+                                        }}
+                                        scrollToFirstError
+                                    >
+                                        <div className='ForgetPasswordPage__Content__Form__Text'>
+                                            <Text color='black' cls='Small' content='Email' fontSize='13' />
+                                        </div>
+                                        <Form.Item
+                                            name="email"
+                                            className='Verification__Form__Item'
 
-                                </Form.Item>
+                                            rules={[
+                                                {
+                                                    type: 'email',
+                                                    message: 'The input is not valid E-mail!',
+                                                },
+                                                {
+                                                    required: true,
+                                                    message: 'Please input your E-mail!',
+                                                },
+                                            ]}
+                                        >
+                                            <Input placeholder='Email' onChange={(e) => { setEmail(e.target.value) }} />
 
-                                <Form.Item {...tailFormItemLayout} className='Verification__Form__Item'>
-                                    <a className="ForgetPasswordPage__Login__Button" href="javascript: return false;" onClick={() => (props.setPageProps({ page: 'LoginPage' }))}>Login now!</a>
+                                        </Form.Item>
 
-                                    <div className="ForgetPasswordPage__Button">
-                                        <Button color={"green"}><Text color='white' cls='Large' content={"Send verify code"} fontSize='15' display="inline-block" /></Button>
-                                    </div>
+                                        <Form.Item {...tailFormItemLayout} className='Verification__Form__Item'>
+                                            <a className="ForgetPasswordPage__Login__Button" href="javascript: return false;" onClick={() => (props.setPageProps({ page: 'LoginPage' }))}>Login now!</a>
 
-                                </Form.Item>
-                            </Form>
+                                            <div className="ForgetPasswordPage__Button">
+                                                <Button color={"green"}><Text color='white' cls='Large' content={"Send verify code"} fontSize='15' display="inline-block" /></Button>
+                                            </div>
 
-                        </div>
-                    </Content>
-                </Layout>
+                                        </Form.Item>
+                                    </Form>
+
+                                </div>
+                            </Content>
+                        </Layout>
+                    </Media>
+                    <Media at="lg" className='loginPage__Media'>
+                        <Layout className='ForgetPasswordPage__Outer'>
+                            <Sider className='ForgetPasswordPage__Sider' width={"50%"}>
+                                <img src="https://static.vecteezy.com/system/resources/previews/003/410/006/original/continuous-one-line-drawing-of-hand-writing-with-a-pen-on-paper-vector.jpg" alt="一張圖片" />
+                            </Sider>
+                            <Content className='ForgetPasswordPage__Content'>
+                                <div className='ForgetPasswordPage__Content__Text'>
+                                    <Text color='black' cls='Large' content='Welcome to Note' fontSize='22' />
+                                    <Text color='purple' cls='Large' content='Share' fontSize='22' />
+                                </div>
+                                <div className='ForgetPasswordPage__Content__Text ForgetPasswordPage__Content__Text__Bottom'>
+                                    <Text color='black' cls='Default' content='Write your own note!' fontSize='10' />
+                                </div>
+                                <div className="ForgetPasswordPage__Form">
+                                    <Form
+                                        {...formItemLayout}
+                                        name="register"
+                                        onFinish={onFinish}
+                                        initialValues={{
+
+                                        }}
+                                        scrollToFirstError
+                                    >
+                                        <div className='ForgetPasswordPage__Content__Form__Text'>
+                                            <Text color='black' cls='Small' content='Email' fontSize='13' />
+                                        </div>
+                                        <Form.Item
+                                            name="email"
+                                            className='Verification__Form__Item'
+
+                                            rules={[
+                                                {
+                                                    type: 'email',
+                                                    message: 'The input is not valid E-mail!',
+                                                },
+                                                {
+                                                    required: true,
+                                                    message: 'Please input your E-mail!',
+                                                },
+                                            ]}
+                                        >
+                                            <Input placeholder='Email' onChange={(e) => { setEmail(e.target.value) }} />
+
+                                        </Form.Item>
+
+                                        <Form.Item {...tailFormItemLayout} className='Verification__Form__Item'>
+                                            <a className="ForgetPasswordPage__Login__Button" href="javascript: return false;" onClick={() => (props.setPageProps({ page: 'LoginPage' }))}>Login now!</a>
+
+                                            <div className="ForgetPasswordPage__Button">
+                                                <Button color={"green"}><Text color='white' cls='Large' content={"Send verify code"} fontSize='15' display="inline-block" /></Button>
+                                            </div>
+
+                                        </Form.Item>
+                                    </Form>
+
+                                </div>
+                            </Content>
+                        </Layout>
+                    </Media>
+                    <Media at="md" className='loginPage__Media'>
+                        <Layout className='ForgetPasswordPage__Outer'>
+                            <Sider className='ForgetPasswordPage__Sider__md' width={"40%"}>
+                                <img src="https://static.vecteezy.com/system/resources/previews/003/410/006/original/continuous-one-line-drawing-of-hand-writing-with-a-pen-on-paper-vector.jpg" alt="一張圖片" />
+                            </Sider>
+                            <Content className='ForgetPasswordPage__Content__md'>
+                                <div className='ForgetPasswordPage__Content__Text'>
+                                    <Text color='black' cls='Large' content='Welcome to Note' fontSize='22' />
+                                    <Text color='purple' cls='Large' content='Share' fontSize='22' />
+                                </div>
+                                <div className='ForgetPasswordPage__Content__Text ForgetPasswordPage__Content__Text__Bottom'>
+                                    <Text color='black' cls='Default' content='Write your own note!' fontSize='10' />
+                                </div>
+                                <div className="ForgetPasswordPage__Form">
+                                    <Form
+                                        {...formItemLayout}
+                                        name="register"
+                                        onFinish={onFinish}
+                                        initialValues={{
+
+                                        }}
+                                        scrollToFirstError
+                                    >
+                                        <div className='ForgetPasswordPage__Content__Form__Text'>
+                                            <Text color='black' cls='Small' content='Email' fontSize='13' />
+                                        </div>
+                                        <Form.Item
+                                            name="email"
+                                            className='Verification__Form__Item'
+
+                                            rules={[
+                                                {
+                                                    type: 'email',
+                                                    message: 'The input is not valid E-mail!',
+                                                },
+                                                {
+                                                    required: true,
+                                                    message: 'Please input your E-mail!',
+                                                },
+                                            ]}
+                                        >
+                                            <Input placeholder='Email' onChange={(e) => { setEmail(e.target.value) }} />
+
+                                        </Form.Item>
+
+                                        <Form.Item {...tailFormItemLayout} className='Verification__Form__Item'>
+                                            <a className="ForgetPasswordPage__Login__Button" href="javascript: return false;" onClick={() => (props.setPageProps({ page: 'LoginPage' }))}>Login now!</a>
+
+                                            <div className="ForgetPasswordPage__Button">
+                                                <Button color={"green"}><Text color='white' cls='Large' content={"Send verify code"} fontSize='15' display="inline-block" /></Button>
+                                            </div>
+
+                                        </Form.Item>
+                                    </Form>
+
+                                </div>
+                            </Content>
+                        </Layout>
+                    </Media>
+                    <Media at="lm" className='loginPage__Media'>
+                        <Layout className='ForgetPasswordPage__Outer'>
+                            
+                            <Content className='ForgetPasswordPage__Content__sm'>
+                                <div className='ForgetPasswordPage__Content__Text'>
+                                    <Text color='black' cls='Large' content='Welcome to Note' fontSize='22' />
+                                    <Text color='purple' cls='Large' content='Share' fontSize='22' />
+                                </div>
+                                <div className='ForgetPasswordPage__Content__Text ForgetPasswordPage__Content__Text__Bottom'>
+                                    <Text color='black' cls='Default' content='Write your own note!' fontSize='10' />
+                                </div>
+                                <div className="ForgetPasswordPage__Form">
+                                    <Form
+                                        {...formItemLayout}
+                                        name="register"
+                                        onFinish={onFinish}
+                                        initialValues={{
+
+                                        }}
+                                        scrollToFirstError
+                                    >
+                                        <div className='ForgetPasswordPage__Content__Form__Text'>
+                                            <Text color='black' cls='Small' content='Email' fontSize='13' />
+                                        </div>
+                                        <Form.Item
+                                            name="email"
+                                            className='Verification__Form__Item'
+
+                                            rules={[
+                                                {
+                                                    type: 'email',
+                                                    message: 'The input is not valid E-mail!',
+                                                },
+                                                {
+                                                    required: true,
+                                                    message: 'Please input your E-mail!',
+                                                },
+                                            ]}
+                                        >
+                                            <Input placeholder='Email' onChange={(e) => { setEmail(e.target.value) }} />
+
+                                        </Form.Item>
+
+                                        <Form.Item {...tailFormItemLayout} className='Verification__Form__Item'>
+                                            <a className="ForgetPasswordPage__Login__Button" href="javascript: return false;" onClick={() => (props.setPageProps({ page: 'LoginPage' }))}>Login now!</a>
+
+                                            <div className="ForgetPasswordPage__Button">
+                                                <Button color={"green"}><Text color='white' cls='Large' content={"Send verify code"} fontSize='15' display="inline-block" /></Button>
+                                            </div>
+
+                                        </Form.Item>
+                                    </Form>
+
+                                </div>
+                            </Content>
+                        </Layout>
+                    </Media>
+                    <Media at="sm" className='loginPage__Media'>
+                        <Layout className='ForgetPasswordPage__Outer'>
+                            <Content className='ForgetPasswordPage__Content__sm'>
+                                <div className='ForgetPasswordPage__Content__Text'>
+                                    <Text color='black' cls='Large' content='Welcome to Note' fontSize='22' />
+                                    <Text color='purple' cls='Large' content='Share' fontSize='22' />
+                                </div>
+                                <div className='ForgetPasswordPage__Content__Text ForgetPasswordPage__Content__Text__Bottom'>
+                                    <Text color='black' cls='Default' content='Write your own note!' fontSize='10' />
+                                </div>
+                                <div className="ForgetPasswordPage__Form">
+                                    <Form
+                                        {...formItemLayout}
+                                        name="register"
+                                        onFinish={onFinish}
+                                        initialValues={{
+
+                                        }}
+                                        scrollToFirstError
+                                    >
+                                        <div className='ForgetPasswordPage__Content__Form__Text'>
+                                            <Text color='black' cls='Small' content='Email' fontSize='13' />
+                                        </div>
+                                        <Form.Item
+                                            name="email"
+                                            className='Verification__Form__Item'
+
+                                            rules={[
+                                                {
+                                                    type: 'email',
+                                                    message: 'The input is not valid E-mail!',
+                                                },
+                                                {
+                                                    required: true,
+                                                    message: 'Please input your E-mail!',
+                                                },
+                                            ]}
+                                        >
+                                            <Input placeholder='Email' onChange={(e) => { setEmail(e.target.value) }} />
+
+                                        </Form.Item>
+
+                                        <Form.Item {...tailFormItemLayout} className='Verification__Form__Item'>
+                                            <a className="ForgetPasswordPage__Login__Button" href="javascript: return false;" onClick={() => (props.setPageProps({ page: 'LoginPage' }))}>Login now!</a>
+
+                                            <div className="ForgetPasswordPage__Button">
+                                                <Button color={"green"}><Text color='white' cls='Large' content={"Send verify code"} fontSize='15' display="inline-block" /></Button>
+                                            </div>
+
+                                        </Form.Item>
+                                    </Form>
+
+                                </div>
+                            </Content>
+                        </Layout>
+                    </Media>
+
+                </MediaContextProvider>
             }
         </div>
 

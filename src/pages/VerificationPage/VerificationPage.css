@@ -28,6 +28,16 @@
   padding: 0 4em 0 4em;
   width: 100%;
 }
+.verificationPage__Sider__md{
+  background-color: #fff;
+  padding-top:8em;
+}
+
+.verificationPage__Sider__md img{
+  position: relative;
+  
+  width: 100%;
+}
 
 .verificationPage__Content{
   background-color: #fff;
@@ -35,6 +45,20 @@
   padding-bottom: 3em;
   padding-left: 1em;
   padding-right: 6em;
+}
+.verificationPage__Content__md{
+  background-color: #fff;
+  padding-top: 6em;
+  padding-bottom: 3em;
+  padding-left: 1em;
+  padding-right: 3em;
+}
+.verificationPage__Content__sm{
+  background-color: #fff;
+  padding-top: 6em;
+  padding-bottom: 3em;
+  padding-left: 1em;
+  padding-right: 1em;
 }
 
 .verificationPage__Content__Text__Bottom{

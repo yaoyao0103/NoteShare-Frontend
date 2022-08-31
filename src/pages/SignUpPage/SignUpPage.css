@@ -22,6 +22,12 @@
 .signUpPage__Sider{
   background-color: #fff;
 }
+.signUpPage__Sider__md{
+  background-color: #fff;
+  padding-top:15em;
+}
+
+
 
 .signUpPage__Sider img{
   position: relative;
@@ -29,13 +35,33 @@
   padding-top: 6em;
   width: 100%;
 }
-
+.signUpPage__Sider__md img{
+  position: relative;
+  
+ 
+  width: 100%;
+}
 .signUpPage__Content{
   background-color: #fff;
   padding-top: 6em;
   padding-bottom: 3.5em;
   padding-left: 1em;
   padding-right: 6em;
+}
+.signUpPage__Content__md{
+  background-color: #fff;
+  padding-top: 6em;
+  padding-bottom: 3.5em;
+  padding-left: 1em;
+  padding-right: 3em;
+}
+
+.signUpPage__Content__sm{
+  background-color: #fff;
+  padding-top: 6em;
+  padding-bottom: 3.5em;
+  padding-left: 1em;
+  padding-right: 1em;
 }
 
 .signUpPage__Content__Text__Bottom{

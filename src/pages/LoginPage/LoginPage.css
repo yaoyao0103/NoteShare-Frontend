@@ -23,10 +23,21 @@
   background-color: #fff;
 }
 
+.loginPage__Sider__md{
+  background-color: #fff;
+  padding-top:15em
+}
+
 .loginPage__Sider img{
   position: relative;
   padding: 4em;
   padding-top: 6em;
+  width: 100%;
+}
+
+.loginPage__Sider__md img{
+  position: relative;
+  
   width: 100%;
 }
 
@@ -55,6 +66,10 @@
 
 .loginPage__Content__Form__Forgot {
   float: right;
+  text-decoration: none;
+}
+.loginPage__Content__Form__Forgot__sm {
+  float: left;
   text-decoration: none;
 }
 
