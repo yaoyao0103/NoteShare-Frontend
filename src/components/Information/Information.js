@@ -80,9 +80,9 @@ function Information(props) {
                     // </div>
                 )}
                 {props.notePublic!=null &&(
-                    <div className={responsive.topRightMode?'information__RefPrice':'information__RefPrice__below'}>
+                    <div className={responsive.topRightMode?'information__NotePublic':'information__NotePublic__below'}>
                         <Tooltip title={"The post/note can't be seen by other users when it is private."}>
-                            <div className={responsive.topRightMode?'information__Price':'information__Price__below'}>
+                            <div className={responsive.topRightMode?'information__NotePublic__Top':'information__NotePublic__Top__below'}>
                                 <Text color='black' cls='Small' content={"Note State"} fontSize='5' display="inline-block" />
                             </div>
                             {props.notePublic?<span style={{color: "#00BB00"}}>Public</span>:<span style={{color: "red"}}>Private</span>}
@@ -97,14 +97,14 @@ function Information(props) {
                     <div className={responsive.topRightMode?'information__Price':'information__Price__below'}>
                         {props.remainBest!=null?
                             <Tooltip title={"Remainder: " + props.remainBest + " people" }>
-                                <div className={responsive.topRightMode?'information__Price':'information__Price__below'}>
+                                <div>
                                     <Text color='black' cls='Small' content={(props.type=="note" || props.type=="collaboration")?"Price":"Best Solution"} fontSize='5' display="inline-block" />
                                 </div>
                                 {props.bestPrice}
                             </Tooltip>
                             :
                             <>
-                                <div className={responsive.topRightMode?'information__Price':'information__Price__below'}>
+                                <div>
                                     <Text color='black' cls='Small' content={(props.type=="note" || props.type=="collaboration")?"Price":"Best Solution"} fontSize='5' display="inline-block" />
                                 </div>
                                 {props.bestPrice}
@@ -118,7 +118,7 @@ function Information(props) {
                 {props.referencePrice!=null &&(
                     <div className={responsive.topRightMode?'information__RefPrice':'information__RefPrice__below'}>
                         <Tooltip title={"Remainder: " + props.remainRef + " people" }>
-                            <div className={responsive.topRightMode?'information__Price':'information__Price__below'}>
+                            <div>
                                 <Text color='black' cls='Small' content={"Ref Solution"} fontSize='5' display="inline-block" />
                             </div>
                             {props.referencePrice}
@@ -132,36 +132,36 @@ function Information(props) {
                 
                 
             </Row>
-            <div>
-                <Row id='information__bottom' className='information__bottom'>
+            <div className='information__bottom'>
+                <div className='information__bottom__Col'>
                     {props.likeCount!=null &&(
-                        <Col className='information__Likes'>
+                        <div className='information__Likes'>
                             <div>
                                 <Text color='black' cls='Small' content={"Likes"} fontSize='5' display="inline-block" />
                             </div>
                             {props.likeCount}
-                        </Col>
+                        </div>
                     )}
                     {props.favoriteCount!=null &&(
-                        <Col className='information__Favorite'>
+                        <div className='information__Favorite'>
                             <div>
                                 <Text color='black' cls='Small' content={"Save" } fontSize='5' display="inline-block" />
                             </div>
                             {props.favoriteCount}
-                        </Col>
+                        </div>
                     )}
                     {props.unlockCount!=null &&(
-                        <Col className='information__Unlock'>
+                        <div className='information__Unlock'>
                             <div>
                                 <Text color='black' cls='Small' content={"Unlock"} fontSize='5' display="inline-block" />
                             </div>
                             {props.unlockCount}
-                        </Col>
+                        </div>
                     )}
-                </Row>
-                <Row id='information__bottom' className='information__bottom'>
+                </div>
+                <div className='information__bottom__Col'>
                     {props.plagiarismRate!=null &&(
-                        <Col className='information__Likes'>
+                        <div className='information__Likes'>
                             <Tooltip title={<><div>{props.plagiarismRateResult}</div><div>*Suspected Plagiarism Rate. The rate is an index of plagiarising from other notes</div></>}>
                                 <div>
                                     <Text color='black' cls='Small' content={"SPR"} fontSize='20' display="inline-block" />
@@ -170,19 +170,19 @@ function Information(props) {
                             </Tooltip>
                             
                             
-                        </Col>
+                        </div>
                     )}
                     {props.quoteRate!=null &&(
-                        <Col className='information__Favorite'>
+                        <div className='information__Favorite'>
                             <Tooltip title={<><div>{props.quoteRateResult}</div><div>*Citation Rate. The rate is an index of citing other notes</div></>}>
                                 <div>
                                     <Text color='black' cls='Small' content={"CR" } fontSize='20' display="inline-block" />
                                     <span style={{color: "#01814A", fontSize:"1.2em"}}>: {props.quoteRate}%</span>
                                 </div>
                             </Tooltip>  
-                        </Col>
+                        </div>
                     )}
-                </Row>
+                </div>
             </div>
         </div>
     );
