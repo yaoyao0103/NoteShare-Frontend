@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Layout, Row, Col, Tag, Progress, message, notification, Avatar, Modal, DatePicker, Select, Skeleton, Drawer, Divider } from "antd";
+import { Layout, Row, Col, Tag, Progress, message, notification, Avatar, Modal, DatePicker, Select, Skeleton, Drawer, Divider, Popconfirm } from "antd";
 import { CaretLeftFilled, QuestionCircleOutlined } from "@ant-design/icons";
 import Button from "../Button/Button";
 import Text from "../Text/Text";
@@ -596,6 +596,7 @@ const PageDetailContentTemplate = (props) => {
                                         setIsPublic={setIsPublic}
                                         setIsNotePublic={setIsNotePublic}
                                         setVersion={setVersion}
+                                        setVersions={setVersions}
                                         isAuthor={isAuthor}
                                         isManager={isManager}
                                         isFavoriter={isFavoriter}
@@ -665,7 +666,9 @@ const PageDetailContentTemplate = (props) => {
 
 
                                 {(props.page == 'NoteDetailPage' || (props.page == 'CollabDetailPage' && isAuthor)) ?
-                                    editor
+                                    <div className={!isBuyer && "contentTemplate__Content__Main__Blur"}>
+                                        {editor}
+                                    </div>
                                     :
                                     props.data?.content
                                 }
@@ -691,9 +694,19 @@ const PageDetailContentTemplate = (props) => {
                                     </>
                                 )}
                                 {(noteType != 'reward' && !(isAuthor || isBuyer)) &&
-                                    <div className="contentTemplate__Footer__Button" onClick={() => buyNote()}>
-                                        <Button color={"green"}><Text color='white' cls='Large' content={"Buy"} fontSize='17' display="inline-block" /></Button>
-                                    </div>
+                                    <Popconfirm
+                                        title="Are you sure to buy the note?"
+                                        okText="Yes"
+                                        cancelText="No"
+                                        onConfirm={() => {
+                                            buyNote();
+                                        }}
+                                    >
+                                        <div className="contentTemplate__Footer__Button">
+                                            <Button color={"green"}><Text color='white' cls='Large' content={"Buy"} fontSize='17' display="inline-block" /></Button>
+                                        </div>
+                                    </Popconfirm>
+                                    
                                 }
                                 {(noteType != 'reward' && isAuthor) &&
                                     <div className="contentTemplate__Footer__Button" onClick={() => props.setPageProps({ page: "NoteEditPage", noteId: noteId, action: "edit" })}>

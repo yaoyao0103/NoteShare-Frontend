@@ -211,3 +211,9 @@
     writing-mode: vertical-lr;
     margin-top: .5em;
 }
+
+.contentTemplate__Content__Main__Blur{
+    filter: blur(2px);
+    height: 30em;
+    overflow: hidden;
+}

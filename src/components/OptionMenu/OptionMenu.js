@@ -178,6 +178,7 @@ const OptionMenu = (props) => {
         }
       })
       .catch(err => {
+        console.log("the error:", err)
         if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
           if (err.response.data.message.slice(0, 13) === 'Malformed JWT') {
             document.cookie = 'error=Jwt'
