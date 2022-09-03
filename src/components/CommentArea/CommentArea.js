@@ -19,6 +19,7 @@ function CommentArea(props) {
     const [tag, setTag] = useState({
         '@': [],
         '#': ['1.0', '2.0', '3.0'],
+        '$':[],
     });
     const [comment, setComment] = useState('');
     const [likeCount, setLikeCount] = useState({});
@@ -90,9 +91,41 @@ function CommentArea(props) {
                 setAuthors(authorArray);
                 setLikeCount(likeCount);
                 setLikeColor(likeColor);
+
+                // axios.get("/note/all/" + tempEmail, {
+                //     headers: {
+                //         'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+                //     }
+                // }).then(res => {
+                   
+                //     setTag({
+                //         '@': [...new Set(Object.values(authorArray))],
+                //         '#': ['1.0', '2.0', '3.0'],
+                //         '#':[...new Set(Object.values(res.data.res.title))]
+                //     });
+                // }).catch((error) => {
+                //     //setGetFolderFail(true);
+                //     if (error.response.status === 500 || error.response.status === 404 || error.response.status === 403) {
+                //         if (error.response.data.message.slice(0, 13) === 'Malformed JWT') {
+                //             document.cookie = 'error=Jwt'
+                //             message.destroy()
+                //             message.warning('The connection timed out, please login again !')
+                //             document.cookie = 'email=;'
+                //             props.setLoggedIn(false)
+                //             props.setPageProps({ page: 'LoginPage' })
+                //         }
+                //         else
+                //             document.cookie = 'error=true'
+                //         message.error('Server Error! Please refresh again! (Get All Notes Error)')
+                //     }
+                //     else {
+                //         message.error("Server Error! Please try again later. (Get All Notes Error)")
+                //     }
+                // });
                 setTag({
                     '@': [...new Set(Object.values(authorArray))],
                     '#': ['1.0', '2.0', '3.0'],
+                  
                 });
             })
             .catch(err => {

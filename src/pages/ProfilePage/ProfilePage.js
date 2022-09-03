@@ -68,7 +68,6 @@ function ProfilePage(props) {
             props.setLoading(true)
             setGetFolderByIdSuccess(false);
             setFansOrFollower(false);
-            //console.log(isAuthor);
             if (!isAuthor)
                 getAllFolder(props.email);
             else {
@@ -81,7 +80,6 @@ function ProfilePage(props) {
             props.setLoading(true)
             setGetFolderByIdSuccess(false);
             setFansOrFollower(true);
-            //console.log(isAuthor);
             if (!isAuthor)
                 getAllNote(props.email);
             else {
@@ -174,17 +172,16 @@ function ProfilePage(props) {
     }
 
     const SaveAvatar = () => {
-        if (avatar) {
+        if (avatar>=0) {
             axios.put("/user/head/" + email, { headshotPhoto: Avatars[avatar] }, {
                 headers: {
                     'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
                 }
             }).then(res => {
                 setAvatarCurrent(Avatars[avatar]);
-                //message.success('You changed your avatar!');
-                //console.log(avatarNum+1);
                 setAvatarNum(avatarNum + 1);
-                props.setAvatar(avatarNum + 1);
+                props.setAvatar(Avatars[avatar]);
+                props.setChangeAvatarNum(avatarNum + 1)
 
             }).catch((error) => {
                 if (error.response.status === 500 || error.response.status === 404 || error.response.status === 403) {
@@ -375,14 +372,12 @@ function ProfilePage(props) {
     };
 
     const AddStrength = (tag) => {
-        //console.log(tag);
         const tags = [...strength, tag];
         axios.put("/user/strength/" + email, { strength: tags }, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
             }
         }).then(res => {
-            //console.log(...strength, tag);
             setStrength(oldArray => [...oldArray, tag]);
             //message.success("You added a strength!")
         }).catch((error) => {
@@ -479,7 +474,6 @@ function ProfilePage(props) {
             }
         }).then(res => {
             const list = res.data.res.children.concat(res.data.res.notes);
-            //console.log(list);
             setFolderList(oldArray => [...oldArray.slice(0, 0), list]);
             if (res.data.res.parent === null)
                 setIsRoot(true);
@@ -514,7 +508,6 @@ function ProfilePage(props) {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
             }
         }).then(res => {
-            //console.log(res.data.res[2]);
             getFolderById(res.data.res[2].id);
             setIsRoot(true);
         }).catch((error) => {
@@ -538,7 +531,6 @@ function ProfilePage(props) {
     };
 
     function getAllNote(Email) {
-        //console.log('123')
         axios.get("/note/all/" + Email, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
@@ -578,10 +570,8 @@ function ProfilePage(props) {
         }).then(res => {
             setUser(res.data.res);
             setAvatarCurrent(res.data.res.headshotPhoto);
-            // console.log(res.data.res.name);
             setProfile(res.data.res.profile);
             setStrength(res.data.res.strength);
-            //console.log(res.data.res.subscribe);
             setFansNum(res.data.res.fansUserObj.length);
             setFollowingNum(res.data.res.subscribeUserObj.length);
             var tempFansList = [];
@@ -653,19 +643,15 @@ function ProfilePage(props) {
         let tempEmail = cookieParser.getCookieByName('email')
         if (tempEmail)
             tempEmail = Base64.decode(tempEmail);
-        //console.log(tempEmail);
-        //console.log(props.email);
 
         if (tempEmail === props.email) {
             getUserByEmail(tempEmail);
             setEmail(tempEmail);
-            //console.log('isAuthor')
             setIsAuthor(true);
             setGetFolderByIdSuccess(true);
 
         }
         else {
-            //console.log('111')
             getUserByEmail(tempEmail);
             setEmail(tempEmail);
             setIsAuthor(false);
@@ -680,19 +666,6 @@ function ProfilePage(props) {
 
 
     }, [props]);
-    /* useEffect(() => {
-         console.log(isAuthor);
-         if (fansOrFollower && !isAuthor)
-             getAllFolder(props.email);
-         else if (!fansOrFollower && !isAuthor)
-             getAllNote(props.email);
-         if (isAuthor) {
-             props.setLoading(false)
-             setGetFolderByIdSuccess(true);
-         }
- 
-     }, [fansOrFollower && isAuthor]);*/
-
     useEffect(() => {
         if (currentFolderId !== '')
             getFolderById(currentFolderId);
@@ -707,7 +680,8 @@ function ProfilePage(props) {
                         <Layout className='Profile__Layout__Inner'>
                             <Content className='Profile__Content'>
                                 <Row className='Profile__Content__First__Row'>
-                                    <Col span={6}>
+                                <Col span={1}></Col>
+                                    <Col span={5}>
                                         <div className={"Profile__Avatar__Outer"}>
                                             <Avatar className={"Profile__Avatar__Inner"} size={84} src={avatarCurrent}></Avatar>
                                             {isAuthor && <div className={"Profile__Avatar__Editor"} onClick={() => { setAvatarSelector(true) }}>
@@ -802,7 +776,7 @@ function ProfilePage(props) {
                                 title="Choose your avatar"
                                 centered
                                 visible={avatarSelector}
-                                onOk={() => { SaveAvatar(); props.setAvatar(props.Avatar + 1); setAvatarSelector(false) }}
+                                onOk={() => { SaveAvatar();  setAvatarSelector(false) }}
                                 onCancel={() => setAvatarSelector(false)}
                                 okText="Save"
                                 cancelText="Cancel"
@@ -1032,7 +1006,8 @@ function ProfilePage(props) {
 
                             <Content className='Profile__Content'>
                                 <Row className='Profile__Content__First__Row'>
-                                    <Col span={6}>
+                                <Col span={1}></Col>
+                                    <Col span={4}>
                                         <div className={"Profile__Avatar__Outer"}>
                                             <Avatar className={"Profile__Avatar__Inner"} size={84} src={avatarCurrent}></Avatar>
                                             {isAuthor && <div className={"Profile__Avatar__Editor"} onClick={() => { setAvatarSelector(true) }}>
@@ -1042,7 +1017,8 @@ function ProfilePage(props) {
                                             }
                                         </div>
                                     </Col>
-                                    <Col className='Profile__NameNEmail' span={18}>
+                                    <Col span={1}></Col>
+                                    <Col className='Profile__NameNEmail' span={15}>
                                         <div className='Profile__TextEditor'>
                                             <TextEditor name={user.name}></TextEditor>
                                         </div>
@@ -1080,13 +1056,13 @@ function ProfilePage(props) {
                                         }
                                     </Col>
                                 </Row>
-                                <div className="Profile__Fans">
+                                <div className="Profile__Fans__lm">
                                     <FansNFollower fans={fansNum} following={followingNum}></FansNFollower>
                                 </div>
-                                <div className='Profile__Strength'>
+                                <div className='Profile__Strength__lm'>
                                     <StrengthEditor strength={strength} delete={(key) => { DeleteStrength(key) }} add={(tag) => (AddStrength(tag))} isAuthor={isAuthor}></StrengthEditor>
                                 </div>
-                                <div className='Profile__Introduction'>
+                                <div className='Profile__Introduction__lm'>
                                     <IntroductionEditor edit={(content) => { SaveProfile(content) }} content={profile} isAuthor={isAuthor}></IntroductionEditor>
                                 </div>
                                 {isAuthor && <Row className='Profile__Sider__Fir__Row__lm'>
@@ -1134,7 +1110,7 @@ function ProfilePage(props) {
 
                             <Content className='Profile__Content'>
                                 <Row className='Profile__Content__First__Row'>
-                                    <Col span={6}>
+                                    <Col span={5}>
                                         <div className={"Profile__Avatar__Outer"}>
                                             <Avatar className={"Profile__Avatar__Inner"} size={84} src={avatarCurrent}></Avatar>
                                             {isAuthor && <div className={"Profile__Avatar__Editor"} onClick={() => { setAvatarSelector(true) }}>
@@ -1144,6 +1120,7 @@ function ProfilePage(props) {
                                             }
                                         </div>
                                     </Col>
+                                    <Col span={1}></Col>
                                     <Col className='Profile__NameNEmail' span={18}>
                                         <div className='Profile__TextEditor'>
                                             <TextEditor name={user.name}></TextEditor>

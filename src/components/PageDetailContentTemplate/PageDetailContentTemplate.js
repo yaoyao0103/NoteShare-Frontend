@@ -18,7 +18,6 @@ import MyEditor from "../MyEditor/MyEditor";
 import axios from "../axios/axios";
 import Cookie from '../../components/Cookies/Cookies';
 import { Base64 } from 'js-base64';
-import { ScreenCapture } from "react-screen-capture";
 const { Header, Content, Sider, Footer } = Layout;
 const { Option } = Select;
 const cookieParser = new Cookie(document.cookie)
@@ -60,7 +59,6 @@ const PageDetailContentTemplate = (props) => {
     const [quoteRate, setQuoteRate] = useState(null)
     const [plagiarismRateResult, setPlagiarismRateResult] = useState(null)
     const [quoteRateResult, setQuoteRateResult] = useState(null)
-    const [screenCapture, setScreenCapture] = useState('');
 
     useEffect(() => {
 
@@ -297,10 +295,7 @@ const PageDetailContentTemplate = (props) => {
     }, [isManager, author])
 
 
-    const handleScreenCapture = (screenCapture) => {
-        console.log(screenCapture)
-        setScreenCapture(screenCapture);
-    };
+   
 
     const setVersion = (index) => {
         if (props.page == "NoteDetailPage")
@@ -559,8 +554,6 @@ const PageDetailContentTemplate = (props) => {
     return (
 
         <div className="contentTemplate" >
-
-            <img style={{ cursor: 'pointer' }} src={screenCapture} alt="react-screen-capture" />
             <Layout className="contentTemplate__Layout__outer">
                 <Layout className="contentTemplate__Layout">
                     {/* Header */}

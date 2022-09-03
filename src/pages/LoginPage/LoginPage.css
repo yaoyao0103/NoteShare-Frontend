@@ -48,6 +48,20 @@
   padding-left: 1em;
   padding-right: 6em;
 }
+.loginPage__Content__md{
+  background-color: #fff;
+  padding-top: 6em;
+  padding-bottom: 3em;
+  padding-left: 1em;
+  padding-right: 3em;
+}
+.loginPage__Content__sm{
+  background-color: #fff;
+  padding-top: 6em;
+  padding-bottom: 3em;
+  padding-left: 1em;
+  padding-right: 1em;
+}
 
 .loginPage__Content__Text__Bottom{
   margin-bottom: 2em;

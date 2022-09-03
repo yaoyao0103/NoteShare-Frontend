@@ -59,7 +59,7 @@ function Navbar(props) {
               <Coin setLoggedIn={props.setLoggedIn} setPageProps={props.setPageProps} setCoinNum={props.setCoinNum} coinNum={props.coinNum} />
             </div>
             <div className="navbar__Button__LoggedIn__Item navbar__Button__Avatar">
-              <AvatarButton className="navbar__AvatarButton" setLoggedIn={props.setLoggedIn} setPageProps={props.setPageProps} changeAvatar={props.changeAvatar}  />
+              <AvatarButton className="navbar__AvatarButton" changeAvatarNum={props.changeAvatarNum} setLoggedIn={props.setLoggedIn} setPageProps={props.setPageProps} changeAvatar={props.changeAvatar}  />
             </div>
 
           </div>

@@ -96,7 +96,9 @@ function AvatarButton(props) {
         });
         //console.log(props.changeAvatar);
         //console.log(avatarNum);
-        if (props.changeAvatar > avatarNum) {
+        setAvatar(props.changeAvatar);
+        document.cookie = "avatar=" + props.changeAvatar
+        if (props.changeAvatarNum ===0) {
             axios.get("/user/head/" + tempEmail, {
                 headers: {
                     'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
@@ -105,8 +107,6 @@ function AvatarButton(props) {
                 setAvatar(res.data.res);
                 setAvatarNum(props.changeAvatar);
                 document.cookie = "avatar=" + res.data.res;
-                //message.info('Change avatar');
-
             }).catch((error) => {
                 if (error.response.status === 500 || error.response.status === 404 || error.response.status === 403) {
                     if (error.response.data.message.slice(0, 13) === 'Malformed JWT') {

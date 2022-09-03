@@ -56,7 +56,8 @@ const OuterPage = () => {
     const [pageProps, setPageProps] = useState({ page: 'LoginPage' });
     const [pageComponent, setPageComponent] = useState(<></>)
     const [loggedIn, setLoggedIn] = useState(false);
-    const [changeAvatar, setChangeAvatar] = useState(0);
+    const [changeAvatar, setChangeAvatar] = useState('');
+    const [changeAvatarNum, setChangeAvatarNum] = useState(0);
     const [coinNum, setCoinNum] = useState(0);
     const [floatButtonVisable, setFloatButtonVisable] = useState(false);
     const [floatButtonDetailVisable, setFloatButtonDetailVisable] = useState(false);
@@ -569,7 +570,7 @@ const OuterPage = () => {
                             <li>If it is not your profile, you can see all the public notes and folders of the user.</li>
                         </ul>
                         ) 
-                        setPageComponent(<ProfilePage page='ProfilePage' setLoggedIn={setLoggedIn} sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} Avatar={changeAvatar} setAvatar={setChangeAvatar} setPageProps={setPageProps} {...pageProps} />); break;
+                        setPageComponent(<ProfilePage page='ProfilePage' setLoggedIn={setLoggedIn} sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} Avatar={changeAvatar} setAvatar={setChangeAvatar}  setChangeAvatarNum={setChangeAvatarNum}setPageProps={setPageProps} {...pageProps} />); break;
                     case 'LoginPage': 
                         setPageComponent(<LoginPage page='LoginPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} setLoggedIn={setLoggedIn} {...pageProps} />); break;
                     case 'SignUpPage': 
@@ -667,7 +668,7 @@ const OuterPage = () => {
             <div className='outerPage'>
                 <>
                     <Spin wrapperClassName={'outerPage__Loading'} indicator={antIcon} spinning={loading} style={{ width: '100%', height: '100%' }}>
-                        <Navbar ringList={ringList} setRingList={setRingList} ringNumber={ringNumber} setRingNumber={setRingNumber} coinNum={coinNum} setCoinNum={setCoinNum} pageProps={pageProps} changeAvatar={changeAvatar} loggedIn={loggedIn} setPageProps={setPageProps} setLoggedIn={setLoggedIn} />
+                        <Navbar ringList={ringList} setRingList={setRingList} ringNumber={ringNumber} setRingNumber={setRingNumber} coinNum={coinNum} setCoinNum={setCoinNum} pageProps={pageProps} changeAvatar={changeAvatar} loggedIn={loggedIn} setPageProps={setPageProps} setLoggedIn={setLoggedIn} changeAvatarNum={changeAvatarNum}/>
 
                         {pageLabel &&
                             <div className='outerPage__PageLabel'>

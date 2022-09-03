@@ -354,7 +354,7 @@ function LoginPage(props) {
                             <Sider className='loginPage__Sider__md' width={"50%"}>
                                 <img src="https://static.vecteezy.com/system/resources/previews/004/482/308/non_2x/single-one-line-drawing-students-woman-and-man-reading-learning-and-sitting-on-big-books-study-in-library-literature-fans-or-lovers-modern-continuous-line-draw-design-graphic-illustration-vector.jpg" alt="一張圖片" />
                             </Sider>
-                            <Content className='loginPage__Content'>
+                            <Content className='loginPage__Content__md'>
                                 <div className='loginPage__Content__Text'>
                                     <Text color='black' cls='Large' content='Welcome to Note' fontSize='22' />
                                     <Text color='purple' cls='Large' content='Share' fontSize='22' />
@@ -444,7 +444,7 @@ function LoginPage(props) {
                             {/* <Sider className='loginPage__Sider' width={"60%"}>
                                 <img src="https://static.vecteezy.com/system/resources/previews/004/482/308/non_2x/single-one-line-drawing-students-woman-and-man-reading-learning-and-sitting-on-big-books-study-in-library-literature-fans-or-lovers-modern-continuous-line-draw-design-graphic-illustration-vector.jpg" alt="一張圖片" />
                             </Sider> */}
-                            <Content className='loginPage__Content'>
+                            <Content className='loginPage__Content__sm'>
                                 <div className='loginPage__Content__Text'>
                                     <Text color='black' cls='Large' content='Welcome to Note' fontSize='22' />
                                     <Text color='purple' cls='Large' content='Share' fontSize='22' />
@@ -536,7 +536,7 @@ function LoginPage(props) {
                             {/* <Sider className='loginPage__Sider' width={"60%"}>
                                 <img src="https://static.vecteezy.com/system/resources/previews/004/482/308/non_2x/single-one-line-drawing-students-woman-and-man-reading-learning-and-sitting-on-big-books-study-in-library-literature-fans-or-lovers-modern-continuous-line-draw-design-graphic-illustration-vector.jpg" alt="一張圖片" />
                             </Sider> */}
-                            <Content className='loginPage__Content'>
+                            <Content className='loginPage__Content__sm'>
                                 <div className='loginPage__Content__Text'>
                                     <Text color='black' cls='Large' content='Welcome to Note' fontSize='22' />
                                     <Text color='purple' cls='Large' content='Share' fontSize='22' />
