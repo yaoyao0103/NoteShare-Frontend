@@ -14,7 +14,6 @@ const Text = (props) => {
     }
 
     useEffect(()=>{
-        console.log("fontsize", props.fontSize)
     },[props.fontSize])
   
     return (

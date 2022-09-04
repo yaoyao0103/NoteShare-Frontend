@@ -32,7 +32,7 @@ import { QuestionCircleOutlined, PlusOutlined, ArrowLeftOutlined, EllipsisOutlin
 import CollabNoteEditPage from "../CollabNoteEditPage/CollabNoteEditPage";
 import CollabRecommendPage from '../CollabRecommendPage/CollabRecommendPage';
 import ResetPasswordPage from '../ResetPasswordPage/ResetPasswordPage';
-import './OuterPage.css'
+import './SharePage.css'
 import { Button, Drawer, message, Spin, notification, Avatar, Tooltip } from 'antd'
 import Text from '../../components/Text/Text';
 import { LoadingOutlined } from '@ant-design/icons';
@@ -49,7 +49,7 @@ var cookieParser = new Cookie(document.cookie);
 // var hasChange = true
 // var isDone = fals
 
-const OuterPage = () => {
+const SharePage = () => {
     const [isConnect, setIsConnect] = useState(false)
     //const [pageBeforeProps, setPageBeforeProps] = useState({ page: 'LoginPage' });
     //const [pageBeforeNumber, setPageBeforeNumber] = useState(1);
@@ -256,15 +256,23 @@ const OuterPage = () => {
             console.log(Id)
             setHasLink(true)
             setPageStack(oldArray => [...oldArray.slice(0, 0)]);
-            switch (type) {
+            switch (type.toString()) {
                 case 'note':
+                    console.log('note111')
                     setPageProps({ page: 'NoteDetailPage', noteId: Id})
+                    break;
                 case 'qnA':
+                    console.log('qa111')
                     setPageProps({ page: 'QnADetailPage', postId: Id })
+                    break;
                 case 'reward':
+                    console.log('reward111')
                     setPageProps({ page: 'RewardDetailPage', postId: Id })
+                    break;
                 case 'collab':
+                    console.log('collab111')
                     setPageProps({ page: 'CollabDetailPage', postId: Id })
+                    break;
             }
         }
         else {
@@ -758,4 +766,4 @@ const OuterPage = () => {
     )
 }
 
-export default OuterPage
+export default SharePage

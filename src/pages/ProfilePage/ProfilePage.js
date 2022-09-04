@@ -531,6 +531,7 @@ function ProfilePage(props) {
     };
 
     function getAllNote(Email) {
+        console.log(Email)
         axios.get("/note/all/" + Email, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
@@ -542,6 +543,7 @@ function ProfilePage(props) {
             props.setLoading(false)
         }).catch((error) => {
             //setGetFolderFail(true);
+            console.log(error)
             if (error.response.status === 500 || error.response.status === 404 || error.response.status === 403) {
                 if (error.response.data.message.slice(0, 13) === 'Malformed JWT') {
                     document.cookie = 'error=Jwt'
@@ -693,14 +695,14 @@ function ProfilePage(props) {
                                     </Col>
                                     <Col className='Profile__NameNEmail' span={18}>
                                         <div className='Profile__TextEditor'>
-                                            <Text className='TextEditor__Title' cls='Gerneral' fontSize='22' content={'Name :'} />
+                                            <Text className='TextEditor__Title' cls='Gerneral' fontSize='22px' content={'Name :'} />
 
                                             <div className='TextEditor__Name'>
-                                                <Text cls='Gerneral' fontSize='22' content={user.name} />
+                                                <Text cls='Gerneral' fontSize='22px' content={user.name} />
                                             </div>
                                         </div>
                                         <div className='Profile__Email'>
-                                            <Text className='Profile__Email__Text' cls='Gerneral' fontSize='20' content={'Email : ' + props.email} />
+                                            <Text className='Profile__Email__Text' cls='Gerneral' fontSize='20px' content={'Email : ' + props.email} />
                                         </div>
                                         {!isAuthor &&
                                             <Row className='Profile__FollowNBell'>
@@ -708,7 +710,7 @@ function ProfilePage(props) {
                                                     <Col className='Profile__Follow' span={6} onClick={() => { Follow() }}>
                                                         <Tooltip arrowPointAtCenter={true} placement="top" title={"Follow " + user.name} color={'#000'}>
                                                             <UserAddOutlined className='Profile__Follow__Icon' style={{ fontSize: '20px' }} />
-                                                            <Text cls='Small' fontSize={'14'} content='Follow'></Text>
+                                                            <Text cls='Small' fontSize='14px' content='Follow'></Text>
                                                         </Tooltip>
                                                     </Col>
                                                 }
@@ -716,7 +718,7 @@ function ProfilePage(props) {
                                                     <Col className='Profile__Follow' span={6} onClick={() => { Follow() }}>
                                                         <Tooltip arrowPointAtCenter={true} placement="top" title={"Follow " + user.name} color={'#000'}>
                                                             <UserDeleteOutlined className='Profile__Follow__Icon' style={{ fontSize: '20px' }} />
-                                                            <Text cls='Small' fontSize={'14'} content='Cancel'></Text>
+                                                            <Text cls='Small' fontSize='14px' content='Cancel'></Text>
                                                         </Tooltip>
                                                     </Col>
                                                 }
@@ -807,7 +809,7 @@ function ProfilePage(props) {
                                             <TextEditor name={user.name}></TextEditor>
                                         </div>
                                         <div className='Profile__Email'>
-                                            <Text className='TextEditor__Name' cls='Gerneral' fontSize='20' content={'Email : ' + props.email} />
+                                            <Text className='TextEditor__Name' cls='Gerneral' fontSize='20px' content={'Email : ' + props.email} />
                                         </div>
                                         {!isAuthor &&
                                             <Row className='Profile__FollowNBell'>
@@ -815,7 +817,7 @@ function ProfilePage(props) {
                                                     <Col className='Profile__Follow' span={6} onClick={() => { Follow() }}>
                                                         <Tooltip arrowPointAtCenter={true} placement="top" title={"Follow " + user.name} color={'#000'}>
                                                             <UserAddOutlined className='Profile__Follow__Icon' style={{ fontSize: '20px' }} />
-                                                            <Text cls='Small' fontSize={'14'} content='Follow'></Text>
+                                                            <Text cls='Small' fontSize='14px' content='Follow'></Text>
                                                         </Tooltip>
                                                     </Col>
                                                 }
@@ -823,7 +825,7 @@ function ProfilePage(props) {
                                                     <Col className='Profile__Follow' span={6} onClick={() => { Follow() }}>
                                                         <Tooltip arrowPointAtCenter={true} placement="top" title={"Follow " + user.name} color={'#000'}>
                                                             <UserDeleteOutlined className='Profile__Follow__Icon' style={{ fontSize: '20px' }} />
-                                                            <Text cls='Small' fontSize={'14'} content='Cancel'></Text>
+                                                            <Text cls='Small' fontSize='14px' content='Cancel'></Text>
                                                         </Tooltip>
                                                     </Col>
                                                 }
@@ -914,7 +916,7 @@ function ProfilePage(props) {
                                             <TextEditor name={user.name}></TextEditor>
                                         </div>
                                         <div className='Profile__Email'>
-                                            <Text className='TextEditor__Name' cls='Gerneral' fontSize='20' content={'Email : ' + props.email} />
+                                            <Text className='TextEditor__Name' cls='Gerneral' fontSize='20px' content={'Email : ' + props.email} />
                                         </div>
                                         {!isAuthor &&
                                             <Row className='Profile__FollowNBell'>
@@ -922,7 +924,7 @@ function ProfilePage(props) {
                                                     <Col className='Profile__Follow' span={6} onClick={() => { Follow() }}>
                                                         <Tooltip arrowPointAtCenter={true} placement="top" title={"Follow " + user.name} color={'#000'}>
                                                             <UserAddOutlined className='Profile__Follow__Icon' style={{ fontSize: '20px' }} />
-                                                            <Text cls='Small' fontSize={'14'} content='Follow'></Text>
+                                                            <Text cls='Small' fontSize='14px' content='Follow'></Text>
                                                         </Tooltip>
                                                     </Col>
                                                 }
@@ -930,7 +932,7 @@ function ProfilePage(props) {
                                                     <Col className='Profile__Follow' span={6} onClick={() => { Follow() }}>
                                                         <Tooltip arrowPointAtCenter={true} placement="top" title={"Follow " + user.name} color={'#000'}>
                                                             <UserDeleteOutlined className='Profile__Follow__Icon' style={{ fontSize: '20px' }} />
-                                                            <Text cls='Small' fontSize={'14'} content='Cancel'></Text>
+                                                            <Text cls='Small' fontSize='14px' content='Cancel'></Text>
                                                         </Tooltip>
                                                     </Col>
                                                 }
@@ -1023,7 +1025,7 @@ function ProfilePage(props) {
                                             <TextEditor name={user.name}></TextEditor>
                                         </div>
                                         <div className='Profile__Email'>
-                                            <Text className='TextEditor__Name' cls='Gerneral' fontSize='20' content={'Email : ' + props.email} />
+                                            <Text className='TextEditor__Name' cls='Gerneral' fontSize='20px' content={'Email : ' + props.email} />
                                         </div>
                                         {!isAuthor &&
                                             <Row className='Profile__FollowNBell'>
@@ -1031,7 +1033,7 @@ function ProfilePage(props) {
                                                     <Col className='Profile__Follow' span={6} onClick={() => { Follow() }}>
                                                         <Tooltip arrowPointAtCenter={true} placement="top" title={"Follow " + user.name} color={'#000'}>
                                                             <UserAddOutlined className='Profile__Follow__Icon' style={{ fontSize: '20px' }} />
-                                                            <Text cls='Small' fontSize={'14'} content='Follow'></Text>
+                                                            <Text cls='Small' fontSize='14px' content='Follow'></Text>
                                                         </Tooltip>
                                                     </Col>
                                                 }
@@ -1039,7 +1041,7 @@ function ProfilePage(props) {
                                                     <Col className='Profile__Follow' span={6} onClick={() => { Follow() }}>
                                                         <Tooltip arrowPointAtCenter={true} placement="top" title={"Follow " + user.name} color={'#000'}>
                                                             <UserDeleteOutlined className='Profile__Follow__Icon' style={{ fontSize: '20px' }} />
-                                                            <Text cls='Small' fontSize={'14'} content='Cancel'></Text>
+                                                            <Text cls='Small' fontSize='14px' content='Cancel'></Text>
                                                         </Tooltip>
                                                     </Col>
                                                 }
@@ -1126,7 +1128,7 @@ function ProfilePage(props) {
                                             <TextEditor name={user.name}></TextEditor>
                                         </div>
                                         <div className='Profile__Email'>
-                                            <Text className='TextEditor__Name' cls='Gerneral' fontSize='20' content={'Email : ' + props.email} />
+                                            <Text className='TextEditor__Name' cls='Gerneral' fontSize='20px' content={'Email : ' + props.email} />
                                         </div>
                                         {!isAuthor &&
                                             <Row className='Profile__FollowNBell'>
@@ -1134,7 +1136,7 @@ function ProfilePage(props) {
                                                     <Col className='Profile__Follow' span={6} onClick={() => { Follow() }}>
                                                         <Tooltip arrowPointAtCenter={true} placement="top" title={"Follow " + user.name} color={'#000'}>
                                                             <UserAddOutlined className='Profile__Follow__Icon' style={{ fontSize: '20px' }} />
-                                                            <Text cls='Small' fontSize={'14'} content='Follow'></Text>
+                                                            <Text cls='Small' fontSize='14px' content='Follow'></Text>
                                                         </Tooltip>
                                                     </Col>
                                                 }
@@ -1142,7 +1144,7 @@ function ProfilePage(props) {
                                                     <Col className='Profile__Follow' span={6} onClick={() => { Follow() }}>
                                                         <Tooltip arrowPointAtCenter={true} placement="top" title={"Follow " + user.name} color={'#000'}>
                                                             <UserDeleteOutlined className='Profile__Follow__Icon' style={{ fontSize: '20px' }} />
-                                                            <Text cls='Small' fontSize={'14'} content='Cancel'></Text>
+                                                            <Text cls='Small' fontSize='14px' content='Cancel'></Text>
                                                         </Tooltip>
                                                     </Col>
                                                 }

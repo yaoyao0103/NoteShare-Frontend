@@ -10,6 +10,7 @@ import Cookie from '../../components/Cookies/Cookies';
 import { Base64 } from 'js-base64';
 import OptionMenu from "../OptionMenu/OptionMenu";
 import { set } from "react-hook-form";
+import ContentEditor from "../../pages/NoteDetailPage/ContentEditor/ContentEditor";
 
 const { Option } = Mentions;
 const cookieParser = new Cookie(document.cookie)
@@ -19,7 +20,7 @@ function CommentArea(props) {
     const [tag, setTag] = useState({
         '@': [],
         '#': ['1.0', '2.0', '3.0'],
-        '$':[],
+        '$': [],
     });
     const [comment, setComment] = useState('');
     const [likeCount, setLikeCount] = useState({});
@@ -58,11 +59,19 @@ function CommentArea(props) {
             var tempEmail = Base64.decode(temp);
         }
         setEmail(tempEmail)
+        console.log(tempEmail)
         const type = props.page == 'NoteDetailPage' ? 'note' : 'post'
         axios.get(`/${type}/${props.id}`)
             .then(res => {
-                //console.log(res.data.res)
                 const tempComment = res.data.res.commentsUserObj
+                for (let i = 0; i < tempComment.length; i++) {
+                    if (tempComment[i].content) {
+                        tempComment[i].contentEdit = tempComment[i].content
+                        tempComment[i].content = transContent(tempComment[i].content)
+
+                    }
+
+                }
                 setComments(tempComment);
                 let authorArray = new Object();
                 let likeCount = new Object();
@@ -91,44 +100,55 @@ function CommentArea(props) {
                 setAuthors(authorArray);
                 setLikeCount(likeCount);
                 setLikeColor(likeColor);
+               
+                if (tempEmail) {
+                    axios.get("/note/all/" + tempEmail, {
+                        headers: {
+                            'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+                        }
+                    }).then(res => {
+                        console.log(res.data.res)
+                        const temp = res.data.res
+                        let noteArray = new Object();
+                        temp.map((item, index) => {
+                            noteArray[index] = item.title + '(noteId :' + item.id + ')'
+                        });
+                        setTag({
+                            '@': [...new Set(Object.values(authorArray))],
+                            '#': [...new Set(Object.values(noteArray))]
+                        });
+                    }).catch((error) => {
+                        //setGetFolderFail(true);
+                        console.log(error)
+                        if (error.response.status === 500 || error.response.status === 404 || error.response.status === 403) {
+                            if (error.response.data.message.slice(0, 13) === 'Malformed JWT') {
+                                document.cookie = 'error=Jwt'
+                                message.destroy()
+                                message.warning('The connection timed out, please login again !')
+                                document.cookie = 'email=;'
+                                props.setLoggedIn(false)
+                                props.setPageProps({ page: 'LoginPage' })
+                            }
+                            else
+                                document.cookie = 'error=true'
+                            message.error('Server Error! Please refresh again! (Get All Notes Error)')
+                        }
+                        else {
+                            message.error("Server Error! Please try again later. (Get All Notes Error)")
+                        }
+                    });
+                }
+                else {
+                    setTag({
+                        '@': [...new Set(Object.values(authorArray))],
+                        '#': [],
 
-                // axios.get("/note/all/" + tempEmail, {
-                //     headers: {
-                //         'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
-                //     }
-                // }).then(res => {
-                   
-                //     setTag({
-                //         '@': [...new Set(Object.values(authorArray))],
-                //         '#': ['1.0', '2.0', '3.0'],
-                //         '#':[...new Set(Object.values(res.data.res.title))]
-                //     });
-                // }).catch((error) => {
-                //     //setGetFolderFail(true);
-                //     if (error.response.status === 500 || error.response.status === 404 || error.response.status === 403) {
-                //         if (error.response.data.message.slice(0, 13) === 'Malformed JWT') {
-                //             document.cookie = 'error=Jwt'
-                //             message.destroy()
-                //             message.warning('The connection timed out, please login again !')
-                //             document.cookie = 'email=;'
-                //             props.setLoggedIn(false)
-                //             props.setPageProps({ page: 'LoginPage' })
-                //         }
-                //         else
-                //             document.cookie = 'error=true'
-                //         message.error('Server Error! Please refresh again! (Get All Notes Error)')
-                //     }
-                //     else {
-                //         message.error("Server Error! Please try again later. (Get All Notes Error)")
-                //     }
-                // });
-                setTag({
-                    '@': [...new Set(Object.values(authorArray))],
-                    '#': ['1.0', '2.0', '3.0'],
-                  
-                });
+                    });
+                }
+
             })
             .catch(err => {
+                console.log(err)
                 if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
                     if (err.response.data.message.slice(0, 13) === 'Malformed JWT') {
                         document.cookie = 'error=Jwt'
@@ -401,6 +421,24 @@ function CommentArea(props) {
             })
     }
 
+    const transContent = (content) => {
+        var arr = []
+        arr = content.toString().split(/#(.+)\)/gm);
+        console.log(arr)
+        var temp = arr
+        for (let i = 0; i < arr.length; i++) {
+            if (arr[i].match(/\(noteId :(.+)/gm)) {
+                let url = arr[i].split(/\(noteId :(.+)/gm)
+                temp[i] = React.createElement('a', { href: '/SharePage/note/'+url[1] }, '#'+url[0]);
+                console.log(temp)
+            }
+        }
+        console.log(temp)
+        var doc = React.createElement('p', {}, temp)
+        console.log(doc)
+        return doc
+    }
+
     return (
         <div className="commentArea">
             {props.page == 'QnADetailPage' &&
@@ -523,7 +561,7 @@ function CommentArea(props) {
                                                     key: '1',
                                                     label: (
                                                         <a onClick={() => {
-                                                            setEditingComment(item.content)
+                                                            setEditingComment(item.contentEdit)
                                                             setCommentEditFloor(item.floor)
                                                         }}
                                                             style={{ textDecoration: "none" }}>Edit</a>

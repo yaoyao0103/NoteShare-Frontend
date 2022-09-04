@@ -40,7 +40,7 @@ function FolderOutlineCard(props) {
         <>{props.mode === 'Folder' &&
             < Sider className={"FolderOutlineCard__Sider__Outer"} width='10%' >
                 <Row className={"FolderOutlineCard__Sider__NoteNumber"}>
-                    <Text cls='Default' fontSize={22} content={'Note number : ' + props.cardContent.notes.length} />
+                    <Text cls='Default' fontSize={'22'} content={'Note number : ' + props.cardContent.notes.length} />
                 </Row>
 
             </Sider >
@@ -82,7 +82,7 @@ function FolderOutlineCard(props) {
                                         <Title mode='FolderOutline' title={props.cardContent.folderName} size={26} />
                                     </Col>
                                     <Col span={4}>
-                                        <Text cls='Default' fontSize={22} content={'Note number : ' + props.cardContent.notes.length} />
+                                        <Text cls='Default' fontSize={'22'} content={'Note number : ' + props.cardContent.notes.length} />
                                     </Col>
                                 </Row>
                             </Header>
@@ -107,7 +107,7 @@ function FolderOutlineCard(props) {
                                         <Title mode='FolderOutline' title={props.cardContent.folderName} size={26} />
                                     </Col>
                                     <Col span={4}>
-                                        <Text cls='Default' fontSize={22} content={'Note number : ' + props.cardContent.notes.length} />
+                                        <Text cls='Default' fontSize={'22'} content={'Note number : ' + props.cardContent.notes.length} />
                                     </Col>
                                 </Row>
                             </Header>
@@ -132,7 +132,7 @@ function FolderOutlineCard(props) {
                                         <Title mode='FolderOutline' title={props.cardContent.folderName} size={26} />
                                     </Col>
                                     <Col span={4}>
-                                        <Text cls='Default' fontSize={22} content={'Note number : ' + props.cardContent.notes.length} />
+                                        <Text cls='Default' fontSize={'22'} content={'Note number : ' + props.cardContent.notes.length} />
                                     </Col>
                                 </Row>
                             </Header>
@@ -157,7 +157,7 @@ function FolderOutlineCard(props) {
                                         <Title mode='FolderOutline' title={props.cardContent.folderName} size={26} />
                                     </Col>
                                     <Col span={24} className={"FolderOutlineCard__Header__NoteNum"}>
-                                        <Text cls='Default' fontSize={22} content={'Note number : ' + props.cardContent.notes.length} />
+                                        <Text cls='Default' fontSize={'22'} content={'Note number : ' + props.cardContent.notes.length} />
                                     </Col>
                                 </Row>
                             </Header>
@@ -182,7 +182,7 @@ function FolderOutlineCard(props) {
                                         <Title mode='FolderOutline' title={props.cardContent.folderName} size={26} />
                                     </Col>
                                     <Col span={24} className={"FolderOutlineCard__Header__NoteNum__sm"}>
-                                        <Text cls='Default' fontSize={22} content={'Note number : ' + props.cardContent.notes.length} />
+                                        <Text cls='Default' fontSize={'22'} content={'Note number : ' + props.cardContent.notes.length} />
                                     </Col>
                                 </Row>
                             </Header>

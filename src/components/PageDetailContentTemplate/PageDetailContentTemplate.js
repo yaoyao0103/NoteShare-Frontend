@@ -659,7 +659,7 @@ const PageDetailContentTemplate = (props) => {
 
 
                                 {(props.page == 'NoteDetailPage' || (props.page == 'CollabDetailPage' && isAuthor)) ?
-                                    <div className={!isBuyer && "contentTemplate__Content__Main__Blur"}>
+                                    <div className={(!isAuthor&&!isBuyer) && "contentTemplate__Content__Main__Blur"}>
                                         {editor}
                                     </div>
                                     :

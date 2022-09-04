@@ -32,13 +32,13 @@ function FolderCard(props) {
                     {item.folderName &&
                         <List.Item.Meta
                             className='FolderCard__List__Sec__Col'
-                            title={<Text cls='Default' fontSize={20} content={item.folderName} />}
+                            title={<Text cls='Default' fontSize={'20'} content={item.folderName} />}
 
                         />}
                     {!item.folderName &&
                         <List.Item.Meta
                             className='FolderCard__List__Sec__Col'
-                            title={<Text cls='Default' fontSize={20} content={item.title} />}
+                            title={<Text cls='Default' fontSize={'20'} content={item.title} />}
                             description={item.description}
                             onClick={()=>{props.setPageProps({
                                 noteId: item.id,
@@ -47,7 +47,7 @@ function FolderCard(props) {
                         />}
                     {item.folderName &&
                         <div className='FolderCard__List__NoteNumber'>
-                            <Text cls='Default' fontSize={16} content={'Note number : ' + item.notes.length} />
+                            <Text cls='Default' fontSize={'16'} content={'Note number : ' + item.notes.length} />
                         </div>
                     }
 

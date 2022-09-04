@@ -104,13 +104,13 @@ function Ring(props) {
     }, [props.ringList]);
     const [ellipsis, setEllipsis] = useState(true);
     const setUnReadNumZero = () => {
-        console.log('Authorization', 'Bearer ', cookieParser.getCookieByName("token"))
+       
         axios.put("/notification/unreadMessage/" + email, {}, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token")
             }
         }).then(res => {
-            console.log('ring')
+          
             props.setRingNumber(0);
         }).catch((error) => {
             console.log(error);

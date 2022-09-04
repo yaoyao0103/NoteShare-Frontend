@@ -1,0 +1,185 @@
+
+.outerPage__Loading{
+    position: absolute;
+    height: 100%;
+    width:100%;
+}
+.ant-spin-container{
+    height: 100%;
+    width:100%;
+}
+
+.outerPage__PageLabel{
+    position: absolute;
+    top: 8%;
+    height: 12%;
+    background-color: #FFFFFF;
+    width: 100%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.outerPage__PageLabel p{
+    position: absolute;
+    bottom: 0;
+    left: 12%
+}
+
+.outerPage__PageLabel .anticon{
+    position: absolute;
+    font-size: 1.8em;
+    bottom: 0;
+    right: 12%;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.outerPage__PageLabel .anticon:hover{
+    transform: scale(1.1);
+}
+
+.outerPage__Layout__PageLabel{
+    position: absolute;
+    background-color: #FFFFFF;
+    top: 20%;
+    width: 100%;
+    /* height: 100%;
+    padding-bottom: 3%; */
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.outerPage__Layout{
+    position: absolute;
+    background-color: #FFFFFF;
+    top: 18%;
+    width: 100%;
+    /* height: 100%;
+    padding-bottom: 3%; */
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+.drawerBtn{
+    position: fixed;
+    left: 2em;
+    bottom: 2em;
+}
+.lastPageButton{
+    position: absolute;
+    left: 8%;
+    top: 16%;
+    cursor: pointer;
+}
+.lastPageButton:hover{
+    transform: scale(1.1);
+    transition: .3s;
+}
+.floatButton {
+    position: fixed;
+    right: 6vh;
+    bottom: 6vh;
+    border-radius: 50%;
+    background-color: #FFAF60;
+    font-size: 2em;
+    padding: .6em;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    cursor: pointer;
+    box-shadow: -2px 2px 20px 1px rgba(0, 0, 0, 0.2);
+}
+.floatButton__Hide {
+    position: fixed;
+    right: 6vh;
+    bottom: 6vh;
+    border-radius: 50%;
+    background-color: #FFAF60;
+    font-size: 2em;
+    padding: .6em;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    cursor: pointer;
+    box-shadow: -2px 2px 20px 1px rgba(0, 0, 0, 0.2);
+}
+.floatButton__Note {
+    position: fixed;
+    right: 6vh;
+    bottom: 5em;
+    border-radius: 50%;
+    background-color: #FFAF60;
+    font-size: 2em;
+    padding: .6em;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    cursor: pointer;
+    box-shadow: -2px 2px 20px 1px rgba(0, 0, 0, 0.2);
+}
+.floatButton__QA {
+    position: fixed;
+    right: 6vh;
+    bottom: 7.8em;
+    border-radius: 50%;
+    background-color: #FFAF60;
+    font-size: 2em;
+    padding: .6em;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    cursor: pointer;
+    box-shadow: -2px 2px 20px 1px rgba(0, 0, 0, 0.2);
+}
+.floatButton__Collab {
+    position: fixed;
+    right: 6vh;
+    bottom: 10.6em;
+    border-radius: 50%;
+    background-color: #FFAF60;
+    font-size: 2em;
+    padding: .6em;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    cursor: pointer;
+    box-shadow: -2px 2px 20px 1px rgba(0, 0, 0, 0.2);
+}
+.floatButton__Reward {
+    position: fixed;
+    right: 6vh;
+    bottom: 13.4em;
+    border-radius: 50%;
+    background-color: #FFAF60;
+    font-size: 2em;
+    padding: .6em;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    cursor: pointer;
+    box-shadow: -2px 2px 20px 1px rgba(0, 0, 0, 0.2);
+}
+.toast__Avatar{
+    margin-right:10em;
+}
+.floatButton:hover{
+    background-color: #FF9224;
+    transform: scale(1.1) rotate(180deg);
+    transition: 0.2s;
+}
