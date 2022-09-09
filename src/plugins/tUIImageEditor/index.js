@@ -17,9 +17,15 @@ export default (editor, options = {}) => {
   
       // Label for the image editor (used in the modal)
       labelImageEditor: 'Image Editor',
+
+      // Label for the OCR (used in the modal)
+      labelOCR: 'OCR',
   
       // Label used on the apply button
       labelApply: 'Apply',
+
+      // Label used on the run OCR button
+      labelRunOCR: 'Run OCR',
   
       // Default editor height
       height: '650px',
@@ -28,13 +34,26 @@ export default (editor, options = {}) => {
       width: '100%',
   
       // Id to use to create the image editor command
-      commandId: 'tui-image-editor',
+      commandId1: 'tui-image-editor',
+
+      // Id to use OCR command
+      commandId2: 'OCR',
   
       // Icon used in the component toolbar
-      toolbarIcon: `<svg viewBox="0 0 24 24">
+      toolbarIcon1: `<svg viewBox="0 0 24 24">
                       <path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z">
                       </path>
                     </svg>`,
+
+      toolbarIcon2: `<svg width="24" height="24" viewBox="160 0 550 550">
+      <g>
+       <path d="m474.32 295.68h-248.64c-8.3984 0-15.68-6.7188-15.68-15.68 0-8.3984 6.7188-15.68 15.68-15.68h248.64c8.3984 0 15.68 6.7188 15.68 15.68 0 8.3984-6.7188 15.68-15.68 15.68z"/>
+       <path d="m454.16 182-53.199-53.199c-2.8008-2.8008-6.7188-4.4805-11.199-4.4805h-117.6c-17.359 0-31.359 14-31.359 31.359v108.64h31.359v-100.8c0-4.4805 3.3594-7.8398 7.8398-7.8398h77.84v42c0 15.68 12.32 28 28 28h42v38.641h31.359v-71.121c-0.55859-4.4805-1.6797-8.3984-5.0391-11.199zm-65.52 12.32v-33.602l33.602 33.602z"/>
+       <path d="m427.84 396.48c0 4.4805-3.3594 7.8398-7.8398 7.8398h-140c-4.4805 0-7.8398-3.3594-7.8398-7.8398v-54.32c0-8.3984-6.7188-15.68-15.68-15.68-8.3984 0-15.68 6.7188-15.68 15.68v62.16c0 17.359 14 31.359 31.359 31.359h155.68c17.359 0 31.359-14 31.359-31.359v-62.16c0-8.3984-6.7188-15.68-15.68-15.68-8.3984 0-15.68 6.7188-15.68 15.68z"/>
+       <path d="m370.16 326.48h-66.641c-4.4805 0-7.8398-3.3594-7.8398-7.8398s3.3594-7.8398 7.8398-7.8398h66.641c4.4805 0 7.8398 3.3594 7.8398 7.8398s-3.9219 7.8398-7.8398 7.8398z"/>
+       <path d="m350 357.84h-46.48c-4.4805 0-7.8398-3.3594-7.8398-7.8398s3.3594-7.8398 7.8398-7.8398h46.48c4.4805 0 7.8398 3.3594 7.8398 7.8398s-3.3594 7.8398-7.8398 7.8398z"/>
+      </g>
+     </svg>`,     
   
       // Hide the default editor header
       hideHeader: 1,
@@ -90,7 +109,7 @@ export default (editor, options = {}) => {
       ],
     },  ...options };
   
-    const { script, style, height, width, hideHeader, icons, onApply, upload, addToAssets, commandId } = opts;
+    const { script, style, height, width, hideHeader, icons, onApply, upload, addToAssets, commandId1, commandId2 } = opts;
     const getConstructor = () => opts.constructor || (window.tui && window.tui.ImageEditor);
     let constr = getConstructor();
   
@@ -130,13 +149,20 @@ export default (editor, options = {}) => {
         initToolbar() {
           typeImage.prototype.initToolbar.apply(this, arguments);
           const tb = this.get('toolbar');
-          const tbExists = tb.some(item => item.command === commandId);
+          const tb1Exists = tb.some(item => item.command === commandId1);
+          const tb2Exists = tb.some(item => item.command === commandId2);
   
-          if (!tbExists) {
+          if (!tb1Exists) {
             tb.unshift({
-              command: commandId,
-              label: opts.toolbarIcon,
+              command: commandId1,
+              label: opts.toolbarIcon1,
             });
+            if (!tb2Exists){
+              tb.unshift({
+                command: commandId2,
+                label: opts.toolbarIcon2,
+              });
+            }
             this.set('toolbar', tb);
           }
         }
@@ -144,14 +170,14 @@ export default (editor, options = {}) => {
     })
   
     // Add the image editor command
-    editor.Commands.add(commandId, {
+    editor.Commands.add(commandId1, {
       run(ed, s, options = {}) {
         const { id } = this;
   
         if (!constr) {
           ed.log('TOAST UI Image editor not found', {
             level: 'error',
-            ns: commandId,
+            ns: commandId1,
           });
           return ed.stopCommand(id);
         }
@@ -290,4 +316,67 @@ export default (editor, options = {}) => {
         return new Blob([ab], { type });
       },
     });
+
+    // Add the image editor command
+    editor.Commands.add(commandId2, {
+      run(ed, s, options = {}) {
+        console.log("run command 2");
+        const { id } = this;
+        const content = this.createContent();
+        const title = opts.labelOCR;
+        ed.Modal.open({ title, content })
+          .getModel().once('change:open', () => ed.stopCommand(id));
+      },
+
+      createContent() {
+        const content = document.createElement('div');
+        content.style = 'position: relative';
+        content.innerHTML = `
+          <div style="
+            position: relative;
+            width: 100%;
+            height: 100%;
+        ">
+          <textarea rows="8" cols="42" style="
+            position: relative;
+            float: left;
+            margin-left: .2em;
+            margin-right: 1em;
+          "></textarea>
+          <textarea rows="8" cols="42" style="
+            position: relative;
+            float: left;
+          "></textarea>
+        </div>
+          <button class="tui-image-editor__run-btn" style="
+            position: relative;
+            float: right;
+            margin: 10px;
+            background-color: #fff;
+            font-size: 1rem;
+            border-radius: 3px;
+            border: solid thin;
+            padding: 10px 20px;
+            cursor: pointer
+          ">
+            ${opts.labelApply}
+          </button>
+          <button class="tui-image-editor__run-btn" style="
+            position: relative;
+            float: right;
+            margin: 10px;
+            background-color: #fff;
+            font-size: 1rem;
+            border-radius: 3px;
+            border: solid thin;
+            padding: 10px 20px;
+            cursor: pointer
+          ">
+            ${opts.labelRunOCR}
+          </button>
+        `;
+  
+        return content;
+      },
+    })
   };
