@@ -2,6 +2,9 @@ import iconA from 'tui-image-editor/dist/svg/icon-a.svg';
 import iconB from 'tui-image-editor/dist/svg/icon-b.svg';
 import iconC from 'tui-image-editor/dist/svg/icon-c.svg';
 import iconD from 'tui-image-editor/dist/svg/icon-d.svg';
+import Cookie from '../../components/Cookies/Cookies';
+import axios from '../../components/axios/axios';
+
 export default (editor, options = {}) => {
     const remoteIcons = 'https://raw.githubusercontent.com/nhnent/tui.image-editor/production/dist/svg/';
     const opts = { ...{
@@ -234,22 +237,38 @@ export default (editor, options = {}) => {
   
       uploadImage(imageEditor, target, am) {
         const dataURL = imageEditor.toDataURL();
-        if (upload) {
-          const file = this.dataUrlToBlob(dataURL);
-          am.FileUploader().uploadFile({
-            dataTransfer: { files: [file] }
-          }, res => {
-            const obj = res && res.data && res.data[0];
-            const src = obj && (typeof obj === 'string' ? obj : obj.src);
-            src && this.applyToTarget(src);
-          });
-        } else {
-          addToAssets && am.add({
-            src: dataURL,
-            name: (target.get('src') || '').split('/').pop(),
-          });
-          this.applyToTarget(dataURL);
-        }
+        const cookieParser = new Cookie(document.cookie)
+        axios.put( '/picture/imgur', { base64: dataURL.split(',')[1] },
+          {
+            headers: {
+              Authorization: 'Bearer ' + cookieParser.getCookieByName('token'),
+            },
+          }
+        )
+        .then(res => {
+          let link = res.data.link;
+          console.log("link", link)
+          if (upload) {
+            const file = this.dataUrlToBlob(dataURL);
+            am.FileUploader().uploadFile({
+              dataTransfer: { files: [file] }
+            }, res => {
+              const obj = res && res.data && res.data[0];
+              const src = obj && (typeof obj === 'string' ? obj : obj.src);
+              src && this.applyToTarget(src);
+            });
+          } else {
+            addToAssets && am.add({
+              src: link,
+              name: (target.get('src') || '').split('/').pop(),
+            });
+            this.applyToTarget(link);
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+        
       },
   
       applyToTarget(result) {

@@ -785,7 +785,7 @@ const FileManager = (props) => {
                                         >
 
 
-                                            {renaming == item.id ? <Input placeholder='New Folder Name' bordered={false} onPressEnter={(ev) => renameFolder(item.id, ev.target.value)} className="fileManage_Folder_Item_Input" addonAfter={<CloseOutlined onClick={() => setRenaming(false)} />} /> : <div className='fileManage_Folder_Item_Name' onClick={() => onClickFolderZone(item.id)}><div>{item.folderName != "Temp Reward Note" ? item.folderName != "Buy" ? item.folderName + 's' : "Owned" : "Draft Reward Notes"}</div></div>}
+                                            {renaming == item.id ? <Input placeholder='New Folder Name' bordered={false} onPressEnter={(ev) => renameFolder(item.id, ev.target.value)} className="fileManage_Folder_Item_Input" addonAfter={<CloseOutlined onClick={() => setRenaming(false)} />} /> : <div className='fileManage_Folder_Item_Name' onClick={() => onClickFolderZone(item.id)}><div>{item.folderName}</div></div>}
 
                                             {renaming != item.id && inFolder &&
                                                 <Dropdown overlay={<Menu
