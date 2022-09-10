@@ -6,6 +6,7 @@ import Cookie from '../../components/Cookies/Cookies';
 import axios from '../../components/axios/axios';
 
 export default (editor, options = {}) => {
+    const cookieParser = new Cookie(document.cookie)
     const remoteIcons = 'https://raw.githubusercontent.com/nhnent/tui.image-editor/production/dist/svg/';
     const opts = { ...{
       // TOAST UI's configurations
@@ -263,7 +264,6 @@ export default (editor, options = {}) => {
   
       uploadImage(imageEditor, target, am) {
         const dataURL = imageEditor.toDataURL();
-        const cookieParser = new Cookie(document.cookie)
         axios.put( '/picture/imgur', { base64: dataURL.split(',')[1] },
           {
             headers: {
@@ -320,15 +320,22 @@ export default (editor, options = {}) => {
     // Add the image editor command
     editor.Commands.add(commandId2, {
       run(ed, s, options = {}) {
-        console.log("run command 2");
+        this.target = options.target || ed.getSelected();
+        this.url = this.target.attributes.attributes.src;
         const { id } = this;
         const content = this.createContent();
         const title = opts.labelOCR;
+        const applyBtn = content.children[1];
+        const OCRBtn = content.children[2];
+
         ed.Modal.open({ title, content })
           .getModel().once('change:open', () => ed.stopCommand(id));
+        applyBtn.onclick = () => this.applyOCR(ed);
+        OCRBtn.onclick = () => this.OCR();
       },
 
       createContent() {
+        const url = this.target.attributes.attributes.src;
         const content = document.createElement('div');
         content.style = 'position: relative';
         content.innerHTML = `
@@ -337,14 +344,16 @@ export default (editor, options = {}) => {
             width: 100%;
             height: 100%;
         ">
-          <textarea rows="8" cols="42" style="
+          <img src=${this.url} id="OCR-image" crossorigin="anonymous" style="
             position: relative;
             float: left;
+            width: 48%;
             margin-left: .2em;
             margin-right: 1em;
-          "></textarea>
-          <textarea rows="8" cols="42" style="
+          "></img>
+          <textarea id = "OCR-result" rows="8" cols="42" style="
             position: relative;
+            border-color: #888;
             float: left;
           "></textarea>
         </div>
@@ -378,5 +387,65 @@ export default (editor, options = {}) => {
   
         return content;
       },
+
+      OCR(){
+        axios.get( `http://54.95.183.197:8080/ocr/getText?imageUrl=${this.url}`,
+          {
+            headers: {
+              Authorization: 'Bearer ' + cookieParser.getCookieByName('token'),
+            },
+          }
+        )
+        .then(res => {
+          this.OCRText = res.data.res;
+          document.getElementById("OCR-result").value = this.OCRText;
+          
+
+        })
+        .catch(err => {
+          console.log(err);
+        });
+      },
+
+      applyOCR(ed){
+        const text = document.getElementById("OCR-result").value;
+        const selected = ed.getSelected()
+        const collection = selected.collection;
+        const index = collection.indexOf(selected);
+        const parent = selected.parent();
+        const dstId = parent.ccid;
+        const dst = parent.view.$el[0];
+        let tmpNode = document.createElement('div');
+        tmpNode.appendChild(dst.cloneNode());
+        let dstString = tmpNode.innerHTML;
+        console.log("dat", dstString)
+        const opts = { 
+          dragInfo: true,
+          draggable: true,
+          dropContent: {
+            activeOnRender: 1,
+            content: text,
+            style: { padding: '10px'},
+            type: "text",
+          },
+          dropInfo: true,
+          droppable: true,
+          dst: dstString,
+          dstId: dstId,
+          pos: {
+            index: index,
+            indexEl: index,
+            method: 'before'
+          },
+          idArray: []
+        }
+        console.log("...opts", opts)
+        const droppable = ed.getModel().getCurrentFrame().droppable;
+        droppable.applyAppendText(opts, 'add-component');
+        
+        ed.runCommand('core:component-delete');
+        ed.Modal.close();
+      }
+
     })
   };
