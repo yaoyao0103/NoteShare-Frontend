@@ -19,36 +19,6 @@ const PersonalPage = (props) => {
         setEmail(startEmail);
     }, [])
 
-    const onClickOCR = () => {
-        message.info("OCR Test")
-        axios.get('http://54.95.183.197:8080/ocr/getText?imageUrl=https://i.imgur.com/oAIn93c.jpg', {
-            headers: {
-                'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
-            }
-        })
-            .then(res => {
-                console.log("OCR Result:", res)
-            })
-            .catch(err => {
-                console.log("OCR err:", err)
-                if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
-                    if (err.response.data.message.slice(0, 13) === 'Malformed JWT') {
-                        document.cookie = 'error=Jwt'
-                        message.destroy()
-                        message.warning('The connection timed out, please login again !')
-                        document.cookie = 'email=;'
-                        props.setLoggedIn(false)
-                        props.setPageProps({ page: 'LoginPage' })
-                    }
-                    else
-                        document.cookie = 'error=true'
-                    message.error('Server Error! Please refresh again! (Get Root File Error)')
-                }
-                else {
-                    message.error("Server Error! Please try again later. (Get Root File Error)")
-                }
-            })
-    }
     return (
         // <div className='personalPage'>
         //     <Navbar currPage={page} changePage={ (page) => { setPage(page) }}/>
@@ -56,10 +26,7 @@ const PersonalPage = (props) => {
         //         <FileManager page={page}/>
         //     </div>
         // </div>
-        <>
-            <button onClick={onClickOCR}>OCR Test</button>
-            <FileManager setLoggedIn={props.setLoggedIn} page={props.page} email={email} setPageProps={props.setPageProps} setLoading={props.setLoading} />
-        </>
+        <FileManager setLoggedIn={props.setLoggedIn} page={props.page} email={email} setPageProps={props.setPageProps} setLoading={props.setLoading} />
     );
 
 }

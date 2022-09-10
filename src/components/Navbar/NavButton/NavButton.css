@@ -36,7 +36,7 @@
 }
 
 .navButton .button__first--active:hover, .navButton .button__second--active:hover, .navButton .button__third--active:hover, .navButton .button__forth--active:hover{
-    transform: scale(1.05);
+    transform: scale(1.03);
     transition: 0.1s;
 }
 

@@ -88,7 +88,7 @@ function PageOutlineContentTemplate(props) {
         }
         else {
 
-            tempcardLists.push(<Empty />);
+            tempcardLists.push(<Empty style={{width:"100%", marginTop: '2em'}}/>);
             setCardList(tempcardLists);
         }
         setPageTotal(props.Post[0].totalPages * 10);
