@@ -657,7 +657,8 @@ const OptionMenu = (props) => {
         axios.get("/download/" + props.id + '/0/0', {
           headers: {
             'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
-          }
+          },
+          responseType: 'blob'
         }).then(res => {
           download(res.data, props.title, "application/pdf")
           message.success('Download success!')
