@@ -204,12 +204,12 @@ function NavButton(props) {
       </>
       :
       <Dropdown overlay={menu} overlayStyle={{textDecoration: "none"}}>
-        <a onClick={(e) => e.preventDefault()}>
+        <p style={{cursor:'pointer'}}onClick={(e) => e.preventDefault()}>
           <Space className="navDropdown">
             Functions
             <DownOutlined />
           </Space>
-        </a>
+        </p>
       </Dropdown>
     }
     
