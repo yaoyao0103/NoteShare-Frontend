@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./OptionMenu.css";
 import { Link, useNavigate } from "react-router-dom";
 import { Menu, Dropdown, Space, Drawer, message, Input, Tooltip, Button, Popover, List, Avatar, Modal, Popconfirm, notification } from "antd";
-import { StarOutlined, CopyOutlined, EditOutlined, CommentOutlined, CheckOutlined, CloseOutlined, ShareAltOutlined, InboxOutlined, DeleteOutlined, EyeOutlined, InfoCircleOutlined, UserOutlined, LikeOutlined } from "@ant-design/icons";
+import { StarOutlined, CopyOutlined, EditOutlined, CommentOutlined, CheckOutlined, CloseOutlined, ShareAltOutlined, InboxOutlined, DeleteOutlined, EyeOutlined, InfoCircleOutlined, UserOutlined, LikeOutlined, DownloadOutlined } from "@ant-design/icons";
 import VersionArea from "../VersionArea/VersionArea";
 import CommentArea from "../CommentArea/CommentArea";
 import ContentEditor from "../../pages/NoteDetailPage/ContentEditor/ContentEditor";
@@ -13,6 +13,7 @@ import axios from "../axios/axios";
 import MyEditor from "../MyEditor/MyEditor";
 import { set } from "react-hook-form";
 import moment from 'moment';
+import download from 'downloadjs'
 const cookieParser = new Cookie(document.cookie)
 const OptionMenu = (props) => {
   const navigate = useNavigate()
@@ -642,6 +643,52 @@ const OptionMenu = (props) => {
     });
   }
 
+  const share = (type) => {
+    const copyText = "http://localhost:3000/sharePage/" + type + '/' + props.id
+
+    // Copy the text inside the text field
+    navigator.clipboard.writeText(copyText);
+    message.success('Copied link to clipboard!')
+  }
+
+  const downloadNOte = () => {
+    if (cookieParser.getCookieByName("email")) {
+      if (props.isBuyer || props.isAuthor) {
+        axios.get("/download/" + props.id + '/0/0', {
+          headers: {
+            'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+          },
+          responseType: 'blob'
+        }).then(res => {
+          download(res.data, props.title, "application/pdf")
+          message.success('Download success!')
+        }).catch((error) => {
+          if (error.response.status === 500 || error.response.status === 404 || error.response.status === 403) {
+            if (error.response.data.message.slice(0, 13) === 'Malformed JWT') {
+              document.cookie = 'error=Jwt'
+              message.destroy()
+              message.warning('The connection timed out, please login again !')
+              document.cookie = 'email=;'
+              props.setLoggedIn(false)
+              props.setPageProps({ page: 'LoginPage' })
+            }
+            else
+              document.cookie = 'error=true'
+            message.error('Server Error! Please refresh again! (Get Fans Error)')
+          }
+          else {
+            message.error("Server Error! Please try again later. (Get Fans Error)")
+          }
+        })
+      }
+      else {
+        message.warn('Please buy first!')
+      }
+    }
+    else {
+      message.warn('Please log in first!')
+    }
+  }
   const NoteDetailMenuReward = (
     <Menu items={
       [
@@ -664,6 +711,15 @@ const OptionMenu = (props) => {
           key: "1",
           icon: <EyeOutlined />,
         },
+        {
+          label: (<a onClick=
+            {() => {
+              downloadNOte();
+            }}
+          >Download</a>),
+          key: "2",
+          icon: <DownloadOutlined />
+        },
       ]
     } />
   );
@@ -673,10 +729,14 @@ const OptionMenu = (props) => {
       props.notePublic ?
         [
           {
-            label: "Share",
+            label: <a onClick=
+              {() => {
+                share('note');
+              }}
+            >Share</a>,
             key: "1",
             icon: <ShareAltOutlined />,
-            disabled: true
+
           },
           {
             label: (<a onClick=
@@ -687,14 +747,26 @@ const OptionMenu = (props) => {
             key: "2",
             icon: <InfoCircleOutlined />
           },
+          {
+            label: (<a onClick=
+              {() => {
+                downloadNOte();
+              }}
+            >Download</a>),
+            key: "3",
+            icon: <DownloadOutlined />
+          },
         ]
         :
         [
           {
-            label: "Share",
+            label: <a onClick=
+              {() => {
+                share('note');
+              }}
+            >Share</a>,
             key: "1",
             icon: <ShareAltOutlined />,
-            disabled: true
           },
           {
             label: (<a onClick=
@@ -718,6 +790,15 @@ const OptionMenu = (props) => {
             key: "3",
             icon: <UserOutlined style={{ color: "#333" }} />
           },
+          {
+            label: (<a onClick=
+              {() => {
+                downloadNOte();
+              }}
+            >Download</a>),
+            key: "4",
+            icon: <DownloadOutlined />
+          },
         ]
     } />
   );
@@ -731,11 +812,23 @@ const OptionMenu = (props) => {
           icon: <StarOutlined />
         },
         {
-          label: "Share",
+          label: <a onClick=
+            {() => {
+              share('note');
+            }}
+          >Share</a>,
           key: "2",
           icon: <ShareAltOutlined />,
-          disabled: true
-        }
+        }, {
+          label: (<a onClick=
+            {() => {
+              downloadNOte();
+            }}
+          >Download</a>),
+          key: "3",
+          icon: <DownloadOutlined />
+        },
+
       ]
     } />
   );
@@ -749,10 +842,13 @@ const OptionMenu = (props) => {
           icon: <StarOutlined />
         },
         {
-          label: "Share",
+          label: <a onClick=
+            {() => {
+              share('note');
+            }}
+          >Share</a>,
           key: "2",
           icon: <ShareAltOutlined />,
-          disabled: true
         },
         {
           label: (<a onClick=
@@ -762,6 +858,14 @@ const OptionMenu = (props) => {
           >View All Versions</a>),
           key: "3",
           icon: <InfoCircleOutlined />
+        }, {
+          label: (<a onClick=
+            {() => {
+              downloadNOte();
+            }}
+          >Download</a>),
+          key: "4",
+          icon: <DownloadOutlined />
         },
       ]
     } />
@@ -771,10 +875,14 @@ const OptionMenu = (props) => {
     <Menu items={
       [
         {
-          label: "Share",
+          label: <a onClick=
+            {() => {
+              share('qnA');
+            }}
+          >Share</a>,
           key: "",
           icon: <ShareAltOutlined />,
-          disabled: true
+
         }
       ]
     } />
@@ -798,10 +906,13 @@ const OptionMenu = (props) => {
           icon: <EditOutlined />
         },
         {
-          label: "Share",
+          label: <a onClick=
+            {() => {
+              share('qnA');
+            }}
+          >Share</a>,
           key: "2",
           icon: <ShareAltOutlined />,
-          disabled: true
         },
         {
           label: (<a onClick={archive}>Archive</a>),
@@ -837,10 +948,13 @@ const OptionMenu = (props) => {
           icon: <EditOutlined />
         },
         {
-          label: "Share",
+          label: <a onClick=
+            {() => {
+              share('qnA');
+            }}
+          >Share</a>,
           key: "2",
           icon: <ShareAltOutlined />,
-          disabled: true
         },
         {
           label: (<a>Archive</a>),
@@ -877,10 +991,14 @@ const OptionMenu = (props) => {
           icon: <EditOutlined />
         },
         {
-          label: "Share",
+          label: <a onClick=
+            {() => {
+              share('reward');
+            }}
+          >Share</a>,
           key: "2",
           icon: <ShareAltOutlined />,
-          disabled: true
+
         },
         {
           label: (
@@ -916,10 +1034,13 @@ const OptionMenu = (props) => {
     <Menu items={
       [
         {
-          label: "Share",
+          label: <a onClick=
+            {() => {
+              share('reward');
+            }}
+          >Share</a>,
           key: "1",
           icon: <ShareAltOutlined />,
-          disabled: true
         }]
     } />
   );
@@ -928,10 +1049,14 @@ const OptionMenu = (props) => {
     <Menu items={
       [
         {
-          label: "Share",
+          label: <a onClick=
+            {() => {
+              share('collab');
+            }}
+          >Share</a>,
           key: "1",
           icon: <ShareAltOutlined />,
-          disabled: true
+
         },
       ]
     } />
@@ -981,10 +1106,13 @@ const OptionMenu = (props) => {
           icon: <InfoCircleOutlined />
         },
         {
-          label: "Share",
+          label: <a onClick=
+            {() => {
+              share('collab');
+            }}
+          >Share</a>,
           key: "4",
           icon: <ShareAltOutlined />,
-          disabled: true
         },
         {
           label: (<a onClick=
@@ -1048,10 +1176,13 @@ const OptionMenu = (props) => {
           icon: <InfoCircleOutlined />
         },
         {
-          label: "Share",
+          label: <a onClick=
+            {() => {
+              share('collab');
+            }}
+          >Share</a>,
           key: "5",
           icon: <ShareAltOutlined />,
-          disabled: true
         },
         {
           label: (
@@ -1246,10 +1377,14 @@ const OptionMenu = (props) => {
           icon: <EditOutlined />
         },
         {
-          label: (<a onClick={() => { message.info("Share: " + props.id) }}>Share</a>),
+          label: <a onClick=
+            {() => {
+              share('note');
+            }}
+          >Share</a>,
           key: "2",
           icon: <ShareAltOutlined />,
-          disabled: true
+
         },
         {
           label: (<a onClick={() => { props.setCopy(props.id) }}>Copy</a>),

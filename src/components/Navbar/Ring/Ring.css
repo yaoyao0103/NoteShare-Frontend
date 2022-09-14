@@ -22,7 +22,8 @@
 }
 .Ring__Icon{
     padding-top:0.2em;
-    
+    float: left;
+    margin-right: 0.8em;
 }
 .Ring__Dropdown .ant-dropdown-menu-item{
     height: 80px;

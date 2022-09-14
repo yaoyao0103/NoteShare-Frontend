@@ -183,3 +183,11 @@
     transform: scale(1.1) rotate(180deg);
     transition: 0.2s;
 }
+
+.ant-notification .ant-switch{
+    background: #8015E8;
+}
+
+.ant-notification .ant-switch-checked{
+    background: #00CCAA;
+}

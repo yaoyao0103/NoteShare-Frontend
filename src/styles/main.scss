@@ -30,3 +30,7 @@ p{
   margin-top: 0.3em;
   margin-bottom: 0.3em;
 }
+
+textarea:focus{
+  outline: none;
+}

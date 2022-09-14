@@ -2,7 +2,11 @@ import iconA from 'tui-image-editor/dist/svg/icon-a.svg';
 import iconB from 'tui-image-editor/dist/svg/icon-b.svg';
 import iconC from 'tui-image-editor/dist/svg/icon-c.svg';
 import iconD from 'tui-image-editor/dist/svg/icon-d.svg';
+import Cookie from '../../components/Cookies/Cookies';
+import axios from '../../components/axios/axios';
+
 export default (editor, options = {}) => {
+    const cookieParser = new Cookie(document.cookie)
     const remoteIcons = 'https://raw.githubusercontent.com/nhnent/tui.image-editor/production/dist/svg/';
     const opts = { ...{
       // TOAST UI's configurations
@@ -14,9 +18,15 @@ export default (editor, options = {}) => {
   
       // Label for the image editor (used in the modal)
       labelImageEditor: 'Image Editor',
+
+      // Label for the OCR (used in the modal)
+      labelOCR: 'OCR',
   
       // Label used on the apply button
       labelApply: 'Apply',
+
+      // Label used on the run OCR button
+      labelRunOCR: 'Run OCR',
   
       // Default editor height
       height: '650px',
@@ -25,13 +35,26 @@ export default (editor, options = {}) => {
       width: '100%',
   
       // Id to use to create the image editor command
-      commandId: 'tui-image-editor',
+      commandId1: 'tui-image-editor',
+
+      // Id to use OCR command
+      commandId2: 'OCR',
   
       // Icon used in the component toolbar
-      toolbarIcon: `<svg viewBox="0 0 24 24">
+      toolbarIcon1: `<svg viewBox="0 0 24 24">
                       <path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z">
                       </path>
                     </svg>`,
+
+      toolbarIcon2: `<svg width="24" height="24" viewBox="160 0 550 550">
+      <g>
+       <path d="m474.32 295.68h-248.64c-8.3984 0-15.68-6.7188-15.68-15.68 0-8.3984 6.7188-15.68 15.68-15.68h248.64c8.3984 0 15.68 6.7188 15.68 15.68 0 8.3984-6.7188 15.68-15.68 15.68z"/>
+       <path d="m454.16 182-53.199-53.199c-2.8008-2.8008-6.7188-4.4805-11.199-4.4805h-117.6c-17.359 0-31.359 14-31.359 31.359v108.64h31.359v-100.8c0-4.4805 3.3594-7.8398 7.8398-7.8398h77.84v42c0 15.68 12.32 28 28 28h42v38.641h31.359v-71.121c-0.55859-4.4805-1.6797-8.3984-5.0391-11.199zm-65.52 12.32v-33.602l33.602 33.602z"/>
+       <path d="m427.84 396.48c0 4.4805-3.3594 7.8398-7.8398 7.8398h-140c-4.4805 0-7.8398-3.3594-7.8398-7.8398v-54.32c0-8.3984-6.7188-15.68-15.68-15.68-8.3984 0-15.68 6.7188-15.68 15.68v62.16c0 17.359 14 31.359 31.359 31.359h155.68c17.359 0 31.359-14 31.359-31.359v-62.16c0-8.3984-6.7188-15.68-15.68-15.68-8.3984 0-15.68 6.7188-15.68 15.68z"/>
+       <path d="m370.16 326.48h-66.641c-4.4805 0-7.8398-3.3594-7.8398-7.8398s3.3594-7.8398 7.8398-7.8398h66.641c4.4805 0 7.8398 3.3594 7.8398 7.8398s-3.9219 7.8398-7.8398 7.8398z"/>
+       <path d="m350 357.84h-46.48c-4.4805 0-7.8398-3.3594-7.8398-7.8398s3.3594-7.8398 7.8398-7.8398h46.48c4.4805 0 7.8398 3.3594 7.8398 7.8398s-3.3594 7.8398-7.8398 7.8398z"/>
+      </g>
+     </svg>`,     
   
       // Hide the default editor header
       hideHeader: 1,
@@ -87,7 +110,7 @@ export default (editor, options = {}) => {
       ],
     },  ...options };
   
-    const { script, style, height, width, hideHeader, icons, onApply, upload, addToAssets, commandId } = opts;
+    const { script, style, height, width, hideHeader, icons, onApply, upload, addToAssets, commandId1, commandId2 } = opts;
     const getConstructor = () => opts.constructor || (window.tui && window.tui.ImageEditor);
     let constr = getConstructor();
   
@@ -127,13 +150,20 @@ export default (editor, options = {}) => {
         initToolbar() {
           typeImage.prototype.initToolbar.apply(this, arguments);
           const tb = this.get('toolbar');
-          const tbExists = tb.some(item => item.command === commandId);
+          const tb1Exists = tb.some(item => item.command === commandId1);
+          const tb2Exists = tb.some(item => item.command === commandId2);
   
-          if (!tbExists) {
+          if (!tb1Exists) {
             tb.unshift({
-              command: commandId,
-              label: opts.toolbarIcon,
+              command: commandId1,
+              label: opts.toolbarIcon1,
             });
+            if (!tb2Exists){
+              tb.unshift({
+                command: commandId2,
+                label: opts.toolbarIcon2,
+              });
+            }
             this.set('toolbar', tb);
           }
         }
@@ -141,14 +171,14 @@ export default (editor, options = {}) => {
     })
   
     // Add the image editor command
-    editor.Commands.add(commandId, {
+    editor.Commands.add(commandId1, {
       run(ed, s, options = {}) {
         const { id } = this;
   
         if (!constr) {
           ed.log('TOAST UI Image editor not found', {
             level: 'error',
-            ns: commandId,
+            ns: commandId1,
           });
           return ed.stopCommand(id);
         }
@@ -234,22 +264,37 @@ export default (editor, options = {}) => {
   
       uploadImage(imageEditor, target, am) {
         const dataURL = imageEditor.toDataURL();
-        if (upload) {
-          const file = this.dataUrlToBlob(dataURL);
-          am.FileUploader().uploadFile({
-            dataTransfer: { files: [file] }
-          }, res => {
-            const obj = res && res.data && res.data[0];
-            const src = obj && (typeof obj === 'string' ? obj : obj.src);
-            src && this.applyToTarget(src);
-          });
-        } else {
-          addToAssets && am.add({
-            src: dataURL,
-            name: (target.get('src') || '').split('/').pop(),
-          });
-          this.applyToTarget(dataURL);
-        }
+        axios.put( '/picture/imgur', { base64: dataURL.split(',')[1] },
+          {
+            headers: {
+              Authorization: 'Bearer ' + cookieParser.getCookieByName('token'),
+            },
+          }
+        )
+        .then(res => {
+          let link = res.data.link;
+          console.log("link", link)
+          if (upload) {
+            const file = this.dataUrlToBlob(dataURL);
+            am.FileUploader().uploadFile({
+              dataTransfer: { files: [file] }
+            }, res => {
+              const obj = res && res.data && res.data[0];
+              const src = obj && (typeof obj === 'string' ? obj : obj.src);
+              src && this.applyToTarget(src);
+            });
+          } else {
+            addToAssets && am.add({
+              src: link,
+              name: (target.get('src') || '').split('/').pop(),
+            });
+            this.applyToTarget(link);
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+        
       },
   
       applyToTarget(result) {
@@ -271,4 +316,136 @@ export default (editor, options = {}) => {
         return new Blob([ab], { type });
       },
     });
+
+    // Add the image editor command
+    editor.Commands.add(commandId2, {
+      run(ed, s, options = {}) {
+        this.target = options.target || ed.getSelected();
+        this.url = this.target.attributes.attributes.src;
+        const { id } = this;
+        const content = this.createContent();
+        const title = opts.labelOCR;
+        const applyBtn = content.children[1];
+        const OCRBtn = content.children[2];
+
+        ed.Modal.open({ title, content })
+          .getModel().once('change:open', () => ed.stopCommand(id));
+        applyBtn.onclick = () => this.applyOCR(ed);
+        OCRBtn.onclick = () => this.OCR();
+      },
+
+      createContent() {
+        const url = this.target.attributes.attributes.src;
+        const content = document.createElement('div');
+        content.style = 'position: relative';
+        content.innerHTML = `
+          <div style="
+            position: relative;
+            width: 100%;
+            height: 100%;
+        ">
+          <img src=${this.url} id="OCR-image" crossorigin="anonymous" style="
+            position: relative;
+            float: left;
+            width: 48%;
+            margin-left: .2em;
+            margin-right: 1em;
+          "></img>
+          <textarea id = "OCR-result" rows="8" cols="42" style="
+            position: relative;
+            border-color: #888;
+            float: left;
+          "></textarea>
+        </div>
+          <button class="tui-image-editor__run-btn" style="
+            position: relative;
+            float: right;
+            margin: 10px;
+            background-color: #fff;
+            font-size: 1rem;
+            border-radius: 3px;
+            border: solid thin;
+            padding: 10px 20px;
+            cursor: pointer
+          ">
+            ${opts.labelApply}
+          </button>
+          <button class="tui-image-editor__run-btn" style="
+            position: relative;
+            float: right;
+            margin: 10px;
+            background-color: #fff;
+            font-size: 1rem;
+            border-radius: 3px;
+            border: solid thin;
+            padding: 10px 20px;
+            cursor: pointer
+          ">
+            ${opts.labelRunOCR}
+          </button>
+        `;
+  
+        return content;
+      },
+
+      OCR(){
+        axios.get( `http://54.95.183.197:8080/ocr/getText?imageUrl=${this.url}`,
+          {
+            headers: {
+              Authorization: 'Bearer ' + cookieParser.getCookieByName('token'),
+            },
+          }
+        )
+        .then(res => {
+          this.OCRText = res.data.res;
+          document.getElementById("OCR-result").value = this.OCRText;
+          
+
+        })
+        .catch(err => {
+          console.log(err);
+        });
+      },
+
+      applyOCR(ed){
+        const text = document.getElementById("OCR-result").value;
+        const selected = ed.getSelected()
+        const collection = selected.collection;
+        const index = collection.indexOf(selected);
+        const parent = selected.parent();
+        const dstId = parent.ccid;
+        const dst = parent.view.$el[0];
+        let tmpNode = document.createElement('div');
+        tmpNode.appendChild(dst.cloneNode());
+        let dstString = tmpNode.innerHTML;
+        console.log("dat", dstString)
+        const opts = { 
+          dragInfo: true,
+          draggable: true,
+          dropContent: {
+            activeOnRender: 1,
+            content: text,
+            style: { padding: '10px'},
+            type: "text",
+          },
+          dropInfo: true,
+          droppable: true,
+          dst: dstString,
+          dstId: dstId,
+          pos: {
+            index: index,
+            indexEl: index,
+            method: 'before'
+          },
+          idArray: []
+        }
+        console.log("...opts", opts)
+        const droppable = ed.getModel().getCurrentFrame().droppable;
+        droppable.applyAppendText(opts, 'add-component');
+        
+        ed.runCommand('core:component-delete');
+        ed.Modal.close();
+      }
+
+    })
   };

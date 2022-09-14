@@ -33,7 +33,7 @@ import CollabNoteEditPage from "../CollabNoteEditPage/CollabNoteEditPage";
 import CollabRecommendPage from '../CollabRecommendPage/CollabRecommendPage';
 import ResetPasswordPage from '../ResetPasswordPage/ResetPasswordPage';
 import './OuterPage.css'
-import { Button, Drawer, message, Spin, notification, Avatar, Tooltip } from 'antd'
+import { Button, Drawer, message, Spin, notification, Avatar, Tooltip, Switch } from 'antd'
 import Text from '../../components/Text/Text';
 import { LoadingOutlined } from '@ant-design/icons';
 import { useParams } from "react-router-dom";
@@ -69,11 +69,13 @@ const OuterPage = () => {
     const [ringNumber, setRingNumber] = useState(0);
     const [ringList, setRingList] = useState([]);
     const [instruction, setInstruction] = useState("No introductions")
+    const [instructionChi, setInstructionChi] = useState("無介紹")
     const [isChanging, setIsChanging] = useState(false);
     const [api, contextHolder] = notification.useNotification();
     const [pageLabel, setPageLabel] = useState(null)
     const [screenCapture, setScreenCapture] = useState('');
     const [hasLink, setHasLink] = useState(false);
+    const [language, setLanguage] = useState(null)
     const { type, Id } = useParams();
 
 
@@ -118,7 +120,7 @@ const OuterPage = () => {
         // postID = (location.state === 'genewang7@gmail.com') ? 12345 : 67890
         if (!isConnect) {
             setIsConnect(true)
-            sock = new SockJS('http://localhost:8080/websocket')
+            sock = new SockJS('https://noteshare-backend.soselab.tw/websocket')
             stompClient = over(sock)
             stompClient.connect({}, onConnected, (err) => {
                 setIsConnect(false)
@@ -296,6 +298,7 @@ const OuterPage = () => {
 
     useEffect(() => {
         console.log(pageProps.page)
+        setLanguage(null)
 
         if (cookieParser.getCookieByName('error') && cookieParser.getCookieByName('error') === 'true') {
             document.cookie = 'error=' + 'false'
@@ -381,6 +384,12 @@ const OuterPage = () => {
                             <li>When the note is set downloadable, you can download the pdf file.</li>
                         </ul>
                         )
+                        setInstructionChi(<ul>
+                            <li>在此頁面中，您可以查看筆記的所有詳細信息。</li>
+                            <li>您可以在此頁面查看您的 SPR 和 CR。</li>
+                            <li>當筆記設置為可下載時，您可以下載 pdf 文件。</li>
+                        </ul>
+                        )
                         setPageComponent(<NoteDetailPage page='NoteDetailPage' screenCapture={screenCapture} setScreenCapture={setScreenCapture} setLoggedIn={setLoggedIn} coinNum={coinNum} setCoinNum={setCoinNum} sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
                     case 'NoteEditPage':
                         setPageLabel("Edit a Note");
@@ -395,6 +404,16 @@ const OuterPage = () => {
                             <li>In hashtag editing phase, on the left port, you can choose recommended hashtags and then they will add to your current hashtags on the right part. Or, you can enter some words and then press enter to add some hashtags</li>
                         </ul>
                         )
+                        setInstructionChi(<ul>
+                            <li>在此頁面中，您可以編輯筆記的信息、內容和標籤。</li>
+                            <li>在信息編輯階段，您可以編輯筆記的標題、價格、學校、部門等，標題和價格不能為空。</li>
+                            <li>在信息編輯階段，如果您選擇將註釋設置為公開，它將公開顯示。如果您將筆記設為私密，則只能由您自己查看。</li>
+                            <li>在內容編輯階段，您可以輕鬆拖放塊來編輯您的筆記。</li>
+                            <li>在內容編輯階段，側邊欄最左邊的工具是“塊”，您可以通過將它們拖到筆記上來創建塊。 </li>
+                            <li>在內容編輯階段，側邊欄中的中間工具是“樣式”，可以更改塊的顏色、大小、位置、字體大小等樣式</li>
+                            <li>在內容編輯階段，側邊欄最右邊的工具是“Trait”，您可以更改區塊的鏈接、來源、標題等屬性</li>
+                            <li>在主題標籤編輯階段，在左側端口，您可以選擇推薦的主題標籤，然後它們將添加到您當前在右側的主題標籤中。或者，您可以輸入一些單詞，然後按 Enter 以添加一些主題標籤</li>
+                        </ul>)
                         setPageComponent(<NoteEditPage page='NoteEditPage' setLoggedIn={setLoggedIn} sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
                     case 'NoteNewPage':
                         setPageLabel("Create a Note");
@@ -409,6 +428,16 @@ const OuterPage = () => {
                             <li>In hashtag editing phase, on the left port, you can choose recommended hashtags and then they will add to your current hashtags on the right part. Or, you can enter some words and then press enter to add some hashtags</li>
                         </ul>
                         )
+                        setInstructionChi(<ul>
+                            <li>在此頁面中，您必須查看筆記的信息、內容和標籤。</li>
+                            <li>在信息編輯階段，您必須輸入您的筆記的標題、價格、學校、部門等，並且標題和價格不能為空。</li>
+                            <li>在信息編輯階段，如果您選擇將註釋設置為公開，它將公開顯示。如果您將筆記設為私密，則只能由您自己查看。</li>
+                            <li>在內容編輯階段，您可以輕鬆拖放塊來編輯您的筆記。</li>
+                            <li>在內容編輯階段，側邊欄最左邊的工具是“塊”，您可以通過將它們拖到筆記上來創建塊。 </li>
+                            <li>在內容編輯階段，側邊欄中的中間工具是“樣式”，可以更改塊的顏色、大小、位置、字體大小等樣式</li>
+                            <li>在內容編輯階段，側邊欄最右邊的工具是“Trait”，您可以更改區塊的鏈接、來源、標題等屬性</li>
+                            <li>在主題標籤編輯階段，在左側端口，您可以選擇推薦的主題標籤，然後它們將添加到您當前在右側的主題標籤中。或者，您可以輸入一些單詞，然後按 Enter 以添加一些主題標籤</li>
+                        </ul>)
                         setPageComponent(<NoteEditPage page='NoteNewPage' setLoggedIn={setLoggedIn} sendBellMessage={sendBellMessage} sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
                     case 'NoteOutlinePage':
                         setPageLabel("Results");
@@ -417,6 +446,10 @@ const OuterPage = () => {
                             <li>The page only show a part of note. If you want to see all the details or buy the note, please click the note.</li>
                         </ul>
                         )
+                        setInstructionChi(<ul>
+                            <li>您可以通過下拉列表對筆記進行排序</li>
+                            <li>該頁面僅顯示部分註釋。 如果您想查看所有詳細信息或購買便箋，請點擊便箋。</li>
+                        </ul>)
                         setPageComponent(<NoteOutlinePage page='NoteOutlinePage' setLoggedIn={setLoggedIn} changeSortMode={setSortMode} setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
                     case 'MemberPage':
                         setPageLabel("Recommended Notes");
@@ -430,11 +463,21 @@ const OuterPage = () => {
                             <li>Once you choose the best and all the reference note, you can't receive any note</li>
                             <li>The note chosen as a best note will be stored to your Owned Folder</li>
                         </ul>)
+                        setInstructionChi(<ul>
+                            <li>在此頁面中，您可以查看獎勵帖子的所有詳細信息。</li>
+                            <li>如果您是原創發帖者，可以點擊按鈕管理所有投稿筆記。</li>
+                            <li>如果您不是原始發帖人，您可以點擊按鈕寫筆記並投稿。</li>
+                            <li>一旦您選擇了最好的和所有的參考筆記，您將無法收到任何筆記</li>
+                            <li>被選為最佳筆記的筆記將存儲到您的自有文件夾中</li>
+                        </ul>)
                         setPageComponent(<RewardDetailPage page='RewardDetailPage' setLoggedIn={setLoggedIn} pageLabel='Reward Detail' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
                     case 'RewardEditPage':
                         setPageLabel("Edit a Reward Post");
                         setInstruction(<ul>
                             <li>In this page, you can edit the information of the reward post.</li>
+                        </ul>)
+                        setInstructionChi(<ul>
+                            <li>在此頁面，您可以編輯打賞帖的信息。</li>
                         </ul>)
                         setPageComponent(<RewardEditPage page='RewardEditPage' setLoggedIn={setLoggedIn} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
                     case 'RewardNewPage':
@@ -442,6 +485,10 @@ const OuterPage = () => {
                         setInstruction(<ul>
                             <li>You have to enter the information of the reward post.</li>
                             <li>After you submit the post, the reward post will be shown in public</li>
+                        </ul>)
+                        setInstructionChi(<ul>
+                            <li>您必須輸入獎勵帖子的信息。</li>
+                            <li>您提交帖子後，獎勵帖子將公開顯示</li>
                         </ul>)
                         setPageComponent(<RewardEditPage page='RewardNewPage' setLoggedIn={setLoggedIn} sendBellMessage={sendBellMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
                     case 'RewardOutlinePage':
@@ -451,6 +498,10 @@ const OuterPage = () => {
                             <li>The post only show a part of detail. If you want to see all the details or contribute note, please click the post.</li>
                         </ul>
                         )
+                        setInstructionChi(<ul>
+                            <li>您可以通過下拉列表對獎勵帖子進行排序</li>
+                            <li>帖子只顯示了部分細節。 如果您想查看所有詳細信息或投稿備註，請點擊帖子。</li>
+                        </ul>)
                         setPageComponent(<RewardOutlinePage page='RewardOutlinePage' setLoggedIn={setLoggedIn} changeSortMode={setSortMode} setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
                     case 'RewardRecommendPage':
                         setPageLabel("Recommended Reward Posts");
@@ -459,6 +510,10 @@ const OuterPage = () => {
                             <li>The post only show a part of detail. If you want to see all the details or contribute note, please click the post.</li>
                         </ul>
                         )
+                        setInstructionChi(<ul>
+                            <li>您可以通過下拉列表對獎勵帖子進行排序</li>
+                            <li>帖子只顯示了部分細節。 如果您想查看所有詳細信息或投稿備註，請點擊帖子。</li>
+                        </ul>)
                         setPageComponent(<RewardRecommendPage page='RewardRecommendPage' setLoggedIn={setLoggedIn} changeSortMode={setSortMode} setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
                     case 'QnADetailPage':
                         setPageLabel("QA Post Detail");
@@ -470,6 +525,14 @@ const OuterPage = () => {
                             <li>You can tag other commenter by using '@'</li>
                             <li>If you are origin poster and the best answer have be chose, you can archive the post then the post can only saw by yourself.</li>
                         </ul>)
+                        setInstructionChi(<ul>
+                            <li>在此頁面中，您可以查看 QA 帖子的所有詳細信息。</li>
+                            <li>如果你是原創發帖者，你可以選擇一個最佳答案來獎勵它。</li>
+                            <li>如果您不是原始發帖人，您可以點擊按鈕寫筆記並投稿。</li>
+                            <li>您可以在評論區編輯和刪除未選擇最佳答案的答案。</li>
+                            <li>您可以使用“@”標記其他評論者</li>
+                            <li>如果你是發帖者，並且選擇了最佳答案，你可以將帖子存檔，然後帖子只能自己看到。</li>
+                        </ul>)
                         setPageComponent(<QnADetailPage page='QnADetailPage' setLoggedIn={setLoggedIn} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
                     case 'QnAOutlinePage':
                         setPageLabel("Results");
@@ -478,11 +541,18 @@ const OuterPage = () => {
                             <li>The post only show a part of detail. If you want to see all the details or answer the question, please click the post.</li>
                         </ul>
                         )
+                        setInstructionChi(<ul>
+                            <li>您可以通過下拉列表對 QA 帖子進行排序</li>
+                            <li>帖子只顯示了部分細節。 如果您想查看所有詳細信息或回答問題，請點擊帖子。</li>
+                        </ul>)
                         setPageComponent(<QnAOutlinePage page='QnAOutlinePage' setLoggedIn={setLoggedIn} changeSortMode={setSortMode} setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
                     case 'QnAEditPage':
                         setPageLabel("Edit a QA Post");
                         setInstruction(<ul>
                             <li>In this page, you can edit the information of the QA post.</li>
+                        </ul>)
+                        setInstructionChi(<ul>
+                            <li>在此頁面中，您可以編輯 QA 帖子的信息。</li>
                         </ul>)
                         setPageComponent(<QnAEditPage page='QnAEditPage' setLoggedIn={setLoggedIn} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
                     case 'QnANewPage':
@@ -490,6 +560,10 @@ const OuterPage = () => {
                         setInstruction(<ul>
                             <li>You have to enter the information of the QA post.</li>
                             <li>After you submit the post, the QA post will be shown in public</li>
+                        </ul>)
+                        setInstructionChi(<ul>
+                            <li>您必須輸入 QA 帖子的信息。</li>
+                            <li>提交帖子後，QA 帖子將公開顯示</li>
                         </ul>)
                         setPageComponent(<QnAEditPage page='QnANewPage' setLoggedIn={setLoggedIn} sendBellMessage={sendBellMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
                     case 'QnARecommendPage':
@@ -499,6 +573,10 @@ const OuterPage = () => {
                             <li>The post only show a part of detail. If you want to see all the details or answer the question, please click the post.</li>
                         </ul>
                         )
+                        setInstructionChi(<ul>
+                            <li>您可以通過下拉列表對 QA 帖子進行排序</li>
+                            <li>帖子只顯示了部分細節。 如果您想查看所有詳細信息或回答問題，請點擊帖子。</li>
+                        </ul>)
                         setPageComponent(<QnARecommendPage page='QnARecommendPage' setLoggedIn={setLoggedIn} changeSortMode={setSortMode} setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
                     case 'CollabDetailPage':
                         setPageLabel("Collaborative Note Detail");
@@ -508,11 +586,19 @@ const OuterPage = () => {
                             <li>If you are not a member of this collaborative note, you can apply it and leave some message for application</li>
                         </ul>
                         )
+                        setInstructionChi(<ul>
+                            <li>如果您是此協作筆記的成員，則可以查看協作筆記的所有詳細信息。</li>
+                            <li>如果您不是此協作筆記的成員，則可以查看協作筆記帖子的所有詳細信息。</li>
+                            <li>如果您不是此協作筆記的成員，您可以申請並留言申請</li>
+                        </ul>)
                         setPageComponent(<CollabDetailPage page='CollabDetailPage' screenCapture={screenCapture} setScreenCapture={setScreenCapture} setLoggedIn={setLoggedIn} sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
                     case 'CollabEditPage':
                         setPageLabel("Edit a Collaborative Note Post");
                         setInstruction(<ul>
                             <li>In this page, you can edit the information of the collaborative note post.</li>
+                        </ul>)
+                        setInstructionChi(<ul>
+                            <li>在此頁面中，您可以編輯協作筆記帖子的信息。</li>
                         </ul>)
                         setPageComponent(<CollabEditPage page='CollabEditPage' setLoggedIn={setLoggedIn} sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
                     case 'CollabNoteEditPage':
@@ -529,12 +615,27 @@ const OuterPage = () => {
                             <li>In hashtag editing phase, on the left port, you can choose recommended hashtags and then they will add to your current hashtags on the right part. Or, you can enter some words and then press enter to add some hashtags</li>
                         </ul>
                         )
+                        setInstructionChi(<ul>
+                            <li>在此頁面中，如果您不是原始發帖人或管理員，則只能編輯備註內容。</li>
+                            <li>在此頁面中，如果您是原始發帖人或管理員，您可以編輯備註的信息、內容和標籤。</li>
+                            <li>在信息編輯階段，您必須輸入您的筆記的標題、價格、學校、部門等，並且標題和價格不能為空。</li>
+                            <li>在信息編輯階段，如果您選擇將註釋設置為公開，它將公開顯示。如果您將筆記設為私密，則只能由您自己查看。</li>
+                            <li>在內容編輯階段，您可以輕鬆拖放塊來編輯您的筆記。</li>
+                            <li>在內容編輯階段，側邊欄最左邊的工具是“塊”，您可以通過將它們拖到筆記上來創建塊。 </li>
+                            <li>在內容編輯階段，側邊欄中的中間工具是“樣式”，可以更改塊的顏色、大小、位置、字體大小等樣式</li>
+                            <li>在內容編輯階段，側邊欄最右邊的工具是“Trait”，您可以更改區塊的鏈接、來源、標題等屬性</li>
+                            <li>在主題標籤編輯階段，在左側端口，您可以選擇推薦的主題標籤，然後它們將添加到您當前在右側的主題標籤中。或者，您可以輸入一些單詞，然後按 Enter 以添加一些主題標籤</li>
+                        </ul>)
                         setPageComponent(<CollabNoteEditPage page='CollabNoteEditPage' setLoggedIn={setLoggedIn} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
                     case 'CollabNewPage':
                         setPageLabel("Create a Collaborative Note Post");
                         setInstruction(<ul>
                             <li>You have to enter the information of the collaborative note post.</li>
                             <li>After you submit the post, the collaborative note post will be shown in public</li>
+                        </ul>)
+                        setInstructionChi(<ul>
+                            <li>您必須輸入協作筆記帖子的信息。</li>
+                            <li>您提交帖子後，協作筆記帖子將公開顯示</li>
                         </ul>)
                         setPageComponent(<CollabEditPage page='CollabNewPage' setLoggedIn={setLoggedIn} sendBellMessage={sendBellMessage} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
                     case 'CollabOutlinePage':
@@ -544,6 +645,10 @@ const OuterPage = () => {
                             <li>The post only show a part of detail. If you want to see all the details or apply, please click the post.</li>
                         </ul>
                         )
+                        setInstructionChi(<ul>
+                            <li>您可以通過下拉列表對協作筆記帖子進行排序</li>
+                            <li>帖子只顯示了部分細節。 如果您想查看所有詳情或申請，請點擊帖子。</li>
+                        </ul>)
                         setPageComponent(<CollabOutlinePage page='CollabOutlinePage' changeSortMode={setSortMode} setLoggedIn={setLoggedIn} setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
                     case 'CollabRecommendPage':
                         setPageLabel("Recommended Collaborative Note Posts");
@@ -552,6 +657,10 @@ const OuterPage = () => {
                             <li>The post only show a part of detail. If you want to see all the details or apply, please click the post.</li>
                         </ul>
                         )
+                        setInstructionChi(<ul>
+                            <li>您可以通過下拉列表對協作筆記帖子進行排序</li>
+                            <li>帖子只顯示了部分細節。 如果您想查看所有詳情或申請，請點擊帖子。</li>
+                        </ul>)
                         setPageComponent(<CollabRecommendPage page='CollabRecommendPage' setLoggedIn={setLoggedIn} changeSortMode={setSortMode} setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
                     case 'FolderOutlinePage':
                         setPageLabel("Recommended Folder");
@@ -560,6 +669,10 @@ const OuterPage = () => {
                             <li>You can click the folder to see all the notes.</li>
                         </ul>
                         )
+                        setInstructionChi(<ul>
+                            <li>您可以通過下拉列表對文件夾進行排序</li>
+                            <li>您可以點擊文件夾查看所有筆記。</li>
+                        </ul>)
                         setPageComponent(<FolderOutlinePage page='FolderOutlinePage' setLoggedIn={setLoggedIn} setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
                     case 'TagOutlinePage':
                         setPageLabel("Results");
@@ -567,6 +680,9 @@ const OuterPage = () => {
                             <li>The note only show a part of detail. If you want to see all the details or buy the note, please click the note.</li>
                         </ul>
                         )
+                        setInstructionChi(<ul>
+                            <li>註釋僅顯示部分細節。 如果您想查看所有詳細信息或購買便箋，請點擊便箋。</li>
+                        </ul>)
                         setPageComponent(<TagOutlinePage page='TagOutlinePage' setLoggedIn={setLoggedIn} changeSortMode={setSortMode} setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
                     case 'PersonalPage':
                         setPageLabel("Personal Area");
@@ -579,6 +695,10 @@ const OuterPage = () => {
                             <li>If it is not your profile, you can see all the public notes and folders of the user.</li>
                         </ul>
                         )
+                        setInstructionChi(<ul>
+                            <li>如果是您的個人資料，您可以在此頁面編輯您的個人信息並管理關注的用戶或粉絲。</li>
+                            <li>如果不是你的個人資料，你可以看到該用戶的所有公開筆記和文件夾。</li>
+                        </ul>)
                         setPageComponent(<ProfilePage page='ProfilePage' setLoggedIn={setLoggedIn} sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} Avatar={changeAvatar} setAvatar={setChangeAvatar} setChangeAvatarNum={setChangeAvatarNum} setPageProps={setPageProps} {...pageProps} />); break;
                     case 'LoginPage':
                         setPageComponent(<LoginPage page='LoginPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} setLoggedIn={setLoggedIn} {...pageProps} />); break;
@@ -670,6 +790,42 @@ const OuterPage = () => {
         />
     );
 
+    const onSwitchChange = () => {
+        if(language==null)
+            setLanguage(true)
+        else
+            setLanguage(!language)
+    }
+
+    useEffect(() => {
+        notification.destroy();
+        if(language!=null){
+            if(language){
+                notification.open({
+                    message: (
+                        <>
+                            <a>Instruction</a><Switch style={{marginLeft: '1em'}} checkedChildren="English" unCheckedChildren="中文" defaultUnChecked onChange={onSwitchChange}/>
+                        </>
+                    ),
+                    description: instructionChi,
+                    placement: 'topRight'
+                });
+            }
+            else{
+                notification.open({
+                    message: (
+                        <>
+                            <a>Instruction</a><Switch style={{marginLeft: '1em'}} checkedChildren="English" unCheckedChildren="中文" defaultChecked onChange={onSwitchChange}/>
+                        </>
+                    ),
+                    description: instruction,
+                    placement: 'topRight'
+                });
+            }
+        }
+        
+    },[language])
+
     return (
         <>
             <div className='outerPage'>
@@ -682,8 +838,12 @@ const OuterPage = () => {
                                 <Text color='gray' cls='Default' content={pageLabel} fontSize='30' display="inline-block" />
                                 <QuestionCircleOutlined onClick={() => {
                                     notification.open({
-                                        message: "Instruction",
-                                        description: instruction,
+                                        message: (
+                                            <>
+                                                <a>Instruction</a><Switch style={{marginLeft: '1em'}} checkedChildren="English" unCheckedChildren="中文" defaultChecked onChange={onSwitchChange}/>
+                                            </>
+                                        ),
+                                        description: !language?instruction:instructionChi,
                                         placement: 'topRight'
                                     });
                                 }} />

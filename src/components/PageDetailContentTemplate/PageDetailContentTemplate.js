@@ -34,6 +34,7 @@ const PageDetailContentTemplate = (props) => {
     const [isBuyer, setIsBuyer] = useState(false)
     const [isArchive, setIsArchive] = useState(false)
     const [versions, setVersions] = useState(null)
+    const [versionNum, setVersionNum] = useState(0)
     const [email, setEmail] = useState('')
     const [author, setAuthor] = useState([])
     const [manager, setManager] = useState('')
@@ -295,13 +296,14 @@ const PageDetailContentTemplate = (props) => {
     }, [isManager, author])
 
 
-   
+
 
     const setVersion = (index) => {
         if (props.page == "NoteDetailPage")
             setEditor(<MyEditor setLoggedIn={props.setLoggedIn} setPageProps={props.setPageProps} noteId={props.data?.id} version={index.toString()} page={props.page} email={email} />)
         else if (props.page == "CollabDetailPage" && props.data)
             setEditor(<MyEditor setLoggedIn={props.setLoggedIn} setPageProps={props.setPageProps} noteId={noteId} version={index.toString()} page={props.page} email={email} />)
+        setVersionNum(index)
     }
 
     const apply = (content) => {
@@ -613,6 +615,7 @@ const PageDetailContentTemplate = (props) => {
                                         publishDate={publishDate}
                                         type={type}
                                         rewardIsEnd={rewardIsEnd}
+                                        title={props.data?.title}
                                     /></div>
 
                             </Col>
@@ -659,7 +662,7 @@ const PageDetailContentTemplate = (props) => {
 
 
                                 {(props.page == 'NoteDetailPage' || (props.page == 'CollabDetailPage' && isAuthor)) ?
-                                    <div className={(!isAuthor&&!isBuyer) && "contentTemplate__Content__Main__Blur"}>
+                                    <div className={(!isAuthor && !isBuyer) && "contentTemplate__Content__Main__Blur"}>
                                         {editor}
                                     </div>
                                     :
@@ -699,7 +702,7 @@ const PageDetailContentTemplate = (props) => {
                                             <Button color={"green"}><Text color='white' cls='Large' content={"Buy"} fontSize='17' display="inline-block" /></Button>
                                         </div>
                                     </Popconfirm>
-                                    
+
                                 }
                                 {(noteType != 'reward' && isAuthor) &&
                                     <div className="contentTemplate__Footer__Button" onClick={() => props.setPageProps({ page: "NoteEditPage", noteId: noteId, action: "edit" })}>
