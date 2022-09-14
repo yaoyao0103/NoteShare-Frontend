@@ -99,7 +99,7 @@
 }
 .Profile__Email{
     position: relative;
-    word-break:break-all;
+   overflow-x:scroll ;
     margin-top:0%;
     margin-right:5%;
     margin-bottom: 0%;
