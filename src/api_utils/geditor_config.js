@@ -16,7 +16,7 @@ import styleFilter from "grapesjs-style-filter";
 //import grapesjsBlockBootstrap from "grapesjs-blocks-bootstrap4";
 import grapesjsPluginExport from "grapesjs-plugin-export";
 import grapesjsStyleBg from "grapesjs-style-bg"
-
+import grapesjsTouch from 'grapesjs-touch';
 
 import {
   addEditorCommand,
@@ -89,6 +89,7 @@ async function geditorConfig(assets, noteId, version, isCollab, email, username,
       //grapesjsBlockBootstrap,
       grapesjsPluginExport,
       grapesjsStyleBg,
+      grapesjsTouch,
     ],
     pluginsOpts: {
       tailwindComponent: {},
