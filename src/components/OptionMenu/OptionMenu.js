@@ -644,7 +644,7 @@ const OptionMenu = (props) => {
   }
 
   const share = (type) => {
-    const copyText = "http://localhost:3000/sharePage/" + type + '/' + props.id
+    const copyText = "https://noteshare.soselab.tw/sharePage/" + type + '/' + props.id
 
     // Copy the text inside the text field
     navigator.clipboard.writeText(copyText);

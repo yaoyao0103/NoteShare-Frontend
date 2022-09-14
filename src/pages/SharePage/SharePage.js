@@ -118,7 +118,7 @@ const SharePage = () => {
         // postID = (location.state === 'genewang7@gmail.com') ? 12345 : 67890
         if (!isConnect) {
             setIsConnect(true)
-            sock = new SockJS('http://localhost:8080/websocket')
+            sock = new SockJS('https://noteshare-backend.soselab.tw/websocket')
             stompClient = over(sock)
             stompClient.connect({}, onConnected, (err) => {
                 setIsConnect(false)

@@ -389,7 +389,7 @@ export default (editor, options = {}) => {
       },
 
       OCR(){
-        axios.get( `http://54.95.183.197:8080/ocr/getText?imageUrl=${this.url}`,
+        axios.get( `https://noteshare-backend.soselab.tw/ocr/getText?imageUrl=${this.url}`,
           {
             headers: {
               Authorization: 'Bearer ' + cookieParser.getCookieByName('token'),
