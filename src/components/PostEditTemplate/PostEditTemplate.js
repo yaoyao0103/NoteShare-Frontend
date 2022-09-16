@@ -37,6 +37,7 @@ const PostEditTemplate = (props) => {
 
 
     useEffect(() => {
+        props.setLoading(true);
         const post = props.post;
         if (post && props.mode == 'edit') {
             setTitle(post.title);
@@ -93,6 +94,7 @@ const PostEditTemplate = (props) => {
             setContent('')
         }
         console.log(props)
+        props.setLoading(false);
     }, [props])
 
 

@@ -57,10 +57,10 @@ const MyEditor = (props) => {
       <Row>
         {props.page == 'NoteEditPage' || props.page == 'NoteNewPage' || props.page == 'CollabNoteEditPage' ?
           <>
-            <Col span={5}>
+            <Col span={3}>
               <Sidebar />
             </Col>
-            <Col span={19}>
+            <Col span={21}>
               <TopNav />
               <div id="editor"></div>
             </Col>

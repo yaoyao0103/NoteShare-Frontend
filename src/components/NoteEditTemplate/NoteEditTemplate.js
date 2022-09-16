@@ -61,7 +61,7 @@ const NoteEditTemplate = (props) => {
     },[editor])*/
 
     useEffect(() => {
-
+        props.setLoading(true);
         const temp = cookieParser.getCookieByName('email')
         if (temp)
             var tempEmail = Base64.decode(temp);
@@ -171,6 +171,7 @@ const NoteEditTemplate = (props) => {
 
                 })
         }
+        props.setLoading(false);
     }, [props])
 
     useEffect(() => {
@@ -830,7 +831,7 @@ const NoteEditTemplate = (props) => {
 
     return (
         <div className="noteEditTemplate">
-            <Layout className="noteEditTemplate__Layout" >
+            <Layout className={step==1?"noteEditTemplate__Layout__Edit":"noteEditTemplate__Layout"} >
                 <Header className="noteEditTemplate__Header">
                     <Row className="noteEditTemplate__Row noteEditTemplate__Steps" >
                         <Steps current={step} progressDot={customDot}>

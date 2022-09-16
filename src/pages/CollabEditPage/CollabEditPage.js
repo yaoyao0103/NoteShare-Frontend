@@ -46,7 +46,7 @@ function QnAEditPage(props) {
             {/* <PageDetailTemplate page={page}>
                 <PostEditTemplate page={page} type={"collaboration"} post={post} mode={props.action} postId={postId}/>
             </PageDetailTemplate> */}
-            <PostEditTemplate setLoggedIn={props.setLoggedIn} setPageProps={props.setPageProps} sendBellMessage={props.sendBellMessage} page={props.page} type={props.type} post={post} mode={props.action} postId={props.postId} />
+            <PostEditTemplate setLoggedIn={props.setLoggedIn} setPageProps={props.setPageProps} sendBellMessage={props.sendBellMessage} page={props.page} type={props.type} post={post} mode={props.action} postId={props.postId} setLoading={props.setLoading}/>
 
         </>
 
