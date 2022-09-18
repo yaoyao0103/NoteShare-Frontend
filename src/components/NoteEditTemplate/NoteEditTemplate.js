@@ -76,6 +76,7 @@ const NoteEditTemplate = (props) => {
                 axios.get(`/post/${note?.postId}`)
                     .then(res => {
                         setPostInfo(res.data.res);
+                        props.setLoading(false);
                     })
                     .catch(err => {
                         console.log("err", err)
@@ -87,6 +88,7 @@ const NoteEditTemplate = (props) => {
                                 document.cookie = 'email=;'
                                 props.setLoggedIn(false)
                                 props.setPageProps({ page: 'LoginPage' })
+                                props.setLoading(false);
                             }
                             else
                                 document.cookie = 'error=true'
@@ -123,6 +125,7 @@ const NoteEditTemplate = (props) => {
                 </>
             )*/
             setTagSelected(note.tag)
+            props.setLoading(false);
         }
         else if (props.mode == 'new') {
             setTitle('')
@@ -136,6 +139,7 @@ const NoteEditTemplate = (props) => {
                 public: true,
             });
             setContent('')
+            props.setLoading(false);
         }
         else if (props.mode == 'newReward') {
             setTitle('')
@@ -150,6 +154,7 @@ const NoteEditTemplate = (props) => {
             axios.get(`/post/${props.postId}`)
                 .then(res => {
                     setPostInfo(res.data.res);
+                    props.setLoading(false);
                 })
                 .catch(err => {
                     if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
@@ -160,6 +165,7 @@ const NoteEditTemplate = (props) => {
                             document.cookie = 'email=;'
                             props.setLoggedIn(false)
                             props.setPageProps({ page: 'LoginPage' })
+                            props.setLoading(false);
                         }
                         else
                             document.cookie = 'error=true'
@@ -171,7 +177,6 @@ const NoteEditTemplate = (props) => {
 
                 })
         }
-        props.setLoading(false);
     }, [props])
 
     useEffect(() => {
@@ -562,7 +567,7 @@ const NoteEditTemplate = (props) => {
             })
     }
     const noteFinish = async () => {
-
+        props.setLoading(true);
         axios.put(`/note/tag/wordSuggestion/${noteId}`, {}, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
@@ -578,6 +583,7 @@ const NoteEditTemplate = (props) => {
                 })
                     .then(plagiarismRes => {
                         setStep(2);
+                        props.setLoading(false)
                     })
                     .catch(plagiarismRrr => {
                         //console.log(err)
@@ -628,7 +634,7 @@ const NoteEditTemplate = (props) => {
 
     const tagSubmit = async () => {
 
-
+        props.setLoading(true)
         axios.put(`/note/tag/updateTags/${noteId}`, {"tags":tagSelected},  {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
@@ -637,6 +643,7 @@ const NoteEditTemplate = (props) => {
             .then(res => {
                 message.success("Success!")
                 props.setPageProps({ page: "NoteDetailPage", noteId: noteId })
+                props.setLoading(false);
 
             })
             .catch(err => {

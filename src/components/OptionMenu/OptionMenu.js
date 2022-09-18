@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./OptionMenu.css";
 import { Link, useNavigate } from "react-router-dom";
 import { Menu, Dropdown, Space, Drawer, message, Input, Tooltip, Button, Popover, List, Avatar, Modal, Popconfirm, notification } from "antd";
-import { StarOutlined, CopyOutlined, EditOutlined, CommentOutlined, CheckOutlined, CloseOutlined, ShareAltOutlined, InboxOutlined, DeleteOutlined, EyeOutlined, InfoCircleOutlined, UserOutlined, LikeOutlined, DownloadOutlined } from "@ant-design/icons";
+import { StarOutlined, CopyOutlined, EditOutlined, PlusOutlined, CheckOutlined, CloseOutlined, ShareAltOutlined, InboxOutlined, DeleteOutlined, EyeOutlined, InfoCircleOutlined, UserOutlined, LikeOutlined, DownloadOutlined } from "@ant-design/icons";
 import VersionArea from "../VersionArea/VersionArea";
 import CommentArea from "../CommentArea/CommentArea";
 import ContentEditor from "../../pages/NoteDetailPage/ContentEditor/ContentEditor";
@@ -920,9 +920,13 @@ const OptionMenu = (props) => {
           icon: <InboxOutlined />
         },
         {
-          label: props.public ? (<a onClick={setStatus}>Set the post private</a>) : (<a onClick={setStatus}>Set the post public</a>),
+          label: props.isAnswered? props.public ? (<a onClick={setStatus}>Set the post private</a>) : (<a onClick={setStatus}>Set the post public</a>)
+          :(
+          <Tooltip title={"You have to select a best answers before set the post private."}>
+            <a style={{ opacity: "0.4", textDecoration: "none" }}>Set the post private</a>
+          </Tooltip>),
           key: "4",
-          icon: <UserOutlined style={{ color: "#333" }} />
+          icon: <UserOutlined style={props.isAnswered? { color: "#333" }:{ color: "#333", opacity: "0.4"}}/>
         },
 
 
@@ -1409,6 +1413,44 @@ const OptionMenu = (props) => {
     } />
   );
 
+  const PersonalPageAllNoteMenu = (
+    <Menu items={
+      [
+        {
+          label: (<a onClick={() => {
+            if (props.type) {
+              switch (props.type) {
+                case 'QA': props.setPageProps({ page: 'QnAEditPage', type: 'QA', postId: props.id, action: 'edit' })
+                case 'reward': props.setPageProps({ page: 'RewardEditPage', type: 'reward', postId: props.id, action: 'edit' })
+                case 'collaboration': props.setPageProps({ page: 'CollabEditPage', type: 'collaboration', postId: props.id, action: 'edit' })
+              }
+            }
+            else {
+              props.setPageProps({ page: 'NoteEditPage', noteId: props.id, action: 'edit' })
+            }
+          }}>Edit</a>),
+          key: "1",
+          icon: <EditOutlined />
+        },
+        {
+          label: <a onClick=
+            {() => {
+              share('note');
+            }}
+          >Share</a>,
+          key: "2",
+          icon: <ShareAltOutlined />,
+
+        },
+        {
+          label: (<a onClick={() => { props.setCopy(props.id) }}>Add to Folder</a>),
+          key: "3",
+          icon: <PlusOutlined />
+        },
+      ]
+    } />
+  );
+
 
   useEffect(() => {
     // set menu
@@ -1493,7 +1535,13 @@ const OptionMenu = (props) => {
         else {
           setMenu(CollabDetailMenu); break;
         }
-      case 'PersonalPage': setMenu(PersonalPageNoteMenu); break;
+      case 'PersonalPage': 
+        if(!props.allNote){ 
+          setMenu(PersonalPageNoteMenu); break;
+        }
+        else{
+          setMenu(PersonalPageAllNoteMenu); break;
+        }
       // case 'QnAOutlinePage': setMenu( QnAOutlineMenu ); break;
     }
   }, [props])
