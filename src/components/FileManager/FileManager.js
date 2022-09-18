@@ -111,7 +111,7 @@ const FileManager = (props) => {
                 setOriginNotes(tempNotes)
                 const tempPath = res.data.res.path;
                 setPath(tempPath)
-                tempPath.split('/')[1] == 'Folder' ? setInFolder(true) : setInFolder(false)
+                tempPath.split('/')[1] == 'Folders' ? setInFolder(true) : setInFolder(false)
                 if (parentId) {
                     console.log("parentId:", parentId)
                     setParent(parentId)
@@ -344,7 +344,7 @@ const FileManager = (props) => {
                     setParent(parentId)
                     const path = res.data.res.path;
                     setPath(path);
-                    path.split('/')[1] == 'Folder' ? setInFolder(true) : setInFolder(false)
+                    path.split('/')[1] == 'Folders' ? setInFolder(true) : setInFolder(false)
                     const tempNotes = res.data.res.notes;
                     setOriginNotes(tempNotes)
                     if (tempNotes.length > 0) {
@@ -722,6 +722,47 @@ const FileManager = (props) => {
         )
     }
 
+    const setFolderPublic = (index) => {
+        const tempFolders = files;
+        console.log(tempFolders[index])
+        tempFolders[index].public = !tempFolders[index].public;
+        setFiles([...tempFolders])
+        if(tempFolders[index].public)
+            message.info("Set public!")
+        else
+            message.info("Set private!")
+        //setFiles()
+        /*
+        axios.put(`/folder/save/${props.email}/${move.folderId}`, data, {
+            headers: {
+                'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
+            }
+        })
+            .then(res => {
+                onClickFolderZone(current)
+                setMove(null)
+                message.success("You moved a folder!")
+            })
+            .catch(err => {
+                if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
+                    if (err.response.data.message.slice(0, 13) === 'Malformed JWT') {
+                        document.cookie = 'error=Jwt'
+                        message.destroy()
+                        message.warning('The connection timed out, please login again !')
+                        document.cookie = 'email=;'
+                        props.setLoggedIn(false)
+                        props.setPageProps({ page: 'LoginPage' })
+                    }
+                    else
+                        document.cookie = 'error=true'
+                    message.error('Server Error! Please refresh again! (Move Folder Error)')
+                }
+                else {
+                    message.error("Server Error! Please try again later. (Move Folder Error)")
+                }
+            })*/
+    }
+
     return (
         <>
             <div className='fileManager'>
@@ -788,38 +829,48 @@ const FileManager = (props) => {
                                             {renaming == item.id ? <Input placeholder='New Folder Name' bordered={false} onPressEnter={(ev) => renameFolder(item.id, ev.target.value)} className="fileManage_Folder_Item_Input" addonAfter={<CloseOutlined onClick={() => setRenaming(false)} />} /> : <div className='fileManage_Folder_Item_Name' onClick={() => onClickFolderZone(item.id)}><div>{item.folderName}</div></div>}
 
                                             {renaming != item.id && inFolder &&
-                                                <Dropdown overlay={<Menu
-                                                    items={[
-                                                        {
-                                                            key: '1',
-                                                            label: (
-                                                                <a onClick={() => setRenaming(item.id)} style={{ textDecoration: "none" }}>Rename</a>
-                                                            ),
-                                                        },
-                                                        {
-                                                            key: '2',
-                                                            label: (
-                                                                <a onClick={() => setMove({ folderId: item.id, folderName: item.folderName })} style={{ textDecoration: "none" }}>Move</a>
-                                                            ),
-                                                        },
-                                                        {
-                                                            key: '3',
-                                                            label: (
-                                                                <Popconfirm
-                                                                    title="Are you sure to delete the folder?"
-                                                                    okText="Yes"
-                                                                    cancelText="No"
-                                                                    onConfirm={() => {
-                                                                        deleteFolder(item.id);
-                                                                    }}>
-                                                                    <a style={{ textDecoration: "none", color: "red" }}>Delete</a>
-                                                                </Popconfirm>
-                                                            ),
-                                                        }
-                                                    ]}
-                                                />} placement="bottomLeft" arrow>
-                                                    <MoreOutlined />
-                                                </Dropdown>
+                                                <>  
+                                                    <div style={item.public?{marginRight:'0.6em', color: "green"}:{marginRight:'0.6em', color: "red"}}>{item.public?"Public":"Private"}</div>
+                                                    <Dropdown 
+                                                        overlay={<Menu
+                                                        items={[
+                                                            {
+                                                                key: '1',
+                                                                label: (
+                                                                    <a onClick={() => setRenaming(item.id)} style={{ textDecoration: "none" }}>Rename</a>
+                                                                ),
+                                                            },
+                                                            {
+                                                                key: '2',
+                                                                label: (
+                                                                    <a onClick={() => setMove({ folderId: item.id, folderName: item.folderName })} style={{ textDecoration: "none" }}>Move</a>
+                                                                ),
+                                                            },
+                                                            {
+                                                                key: '3',
+                                                                label: (
+                                                                    <a onClick={() => setFolderPublic(index)} style={{ textDecoration: "none"}}>{item.public?"Set Private":"Set Public"}</a>
+                                                                ),
+                                                            },
+                                                            {
+                                                                key: '4',
+                                                                label: (
+                                                                    <Popconfirm
+                                                                        title="Are you sure to delete the folder?"
+                                                                        okText="Yes"
+                                                                        cancelText="No"
+                                                                        onConfirm={() => {
+                                                                            deleteFolder(item.id);
+                                                                        }}>
+                                                                        <a style={{ textDecoration: "none", color: "red" }}>Delete</a>
+                                                                    </Popconfirm>
+                                                                ),
+                                                            }
+                                                        ]}
+                                                    />} placement="bottomLeft" arrow>
+                                                        <MoreOutlined />
+                                                    </Dropdown>
+                                                </>
                                             }
                                         </List.Item>
 
