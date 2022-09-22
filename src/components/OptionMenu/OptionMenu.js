@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./OptionMenu.css";
 import { Link, useNavigate } from "react-router-dom";
 import { Menu, Dropdown, Space, Drawer, message, Input, Tooltip, Button, Popover, List, Avatar, Modal, Popconfirm, notification } from "antd";
-import { StarOutlined, CopyOutlined, EditOutlined, PlusOutlined, CheckOutlined, CloseOutlined, ShareAltOutlined, InboxOutlined, DeleteOutlined, EyeOutlined, InfoCircleOutlined, UserOutlined, LikeOutlined, DownloadOutlined } from "@ant-design/icons";
+import { StarOutlined, CopyOutlined, EditOutlined, PlusOutlined, CheckOutlined, CloseOutlined, ShareAltOutlined, InboxOutlined, DeleteOutlined, EyeOutlined, InfoCircleOutlined, UserOutlined, LikeOutlined, DownloadOutlined, EllipsisOutlined } from "@ant-design/icons";
 import VersionArea from "../VersionArea/VersionArea";
 import CommentArea from "../CommentArea/CommentArea";
 import ContentEditor from "../../pages/NoteDetailPage/ContentEditor/ContentEditor";
@@ -1745,12 +1745,12 @@ const OptionMenu = (props) => {
 
   return (
     <>
-      <Space className="dropdownFunction" wrap >
-        <Dropdown.Button
+        <Dropdown
           className="dropdownFunction"
           overlay={menu}
-        ></Dropdown.Button>
-      </Space>
+        >
+          <Button><EllipsisOutlined style={{fontSize:"1.5em", float:"right"}}/></Button>
+        </Dropdown>
       <Drawer title={"Version"} placement="right" onClose={onClose} visible={visible}>
         <VersionArea setLoggedIn={props.setLoggedIn} setPageProps={props.setPageProps} page={'NoteDetailPageVersion'} notePublic={props.notePublic} id={props.id} versions={props.versions} setVersions={props.setVersions} setVersion={props.setVersion} isAuthor={props.isAuthor} />
       </Drawer>

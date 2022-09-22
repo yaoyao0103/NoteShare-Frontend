@@ -84,3 +84,7 @@
 .ant-modal-confirm-content{
     margin: 2em 0 0 0 !important;
 }
+
+.dropdownFunction{
+    width: 100%;
+}
