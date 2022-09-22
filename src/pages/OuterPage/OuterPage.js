@@ -21,6 +21,7 @@ import RewardEditPage from "../RewardEditPage/RewardEditPage";
 import CollabEditPage from "../CollabEditPage/CollabEditPage";
 import NoteEditPage from "../NoteEditPage/NoteEditPage";
 import FolderOutlinePage from '../FolderOutlinePage/FolderOutlinePage';
+import FolderDetailPage from '../FolderDetailPage/FolderDetailPage';
 import ProfilePage from "../ProfilePage/ProfilePage";
 import PersonalPage from "../PersonalPage/PersonalPage";
 import LoginPage from "../LoginPage/LoginPage";
@@ -42,6 +43,16 @@ import { timers } from 'jquery';
 import Cookie from '../../components/Cookies/Cookies';
 import { set } from 'react-hook-form';
 import { editor } from '../../api_utils/geditor_config';
+import { createMedia } from "@artsy/fresnel"
+const { MediaContextProvider, Media } = createMedia({
+    breakpoints: {
+        sm: 0,
+        lm: 391,
+        md: 768,
+        lg: 1024,
+        xl: 1192,
+    },
+})
 var sock
 var stompClient;
 var cookieParser = new Cookie(document.cookie);
@@ -164,7 +175,7 @@ const OuterPage = () => {
                     message.warning('The connection timed out, please login again !')
                     document.cookie = 'email=;'
                     setLoggedIn(false)
-                    
+
                 }
                 else
                     document.cookie = 'error=true'
@@ -238,17 +249,17 @@ const OuterPage = () => {
         const cookieParser = new Cookie(document.cookie)
         const email = cookieParser.getCookieByName('email')
         console.log(type)
-            if (email) {
-                connect();
-                setLoggedIn(true);
-                setPageProps({ page: 'MemberPage', pageNumber: 1, sortMode: 'likeCount' })
-            }
-            const tempPageProps = cookieParser.getCookieByName('pageProps')
-            if (tempPageProps) {
-                const temp = JSON.parse(tempPageProps)
-                setPageProps(temp)
+        if (email) {
+            connect();
+            setLoggedIn(true);
+            setPageProps({ page: 'MemberPage', pageNumber: 1, sortMode: 'likeCount' })
+        }
+        const tempPageProps = cookieParser.getCookieByName('pageProps')
+        if (tempPageProps) {
+            const temp = JSON.parse(tempPageProps)
+            setPageProps(temp)
 
-            }
+        }
     }, [])
     useEffect(() => {
         const cookieParser = new Cookie(document.cookie)
@@ -260,7 +271,7 @@ const OuterPage = () => {
             setPageStack(oldArray => [...oldArray.slice(0, 0)]);
             switch (type) {
                 case 'note':
-                    setPageProps({ page: 'NoteDetailPage', noteId: Id})
+                    setPageProps({ page: 'NoteDetailPage', noteId: Id })
                 case 'qnA':
                     setPageProps({ page: 'QnADetailPage', postId: Id })
                 case 'reward':
@@ -322,7 +333,7 @@ const OuterPage = () => {
                 pageProps.page === 'QnAEditPage' || pageProps.page === 'QnANewPage' ||
                 pageProps.page === 'CollabEditPage' || pageProps.page === 'CollabNewPage' ||
                 pageProps.page === 'PersonalPage' || pageProps.page === 'ProfilePage' || pageProps.page === 'ResetPasswordPage'
-            ) && !loggedIn&&!Id) {
+            ) && !loggedIn && !Id) {
                 message.warn("Please log in first!")
                 setPageProps({ page: "LoginPage" })
             }
@@ -354,7 +365,7 @@ const OuterPage = () => {
                     pageProps.page === 'QnAOutlinePage' || pageProps.page === 'QnARecommendPage' || pageProps.page === 'QnAOutlinePage' || pageProps.page === 'QnADetailPage' ||
                     pageProps.page === 'NoteOutlinePage' || pageProps.page === 'MemberPage' || pageProps.page === 'NoteDetailPage' ||
                     pageProps.page === 'RewardOutlinePage' || pageProps.page === 'RewardRecommendPage' || pageProps.page === 'RewardDetailPage' ||
-                    pageProps.page === 'FolderOutlinePage' || pageProps.page === 'PersonalPage' || pageProps.page === 'TagOutlinePage'
+                    pageProps.page === 'FolderOutlinePage' || pageProps.page === 'PersonalPage' || pageProps.page === 'TagOutlinePage' || pageProps.page === 'FolderDetailPage'
                 )
                     setLoading(true)
                 else
@@ -369,7 +380,7 @@ const OuterPage = () => {
                     pageProps.page === 'RewardDetailPage' || pageProps.page === 'RewardOutlinePage' || pageProps.page === 'RewardRecommendPage' ||
                     pageProps.page === 'QnADetailPage' || pageProps.page === 'QnAOutlinePage' || pageProps.page === 'QnARecommendPage' ||
                     pageProps.page === 'CollabDetailPage' || pageProps.page === 'CollabOutlinePage' || pageProps.page === 'CollabRecommendPage' || pageProps.page === 'PersonalPage' ||
-                    pageProps.page === 'ProfilePage' || pageProps.page === 'FolderOutlinePage' || pageProps.page === 'TagOutlinePage'
+                    pageProps.page === 'ProfilePage' || pageProps.page === 'FolderOutlinePage' || pageProps.page === 'TagOutlinePage' || pageProps.page === 'FolderDetailPage'
                 )
                     setFloatButtonVisable(true)
                 else
@@ -674,6 +685,10 @@ const OuterPage = () => {
                             <li>您可以點擊文件夾查看所有筆記。</li>
                         </ul>)
                         setPageComponent(<FolderOutlinePage page='FolderOutlinePage' setLoggedIn={setLoggedIn} setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} {...pageProps} />); break;
+                    case 'FolderDetailPage':
+                        setPageLabel("Folder Detail");
+                        setPageComponent(<FolderDetailPage page='FolderDetailPage' setLoggedIn={setLoggedIn}  setPageNumber={changePageNumber} changePage={changePage} setLoading={setLoading} setPageProps={setPageProps}  {...pageProps} />); break;
+                        break;
                     case 'TagOutlinePage':
                         setPageLabel("Results");
                         setInstruction(<ul>
@@ -791,7 +806,7 @@ const OuterPage = () => {
     );
 
     const onSwitchChange = () => {
-        if(language==null)
+        if (language == null)
             setLanguage(true)
         else
             setLanguage(!language)
@@ -799,23 +814,23 @@ const OuterPage = () => {
 
     useEffect(() => {
         notification.destroy();
-        if(language!=null){
-            if(language){
+        if (language != null) {
+            if (language) {
                 notification.open({
                     message: (
                         <>
-                            <a>Instruction</a><Switch style={{marginLeft: '1em'}} checkedChildren="English" unCheckedChildren="中文" defaultUnChecked onChange={onSwitchChange}/>
+                            <a>Instruction</a><Switch style={{ marginLeft: '1em' }} checkedChildren="English" unCheckedChildren="中文" defaultUnChecked onChange={onSwitchChange} />
                         </>
                     ),
                     description: instructionChi,
                     placement: 'topRight'
                 });
             }
-            else{
+            else {
                 notification.open({
                     message: (
                         <>
-                            <a>Instruction</a><Switch style={{marginLeft: '1em'}} checkedChildren="English" unCheckedChildren="中文" defaultChecked onChange={onSwitchChange}/>
+                            <a>Instruction</a><Switch style={{ marginLeft: '1em' }} checkedChildren="English" unCheckedChildren="中文" defaultChecked onChange={onSwitchChange} />
                         </>
                     ),
                     description: instruction,
@@ -823,8 +838,8 @@ const OuterPage = () => {
                 });
             }
         }
-        
-    },[language])
+
+    }, [language])
 
     return (
         <>
@@ -832,83 +847,398 @@ const OuterPage = () => {
                 <>
                     <Spin wrapperClassName={'outerPage__Loading'} indicator={antIcon} spinning={loading} style={{ width: '100%', height: '100%' }}>
                         <Navbar ringList={ringList} setRingList={setRingList} ringNumber={ringNumber} setRingNumber={setRingNumber} coinNum={coinNum} setCoinNum={setCoinNum} pageProps={pageProps} changeAvatar={changeAvatar} loggedIn={loggedIn} setPageProps={setPageProps} setLoggedIn={setLoggedIn} changeAvatarNum={changeAvatarNum} />
-
-                        {pageLabel &&
-                            <div className='outerPage__PageLabel'>
-                                <Text color='gray' cls='Default' content={pageLabel} fontSize='30' display="inline-block" />
-                                <QuestionCircleOutlined onClick={() => {
-                                    notification.open({
-                                        message: (
-                                            <>
-                                                <a>Instruction</a><Switch style={{marginLeft: '1em'}} checkedChildren="English" unCheckedChildren="中文" defaultChecked onChange={onSwitchChange}/>
-                                            </>
-                                        ),
-                                        description: !language?instruction:instructionChi,
-                                        placement: 'topRight'
-                                    });
-                                }} />
-                            </div>
-                        }
-                        <div className={pageLabel ? 'outerPage__Layout__PageLabel' : 'outerPage__Layout'} >
-                            {pageComponent && pageComponent}
-                        </div>
-                        {backMode &&
-                            <div className={"lastPageButton"} disable={false} onClick={lastPageBtnOnClick}>
-                                <ArrowLeftOutlined style={{ fontSize: '1.5em' }} />
-                            </div>
-                        }
-                        {floatButtonVisable && !floatButtonDetailVisable &&
-                            <div className="floatButton" onClick={floatBtnOnClick}>
-                                <PlusOutlined />
-                                {/* <UpOutlined /> */}
-                            </div>
-                        }
-                        {floatButtonVisable && floatButtonDetailVisable &&
-                            <div className="floatButton__Hide" onClick={floatBtnOnClick}>
-                                {/* <PlusOutlined /> */}
-                                <DownOutlined />
-                            </div>
-                        }
-                        {floatButtonVisable && floatButtonDetailVisable &&
-                            <Tooltip arrowPointAtCenter={true} placement="left" title={"Create New Note"} color={'#000'}>
-                                <div className="floatButton__Note" onClick={floatBtnNoteOnClick}>
-                                    {/* <PlusOutlined /> */}
-
-                                    <FileTextOutlined />
-
+                        <MediaContextProvider >
+                            <Media at="xl" className='outlineContentTemplate__Media'>
+                                {pageLabel &&
+                                    <div className='outerPage__PageLabel'>
+                                        <Text color='gray' cls='Default' content={pageLabel} fontSize='30' display="inline-block" />
+                                        <QuestionCircleOutlined onClick={() => {
+                                            notification.open({
+                                                message: (
+                                                    <>
+                                                        <a>Instruction</a><Switch style={{ marginLeft: '1em' }} checkedChildren="English" unCheckedChildren="中文" defaultChecked onChange={onSwitchChange} />
+                                                    </>
+                                                ),
+                                                description: !language ? instruction : instructionChi,
+                                                placement: 'topRight'
+                                            });
+                                        }} />
+                                    </div>
+                                }
+                                <div className={pageLabel ? 'outerPage__Layout__PageLabel' : 'outerPage__Layout'} >
+                                    {pageComponent && pageComponent}
                                 </div>
-                            </Tooltip>
-                        }
-                        {floatButtonVisable && floatButtonDetailVisable &&
-                            <Tooltip arrowPointAtCenter={true} placement="left" title={"Create New QA"} color={'#000'}>
-                                <div className="floatButton__QA" onClick={floatBtnQAOnClick}>
-                                    {/* <PlusOutlined /> */}
+                                {backMode &&
+                                    <div className={"lastPageButton"} disable={false} onClick={lastPageBtnOnClick}>
+                                        <ArrowLeftOutlined style={{ fontSize: '1.5em' }} />
+                                    </div>
+                                }
+                                {floatButtonVisable && !floatButtonDetailVisable &&
+                                    <div className="floatButton" onClick={floatBtnOnClick}>
+                                        <PlusOutlined />
+                                        {/* <UpOutlined /> */}
+                                    </div>
+                                }
+                                {floatButtonVisable && floatButtonDetailVisable &&
+                                    <div className="floatButton__Hide" onClick={floatBtnOnClick}>
+                                        {/* <PlusOutlined /> */}
+                                        <DownOutlined />
+                                    </div>
+                                }
+                                {floatButtonVisable && floatButtonDetailVisable &&
+                                    <Tooltip arrowPointAtCenter={true} placement="left" title={"Create New Note"} color={'#000'}>
+                                        <div className="floatButton__Note" onClick={floatBtnNoteOnClick}>
+                                            {/* <PlusOutlined /> */}
 
-                                    <MessageOutlined />
+                                            <FileTextOutlined />
 
+                                        </div>
+                                    </Tooltip>
+                                }
+                                {floatButtonVisable && floatButtonDetailVisable &&
+                                    <Tooltip arrowPointAtCenter={true} placement="left" title={"Create New QA"} color={'#000'}>
+                                        <div className="floatButton__QA" onClick={floatBtnQAOnClick}>
+                                            {/* <PlusOutlined /> */}
+
+                                            <MessageOutlined />
+
+                                        </div>
+                                    </Tooltip>
+                                }
+                                {floatButtonVisable && floatButtonDetailVisable &&
+                                    <Tooltip arrowPointAtCenter={true} placement="left" title={"Create New Collab"} color={'#000'}>
+                                        <div className="floatButton__Collab" onClick={floatBtnCollabOnClick}>
+                                            {/* <PlusOutlined /> */}
+
+                                            <TeamOutlined />
+
+                                        </div>
+                                    </Tooltip>
+                                }
+                                {floatButtonVisable && floatButtonDetailVisable &&
+                                    <Tooltip arrowPointAtCenter={true} placement="left" title={"Create New Reward"} color={'#000'}>
+                                        <div className="floatButton__Reward" onClick={floatBtnRewardOnClick}>
+                                            {/* <PlusOutlined /> */}
+
+                                            <FileSearchOutlined />
+
+                                        </div>
+                                    </Tooltip>
+                                }
+                            </Media>
+                            <Media at="lg" className='outlineContentTemplate__Media'>
+                                {pageLabel &&
+                                    <div className='outerPage__PageLabel'>
+                                        <Text color='gray' cls='Default' content={pageLabel} fontSize='30' display="inline-block" />
+                                        <QuestionCircleOutlined onClick={() => {
+                                            notification.open({
+                                                message: (
+                                                    <>
+                                                        <a>Instruction</a><Switch style={{ marginLeft: '1em' }} checkedChildren="English" unCheckedChildren="中文" defaultChecked onChange={onSwitchChange} />
+                                                    </>
+                                                ),
+                                                description: !language ? instruction : instructionChi,
+                                                placement: 'topRight'
+                                            });
+                                        }} />
+                                    </div>
+                                }
+                                <div className={pageLabel ? 'outerPage__Layout__PageLabel' : 'outerPage__Layout'} >
+                                    {pageComponent && pageComponent}
                                 </div>
-                            </Tooltip>
-                        }
-                        {floatButtonVisable && floatButtonDetailVisable &&
-                            <Tooltip arrowPointAtCenter={true} placement="left" title={"Create New Collab"} color={'#000'}>
-                                <div className="floatButton__Collab" onClick={floatBtnCollabOnClick}>
-                                    {/* <PlusOutlined /> */}
+                                {backMode &&
+                                    <div className={"lastPageButton"} disable={false} onClick={lastPageBtnOnClick}>
+                                        <ArrowLeftOutlined style={{ fontSize: '1.5em' }} />
+                                    </div>
+                                }
+                                {floatButtonVisable && !floatButtonDetailVisable &&
+                                    <div className="floatButton" onClick={floatBtnOnClick}>
+                                        <PlusOutlined />
+                                        {/* <UpOutlined /> */}
+                                    </div>
+                                }
+                                {floatButtonVisable && floatButtonDetailVisable &&
+                                    <div className="floatButton__Hide" onClick={floatBtnOnClick}>
+                                        {/* <PlusOutlined /> */}
+                                        <DownOutlined />
+                                    </div>
+                                }
+                                {floatButtonVisable && floatButtonDetailVisable &&
+                                    <Tooltip arrowPointAtCenter={true} placement="left" title={"Create New Note"} color={'#000'}>
+                                        <div className="floatButton__Note" onClick={floatBtnNoteOnClick}>
+                                            {/* <PlusOutlined /> */}
 
-                                    <TeamOutlined />
+                                            <FileTextOutlined />
 
+                                        </div>
+                                    </Tooltip>
+                                }
+                                {floatButtonVisable && floatButtonDetailVisable &&
+                                    <Tooltip arrowPointAtCenter={true} placement="left" title={"Create New QA"} color={'#000'}>
+                                        <div className="floatButton__QA" onClick={floatBtnQAOnClick}>
+                                            {/* <PlusOutlined /> */}
+
+                                            <MessageOutlined />
+
+                                        </div>
+                                    </Tooltip>
+                                }
+                                {floatButtonVisable && floatButtonDetailVisable &&
+                                    <Tooltip arrowPointAtCenter={true} placement="left" title={"Create New Collab"} color={'#000'}>
+                                        <div className="floatButton__Collab" onClick={floatBtnCollabOnClick}>
+                                            {/* <PlusOutlined /> */}
+
+                                            <TeamOutlined />
+
+                                        </div>
+                                    </Tooltip>
+                                }
+                                {floatButtonVisable && floatButtonDetailVisable &&
+                                    <Tooltip arrowPointAtCenter={true} placement="left" title={"Create New Reward"} color={'#000'}>
+                                        <div className="floatButton__Reward" onClick={floatBtnRewardOnClick}>
+                                            {/* <PlusOutlined /> */}
+
+                                            <FileSearchOutlined />
+
+                                        </div>
+                                    </Tooltip>
+                                }
+                            </Media>
+                            <Media at="md" className='outlineContentTemplate__Media'>
+                                {pageLabel &&
+                                    <div className='outerPage__PageLabel'>
+                                        <Text color='gray' cls='Default' content={pageLabel} fontSize='30' display="inline-block" />
+                                        <QuestionCircleOutlined onClick={() => {
+                                            notification.open({
+                                                message: (
+                                                    <>
+                                                        <a>Instruction</a><Switch style={{ marginLeft: '1em' }} checkedChildren="English" unCheckedChildren="中文" defaultChecked onChange={onSwitchChange} />
+                                                    </>
+                                                ),
+                                                description: !language ? instruction : instructionChi,
+                                                placement: 'topRight'
+                                            });
+                                        }} />
+                                    </div>
+                                }
+                                <div className={pageLabel ? 'outerPage__Layout__PageLabel' : 'outerPage__Layout'} >
+                                    {pageComponent && pageComponent}
                                 </div>
-                            </Tooltip>
-                        }
-                        {floatButtonVisable && floatButtonDetailVisable &&
-                            <Tooltip arrowPointAtCenter={true} placement="left" title={"Create New Reward"} color={'#000'}>
-                                <div className="floatButton__Reward" onClick={floatBtnRewardOnClick}>
-                                    {/* <PlusOutlined /> */}
+                                {backMode &&
+                                    <div className={"lastPageButton"} disable={false} onClick={lastPageBtnOnClick}>
+                                        <ArrowLeftOutlined style={{ fontSize: '1.5em' }} />
+                                    </div>
+                                }
+                                {floatButtonVisable && !floatButtonDetailVisable &&
+                                    <div className="floatButton" onClick={floatBtnOnClick}>
+                                        <PlusOutlined />
+                                        {/* <UpOutlined /> */}
+                                    </div>
+                                }
+                                {floatButtonVisable && floatButtonDetailVisable &&
+                                    <div className="floatButton__Hide" onClick={floatBtnOnClick}>
+                                        {/* <PlusOutlined /> */}
+                                        <DownOutlined />
+                                    </div>
+                                }
+                                {floatButtonVisable && floatButtonDetailVisable &&
+                                    <Tooltip arrowPointAtCenter={true} placement="left" title={"Create New Note"} color={'#000'}>
+                                        <div className="floatButton__Note" onClick={floatBtnNoteOnClick}>
+                                            {/* <PlusOutlined /> */}
 
-                                    <FileSearchOutlined />
+                                            <FileTextOutlined />
 
+                                        </div>
+                                    </Tooltip>
+                                }
+                                {floatButtonVisable && floatButtonDetailVisable &&
+                                    <Tooltip arrowPointAtCenter={true} placement="left" title={"Create New QA"} color={'#000'}>
+                                        <div className="floatButton__QA" onClick={floatBtnQAOnClick}>
+                                            {/* <PlusOutlined /> */}
+
+                                            <MessageOutlined />
+
+                                        </div>
+                                    </Tooltip>
+                                }
+                                {floatButtonVisable && floatButtonDetailVisable &&
+                                    <Tooltip arrowPointAtCenter={true} placement="left" title={"Create New Collab"} color={'#000'}>
+                                        <div className="floatButton__Collab" onClick={floatBtnCollabOnClick}>
+                                            {/* <PlusOutlined /> */}
+
+                                            <TeamOutlined />
+
+                                        </div>
+                                    </Tooltip>
+                                }
+                                {floatButtonVisable && floatButtonDetailVisable &&
+                                    <Tooltip arrowPointAtCenter={true} placement="left" title={"Create New Reward"} color={'#000'}>
+                                        <div className="floatButton__Reward" onClick={floatBtnRewardOnClick}>
+                                            {/* <PlusOutlined /> */}
+
+                                            <FileSearchOutlined />
+
+                                        </div>
+                                    </Tooltip>
+                                }
+                            </Media>
+                            <Media at="lm" className='outlineContentTemplate__Media'>
+                                {pageLabel &&
+                                    <div className='outerPage__PageLabel'>
+                                        <Text  width={'70%'} wordWrap={'break-word'} color='gray' cls='Default' content={pageLabel} fontSize='30' display="inline-block" />
+                                        <QuestionCircleOutlined onClick={() => {
+                                            notification.open({
+                                                message: (
+                                                    <>
+                                                        <a>Instruction</a><Switch style={{ marginLeft: '1em' }} checkedChildren="English" unCheckedChildren="中文" defaultChecked onChange={onSwitchChange} />
+                                                    </>
+                                                ),
+                                                description: !language ? instruction : instructionChi,
+                                                placement: 'topRight'
+                                            });
+                                        }} />
+                                    </div>
+                                }
+                                <div className={pageLabel ? 'outerPage__Layout__PageLabel' : 'outerPage__Layout'} >
+                                    {pageComponent && pageComponent}
                                 </div>
-                            </Tooltip>
-                        }
+                                {backMode &&
+                                    <div className={"lastPageButton"} disable={false} onClick={lastPageBtnOnClick}>
+                                        <ArrowLeftOutlined style={{ fontSize: '1.5em' }} />
+                                    </div>
+                                }
+                                {floatButtonVisable && !floatButtonDetailVisable &&
+                                    <div className="floatButton" onClick={floatBtnOnClick}>
+                                        <PlusOutlined />
+                                        {/* <UpOutlined /> */}
+                                    </div>
+                                }
+                                {floatButtonVisable && floatButtonDetailVisable &&
+                                    <div className="floatButton__Hide" onClick={floatBtnOnClick}>
+                                        {/* <PlusOutlined /> */}
+                                        <DownOutlined />
+                                    </div>
+                                }
+                                {floatButtonVisable && floatButtonDetailVisable &&
+                                    <Tooltip arrowPointAtCenter={true} placement="left" title={"Create New Note"} color={'#000'}>
+                                        <div className="floatButton__Note" onClick={floatBtnNoteOnClick}>
+                                            {/* <PlusOutlined /> */}
+
+                                            <FileTextOutlined />
+
+                                        </div>
+                                    </Tooltip>
+                                }
+                                {floatButtonVisable && floatButtonDetailVisable &&
+                                    <Tooltip arrowPointAtCenter={true} placement="left" title={"Create New QA"} color={'#000'}>
+                                        <div className="floatButton__QA" onClick={floatBtnQAOnClick}>
+                                            {/* <PlusOutlined /> */}
+
+                                            <MessageOutlined />
+
+                                        </div>
+                                    </Tooltip>
+                                }
+                                {floatButtonVisable && floatButtonDetailVisable &&
+                                    <Tooltip arrowPointAtCenter={true} placement="left" title={"Create New Collab"} color={'#000'}>
+                                        <div className="floatButton__Collab" onClick={floatBtnCollabOnClick}>
+                                            {/* <PlusOutlined /> */}
+
+                                            <TeamOutlined />
+
+                                        </div>
+                                    </Tooltip>
+                                }
+                                {floatButtonVisable && floatButtonDetailVisable &&
+                                    <Tooltip arrowPointAtCenter={true} placement="left" title={"Create New Reward"} color={'#000'}>
+                                        <div className="floatButton__Reward" onClick={floatBtnRewardOnClick}>
+                                            {/* <PlusOutlined /> */}
+
+                                            <FileSearchOutlined />
+
+                                        </div>
+                                    </Tooltip>
+                                }
+                            </Media>
+                            <Media at="sm" className='outlineContentTemplate__Media'>
+                                {pageLabel &&
+                                    <div className='outerPage__PageLabel'>
+                                        <Text width={'70%'} wordWrap={'break-word'}color='gray' cls='Default' content={pageLabel} fontSize='30' display="inline-block" />
+                                        <QuestionCircleOutlined onClick={() => {
+                                            notification.open({
+                                                message: (
+                                                    <>
+                                                        <a>Instruction</a><Switch style={{ marginLeft: '1em' }} checkedChildren="English" unCheckedChildren="中文" defaultChecked onChange={onSwitchChange} />
+                                                    </>
+                                                ),
+                                                description: !language ? instruction : instructionChi,
+                                                placement: 'topRight'
+                                            });
+                                        }} />
+                                    </div>
+                                }
+                                <div className={pageLabel ? 'outerPage__Layout__PageLabel' : 'outerPage__Layout'} >
+                                    {pageComponent && pageComponent}
+                                </div>
+                                {backMode &&
+                                    <div className={"lastPageButton"} disable={false} onClick={lastPageBtnOnClick}>
+                                        <ArrowLeftOutlined style={{ fontSize: '1.5em' }} />
+                                    </div>
+                                }
+                                {floatButtonVisable && !floatButtonDetailVisable &&
+                                    <div className="floatButton" onClick={floatBtnOnClick}>
+                                        <PlusOutlined />
+                                        {/* <UpOutlined /> */}
+                                    </div>
+                                }
+                                {floatButtonVisable && floatButtonDetailVisable &&
+                                    <div className="floatButton__Hide" onClick={floatBtnOnClick}>
+                                        {/* <PlusOutlined /> */}
+                                        <DownOutlined />
+                                    </div>
+                                }
+                                {floatButtonVisable && floatButtonDetailVisable &&
+                                    <Tooltip arrowPointAtCenter={true} placement="left" title={"Create New Note"} color={'#000'}>
+                                        <div className="floatButton__Note" onClick={floatBtnNoteOnClick}>
+                                            {/* <PlusOutlined /> */}
+
+                                            <FileTextOutlined />
+
+                                        </div>
+                                    </Tooltip>
+                                }
+                                {floatButtonVisable && floatButtonDetailVisable &&
+                                    <Tooltip arrowPointAtCenter={true} placement="left" title={"Create New QA"} color={'#000'}>
+                                        <div className="floatButton__QA" onClick={floatBtnQAOnClick}>
+                                            {/* <PlusOutlined /> */}
+
+                                            <MessageOutlined />
+
+                                        </div>
+                                    </Tooltip>
+                                }
+                                {floatButtonVisable && floatButtonDetailVisable &&
+                                    <Tooltip arrowPointAtCenter={true} placement="left" title={"Create New Collab"} color={'#000'}>
+                                        <div className="floatButton__Collab" onClick={floatBtnCollabOnClick}>
+                                            {/* <PlusOutlined /> */}
+
+                                            <TeamOutlined />
+
+                                        </div>
+                                    </Tooltip>
+                                }
+                                {floatButtonVisable && floatButtonDetailVisable &&
+                                    <Tooltip arrowPointAtCenter={true} placement="left" title={"Create New Reward"} color={'#000'}>
+                                        <div className="floatButton__Reward" onClick={floatBtnRewardOnClick}>
+                                            {/* <PlusOutlined /> */}
+
+                                            <FileSearchOutlined />
+
+                                        </div>
+                                    </Tooltip>
+                                }
+                            </Media>
+                        </MediaContextProvider>
                     </Spin>
                 </>
 

@@ -10,6 +10,7 @@
         max-width: 45%;
         background-color: #fff;
         margin:2.5%;
+        
         box-shadow: rgba(60, 60, 60, 0.25) 0px 5px 10px 0px;   
         
     }
@@ -111,7 +112,13 @@
     .OutlineCard__Footer{
         background-color: #FFF; 
     }
-    
+    .OutlineCard__Tags{
+      
+        position: relative;
+        font-size: 14px;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 200;
+    }
     .OutlineCard__Sider__Footer__Post{
         position: relative;
         width: inherit;
@@ -391,7 +398,13 @@
     .OutlineCard__Footer{
         background-color: #FFF; 
     }
+    .OutlineCard__Tags{
     
+        position: relative;
+        font-size: 14px;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 200;
+    }
     .OutlineCard__Sider__Footer__Post{
         position: relative;
         width: inherit;
@@ -569,7 +582,10 @@
         width: 90%;
         max-width: 90%;
         background-color: #fff;
-        margin:2.5%;
+        margin-left:5%;
+        margin-right:5%;
+        margin-top:1.5em;
+        margin-bottom:1.5em;
         box-shadow: rgba(60, 60, 60, 0.25) 0px 5px 10px 0px;   
         
     }
@@ -581,7 +597,10 @@
         background-color: #fff;
         transform: scale(1.005);
         transition: .3s;
-        
+        margin-left:5%;
+        margin-right:5%;
+        margin-top:1.5em;
+        margin-bottom:1.5em; 
         box-shadow: rgba(60, 60, 60, 0.25) 0px 5px 10px 0px; 
         
     }
@@ -670,8 +689,15 @@
     
     .OutlineCard__Footer{
         background-color: #FFF; 
+
     }
-    
+    .OutlineCard__Tags{
+        margin-right:1% ;
+        position: relative;
+        font-size: 14px;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 200;
+    }
     .OutlineCard__Sider__Footer__Post{
         position: relative;
         width: inherit;
@@ -763,7 +789,7 @@
     .OutlineCard__Content__Inner__Note{
         position: relative;
         height: auto;
-        min-height:10em;
+        min-height:16em;
         margin-left:10%;
         margin-right:3%;
     }
@@ -840,7 +866,7 @@
     }
     
   }
-  @media screen and (min-width: 391px)and (max-width: 768px) {
+  @media screen and (min-width: 500px)and (max-width: 768px) {
    
     .OutlineCard__Layout__Outer__Post{
         position:relative;
@@ -849,7 +875,11 @@
         width: 90%;
         max-width: 90%;
         background-color: #fff;
-        margin:2.5%;
+        margin-left:5%;
+        margin-right:5%;
+        margin-top:1.5em;
+        margin-bottom:1.5em;
+        padding:2.5%;
         box-shadow: rgba(60, 60, 60, 0.25) 0px 5px 10px 0px;   
         
     }
@@ -861,7 +891,11 @@
         background-color: #fff;
         transform: scale(1.005);
         transition: .3s;
-        
+        margin-left:5%;
+        margin-right:5%;
+        margin-top:1.5em;
+        margin-bottom:1.5em;
+        padding:2.5%;
         box-shadow: rgba(60, 60, 60, 0.25) 0px 5px 10px 0px; 
         
     }
@@ -913,7 +947,7 @@
     }
     .OutlineCard__Content__Inner__Post{
         position: relative;
-     
+        margin-top:1em;
         margin-left:10%;
         margin-right:3%;
     }
@@ -947,13 +981,18 @@
         width: inherit;
         background-color: #FFF; 
     }
-    
     .OutlineCard__Footer{
-        background-color: #FFF; 
         padding:0;
-        padding-left:10%;
+        padding-left:5.5%;
+        background-color: #FFF; 
     }
-    
+    .OutlineCard__Tags{
+        margin-right:3% ;
+        position: relative;
+        font-size: 14px;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 200;
+    }
     .OutlineCard__Sider__Footer__Post{
         position: relative;
         width: inherit;
@@ -984,6 +1023,7 @@
         margin-right:5%;
         margin-top:1.5em;
         margin-bottom:1.5em;
+        padding:2.5%;
     box-shadow: rgba(60, 60, 60, 0.25) 0px 5px 10px 0px;    
     }
     .OutlineCard__Layout__Outer__Note:hover{
@@ -997,6 +1037,7 @@
         margin-right:5%;
         margin-top:1.5em;
         margin-bottom:1.5em;
+        padding:2.5%;
         transform: scale(1.005);
         transition: .3s;
         box-shadow: rgba(60, 60, 60, 0.5) 0px 5px 20px 0px;
@@ -1045,12 +1086,13 @@
     .OutlineCard__Content__Inner__Note{
         position: relative;
         height: auto;
-        min-height:20em;
-        margin-left:10%;
+        min-height:18em;
+        margin-top:1em;
+        margin-left:5%;
         margin-right:3%;
     }
     .OutlineCard__Paragraph__Note{
-        margin-left:1.5%;
+        margin-left:1%;
         position: relative;
         font-size: 22px;
         font-family: 'Poppins', sans-serif;
@@ -1111,6 +1153,11 @@
     .OutlineCard__Sider__Footer__Fir__Note{
         position: relative;
         width:100%
+    }
+    .OutlineCard__Footer__Fir__Note{
+        position: relative;
+        width:100%;
+        padding-bottom:1em;
     }
     .OutlineCard__Sider__Footer__Buy__Note{
         align-content: left;      
@@ -1122,7 +1169,7 @@
     }
     
   }
-  @media screen and (min-width: 0px)and (max-width: 391px)  {
+  @media screen and (min-width: 0px)and (max-width:499px)  {
    
     .OutlineCard__Layout__Outer__Post{
         position:relative;
@@ -1131,7 +1178,11 @@
         width: 90%;
         max-width: 90%;
         background-color: #fff;
-        margin:2.5%;
+        margin-left:5%;
+        margin-right:5%;
+        margin-top:1.5em;
+        margin-bottom:1.5em;
+        padding:2.5%;
         box-shadow: rgba(60, 60, 60, 0.25) 0px 5px 10px 0px;   
         
     }
@@ -1143,7 +1194,11 @@
         background-color: #fff;
         transform: scale(1.005);
         transition: .3s;
-        
+        margin-left:5%;
+        margin-right:5%;
+        margin-top:1.5em;
+        margin-bottom:1.5em;
+        padding:2.5%;
         box-shadow: rgba(60, 60, 60, 0.25) 0px 5px 10px 0px; 
         
     }
@@ -1195,7 +1250,7 @@
     }
     .OutlineCard__Content__Inner__Post{
         position: relative;
-     
+        margin-top:1em;
         margin-left:10%;
         margin-right:3%;
     }
@@ -1232,10 +1287,16 @@
     
     .OutlineCard__Footer{
         padding:0;
-        padding-left:5%;
+        padding-left:5.5%;
         background-color: #FFF; 
     }
-    
+    .OutlineCard__Tags{
+        margin-right:3% !important;
+        position: relative;
+        font-size: 14px;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 200;
+    }
     .OutlineCard__Sider__Footer__Post{
         position: relative;
         width: inherit;
@@ -1246,6 +1307,7 @@
         padding-left:13px
        
     }
+    
     .OutlineCard__Sider__Footer__Fir__Post{
         position: relative;
         width:100%
@@ -1266,6 +1328,7 @@
         margin-right:5%;
         margin-top:1.5em;
         margin-bottom:1.5em;
+        padding:2.5%;
     box-shadow: rgba(60, 60, 60, 0.25) 0px 5px 10px 0px;    
     }
     .OutlineCard__Layout__Outer__Note:hover{
@@ -1279,6 +1342,7 @@
         margin-right:5%;
         margin-top:1.5em;
         margin-bottom:1.5em;
+        padding:2.5%;
         transform: scale(1.005);
         transition: .3s;
         box-shadow: rgba(60, 60, 60, 0.5) 0px 5px 20px 0px;
@@ -1327,12 +1391,13 @@
     .OutlineCard__Content__Inner__Note{
         position: relative;
         height: auto;
-        min-height:20em;
-        margin-left:10%;
+        min-height:9.5em;
+        margin-top:1em;
+        margin-left:5%;
         margin-right:3%;
     }
     .OutlineCard__Paragraph__Note{
-        margin-left:1.5%;
+        margin-left:1%;
         position: relative;
         font-size: 22px;
         font-family: 'Poppins', sans-serif;
@@ -1393,6 +1458,11 @@
     .OutlineCard__Sider__Footer__Fir__Note{
         position: relative;
         width:100%
+    }
+    .OutlineCard__Footer__Fir__Note{
+        position: relative;
+        width:100%;
+        padding-bottom:1em;
     }
     .OutlineCard__Sider__Footer__Buy__Note{
         align-content: left;      

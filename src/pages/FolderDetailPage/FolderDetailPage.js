@@ -1,20 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import Navbar from '../../components/Navbar/Navbar';
-import PageOutlineTemplate from '../../components/PageOutlineTemplate/PageOutlineTemplate';
-import PageOutlineContentTemplate from '../../components/PageOutlineContentTemplate/PageOutlineContentTemplate';
 import { Layout, message } from "antd";
 import axios from '../../components/axios/axios';
 import Cookie from '../../components/Cookies/Cookies';
+import FileManager from '../../components/FileManager/FileManager';
+import { Base64 } from 'js-base64';
 const cookieParser = new Cookie(document.cookie)
 const { Header, Content, Footer } = Layout;
-function FolderOutlinePage(props) {
+function FolderDetailPage(props) {
     const page = 'FolderOutlinePage';
     const [Folder, setFolder] = useState([]);
     const [sortMode, setSortMode] = useState('date');
-
+    const [email, setEmail] = useState('')
 
     useEffect(() => {
         //console.log(props.headerName)
+        const temp = cookieParser.getCookieByName('email');
+        if (temp)
+            var startEmail = Base64.decode(temp);
+        setEmail(startEmail);
         async function getFolderById() {
             try {
                 await axios.get('/search/folder/' + String(props.pageNumber - 1) + '/20?keyword=' + (props.keyword ? props.keyword : '') + '&creator=' + (props.headerName ? props.headerName : '')).then((res) => {
@@ -88,13 +91,13 @@ function FolderOutlinePage(props) {
 
     return (
         <>
-            {Folder.length > 0 &&
-                <PageOutlineContentTemplate setLoggedIn={props.setLoggedIn} setPageProps={props.setPageProps} pageNumber={props.pageNumber} page={page} hasSwitch={false} mode='Folder' Post={Folder} changePageNumber={props.setPageNumber} changeSortMode={(sortMode) => { setSortMode(sortMode); }} />
-            }
+
+            <FileManager setLoggedIn={props.setLoggedIn}  page={props.page} email={email} setPageProps={props.setPageProps} setLoading={props.setLoading} />
+
         </>
     );
 
 
 }
 
-export default FolderOutlinePage;
+export default FolderDetailPage;

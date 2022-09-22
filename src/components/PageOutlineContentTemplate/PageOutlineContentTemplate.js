@@ -35,7 +35,7 @@ function PageOutlineContentTemplate(props) {
         var tempcardLists = [];
         const temp = cookieParser.getCookieByName('email')
         if (temp) {
-            console.log(temp)
+            //console.log(temp)
             var tempEmail = Base64.decode(temp);
         }
 
@@ -78,17 +78,18 @@ function PageOutlineContentTemplate(props) {
             setCardList(tempcardLists);
         }
         else if (!(props.Post[0].totalPages === 0) && props.mode === 'Folder') {
-            console.log('1111');
+            console.log(props.Post[0].items[0]);
             // tempcardLists.push(<FolderOutlineCard page={props.page} mode={props.mode} cardContent={props.Post[0].items[0]} author={props.Post[0].items[0].creatorName} />);
             for (let i = 0; i <= props.Post[0].items.length - 1; i++) {
-                tempcardLists.push(<FolderOutlineCard page={props.page} mode={props.mode} cardContent={props.Post[0].items[i]} setPageProps={props.setPageProps} />);
+                console.log('1111')
+                tempcardLists.push(<FolderOutlineCard page={props.page} mode={props.mode} cardContent={props.Post[0].items[i]} setPageProps={props.setPageProps} setLoggedIn={props.setLoggedIn} />);
             };
 
             setCardList(tempcardLists);
         }
         else {
 
-            tempcardLists.push(<Empty style={{width:"100%", marginTop: '2em'}}/>);
+            tempcardLists.push(<Empty style={{ width: "100%", marginTop: '2em' }} />);
             setCardList(tempcardLists);
         }
         setPageTotal(props.Post[0].totalPages * 10);

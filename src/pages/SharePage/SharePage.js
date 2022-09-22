@@ -32,7 +32,7 @@ import { QuestionCircleOutlined, PlusOutlined, ArrowLeftOutlined, EllipsisOutlin
 import CollabNoteEditPage from "../CollabNoteEditPage/CollabNoteEditPage";
 import CollabRecommendPage from '../CollabRecommendPage/CollabRecommendPage';
 import ResetPasswordPage from '../ResetPasswordPage/ResetPasswordPage';
-import './SharePage.css'
+import '../OuterPage/OuterPage.css'
 import { Button, Drawer, message, Spin, notification, Avatar, Tooltip } from 'antd'
 import Text from '../../components/Text/Text';
 import { LoadingOutlined } from '@ant-design/icons';

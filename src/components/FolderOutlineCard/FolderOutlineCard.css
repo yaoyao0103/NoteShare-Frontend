@@ -10,7 +10,7 @@
     margin-top:2.5%;
     margin-bottom:0%;
     box-shadow: rgba(60, 60, 60, 0.25) 0px 5px 10px 0px;
-   
+    cursor: pointer;
     
 }
 .FolderOutlineCard__Layout__Outer:hover{

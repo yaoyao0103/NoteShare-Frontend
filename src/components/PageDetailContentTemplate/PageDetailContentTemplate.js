@@ -62,12 +62,11 @@ const PageDetailContentTemplate = (props) => {
     const [quoteRateResult, setQuoteRateResult] = useState(null)
 
     useEffect(() => {
-
+        props.setLoading(true);
         const temp = cookieParser.getCookieByName('email')
         if (temp)
             var tempEmail = Base64.decode(temp);
         setEmail(tempEmail)
-        console.log("tempEmail", tempEmail)
         if (props.page == "NoteDetailPage") {
             setNoteId(props.data?.id);
             setType("note")
@@ -165,6 +164,7 @@ const PageDetailContentTemplate = (props) => {
                         tempAuthor = [...tempAuthor, { email: tempNote.authorUserObj[i].userObjEmail, name: tempNote.authorUserObj[i].userObjName, avatar: tempNote.authorUserObj[i].userObjAvatar }]
                     }
                     setAuthor(tempAuthor)
+                    props.setLoading(false);
                 })
                 .catch(err => {
                     if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
@@ -221,7 +221,7 @@ const PageDetailContentTemplate = (props) => {
             }
 
         }
-
+        props.setLoading(false);
     }, [props.data])
 
     useEffect(() => {
