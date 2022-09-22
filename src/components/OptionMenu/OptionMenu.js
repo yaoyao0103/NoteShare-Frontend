@@ -14,6 +14,9 @@ import MyEditor from "../MyEditor/MyEditor";
 import { set } from "react-hook-form";
 import moment from 'moment';
 import download from 'downloadjs'
+import { FacebookShareButton, FacebookIcon } from "react-share";
+
+const frontendURL = "http://localhost:3000/";
 const cookieParser = new Cookie(document.cookie)
 const OptionMenu = (props) => {
   const navigate = useNavigate()
@@ -644,7 +647,7 @@ const OptionMenu = (props) => {
   }
 
   const share = (type) => {
-    const copyText = "http://localhost:3000/sharePage/" + type + '/' + props.id
+    const copyText = frontendURL + "sharePage/" + type + '/' + props.id
 
     // Copy the text inside the text field
     navigator.clipboard.writeText(copyText);
@@ -756,6 +759,20 @@ const OptionMenu = (props) => {
             key: "3",
             icon: <DownloadOutlined />
           },
+          {
+            label: (
+              <FacebookShareButton
+                url={`${frontendURL}sharePage/note/${props.id}`}
+                quote={"フェイスブックはタイトルが付けれるようです"}
+                hashtag={"#NoteShare"}
+                description={"aiueo"}
+              >
+                Share on Facebook
+              </FacebookShareButton>
+            ),
+            key: "4",
+            icon: <FacebookIcon size={16} round /> 
+          }
         ]
         :
         [
@@ -799,6 +816,20 @@ const OptionMenu = (props) => {
             key: "4",
             icon: <DownloadOutlined />
           },
+          {
+            label: (
+              <FacebookShareButton
+                url={`${frontendURL}sharePage/note/${props.id}`}
+                quote={"フェイスブックはタイトルが付けれるようです"}
+                hashtag={"#NoteShare"}
+                description={"aiueo"}
+              >
+                Share on Facebook
+              </FacebookShareButton>
+            ),
+            key: "5",
+            icon: <FacebookIcon size={16} round /> 
+          }
         ]
     } />
   );
@@ -828,6 +859,20 @@ const OptionMenu = (props) => {
           key: "3",
           icon: <DownloadOutlined />
         },
+        {
+          label: (
+            <FacebookShareButton
+              url={`${frontendURL}sharePage/note/${props.id}`}
+              quote={"フェイスブックはタイトルが付けれるようです"}
+              hashtag={"#NoteShare"}
+              description={"aiueo"}
+            >
+              Share on Facebook
+            </FacebookShareButton>
+          ),
+          key: "4",
+          icon: <FacebookIcon size={16} round /> 
+        }
 
       ]
     } />
@@ -867,6 +912,20 @@ const OptionMenu = (props) => {
           key: "4",
           icon: <DownloadOutlined />
         },
+        {
+          label: (
+            <FacebookShareButton
+              url={`${frontendURL}sharePage/note/${props.id}`}
+              quote={"フェイスブックはタイトルが付けれるようです"}
+              hashtag={"#NoteShare"}
+              description={"aiueo"}
+            >
+              Share on Facebook
+            </FacebookShareButton>
+          ),
+          key: "5",
+          icon: <FacebookIcon size={16} round /> 
+        }
       ]
     } />
   );
@@ -880,9 +939,22 @@ const OptionMenu = (props) => {
               share('qnA');
             }}
           >Share</a>,
-          key: "",
+          key: "1",
           icon: <ShareAltOutlined />,
-
+        },
+        {
+          label: (
+            <FacebookShareButton
+              url={`${frontendURL}sharePage/qnA/${props.id}`}
+              quote={"フェイスブックはタイトルが付けれるようです"}
+              hashtag={"#NoteShare"}
+              description={"aiueo"}
+            >
+              Share on Facebook
+            </FacebookShareButton>
+          ),
+          key: "2",
+          icon: <FacebookIcon size={16} round /> 
         }
       ]
     } />
@@ -919,7 +991,7 @@ const OptionMenu = (props) => {
           key: "3",
           icon: <InboxOutlined />
         },
-        {
+        /*{
           label: props.isAnswered? props.public ? (<a onClick={setStatus}>Set the post private</a>) : (<a onClick={setStatus}>Set the post public</a>)
           :(
           <Tooltip title={"You have to select a best answers before set the post private."}>
@@ -927,7 +999,21 @@ const OptionMenu = (props) => {
           </Tooltip>),
           key: "4",
           icon: <UserOutlined style={props.isAnswered? { color: "#333" }:{ color: "#333", opacity: "0.4"}}/>
-        },
+        },*/
+        {
+          label: (
+            <FacebookShareButton
+              url={`${frontendURL}sharePage/qnA/${props.id}`}
+              quote={"フェイスブックはタイトルが付けれるようです"}
+              hashtag={"#NoteShare"}
+              description={"aiueo"}
+            >
+              Share on Facebook
+            </FacebookShareButton>
+          ),
+          key: "4",
+          icon: <FacebookIcon size={16} round /> 
+        }
 
 
       ]
@@ -966,11 +1052,11 @@ const OptionMenu = (props) => {
           icon: <InboxOutlined />,
           disabled: true
         },
-        {
+        /*{
           label: props.public ? (<a onClick={setStatus}>Set the post private</a>) : (<a onClick={setStatus}>Set the post public</a>),
           key: "4",
           icon: <UserOutlined style={{ color: "#333" }} />
-        },
+        },*/
 
 
       ]
@@ -1028,7 +1114,22 @@ const OptionMenu = (props) => {
               <DeleteOutlined style={{ color: "red", opacity: "0.4" }} />
           ),
 
-        }]
+        },
+        {
+          label: (
+            <FacebookShareButton
+              url={`${frontendURL}sharePage/reward/${props.id}`}
+              quote={"フェイスブックはタイトルが付けれるようです"}
+              hashtag={"#NoteShare"}
+              description={"aiueo"}
+            >
+              Share on Facebook
+            </FacebookShareButton>
+          ),
+          key: "4",
+          icon: <FacebookIcon size={16} round /> 
+        }
+      ]
     } />
   );
 
@@ -1045,6 +1146,20 @@ const OptionMenu = (props) => {
           >Share</a>,
           key: "1",
           icon: <ShareAltOutlined />,
+        },
+        {
+          label: (
+            <FacebookShareButton
+              url={`${frontendURL}sharePage/reward/${props.id}`}
+              quote={"フェイスブックはタイトルが付けれるようです"}
+              hashtag={"#NoteShare"}
+              description={"aiueo"}
+            >
+              Share on Facebook
+            </FacebookShareButton>
+          ),
+          key: "2",
+          icon: <FacebookIcon size={16} round /> 
         }]
     } />
   );
@@ -1062,6 +1177,20 @@ const OptionMenu = (props) => {
           icon: <ShareAltOutlined />,
 
         },
+        {
+          label: (
+            <FacebookShareButton
+              url={`${frontendURL}sharePage/collab/${props.id}`}
+              quote={"フェイスブックはタイトルが付けれるようです"}
+              hashtag={"#NoteShare"}
+              description={"aiueo"}
+            >
+              Share on Facebook
+            </FacebookShareButton>
+          ),
+          key: "2",
+          icon: <FacebookIcon size={16} round /> 
+        }
       ]
     } />
   );
@@ -1127,6 +1256,20 @@ const OptionMenu = (props) => {
           key: "5",
           icon: <InfoCircleOutlined />
         },
+        {
+          label: (
+            <FacebookShareButton
+              url={`${frontendURL}sharePage/qnA/${props.id}`}
+              quote={"フェイスブックはタイトルが付けれるようです"}
+              hashtag={"#NoteShare"}
+              description={"aiueo"}
+            >
+              Share on Facebook
+            </FacebookShareButton>
+          ),
+          key: "6",
+          icon: <FacebookIcon size={16} round /> 
+        }
       ]
     } />
   );
@@ -1232,6 +1375,20 @@ const OptionMenu = (props) => {
           key: "10",
           icon: <InfoCircleOutlined />
         },
+        {
+          label: (
+            <FacebookShareButton
+              url={`${frontendURL}sharePage/collab/${props.id}`}
+              quote={"フェイスブックはタイトルが付けれるようです"}
+              hashtag={"#NoteShare"}
+              description={"aiueo"}
+            >
+              Share on Facebook
+            </FacebookShareButton>
+          ),
+          key: "11",
+          icon: <FacebookIcon size={16} round /> 
+        }
       ]
     } />
   );
@@ -1409,6 +1566,20 @@ const OptionMenu = (props) => {
           key: "4",
           icon: <DeleteOutlined style={{ color: "red" }} />
         },
+        {
+          label: (
+            <FacebookShareButton
+              url={`${frontendURL}sharePage/note/${props.id}`}
+              quote={"フェイスブックはタイトルが付けれるようです"}
+              hashtag={"#NoteShare"}
+              description={"aiueo"}
+            >
+              Share on Facebook
+            </FacebookShareButton>
+          ),
+          key: "5",
+          icon: <FacebookIcon size={16} round /> 
+        }
       ]
     } />
   );
@@ -1447,6 +1618,20 @@ const OptionMenu = (props) => {
           key: "3",
           icon: <PlusOutlined />
         },
+        {
+          label: (
+            <FacebookShareButton
+              url={`${frontendURL}sharePage/note/${props.id}`}
+              quote={"フェイスブックはタイトルが付けれるようです"}
+              hashtag={"#NoteShare"}
+              description={"aiueo"}
+            >
+              Share on Facebook
+            </FacebookShareButton>
+          ),
+          key: "4",
+          icon: <FacebookIcon size={16} round /> 
+        }
       ]
     } />
   );
