@@ -742,26 +742,19 @@ const FileManager = (props) => {
         )
     }
 
-    const setFolderPublic = (index) => {
+    const setFolderPublic = (index, folderId) => {
         const tempFolders = files;
         console.log(tempFolders[index])
         tempFolders[index].public = !tempFolders[index].public;
         setFiles([...tempFolders])
-        if(tempFolders[index].public)
-            message.info("Set public!")
-        else
-            message.info("Set private!")
-        //setFiles()
-        /*
-        axios.put(`/folder/save/${props.email}/${move.folderId}`, data, {
+
+        axios.put(`/folder/public/${folderId}`, {} , {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
             }
         })
             .then(res => {
-                onClickFolderZone(current)
-                setMove(null)
-                message.success("You moved a folder!")
+                message.success("Success!")
             })
             .catch(err => {
                 if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
@@ -780,7 +773,7 @@ const FileManager = (props) => {
                 else {
                     message.error("Server Error! Please try again later. (Move Folder Error)")
                 }
-            })*/
+            })
     }
 
     return (
@@ -869,7 +862,7 @@ const FileManager = (props) => {
                                                             {
                                                                 key: '3',
                                                                 label: (
-                                                                    <a onClick={() => setFolderPublic(index)} style={{ textDecoration: "none"}}>{item.public?"Set Private":"Set Public"}</a>
+                                                                    <a onClick={() => setFolderPublic(index, item.id)} style={{ textDecoration: "none"}}>{item.public?"Set Private":"Set Public"}</a>
                                                                 ),
                                                             },
                                                             {
