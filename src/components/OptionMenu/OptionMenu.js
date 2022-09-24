@@ -1743,6 +1743,47 @@ const OptionMenu = (props) => {
       ]
     } />
   );
+
+  const FolderDetailPageNoteMenu = (
+    <Menu items={
+      [{
+        label: (
+          <>
+            <Text className="detailNotice__Header__Title" color='black' cls='Small' content={"Share Link"} fontSize='12' />
+            <Input.Group compact>
+              <Input
+                style={{ width: '80%' }}
+                defaultValue={shareLink + "note" + '/' + props.id}
+              />
+              <Tooltip title="copy share link">
+                <Button icon={<CopyOutlined />} onClick={() => {
+                  navigator.clipboard.writeText(shareLink + "note" + '/' + props.id);
+                  message.success('Copied link to clipboard!')
+                }} />
+              </Tooltip>
+            </Input.Group>
+          </>
+        ),
+        key: "1",
+      },
+      {
+        label: (
+          <FacebookShareButton
+            url={`${frontendURL}sharePage/note/${props.id}`}
+            quote={"フェイスブックはタイトルが付けれるようです"}
+            hashtag={"#NoteShare"}
+            description={"aiueo"}
+          >
+            Share on Facebook
+          </FacebookShareButton>
+        ),
+        key: "3",
+        icon: <FacebookIcon size={16} round />
+      }
+      ]
+    } />
+  );
+
   useEffect(() => {
     // set menu
     switch (props.page) {
@@ -1827,11 +1868,16 @@ const OptionMenu = (props) => {
           setMenu(CollabDetailMenu); break;
         }
       case 'PersonalPage':
-        if (!props.allNote) {
-          setMenu(PersonalPageNoteMenu); break;
+        if(props.mode != 'search'){
+          if (!props.allNote) {
+            setMenu(PersonalPageNoteMenu); break;
+          }
+          else {
+            setMenu(PersonalPageAllNoteMenu); break;
+          }
         }
-        else {
-          setMenu(PersonalPageAllNoteMenu); break;
+        else{
+          setMenu(FolderDetailPageNoteMenu); break;
         }
       // case 'QnAOutlinePage': setMenu( QnAOutlineMenu ); break;
     }
