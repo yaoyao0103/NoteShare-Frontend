@@ -91,20 +91,27 @@ function LoginPage(props) {
     };
     const login = () => {
         var str = Base64.encode(email);
-        document.cookie = "email=" + str;
+        document.cookie = "email=" + str + ';path=/sharePage/note';
+        document.cookie = "email=" + str + ';path=/sharePage/post';
+        document.cookie = "email=" + str + ';path=/';
         if (hasRemember === 'A') {
             str = Base64.encode(email);
-            document.cookie = "rEmail=" + str;
-
+            document.cookie = "rEmail=" + str + ';path=/';
+            document.cookie = "rEmail=" + str + ';path=/sharePage/note';
+            document.cookie = "rEmail=" + str + ';path=/sharePage/post';
             str = Base64.encode(password);
-            document.cookie = "rPassword=" + str;
+            document.cookie = "rPassword=" + str + ';path=/';
+            document.cookie = "rPassword=" + str + ';path=/sharePage/note';
+            document.cookie = "rPassword=" + str + ';path=/sharePage/post';
             //console.log('1111111')
         }
         axios.post("/verification/login", {
             email: email,
             password: password
         }).then(res => {
-            document.cookie = "token=" + res.data.token;
+            document.cookie = "token=" + res.data.token + ';path=/sharePage/note';
+            document.cookie = "token=" + res.data.token + ';path=/sharePage/post';
+            document.cookie = "token=" + res.data.token + ';path=/';
             //console.log(document.cookie);
             if (res.data.activate) {
                 props.setLoggedIn(true)
@@ -118,15 +125,20 @@ function LoginPage(props) {
                     console.log(error.response.status);
                     if (error.response.status === 500 || error.response.status === 404 || error.response.status === 403) {
                         if (error.response.data.message.slice(0, 13) === 'Malformed JWT') {
-                            document.cookie = 'error=Jwt'
+                            document.cookie = 'error=Jwt;path=/sharePage/note'
+                            document.cookie = 'error=Jwt;path=/sharePage/post'
+                            document.cookie = 'error=Jwt;path=/'
                             message.destroy()
                             message.warning('The connection timed out, please login again !')
                             document.cookie = 'email=;'
                             props.setLoggedIn(false)
                             props.setPageProps({ page: 'LoginPage' })
                         }
-                        else
-                            document.cookie = 'error=true'
+                        else {
+                            document.cookie = 'error=true;path=/sharePage/note'
+                            document.cookie = 'error=true;path=/sharePage/post'
+                            document.cookie = 'error=true;path=/'
+                        }
                         message.error('Server Error! Please refresh again! (Resend Verify Code Error)')
                     }
                     else {
@@ -515,11 +527,11 @@ function LoginPage(props) {
                                         </Form.Item>
                                         <Form.Item className='loginPage__Form__Item'>
                                             <a href="javascript: return false;" onClick={() => (props.setPageProps({ page: 'SignUpPage' }))}>Register now!</a>
-                                           
+
 
                                         </Form.Item>
                                         <Form.Item className='loginPage__Form__Item'>
-                                           
+
                                             <a className="loginPage__Content__Form__Forgot__sm" href="javascript: return false;" onClick={() => (props.setPageProps({ page: 'ForgetPasswordPage' }))}>
                                                 Forgot password?
                                             </a>
@@ -607,11 +619,11 @@ function LoginPage(props) {
                                         </Form.Item>
                                         <Form.Item className='loginPage__Form__Item'>
                                             <a href="javascript: return false;" onClick={() => (props.setPageProps({ page: 'SignUpPage' }))}>Register now!</a>
-                                           
+
 
                                         </Form.Item>
                                         <Form.Item className='loginPage__Form__Item'>
-                                       
+
                                             <a className="loginPage__Content__Form__Forgot__sm" href="javascript: return false;" onClick={() => (props.setPageProps({ page: 'ForgetPasswordPage' }))}>
                                                 Forgot password?
                                             </a>

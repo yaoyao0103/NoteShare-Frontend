@@ -49,7 +49,9 @@ function AvatarButton(props) {
                             <LogoutOutlined style={{ color: "#555" }} />
                             <a className='AvatarButton__item__text' onClick={() => {
                                 const cookieParser = new Cookie(document.cookie)
-                                document.cookie = "email=";
+                                document.cookie = "email=;path=/sharePage/note";
+                                document.cookie = "email=;path=/sharePage/post";
+                                document.cookie = "email=;path=/";
                                 props.setLoggedIn(false);
                                 props.setPageProps({ page: 'LoginPage' });
                             }}>
