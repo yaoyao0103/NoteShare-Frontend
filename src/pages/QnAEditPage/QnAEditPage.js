@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PageDetailTemplate from '../../components/PageDetailTemplate/PageDetailTemplate'
 import PostEditTemplate from '../../components/PostEditTemplate/PostEditTemplate';
-import axios from 'axios';
+import axios from '../../components/axios/axios';
 import { message } from "antd";
 import Cookie from '../../components/Cookies/Cookies';
 const cookieParser = new Cookie(document.cookie)
@@ -10,12 +10,14 @@ function QnAEditPage(props) {
 
     useEffect(() => {
         async function getQnAById() {
+            console.log("props", props)
             axios.get(`/post/${props.postId}`)
                 .then(res => {
                     console.log(res.data.res)
                     setPost(res.data.res)
                 })
                 .catch(err => {
+                    console.log("error", err)
                     if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
                         if (err.response.data.message.slice(0, 13) === 'Malformed JWT') {
                             document.cookie = 'error=Jwt'

@@ -44,13 +44,13 @@ const InformationInput = ({information, setInformation, notShowSwitch, page}) =>
         {information?.subject!=null &&
             <div className="informationInput__item informationInput__Input">
                 <Text color='black' cls='Small' content={"Subject"} fontSize='15' display="inline-block" />
-                <Input showCount maxLength={20} placeholder="Subject" onChange={(ev) => setInformation({...information, subject: ev.target.value})} value={information?.subject} /> 
+                <Input showCount maxLength={50} placeholder="Subject" onChange={(ev) => setInformation({...information, subject: ev.target.value})} value={information?.subject} /> 
             </div>  
         }
         {information?.professor!=null &&
             <div className="informationInput__item informationInput__Input">
                 <Text color='black' cls='Small' content={"Instructor"} fontSize='15' display="inline-block" />
-                <Input showCount maxLength={20} placeholder="Instructor" onChange={(ev) => setInformation({...information, professor: ev.target.value})} value={information?.professor} /> 
+                <Input showCount maxLength={50} placeholder="Instructor" onChange={(ev) => setInformation({...information, professor: ev.target.value})} value={information?.professor} /> 
             </div>  
         }
         <div className="informationInput__InputNumbers">
