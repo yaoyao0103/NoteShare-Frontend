@@ -16,7 +16,7 @@ import moment from 'moment';
 import download from 'downloadjs'
 import { FacebookShareButton, FacebookIcon } from "react-share";
 
-const frontendURL = "http://localhost:3000/";
+const frontendURL = "https://noteshare.soselab.tw/";
 const cookieParser = new Cookie(document.cookie)
 const OptionMenu = (props) => {
   const navigate = useNavigate()
@@ -35,7 +35,7 @@ const OptionMenu = (props) => {
     setVisible(false);
   };
 
-  const shareLink = 'http://localhost:3000/sharePage/'
+  const shareLink = 'https://noteshare.soselab.tw/sharePage/'
 
   const archive = () => {
     if (props.isAnswered) {
