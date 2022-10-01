@@ -22,11 +22,11 @@ function AvatarButton(props) {
                     label: (
                         <>
                             <UserOutlined style={{ color: "#555" }} />
-                            <span className='AvatarButton__item__text'>
-                                <a className='AvatarButton__item__text' onClick={() => props.setPageProps({ page: 'ProfilePage', email: email })}>
-                                    <Text cls='Gerneral' fontSize='16' content={'Profile'} />
-                                </a>
-                            </span>
+
+                            <a className='AvatarButton__item__text' onClick={() => props.setPageProps({ page: 'ProfilePage', email: email })}>
+                                <Text cls='Gerneral' fontSize='16' content={'Profile'} />
+                            </a>
+
                         </>
 
                     ),
@@ -49,7 +49,9 @@ function AvatarButton(props) {
                             <LogoutOutlined style={{ color: "#555" }} />
                             <a className='AvatarButton__item__text' onClick={() => {
                                 const cookieParser = new Cookie(document.cookie)
-                                document.cookie = "email=";
+                                document.cookie = "email=;path=/sharePage/note";
+                                document.cookie = "email=;path=/sharePage/post";
+                                document.cookie = "email=;path=/";
                                 props.setLoggedIn(false);
                                 props.setPageProps({ page: 'LoginPage' });
                             }}>
@@ -98,7 +100,7 @@ function AvatarButton(props) {
         //console.log(avatarNum);
         setAvatar(props.changeAvatar);
         document.cookie = "avatar=" + props.changeAvatar
-        if (props.changeAvatarNum ===0) {
+        if (props.changeAvatarNum === 0) {
             axios.get("/user/head/" + tempEmail, {
                 headers: {
                     'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),

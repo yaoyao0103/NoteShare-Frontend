@@ -48,6 +48,6 @@ ToggleSwitch.propTypes = {
 ToggleSwitch.defaultProps = {
     SwitchLeft: 'Following',
     checkedColor: '#66e1c1',
-    SwitchRight: 'Recommand',
+    SwitchRight: 'Recommend',
 };
 export default ToggleSwitch;

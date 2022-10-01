@@ -45,7 +45,7 @@ function RewardEditPage(props) {
             {/* <PageDetailTemplate page={page}>
                 <PostEditTemplate page={page} type={"reward"} post={post} mode={mode}/>
             </PageDetailTemplate> */}
-            <PostEditTemplate setLoggedIn={props.setLoggedIn} setPageProps={props.setPageProps} sendBellMessage={props.sendBellMessage} page={props.page} type={props.type} post={post} postId={props.postId} mode={props.action} />
+            <PostEditTemplate setLoggedIn={props.setLoggedIn} setPageProps={props.setPageProps} sendBellMessage={props.sendBellMessage} page={props.page} type={props.type} post={post} postId={props.postId} mode={props.action}  setLoading={props.setLoading}/>
         </>
 
     );

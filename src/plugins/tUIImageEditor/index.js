@@ -4,6 +4,7 @@ import iconC from 'tui-image-editor/dist/svg/icon-c.svg';
 import iconD from 'tui-image-editor/dist/svg/icon-d.svg';
 import Cookie from '../../components/Cookies/Cookies';
 import axios from '../../components/axios/axios';
+import { message } from 'antd';
 
 export default (editor, options = {}) => {
     const cookieParser = new Cookie(document.cookie)
@@ -20,7 +21,7 @@ export default (editor, options = {}) => {
       labelImageEditor: 'Image Editor',
 
       // Label for the OCR (used in the modal)
-      labelOCR: 'OCR',
+      labelOCR: 'OCR (Convert image to text)',
   
       // Label used on the apply button
       labelApply: 'Apply',
@@ -351,11 +352,14 @@ export default (editor, options = {}) => {
             margin-left: .2em;
             margin-right: 1em;
           "></img>
-          <textarea id = "OCR-result" rows="8" cols="42" style="
-            position: relative;
-            border-color: #888;
-            float: left;
-          "></textarea>
+          <div style="position: relative; border-color: #888; float: left;">
+            <div>OCR Result</div>
+            <textarea id = "OCR-result" rows="8" cols="42" style="
+              position: relative;
+              border-color: #888;"
+            ></textarea>
+          </div>
+          
         </div>
           <button class="tui-image-editor__run-btn" style="
             position: relative;
@@ -397,6 +401,8 @@ export default (editor, options = {}) => {
           }
         )
         .then(res => {
+          message.destroy()
+          message.success("Success!")
           this.OCRText = res.data.res;
           document.getElementById("OCR-result").value = this.OCRText;
           

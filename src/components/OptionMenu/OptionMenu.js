@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./OptionMenu.css";
 import { Link, useNavigate } from "react-router-dom";
 import { Menu, Dropdown, Space, Drawer, message, Input, Tooltip, Button, Popover, List, Avatar, Modal, Popconfirm, notification } from "antd";
-import { StarOutlined, CopyOutlined, EditOutlined, CommentOutlined, CheckOutlined, CloseOutlined, ShareAltOutlined, InboxOutlined, DeleteOutlined, EyeOutlined, InfoCircleOutlined, UserOutlined, LikeOutlined, DownloadOutlined } from "@ant-design/icons";
+import { StarOutlined, CopyOutlined, EditOutlined, PlusOutlined, CheckOutlined, CloseOutlined, ShareAltOutlined, InboxOutlined, DeleteOutlined, EyeOutlined, InfoCircleOutlined, UserOutlined, LikeOutlined, DownloadOutlined, EllipsisOutlined } from "@ant-design/icons";
 import VersionArea from "../VersionArea/VersionArea";
 import CommentArea from "../CommentArea/CommentArea";
 import ContentEditor from "../../pages/NoteDetailPage/ContentEditor/ContentEditor";
@@ -14,6 +14,9 @@ import MyEditor from "../MyEditor/MyEditor";
 import { set } from "react-hook-form";
 import moment from 'moment';
 import download from 'downloadjs'
+import { FacebookShareButton, FacebookIcon } from "react-share";
+
+const frontendURL = "https://noteshare.soselab.tw/";
 const cookieParser = new Cookie(document.cookie)
 const OptionMenu = (props) => {
   const navigate = useNavigate()
@@ -32,7 +35,7 @@ const OptionMenu = (props) => {
     setVisible(false);
   };
 
-
+  const shareLink = 'https://noteshare.soselab.tw/sharePage/'
 
   const archive = () => {
     if (props.isAnswered) {
@@ -727,78 +730,123 @@ const OptionMenu = (props) => {
   const NoteDetailMenuAuthor = (
     <Menu items={
       props.notePublic ?
-        [
-          {
-            label: <a onClick=
-              {() => {
-                share('note');
-              }}
-            >Share</a>,
-            key: "1",
-            icon: <ShareAltOutlined />,
-
-          },
-          {
-            label: (<a onClick=
-              {() => {
-                showDrawer();
-              }}
-            >Manage Version</a>),
-            key: "2",
-            icon: <InfoCircleOutlined />
-          },
-          {
-            label: (<a onClick=
-              {() => {
-                downloadNOte();
-              }}
-            >Download</a>),
-            key: "3",
-            icon: <DownloadOutlined />
-          },
+        [{
+          label: (
+            <>
+              <Text className="detailNotice__Header__Title" color='black' cls='Small' content={"Share Link"} fontSize='12' />
+              <Input.Group compact>
+                <Input
+                  style={{ width: '80%' }}
+                  defaultValue={shareLink + "note" + '/' + props.id}
+                />
+                <Tooltip title="copy share link">
+                  <Button icon={<CopyOutlined />} onClick={() => {
+                    navigator.clipboard.writeText(shareLink + "note" + '/' + props.id);
+                    message.success('Copied link to clipboard!')
+                  }} />
+                </Tooltip>
+              </Input.Group>
+            </>
+          ),
+          key: "1",
+        },
+        {
+          label: (<a onClick=
+            {() => {
+              showDrawer();
+            }}
+          >Manage Version</a>),
+          key: "3",
+          icon: <InfoCircleOutlined />
+        },
+        {
+          label: (<a onClick=
+            {() => {
+              downloadNOte();
+            }}
+          >Download</a>),
+          key: "4",
+          icon: <DownloadOutlined />
+        }, {
+          label: (
+            <FacebookShareButton
+              url={`${frontendURL}sharePage/note/${props.id}`}
+              quote={"フェイスブックはタイトルが付けれるようです"}
+              hashtag={"#NoteShare"}
+              description={"aiueo"}
+            >
+              Share on Facebook
+            </FacebookShareButton>
+          ),
+          key: "5",
+          icon: <FacebookIcon size={16} round />
+        }
         ]
         :
-        [
-          {
-            label: <a onClick=
-              {() => {
-                share('note');
-              }}
-            >Share</a>,
-            key: "1",
-            icon: <ShareAltOutlined />,
-          },
-          {
-            label: (<a onClick=
-              {() => {
-                showDrawer();
-              }}
-            >Manage Version</a>),
-            key: "2",
-            icon: <InfoCircleOutlined />
-          },
-          {
-            label: (
-              <Popconfirm
-                title="Are you sure to publish the note?"
-                okText="Yes"
-                cancelText="No"
-                onConfirm={setNoteStatus}
-              >
-                <a style={{ textDecoration: "none" }}>Publish the note</a>
-              </Popconfirm>),
-            key: "3",
-            icon: <UserOutlined style={{ color: "#333" }} />
-          },
-          {
-            label: (<a onClick=
-              {() => {
-                downloadNOte();
-              }}
-            >Download</a>),
-            key: "4",
-            icon: <DownloadOutlined />
-          },
+        [{
+          label: (
+            <>
+              <Text className="detailNotice__Header__Title" color='black' cls='Small' content={"Share Link"} fontSize='12' />
+              <Input.Group compact>
+                <Input
+                  style={{ width: '80%' }}
+                  defaultValue={shareLink + "note" + '/' + props.id}
+                />
+                <Tooltip title="copy share link">
+                  <Button icon={<CopyOutlined />} onClick={() => {
+                    navigator.clipboard.writeText(shareLink + "note" + '/' + props.id);
+                    message.success('Copied link to clipboard!')
+                  }} />
+                </Tooltip>
+              </Input.Group>
+            </>
+          ),
+          key: "1",
+        },
+        {
+          label: (<a onClick=
+            {() => {
+              showDrawer();
+            }}
+          >Manage Version</a>),
+          key: "2",
+          icon: <InfoCircleOutlined />
+        },
+        {
+          label: (
+            <Popconfirm
+              title="Are you sure to publish the note?"
+              okText="Yes"
+              cancelText="No"
+              onConfirm={setNoteStatus}
+            >
+              <a style={{ textDecoration: "none" }}>Publish the note</a>
+            </Popconfirm>),
+          key: "3",
+          icon: <UserOutlined style={{ color: "#333" }} />
+        },
+        {
+          label: (<a onClick=
+            {() => {
+              downloadNOte();
+            }}
+          >Download</a>),
+          key: "4",
+          icon: <DownloadOutlined />
+        }, {
+          label: (
+            <FacebookShareButton
+              url={`${frontendURL}sharePage/note/${props.id}`}
+              quote={"フェイスブックはタイトルが付けれるようです"}
+              hashtag={"#NoteShare"}
+              description={"aiueo"}
+            >
+              Share on Facebook
+            </FacebookShareButton>
+          ),
+          key: "5",
+          icon: <FacebookIcon size={16} round />
+        }
         ]
     } />
   );
@@ -807,18 +855,29 @@ const OptionMenu = (props) => {
     <Menu items={
       [
         {
-          label: !props.isFavoriter ? (<a onClick={favorite}>Favorite</a>) : (<a onClick={unfavorite}>UnFavorite</a>),
+          label: (
+            <>
+              <Text className="detailNotice__Header__Title" color='black' cls='Small' content={"Share Link"} fontSize='12' />
+              <Input.Group compact>
+                <Input
+                  style={{ width: '80%' }}
+                  defaultValue={shareLink + "note" + '/' + props.id}
+                />
+                <Tooltip title="copy share link">
+                  <Button icon={<CopyOutlined />} onClick={() => {
+                    navigator.clipboard.writeText(shareLink + "note" + '/' + props.id);
+                    message.success('Copied link to clipboard!')
+                  }} />
+                </Tooltip>
+              </Input.Group>
+            </>
+          ),
           key: "1",
-          icon: <StarOutlined />
         },
         {
-          label: <a onClick=
-            {() => {
-              share('note');
-            }}
-          >Share</a>,
+          label: !props.isFavoriter ? (<a onClick={favorite}>Favorite</a>) : (<a onClick={unfavorite}>UnFavorite</a>),
           key: "2",
-          icon: <ShareAltOutlined />,
+          icon: <StarOutlined />
         }, {
           label: (<a onClick=
             {() => {
@@ -828,6 +887,20 @@ const OptionMenu = (props) => {
           key: "3",
           icon: <DownloadOutlined />
         },
+        {
+          label: (
+            <FacebookShareButton
+              url={`${frontendURL}sharePage/note/${props.id}`}
+              quote={"フェイスブックはタイトルが付けれるようです"}
+              hashtag={"#NoteShare"}
+              description={"aiueo"}
+            >
+              Share on Facebook
+            </FacebookShareButton>
+          ),
+          key: "4",
+          icon: <FacebookIcon size={16} round />
+        }
 
       ]
     } />
@@ -837,18 +910,29 @@ const OptionMenu = (props) => {
     <Menu items={
       [
         {
-          label: !props.isFavoriter ? (<a onClick={favorite}>Favorite</a>) : (<a onClick={unfavorite}>UnFavorite</a>),
+          label: (
+            <>
+              <Text className="detailNotice__Header__Title" color='black' cls='Small' content={"Share Link"} fontSize='12' />
+              <Input.Group compact>
+                <Input
+                  style={{ width: '80%' }}
+                  defaultValue={shareLink + "note" + '/' + props.id}
+                />
+                <Tooltip title="copy share link">
+                  <Button icon={<CopyOutlined />} onClick={() => {
+                    navigator.clipboard.writeText(shareLink + "note" + '/' + props.id);
+                    message.success('Copied link to clipboard!')
+                  }} />
+                </Tooltip>
+              </Input.Group>
+            </>
+          ),
           key: "1",
-          icon: <StarOutlined />
         },
         {
-          label: <a onClick=
-            {() => {
-              share('note');
-            }}
-          >Share</a>,
+          label: !props.isFavoriter ? (<a onClick={favorite}>Favorite</a>) : (<a onClick={unfavorite}>UnFavorite</a>),
           key: "2",
-          icon: <ShareAltOutlined />,
+          icon: <StarOutlined />
         },
         {
           label: (<a onClick=
@@ -867,6 +951,20 @@ const OptionMenu = (props) => {
           key: "4",
           icon: <DownloadOutlined />
         },
+        {
+          label: (
+            <FacebookShareButton
+              url={`${frontendURL}sharePage/note/${props.id}`}
+              quote={"フェイスブックはタイトルが付けれるようです"}
+              hashtag={"#NoteShare"}
+              description={"aiueo"}
+            >
+              Share on Facebook
+            </FacebookShareButton>
+          ),
+          key: "5",
+          icon: <FacebookIcon size={16} round />
+        }
       ]
     } />
   );
@@ -875,14 +973,38 @@ const OptionMenu = (props) => {
     <Menu items={
       [
         {
-          label: <a onClick=
-            {() => {
-              share('qnA');
-            }}
-          >Share</a>,
-          key: "",
-          icon: <ShareAltOutlined />,
-
+          label: (
+            <>
+              <Text className="detailNotice__Header__Title" color='black' cls='Small' content={"Share Link"} fontSize='12' />
+              <Input.Group compact>
+                <Input
+                  style={{ width: '80%' }}
+                  defaultValue={shareLink + "qnA" + '/' + props.id}
+                />
+                <Tooltip title="copy share link">
+                  <Button icon={<CopyOutlined />} onClick={() => {
+                    navigator.clipboard.writeText(shareLink + "qnA" + '/' + props.id);
+                    message.success('Copied link to clipboard!')
+                  }} />
+                </Tooltip>
+              </Input.Group>
+            </>
+          ),
+          key: "1",
+        },
+        {
+          label: (
+            <FacebookShareButton
+              url={`${frontendURL}sharePage/qnA/${props.id}`}
+              quote={"フェイスブックはタイトルが付けれるようです"}
+              hashtag={"#NoteShare"}
+              description={"aiueo"}
+            >
+              Share on Facebook
+            </FacebookShareButton>
+          ),
+          key: "2",
+          icon: <FacebookIcon size={16} round />
         }
       ]
     } />
@@ -890,40 +1012,68 @@ const OptionMenu = (props) => {
 
   const QnADetailMenuAuthor = (
     <Menu items={
-      [
-        {
-          label: (<a onClick=
-            {() => {
-              props.setPageProps({
-                postId: props.id,
-                type: 'QA',
-                action: "edit",
-                page: 'QnAEditPage'
-              })
-            }}
-          >Edit Information</a>),
-          key: "1",
-          icon: <EditOutlined />
-        },
-        {
-          label: <a onClick=
-            {() => {
-              share('qnA');
-            }}
-          >Share</a>,
-          key: "2",
-          icon: <ShareAltOutlined />,
-        },
-        {
-          label: (<a onClick={archive}>Archive</a>),
-          key: "3",
-          icon: <InboxOutlined />
-        },
-        {
-          label: props.public ? (<a onClick={setStatus}>Set the post private</a>) : (<a onClick={setStatus}>Set the post public</a>),
-          key: "4",
-          icon: <UserOutlined style={{ color: "#333" }} />
-        },
+      [{
+        label: (
+          <>
+            <Text className="detailNotice__Header__Title" color='black' cls='Small' content={"Share Link"} fontSize='12' />
+            <Input.Group compact>
+              <Input
+                style={{ width: '80%' }}
+                defaultValue={shareLink + "qnA" + '/' + props.id}
+              />
+              <Tooltip title="copy share link">
+                <Button icon={<CopyOutlined />} onClick={() => {
+                  navigator.clipboard.writeText(shareLink + "qnA" + '/' + props.id);
+                  message.success('Copied link to clipboard!')
+                }} />
+              </Tooltip>
+            </Input.Group>
+          </>
+        ),
+        key: "1",
+      },
+      {
+        label: (<a onClick=
+          {() => {
+            props.setPageProps({
+              postId: props.id,
+              type: 'QA',
+              action: "edit",
+              page: 'QnAEditPage'
+            })
+          }}
+        >Edit Information</a>),
+        key: "2",
+        icon: <EditOutlined />
+      },
+      {
+        label: (<a onClick={archive}>Archive</a>),
+        key: "3",
+        icon: <InboxOutlined />
+      },
+      /*{
+        label: props.isAnswered? props.public ? (<a onClick={setStatus}>Set the post private</a>) : (<a onClick={setStatus}>Set the post public</a>)
+        :(
+        <Tooltip title={"You have to select a best answers before set the post private."}>
+          <a style={{ opacity: "0.4", textDecoration: "none" }}>Set the post private</a>
+        </Tooltip>),
+        key: "4",
+        icon: <UserOutlined style={props.isAnswered? { color: "#333" }:{ color: "#333", opacity: "0.4"}}/>
+      },*/
+      {
+        label: (
+          <FacebookShareButton
+            url={`${frontendURL}sharePage/qnA/${props.id}`}
+            quote={"フェイスブックはタイトルが付けれるようです"}
+            hashtag={"#NoteShare"}
+            description={"aiueo"}
+          >
+            Share on Facebook
+          </FacebookShareButton>
+        ),
+        key: "5",
+        icon: <FacebookIcon size={16} round />
+      }
 
 
       ]
@@ -932,41 +1082,51 @@ const OptionMenu = (props) => {
 
   const QnADetailMenuAuthorArchive = (
     <Menu items={
-      [
-        {
-          label: (<a onClick=
-            {() => {
-              props.setPageProps({
-                postId: props.id,
-                type: 'QA',
-                action: "edit",
-                page: 'QnAEditPage'
-              })
-            }}
-          >Edit Information</a>),
-          key: "1",
-          icon: <EditOutlined />
-        },
-        {
-          label: <a onClick=
-            {() => {
-              share('qnA');
-            }}
-          >Share</a>,
-          key: "2",
-          icon: <ShareAltOutlined />,
-        },
-        {
-          label: (<a>Archive</a>),
-          key: "3",
-          icon: <InboxOutlined />,
-          disabled: true
-        },
-        {
-          label: props.public ? (<a onClick={setStatus}>Set the post private</a>) : (<a onClick={setStatus}>Set the post public</a>),
-          key: "4",
-          icon: <UserOutlined style={{ color: "#333" }} />
-        },
+      [{
+        label: (
+          <>
+            <Text className="detailNotice__Header__Title" color='black' cls='Small' content={"Share Link"} fontSize='12' />
+            <Input.Group compact>
+              <Input
+                style={{ width: '80%' }}
+                defaultValue={shareLink + "qnA" + '/' + props.id}
+              />
+              <Tooltip title="copy share link">
+                <Button icon={<CopyOutlined />} onClick={() => {
+                  navigator.clipboard.writeText(shareLink + "qnA" + '/' + props.id);
+                  message.success('Copied link to clipboard!')
+                }} />
+              </Tooltip>
+            </Input.Group>
+          </>
+        ),
+        key: "1",
+      },
+      {
+        label: (<a onClick=
+          {() => {
+            props.setPageProps({
+              postId: props.id,
+              type: 'QA',
+              action: "edit",
+              page: 'QnAEditPage'
+            })
+          }}
+        >Edit Information</a>),
+        key: "2",
+        icon: <EditOutlined />
+      },
+      {
+        label: (<a>Archive</a>),
+        key: "3",
+        icon: <InboxOutlined />,
+        disabled: true
+      },
+      // {
+      //   label: props.public ? (<a onClick={setStatus}>Set the post private</a>) : (<a onClick={setStatus}>Set the post public</a>),
+      //   key: "5",
+      //   icon: <UserOutlined style={{ color: "#333" }} />
+      // },
 
 
       ]
@@ -975,56 +1135,80 @@ const OptionMenu = (props) => {
 
   const RewardDetailMenuAuthor = (
     <Menu items={
-      [
-        {
-          label: (<a onClick=
-            {() => {
-              props.setPageProps({
-                postId: props.id,
-                type: 'reward',
-                action: "edit",
-                page: 'RewardEditPage'
-              })
-            }}
-          >Edit Information</a>),
-          key: "1",
-          icon: <EditOutlined />
-        },
-        {
-          label: <a onClick=
-            {() => {
-              share('reward');
-            }}
-          >Share</a>,
-          key: "2",
-          icon: <ShareAltOutlined />,
+      [{
+        label: (
+          <>
+            <Text className="detailNotice__Header__Title" color='black' cls='Small' content={"Share Link"} fontSize='12' />
+            <Input.Group compact>
+              <Input
+                style={{ width: '80%' }}
+                defaultValue={shareLink + "reward" + '/' + props.id}
+              />
+              <Tooltip title="copy share link">
+                <Button icon={<CopyOutlined />} onClick={() => {
+                  navigator.clipboard.writeText(shareLink + "reward" + '/' + props.id);
+                  message.success('Copied link to clipboard!')
+                }} />
+              </Tooltip>
+            </Input.Group>
+          </>
+        ),
+        key: "1",
+      },
+      {
+        label: (<a onClick=
+          {() => {
+            props.setPageProps({
+              postId: props.id,
+              type: 'reward',
+              action: "edit",
+              page: 'RewardEditPage'
+            })
+          }}
+        >Edit Information</a>),
+        key: "2",
+        icon: <EditOutlined />
+      },
+      {
+        label: (
+          props.isAnswered ?
+            <Popconfirm
+              title="Are you sure to delete the post?"
+              okText="Yes"
+              cancelText="No"
+              onConfirm={deletePost}
+            >
+              <a style={{ color: "red" }}>Delete</a>
+            </Popconfirm>
+            :
+            <Tooltip title={"You have to select all best/reference answers before delete the post."}>
+              <a style={{ color: "red", opacity: "0.4", textDecoration: "none" }}>Delete</a>
+            </Tooltip>
+        ),
+        key: "3",
+        icon: (
+          props.isAnswered ?
+            <DeleteOutlined style={{ color: "red" }} />
+            :
+            <DeleteOutlined style={{ color: "red", opacity: "0.4" }} />
+        ),
 
         },
         {
           label: (
-            props.isAnswered ?
-              <Popconfirm
-                title="Are you sure to delete the post?"
-                okText="Yes"
-                cancelText="No"
-                onConfirm={deletePost}
-              >
-                <a style={{ color: "red" }}>Delete</a>
-              </Popconfirm>
-              :
-              <Tooltip title={"You have to select all best/reference answers before delete the post."}>
-                <a style={{ color: "red", opacity: "0.4", textDecoration: "none" }}>Delete</a>
-              </Tooltip>
+            <FacebookShareButton
+              url={`${frontendURL}sharePage/reward/${props.id}`}
+              quote={"フェイスブックはタイトルが付けれるようです"}
+              hashtag={"#NoteShare"}
+              description={"aiueo"}
+            >
+              Share on Facebook
+            </FacebookShareButton>
           ),
-          key: "3",
-          icon: (
-            props.isAnswered ?
-              <DeleteOutlined style={{ color: "red" }} />
-              :
-              <DeleteOutlined style={{ color: "red", opacity: "0.4" }} />
-          ),
-
-        }]
+          key: "4",
+          icon: <FacebookIcon size={16} round />
+        }
+      ]
     } />
   );
 
@@ -1032,32 +1216,79 @@ const OptionMenu = (props) => {
 
   const RewardDetailMenu = (
     <Menu items={
-      [
-        {
-          label: <a onClick=
-            {() => {
-              share('reward');
-            }}
-          >Share</a>,
-          key: "1",
-          icon: <ShareAltOutlined />,
-        }]
+      [{
+        label: (
+          <>
+            <Text className="detailNotice__Header__Title" color='black' cls='Small' content={"Share Link"} fontSize='12' />
+            <Input.Group compact>
+              <Input
+                style={{ width: '80%' }}
+                defaultValue={shareLink + "reward" + '/' + props.id}
+              />
+              <Tooltip title="copy share link">
+                <Button icon={<CopyOutlined />} onClick={() => {
+                  navigator.clipboard.writeText(shareLink + "reward" + '/' + props.id);
+                  message.success('Copied link to clipboard!')
+                }} />
+              </Tooltip>
+            </Input.Group>
+          </>
+        ),
+        key: "1",
+        
+      },
+      {
+        label: (
+          <FacebookShareButton
+            url={`${frontendURL}sharePage/reward/${props.id}`}
+            quote={"フェイスブックはタイトルが付けれるようです"}
+            hashtag={"#NoteShare"}
+            description={"aiueo"}
+          >
+            Share on Facebook
+          </FacebookShareButton>
+        ),
+        key: "2",
+        icon: <FacebookIcon size={16} round />
+      }]
     } />
   );
 
   const CollabDetailMenu = (
     <Menu items={
-      [
-        {
-          label: <a onClick=
-            {() => {
-              share('collab');
-            }}
-          >Share</a>,
-          key: "1",
-          icon: <ShareAltOutlined />,
-
-        },
+      [{
+        label: (
+          <>
+            <Text className="detailNotice__Header__Title" color='black' cls='Small' content={"Share Link"} fontSize='12' />
+            <Input.Group compact>
+              <Input
+                style={{ width: '80%' }}
+                defaultValue={shareLink + "collab" + '/' + props.id}
+              />
+              <Tooltip title="copy share link">
+                <Button icon={<CopyOutlined />} onClick={() => {
+                  navigator.clipboard.writeText(shareLink + "collab" + '/' + props.id);
+                  message.success('Copied link to clipboard!')
+                }} />
+              </Tooltip>
+            </Input.Group>
+          </>
+        ),
+        key: "1",
+      }, {
+        label: (
+          <FacebookShareButton
+            url={`${frontendURL}sharePage/collab/${props.id}`}
+            quote={"フェイスブックはタイトルが付けれるようです"}
+            hashtag={"#NoteShare"}
+            description={"aiueo"}
+          >
+            Share on Facebook
+          </FacebookShareButton>
+        ),
+        key: "2",
+        icon: <FacebookIcon size={16} round />
+      }
       ]
     } />
   );
@@ -1072,10 +1303,13 @@ const OptionMenu = (props) => {
               <Input.Group compact>
                 <Input
                   style={{ width: '80%' }}
-                  defaultValue="git@github.com:ant-design/ant-design.git"
+                  defaultValue={shareLink + "collab" + '/' + props.id}
                 />
-                <Tooltip title="copy git url">
-                  <Button icon={<CopyOutlined />} />
+                <Tooltip title="copy share link">
+                  <Button icon={<CopyOutlined />} onClick={() => {
+                    navigator.clipboard.writeText(shareLink + "collab" + '/' + props.id);
+                    message.success('Copied link to clipboard!')
+                  }} />
                 </Tooltip>
               </Input.Group>
             </>
@@ -1106,23 +1340,28 @@ const OptionMenu = (props) => {
           icon: <InfoCircleOutlined />
         },
         {
-          label: <a onClick=
-            {() => {
-              share('collab');
-            }}
-          >Share</a>,
-          key: "4",
-          icon: <ShareAltOutlined />,
-        },
-        {
           label: (<a onClick=
             {() => {
               showHistoricalVoting();
             }}
           >Historical Voting</a>),
-          key: "5",
+          key: "4",
           icon: <InfoCircleOutlined />
         },
+        {
+          label: (
+            <FacebookShareButton
+              url={`${frontendURL}sharePage/qnA/${props.id}`}
+              quote={"フェイスブックはタイトルが付けれるようです"}
+              hashtag={"#NoteShare"}
+              description={"aiueo"}
+            >
+              Share on Facebook
+            </FacebookShareButton>
+          ),
+          key: "5",
+          icon: <FacebookIcon size={16} round />
+        }
       ]
     } />
   );
@@ -1132,15 +1371,23 @@ const OptionMenu = (props) => {
     <Menu items={
       [
         {
-          label: (<Input.Group compact>
-            <Input
-              style={{ width: '80%' }}
-              defaultValue="git@github.com:ant-design/ant-design.git"
-            />
-            <Tooltip title="copy git url">
-              <Button icon={<CopyOutlined />} />
-            </Tooltip>
-          </Input.Group>),
+          label: (
+            <>
+              <Text className="detailNotice__Header__Title" color='black' cls='Small' content={"Invite Link"} fontSize='12' />
+              <Input.Group compact>
+                <Input
+                  style={{ width: '80%' }}
+                  defaultValue={shareLink + "collab" + '/' + props.id}
+                />
+                <Tooltip title="copy share link">
+                  <Button icon={<CopyOutlined />} onClick={() => {
+                    navigator.clipboard.writeText(shareLink + "collab" + '/' + props.id);
+                    message.success('Copied link to clipboard!')
+                  }} />
+                </Tooltip>
+              </Input.Group>
+            </>
+          ),
           key: "1",
         },
         {
@@ -1176,15 +1423,6 @@ const OptionMenu = (props) => {
           icon: <InfoCircleOutlined />
         },
         {
-          label: <a onClick=
-            {() => {
-              share('collab');
-            }}
-          >Share</a>,
-          key: "5",
-          icon: <ShareAltOutlined />,
-        },
-        {
           label: (
             <Popover
               content={chooseManagerList}
@@ -1194,17 +1432,17 @@ const OptionMenu = (props) => {
               Choose Manager
             </Popover>
           ),
-          key: "6",
+          key: "5",
           icon: <UserOutlined style={{ color: "#333" }} />
         },
         {
           label: (<a onClick={() => props.showKickWindow()}>Kick User</a>),
-          key: "7",
+          key: "6",
           icon: <UserOutlined style={{ color: "#333" }} />,
         },
         {
           label: props.public ? (<a onClick={setStatus}>Set the post private</a>) : (<a onClick={setStatus}>Set the post public</a>),
-          key: "8",
+          key: "7",
           icon: <UserOutlined style={{ color: "#333" }} />
         },
         {
@@ -1216,7 +1454,7 @@ const OptionMenu = (props) => {
             </Tooltip>
 
           ),
-          key: "9",
+          key: "8",
           icon: <UserOutlined style={{ color: "#333" }} />
         },
         {
@@ -1225,9 +1463,23 @@ const OptionMenu = (props) => {
               showHistoricalVoting();
             }}
           >Historical Voting</a>),
-          key: "10",
+          key: "9",
           icon: <InfoCircleOutlined />
         },
+        {
+          label: (
+            <FacebookShareButton
+              url={`${frontendURL}sharePage/collab/${props.id}`}
+              quote={"フェイスブックはタイトルが付けれるようです"}
+              hashtag={"#NoteShare"}
+              description={"aiueo"}
+            >
+              Share on Facebook
+            </FacebookShareButton>
+          ),
+          key: "10",
+          icon: <FacebookIcon size={16} round />
+        }
       ]
     } />
   );
@@ -1359,7 +1611,100 @@ const OptionMenu = (props) => {
 
   const PersonalPageNoteMenu = (
     <Menu items={
-      [
+      [{
+        label: (
+          <>
+            <Text className="detailNotice__Header__Title" color='black' cls='Small' content={"Share Link"} fontSize='12' />
+            <Input.Group compact>
+              <Input
+                style={{ width: '80%' }}
+                defaultValue={shareLink + "note" + '/' + props.id}
+              />
+              <Tooltip title="copy share link">
+                <Button icon={<CopyOutlined />} onClick={() => {
+                  navigator.clipboard.writeText(shareLink + "note" + '/' + props.id);
+                  message.success('Copied link to clipboard!')
+                }} />
+              </Tooltip>
+            </Input.Group>
+          </>
+        ),
+        key: "1",
+      },
+      {
+        label: (<a onClick={() => {
+          if (props.type) {
+            switch (props.type) {
+              case 'QA': props.setPageProps({ page: 'QnAEditPage', type: 'QA', postId: props.id, action: 'edit' })
+              case 'reward': props.setPageProps({ page: 'RewardEditPage', type: 'reward', postId: props.id, action: 'edit' })
+              case 'collaboration': props.setPageProps({ page: 'CollabEditPage', type: 'collaboration', postId: props.id, action: 'edit' })
+            }
+          }
+          else {
+            props.setPageProps({ page: 'NoteEditPage', noteId: props.id, action: 'edit' })
+          }
+        }}>Edit</a>),
+        key: "2",
+        icon: <EditOutlined />
+      },
+      {
+        label: (<a onClick={() => { props.setCopy(props.id) }}>Copy</a>),
+        key: "3",
+        icon: <CopyOutlined />
+      },
+      {
+        label: (
+          <Popconfirm
+            title="Are you sure to delete the note from the folder?"
+            okText="Yes"
+            cancelText="No"
+            onConfirm={deletePost}
+          >
+            <a style={{ color: "red" }}>Delete</a>
+          </Popconfirm>
+        ),
+        key: "4",
+        icon: <DeleteOutlined style={{ color: "red" }} />
+      },{
+        label: (
+          <FacebookShareButton
+            url={`${frontendURL}sharePage/note/${props.id}`}
+            quote={"フェイスブックはタイトルが付けれるようです"}
+            hashtag={"#NoteShare"}
+            description={"aiueo"}
+          >
+            Share on Facebook
+          </FacebookShareButton>
+        ),
+        key: "5",
+        icon: <FacebookIcon size={16} round />
+      }
+      ]
+    } />
+  );
+
+  const PersonalPageAllNoteMenu = (
+    <Menu items={
+      [{
+        label: (
+          <>
+            <Text className="detailNotice__Header__Title" color='black' cls='Small' content={"Share Link"} fontSize='12' />
+            <Input.Group compact>
+              <Input
+                style={{ width: '80%' }}
+                defaultValue={shareLink + "note" + '/' + props.id}
+              />
+              <Tooltip title="copy share link">
+                <Button icon={<CopyOutlined />} onClick={() => {
+                  navigator.clipboard.writeText(shareLink + "note" + '/' + props.id);
+                  message.success('Copied link to clipboard!')
+                }} />
+              </Tooltip>
+            </Input.Group>
+          </>
+        ),
+        key: "1",
+      },
         {
           label: (<a onClick={() => {
             if (props.type) {
@@ -1373,42 +1718,71 @@ const OptionMenu = (props) => {
               props.setPageProps({ page: 'NoteEditPage', noteId: props.id, action: 'edit' })
             }
           }}>Edit</a>),
-          key: "1",
+          key: "2",
           icon: <EditOutlined />
         },
         {
-          label: <a onClick=
-            {() => {
-              share('note');
-            }}
-          >Share</a>,
-          key: "2",
-          icon: <ShareAltOutlined />,
-
-        },
-        {
-          label: (<a onClick={() => { props.setCopy(props.id) }}>Copy</a>),
+          label: (<a onClick={() => { props.setCopy(props.id) }}>Add to Folder</a>),
           key: "3",
-          icon: <CopyOutlined />
+          icon: <PlusOutlined />
         },
         {
           label: (
-            <Popconfirm
-              title="Are you sure to delete the note from the folder?"
-              okText="Yes"
-              cancelText="No"
-              onConfirm={deletePost}
+            <FacebookShareButton
+              url={`${frontendURL}sharePage/note/${props.id}`}
+              quote={"フェイスブックはタイトルが付けれるようです"}
+              hashtag={"#NoteShare"}
+              description={"aiueo"}
             >
-              <a style={{ color: "red" }}>Delete</a>
-            </Popconfirm>
+              Share on Facebook
+            </FacebookShareButton>
           ),
           key: "4",
-          icon: <DeleteOutlined style={{ color: "red" }} />
-        },
+          icon: <FacebookIcon size={16} round /> 
+        }
       ]
     } />
   );
 
+  const FolderDetailPageNoteMenu = (
+    <Menu items={
+      [{
+        label: (
+          <>
+            <Text className="detailNotice__Header__Title" color='black' cls='Small' content={"Share Link"} fontSize='12' />
+            <Input.Group compact>
+              <Input
+                style={{ width: '80%' }}
+                defaultValue={shareLink + "note" + '/' + props.id}
+              />
+              <Tooltip title="copy share link">
+                <Button icon={<CopyOutlined />} onClick={() => {
+                  navigator.clipboard.writeText(shareLink + "note" + '/' + props.id);
+                  message.success('Copied link to clipboard!')
+                }} />
+              </Tooltip>
+            </Input.Group>
+          </>
+        ),
+        key: "1",
+      },
+      {
+        label: (
+          <FacebookShareButton
+            url={`${frontendURL}sharePage/note/${props.id}`}
+            quote={"フェイスブックはタイトルが付けれるようです"}
+            hashtag={"#NoteShare"}
+            description={"aiueo"}
+          >
+            Share on Facebook
+          </FacebookShareButton>
+        ),
+        key: "3",
+        icon: <FacebookIcon size={16} round />
+      }
+      ]
+    } />
+  );
 
   useEffect(() => {
     // set menu
@@ -1493,7 +1867,18 @@ const OptionMenu = (props) => {
         else {
           setMenu(CollabDetailMenu); break;
         }
-      case 'PersonalPage': setMenu(PersonalPageNoteMenu); break;
+      case 'PersonalPage':
+        if(props.mode != 'search'){
+          if (!props.allNote) {
+            setMenu(PersonalPageNoteMenu); break;
+          }
+          else {
+            setMenu(PersonalPageAllNoteMenu); break;
+          }
+        }
+        else{
+          setMenu(FolderDetailPageNoteMenu); break;
+        }
       // case 'QnAOutlinePage': setMenu( QnAOutlineMenu ); break;
     }
   }, [props])
@@ -1512,12 +1897,12 @@ const OptionMenu = (props) => {
 
   return (
     <>
-      <Space className="dropdownFunction" wrap >
-        <Dropdown.Button
-          className="dropdownFunction"
-          overlay={menu}
-        ></Dropdown.Button>
-      </Space>
+      <Dropdown
+        className="dropdownFunction"
+        overlay={menu}
+      >
+        <Button><EllipsisOutlined style={{ fontSize: "1.5em", float: "right" }} /></Button>
+      </Dropdown>
       <Drawer title={"Version"} placement="right" onClose={onClose} visible={visible}>
         <VersionArea setLoggedIn={props.setLoggedIn} setPageProps={props.setPageProps} page={'NoteDetailPageVersion'} notePublic={props.notePublic} id={props.id} versions={props.versions} setVersions={props.setVersions} setVersion={props.setVersion} isAuthor={props.isAuthor} />
       </Drawer>

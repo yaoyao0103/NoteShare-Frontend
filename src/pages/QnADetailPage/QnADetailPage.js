@@ -45,7 +45,7 @@ function QnADetailPage(props) {
             {/* <PageDetailTemplate page={page}>
                 <PageDetailContentTemplate page={page} data={QnA} postId={postId}/>  
             </PageDetailTemplate> */}
-            <PageDetailContentTemplate setLoggedIn={props.setLoggedIn} page={props.page} data={post} postId={props.postId} setPageProps={props.setPageProps} />
+            <PageDetailContentTemplate setLoggedIn={props.setLoggedIn} page={props.page} data={post} postId={props.postId} setPageProps={props.setPageProps} setLoading={props.setLoading}/>
         </>
     );
 }

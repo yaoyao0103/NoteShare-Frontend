@@ -37,6 +37,7 @@ const PostEditTemplate = (props) => {
 
 
     useEffect(() => {
+        props.setLoading(true);
         const post = props.post;
         if (post && props.mode == 'edit') {
             setTitle(post.title);
@@ -93,6 +94,7 @@ const PostEditTemplate = (props) => {
             setContent('')
         }
         console.log(props)
+        props.setLoading(false);
     }, [props])
 
 
@@ -299,7 +301,7 @@ const PostEditTemplate = (props) => {
                     </Row>
                     <Row className='postEditTemplate__Row'>
                         <Col className='postEditTemplate__Content__Title' >
-                            <Input showCount maxLength={20} placeholder="Title" value={title} onChange={(ev) => setTitle(ev.target.value)} />
+                            <Input showCount maxLength={100} placeholder="Title" value={title} onChange={(ev) => setTitle(ev.target.value)} />
                         </Col>
                     </Row>
                     <Row className='postEditTemplate__Row'>

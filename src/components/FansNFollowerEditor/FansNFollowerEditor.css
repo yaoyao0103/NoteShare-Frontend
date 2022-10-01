@@ -29,12 +29,12 @@
         cursor: pointer;
         border: 1px solid;
         border-color: #dbdbdb;
-        width: 15%;
+        width: auto;
         word-break: break-all;
         margin-top:3%;
         margin-right:0%;
         margin-bottom: 3%;
-        padding-left: 3%;
+        padding-left: 6%;
         border-radius: 10%;
     }
     .FansNFollowerEditor__unFans{
@@ -46,7 +46,7 @@
         border-color: #dbdbdb;
         background-color: #66e1c1;
         word-break: break-all;
-        width: 15%;
+        width: auto;
         margin-top:3%;
         margin-right:0%;
         margin-bottom: 3%;
@@ -93,11 +93,11 @@
         border: 1px solid;
         border-color: #dbdbdb;
         word-break: break-all;
-        width: 15%;
+        width: auto;
         margin-top:3%;
         margin-right:0%;
         margin-bottom: 3%;
-        padding-left: 3%;
+        padding-left: 5%;
         border-radius: 10%;
     }
     .FansNFollowerEditor__unFans{
@@ -109,11 +109,11 @@
         border-color: #dbdbdb;
         word-break: break-all;
         background-color: #66e1c1;
-        width: 15%;
+        width: auto;
         margin-top:3%;
         margin-right:0%;
         margin-bottom: 3%;
-        padding-left:6%;
+        padding-left:7%;
         border-radius: 10%;
     }
     .ant-popover-inner{
@@ -156,11 +156,11 @@
         border: 1px solid;
         border-color: #dbdbdb;
         word-break: break-all;
-        width: 15%;
+        width: auto;
         margin-top:3%;
         margin-right:0%;
         margin-bottom: 3%;
-        padding-left: 3%;
+        padding-left: 8%;
         border-radius: 10%;
     }
     .FansNFollowerEditor__unFans{
@@ -172,11 +172,11 @@
         border-color: #dbdbdb;
         background-color: #66e1c1;
         word-break: break-all;
-        width: 15%;
+        width: auto;
         margin-top:3%;
         margin-right:0%;
         margin-bottom: 3%;
-        padding-left: 6%;
+        padding-left: 12%;
         border-radius: 10%;
     }
     .ant-popover-inner{
@@ -218,11 +218,11 @@
         border: 1px solid;
         border-color: #dbdbdb;
         word-break: break-all;
-        width: 15%;
+        width: auto;
         margin-top:3%;
         margin-right:0%;
         margin-bottom: 3%;
-        padding-left: 3%;
+        padding-left: 7%;
         border-radius: 10%;
     }
     .FansNFollowerEditor__unFans{
@@ -234,11 +234,11 @@
         border-color: #dbdbdb;
         background-color: #66e1c1;
         word-break: break-all;
-        width: 15%;
+        width: auto;
         margin-top:3%;
         margin-right:0%;
         margin-bottom: 3%;
-        padding-left: 6%;
+        padding-left: 9%;
         border-radius: 10%;
     }
     .ant-popover-inner{
@@ -281,7 +281,7 @@
         border: 1px solid;
         border-color: #dbdbdb;
         word-break: break-all;
-        width: 15%;
+        width: auto;
         margin-top:3%;
         margin-right:0%;
         margin-bottom: 3%;
@@ -297,7 +297,7 @@
         border-color: #dbdbdb;
         background-color: #66e1c1;
         word-break: break-all;
-        width: 15%;
+        width: auto;
         margin-top:3%;
         margin-right:0%;
         margin-bottom: 3%;

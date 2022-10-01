@@ -15,25 +15,252 @@
     height: 12%;
     background-color: #FFFFFF;
     width: 100%;
+   
     display: block;
     margin-left: auto;
     margin-right: auto;
 }
-
-.outerPage__PageLabel p{
+.outerPage__PageLabel__Icon{
     position: absolute;
-    bottom: 0;
-    left: 12%
+    top: 50%;
+    height: 12%;
+    background-color: #FFFFFF;
+    width: 100%;
+   
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+.outerPage__PageLabel__Text{
+    width: 70% !important;
+   word-wrap: initial;
+}
+@media screen and (min-width: 768px) {
+    .outerPage__PageLabel p{
+         position: absolute;
+        bottom: 0;
+        left: 12% !important
+    }
+    .outerPage__PageLabel .anticon{
+        position: absolute;
+        font-size: 1.8em;
+        bottom: 0;
+        right: 12% !important;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+    .floatButton {
+        position: fixed;
+        right: 6vh;
+        bottom: 6vh;
+        border-radius: 50%;
+        background-color: #FFAF60;
+        font-size: 2em;
+        padding: .6em;
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1;
+        cursor: pointer;
+        box-shadow: -2px 2px 20px 1px rgba(0, 0, 0, 0.2);
+    }
+    .floatButton__Hide {
+        position: fixed;
+        right: 6vh ;
+        bottom: 6vh;
+        border-radius: 50%;
+        background-color: #FFAF60;
+        font-size: 2em;
+        padding: .6em;
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1;
+        cursor: pointer;
+        box-shadow: -2px 2px 20px 1px rgba(0, 0, 0, 0.2);
+    }
+    .floatButton__Note {
+        position: fixed;
+        right: 6vh;
+        bottom: 5em;
+        border-radius: 50%;
+        background-color: #FFAF60;
+        font-size: 2em;
+        padding: .6em;
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1;
+        cursor: pointer;
+        box-shadow: -2px 2px 20px 1px rgba(0, 0, 0, 0.2);
+    }
+    .floatButton__QA {
+        position: fixed;
+        right: 6vh;
+        bottom: 7.8em;
+        border-radius: 50%;
+        background-color: #FFAF60;
+        font-size: 2em;
+        padding: .6em;
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1;
+        cursor: pointer;
+        box-shadow: -2px 2px 20px 1px rgba(0, 0, 0, 0.2);
+    }
+    .floatButton__Collab {
+        position: fixed;
+        right: 6vh;
+        bottom: 10.6em;
+        border-radius: 50%;
+        background-color: #FFAF60;
+        font-size: 2em;
+        padding: .6em;
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1;
+        cursor: pointer;
+        box-shadow: -2px 2px 20px 1px rgba(0, 0, 0, 0.2);
+    }
+    .floatButton__Reward {
+        position: fixed;
+        right: 6vh;
+        bottom: 13.4em;
+        border-radius: 50%;
+        background-color: #FFAF60;
+        font-size: 2em;
+        padding: .6em;
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1;
+        cursor: pointer;
+        box-shadow: -2px 2px 20px 1px rgba(0, 0, 0, 0.2);
+    }
+}
+@media screen and (min-width: 0px)and (max-width: 768px) {
+    .outerPage__PageLabel p{
+        position: absolute;
+        bottom: 0;
+        left: 16% !important
+    }
+    .outerPage__PageLabel .anticon{
+        position: absolute;
+        font-size: 1.8em;
+        bottom: 0;
+        right: 5% !important;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+    .floatButton {
+        position: fixed;
+        right: 1vh;
+        bottom: 1vh;
+        border-radius: 50%;
+        background-color: #FFAF60;
+        font-size: 1.5em;
+        padding: .6em;
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1;
+        cursor: pointer;
+        box-shadow: -2px 2px 20px 1px rgba(0, 0, 0, 0.2);
+    }
+    .floatButton__Hide {
+        position: fixed;
+        right: 1vh ;
+        bottom: 1vh;
+        border-radius: 50%;
+        background-color: #FFAF60;
+        font-size: 1.5em;
+        padding: .6em;
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1;
+        cursor: pointer;
+        box-shadow: -2px 2px 20px 1px rgba(0, 0, 0, 0.2);
+    }
+    .floatButton__Note {
+        position: fixed;
+        right: 1vh;
+        bottom: 3em;
+        border-radius: 50%;
+        background-color: #FFAF60;
+        font-size: 1.5em;
+        padding: .6em;
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1;
+        cursor: pointer;
+        box-shadow: -2px 2px 20px 1px rgba(0, 0, 0, 0.2);
+    }
+    .floatButton__QA {
+        position: fixed;
+        right: 1vh;
+        bottom: 5.8em;
+        border-radius: 50%;
+        background-color: #FFAF60;
+        font-size: 1.5em;
+        padding: .6em;
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1;
+        cursor: pointer;
+        box-shadow: -2px 2px 20px 1px rgba(0, 0, 0, 0.2);
+    }
+    .floatButton__Collab {
+        position: fixed;
+        right: 1vh;
+        bottom: 8.6em;
+        border-radius: 50%;
+        background-color: #FFAF60;
+        font-size: 1.5em;
+        padding: .6em;
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1;
+        cursor: pointer;
+        box-shadow: -2px 2px 20px 1px rgba(0, 0, 0, 0.2);
+    }
+    .floatButton__Reward {
+        position: fixed;
+        right: 1vh;
+        bottom: 11.4em;
+        border-radius: 50%;
+        background-color: #FFAF60;
+        font-size: 1.5em;
+        padding: .6em;
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1;
+        cursor: pointer;
+        box-shadow: -2px 2px 20px 1px rgba(0, 0, 0, 0.2);
+    }
+
+
 }
 
-.outerPage__PageLabel .anticon{
-    position: absolute;
-    font-size: 1.8em;
-    bottom: 0;
-    right: 12%;
-    cursor: pointer;
-    transition: 0.3s;
-}
+
 
 .outerPage__PageLabel .anticon:hover{
     transform: scale(1.1);
@@ -79,102 +306,7 @@
     transform: scale(1.1);
     transition: .3s;
 }
-.floatButton {
-    position: fixed;
-    right: 6vh;
-    bottom: 6vh;
-    border-radius: 50%;
-    background-color: #FFAF60;
-    font-size: 2em;
-    padding: .6em;
-    color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1;
-    cursor: pointer;
-    box-shadow: -2px 2px 20px 1px rgba(0, 0, 0, 0.2);
-}
-.floatButton__Hide {
-    position: fixed;
-    right: 6vh;
-    bottom: 6vh;
-    border-radius: 50%;
-    background-color: #FFAF60;
-    font-size: 2em;
-    padding: .6em;
-    color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1;
-    cursor: pointer;
-    box-shadow: -2px 2px 20px 1px rgba(0, 0, 0, 0.2);
-}
-.floatButton__Note {
-    position: fixed;
-    right: 6vh;
-    bottom: 5em;
-    border-radius: 50%;
-    background-color: #FFAF60;
-    font-size: 2em;
-    padding: .6em;
-    color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1;
-    cursor: pointer;
-    box-shadow: -2px 2px 20px 1px rgba(0, 0, 0, 0.2);
-}
-.floatButton__QA {
-    position: fixed;
-    right: 6vh;
-    bottom: 7.8em;
-    border-radius: 50%;
-    background-color: #FFAF60;
-    font-size: 2em;
-    padding: .6em;
-    color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1;
-    cursor: pointer;
-    box-shadow: -2px 2px 20px 1px rgba(0, 0, 0, 0.2);
-}
-.floatButton__Collab {
-    position: fixed;
-    right: 6vh;
-    bottom: 10.6em;
-    border-radius: 50%;
-    background-color: #FFAF60;
-    font-size: 2em;
-    padding: .6em;
-    color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1;
-    cursor: pointer;
-    box-shadow: -2px 2px 20px 1px rgba(0, 0, 0, 0.2);
-}
-.floatButton__Reward {
-    position: fixed;
-    right: 6vh;
-    bottom: 13.4em;
-    border-radius: 50%;
-    background-color: #FFAF60;
-    font-size: 2em;
-    padding: .6em;
-    color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1;
-    cursor: pointer;
-    box-shadow: -2px 2px 20px 1px rgba(0, 0, 0, 0.2);
-}
+
 .toast__Avatar{
     margin-right:10em;
 }

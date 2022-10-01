@@ -599,7 +599,7 @@ function CommentArea(props) {
             <div className='commentArea__Input'>
                 <Mentions
                     rows={6}
-                    placeholder="input @ to mention people, # to mention tag"
+                    placeholder="input @ to mention people, # to mention note"
                     prefix={['@', '#']}
                     onSearch={onSearch}
                     onChange={onChange}
