@@ -348,7 +348,7 @@ const CollabNoteEditPage = (props) => {
     }
     const noteFinish = async () => {
         if (props.isManager) {
-            axios.put(`/note/tag/wordSuggestion/${note.id}`, {}, {
+            axios.get(`/note/tag/wordSuggestion/${note.id}`, {
                 headers: {
                     'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
                 }

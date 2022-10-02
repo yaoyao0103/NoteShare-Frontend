@@ -61,6 +61,23 @@ const PageDetailContentTemplate = (props) => {
     const [plagiarismRateResult, setPlagiarismRateResult] = useState(null)
     const [quoteRateResult, setQuoteRateResult] = useState(null)
 
+    const [width, setWindowWidth] = useState(0)
+    useEffect(() => { 
+
+        updateDimensions();
+        window.addEventListener("resize", updateDimensions);
+        return () => 
+            window.removeEventListener("resize",updateDimensions);
+    }, [])
+
+    const updateDimensions = () => {
+        const width = window.innerWidth
+        setWindowWidth(width)
+    }
+    const responsive = {
+        showSider: width >= 768
+    }
+
     useEffect(() => {
         props.setLoading(true);
         const temp = cookieParser.getCookieByName('email')
@@ -789,9 +806,15 @@ const PageDetailContentTemplate = (props) => {
                 {/* Sider */}
                 {(props.page != 'NoteDetailPage' && props.page != 'CollabDetailPage') &&
                     <>
+                        {responsive.showSider?
                         <Sider id="contentTemplate__Comment" className="contentTemplate__Comment" width={props.page == "QnADetailPage" ? '50%' : '40%'}>
-                            <CommentArea type="post" setLoggedIn={props.setLoggedIn} setPageProps={props.setPageProps} page={props.page} comments={props.data?.commentsUserObj ? props.data.commentsUserObj : []} id={props.postId} isArchive={isArchive} isAuthor={isAuthor} authorEmail={authorEmail} />
+                            <CommentArea type="post" setLoggedIn={props.setLoggedIn} setPageProps={props.setPageProps} page={props.page} comments={props.data?.commentsUserObj ? props.data.commentsUserObj : []} id={props.postId} isArchive={isArchive} isAuthor={isAuthor} authorEmail={authorEmail} setIsAnswered={setIsAnswered}/>
                         </Sider>
+                        :
+                        <div style={{paddingLeft: "1.5em", backgroundColor: "#fff"}}>
+                            <CommentArea type="post" setLoggedIn={props.setLoggedIn} setPageProps={props.setPageProps} page={props.page} comments={props.data?.commentsUserObj ? props.data.commentsUserObj : []} id={props.postId} isArchive={isArchive} isAuthor={isAuthor} authorEmail={authorEmail} setIsAnswered={setIsAnswered}/>
+                        </div>
+                        }
                     </>
                 }
             </Layout>

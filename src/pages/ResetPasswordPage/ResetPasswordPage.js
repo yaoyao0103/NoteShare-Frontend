@@ -48,6 +48,8 @@ function ResetPasswordPage(props) {
     useEffect(() => {
         props.setLoading(false)
     }, [render]);
+
+
     const onFinish = (values) => {
         //console.log('Received values of form: ', values);
 
@@ -55,8 +57,7 @@ function ResetPasswordPage(props) {
     };
 
     const ResetPassword = () => {
-        console.log(oldPassword);
-        console.log(newPassword);
+        props.setLoading(true);
         axios.post("/verification/resetPassword", { password: oldPassword, newPassword: newPassword, email: props.email, }, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
@@ -70,10 +71,15 @@ function ResetPasswordPage(props) {
                 page: 'LoginPage',
 
             })
+            props.setLoading(false);
         }).catch((error) => {
             setOpenFail(true);
+            console.log("err",error.response);
             if (error.response.status === 500 || error.response.status === 404 || error.response.status === 403) {
-                if (error.response.data.message.slice(0, 13) === 'Malformed JWT') {
+                if(error.response.data.msg === 'Wrong password.'){
+                    message.warning("Your have to enter the correct password!")
+                }
+                else if (error.response.data.message.slice(0, 13) === 'Malformed JWT') {
                     document.cookie = 'error=Jwt'
                     message.destroy()
                     message.warning('The connection timed out, please login again !')
@@ -81,13 +87,15 @@ function ResetPasswordPage(props) {
                     props.setLoggedIn(false)
                     props.setPageProps({ page: 'LoginPage' })
                 }
-                else
+                else{
+                    message.error('Server Error! Please refresh again! (Reset Password Error)')
                     document.cookie = 'error=true'
-                message.error('Server Error! Please refresh again! (Reset Password Error)')
+                }
             }
             else {
                 message.error("Server Error! Please try again later. (Reset Password Error)")
             }
+            props.setLoading(false);
         })
 
     };

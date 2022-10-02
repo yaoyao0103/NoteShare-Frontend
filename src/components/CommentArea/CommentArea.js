@@ -80,6 +80,7 @@ function CommentArea(props) {
                     if (item.date) {
                         if (item.best) {
                             setBestAns([item])
+                            props.setIsAnswered(true)
                         }
                         authorArray[item.id] = item.userObj.userObjName ? item.userObj.userObjName : null
                         likeCount[item.id] = item.likeCount ? item.likeCount : 0;

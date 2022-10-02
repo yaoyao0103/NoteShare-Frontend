@@ -61,7 +61,11 @@ function VerificationPage(props) {
             // if(error.response.status === 403){
             //   setRedirectActivate(true);
             // }
-            if (error.response.status === 500 || error.response.status === 404 || error.response.status === 403) {
+            console.log("err", error.response)
+            if(error.response.status === 418){
+                message.error('Wrong Verification Code!')
+            }
+            else if (error.response.status === 500 || error.response.status === 404 || error.response.status === 403) {
                 if (error.response.data.message.slice(0, 13) === 'Malformed JWT') {
                     document.cookie = 'error=Jwt'
                     message.destroy()
