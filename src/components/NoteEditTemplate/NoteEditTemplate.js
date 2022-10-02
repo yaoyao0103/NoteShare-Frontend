@@ -568,7 +568,7 @@ const NoteEditTemplate = (props) => {
     }
     const noteFinish = async () => {
         props.setLoading(true);
-        axios.put(`/note/tag/wordSuggestion/${noteId}`, {
+        axios.get(`/note/tag/wordSuggestion/${noteId}`, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
             }
