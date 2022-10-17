@@ -38,6 +38,7 @@ function App() {
     <Router>
       <Routes>
         <Route exact path="/" element={<OuterPage />}></Route>
+        {/* <Route exact path="/test" element={<NoteEditPage page='NoteEditPage' setLoggedIn={() => {}} sendPrivateMessage={() => {}} changePage={() => {}} setLoading={() => {}} setPageProps={() => {}} noteId="6311b12ef1696c1d90d4a802" action='edit' />}></Route> */}
         <Route exact path="/editor/:pageId" element={<Editor />}></Route>
         <Route exact path="/MemberPage" element={<MemberPage />}></Route>
         <Route exact path="/NoteOutlinePage" element={<NoteOutlinePage />}></Route>
