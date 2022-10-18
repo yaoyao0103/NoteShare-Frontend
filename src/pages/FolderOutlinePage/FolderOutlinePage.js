@@ -19,7 +19,7 @@ function FolderOutlinePage(props) {
             try {
                 await axios.get('/search/folder/' + String(props.pageNumber - 1) + '/20?keyword=' + (props.keyword ? props.keyword : '') + '&creator=' + (props.headerName ? props.headerName : '')).then((res) => {
                     console.log(res.data.search);
-                    setFolder(oldArray => [...oldArray, res.data.search]);
+                    setFolder(oldArray => [...oldArray = [], res.data.search]);
                     props.setLoading(false)
                 });
             } catch (error) {

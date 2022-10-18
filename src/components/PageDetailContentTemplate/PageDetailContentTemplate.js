@@ -774,7 +774,7 @@ const PageDetailContentTemplate = (props) => {
                                     <>
                                         {/* 
                                     <Text color='black' cls='Default' content={tag} fontSize='18' display="inline-block" /> */}
-                                        <Tag style={{ fontSize: "15px" }}>{tag}</Tag>
+                                        <Tag style={{ fontSize: "15px" }}><p style={{ cursor: 'pointer' }} onClick={() => (props.setPageProps({ page: 'TagOutlinePage', tag: tag, pageNumber: 1 }))}>{tag}</p></Tag>
                                     </>
                                 )}
                                 <div className="contentTemplate__Footer__Button" onClick={() => setPoppedContentShow(true)}>
