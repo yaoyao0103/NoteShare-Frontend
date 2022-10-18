@@ -432,7 +432,7 @@ export const panels = {
       id: "editor-actions",
       el: ".panel__editor",
       buttons: [
-        {
+        /*{
           id: "saveDb",
           className: "fa fa-floppy-o btn-save",
           command: "saveDb",
@@ -441,7 +441,7 @@ export const panels = {
           id: "cmd-clear",
           className: "fa fa-trash",
           command: "cmd-clear",
-        },
+        },*/
         {
           id: "undo",
           className: "fa fa-undo",
@@ -451,12 +451,12 @@ export const panels = {
           id: "redo",
           className: "fa fa-repeat",
           command: "redo",
-        },
+        },/*
         {
           id: "export",
           className: "fa fa-download",
           command: "export",
-        },
+        },*/
         {
           id: "preview",
           className: "fa fa-eye",

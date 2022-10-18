@@ -414,7 +414,7 @@ export default (editor, options = {}) => {
       },
 
       applyOCR(ed){
-        const text = document.getElementById("OCR-result").value;
+        const text = document.getElementById("OCR-result").value.replaceAll('\n', '<br />');
         const selected = ed.getSelected()
         const collection = selected.collection;
         const index = collection.indexOf(selected);

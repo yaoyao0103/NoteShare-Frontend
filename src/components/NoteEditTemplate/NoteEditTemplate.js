@@ -76,7 +76,6 @@ const NoteEditTemplate = (props) => {
                 axios.get(`/post/${note?.postId}`)
                     .then(res => {
                         setPostInfo(res.data.res);
-                        props.setLoading(false);
                     })
                     .catch(err => {
                         console.log("err", err)
@@ -125,7 +124,6 @@ const NoteEditTemplate = (props) => {
                 </>
             )*/
             setTagSelected(note.tag)
-            props.setLoading(false);
         }
         else if (props.mode == 'new') {
             setTitle('')
@@ -139,7 +137,6 @@ const NoteEditTemplate = (props) => {
                 public: true,
             });
             setContent('')
-            props.setLoading(false);
         }
         else if (props.mode == 'newReward') {
             setTitle('')
@@ -154,7 +151,6 @@ const NoteEditTemplate = (props) => {
             axios.get(`/post/${props.postId}`)
                 .then(res => {
                     setPostInfo(res.data.res);
-                    props.setLoading(false);
                 })
                 .catch(err => {
                     if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
@@ -178,6 +174,10 @@ const NoteEditTemplate = (props) => {
                 })
         }
     }, [props])
+
+    useEffect(() => {
+        props.setLoading(false);
+    }, [information])
 
     useEffect(() => {
         setPopoverContent(

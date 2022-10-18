@@ -55,7 +55,6 @@ function Ring(props) {
         setRingList(oldArray => [...oldArray.slice(0, 0)])
         for (let i = 0; i < props.ringList.length; i++) {
             let type = props.ringList[i].type
-            console.log('i:', i, props.ringList[i])
             if (props.ringList[i].type === 'note' || props.ringList[i].type === 'normal') {
                 type = 'NoteDetailPage';
             }

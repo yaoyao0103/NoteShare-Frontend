@@ -94,8 +94,13 @@ const PostEditTemplate = (props) => {
             setContent('')
         }
         console.log(props)
-        props.setLoading(false);
     }, [props])
+    
+    useEffect(() => {  
+        if(information){
+            props.setLoading(false);
+        }
+    }, [information])
 
 
     const onUpdate = () => {
