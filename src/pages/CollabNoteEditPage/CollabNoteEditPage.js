@@ -347,7 +347,9 @@ const CollabNoteEditPage = (props) => {
             })
     }
     const noteFinish = async () => {
+
         if (props.isManager) {
+            props.setLoading(true);
             axios.get(`/note/tag/wordSuggestion/${note.id}`, {
                 headers: {
                     'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
@@ -363,6 +365,7 @@ const CollabNoteEditPage = (props) => {
                     })
                         .then(plagiarismRes => {
                             setStep(2);
+                            props.setLoading(false)
                         })
                         .catch(plagiarismRrr => {
                             //console.log(err)
