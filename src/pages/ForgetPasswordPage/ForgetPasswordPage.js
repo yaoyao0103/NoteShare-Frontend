@@ -66,7 +66,6 @@ function ForgetPasswordPage(props) {
                 }
                 else {
                     message.warn('Please verify your account first!');
-    
                     props.setPageProps({ page: 'VerificationPage', email: email });
     
     
