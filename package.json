@@ -15,7 +15,7 @@
     "devextreme": "21.2.8",
     "devextreme-react": "21.2.8",
     "downloadjs": "^1.4.7",
-    "grapesjs": "npm:grapesjs-clot@^0.1.154",
+    "grapesjs": "npm:grapesjs-clot@^0.1.160",
     "grapesjs-blocks-basic": "^0.1.8",
     "grapesjs-component-countdown": "^0.1.3",
     "grapesjs-plugin-export": "^1.0.7",

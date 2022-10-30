@@ -6560,10 +6560,10 @@ grapesjs-touch@^0.1.1:
   resolved "https://registry.yarnpkg.com/grapesjs-touch/-/grapesjs-touch-0.1.1.tgz#6a06c89ccc609ca148ce4b4edb47905a255a1b2e"
   integrity sha512-rtuxdAhlfGW2XXYY3O04C2Q27X9dtB8P0jcA75rAP/TmwC0kaJKTKHihXAW0VVjx3M8IsC9RSxvhA1Q44QcjmA==
 
-"grapesjs@npm:grapesjs-clot@^0.1.154":
-  version "0.1.154"
-  resolved "https://registry.yarnpkg.com/grapesjs-clot/-/grapesjs-clot-0.1.154.tgz#15da0e1e3e752f613f07a1566c3967280c5c5f7e"
-  integrity sha512-z8EuW78b1IqH/SQZDfsrSiV9/XMbbPQxJTp522j81fctc/YfRrRYFOlQQnKRNtB/z2/LVe+/frPHzNvXjaCnYA==
+"grapesjs@npm:grapesjs-clot@^0.1.160":
+  version "0.1.160"
+  resolved "https://registry.yarnpkg.com/grapesjs-clot/-/grapesjs-clot-0.1.160.tgz#89483f676e9b7f618c6ca98904f5a1df1d49ef9f"
+  integrity sha512-WG3LwKAgj0BeGX14qTniMiHJe35DCx2HjJjJfmspytNp9GN1jw8OXhpUKbdAZOhjA9mQEHri91iWdm37LE9TXw==
   dependencies:
     antd "^4.23.2"
     axios "^0.27.2"

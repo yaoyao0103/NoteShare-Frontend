@@ -77,7 +77,12 @@ const CollabNoteEditPage = (props) => {
                 const tempNote = res.data.res
                 setNote(res.data.res)
                 setTitle(tempNote.title);
-                setMyEditor(<MyEditor setLoggedIn={props.setLoggedIn} setPageProps={props.setPageProps} noteId={props.noteId} version={'0'} page={props.page} email={tempEmail} name={tempName} avatar={tempAvatar} isCollab={true} setQueue={setQueue} />);
+                if(!props.isManager){
+                    message.info("not manager")
+                    setMyEditor(<MyEditor setLoggedIn={props.setLoggedIn} setPageProps={props.setPageProps} noteId={props.noteId} version={'0'} page={props.page} email={tempEmail} name={tempName} avatar={tempAvatar} isCollab={true} setQueue={setQueue} />);
+                    setStep(1)
+                }
+
                 setInformation({
                     school: tempNote.school,
                     department: tempNote.department,
@@ -89,9 +94,6 @@ const CollabNoteEditPage = (props) => {
                 setContent(tempNote.description)
                 setVersions(tempNote.version)
                 setTagSelected(tempNote.tag)
-                if (!props.isManager) {
-                    setStep(1)
-                }
             })
             .catch(err => {
                 if (err.response.status === 500 || err.response.status === 404 || err.response.status === 403) {
@@ -246,6 +248,11 @@ const CollabNoteEditPage = (props) => {
         })
             .then(contentRes => {
                 console.log(contentRes)
+                const temp = cookieParser.getCookieByName('email')
+                const tempEmail = Base64.decode(temp);
+                const tempName = cookieParser.getCookieByName('name')
+                const tempAvatar = cookieParser.getCookieByName('avatar')
+                setMyEditor(<MyEditor setLoggedIn={props.setLoggedIn} setPageProps={props.setPageProps} noteId={props.noteId} version={'0'} page={props.page} email={tempEmail} name={tempName} avatar={tempAvatar} isCollab={true} setQueue={setQueue} />);
                 setStep(1);
             })
             .catch(err => {
@@ -364,6 +371,7 @@ const CollabNoteEditPage = (props) => {
                         }
                     })
                         .then(plagiarismRes => {
+                            editor.disconnectWS()
                             setStep(2);
                             props.setLoading(false)
                         })
@@ -419,6 +427,7 @@ const CollabNoteEditPage = (props) => {
     }
 
     const editNote = () => {
+        setMyEditor(<MyEditor setLoggedIn={props.setLoggedIn} setPageProps={props.setPageProps} noteId={props.noteId} version={'0'} page={props.page} email={email} name={name} avatar={avatar} isCollab={true} setQueue={setQueue} />)
         setStep(1);
     }
 
