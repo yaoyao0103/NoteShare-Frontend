@@ -52,11 +52,27 @@ function ForgetPasswordPage(props) {
 
     const resend = () => {
         axios.get("/user/" + email).then(res => {
+            let activate = res.data.res.activate
             console.log(res.data.res);
             axios.post("/verification/resendCode/" + email).then(res => {
                 console.log(res.data.msg);
+                if (activate) {
+                    message.success("Your new password has send to your email!");
+                    document.cookie = 'email=;'
+                    props.setLoggedIn(false)
+                    props.setPageProps({
+                        page: 'LoginPage',
+                    })
+                }
+                else {
+                    message.warn('Please verify your account first!');
+    
+                    props.setPageProps({ page: 'VerificationPage', email: email });
+    
+    
+                }
             }).catch((error) => {
-                console.log(error.response.status)
+                console.log(error)
                 // if(error.response.status === 403){
                 //   setRedirectActivate(true);
                 // }
@@ -78,26 +94,11 @@ function ForgetPasswordPage(props) {
                 }
                 setResendFail(true);
             })
-            if (res.data.res.activate) {
-                message.success("Your new password has send to your email!");
-                setInterval(function () {
-                    props.setPageProps({
-                        page: 'LoginPage',
-
-                    })
-                }, 2000)
-
-            }
-            else {
-                message.warn('Please verify your account first!');
-                setInterval(function () {
-                    props.setPageProps({ page: 'VerificationPage', email: email });
-                }, 2000)
-
-            }
+           
 
 
         }).catch((error) => {
+            console.log('132')
             setError(error.response.status);
             // if(error.response.status === 403){
             //   setRedirectActivate(true);
@@ -347,7 +348,7 @@ function ForgetPasswordPage(props) {
                     </Media>
                     <Media at="lm" className='loginPage__Media'>
                         <Layout className='ForgetPasswordPage__Outer'>
-                            
+
                             <Content className='ForgetPasswordPage__Content__sm'>
                                 <div className='ForgetPasswordPage__Content__Text'>
                                     <Text color='black' cls='Large' content='Welcome to Note' fontSize='22' />

@@ -25,7 +25,6 @@ function VerificationPage(props) {
     const [render, setRender] = useState(false);
     const [code, setCode] = useState('');
     const [loading, setLoading] = useState(false);
-    const [openSuccess, setOpenSuccess] = useState(false);
     const [openFail, setOpenFail] = useState(false);
     const [resendSuccess, setResendSuccess] = useState(false);
     const [resendFail, setResendFail] = useState(false);
@@ -55,7 +54,10 @@ function VerificationPage(props) {
     const Verification = () => {
         axios.put("/verification/verify/" + newEmail + "/" + code).then(res => {
             console.log(res.data.msg);
-            setOpenSuccess(true);
+            message.success("Success!")
+            props.setPageProps({
+                page: 'LoginPage'
+            })
         }).catch((error) => {
             //console.log(error.response.status)
             // if(error.response.status === 403){
@@ -88,7 +90,8 @@ function VerificationPage(props) {
     const resend = () => {
         axios.post("/verification/resendCode/" + newEmail).then(res => {
             console.log(res.data.msg);
-            setResendSuccess(true);
+            setLoading(false);
+            message.success('Verify code has resend!');
         }).catch((error) => {
             //console.log(error.response.status)
             // if(error.response.status === 403){
@@ -110,34 +113,14 @@ function VerificationPage(props) {
             else {
                 message.error('Server Error! Please try again later. (Resend Verify Code Error)')
             }
-            setResendFail(true);
+            setLoading(false);
         })
         setLoading(true);
 
     }
-    useEffect(() => {
-        if (resendSuccess) {
-            setLoading(false);
-            message.success('Verify code has resend!');
-        }
-
-    }, [resendSuccess]);
-    useEffect(() => {
-        if (resendFail) {
-            setLoading(false);
-
-        }
-    }, [resendFail]);
-    useEffect(() => {
-        //console.log(openSuccess)
-        if (openSuccess) {
-            message.success("Success!")
-            props.setPageProps({
-                page: 'LoginPage'
-            })
-        }
-
-    }, [openSuccess]);
+  
+  
+ 
 
     const formItemLayout = {
         labelCol: {
