@@ -54,7 +54,8 @@ function ForgetPasswordPage(props) {
         axios.get("/user/" + email).then(res => {
             let activate = res.data.res.activate
             console.log(res.data.res);
-            axios.post("/verification/resendCode/" + email).then(res => {
+            props.setLoading(true)
+            axios.post("verification/randomPassword/"+email).then(res => {
                 console.log(res.data.msg);
                 if (activate) {
                     message.success("Your new password has send to your email!");
@@ -70,8 +71,10 @@ function ForgetPasswordPage(props) {
     
     
                 }
+                props.setLoading(false)
             }).catch((error) => {
                 console.log(error)
+                props.setLoading(false)
                 // if(error.response.status === 403){
                 //   setRedirectActivate(true);
                 // }
@@ -86,10 +89,10 @@ function ForgetPasswordPage(props) {
                     }
                     else
                         document.cookie = 'error=true'
-                    message.error('Server Error! Please refresh again! (Resend Verify Code Error)')
+                    message.error('Server Error! Please refresh again! (Resend New Password Error)')
                 }
                 else {
-                    message.error('Server Error! Please try again later. (Resend Verify Code Error)')
+                    message.error('Server Error! Please try again later. (Resend New Password Error)')
                 }
                 setResendFail(true);
             })
@@ -217,7 +220,7 @@ function ForgetPasswordPage(props) {
                                             <a className="ForgetPasswordPage__Login__Button" href="javascript: return false;" onClick={() => (props.setPageProps({ page: 'LoginPage' }))}>Login now!</a>
 
                                             <div className="ForgetPasswordPage__Button">
-                                                <Button color={"green"}><Text color='white' cls='Large' content={"Send verify code"} fontSize='15' display="inline-block" /></Button>
+                                                <Button color={"green"}><Text color='white' cls='Large' content={"Send new password"} fontSize='15' display="inline-block" /></Button>
                                             </div>
 
                                         </Form.Item>
@@ -276,7 +279,7 @@ function ForgetPasswordPage(props) {
                                             <a className="ForgetPasswordPage__Login__Button" href="javascript: return false;" onClick={() => (props.setPageProps({ page: 'LoginPage' }))}>Login now!</a>
 
                                             <div className="ForgetPasswordPage__Button">
-                                                <Button color={"green"}><Text color='white' cls='Large' content={"Send verify code"} fontSize='15' display="inline-block" /></Button>
+                                                <Button color={"green"}><Text color='white' cls='Large' content={"Send new password"} fontSize='15' display="inline-block" /></Button>
                                             </div>
 
                                         </Form.Item>
@@ -335,7 +338,7 @@ function ForgetPasswordPage(props) {
                                             <a className="ForgetPasswordPage__Login__Button" href="javascript: return false;" onClick={() => (props.setPageProps({ page: 'LoginPage' }))}>Login now!</a>
 
                                             <div className="ForgetPasswordPage__Button">
-                                                <Button color={"green"}><Text color='white' cls='Large' content={"Send verify code"} fontSize='15' display="inline-block" /></Button>
+                                                <Button color={"green"}><Text color='white' cls='Large' content={"Send new password"} fontSize='15' display="inline-block" /></Button>
                                             </div>
 
                                         </Form.Item>
@@ -392,7 +395,7 @@ function ForgetPasswordPage(props) {
                                             <a className="ForgetPasswordPage__Login__Button" href="javascript: return false;" onClick={() => (props.setPageProps({ page: 'LoginPage' }))}>Login now!</a>
 
                                             <div className="ForgetPasswordPage__Button">
-                                                <Button color={"green"}><Text color='white' cls='Large' content={"Send verify code"} fontSize='15' display="inline-block" /></Button>
+                                                <Button color={"green"}><Text color='white' cls='Large' content={"Send new password"} fontSize='15' display="inline-block" /></Button>
                                             </div>
 
                                         </Form.Item>
@@ -448,7 +451,7 @@ function ForgetPasswordPage(props) {
                                             <a className="ForgetPasswordPage__Login__Button" href="javascript: return false;" onClick={() => (props.setPageProps({ page: 'LoginPage' }))}>Login now!</a>
 
                                             <div className="ForgetPasswordPage__Button">
-                                                <Button color={"green"}><Text color='white' cls='Large' content={"Send verify code"} fontSize='15' display="inline-block" /></Button>
+                                                <Button color={"green"}><Text color='white' cls='Large' content={"Send new password"} fontSize='15' display="inline-block" /></Button>
                                             </div>
 
                                         </Form.Item>
