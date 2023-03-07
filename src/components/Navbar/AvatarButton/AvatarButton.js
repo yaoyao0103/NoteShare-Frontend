@@ -12,7 +12,7 @@ import Cookie from "../../Cookies/Cookies";
 const cookieParser = new Cookie(document.cookie)
 function AvatarButton(props) {
     const [email, setEmail] = useState('');
-    const [avatar, setAvatar] = useState('');
+    const [avatar, setAvatar] = useState("https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x");
     const [avatarNum, setAvatarNum] = useState(-1);
     const menu = (
         <Menu
@@ -98,17 +98,17 @@ function AvatarButton(props) {
         });
         //console.log(props.changeAvatar);
         //console.log(avatarNum);
-        setAvatar(props.changeAvatar);
-        document.cookie = "avatar=" + props.changeAvatar
+        setAvatar("https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x");
+        document.cookie = "avatar=" + "https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x"
         if (props.changeAvatarNum === 0) {
             axios.get("/user/head/" + tempEmail, {
                 headers: {
                     'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
                 }
             }).then(res => {
-                setAvatar(res.data.res);
+                setAvatar("https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x");
                 setAvatarNum(props.changeAvatar);
-                document.cookie = "avatar=" + res.data.res;
+                document.cookie = "avatar=" + "https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x";
             }).catch((error) => {
                 if (error.response.status === 500 || error.response.status === 404 || error.response.status === 403) {
                     if (error.response.data.message.slice(0, 13) === 'Malformed JWT') {

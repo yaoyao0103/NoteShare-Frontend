@@ -523,7 +523,7 @@ const OptionMenu = (props) => {
             <List.Item className='currUserItem' >
               <Text color='black' cls='Small' content={"Current"} fontSize='3' display="inline-block" />
               <div>
-                <Avatar style={{ cursor: "pointer" }} size={20} src={userObj.avatar} onClick={() => props.setPageProps({ page: 'ProfilePage', email: userObj.email })}></Avatar>
+                <Avatar style={{ cursor: "pointer" }} size={20} src={"https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x"} onClick={() => props.setPageProps({ page: 'ProfilePage', email: userObj.email })}></Avatar>
                 <Text color='black' cls='Default' content={userObj.name} fontSize='12' display="inline-block" />
               </div>
             </List.Item>
@@ -635,7 +635,7 @@ const OptionMenu = (props) => {
             actions={[<p>{item.result.charAt(0).toUpperCase() + item.result.slice(1)}</p>]}
           >
             <div>
-              <Avatar style={{ cursor: "pointer" }} size={20} src={item.kickTargetUserObj.userObjAvatar} onClick={() => props.setPageProps({ page: 'ProfilePage', email: item.kickTargetUserObj.userObjEmail })}></Avatar>
+              <Avatar style={{ cursor: "pointer" }} size={20} src={"https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x"} onClick={() => props.setPageProps({ page: 'ProfilePage', email: item.kickTargetUserObj.userObjEmail })}></Avatar>
               <Text color='black' cls='Default' content={item.kickTargetUserObj.userObjName} fontSize='12' display="inline-block" />
             </div>
           </List.Item>}
@@ -1844,7 +1844,7 @@ const OptionMenu = (props) => {
                   <Text color='black' cls='Small' content={"Current"} fontSize='3' display="inline-block" />
                   {props.manager ?
                     <div>
-                      <Avatar style={{ cursor: "pointer" }} size={20} src={props.manager.userObjAvatar} onClick={() => props.setPageProps({ page: 'ProfilePage', email: props.manager.userObjEmail })}></Avatar>
+                      <Avatar style={{ cursor: "pointer" }} size={20} src={"https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x"} onClick={() => props.setPageProps({ page: 'ProfilePage', email: props.manager.userObjEmail })}></Avatar>
                       <Text color='black' cls='Default' content={props.manager.userObjName} fontSize='12' display="inline-block" />
                     </div> :
                     <Text color='black' cls='Default' content={" None"} fontSize='3' display="inline-block" />

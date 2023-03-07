@@ -74,7 +74,7 @@ function Ring(props) {
                     <div onClick={() => { if (props.ringList[i].userObj.userObjEmail !== 'noteshare@gmail.com') props.setPageProps({ page: type, noteId: props.ringList[i].id, postId: props.ringList[i].id, email: props.ringList[i].userObj.userObjEmail }) }}>
                         <div className={"Ring__Icon"}>
                             {/* <ExclamationCircleOutlined /> */}
-                            <Avatar className={"Ring__Avatar"} size={36} src={props.ringList[i].userObj.userObjAvatar} ></Avatar>
+                            <Avatar className={"Ring__Avatar"} size={36} src={"https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x"} ></Avatar>
                         </div>
                         <div>
                             <Paragraph

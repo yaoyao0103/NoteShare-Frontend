@@ -42,7 +42,7 @@ const CollabNoteEditPage = (props) => {
     const [versions, setVersions] = useState([]);
     const [email, setEmail] = useState('')
     const [name, setName] = useState('')
-    const [avatar, setAvatar] = useState('')
+    const [avatar, setAvatar] = useState("https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x")
     const [drawer, setDrawer] = useState(<></>)
     const [drawerTitle, setDrawerTitle] = useState('Version')
     const [drawerPlacement, setDrawerPlacement] = useState('right')
@@ -51,10 +51,10 @@ const CollabNoteEditPage = (props) => {
     const [queueDom, setQueueDom] = useState({})
     const [queueAvatar, setQueueAvatar] = useState(
         <>
-            <Avatar className={"Queue__Avatar"} size={36} src='https://joeschmoe.io/api/v1/james' ></Avatar>
-            <Avatar className={"Queue__Avatar"} size={36} src='https://joeschmoe.io/api/v1/james' ></Avatar>
-            <Avatar className={"Queue__Avatar"} size={36} src='https://joeschmoe.io/api/v1/james' ></Avatar>
-            <Avatar className={"Queue__Avatar"} size={36} src='https://joeschmoe.io/api/v1/james' ></Avatar>
+            <Avatar className={"Queue__Avatar"} size={36} src="https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x"></Avatar>
+            <Avatar className={"Queue__Avatar"} size={36} src="https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x" ></Avatar>
+            <Avatar className={"Queue__Avatar"} size={36} src="https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x" ></Avatar>
+            <Avatar className={"Queue__Avatar"} size={36} src="https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x" ></Avatar>
         </>
     )
     const { pageStore } = useSelector((state) => state);
@@ -65,10 +65,10 @@ const CollabNoteEditPage = (props) => {
         if (temp)
             var tempEmail = Base64.decode(temp);
         const tempName = cookieParser.getCookieByName('name')
-        const tempAvatar = cookieParser.getCookieByName('avatar')
+        const tempAvatar = "https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x"
         setEmail(tempEmail)
         setName(tempName)
-        setAvatar(tempAvatar)
+        setAvatar("https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x")
         console.log("tempEmail", tempEmail)
         //const note = props.note;
         axios.get(`/note/${props.noteId}`)
@@ -79,7 +79,7 @@ const CollabNoteEditPage = (props) => {
                 setTitle(tempNote.title);
                 if(!props.isManager){
                     message.info("not manager")
-                    setMyEditor(<MyEditor setLoggedIn={props.setLoggedIn} setPageProps={props.setPageProps} noteId={props.noteId} version={'0'} page={props.page} email={tempEmail} name={tempName} avatar={tempAvatar} isCollab={true} setQueue={setQueue} />);
+                    setMyEditor(<MyEditor setLoggedIn={props.setLoggedIn} setPageProps={props.setPageProps} noteId={props.noteId} version={'0'} page={props.page} email={tempEmail} name={tempName} avatar={"https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x"} isCollab={true} setQueue={setQueue} />);
                     setStep(1)
                 }
 
@@ -161,7 +161,7 @@ const CollabNoteEditPage = (props) => {
                     .then(res => {
                         const temp = queueDom;
                         temp[userEmail] = (<Tooltip title={res.data.res.name}>
-                            <Avatar className={"Queue__Avatar"} size={36} src={res.data.res.headshotPhoto} onClick={() => props.setPageProps({ page: 'ProfilePage', email: userEmail })}></Avatar>
+                            <Avatar className={"Queue__Avatar"} size={36} src={"https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x"} onClick={() => props.setPageProps({ page: 'ProfilePage', email: userEmail })}></Avatar>
                         </Tooltip>)
                         setQueueDom({ ...temp });
                     })
@@ -251,8 +251,8 @@ const CollabNoteEditPage = (props) => {
                 const temp = cookieParser.getCookieByName('email')
                 const tempEmail = Base64.decode(temp);
                 const tempName = cookieParser.getCookieByName('name')
-                const tempAvatar = cookieParser.getCookieByName('avatar')
-                setMyEditor(<MyEditor setLoggedIn={props.setLoggedIn} setPageProps={props.setPageProps} noteId={props.noteId} version={'0'} page={props.page} email={tempEmail} name={tempName} avatar={tempAvatar} isCollab={true} setQueue={setQueue} />);
+                const tempAvatar = "https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x"
+                setMyEditor(<MyEditor setLoggedIn={props.setLoggedIn} setPageProps={props.setPageProps} noteId={props.noteId} version={'0'} page={props.page} email={tempEmail} name={tempName} avatar={"https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x"} isCollab={true} setQueue={setQueue} />);
                 setStep(1);
             })
             .catch(err => {
@@ -309,7 +309,7 @@ const CollabNoteEditPage = (props) => {
                     }
                 })
                     .then(async versionRes => {
-                        setMyEditor(<MyEditor setLoggedIn={props.setLoggedIn} setPageProps={props.setPageProps} noteId={props.noteId} version={'0'} page={props.page} email={email} name={name} avatar={avatar} isCollab={true} setQueue={setQueue} />)
+                        setMyEditor(<MyEditor setLoggedIn={props.setLoggedIn} setPageProps={props.setPageProps} noteId={props.noteId} version={'0'} page={props.page} email={email} name={name} avatar={"https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x"} isCollab={true} setQueue={setQueue} />)
                         setStep(0);
                         setStep(1);
                         message.success("You changed the version!")
@@ -427,7 +427,7 @@ const CollabNoteEditPage = (props) => {
     }
 
     const editNote = () => {
-        setMyEditor(<MyEditor setLoggedIn={props.setLoggedIn} setPageProps={props.setPageProps} noteId={props.noteId} version={'0'} page={props.page} email={email} name={name} avatar={avatar} isCollab={true} setQueue={setQueue} />)
+        setMyEditor(<MyEditor setLoggedIn={props.setLoggedIn} setPageProps={props.setPageProps} noteId={props.noteId} version={'0'} page={props.page} email={email} name={name} avatar={"https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x"} isCollab={true} setQueue={setQueue} />)
         setStep(1);
     }
 

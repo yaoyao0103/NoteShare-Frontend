@@ -184,7 +184,7 @@ function FansNFollowerEditor(props) {
 
                     <Row className='FansNFollowerEditor__Row'>
                         <Col className='FansNFollowerEditor__Avatar' span={4}>
-                            <Avatar className={"FansNFollowerEditor__Avatar__Inner"} size={48} src={props.Avatar} onClick={() => { props.setPageProps({ page: 'ProfilePage', email: props.targetEmail }) }}></Avatar>
+                            <Avatar className={"FansNFollowerEditor__Avatar__Inner"} size={48} src={"https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x"} onClick={() => { props.setPageProps({ page: 'ProfilePage', email: props.targetEmail }) }}></Avatar>
                         </Col>
                         <Col className='FansNFollowerEditor__Name' span={12}>
                             <Text cls='Small' fontSize={'22'} content={props.Name} />
@@ -225,7 +225,7 @@ function FansNFollowerEditor(props) {
 
                     <Row className='FansNFollowerEditor__Row'>
                         <Col className='FansNFollowerEditor__Avatar' span={4}>
-                            <Avatar className={"FansNFollowerEditor__Avatar__Inner"} size={48} src={props.Avatar} onClick={() => { props.setPageProps({ page: 'ProfilePage', email: props.targetEmail }) }}></Avatar>
+                            <Avatar className={"FansNFollowerEditor__Avatar__Inner"} size={48} src={"https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x"} onClick={() => { props.setPageProps({ page: 'ProfilePage', email: props.targetEmail }) }}></Avatar>
                         </Col>
                         <Col className='FansNFollowerEditor__Name' span={14}>
                             <Text cls='Small' fontSize={'22'} content={props.Name} />
@@ -266,7 +266,7 @@ function FansNFollowerEditor(props) {
 
                     <Row className='FansNFollowerEditor__Row'>
                         <Col className='FansNFollowerEditor__Avatar' span={4}>
-                            <Avatar className={"FansNFollowerEditor__Avatar__Inner"} size={48} src={props.Avatar} onClick={() => { props.setPageProps({ page: 'ProfilePage', email: props.targetEmail }) }}></Avatar>
+                            <Avatar className={"FansNFollowerEditor__Avatar__Inner"} size={48} src={"https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x"} onClick={() => { props.setPageProps({ page: 'ProfilePage', email: props.targetEmail }) }}></Avatar>
                         </Col>
                         <Col className='FansNFollowerEditor__Name' span={12}>
                             <Text cls='Small' fontSize={'22'} content={props.Name} />
@@ -307,7 +307,7 @@ function FansNFollowerEditor(props) {
 
                     <Row className='FansNFollowerEditor__Row'>
                         <Col className='FansNFollowerEditor__Avatar' span={4}>
-                            <Avatar className={"FansNFollowerEditor__Avatar__Inner"} size={48} src={props.Avatar} onClick={() => { props.setPageProps({ page: 'ProfilePage', email: props.targetEmail }) }}></Avatar>
+                            <Avatar className={"FansNFollowerEditor__Avatar__Inner"} size={48} src={"https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x"} onClick={() => { props.setPageProps({ page: 'ProfilePage', email: props.targetEmail }) }}></Avatar>
                         </Col>
                         <Col className='FansNFollowerEditor__Name' span={12}>
                             <Text cls='Small' fontSize={'22'} content={props.Name} />
@@ -348,7 +348,7 @@ function FansNFollowerEditor(props) {
 
                     <Row className='FansNFollowerEditor__Row'>
                         <Col className='FansNFollowerEditor__Avatar' span={4}>
-                            <Avatar className={"FansNFollowerEditor__Avatar__Inner"} size={48} src={props.Avatar} onClick={() => { props.setPageProps({ page: 'ProfilePage', email: props.targetEmail }) }}></Avatar>
+                            <Avatar className={"FansNFollowerEditor__Avatar__Inner"} size={48} src={"https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x"} onClick={() => { props.setPageProps({ page: 'ProfilePage', email: props.targetEmail }) }}></Avatar>
                         </Col>
                         <Col className='FansNFollowerEditor__Name' span={12}>
                             <Text cls='Small' fontSize={'22'} content={props.Name} />

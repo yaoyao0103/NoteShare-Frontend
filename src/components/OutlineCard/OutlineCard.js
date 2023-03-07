@@ -939,12 +939,12 @@ function OutlineCard(props) {
     var dateFontSize = '12';
     var email = '';
     var author = '';
-    var avatar = '';
+    var avatar = "https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x";
     var date = props.cardContent.date ? props.cardContent.date : '';
     if (props.mode === 'Post') {
         email = props.cardContent.authorUserObj.userObjEmail ? props.cardContent.authorUserObj.userObjEmail : '';
         author = props.cardContent.authorUserObj.userObjName ? props.cardContent.authorUserObj.userObjName : "";
-        avatar = props.cardContent.authorUserObj.userObjAvatar ? props.cardContent.authorUserObj.userObjAvatar : '';
+        avatar = "https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x";
     }
     if (props.mode == 'Note') {
         opSize = 48;
@@ -955,12 +955,12 @@ function OutlineCard(props) {
             //console.log('1')
             email = props.cardContent.headerEmailUserObj.userObjEmail;
             author = props.cardContent.headerEmailUserObj.userObjName;
-            avatar = props.cardContent.headerEmailUserObj.userObjAvatar;
+            avatar = "https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x";
         }
         else {
             email = props.cardContent.headerUserObj.userObjEmail;
             author = props.cardContent.headerUserObj.userObjName;
-            avatar = props.cardContent.headerUserObj.userObjAvatar;
+            avatar = "https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x";
         }
     }
 

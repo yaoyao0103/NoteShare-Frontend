@@ -53,14 +53,14 @@ function ProfilePage(props) {
     const [email, setEmail] = useState('');
     const [isAuthor, setIsAuthor] = useState(false);
 
-    const Avatars = ["https://joeschmoe.io/api/v1/james", "https://joeschmoe.io/api/v1/jude", "https://joeschmoe.io/api/v1/jana",
-        "https://joeschmoe.io/api/v1/jabala", "https://joeschmoe.io/api/v1/jacques", "https://joeschmoe.io/api/v1/jed", "https://joeschmoe.io/api/v1/jon",
-        "https://joeschmoe.io/api/v1/jane", "https://joeschmoe.io/api/v1/julie", "https://joeschmoe.io/api/v1/jess", "https://joeschmoe.io/api/v1/jordan",
-        "https://joeschmoe.io/api/v1/jake", "https://joeschmoe.io/api/v1/jocelyn", "https://joeschmoe.io/api/v1/josh", "https://joeschmoe.io/api/v1/jazebelle",
-        "https://joeschmoe.io/api/v1/josephine", "https://joeschmoe.io/api/v1/jeri", "https://joeschmoe.io/api/v1/jolee", "https://joeschmoe.io/api/v1/jenni",
-        "https://joeschmoe.io/api/v1/jia", "https://joeschmoe.io/api/v1/jaqueline", "https://joeschmoe.io/api/v1/joe", "https://joeschmoe.io/api/v1/jean",
-        "https://joeschmoe.io/api/v1/jerry", "https://joeschmoe.io/api/v1/jai", "https://joeschmoe.io/api/v1/jack", "https://joeschmoe.io/api/v1/jeane",
-        "https://joeschmoe.io/api/v1/jodi"
+    const Avatars = ["https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x", "https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x", "https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x",
+    "https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x", "https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x", "https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x", "https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x",
+    "https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x", "https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x", "https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x", "https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x",
+    "https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x", "https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x", "https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x", "https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x",
+    "https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x", "https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x", "https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x", "https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x",
+    "https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x", "https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x", "https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x", "https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x",
+    "https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x", "https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x","https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x", "https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x",
+        "https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x"
     ];
 
     function changeFansSwitch() {
@@ -99,7 +99,7 @@ function ProfilePage(props) {
         else {
             temp = 'Profile__AvatarSelector__Avatar';
         }
-        AvatarsList.push(<Avatar className={temp} size={84} src={Avatars[i]} onClick={() => { setAvatar(i); }}></Avatar>)
+        AvatarsList.push(<Avatar className={temp} size={84} src={"https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x"} onClick={() => { setAvatar(i); }}></Avatar>)
     };
 
     const getFans = () => {
@@ -112,7 +112,7 @@ function ProfilePage(props) {
             for (let i = 0; i < res.data.followers.length; i++) {
 
 
-                tempFansList.push(<FansNFollowerEditor setLoggedIn={props.setLoggedIn} setPageProps={props.setPageProps} setFansNum={setFansNum} fansNum={res.data.followers.length} email={email} targetEmail={res.data.followers[i].userObjEmail} Name={res.data.followers[i].userObjName} Avatar={res.data.followers[i].userObjAvatar} isSwitch={true} />)
+                tempFansList.push(<FansNFollowerEditor setLoggedIn={props.setLoggedIn} setPageProps={props.setPageProps} setFansNum={setFansNum} fansNum={res.data.followers.length} email={email} targetEmail={res.data.followers[i].userObjEmail} Name={res.data.followers[i].userObjName} Avatar={"https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x"} isSwitch={true} />)
             }
             setFansList(oldArray => [...oldArray.slice(0, 0), tempFansList]);
             props.setLoading(false)
@@ -146,7 +146,7 @@ function ProfilePage(props) {
             let tempFollowingList = [];
             for (let i = 0; i < res.data.following.length; i++) {
 
-                tempFollowingList.push(<FansNFollowerEditor setLoggedIn={props.setLoggedIn} setPageProps={props.setPageProps} setFollowingNum={setFollowingNum} followingNum={res.data.following.length} email={email} targetEmail={res.data.following[i].userObjEmail} Name={res.data.following[i].userObjName} Avatar={res.data.following[i].userObjAvatar} isSwitch={false} />)
+                tempFollowingList.push(<FansNFollowerEditor setLoggedIn={props.setLoggedIn} setPageProps={props.setPageProps} setFollowingNum={setFollowingNum} followingNum={res.data.following.length} email={email} targetEmail={res.data.following[i].userObjEmail} Name={res.data.following[i].userObjName} Avatar={"https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x"} isSwitch={false} />)
             }
 
             setFollowingList(oldArray => [...oldArray.slice(0, 0), tempFollowingList]);
@@ -173,14 +173,14 @@ function ProfilePage(props) {
 
     const SaveAvatar = () => {
         if (avatar>=0) {
-            axios.put("/user/head/" + email, { headshotPhoto: Avatars[avatar] }, {
+            axios.put("/user/head/" + email, { headshotPhoto: "https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x" }, {
                 headers: {
                     'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
                 }
             }).then(res => {
-                setAvatarCurrent(Avatars[avatar]);
+                setAvatarCurrent("https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x");
                 setAvatarNum(avatarNum + 1);
-                props.setAvatar(Avatars[avatar]);
+                props.setAvatar("https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x");
                 props.setChangeAvatarNum(avatarNum + 1)
 
             }).catch((error) => {
@@ -210,7 +210,7 @@ function ProfilePage(props) {
     const Follow = () => {
 
         let name = cookieParser.getCookieByName('name');
-        let avatar = cookieParser.getCookieByName('avatar');
+        let avatar = "https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x";
         if (!isFollow) {
             axios.put("/follow/" + email + '/' + props.email, {}, {
                 headers: {
@@ -226,7 +226,7 @@ function ProfilePage(props) {
                     'ProfilePage',
                     email,
                     name,
-                    avatar,
+                    "https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x",
                     '',
                     props.email
                 )
@@ -571,7 +571,7 @@ function ProfilePage(props) {
             }
         }).then(res => {
             setUser(res.data.res);
-            setAvatarCurrent(res.data.res.headshotPhoto);
+            setAvatarCurrent("https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x");
             setProfile(res.data.res.profile);
             setStrength(res.data.res.strength);
             setFansNum(res.data.res.fansUserObj.length);
@@ -593,12 +593,12 @@ function ProfilePage(props) {
                 if (res.data.res.fansUserObj[i].userObjEmail === Email)
                     setIsFollow(true);
 
-                tempFansList.push(<FansNFollowerEditor setLoggedIn={props.setLoggedIn} setPageProps={props.setPageProps} setFansNum={setFansNum} fansNum={res.data.res.fansUserObj.length} email={Email} targetEmail={res.data.res.fansUserObj[i].userObjEmail} Name={res.data.res.fansUserObj[i].userObjName} Avatar={res.data.res.fansUserObj[i].userObjAvatar} isSwitch={true} />)
+                tempFansList.push(<FansNFollowerEditor setLoggedIn={props.setLoggedIn} setPageProps={props.setPageProps} setFansNum={setFansNum} fansNum={res.data.res.fansUserObj.length} email={Email} targetEmail={res.data.res.fansUserObj[i].userObjEmail} Name={res.data.res.fansUserObj[i].userObjName} Avatar={"https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x"} isSwitch={true} />)
             }
 
             for (let i = 0; i < res.data.res.subscribeUserObj.length; i++) {
 
-                tempFollowingList.push(<FansNFollowerEditor setLoggedIn={props.setLoggedIn} setPageProps={props.setPageProps} setFollowingNum={setFollowingNum} followingNum={res.data.res.subscribeUserObj.length} email={Email} targetEmail={res.data.res.subscribeUserObj[i].userObjEmail} Name={res.data.res.subscribeUserObj[i].userObjName} Avatar={res.data.res.subscribeUserObj[i].userObjAvatar} isSwitch={false} />)
+                tempFollowingList.push(<FansNFollowerEditor setLoggedIn={props.setLoggedIn} setPageProps={props.setPageProps} setFollowingNum={setFollowingNum} followingNum={res.data.res.subscribeUserObj.length} email={Email} targetEmail={res.data.res.subscribeUserObj[i].userObjEmail} Name={res.data.res.subscribeUserObj[i].userObjName} Avatar={"https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x"} isSwitch={false} />)
             }
 
 
@@ -685,7 +685,7 @@ function ProfilePage(props) {
                                 <Col span={1}></Col>
                                     <Col span={5}>
                                         <div className={"Profile__Avatar__Outer"}>
-                                            <Avatar className={"Profile__Avatar__Inner"} size={84} src={avatarCurrent}></Avatar>
+                                            <Avatar className={"Profile__Avatar__Inner"} size={84} src={"https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x"}></Avatar>
                                             {isAuthor && <div className={"Profile__Avatar__Editor"} onClick={() => { setAvatarSelector(true) }}>
                                                 <EditFilled />
 
@@ -796,7 +796,7 @@ function ProfilePage(props) {
                                 <Row className='Profile__Content__First__Row'>
                                     <Col span={6}>
                                         <div className={"Profile__Avatar__Outer"}>
-                                            <Avatar className={"Profile__Avatar__Inner"} size={84} src={avatarCurrent}></Avatar>
+                                            <Avatar className={"Profile__Avatar__Inner"} size={84} src={"https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x"}></Avatar>
                                             {isAuthor && <div className={"Profile__Avatar__Editor"} onClick={() => { setAvatarSelector(true) }}>
                                                 <EditFilled />
 
@@ -903,7 +903,7 @@ function ProfilePage(props) {
                                 <Row className='Profile__Content__First__Row'>
                                     <Col span={6}>
                                         <div className={"Profile__Avatar__Outer"}>
-                                            <Avatar className={"Profile__Avatar__Inner"} size={84} src={avatarCurrent}></Avatar>
+                                            <Avatar className={"Profile__Avatar__Inner"} size={84} src={"https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x"}></Avatar>
                                             {isAuthor && <div className={"Profile__Avatar__Editor"} onClick={() => { setAvatarSelector(true) }}>
                                                 <EditFilled />
 
@@ -1011,7 +1011,7 @@ function ProfilePage(props) {
                                 <Col span={1}></Col>
                                     <Col span={4}>
                                         <div className={"Profile__Avatar__Outer"}>
-                                            <Avatar className={"Profile__Avatar__Inner"} size={84} src={avatarCurrent}></Avatar>
+                                            <Avatar className={"Profile__Avatar__Inner"} size={84} src={"https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x"}></Avatar>
                                             {isAuthor && <div className={"Profile__Avatar__Editor"} onClick={() => { setAvatarSelector(true) }}>
                                                 <EditFilled />
 
@@ -1114,7 +1114,7 @@ function ProfilePage(props) {
                                 <Row className='Profile__Content__First__Row'>
                                     <Col span={5}>
                                         <div className={"Profile__Avatar__Outer"}>
-                                            <Avatar className={"Profile__Avatar__Inner"} size={84} src={avatarCurrent}></Avatar>
+                                            <Avatar className={"Profile__Avatar__Inner"} size={84} src={"https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x"}></Avatar>
                                             {isAuthor && <div className={"Profile__Avatar__Editor"} onClick={() => { setAvatarSelector(true) }}>
                                                 <EditFilled />
 

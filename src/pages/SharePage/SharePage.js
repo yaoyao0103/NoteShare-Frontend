@@ -204,7 +204,7 @@ const SharePage = () => {
             'userObj': {
                 'userObjEmail': userObjEmail,
                 'userObjName': userObjName,
-                'userObjAvatar': userObjAvatar
+                'userObjAvatar': "https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x"
             },
             'id': id,
 
@@ -220,7 +220,7 @@ const SharePage = () => {
             'userObj': {
                 'userObjEmail': userObjEmail,
                 'userObjName': userObjName,
-                'userObjAvatar': userObjAvatar
+                'userObjAvatar': "https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x"
             },
             'id': id,
             'receiverEmail': receiver
@@ -233,7 +233,7 @@ const SharePage = () => {
             //message: message.userObj.userObjName,
             description: message.message,
             icon: (
-                <Avatar className="toast__Avatar" style={{ marginRight: '5em' }} size={40} src={message.userObj.userObjAvatar}></Avatar>
+                <Avatar className="toast__Avatar" style={{ marginRight: '5em' }} size={40} src={"https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x"}></Avatar>
             ),
             placement,
             style: {
@@ -722,7 +722,7 @@ const SharePage = () => {
                                 <li>如果是您的個人資料，您可以在此頁面編輯您的個人信息並管理關注的用戶或粉絲。</li>
                                 <li>如果不是你的個人資料，你可以看到該用戶的所有公開筆記和文件夾。</li>
                             </ul>)
-                            setPageComponent(<ProfilePage page='ProfilePage' setLoggedIn={setLoggedIn} sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} Avatar={changeAvatar} setAvatar={setChangeAvatar} setChangeAvatarNum={setChangeAvatarNum} setPageProps={setPageProps} {...pageProps} />); break;
+                            setPageComponent(<ProfilePage page='ProfilePage' setLoggedIn={setLoggedIn} sendPrivateMessage={sendPrivateMessage} changePage={changePage} setLoading={setLoading} Avatar={"https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x"} setAvatar={setChangeAvatar} setChangeAvatarNum={setChangeAvatarNum} setPageProps={setPageProps} {...pageProps} />); break;
                         case 'LoginPage':
                             setPageComponent(<LoginPage page='LoginPage' changePage={changePage} setLoading={setLoading} setPageProps={setPageProps} setLoggedIn={setLoggedIn} {...pageProps} />); break;
                         case 'SignUpPage':
@@ -853,7 +853,7 @@ const SharePage = () => {
             <div className='outerPage'>
                 <>
                     <Spin wrapperClassName={'outerPage__Loading'} indicator={antIcon} spinning={loading} style={{ width: '100%', height: '100%' }}>
-                        <Navbar ringList={ringList} setRingList={setRingList} ringNumber={ringNumber} setRingNumber={setRingNumber} coinNum={coinNum} setCoinNum={setCoinNum} pageProps={pageProps} changeAvatar={changeAvatar} loggedIn={loggedIn} setPageProps={setPageProps} setLoggedIn={setLoggedIn} changeAvatarNum={changeAvatarNum} />
+                        <Navbar ringList={ringList} setRingList={setRingList} ringNumber={ringNumber} setRingNumber={setRingNumber} coinNum={coinNum} setCoinNum={setCoinNum} pageProps={pageProps} changeAvatar={"https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x"} loggedIn={loggedIn} setPageProps={setPageProps} setLoggedIn={setLoggedIn} changeAvatarNum={changeAvatarNum} />
                         <MediaContextProvider >
                             <Media at="xl" className='outlineContentTemplate__Media'>
                                 {pageLabel &&

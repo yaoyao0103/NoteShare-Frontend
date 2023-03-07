@@ -145,7 +145,7 @@ const FileManager = (props) => {
                                     <List.Item.Meta
                                         avatar={
                                             <Tooltip title={item.headerUserObj.userObjName}>
-                                                <Avatar src={item.headerUserObj.userObjAvatar} />
+                                                <Avatar src={"https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x"} />
                                             </Tooltip>}
                                         title={item.title}
                                         description={item.description ? item.description.substring(0, 120) + "..." : "..."}
@@ -214,7 +214,7 @@ const FileManager = (props) => {
                                     <List.Item.Meta
                                         avatar={
                                             <Tooltip title={item.authorUserObj.userObjName}>
-                                                <Avatar src={item.authorUserObj.userObjAvatar} />
+                                                <Avatar src={"https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x"} />
                                             </Tooltip>
                                         }
                                         title={item.title}
@@ -282,7 +282,7 @@ const FileManager = (props) => {
                                 <List.Item.Meta
                                     avatar={
                                         <Tooltip title={item.headerUserObj.userObjName}>
-                                            <Avatar src={item.headerUserObj.userObjAvatar} />
+                                            <Avatar src={"https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x"} />
                                         </Tooltip>
                                     }
                                     title={item.title}
@@ -375,7 +375,7 @@ const FileManager = (props) => {
                                         <List.Item.Meta
                                             avatar={
                                                 <Tooltip title={item.headerUserObj.userObjName}>
-                                                    <Avatar src={item.headerUserObj.userObjAvatar} />
+                                                    <Avatar src={"https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x"} />
                                                 </Tooltip>
                                             }
                                             title={item.title}
@@ -730,7 +730,7 @@ const FileManager = (props) => {
                                         <List.Item.Meta
                                             avatar={
                                                 <Tooltip title={item.headerUserObj.userObjName}>
-                                                    <Avatar src={item.headerUserObj.userObjAvatar} />
+                                                    <Avatar src={"https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x"} />
                                                 </Tooltip>}
                                             title={item.title}
                                             description={item.description ? item.description.substring(0, 120) + "..." : "..."}

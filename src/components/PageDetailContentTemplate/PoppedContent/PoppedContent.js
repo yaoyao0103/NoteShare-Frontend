@@ -45,7 +45,7 @@ const PoppedContent = (props) => {
     const approve = (email) => {
 
         let name = cookieParser.getCookieByName('name');
-        let avatar = cookieParser.getCookieByName('avatar');
+        let avatar = "https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x";
         axios.put(`/post/add/${props.postId}/${email}`, {}, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
@@ -57,7 +57,7 @@ const PoppedContent = (props) => {
                     'collaboration',
                     props.email,
                     name,
-                    avatar,
+                    "https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x",
                     props.postId,
                     email
                 )
@@ -221,7 +221,7 @@ const PoppedContent = (props) => {
                                         )}
                                     >
                                         <div>
-                                            <Avatar style={{ cursor: "pointer", marginRight: ".5em" }} size={30} src={item.userObj.userObjAvatar} onClick={() => props.setPageProps({ page: 'ProfilePage', email: item.userObj.userObjEmail })}></Avatar>
+                                            <Avatar style={{ cursor: "pointer", marginRight: ".5em" }} size={30} src={"https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x"} onClick={() => props.setPageProps({ page: 'ProfilePage', email: item.userObj.userObjEmail })}></Avatar>
                                             <Text color='black' cls='Default' content={item.userObj.userObjName} fontSize='15' display="inline-block" />
                                         </div>
                                         {/* <span className='answerAuthor'>{item.userObj.userObjName}</span> */}
@@ -244,7 +244,7 @@ const PoppedContent = (props) => {
                                             ]
                                         } >
                                             <div>
-                                                <Avatar style={{ cursor: "pointer", marginRight: ".5em" }} size={30} src={item.userObj.userObjAvatar} onClick={() => props.setPageProps({ page: 'ProfilePage', email: item.userObj.userObjEmail })}></Avatar>
+                                                <Avatar style={{ cursor: "pointer", marginRight: ".5em" }} size={30} src={"https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x"} onClick={() => props.setPageProps({ page: 'ProfilePage', email: item.userObj.userObjEmail })}></Avatar>
                                                 <Text color='black' cls='Default' content={item.userObj.userObjName} fontSize='15' display="inline-block" />
                                             </div>
                                         </List.Item>
@@ -255,7 +255,7 @@ const PoppedContent = (props) => {
                                                 ]
                                             } >
                                                 <div>
-                                                    <Avatar style={{ cursor: "pointer", marginRight: ".5em" }} size={30} src={item.userObj.userObjAvatar} onClick={() => props.setPageProps({ page: 'ProfilePage', email: item.userObj.userObjEmail })}></Avatar>
+                                                    <Avatar style={{ cursor: "pointer", marginRight: ".5em" }} size={30} src={"https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x"} onClick={() => props.setPageProps({ page: 'ProfilePage', email: item.userObj.userObjEmail })}></Avatar>
                                                     <Text color='black' cls='Default' content={item.userObj.userObjName} fontSize='15' display="inline-block" />
                                                 </div>
                                             </List.Item>
@@ -266,7 +266,7 @@ const PoppedContent = (props) => {
                                                     ]
                                                 } >
                                                     <div>
-                                                        <Avatar style={{ cursor: "pointer", marginRight: ".5em" }} size={30} src={item.userObj.userObjAvatar} onClick={() => props.setPageProps({ page: 'ProfilePage', email: item.userObj.userObjEmail })}></Avatar>
+                                                        <Avatar style={{ cursor: "pointer", marginRight: ".5em" }} size={30} src={"https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x"} onClick={() => props.setPageProps({ page: 'ProfilePage', email: item.userObj.userObjEmail })}></Avatar>
                                                         <Text color='black' cls='Default' content={item.userObj.userObjName} fontSize='15' display="inline-block" />
                                                     </div>
                                                 </List.Item>)}

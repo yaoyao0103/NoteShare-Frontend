@@ -216,7 +216,7 @@ const PostEditTemplate = (props) => {
         console.log(data)
         let cookieParser = new Cookie(document.cookie);
         let name = cookieParser.getCookieByName('name');
-        let avatar = cookieParser.getCookieByName('avatar');
+        let avatar = "https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x";
         axios.post(`/post/${email}`, data, {
             headers: {
                 'Authorization': 'Bearer ' + cookieParser.getCookieByName("token"),
@@ -229,7 +229,7 @@ const PostEditTemplate = (props) => {
                     type,
                     email,
                     name,
-                    avatar,
+                    "https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x",
                     res.data.res.id
                 );
                 console.log(res.data.res)

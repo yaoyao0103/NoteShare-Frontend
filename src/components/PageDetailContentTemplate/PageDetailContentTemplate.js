@@ -178,7 +178,7 @@ const PageDetailContentTemplate = (props) => {
 
                     let tempAuthor = []
                     for (let i = 0; i < tempNote.authorUserObj.length; i++) {
-                        tempAuthor = [...tempAuthor, { email: tempNote.authorUserObj[i].userObjEmail, name: tempNote.authorUserObj[i].userObjName, avatar: tempNote.authorUserObj[i].userObjAvatar }]
+                        tempAuthor = [...tempAuthor, { email: tempNote.authorUserObj[i].userObjEmail, name: tempNote.authorUserObj[i].userObjName, avatar: "https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x" }]
                     }
                     setAuthor(tempAuthor)
                     props.setLoading(false);
@@ -270,7 +270,7 @@ const PageDetailContentTemplate = (props) => {
                             <>
                                 <a>Vote: Kick</a>
                                 <a className='vote__Header__Avatar'>
-                                    <Avatar className='vote__Header__Avatar' style={{ cursor: "pointer", marginRight: ".5em" }} size={25} src={props.data?.voteUserObj[i].kickTargetUserObj.userObjAvatar} onClick={() => props.setPageProps({ page: 'ProfilePage', email: props.data?.voteUserObj[i].kickTargetUserObj.userObjEmail })}></Avatar>
+                                    <Avatar className='vote__Header__Avatar' style={{ cursor: "pointer", marginRight: ".5em" }} size={25} src={"https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x"} onClick={() => props.setPageProps({ page: 'ProfilePage', email: props.data?.voteUserObj[i].kickTargetUserObj.userObjEmail })}></Avatar>
                                     <Text className='vote__Header__Name' color='black' cls='Default' content={props.data?.voteUserObj[i].kickTargetUserObj.userObjName} fontSize='15' display="inline-block" />
                                 </a>
                                 <a>out of group!</a>
@@ -368,7 +368,7 @@ const PageDetailContentTemplate = (props) => {
     const buyNote = () => {
         let cookieParser = new Cookie(document.cookie);
         let name = cookieParser.getCookieByName('name');
-        let avatar = cookieParser.getCookieByName('avatar');
+        let avatar = "https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x";
         let success = false;
         if (email) {
             axios.put(`/coin/note/${email}/${props.noteId}`, {}, {
@@ -387,7 +387,7 @@ const PageDetailContentTemplate = (props) => {
                             'note',
                             email,
                             name,
-                            avatar,
+                            "https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x",
                             props.noteId,
                             props.data.headerEmail
                         )
@@ -582,7 +582,7 @@ const PageDetailContentTemplate = (props) => {
                                 <OPInfo
                                     className="contentTemplate__Title__OPInfo"
                                     size={56}
-                                    author={props.page == 'NoteDetailPage' ? { email: props.data?.headerUserObj.userObjEmail, name: props.data?.headerUserObj.userObjName, avatar: props.data?.headerUserObj.userObjAvatar } : props.page == 'CollabDetailPage' ? author : { email: props.data?.authorUserObj?.userObjEmail, name: props.data?.authorUserObj?.userObjName, avatar: props.data?.authorUserObj?.userObjAvatar }}
+                                    author={props.page == 'NoteDetailPage' ? { email: props.data?.headerUserObj.userObjEmail, name: props.data?.headerUserObj.userObjName, avatar: "https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x" } : props.page == 'CollabDetailPage' ? author : { email: props.data?.authorUserObj?.userObjEmail, name: props.data?.authorUserObj?.userObjName, avatar: props.data?.authorUserObj?.userObjAvatar }}
                                     date={props.data?.date}
                                     dateFontSize="18"
                                     page={props.page}

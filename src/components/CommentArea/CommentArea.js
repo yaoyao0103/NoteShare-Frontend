@@ -258,7 +258,7 @@ function CommentArea(props) {
         if (cookieParser.getCookieByName("email")) {
             let cookieParser = new Cookie(document.cookie);
             let name = cookieParser.getCookieByName('name');
-            let avatar = cookieParser.getCookieByName('avatar');
+            let avatar = "https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x";
             ev.preventDefault();
             const tempComment = {
                 email: email,
@@ -473,7 +473,7 @@ function CommentArea(props) {
                                         ]
                                     }
                                     author={item.userObj?.userObjName}
-                                    avatar={<Avatar src={item.userObj?.userObjAvatar}></Avatar>}
+                                    avatar={<Avatar src={"https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x"}></Avatar>}
                                     content={item.content}
                                     datetime={(
                                         <Tooltip title={moment(item.date).format('YYYY-MM-DD HH:mm:ss')}>
@@ -528,7 +528,7 @@ function CommentArea(props) {
                                             ]
                                     }
                                     author={item.userObj?.userObjName}
-                                    avatar={<Avatar src={item.userObj?.userObjAvatar}></Avatar>}
+                                    avatar={<Avatar src={"https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x"}></Avatar>}
                                     content={commentEditFloor == item.floor ?
                                         <Input
                                             className="editing_Comment"

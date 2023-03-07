@@ -77,7 +77,7 @@ function FolderOutlineCard(props) {
                                             className="FolderOutlineCard__OPInfo"
                                             mode="FolderOutline"
                                             size={opSize}
-                                            author={{ email: email, name: author, avatar: props.cardContent.headshotPhoto }}
+                                            author={{ email: email, name: author, avatar: "https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x" }}
                                             authorFontSize={authorFontSize}
                                             dateFontSize={dateFontSize}
                                             setPageProps={props.setPageProps}
@@ -102,7 +102,7 @@ function FolderOutlineCard(props) {
                                             className="FolderOutlineCard__OPInfo"
                                             mode="FolderOutline"
                                             size={opSize}
-                                            author={{ email: email, name: author, avatar: props.cardContent.headshotPhoto }}
+                                            author={{ email: email, name: author, avatar: "https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x" }}
                                             authorFontSize={authorFontSize}
                                             dateFontSize={dateFontSize}
                                             setPageProps={props.setPageProps}
@@ -127,7 +127,7 @@ function FolderOutlineCard(props) {
                                             className="FolderOutlineCard__OPInfo"
                                             mode="FolderOutline"
                                             size={opSize}
-                                            author={{ email: email, name: author, avatar: props.cardContent.headshotPhoto }}
+                                            author={{ email: email, name: author, avatar: "https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x" }}
                                             authorFontSize={authorFontSize}
                                             dateFontSize={dateFontSize}
                                             setPageProps={props.setPageProps}
@@ -152,7 +152,7 @@ function FolderOutlineCard(props) {
                                             className="FolderOutlineCard__OPInfo"
                                             mode="FolderOutline"
                                             size={opSize}
-                                            author={{ email: email, name: author, avatar: props.cardContent.headshotPhoto }}
+                                            author={{ email: email, name: author, avatar: "https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x" }}
                                             authorFontSize={authorFontSize}
                                             dateFontSize={dateFontSize}
                                             setPageProps={props.setPageProps}
@@ -177,7 +177,7 @@ function FolderOutlineCard(props) {
                                             className="FolderOutlineCard__OPInfo"
                                             mode="FolderOutline"
                                             size={opSize}
-                                            author={{ email: email, name: author, avatar: props.cardContent.headshotPhoto }}
+                                            author={{ email: email, name: author, avatar: "https://gravatar.com/avatar/7fdc37318319569a920fd7d087c14d1f?s=400&d=robohash&r=x" }}
                                             authorFontSize={authorFontSize}
                                             dateFontSize={dateFontSize}
                                             setPageProps={props.setPageProps}
