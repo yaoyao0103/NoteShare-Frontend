@@ -73,7 +73,10 @@ const NoteEditTemplate = (props) => {
         if (note && props.mode == 'edit') {
             if (note?.type == 'reward') {
                 setPostId(note?.postId);
-                axios.get(`/post/${note?.postId}`)
+                let id=note?.postId
+                if(note.id)
+                id=note.id
+                axios.get(`/post/${id}`)
                     .then(res => {
                         setPostInfo(res.data.res);
                     })

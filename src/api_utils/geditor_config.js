@@ -33,6 +33,7 @@ import {
 import tailwindComponent from "../plugins/tailwind";
 import codeComponent from "../plugins/code";
 import tUIImageEditor from "../plugins/tUIImageEditor";
+import NoteAi from "../plugins/NoteAi";
 
 export var editor = null;
 
@@ -85,6 +86,7 @@ async function geditorConfig(assets, noteId, version, isCollab, email, username,
       tooltip,
       countdown,
       tUIImageEditor,
+      NoteAi,
       styleFilter,
       //grapesjsBlockBootstrap,
       grapesjsPluginExport,
@@ -101,6 +103,7 @@ async function geditorConfig(assets, noteId, version, isCollab, email, username,
       tooltip: { blockTooltip: { label: 'Tooltip', category: 'Basic'}},
       countdown: {},
       tUIImageEditor: {},
+      NoteAi:{},
       styleFilter: {},
       grapesjsBlockBootstrap: {},
       grapesjsPluginExport: {},
