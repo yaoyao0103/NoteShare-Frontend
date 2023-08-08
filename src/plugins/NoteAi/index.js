@@ -7,6 +7,8 @@ import axios from '../../components/axios/axios';
 import { message } from 'antd';
 import { Configuration, OpenAIApi } from "openai";
 import { useState } from "react";
+import { Avatar } from 'antd';
+var ai_type='summary'
 
 export default (editor, options = {}) => {
   require('dotenv').config()
@@ -31,13 +33,20 @@ export default (editor, options = {}) => {
       labelImageEditor: 'Image Editor',
 
       // Label for the OCR (used in the modal)
-      labelOCR: 'NS Auto Summary',
+      labelOCR: 'NS Artificial Intelligence',
 
       // Label used on the apply button
       labelApply: 'Apply',
 
       // Label used on the run OCR button
-      labelRunOCR: 'Send',
+      labelSummary: 'Summary',
+      // Label used on the run OCR button
+      labelCompletion: 'Completion',
+      // Label used on the run OCR button
+      labelTranslation: 'Translation',
+      // Label used on the run OCR button
+      labelGrammar: 'Grammar',
+
 
       // Default editor height
       height: '650px',
@@ -176,67 +185,129 @@ export default (editor, options = {}) => {
       const { id } = this;
       const content = this.createContent();
       const title = opts.labelOCR;
-      const applyBtn = content.children[1];
-      const SendBtn = content.children[2];
-
+      const translationBtn = content.children[1];
+      const summaryBtn = content.children[2];
+      const completionBtn = content.children[3];
+      const grammarBtn = content.children[4];
+      
+      const applyBtn = content.children[6];
+      
       ed.Modal.open({ title, content })
         .getModel().once('change:open', () => ed.stopCommand(id));
       applyBtn.onclick = () => this.applyOCR(ed);
-      SendBtn.onclick = () => this.handleSubmit(ed);
+      summaryBtn.onclick = () => this.handleSubmit(ed, 'summary');
+      completionBtn.onclick = () => this.handleSubmit(ed, 'completion');
+      translationBtn.onclick = () => this.handleSubmit(ed, 'translation');
+      grammarBtn.onclick = () => this.handleSubmit(ed, 'grammar');
     },
 
     createContent() {
       const url = this.target.attributes.attributes.src;
       const content = document.createElement('div');
-      content.style = 'position: relative';
+      content.style = 'position: relative;height: 100%;width:100%';
       content.innerHTML = `
+     
           <div style="
             position: relative;
             width: 100%;
             height: 100%;
             
         ">
-      
-          <div style="position: relative; border-color: #888; float: left;">
-            <div>Summarize</div>
-            <textarea id = "Ai-result" rows="8" cols="42" style="
+          <div style="position: relative; border-color: #888; float: left;width:100%;padding-left:3%">
+            <div>Result</div>
+            <textarea id = "Ai-result" rows="8" cols="84" style="
               position: relative;
               border-color: #888;"
             ></textarea>
           </div>
           
         </div>
+        <button class="tui-image-editor__run-btn" style="
+          position: relative;
+          background-color: #fff;
+          font-size: 1rem;
+          margin-left:10px;
+          border-radius: 3px;
+          border: solid thin;
+          padding: 10px 20px;
+          cursor: pointer
+        ">
+          ${opts.labelTranslation}
+      </button>
           <button class="tui-image-editor__run-btn" style="
             position: relative;
-            float: right;
-            margin: 10px;
             background-color: #fff;
             font-size: 1rem;
             border-radius: 3px;
             border: solid thin;
             padding: 10px 20px;
+           
             cursor: pointer
           ">
-            ${opts.labelApply}
+            ${opts.labelSummary}
           </button>
           <button class="tui-image-editor__run-btn" style="
-            position: relative;
-            float: right;
-            margin: 10px;
-            background-color: #fff;
-            font-size: 1rem;
-            border-radius: 3px;
-            border: solid thin;
-            padding: 10px 20px;
-            cursor: pointer
-          ">
-            ${opts.labelRunOCR}
-          </button>
+          position: relative;
+        
+          
+          background-color: #fff;
+          font-size: 1rem;
+          border-radius: 3px;
+          border: solid thin;
+          padding: 10px 20px;
+       
+          cursor: pointer
+        ">
+          ${opts.labelCompletion}
+        </button>
+        </button>
+        <button class="tui-image-editor__run-btn" style="
+        position: relative;
+        
+       
+        background-color: #fff;
+        font-size: 1rem;
+        border-radius: 3px;
+        border: solid thin;
+        padding: 10px 20px;
+        
+        cursor: pointer
+      ">
+        ${opts.labelGrammar}
+      </button>
+   
+    <div style="position: relative; border-color: #888; float: left;width:auto;padding-left:3%; margin-top:1%;">
+      <textarea id = "Language-result" rows="1" cols="12" style="
+        position: relative;
+        border-color: #888;
+        overflow: hidden;
+        padding-bottom:1%;"
+
+        >English
+      </textarea>
+    </div>
+
+    <button class="tui-image-editor__run-btn" style="
+    position: relative;
+    float:right;
+  
+    background-color: #fff;
+    font-size: 1rem;
+    border-radius: 3px;
+    border: solid thin;
+    padding: 10px 20px;
+    margin-right:3%;
+    cursor: pointer
+  ">
+    ${opts.labelApply}
+  </button>
+
         `;
 
       return content;
     },
-    async handleSubmit(ed) {
+    async handleSubmit(ed, type) {
+      ai_type=type
       const selected = ed.getSelected()
       const selectedId = selected.attributes.attributes.id;
 
@@ -246,20 +317,37 @@ export default (editor, options = {}) => {
       let tempObject = parser.parseFromString(selectedHtml, 'text/html');
       console.log(tempObject)
       let originalText = tempObject.getElementById(selectedId).innerText;
+      let content = "Create advanced bullet-point notes summarizing the important parts of the reading or topic. Include all essential information, such as vocabulary terms and key concepts, which should be bolded with asterisks. Remove any extraneous language, focusing only on the critical aspects of the passage or topic. Strictly base your notes on the provided text, without adding any external information."
       console.log(originalText)
+      if (type == 'summary') {
+        
+        content = "Create advanced bullet-point notes summarizing the important parts of the reading or topic. Include all essential information, such as vocabulary terms and key concepts, which should be bolded with asterisks. Remove any extraneous language, focusing only on the critical aspects of the passage or topic. Strictly base your notes on the provided text, without adding any external information."
+      }
+      else if (type == 'completion') {
+        content = "You will play as a college professor. I'll type a snippet of the note, and you'll just Complete the full note.You don't need to reply by letter, I just need notes"
+      }
+      else if (type == 'translation') {
+        const language=document.getElementById('Language-result').value;
+        content = `You will be given a snippet of notes, and your task will be to translate it into ${language}, keeping proper nouns correct.`
+        
+      }
+      else {
+        content = "You will be provided with statements, and your task is to convert them to standard grammar."
+
+      }
       try {
         let result = await openai.createChatCompletion({
           model: "gpt-3.5-turbo",
           messages: [{
             "role": "system",
-            "content": "Create advanced bullet-point notes summarizing the important parts of the reading or topic. Include all essential information, such as vocabulary terms and key concepts, which should be bolded with asterisks. Remove any extraneous language, focusing only on the critical aspects of the passage or topic. Strictly base your notes on the provided text, without adding any external information."
+            "content": content
           },
           { role: "user", content: `{${originalText}}` }],
           temperature: 0.5,
           max_tokens: 1024,
 
         });
-        result=result.data.choices[0].message.content;
+        result = result.data.choices[0].message.content;
         console.log(result)
         //console.log("response", result.data.choices[0].text);
         this.AiMessage = result
@@ -290,7 +378,10 @@ export default (editor, options = {}) => {
       let tempObject = parser.parseFromString(selectedHtml, 'text/html');
       let originalText = tempObject.getElementById(selectedId).innerText;
       console.log(originalText)
-      text = originalText + '<br />' + text
+      if(ai_type==='summary'||ai_type==='completion'){
+        text = originalText + '<br />' + text
+      }
+      
       const index = collection.indexOf(selected);
       const parent = selected.parent();
       const dstId = parent.ccid;
