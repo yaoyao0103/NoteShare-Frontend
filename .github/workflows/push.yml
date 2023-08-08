@@ -31,7 +31,7 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: noteshare/frontend:latest
+          tags: noteshare/frontend:test
       - 
         name: Send mail
         uses: dawidd6/action-send-mail@v3
