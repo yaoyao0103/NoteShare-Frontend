@@ -25,6 +25,7 @@ import SignUpPage from "./pages/SignUpPage/SignUpPage";
 import VerificationPage from "./pages/VerificationPage/VerificationPage";
 import OuterPage from "./pages/OuterPage/OuterPage";
 import SharePage from "./pages/SharePage/SharePage";
+//nothing
 function App() {
   const dispatch = useDispatch();
   const noteId = '62b477d9c291fe27002cae3c'
