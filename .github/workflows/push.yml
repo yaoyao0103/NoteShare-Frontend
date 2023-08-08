@@ -3,7 +3,7 @@ name: NoteShare CD to Docker hub
 on:
   push:
     branches:
-      - 'deployLab'
+      - 'deployTest'
 
 jobs:
   docker:
