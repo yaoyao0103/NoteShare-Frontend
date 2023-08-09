@@ -15,7 +15,7 @@ jobs:
       - 
         name: Create env file
         run: |
-          echo "${{ secrets.REACT_APP_OPENAI_API_KEY }}" > .env
+          echo "REACT_APP_OPENAI_API_KEY=${{ secrets.REACT_APP_OPENAI_API_KEY }}" > .env
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v2
