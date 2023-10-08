@@ -13,7 +13,7 @@ CLOT (Control Loop Operational Transformation) method combines OT with concept c
 Google diff-match-patch uses Myer's diff algorithm to implement article comparison. Compared with other implementation methods, it has the best time complexity while retaining the difference between the two strings and recording the original string. The deletion and addition of characters in the comparison target string are considered based on the plagiarism degree comparison that this project direction focuses on. This is currently the best choice. Therefore, this calculation is used in the implementation of plagiarism degree comparison. Law.
 
 
-## Comparison between existing servicea or platforms
+## Comparison between existing platforms
 
 ### ClearNote
 ClearNote is a note platform, which has fewer subjects, and most of the notes is upload by high school students. However, the platform design is relatively simple, having less fuctions, the biggest drawback is that it only supports image type notes. 
