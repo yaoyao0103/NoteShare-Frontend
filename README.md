@@ -28,7 +28,7 @@ Notion also can use markdown to take a note. And by using block-based as a editi
 ### Dragging block to edit a note
 ![image](https://github.com/yaoyao0103/NoteShare-Frontend/assets/76504560/b964065f-d24e-44a3-96c4-20c661519e1a)
 
-### Recommendation Page and Search bar 
+### Recommended notes and search bar 
 ![image](https://github.com/yaoyao0103/NoteShare-Frontend/assets/76504560/74949e00-1c8b-4924-a415-ab069d2d3c5c)
 
 
