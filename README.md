@@ -31,4 +31,10 @@ Notion also can use markdown to take a note. And by using block-based as a editi
 ### Recommended notes and search bar 
 ![image](https://github.com/yaoyao0103/NoteShare-Frontend/assets/76504560/74949e00-1c8b-4924-a415-ab069d2d3c5c)
 
+## Backend Repository of NoteShare
+Link: https://github.com/allen3325/NoteShareDevBackend
+
+## Demo
+Link: https://www.youtube.com/watch?v=5lnt1ZTHh08&t=0s
+
 
