@@ -2,7 +2,7 @@
 
 ## Abstract
 Although existing note systems have their features, they cannot simultaneously support note browsing and searching, online authoring and sharing for notes, and collaborative editing of notes, to assist college students in their learning. In addition, the current note-sharing systems do not provide a plagiarism detection mechanism, which can lead to the unauthorized copying and modification of note content. Therefore, we developed NoteShare to solve those problems. oteShare enables users to obtain their required notes 
-easily through a block-based note editor and NLP (Natural Language Processing) tools. Moreover, we implemented the co-editing features by using the CLOT (Control Loop-based Operational Transformation) algorithm and WebSocket, allowing classmates or students who have the relevant knowledge to write notes together. To protect intellectual property rights, we developed a plagiarism evaluation based on the diffmatch-patch API. 
+easily through a block-based note editor and NLP (Natural Language Processing) tools. Moreover, we implemented the co-editing features by using the CLOT (Control Loop-based Operational Transformation) algorithm and WebSocket, allowing classmates or students who have the relevant knowledge to write notes together. To protect intellectual property rights, we developed a plagiarism evaluation based on the diff-match-patch API. 
 
 ## Main Features
 
