@@ -1,8 +1,9 @@
 # NoteShare
 
 ## Abstract
-Although existing note systems have their features, they cannot simultaneously support note browsing and searching, online authoring and sharing for notes, and collaborative editing of notes, to assist college students in their learning. In addition, the current note-sharing systems do not provide a plagiarism detection mechanism, which can lead to the unauthorized copying and modification of note content. Therefore, we developed NoteShare to solve those problems. oteShare enables users to obtain their required notes 
-easily through a block-based note editor and NLP (Natural Language Processing) tools. Moreover, we implemented the co-editing features by using the CLOT (Control Loop-based Operational Transformation) algorithm and WebSocket, allowing classmates or students who have the relevant knowledge to write notes together. To protect intellectual property rights, we developed a plagiarism evaluation based on the diff-match-patch API. 
+The motivation for this project is based on the observation that while university students frequently take notes, there is no existing platform that integrates all the necessary features. Some platforms only support personal notes or have unclear community categorizations, and notes are limited to either text or images, with the majority lacking collaborative editing capabilities.
+
+NoteShare is a note-taking platform developed specifically for university students. We provide clear categorization of notes along with an automatic tagging feature. Additionally, our platform offers a drag-and-drop interface for constructing notes, allowing the inclusion of text, videos, images, and various components implemented using DOM elements, all with real-time collaborative editing capabilities. The platform also boasts a comprehensive note-sharing community where users can buy and sell notes and pose questions. Furthermore, we have implemented a plagiarism detection system to protect the intellectual property rights of authors.
 
 ## Main Features
 
